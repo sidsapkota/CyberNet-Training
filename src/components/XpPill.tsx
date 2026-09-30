@@ -10,7 +10,7 @@ export function XpPill() {
   const xp = snapshot?.totalXp;
   return (
     <div
-      className="inline-flex h-9 min-w-18 items-center justify-center gap-1.5 rounded-control border border-line bg-surface px-3 font-mono text-small font-semibold text-accent-ink tabular-nums"
+      className="inline-flex h-9 min-w-18 items-center justify-center gap-1.5 rounded-control border border-line bg-surface px-3 font-mono max-[399px]:min-w-11 max-[399px]:px-2.5 text-small font-semibold text-accent-ink tabular-nums"
       aria-label={xp === undefined ? "Loading XP" : `${xp} XP total`}
     >
       <XpIcon className="size-4" />
@@ -28,7 +28,8 @@ export function XpPill() {
           </motion.span>
         </AnimatePresence>
       </span>
-      <span className="text-caption font-medium text-ink-faint">XP</span>
+      {/* The label says "XP" too; the narrowest phones drop the visible suffix to fit the streak. */}
+      <span className="text-caption font-medium text-ink-faint max-[399px]:hidden">XP</span>
     </div>
   );
 }

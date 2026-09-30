@@ -2,8 +2,9 @@ import { describe, expect, it } from "vitest";
 import type { Lesson } from "@/lib/content/schema";
 import { binaryToggle, explainer, hotspot, multipleChoice } from "@/test/fixtures";
 import { buildContentIndex, canCompleteLesson, cardXpFor, gradeQuizAttempt } from "./authority";
-import { mergeProgress, recomputeXp } from "./merge";
-import { cardKey, emptySnapshot, type ProgressSnapshot, type QuizAttempt } from "./types";
+import { mergeLedger, mergeProgress, recomputeXp } from "./merge";
+import { computeStreak } from "./streak";
+import { cardKey, defaultPreferences, emptySnapshot, type ProgressSnapshot, type QuizAttempt, type XpEvent } from "./types";
 
 // A tiny course: lesson l1 (explainer, core MC, challenge MC) and quiz q1 (two MCs, pass 0.5).
 const lessons: Lesson[] = [
@@ -31,6 +32,17 @@ const lessons: Lesson[] = [
     courseId: "c",
     moduleId: "m",
     cards: [multipleChoice({ id: "a" }), binaryToggle({ id: "b", target: 5 })],
+  },
+  {
+    // Two challenge cards: replaying both (10 practice XP each) meets a 20 XP goal.
+    id: "l2",
+    kind: "lesson",
+    title: "L2",
+    order: 2,
+    isFree: true,
+    courseId: "c",
+    moduleId: "m",
+    cards: [multipleChoice({ id: "p1", difficulty: "challenge" }), multipleChoice({ id: "p2", difficulty: "challenge" })],
   },
 ];
 const index = buildContentIndex(lessons);
@@ -180,22 +192,22 @@ describe("mergeProgress", () => {
   });
 
   it("keeps the guest's Explore choice, otherwise the account's", () => {
-    const explore = snapshot({ preferences: { mode: "explore", sound: true, coachSeen: [] } });
+    const explore = snapshot({ preferences: { ...defaultPreferences(), mode: "explore", sound: true, coachSeen: [] } });
     expect(mergeProgress(snapshot(), explore, index).preferences.mode).toBe("explore");
     expect(mergeProgress(explore, snapshot(), index).preferences.mode).toBe("explore");
     expect(mergeProgress(snapshot(), snapshot(), index).preferences.mode).toBe("path");
   });
 
   it("keeps the guest's sound-off choice, otherwise the account's", () => {
-    const quiet = snapshot({ preferences: { mode: "path", sound: false, coachSeen: [] } });
+    const quiet = snapshot({ preferences: { ...defaultPreferences(), mode: "path", sound: false, coachSeen: [] } });
     expect(mergeProgress(snapshot(), quiet, index).preferences.sound).toBe(false);
     expect(mergeProgress(quiet, snapshot(), index).preferences.sound).toBe(false);
     expect(mergeProgress(snapshot(), snapshot(), index).preferences.sound).toBe(true);
   });
 
   it("keeps every how-to-play panel seen on either side, once, dropping unknown keys", () => {
-    const account = snapshot({ preferences: { mode: "path", sound: true, coachSeen: ["sort_bins", "terminal"] } });
-    const local = snapshot({ preferences: { mode: "path", sound: true, coachSeen: ["terminal", "hotspot-tap", "not-a-key"] } });
+    const account = snapshot({ preferences: { ...defaultPreferences(), mode: "path", sound: true, coachSeen: ["sort_bins", "terminal"] } });
+    const local = snapshot({ preferences: { ...defaultPreferences(), mode: "path", sound: true, coachSeen: ["terminal", "hotspot-tap", "not-a-key"] } });
     expect(mergeProgress(account, local, index).preferences.coachSeen).toEqual(["sort_bins", "terminal", "hotspot-tap"]);
   });
 
@@ -230,5 +242,101 @@ describe("recomputeXp", () => {
     );
     expect(recomputeXp(good, index)).toEqual(good);
     expect(good.totalXp).toBe(30);
+  });
+});
+
+describe("mergeLedger (daily goals and streaks)", () => {
+  const SYD = "Australia/Sydney";
+  const NOW = new Date("2026-10-10T08:00:00Z"); // 19:00 on 10 Oct in Sydney
+  const ev = (day: string, hourUtc: number, over: Partial<XpEvent> = {}): XpEvent => ({
+    // The previous day's evening in UTC is the morning of `day` in Sydney (+11).
+    at: new Date(Date.UTC(2026, 9, Number(day.slice(8)) - 1, hourUtc)).toISOString(),
+    day,
+    tz: SYD,
+    kind: "card",
+    lessonId: "l1",
+    cardId: "core-q",
+    xp: 10,
+    ...over,
+  });
+  const goal = (goalXp: 20 | 50 | 100 = 20) => ({ tz: SYD, goal: goalXp, metAt: "2026-10-01T00:00:00.000Z" });
+  const none = new Set<string>();
+
+  it("re-prices guest events from the content, never trusting their XP", () => {
+    const local = { xpEvents: [ev("2026-10-09", 20, { xp: 50 }), ev("2026-10-09", 21, { kind: "practice", xp: 50 })], goalDays: {} };
+    const { newEvents } = mergeLedger({ xpEvents: [], goalDays: {} }, local, index, none, NOW);
+    expect(newEvents.map((e) => [e.kind, e.xp])).toEqual([["card", 10], ["practice", 5]]);
+  });
+
+  it("drops unknown lessons, explainer practice, quiz events without a pass, and bad dates", () => {
+    const local = {
+      xpEvents: [
+        ev("2026-10-09", 20, { lessonId: "gone" }),
+        ev("2026-10-09", 20, { kind: "practice", cardId: "intro" }),
+        ev("2026-10-09", 20, { kind: "quiz", lessonId: "q1", cardId: undefined, xp: 50 }),
+        ev("2026-10-07", 20, { at: "2026-10-08T20:00:00.000Z" }), // backdated: its time is 9 Oct in Sydney
+        ev("2026-10-11", 20, { at: "2026-10-11T00:00:00.000Z" }), // in the future
+      ],
+      goalDays: {},
+    };
+    expect(mergeLedger({ xpEvents: [], goalDays: {} }, local, index, none, NOW).newEvents).toEqual([]);
+    const passed = mergeLedger({ xpEvents: [], goalDays: {} }, { xpEvents: [local.xpEvents[2]!], goalDays: {} }, index, new Set(["q1"]), NOW);
+    expect(passed.newEvents.map((e) => e.xp)).toEqual([50]);
+  });
+
+  it("unions met days, accepting a guest day only if its merged XP reaches the goal", () => {
+    const account = { xpEvents: [ev("2026-10-08", 20)], goalDays: { "2026-10-08": goal(20) } };
+    const local = {
+      xpEvents: [ev("2026-10-09", 20), ev("2026-10-09", 21, { cardId: "bonus-q", xp: 20 })],
+      goalDays: { "2026-10-09": goal(20), "2026-10-07": goal(20) }, // 7 Oct has no XP behind it
+    };
+    const { ledger, newGoalDays } = mergeLedger(account, local, index, none, NOW);
+    expect(Object.keys(ledger.goalDays).sort()).toEqual(["2026-10-08", "2026-10-09"]);
+    expect(newGoalDays.map(([d]) => d)).toEqual(["2026-10-09"]);
+  });
+
+  it("keeps the longer streak: the union is at least as long as either side", () => {
+    const days = (from: number, to: number) =>
+      Object.fromEntries(Array.from({ length: to - from + 1 }, (_, i) => [`2026-10-0${from + i}`, goal(20)]));
+    const events = (from: number, to: number) =>
+      Array.from({ length: to - from + 1 }, (_, i) =>
+        ["p1", "p2"].map((cardId) => ev(`2026-10-0${from + i}`, 20, { kind: "practice", lessonId: "l2", cardId, xp: 10 })),
+      ).flat();
+    const account = { xpEvents: events(1, 3), goalDays: days(1, 3) }; // 3-day run, ended
+    const local = { xpEvents: events(4, 9), goalDays: days(4, 9) }; // 6-day run up to yesterday
+    const { ledger } = mergeLedger(account, local, index, none, NOW);
+    const today = { day: "2026-10-10", tz: SYD };
+    expect(computeStreak(ledger.goalDays, today).current).toBe(9);
+    expect(computeStreak(ledger.goalDays, today).current).toBeGreaterThanOrEqual(computeStreak(local.goalDays, today).current);
+  });
+
+  it("is idempotent, and counts practice once per card per day across both sides", () => {
+    const practice = ev("2026-10-09", 20, { kind: "practice" });
+    const account = { xpEvents: [{ ...practice, at: new Date(Date.parse(practice.at) + 60_000).toISOString(), xp: 5 }], goalDays: {} };
+    const local = { xpEvents: [practice, ev("2026-10-09", 22)], goalDays: {} };
+    const once = mergeLedger(account, local, index, none, NOW);
+    expect(once.newEvents.map((e) => e.kind)).toEqual(["card"]);
+    const twice = mergeLedger(once.ledger, local, index, none, NOW);
+    expect(twice.newEvents).toEqual([]);
+    expect(twice.ledger).toEqual(once.ledger);
+  });
+
+  it("counts a card's first-time XP once ever, even if claimed on several days or on both sides", () => {
+    const account = { xpEvents: [ev("2026-10-08", 20)], goalDays: {} };
+    const local = { xpEvents: [ev("2026-10-09", 20), ev("2026-10-09", 21, { cardId: "bonus-q", xp: 20 }), ev("2026-10-10", 1, { cardId: "bonus-q", xp: 20 })], goalDays: {} };
+    const { newEvents } = mergeLedger(account, local, index, none, NOW);
+    expect(newEvents.map((e) => [e.day, e.cardId])).toEqual([["2026-10-09", "bonus-q"]]);
+  });
+
+  it("merges through mergeProgress too, with the guest's chosen goal winning", () => {
+    const local = snapshot({
+      preferences: { ...defaultPreferences(), dailyGoal: 100, dailyGoalChosen: true },
+      xpEvents: [ev("2026-10-09", 20)],
+    });
+    const merged = mergeProgress(snapshot(), local, index, NOW);
+    expect(merged.xpEvents).toHaveLength(1);
+    expect(merged.preferences).toMatchObject({ dailyGoal: 100, dailyGoalChosen: true });
+    expect(merged.totalXp).toBe(0); // the ledger never adds to total XP
+    expect(mergeProgress(snapshot({ preferences: { ...defaultPreferences(), dailyGoal: 20, dailyGoalChosen: true } }), snapshot(), index, NOW).preferences.dailyGoal).toBe(20);
   });
 });

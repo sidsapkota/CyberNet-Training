@@ -4,14 +4,18 @@
  */
 import { cleanCoachSeen } from "@/lib/coach";
 import type { Database, Json } from "@/lib/supabase/database.types";
+import { isDailyGoal, DEFAULT_DAILY_GOAL } from "./daily";
 import { quizProgressFrom } from "./merge";
 import {
   cardKey,
+  type DailyGoalDay,
   LearningModeSchema,
   type ProgressSnapshot,
   type QuizAttempt,
   QuizAttemptSchema,
   sumXp,
+  type XpEvent,
+  XpEventKindSchema,
 } from "./types";
 
 type Tables = Database["public"]["Tables"];
@@ -22,6 +26,38 @@ export type AttemptRow = Pick<
   "quiz_id" | "attempted_at" | "score" | "passed" | "xp" | "answers"
 >;
 
+export type XpEventRow = Pick<Tables["xp_events"]["Row"], "at" | "day" | "time_zone" | "kind" | "lesson_id" | "card_id" | "xp">;
+export type GoalDayRow = Pick<Tables["goal_days"]["Row"], "day" | "time_zone" | "goal" | "met_at">;
+export const XP_EVENT_COLUMNS = "at, day, time_zone, kind, lesson_id, card_id, xp";
+export const GOAL_DAY_COLUMNS = "day, time_zone, goal, met_at";
+
+export function eventFromRow(r: XpEventRow): XpEvent | null {
+  const kind = XpEventKindSchema.safeParse(r.kind);
+  if (!kind.success) return null;
+  return {
+    at: iso(r.at),
+    day: r.day,
+    tz: r.time_zone,
+    kind: kind.data,
+    lessonId: r.lesson_id,
+    ...(r.card_id ? { cardId: r.card_id } : {}),
+    xp: r.xp,
+  };
+}
+
+export function eventToRow(userId: string, e: XpEvent) {
+  return { user_id: userId, at: e.at, day: e.day, time_zone: e.tz, kind: e.kind, lesson_id: e.lessonId, card_id: e.cardId ?? null, xp: e.xp };
+}
+
+export function goalDayFromRow(r: GoalDayRow): [string, DailyGoalDay] | null {
+  if (!isDailyGoal(r.goal)) return null;
+  return [r.day, { tz: r.time_zone, goal: r.goal, metAt: iso(r.met_at) }];
+}
+
+export function goalDayToRow(userId: string, day: string, g: DailyGoalDay) {
+  return { user_id: userId, day, time_zone: g.tz, goal: g.goal, met_at: g.metAt };
+}
+
 export interface ProgressRows {
   cards: CardRow[];
   lessons: LessonRow[];
@@ -29,6 +65,10 @@ export interface ProgressRows {
   learningMode: string | null | undefined;
   soundEnabled?: boolean | null;
   coachSeen?: string[] | null;
+  xpEvents?: XpEventRow[];
+  goalDays?: GoalDayRow[];
+  dailyGoal?: number | null;
+  dailyGoalChosen?: boolean | null;
 }
 
 const iso = (value: string) => new Date(value).toISOString();
@@ -65,7 +105,14 @@ export function rowsToSnapshot(rows: ProgressRows): ProgressSnapshot {
       mode: mode.success ? mode.data : ("path" as const),
       sound: rows.soundEnabled ?? true,
       coachSeen: cleanCoachSeen(rows.coachSeen),
+      dailyGoal: isDailyGoal(rows.dailyGoal) ? rows.dailyGoal : DEFAULT_DAILY_GOAL,
+      dailyGoalChosen: rows.dailyGoalChosen ?? false,
     },
+    xpEvents: (rows.xpEvents ?? [])
+      .map(eventFromRow)
+      .filter((e): e is XpEvent => e !== null)
+      .sort((a, b) => a.at.localeCompare(b.at)),
+    goalDays: Object.fromEntries((rows.goalDays ?? []).map(goalDayFromRow).filter((g) => g !== null)),
   };
   return { ...next, totalXp: sumXp(next) };
 }

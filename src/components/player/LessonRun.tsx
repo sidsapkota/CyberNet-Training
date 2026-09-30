@@ -13,7 +13,11 @@ import { trackEvent } from "@/lib/analytics";
 import { hintXpNote, visibleHint } from "@/lib/hints";
 import { getNextLesson, lessonFinishState } from "@/lib/progress/state";
 import { emptySnapshot, isCardCompleted } from "@/lib/progress/types";
-import { cardXpToAward, exploreXpToAward, lessonBonusToAward, XP } from "@/lib/progress/xp";
+import { practicedOn } from "@/lib/progress/daily";
+import { milestoneReached } from "@/lib/progress/streak";
+import { useDaily } from "@/lib/progress/useDaily";
+import { cardXpToAward, exploreXpToAward, lessonBonusToAward, practiceXp, XP } from "@/lib/progress/xp";
+import { MilestoneScreen } from "@/components/streak/MilestoneScreen";
 import { type ProgressNode } from "@/components/network/NodeProgress";
 import { CardStage, useFeedbackAnimation } from "./CardStage";
 import { FeedbackFooter, type FeedbackTone, type FooterAction } from "./FeedbackFooter";
@@ -29,6 +33,8 @@ interface CardRun {
   /** Number of times Check was pressed on this card. */
   attempts: number;
   xpAwarded: number;
+  /** Practice XP toward today's goal, when a finished card is replayed. */
+  practiceAwarded: number;
   /** The learner opened the hint (the card then pays retry XP). */
   hintUsed: boolean;
 }
@@ -41,6 +47,7 @@ function freshRun(card: Card): CardRun {
     status: "answering",
     attempts: 0,
     xpAwarded: 0,
+    practiceAwarded: 0,
     hintUsed: false,
   };
 }
@@ -76,6 +83,27 @@ export function LessonRun({
   const { scope, playIncorrect } = useFeedbackAnimation();
   const feedback = useFeedback();
 
+  // Daily goal and streak: compared with how they stood when the lesson opened, to catch the
+  // moment the goal is met (a chime and a note) and a streak milestone (a screen at the end).
+  const daily = useDaily();
+  const [start] = useState(() => ({
+    met: daily?.today.met ?? false,
+    streak: daily?.streak.current ?? 0,
+    freezes: daily?.streak.freezes ?? 0,
+  }));
+  const goalMetNow = Boolean(daily?.today.met && !start.met);
+  /** The card whose answer met the goal (its footer shows the note). */
+  const [goalNoteAt, setGoalNoteAt] = useState<number | null>(null);
+  if (goalMetNow && goalNoteAt === null) setGoalNoteAt(index);
+  const goalReached = goalNoteAt !== null;
+  const { play: playSound, haptic } = feedback;
+  useEffect(() => {
+    if (!goalReached) return;
+    playSound("goal");
+    haptic("success");
+  }, [goalReached, playSound, haptic]);
+  const [milestoneSeen, setMilestoneSeen] = useState(false);
+
   const card = lesson.cards[index] as Card;
   const definition = getCardDefinition(card);
   const total = lesson.cards.length;
@@ -88,9 +116,15 @@ export function LessonRun({
   /** Saves are tracked so finishing can wait for them (matters for async stores like Supabase). */
   const pendingSaves = useRef<Promise<void>[]>([]);
 
-  function markComplete(c: Card, xp: number) {
+  /** Practice XP a finished graded card would add toward today's goal (once per card per day). */
+  function practiceFor(c: Card): number {
+    if (!isDone(c) || !isInteractiveCard(c) || !daily) return 0;
+    return practicedOn(snapshot.xpEvents, daily.today.day, lesson.id, c.id) ? 0 : practiceXp(c.difficulty);
+  }
+
+  function markComplete(c: Card, xp: number, practice = 0) {
     setCompletedThisVisit((current) => new Set(current).add(c.id));
-    pendingSaves.current.push(store.completeCard(lesson.id, c.id, xp));
+    pendingSaves.current.push(store.completeCard(lesson.id, c.id, xp, practice));
   }
 
   function goTo(nextIndex: number) {
@@ -145,9 +179,10 @@ export function LessonRun({
     const { correct } = definition.grade(card, run.answer);
     if (correct) {
       const xp = cardXpToAward(isDone(card), card.difficulty, attempts, run.hintUsed);
-      setRun({ ...run, status: "correct", attempts, xpAwarded: xp });
+      const practice = practiceFor(card);
+      setRun({ ...run, status: "correct", attempts, xpAwarded: xp, practiceAwarded: practice });
       setSessionXp((current) => current + xp);
-      markComplete(card, xp);
+      markComplete(card, xp, practice);
       setPulse((current) => ({ key: (current?.key ?? 0) + 1, from: index - 1, to: index }));
       feedback.play("correct");
       feedback.haptic("success");
@@ -201,9 +236,19 @@ export function LessonRun({
 
   if (result) {
     const next = getNextLesson(course, lesson.id);
+    const milestone = daily ? milestoneReached(start.streak, daily.streak.current) : null;
+    if (milestone && !milestoneSeen) {
+      return (
+        <PlayerShell nodes={progressNodes} progressLabel="Lesson progress: complete" exitHref={`/course/${course.id}`}>
+          <MilestoneScreen days={milestone} onContinue={() => setMilestoneSeen(true)} />
+        </PlayerShell>
+      );
+    }
     return (
       <PlayerShell nodes={progressNodes} progressLabel="Lesson progress: complete" exitHref={`/course/${course.id}`}>
         <LessonComplete
+          goalMetNow={goalMetNow}
+          freezeEarned={(daily?.streak.freezes ?? 0) > start.freezes}
           pathHref={`/course/${course.id}?completed=${lesson.id}`}
           title={lesson.title}
           xpEarned={result.xpEarned}
@@ -247,6 +292,8 @@ export function LessonRun({
               : undefined
           }
           xpAwarded={run.xpAwarded}
+          practiceXp={run.practiceAwarded}
+          goalNote={goalNoteAt === index && run.status === "correct" ? "Daily goal reached" : undefined}
           explanation={isInteractiveCard(card) && run.status !== "answering" ? card.explanation : undefined}
           collapseExplanation={run.status === "incorrect"}
           primary={primary}

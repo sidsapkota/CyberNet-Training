@@ -39,6 +39,8 @@ import {
   MessageSquareText,
   ShieldCheck,
   Star,
+  Snowflake,
+  Target,
 } from "lucide-react";
 
 /**
@@ -112,3 +114,7 @@ export const HandsOnIcon = brandIcon(Hand, "HandsOnIcon");
 export const FeedbackIcon = brandIcon(MessageSquareText, "FeedbackIcon");
 export const SafeIcon = brandIcon(ShieldCheck, "SafeIcon");
 export const RatingIcon = brandIcon(Star, "RatingIcon");
+
+// Daily goals and streaks (the streak itself uses the drawn node chain, StreakIcon).
+export const GoalIcon = brandIcon(Target, "GoalIcon");
+export const FreezeIcon = brandIcon(Snowflake, "FreezeIcon");

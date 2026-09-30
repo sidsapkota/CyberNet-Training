@@ -3,9 +3,10 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useId, useState } from "react";
 import { Button, type ButtonVariant } from "@/components/ui/Button";
-import { CheckIcon, ChevronDownIcon, XIcon, XpIcon } from "@/components/ui/icons";
+import { CheckIcon, ChevronDownIcon, GoalIcon, XIcon, XpIcon } from "@/components/ui/icons";
 import { Markdown } from "@/components/ui/Markdown";
 import { Mascot } from "@/components/mascot/Mascot";
+import { StreakIcon } from "@/components/streak/StreakIcon";
 import type { MascotExpression } from "@/components/mascot/poses";
 
 export type FeedbackTone = "neutral" | "correct" | "incorrect";
@@ -21,6 +22,10 @@ interface FeedbackFooterProps {
   heading?: string;
   subheading?: string;
   xpAwarded?: number;
+  /** Practice XP a replayed card added toward today's goal (never total XP). */
+  practiceXp?: number;
+  /** Shown under the heading when this answer met the daily goal. */
+  goalNote?: string;
   explanation?: string;
   /** If true, the explanation starts hidden behind a "Show explanation" toggle. */
   collapseExplanation?: boolean;
@@ -75,6 +80,8 @@ export function FeedbackFooter({
   heading,
   subheading,
   xpAwarded = 0,
+  practiceXp = 0,
+  goalNote,
   explanation,
   collapseExplanation = false,
   primary,
@@ -121,7 +128,27 @@ export function FeedbackFooter({
                     <XpIcon className="size-4" />+{xpAwarded} XP
                   </motion.span>
                 )}
+                {xpAwarded === 0 && practiceXp > 0 && (
+                  <motion.span
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.12, duration: 0.2 }}
+                    className="inline-flex items-center gap-1 rounded-control border border-line bg-surface px-2.5 py-1 font-mono text-small font-semibold text-accent-ink"
+                  >
+                    <GoalIcon className="size-4" />+{practiceXp}
+                    <span className="sr-only"> XP toward today&apos;s goal</span>
+                    <span aria-hidden="true" className="font-sans text-caption font-medium text-ink-faint">
+                      today
+                    </span>
+                  </motion.span>
+                )}
               </div>
+              {goalNote && (
+                <p className="mt-2 flex items-center gap-2 text-small font-semibold text-accent-ink">
+                  <StreakIcon lit className="size-4" />
+                  {goalNote}
+                </p>
+              )}
 
               {explanation && collapseExplanation && (
                 <button

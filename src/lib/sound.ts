@@ -8,7 +8,7 @@
  * silent no-op. Whether sound is on at all is a learner preference, checked by `useFeedback()`.
  */
 
-export type SoundName = "correct" | "wrong" | "complete" | "lessonComplete" | "remove" | "snap";
+export type SoundName = "correct" | "wrong" | "complete" | "lessonComplete" | "goal" | "remove" | "snap";
 
 interface Note {
   /** Hz; `to` glides the pitch over the note. */
@@ -34,6 +34,12 @@ export const SOUNDS: Record<SoundName, Note[]> = {
     { freq: 523.25, at: 0, dur: 0.12, gain: 0.45 },
     { freq: 659.25, at: 0.1, dur: 0.12, gain: 0.45 },
     { freq: 783.99, at: 0.2, dur: 0.38, gain: 0.5 },
+  ],
+  // Daily goal reached: a quick rising three-note figure, brighter than "correct".
+  goal: [
+    { freq: 783.99, at: 0, dur: 0.1, gain: 0.4 },
+    { freq: 987.77, at: 0.08, dur: 0.1, gain: 0.4 },
+    { freq: 1318.51, at: 0.16, dur: 0.13, gain: 0.45 },
   ],
   remove: [
     { freq: 1500, to: 900, at: 0, dur: 0.05, wave: "triangle", gain: 0.35 },

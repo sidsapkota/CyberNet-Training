@@ -110,6 +110,53 @@ async function main() {
     record("A can't change coach_seen directly", blocked(await a.client.from("profiles").update({ coach_seen: ["sort_bins"] }).eq("id", a.id).select()));
     const coachDefaults = await admin.from("profiles").select("coach_seen").eq("id", a.id).single();
     record("New profiles have seen no coach panels", Array.isArray(coachDefaults.data?.coach_seen) && coachDefaults.data.coach_seen.length === 0);
+
+    // Daily goals and streaks: the XP ledger and met days are read-only for learners.
+    const day = now.slice(0, 10);
+    const event = (userId: string, cardId: string, kind = "card") => ({
+      user_id: userId, at: now, day, time_zone: "Australia/Sydney", kind, lesson_id: "bits-and-binary", card_id: cardId, xp: 10,
+    });
+    const seedB = await admin.from("xp_events").insert(event(b.id, "make-5"));
+    const seedBDay = await admin.from("goal_days").insert({ user_id: b.id, day, time_zone: "Australia/Sydney", goal: 20 });
+    const seedA = await admin.from("xp_events").insert(event(a.id, "make-5"));
+    record("The server can record XP events and met days (control)", !seedB.error && !seedBDay.error && !seedA.error);
+    for (const table of ["xp_events", "goal_days"] as const) {
+      const all = await a.client.from(table).select("user_id");
+      const theirs = await a.client.from(table).select("user_id").eq("user_id", b.id);
+      record(`A can't read B's ${table}`, !all.error && (all.data ?? []).every((r) => r.user_id === a.id) && (theirs.data ?? []).length === 0);
+    }
+    const ownEvents = await a.client.from("xp_events").select("xp").eq("user_id", a.id);
+    record("A can read their own XP events (control)", (ownEvents.data ?? []).length === 1);
+    record("A can't add XP events for themselves", blocked(await a.client.from("xp_events").insert(event(a.id, "extra")).select()));
+    record(
+      "A can't mark a day as met themselves",
+      blocked(await a.client.from("goal_days").insert({ user_id: a.id, day, time_zone: "Australia/Sydney", goal: 20 }).select()),
+    );
+    record("A can't change their XP events", blocked(await a.client.from("xp_events").update({ xp: 50 }).eq("user_id", a.id).select()));
+    record(
+      "A can't change or delete B's streak data",
+      blocked(await a.client.from("goal_days").update({ goal: 100 }).eq("user_id", b.id).select()) &&
+        blocked(await a.client.from("goal_days").delete().eq("user_id", b.id).select()) &&
+        blocked(await a.client.from("xp_events").delete().eq("user_id", b.id).select()),
+    );
+    record(
+      "A can't set their own daily goal or time zone directly",
+      blocked(await a.client.from("profiles").update({ daily_goal: 20 }).eq("id", a.id).select()) &&
+        blocked(await a.client.from("profiles").update({ daily_goal_chosen: true }).eq("id", a.id).select()) &&
+        blocked(await a.client.from("profiles").update({ time_zone: "UTC" }).eq("id", a.id).select()),
+    );
+    const goalDefaults = await admin.from("profiles").select("daily_goal, daily_goal_chosen, time_zone").eq("id", a.id).single();
+    record(
+      "New profiles start on Regular (50), not yet chosen, no time zone",
+      goalDefaults.data?.daily_goal === 50 && goalDefaults.data.daily_goal_chosen === false && goalDefaults.data.time_zone === null,
+    );
+    const badGoal = await admin.from("profiles").update({ daily_goal: 75 }).eq("id", a.id).select();
+    const badXp = await admin.from("xp_events").insert({ ...event(a.id, "big"), xp: 51 });
+    const badKind = await admin.from("xp_events").insert(event(a.id, "odd", "bonus"));
+    record("Only the three goals, XP up to 50 and known kinds are allowed (even for the server)", Boolean(badGoal.error && badXp.error && badKind.error));
+    const practice1 = await admin.from("xp_events").insert(event(a.id, "make-5", "practice"));
+    const practice2 = await admin.from("xp_events").insert(event(a.id, "make-5", "practice"));
+    record("Practice counts once per card per day (unique index)", !practice1.error && practice2.error?.code === "23505");
     const tooMany = await admin.from("profiles").update({ coach_seen: Array.from({ length: 33 }, (_, i) => `k${i}`) }).eq("id", a.id).select();
     record("coach_seen is capped at 32 entries (even for the server)", Boolean(tooMany.error));
     record("A can't set age_confirmed directly", blocked(await a.client.from("profiles").update({ age_confirmed: true }).eq("id", a.id).select()));
@@ -127,7 +174,7 @@ async function main() {
     // Signed-out visitors see nothing.
     const anon = createClient<Database>(env.url, env.publishableKey, noSession);
     let anonClean = true;
-    for (const table of ["profiles", "card_completions", "lesson_completions", "quiz_attempts"] as const) {
+    for (const table of ["profiles", "card_completions", "lesson_completions", "quiz_attempts", "xp_events", "goal_days"] as const) {
       const r = await anon.from(table).select("*");
       if (!r.error && (r.data ?? []).length > 0) anonClean = false;
     }
@@ -161,7 +208,7 @@ async function main() {
     // Delete both users; ON DELETE CASCADE must remove every row.
     for (const user of [a, b]) await admin.auth.admin.deleteUser(user.id);
     let leftovers = 0;
-    for (const table of ["card_completions", "lesson_completions", "quiz_attempts"] as const) {
+    for (const table of ["card_completions", "lesson_completions", "quiz_attempts", "xp_events", "goal_days"] as const) {
       const r = await admin.from(table).select("user_id").in("user_id", [a.id, b.id]);
       leftovers += (r.data ?? []).length;
     }

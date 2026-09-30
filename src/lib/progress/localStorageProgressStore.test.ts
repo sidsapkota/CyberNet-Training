@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { LocalStorageProgressStore, PROGRESS_STORAGE_KEY } from "./localStorageProgressStore";
 import { MemoryStorage } from "./memoryStorage";
-import { cardKey, emptySnapshot, type QuizAttempt } from "./types";
+import { cardKey, defaultPreferences, emptySnapshot, type QuizAttempt } from "./types";
 
 const attempt = (over: Partial<QuizAttempt> = {}): QuizAttempt => ({
   at: "2026-01-01T00:00:00.000Z",
@@ -34,7 +34,9 @@ describe("LocalStorageProgressStore", () => {
     };
     storage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(saved));
     const snapshot = await store.getSnapshot();
-    expect(snapshot.preferences).toEqual({ mode: "path", sound: true, coachSeen: [] });
+    expect(snapshot.preferences).toEqual(defaultPreferences());
+    expect(snapshot.xpEvents).toEqual([]);
+    expect(snapshot.goalDays).toEqual({});
     expect(snapshot.cards[cardKey("l1", "c1")]?.xp).toBe(10);
   });
 
@@ -91,10 +93,21 @@ describe("LocalStorageProgressStore", () => {
     expect(snapshot.totalXp).toBe(10);
   });
 
-  it("resets everything", async () => {
+  it("resets all progress but keeps the streak and settings", async () => {
+    await store.setPreferences({ dailyGoal: 20 });
     await store.completeCard("l1", "c1", 10);
+    await store.completeCard("l1", "c2", 10);
     await store.resetAll();
-    expect(await store.getSnapshot()).toEqual(emptySnapshot());
+    const after = await store.getSnapshot();
+    expect({ cards: after.cards, lessons: after.lessons, quizzes: after.quizzes, totalXp: after.totalXp }).toEqual({
+      cards: {},
+      lessons: {},
+      quizzes: {},
+      totalXp: 0,
+    });
+    expect(after.xpEvents).toHaveLength(2);
+    expect(Object.keys(after.goalDays)).toHaveLength(1);
+    expect(after.preferences.dailyGoal).toBe(20);
   });
 
   it("notifies subscribers and stops after unsubscribe", async () => {
@@ -128,5 +141,67 @@ describe("LocalStorageProgressStore", () => {
     );
     await store.completeCard("l1", "c1", 5);
     expect((await store.getSnapshot()).totalXp).toBe(25);
+  });
+});
+
+describe("LocalStorageProgressStore: daily goal and streak", () => {
+  let now = new Date("2026-10-10T01:00:00Z"); // 12:00 on 10 Oct in Sydney
+  let tz = "Australia/Sydney";
+  let store: LocalStorageProgressStore;
+
+  beforeEach(() => {
+    now = new Date("2026-10-10T01:00:00Z");
+    tz = "Australia/Sydney";
+    const storage = new MemoryStorage();
+    store = new LocalStorageProgressStore(() => storage, undefined, { now: () => now, timeZone: () => tz });
+  });
+
+  it("records each first-time XP as a dated event, without changing total XP", async () => {
+    await store.completeCard("l1", "c1", 10);
+    await store.completeLesson("l1", 20);
+    await store.recordQuizAttempt("q1", attempt({ passed: true, score: 1, xp: 50 }));
+    const s = await store.getSnapshot();
+    expect(s.xpEvents.map((e) => [e.kind, e.xp, e.day])).toEqual([
+      ["card", 10, "2026-10-10"],
+      ["lesson", 20, "2026-10-10"],
+      ["quiz", 50, "2026-10-10"],
+    ]);
+    expect(s.totalXp).toBe(80);
+  });
+
+  it("meets the daily goal once today's XP reaches it", async () => {
+    await store.completeCard("l1", "c1", 10);
+    await store.completeCard("l1", "c2", 20);
+    expect((await store.getSnapshot()).goalDays).toEqual({});
+    await store.completeLesson("l1", 20);
+    expect((await store.getSnapshot()).goalDays["2026-10-10"]).toMatchObject({ goal: 50, tz: "Australia/Sydney" });
+  });
+
+  it("counts practice toward today's goal only, once per card per day", async () => {
+    await store.completeCard("l1", "c1", 10);
+    await store.completeCard("l1", "c1", 0, 5);
+    await store.completeCard("l1", "c1", 0, 5);
+    let s = await store.getSnapshot();
+    expect(s.xpEvents.map((e) => e.kind)).toEqual(["card", "practice"]);
+    expect(s.totalXp).toBe(10);
+    now = new Date("2026-10-11T01:00:00Z");
+    await store.completeCard("l1", "c1", 0, 5);
+    s = await store.getSnapshot();
+    expect(s.xpEvents.at(-1)).toMatchObject({ kind: "practice", day: "2026-10-11" });
+  });
+
+  it("meets today's goal straight away when it's lowered below today's XP", async () => {
+    await store.completeCard("l1", "c1", 10);
+    await store.completeCard("l1", "c2", 10);
+    await store.setPreferences({ dailyGoal: 20, dailyGoalChosen: true });
+    const s = await store.getSnapshot();
+    expect(s.goalDays["2026-10-10"]).toMatchObject({ goal: 20 });
+    expect(s.preferences).toMatchObject({ dailyGoal: 20, dailyGoalChosen: true });
+  });
+
+  it("dates events in the learner's current time zone", async () => {
+    tz = "America/Los_Angeles"; // 01:00 UTC on 10 Oct is still 9 Oct there
+    await store.completeCard("l1", "c1", 10);
+    expect((await store.getSnapshot()).xpEvents[0]?.day).toBe("2026-10-09");
   });
 });

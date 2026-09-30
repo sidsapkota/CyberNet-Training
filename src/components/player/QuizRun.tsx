@@ -17,6 +17,9 @@ import { useFeedback } from "@/lib/feedback";
 import { getNextLesson } from "@/lib/progress/state";
 import { emptySnapshot, type QuizAttempt } from "@/lib/progress/types";
 import { quizXpToAward, scoreQuiz } from "@/lib/progress/xp";
+import { milestoneReached } from "@/lib/progress/streak";
+import { useDaily } from "@/lib/progress/useDaily";
+import { MilestoneScreen } from "@/components/streak/MilestoneScreen";
 import { CardStage, useFeedbackAnimation } from "./CardStage";
 import { FeedbackFooter, type FooterAction } from "./FeedbackFooter";
 import { PlayerShell, uniformNodes } from "./PlayerShell";
@@ -50,6 +53,14 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
   const [pulse, setPulse] = useState<{ key: number; from: number; to: number } | null>(null);
   const { scope, playIncorrect } = useFeedbackAnimation();
   const feedback = useFeedback();
+  // Daily goal and streak as they stood when the quiz opened (a first pass can meet the goal).
+  const daily = useDaily();
+  const [startDaily] = useState(() => ({
+    met: daily?.today.met ?? false,
+    streak: daily?.streak.current ?? 0,
+    freezes: daily?.streak.freezes ?? 0,
+  }));
+  const [milestoneSeen, setMilestoneSeen] = useState(false);
 
   const card = quiz.cards[index] as Card;
   const definition = getCardDefinition(card);
@@ -134,9 +145,19 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
   }, primary !== null);
 
   if (phase === "results" && attempt) {
+    const milestone = daily ? milestoneReached(startDaily.streak, daily.streak.current) : null;
+    if (milestone && !milestoneSeen) {
+      return (
+        <PlayerShell nodes={uniformNodes(total, "done")} progressLabel="Quiz progress: complete" exitHref={`/course/${course.id}`}>
+          <MilestoneScreen days={milestone} onContinue={() => setMilestoneSeen(true)} />
+        </PlayerShell>
+      );
+    }
     return (
       <PlayerShell nodes={uniformNodes(total, "done")} progressLabel="Quiz progress: complete" exitHref={`/course/${course.id}`}>
         <QuizResults
+          goalMetNow={Boolean(daily?.today.met && !startDaily.met)}
+          freezeEarned={(daily?.streak.freezes ?? 0) > startDaily.freezes}
           quiz={quiz}
           attempt={attempt}
           next={getNextLesson(course, quiz.id)}

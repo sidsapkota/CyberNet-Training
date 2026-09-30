@@ -308,6 +308,8 @@ interactive, update `isInteractiveCard` / `InteractiveCard` in `schema.ts`.
   - quiz first pass: +50
   - explore card (hotspot explore mode) finished: 5; explainers: 0
   - XP is paid once per card, ever
+  - **practice XP** (`practiceXp`): replaying a finished graded card pays the retry amount toward
+    **today's daily goal only**, never total XP, once per card per day
 - **`state.ts`** holds pure derived state, and nothing derived is ever stored:
   - unlocks: lessons in order within a module; the quiz after all of the module's lessons; the next
     module after this module's quiz is passed
@@ -319,9 +321,44 @@ interactive, update `isInteractiveCard` / `InteractiveCard` in `schema.ts`.
   - `snapshotBefore(snapshot, id)`: progress minus one completion, which the path draws first so a
     newly completed node visibly fills in
 
+### Daily goals and streaks (`src/lib/progress/daily.ts`, `streak.ts`)
+- **Daily goal:** Casual 20, Regular 50 (default) or Serious 100 XP (`DAILY_GOALS`), in
+  `preferences.dailyGoal`. The first lesson- or quiz-complete screen asks once (Regular preselected;
+  `dailyGoalChosen`); change it on the dashboard's Today panel or `/account`.
+- **The XP ledger:** every XP-earning write also records an **XP event** (`snapshot.xpEvents`:
+  `{at, day, tz, kind: card|lesson|quiz|practice, lessonId, cardId?, xp}`), dated with the
+  learner's local day **when it happens**. Dates never go backwards (`currentDay`: never earlier than
+  the latest event), and old events are never re-dated. The ledger is separate from the completion
+  records: total XP never includes practice.
+- **Met days:** when a day's XP reaches the goal, the day is recorded in `snapshot.goalDays` with
+  the goal and time zone at that moment (`addXpEvent` / `checkGoal`). Lowering the goal can meet
+  today straight away.
+- **Streaks are calculated, never stored** (`computeStreak`, pure, shared by server and UI):
+  - A day counts when its goal was met. Today isn't missed until it's over.
+  - Freezes: one each time the streak reaches a multiple of 7, at most 2 held; each missed day uses
+    one automatically (a frozen day keeps the streak but doesn't add to it). More missed days than
+    freezes restarts the streak.
+  - **Fair days:** in one time zone, gaps are counted by calendar date, so daylight saving never
+    matters. Across a time zone change, a day is missed only if a full 24 hours (3 hours'
+    tolerance) went by between the end of the last met day and the start of the next
+    (`missedDaysBetween`), so flying east over the date line can't break a streak.
+  - Milestones at 3, 7, 14, 30, 50 and 100 days (`milestoneReached`).
+  - `dailyStatus()` / `useDaily()` give today's progress and the streak (the hook re-checks each
+    minute, so midnight rolls over without a reload).
+- **Where it shows:** a streak pill in the header next to XP (the node-chain `StreakIcon`, lit once
+  today's goal is met; no flame); the dashboard's Today panel (goal ring, streak, freezes, this
+  month's calendar, "How streaks work", goal setting; a gentle "Fresh start" note after a streak
+  ends, never a count of what was lost); in lessons, the "goal" chime plus a "Daily goal reached"
+  note in the footer (replays show a "+5 today" pill); a milestone screen before the lesson- or
+  quiz-complete screen; "Daily goal reached" on those screens (`DailyGoalSummary`).
+- **Guests** keep the ledger in local progress (at most 5,000 events). **Signed in**, Server
+  Actions record everything (next section); the browser only sends its time zone.
+- **Resets keep the streak:** "Reset progress" clears lessons and XP but keeps the ledger, met days
+  and settings.
+
 ### Pages
 Pages with the site header live in the `src/app/(main)/` route group: a top bar (logo, Dashboard,
-Courses, XP, theme) and, on phones, a bottom tab bar (`src/components/nav/SiteNav.tsx`). Lessons
+Courses, streak, XP, sound, theme) and, on phones, a bottom tab bar (`src/components/nav/SiteNav.tsx`). Lessons
 keep their focused player shell.
 - `/`: the **landing page** for first-time visitors (`src/components/landing/Landing.tsx`: hero
   with the waving mascot and "Try a lesson free", the two courses, how it works, parents and
@@ -329,7 +366,7 @@ keep their focused player shell.
   (`src/lib/home.ts`) sets `data-returning` on `<html>` before first paint when there's guest
   progress or a Supabase auth cookie, and CSS shows one or the other (`HomeSwitch`). The
   dashboard (`src/components/dashboard/Dashboard.tsx`) has a big "Continue" hero for the
-  current lesson, real stats (XP, lessons, modules), 14 days of activity, a progress ring per
+  current lesson, real stats (XP, lessons, modules), the Today panel (daily goal and streak), 14 days of activity, a progress ring per
   course, and "Your courses"; its one-button welcome now only shows after a progress reset.
 - `/from/<platform>` (and `/from/<platform>/<lesson-id>`): tagged links for videos. Same home
   page (or that lesson), never indexed (canonical is `/` or `/lesson/<id>`); page views then show
@@ -375,6 +412,8 @@ src/components/brand/    logo geometry (single source of truth) and <LogoMark>/<
 src/components/network/  the network motif: NetworkMark, NodeProgress, QuizNetwork
 src/components/nav/      site header and phone tab bar
 src/components/dashboard/ dashboard (hero, stats, activity, rings, welcome), reset button
+src/components/streak/   streak icon (node chain), header pill, Today panel, calendar, goal picker,
+                         goal summary for end screens, milestone screen
 src/components/course/   course path, path nodes + popovers, mode toggle, course card, catalog
 src/components/illustrations/ course covers (CourseCover registry, keyed by course id)
 src/components/mascot/   the mascot: geometry + palette, poses, SVG parts, <Mascot>
@@ -520,6 +559,12 @@ src/dev/                 dev-only card samples + playground (served at /dev/card
   - **Quizzes:** attempts are **re-graded on the server** from their raw answers, using
     `src/cards/grading.ts` (card type → pure grade function, no React). +50 for the first pass
     only.
+  - **Daily goals:** each XP-earning action also inserts the XP event, dated **on the server** in
+    the learner's time zone (validated IANA name; never earlier than their latest event), and
+    inserts the met day when the ledger's total for that day reaches the profile's goal. A card
+    that's already complete becomes practice (`practiceXpFor`, once per card per day; a unique
+    index backs it up). Actions return `{ completion | attempt, xp: XpWrite }` so the browser store
+    swaps its optimistic event for what the server stored.
 - **Adding a card type** now includes registering its grader in `src/cards/grading.ts`; the
   compiler enforces it.
 
@@ -533,7 +578,12 @@ src/dev/                 dev-only card samples + playground (served at /dev/card
   - Quiz attempts: the union, de-duplicated by time, and re-graded.
   - XP is **recomputed** from the content, never added up.
   - Unknown ids are dropped.
-  - Path/Explore: the guest's non-default choice wins.
+  - Path/Explore: the guest's non-default choice wins. Daily goal: the guest's wins if they chose one.
+  - Daily-goal ledger (`mergeLedger`): guest events are re-priced from the content, must be
+    plausible for their own time and time zone (`plausibleEvent`: not in the future, not
+    backdated), and first-time XP (card, lesson, quiz pass) counts once ever across both sides.
+    Met days are the **union**: the account's plus each guest met day whose merged XP really
+    reaches its goal, so the streak afterwards is at least as long as either.
   - Merging is idempotent, so repeated sign-ins are safe.
 - **Save prompt:** guests see "Save your progress?" on the lesson-complete screen. Dismissing it
   sets `cybernet.savePrompt.dismissed`, and it never shows again in that browser.
@@ -547,13 +597,17 @@ Migrations, all applied to the linked project:
 - `20260930150000_profiles_coach_seen.sql`: `profiles.coach_seen` (text[], default empty, at most 32).
 - `20260930160000_age_confirmed_and_feedback.sql`: `profiles.age_confirmed`, and the `feedback`
   table with its rate-limit trigger.
+- `20260930170000_streaks_and_daily_goals.sql`: `profiles.daily_goal`, `daily_goal_chosen` and
+  `time_zone`, and the `xp_events` and `goal_days` tables.
 
 | Table | Holds |
 |---|---|
-| `profiles` | `id` (= auth user), `display_name` (1 to 40 chars, nullable until chosen), `is_premium` (default false), `learning_mode` (`path` or `explore`), `sound_enabled` (default true), `coach_seen` (how-to-play panels dismissed), `age_confirmed` (13+ confirmed; never a date of birth) |
+| `profiles` | `id` (= auth user), `display_name` (1 to 40 chars, nullable until chosen), `is_premium` (default false), `learning_mode` (`path` or `explore`), `sound_enabled` (default true), `coach_seen` (how-to-play panels dismissed), `age_confirmed` (13+ confirmed; never a date of birth), `daily_goal` (20, 50 or 100; default 50), `daily_goal_chosen`, `time_zone` (IANA name, for dating days) |
 | `card_completions` | `(user_id, lesson_id, card_id)` primary key, `completed_at`, `xp` (0 to 20) |
 | `lesson_completions` | `(user_id, lesson_id)` primary key, `completed_at`, `xp` (0 to 20) |
 | `quiz_attempts` | `id`, `user_id`, `quiz_id`, `attempted_at` (unique per user and quiz), `score` 0 to 1, `passed`, `xp` (0 to 50), `answers` jsonb |
+| `xp_events` | `id`, `user_id`, `at`, `day` (local date), `time_zone`, `kind` (`card`, `lesson`, `quiz`, `practice`), `lesson_id`, `card_id?`, `xp` (0 to 50); practice unique per user, day and card |
+| `goal_days` | `(user_id, day)` primary key, `time_zone`, `goal` (the goal that day), `met_at` |
 | `feedback` | `id`, `created_at`, `message` (1 to 1,000 chars), `lesson_id?` (kebab-case), `rating?` (1 to 5), `session_id` (random per tab). **Not linked to users.** |
 
 - **Not stored:** best score and first pass are derived from attempts, and total XP is summed from
@@ -567,8 +621,11 @@ Migrations, all applied to the linked project:
   `= id` for profiles).
 - **Writes:**
   - Users may **update only `profiles.display_name`**, on their own row. There's a column-level
-    grant and an update policy; `is_premium`, `learning_mode`, `sound_enabled`, `coach_seen` and
-    `age_confirmed` aren't writable (`confirmAgeAction` sets the last one with the secret key).
+    grant and an update policy; `is_premium`, `learning_mode`, `sound_enabled`, `coach_seen`,
+    `age_confirmed`, `daily_goal`, `daily_goal_chosen` and `time_zone` aren't writable (Server
+    Actions set them with the secret key).
+  - **`xp_events` and `goal_days` are read-only for learners** (select own rows only, no write
+    grants), so nobody can write their own streak.
   - **`feedback` is insert-only:** `anon` and `authenticated` may insert only `message`,
     `lesson_id`, `rating` and `session_id` (column grant + an insert policy). Nobody can select,
     update or delete except the service role (read it in the Supabase dashboard). A `security
@@ -744,10 +801,12 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   - the landing page hero and the dashboard's welcome (`happy`, waving)
   - lesson complete (`celebrating`)
   - module quiz pass (`celebrating`, with the confetti)
+  - streak milestones (`celebrating`, on their own screen before lesson or quiz complete; confetti
+    from 30 days)
   - quiz fail (`thinking`, with encouraging copy)
   - wrong answers in lessons (a small `confused` beside the feedback)
-  - the age check, the locked lesson screen, the 404 page and empty states (`presenting`, pointing at the next
-    step)
+  - the age check, the locked lesson screen, the 404 page, empty states and the dashboard's
+    "Fresh start" note after a streak ends (`presenting`, pointing at the next step)
   - **the one exception inside cards:** a **safety-note explainer** (`mascot: "presenting"`), which
     shows the mascot beside the body in an amber panel. Use it only for real-world safety (e.g.
     "don't open real devices"), at most once per lesson.
@@ -763,7 +822,7 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
 - **Sounds are synthesised** with the Web Audio API in `src/lib/sound.ts`: short oscillator notes
   with soft envelopes. **Source: original, written for this project; no audio files, nothing to
   license.**
-- **Sounds:** correct, wrong, card complete, lesson complete, part removed and snap. All are under
+- **Sounds:** correct, wrong, card complete, lesson complete, daily goal reached, part removed and snap. All are under
   300ms except the chime, and quiet.
 - **Never before interaction:** `installAudioUnlock()` (in `Providers`) only creates the audio
   context on the first tap or key press. Before that, `playSound` is a no-op.

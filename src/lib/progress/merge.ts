@@ -10,17 +10,26 @@
  * - XP is RECOMPUTED from the content, never added up, so nothing is counted twice.
  * - Records for lessons or cards that no longer exist are dropped.
  * - Path/Explore and sound: the guest's choice wins if they changed it from the default
- *   ("path", sound on). "How to play" panels seen: the union of both.
+ *   ("path", sound on). "How to play" panels seen: the union of both. Daily goal: the guest's
+ *   wins if they picked one.
+ * - Daily goals and streaks (mergeLedger): the guest's XP events are re-priced from the content
+ *   and checked against their own time and time zone; duplicates are dropped, and first-time XP
+ *   (a card, a lesson bonus, a quiz pass) counts once ever across both sides. Met days are the
+ *   union: the account's, plus each guest met day whose merged XP really reaches its goal. So the
+ *   streak afterwards is at least as long as either one.
  */
 import { cleanCoachSeen } from "@/lib/coach";
-import { type ContentIndex, cardXpFor } from "./authority";
+import { type ContentIndex, cardXpFor, practiceXpFor } from "./authority";
+import { dayXp, isDailyGoal, isValidTimeZone, type Ledger, MAX_LOCAL_XP_EVENTS, plausibleEvent } from "./daily";
 import {
   type CardCompletion,
+  type DailyGoalDay,
   type LessonCompletion,
   type ProgressSnapshot,
   type QuizAttempt,
   type QuizProgress,
   sumXp,
+  type XpEvent,
 } from "./types";
 import { XP } from "./xp";
 
@@ -88,8 +97,78 @@ export function recomputeXp(snapshot: Omit<ProgressSnapshot, "totalXp">, index: 
     quizzes[id] = { ...derived, attempts };
   }
 
-  const next = { cards, lessons, quizzes, preferences: snapshot.preferences };
+  const next = { cards, lessons, quizzes, preferences: snapshot.preferences, xpEvents: snapshot.xpEvents, goalDays: snapshot.goalDays };
   return { ...next, totalXp: sumXp(next) };
+}
+
+/** The XP an event is worth under the content rules, or null if it can't be (unknown ids, no XP). */
+export function priceEvent(index: ContentIndex, e: XpEvent, passedQuizzes: ReadonlySet<string>): number | null {
+  let xp: number | null = null;
+  if (e.kind === "card") xp = e.cardId ? cardXpFor(index, e.lessonId, e.cardId, e.xp) : null;
+  else if (e.kind === "practice") xp = e.cardId ? practiceXpFor(index, e.lessonId, e.cardId) : null;
+  else if (e.kind === "lesson") xp = index.get(e.lessonId)?.kind === "lesson" ? XP.lessonComplete : null;
+  else if (e.kind === "quiz") xp = index.get(e.lessonId)?.kind === "quiz" && passedQuizzes.has(e.lessonId) ? XP.quizPass : null;
+  return xp && xp > 0 ? xp : null;
+}
+
+const eventKey = (e: XpEvent) => `${time(e.at)}|${e.kind}|${e.lessonId}|${e.cardId ?? ""}`;
+const practiceKey = (e: XpEvent) => `${e.day}|${e.lessonId}|${e.cardId ?? ""}`;
+/** First-time XP (a card, a lesson's bonus, a quiz pass) happens once ever. */
+const firstTimeKey = (e: XpEvent) => (e.kind === "practice" ? null : `${e.kind}|${e.lessonId}|${e.cardId ?? ""}`);
+
+export interface LedgerMerge {
+  ledger: Ledger;
+  /** Guest events that were accepted (to insert). */
+  newEvents: XpEvent[];
+  /** Guest met days that were accepted (to insert). */
+  newGoalDays: [string, DailyGoalDay][];
+}
+
+/**
+ * Merges a guest's daily-goal ledger into the account's. `passedQuizzes` are the quizzes the
+ * guest really passed (after re-grading), the only ones whose quiz events count.
+ */
+export function mergeLedger(
+  account: Ledger,
+  local: Ledger,
+  index: ContentIndex,
+  passedQuizzes: ReadonlySet<string>,
+  now: Date,
+): LedgerMerge {
+  const seen = new Set(account.xpEvents.map(eventKey));
+  const practiced = new Set(account.xpEvents.filter((e) => e.kind === "practice").map(practiceKey));
+  const firstTimes = new Set(account.xpEvents.map(firstTimeKey).filter((k) => k !== null));
+  const newEvents: XpEvent[] = [];
+  for (const e of local.xpEvents.slice(-MAX_LOCAL_XP_EVENTS)) {
+    if (!plausibleEvent(e, now)) continue;
+    const xp = priceEvent(index, e, passedQuizzes);
+    if (xp === null) continue;
+    const event: XpEvent = { ...e, at: new Date(e.at).toISOString(), xp };
+    if (seen.has(eventKey(event))) continue;
+    if (event.kind === "practice") {
+      if (practiced.has(practiceKey(event))) continue;
+      practiced.add(practiceKey(event));
+    } else {
+      const key = firstTimeKey(event)!;
+      if (firstTimes.has(key)) continue;
+      firstTimes.add(key);
+    }
+    seen.add(eventKey(event));
+    newEvents.push(event);
+  }
+  const xpEvents = [...account.xpEvents, ...newEvents].sort((a, b) => time(a.at) - time(b.at));
+
+  const goalDays = { ...account.goalDays };
+  const newGoalDays: [string, DailyGoalDay][] = [];
+  for (const [day, g] of Object.entries(local.goalDays)) {
+    if (goalDays[day] || !isDailyGoal(g.goal) || !isValidTimeZone(g.tz)) continue;
+    if (dayXp(xpEvents, day) < g.goal) continue;
+    const metAt = time(g.metAt) <= now.getTime() ? new Date(g.metAt).toISOString() : now.toISOString();
+    const accepted: DailyGoalDay = { tz: g.tz, goal: g.goal, metAt };
+    goalDays[day] = accepted;
+    newGoalDays.push([day, accepted]);
+  }
+  return { ledger: { xpEvents, goalDays }, newEvents, newGoalDays };
 }
 
 /** Merges local (guest) progress into the account's progress. See the rules at the top. */
@@ -97,6 +176,7 @@ export function mergeProgress(
   account: ProgressSnapshot,
   local: ProgressSnapshot,
   index: ContentIndex,
+  now: Date = new Date(),
 ): ProgressSnapshot {
   const quizzes: Record<string, QuizProgress> = {};
   for (const id of new Set([...Object.keys(account.quizzes), ...Object.keys(local.quizzes)])) {
@@ -108,8 +188,16 @@ export function mergeProgress(
     quizzes[id] = quizProgressFrom([...seen.values()]);
   }
 
+  const passedQuizzes = new Set(
+    Object.entries(local.quizzes)
+      .filter(([, q]) => q.attempts.some((a) => a.passed))
+      .map(([id]) => id),
+  );
+  const { ledger } = mergeLedger(account, local, index, passedQuizzes, now);
+
   return recomputeXp(
     {
+      ...ledger,
       cards: unionRecords(account.cards, local.cards),
       lessons: unionRecords(account.lessons, local.lessons),
       quizzes,
@@ -117,6 +205,8 @@ export function mergeProgress(
         mode: local.preferences.mode !== "path" ? local.preferences.mode : account.preferences.mode,
         sound: local.preferences.sound === false ? false : account.preferences.sound,
         coachSeen: cleanCoachSeen([...account.preferences.coachSeen, ...local.preferences.coachSeen]),
+        dailyGoal: local.preferences.dailyGoalChosen ? local.preferences.dailyGoal : account.preferences.dailyGoal,
+        dailyGoalChosen: local.preferences.dailyGoalChosen || account.preferences.dailyGoalChosen,
       },
     },
     index,

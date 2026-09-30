@@ -90,6 +90,30 @@ export type Database = {
         }
         Relationships: []
       }
+      goal_days: {
+        Row: {
+          day: string
+          goal: number
+          met_at: string
+          time_zone: string
+          user_id: string
+        }
+        Insert: {
+          day: string
+          goal: number
+          met_at?: string
+          time_zone: string
+          user_id: string
+        }
+        Update: {
+          day?: string
+          goal?: number
+          met_at?: string
+          time_zone?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       lesson_completions: {
         Row: {
           completed_at: string
@@ -116,31 +140,40 @@ export type Database = {
           age_confirmed: boolean
           coach_seen: string[]
           created_at: string
+          daily_goal: number
+          daily_goal_chosen: boolean
           display_name: string | null
           id: string
           is_premium: boolean
           learning_mode: string
           sound_enabled: boolean
+          time_zone: string | null
         }
         Insert: {
           age_confirmed?: boolean
           coach_seen?: string[]
           created_at?: string
+          daily_goal?: number
+          daily_goal_chosen?: boolean
           display_name?: string | null
           id: string
           is_premium?: boolean
           learning_mode?: string
           sound_enabled?: boolean
+          time_zone?: string | null
         }
         Update: {
           age_confirmed?: boolean
           coach_seen?: string[]
           created_at?: string
+          daily_goal?: number
+          daily_goal_chosen?: boolean
           display_name?: string | null
           id?: string
           is_premium?: boolean
           learning_mode?: string
           sound_enabled?: boolean
+          time_zone?: string | null
         }
         Relationships: []
       }
@@ -172,6 +205,42 @@ export type Database = {
           passed?: boolean
           quiz_id?: string
           score?: number
+          user_id?: string
+          xp?: number
+        }
+        Relationships: []
+      }
+      xp_events: {
+        Row: {
+          at: string
+          card_id: string | null
+          day: string
+          id: number
+          kind: string
+          lesson_id: string
+          time_zone: string
+          user_id: string
+          xp: number
+        }
+        Insert: {
+          at?: string
+          card_id?: string | null
+          day: string
+          id?: never
+          kind: string
+          lesson_id: string
+          time_zone: string
+          user_id: string
+          xp: number
+        }
+        Update: {
+          at?: string
+          card_id?: string | null
+          day?: string
+          id?: never
+          kind?: string
+          lesson_id?: string
+          time_zone?: string
           user_id?: string
           xp?: number
         }

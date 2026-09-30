@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { useEffect } from "react";
 import { SaveProgressPrompt } from "@/components/account/SaveProgressPrompt";
+import { DailyGoalSummary } from "@/components/streak/DailyGoalSummary";
 import { Mascot } from "@/components/mascot/Mascot";
 import { ButtonLink } from "@/components/ui/Button";
 import { CountUp } from "@/components/ui/CountUp";
@@ -24,7 +25,13 @@ export function LessonComplete({
   next,
   pathHref,
   lessonId,
+  goalMetNow = false,
+  freezeEarned = false,
 }: {
+  /** This lesson met today's daily goal. */
+  goalMetNow?: boolean;
+  /** Meeting it earned a streak freeze. */
+  freezeEarned?: boolean;
   /** For the "Send feedback" link, which fills in this lesson. */
   lessonId: string;
   /** The course path, with `?completed=` so the new node fills in there. */
@@ -85,6 +92,8 @@ export function LessonComplete({
             You can come back any time to try the challenges you skipped.
           </p>
         )}
+
+        <DailyGoalSummary goalMetNow={goalMetNow} freezeEarned={freezeEarned} />
 
         <SaveProgressPrompt />
 

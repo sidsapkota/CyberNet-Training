@@ -7,7 +7,7 @@ import { gradeUntrusted } from "@/cards/grading";
 import { type Card, isExploreCard, isInteractiveCard } from "@/cards/schema";
 import type { Lesson } from "@/lib/content/schema";
 import type { QuizAttempt } from "./types";
-import { scoreQuiz, XP } from "./xp";
+import { practiceXp, scoreQuiz, XP } from "./xp";
 
 export interface IndexedLesson {
   kind: Lesson["kind"];
@@ -48,6 +48,18 @@ export function cardXpFor(index: ContentIndex, lessonId: string, cardId: string,
   if (!isInteractiveCard(card)) return 0;
   const table = XP.card[card.difficulty];
   return Number.isFinite(claimedXp) && claimedXp >= table.firstTry ? table.firstTry : table.retry;
+}
+
+/**
+ * Practice XP for replaying a card in a regular lesson, or null if the card doesn't exist.
+ * Graded cards only: explainers and explore cards pay no practice XP, and quizzes never do.
+ */
+export function practiceXpFor(index: ContentIndex, lessonId: string, cardId: string): number | null {
+  const lesson = index.get(lessonId);
+  const card = lesson?.cards.get(cardId);
+  if (!lesson || !card) return null;
+  if (lesson.kind !== "lesson" || !isInteractiveCard(card)) return 0;
+  return practiceXp(card.difficulty);
 }
 
 /** A regular lesson counts as complete only once every core card is recorded. */

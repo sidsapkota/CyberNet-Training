@@ -53,9 +53,11 @@ export function LogoMark({
 /** Horizontal lockup: tile mark + "CyberNet Training" wordmark. */
 export function LogoLockup({ className = "" }: { className?: string }) {
   return (
-    <span className={`inline-flex items-center gap-2.5 ${className}`}>
+    <span className={`inline-flex items-center gap-2.5 max-[399px]:gap-2 ${className}`}>
       <LogoMark variant="tile" className="size-9 shrink-0" />
-      <span className="text-lead leading-none tracking-tight whitespace-nowrap">
+      {/* Below 400px the wordmark is a size smaller, and below 380px only the tile shows (the
+          link's label still names the site), so the header with XP and streak fits on one line. */}
+      <span className="text-lead leading-none tracking-tight whitespace-nowrap max-[399px]:text-body max-[379px]:sr-only">
         <span className="font-semibold text-ink">CyberNet</span>
         {/* Dropped on the narrowest phones so the header stays on one line. */}
         <span className="font-normal text-ink-muted max-[399px]:hidden"> Training</span>

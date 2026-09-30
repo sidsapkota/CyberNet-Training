@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { DailyGoalSummary } from "@/components/streak/DailyGoalSummary";
 import { useEffect } from "react";
 import { getCardDefinition } from "@/cards/registry";
 import { isInteractiveCard } from "@/cards/schema";
@@ -21,7 +22,13 @@ export function QuizResults({
   next,
   onRetake,
   pathHref,
+  goalMetNow = false,
+  freezeEarned = false,
 }: {
+  /** Passing met today's daily goal. */
+  goalMetNow?: boolean;
+  /** Meeting it earned a streak freeze. */
+  freezeEarned?: boolean;
   /** The course path, with `?completed=` so the hub fills in there. */
   pathHref: string;
   quiz: Quiz;
@@ -79,6 +86,7 @@ export function QuizResults({
           </div>
         )}
 
+        {attempt.passed && <DailyGoalSummary goalMetNow={goalMetNow} freezeEarned={freezeEarned} />}
         <div className="mx-auto mt-8 flex max-w-sm flex-col gap-2">
           {attempt.passed ? (
             <>

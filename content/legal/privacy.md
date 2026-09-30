@@ -36,13 +36,13 @@ CyberNet Training ("we", "us") is a free website for learning how devices and th
 ## The short version
 
 - You can play every lesson **without an account**. Your progress then stays on your device.
-- If you make an account (you must be **13 or older**), we keep your **email**, the **display name** you choose, your **learning progress** and your **settings**.
+- If you make an account (you must be **13 or older**), we keep your **email**, the **display name** you choose, your **learning progress** (including when you learn and your time zone, for daily goals and streaks) and your **settings**.
 - **No ads. We never sell your data. No tracking cookies.**
 - You can **delete your account** at any time on the [Account page](/account).
 
 ## If you play as a guest
 
-Your progress, XP and settings are saved in your browser's storage on this device, not on our servers. Clearing your browser data removes them.
+Your progress, XP and settings are saved in your browser's storage on this device, not on our servers. So are the times you earn XP and your device's time zone, which work out your daily goal and streak. Clearing your browser data removes them.
 
 We also count visits with privacy-friendly analytics (see "Analytics" below). It doesn't use cookies and doesn't know who you are.
 
@@ -53,7 +53,8 @@ Accounts are for people **aged 13 or older**. When you sign in we keep:
 - **Your email address**, so you can sign in.
 - **Your display name**, a nickname you choose. Please don't use your real full name.
 - **Your learning progress**: which cards, lessons and quizzes you've finished, your quiz answers and scores, and your XP.
-- **Your settings**: Path or Explore mode, sound on or off, and which "how to play" tips you've seen.
+- **When your learning happens, and your time zone**: the time of each moment you earn XP, and your device's time zone (for example "Australia/Sydney": it shows roughly which part of the world you're in, never your address or exact location). We use these **only** to work out your daily goal and your streak, so a day counts on your own calendar.
+- **Your settings**: Path or Explore mode, sound on or off, your daily goal, and which "how to play" tips you've seen.
 - **That you confirmed you're 13 or older.** We only store "confirmed", never your date of birth.
 
 If you sign in with Google, Google sends us your email address, and also your name and profile picture. We don't use or show your name or picture, and we remove them from your profile. Our sign-in provider (Supabase) keeps the details Google sent in its sign-in records until you delete your account.

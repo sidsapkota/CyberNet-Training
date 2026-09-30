@@ -37,6 +37,8 @@ describe("privacy policy and terms", () => {
       "privacy act 1988",
       "no ads",
       "don't include personal details",
+      "time zone",
+      "only** to work out your daily goal and your streak",
     ]) {
       expect(privacy, must).toContain(must);
     }

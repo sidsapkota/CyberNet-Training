@@ -8,6 +8,7 @@ import { LogoLockup } from "@/components/brand/Logo";
 import { CoursesIcon, DashboardIcon, SignInIcon } from "@/components/ui/icons";
 import { SoundToggle } from "@/components/ui/SoundToggle";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { StreakPill } from "@/components/streak/StreakPill";
 import { XpPill } from "@/components/XpPill";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { FALLBACK_DISPLAY_NAME, initialOf } from "@/lib/auth/profile";
@@ -62,7 +63,8 @@ export function SiteHeader() {
             );
           })}
         </nav>
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-2 max-[399px]:gap-1">
+          <StreakPill />
           <Link href="/" aria-label="Your XP, on the dashboard" className="rounded-control">
             <XpPill />
           </Link>

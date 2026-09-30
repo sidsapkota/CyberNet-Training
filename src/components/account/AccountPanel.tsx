@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { deleteAccountAction, updateDisplayNameAction } from "@/app/actions/account";
 import { Button } from "@/components/ui/Button";
+import { DailyGoalSetting } from "./DailyGoalSetting";
 import { DeleteIcon, SignOutIcon } from "@/components/ui/icons";
 import { trackEvent } from "@/lib/analytics";
 import { useAuth } from "@/lib/auth/AuthProvider";
@@ -99,6 +100,8 @@ export function AccountPanel({
           </p>
         )}
       </form>
+
+      <DailyGoalSetting className={panel} />
 
       <div className={panel}>
         <Button

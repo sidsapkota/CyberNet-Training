@@ -33,6 +33,14 @@ export function cardXpToAward(
   return alreadyCompleted ? 0 : cardXp(difficulty, attempts, usedHint);
 }
 
+/**
+ * Practice XP for replaying a graded card already finished: the retry amount. It counts toward
+ * the daily goal only (never total XP), once per card per day (see daily.ts).
+ */
+export function practiceXp(difficulty: Difficulty): number {
+  return XP.card[difficulty].retry;
+}
+
 /** XP for finishing an explore card, or 0 if it was already done. */
 export function exploreXpToAward(alreadyCompleted: boolean): number {
   return alreadyCompleted ? 0 : XP.explore;
