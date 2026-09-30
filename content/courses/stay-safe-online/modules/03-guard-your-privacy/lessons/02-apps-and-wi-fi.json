@@ -135,7 +135,7 @@
       "id": "wi-fi-ok",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "On the café's real public Wi-Fi: fine, or better on mobile data?",
+      "prompt": "On a café's public Wi-Fi: fine, or better on mobile data?",
       "bins": [
         {
           "id": "fine",
@@ -173,7 +173,7 @@
           "bin": "mobile"
         }
       ],
-      "explanation": "Everyday browsing is fine on the café's real network. For banking or important accounts, **mobile data** is the safer choice.",
+      "explanation": "Everyday browsing is fine on public Wi-Fi. For banking or important accounts, **mobile data** is safer, because you can't always be sure a network is the real one.",
       "hint": "Which activities involve your money or your most important accounts?",
       "nudge": "Save banking and important account changes for mobile data. Videos, news and recipes are fine."
     },

@@ -63,7 +63,11 @@
       "definition": "Everything about you that ends up online: what you post, what others post about you, and what apps and websites record."
     },
     { "id": "dns", "term": "DNS", "definition": "Domain Name System: the internet's phone book. It turns names like example.com into IP addresses." },
-    { "id": "domain-name", "term": "domain name", "definition": "A website's name, like example.com. Easier for people to remember than an IP address." },
+    {
+      "id": "domain-name",
+      "term": "domain name",
+      "definition": "A website's name, like example.com. People use it instead of the number computers use to find the site (its IP address)."
+    },
     { "id": "encryption", "term": "encryption", "definition": "Scrambling data with a secret key so that only the right people or devices can unscramble and read it." },
     { "id": "export", "term": "export", "definition": "To save a finished piece of work, like a video, as a file that other apps and people can use." },
     { "id": "extension", "term": "file extension", "definition": "The end of a file's name after the last dot, like .jpg. It tells the computer what kind of file it is." },
@@ -167,6 +171,11 @@
     { "id": "routing-table", "term": "routing table", "definition": "A router's list of where to send packets next, depending on their destination address." },
     { "id": "scam", "term": "scam", "definition": "A trick to get your money, personal details or passwords." },
     { "id": "security-hole", "term": "security hole", "definition": "A weak spot in software that an attacker could use to get in. Updates fix them." },
+    {
+      "id": "security-question",
+      "term": "security question",
+      "definition": "An old way to check it's you, like \"What was your first pet's name?\". Weak, because the answers can often be guessed or found online."
+    },
     { "id": "sequence-number", "term": "sequence number", "definition": "A number that marks where a piece of data belongs, so the pieces can be put back in order." },
     { "id": "server", "term": "server", "definition": "A computer that provides something, like a website, email or files, to other devices over a network." },
     {

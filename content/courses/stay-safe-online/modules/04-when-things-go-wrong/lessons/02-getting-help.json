@@ -60,7 +60,7 @@
       ],
       "explanation": "Serious bullying goes to **eSafety** once the app has had a chance; scams to **Scamwatch**; card problems to **your bank** straight away; stolen details to **IDCARE**; and danger right now is always **000**.",
       "hint": "Look back at the list: what is each service for?",
-      "nudge": "Money problems go to your bank first. Danger right now is always 000. Then match bullying, scams and stolen details."
+      "nudge": "Look back at the list, and start with the one you're surest of. What is each service for?"
     },
     {
       "id": "save-evidence",

@@ -17,14 +17,14 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Read the address",
-      "body": "The owner of a website is the name **just before the ending** (the ending is like `.example`, `.com` or `.com.au`). You met these as [[domain names|domain-name]] in How the Internet Works.\n\n- `yourbank.example` and `login.yourbank.example` both belong to Your Bank. `login.` in front is a [[subdomain]], and only the owner can make those.\n- `yourbank.example.login-check.example` belongs to **login-check.example**: the name just before the final ending. That's the **wrong owner**.\n- `yourbank-secure.example` or `yourbnak.example` are lookalikes: an extra word, or swapped letters."
+      "body": "The owner of a website is the name **just before the ending** (the ending is like `.example`, `.com` or `.com.au`). These names are called [[domain names|domain-name]]. Anything after a `/` is just a page on that site.\n\n- `yourbank.example` and `login.yourbank.example` both belong to Your Bank. `login.` in front is a [[subdomain]], and only the owner can make those.\n- `yourbank.example.login-check.example` belongs to **login-check.example**: the name just before the final ending. That's the **wrong owner**.\n- `yourbank-secure.example` or `yourbnak.example` are lookalikes: an extra word, or swapped letters."
     },
     {
       "id": "padlock",
       "type": "explainer",
       "difficulty": "core",
       "title": "What the padlock means",
-      "body": "The padlock next to an address means your connection is **encrypted** ([[HTTPS|https]]): nobody can read what you send on the way. It **doesn't** mean the site is honest. Scam sites can have a padlock too, so a padlock **only means encrypted**.\n\nTwo more signs a sign-in page is fake:\n- **Rushing you:** \"Your account is locked! Sign in within 10 minutes.\"\n- **Asks for your PIN:** a bank never asks for your card PIN on a website."
+      "body": "The padlock next to an address means your connection is **encrypted** ([[HTTPS|https]]): nobody can read what you send on the way. It **doesn't** mean the site is honest. Scam sites can have a padlock too, so a padlock **only means encrypted**. (Some browsers now show a different icon there, or none at all. It still only means encrypted.)\n\nTwo more signs a sign-in page is fake:\n- **Rushing you:** \"Your account is locked! Sign in within 10 minutes.\"\n- **Asks for your PIN:** a bank never asks for your card PIN on a website."
     },
     {
       "id": "bank-or-not",
@@ -91,7 +91,7 @@
       ],
       "explanation": "Three warning signs: the address belongs to `login-check.example` (the **wrong owner**), the banner is **rushing you**, and it **asks for your card PIN**. The padlock and the logo look real, but they don't prove anything.",
       "hint": "Read the address to find its owner. Then look for pressure, and for anything a bank would never ask for.",
-      "nudge": "There are three signs. The padlock and logo aren't among them. Check who owns the address, the banner, and each box it asks you to fill in."
+      "nudge": "Three things on this page match the warning signs you just learned. Look for each sign in turn."
     },
     {
       "id": "safer-ways-in",
@@ -229,7 +229,7 @@
       ],
       "explanation": "The address has the **wrong owner**, the banner is **rushing you**, the page **asks for your PIN**, and the padlock **only means encrypted**: it doesn't make the site real.",
       "hint": "Match each label to one part of the page. One label is about something that looks reassuring but proves nothing.",
-      "nudge": "\"Only means encrypted\" goes on the padlock. \"Wrong owner\" goes on the address. Then find the pressure and the PIN box."
+      "nudge": "Each label is something you learned about fake sign-in pages. Take one at a time and find the part it describes."
     },
     {
       "id": "recap",

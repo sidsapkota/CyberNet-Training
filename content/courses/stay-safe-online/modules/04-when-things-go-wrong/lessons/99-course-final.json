@@ -34,12 +34,12 @@
         },
         {
           "id": "own",
-          "label": "A code just after you signed in",
+          "label": "A code while you were signing in",
           "bin": "normal"
         },
         {
           "id": "change",
-          "label": "An email right after you changed it",
+          "label": "An email after you changed your password",
           "bin": "normal"
         }
       ],
@@ -49,7 +49,7 @@
       "id": "q-steps",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "Put the first steps after a hack in order.",
+      "prompt": "Put the first three steps after a hack in order.",
       "items": [
         {
           "id": "tell",
@@ -60,19 +60,11 @@
           "label": "Change the password"
         },
         {
-          "id": "sign-out",
-          "label": "Sign out of other devices"
-        },
-        {
-          "id": "two-step",
-          "label": "Turn on two-step sign-in"
-        },
-        {
           "id": "recovery",
           "label": "Check the recovery email and phone"
         }
       ],
-      "explanation": "Tell an adult, change the password, sign out other devices, turn on two-step sign-in, check the recovery details."
+      "explanation": "Tell a trusted adult, change the password, then check the recovery email and phone so the attacker can't reset it again."
     },
     {
       "id": "q-where",

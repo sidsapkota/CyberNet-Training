@@ -17,7 +17,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "What two-step sign-in is",
-      "body": "**Two-step sign-in** means proving it's you in two different ways. You'll also see it called **two-factor** or **multi-factor authentication (MFA)**. The proofs come in three kinds:\n\n- something you **know**: a password or PIN\n- something you **have**: your phone, or a small security key\n- something you **are**: your fingerprint or face\n\nStrongest first: a **[[passkey]]** (your device signs you in with your fingerprint, face or PIN), then a code from an **[[authenticator app]]**, then a code sent by **text message** (SMS), which can be intercepted. When you turn it on, save the **backup codes** it gives you somewhere safe, in case you lose your phone."
+      "body": "**Two-step sign-in** means proving it's you in two different ways. You'll also see it called **two-factor** or **multi-factor authentication (MFA)**. The proofs come in three kinds:\n\n- something you **know**: a password or PIN\n- something you **have**: your phone, or a small security key\n- something you **are**: your fingerprint or face"
     },
     {
       "id": "know-have-are",
@@ -72,7 +72,14 @@
       ],
       "explanation": "Passwords and PINs are things you **know**. Your phone and a security key are things you **have**. Fingerprints and faces are part of who you **are**. Two-step sign-in uses two different kinds.",
       "hint": "Ask of each one: is it in your head, in your pocket, or part of your body?",
-      "nudge": "A PIN is remembered, like a password. A phone is something you carry. A fingerprint is part of you."
+      "nudge": "For each one, ask where it lives: in your head, in your pocket or bag, or as part of you."
+    },
+    {
+      "id": "strongest-proofs",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Which second proof is strongest?",
+      "body": "Strongest first:\n\n1. A **[[passkey]]**: your device signs you in with your fingerprint, face or PIN, and it won't work on a fake website.\n2. A code from an **[[authenticator app]]** on your phone.\n3. A code sent by **text message** (SMS), which can be intercepted.\n\nOld-style **security questions**, like \"What was your first pet's name?\", are weak: the answers can often be guessed or found online.\n\nWhen you turn two-step sign-in on, save the **backup codes** it gives you somewhere safe, in case you lose your phone."
     },
     {
       "id": "never-share-codes",
@@ -150,8 +157,8 @@
         }
       ],
       "correctOptionId": "passkey",
-      "explanation": "A **passkey** is the strongest: your device proves it's you, and it won't work on a fake website. Next best is an [[authenticator app]]; text codes are the weakest of the three, but still far better than a password alone.",
-      "hint": "Think back to the order in the lesson: strongest first."
+      "explanation": "A **passkey** is the strongest: your device proves it's you, and it won't work on a fake website. A text code is weaker, and a security question is the weakest of these three, because the answer can be guessed or found.",
+      "hint": "Think back to the list: strongest first, and what it said about security questions."
     },
     {
       "id": "password-managers",

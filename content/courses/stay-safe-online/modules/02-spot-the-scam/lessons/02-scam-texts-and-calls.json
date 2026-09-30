@@ -33,7 +33,7 @@
       ],
       "explanation": "The new message asks for a **small fee**, sets a **deadline**, and links to `parcels-redelivery.example`, an **unfamiliar link**. The older message and the sender name look normal, which is exactly how these scams blend in.",
       "hint": "Only look at the new message. Which parts match the warning signs: a fee, a deadline and a link?",
-      "nudge": "Three parts of the new message are warning signs: what it asks you to pay, how long you have, and where the link goes."
+      "nudge": "Three parts of the new message match the warning signs for texts. Go through those signs one at a time."
     },
     {
       "id": "scam-calls",
@@ -120,13 +120,13 @@
         },
         {
           "id": "friend",
-          "label": "A friend calls from their saved number",
+          "label": "You call a friend on their saved number",
           "bin": "ok"
         }
       ],
-      "explanation": "Asking for codes, remote control of your computer, gift-card payments and secrecy are all scam signs: **hang up**. Calling a number you found yourself, or a friend's saved number, is fine.",
+      "explanation": "Asking for codes, remote control of your computer, gift-card payments and secrecy are all scam signs: **hang up**. Calling a number you found yourself, or a friend on their saved number, is fine.",
       "hint": "Check each against the warning signs for calls: codes, controlling your computer, gift cards, secrecy. Who made the call, and with what number?",
-      "nudge": "If the caller wants a code, control of your computer, gift cards or secrecy, hang up. Calls you make to numbers you already know are fine."
+      "nudge": "Check each against the warning signs for calls. It also matters who made the call, and to what number."
     },
     {
       "id": "too-good",
@@ -212,7 +212,7 @@
       ],
       "explanation": "The **small fee** and the **deadline** are the pressure. The **unfamiliar link** is where they want you to go.",
       "hint": "Match each label to one part of the new message: what it wants paid, how long you have, and where it sends you.",
-      "nudge": "\"Unfamiliar link\" goes on the web address. Which line asks for money, and which one sets a time limit?"
+      "nudge": "Each label is one of the three warning signs for texts. Take one at a time and find the line that shows it."
     },
     {
       "id": "recap",

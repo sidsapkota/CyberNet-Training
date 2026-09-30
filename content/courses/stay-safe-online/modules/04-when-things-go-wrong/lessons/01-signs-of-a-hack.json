@@ -57,12 +57,12 @@
         },
         {
           "id": "own-change",
-          "label": "An email right after you changed it",
+          "label": "An email after you changed your password",
           "bin": "normal"
         },
         {
           "id": "own-code",
-          "label": "A code just after you tried to sign in",
+          "label": "A code while you were signing in",
           "bin": "normal"
         }
       ],
@@ -75,7 +75,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "What to do, step by step",
-      "body": "1. **Tell a trusted adult.** You're not in trouble, and two heads are better than one.\n2. **Change the password**, on a device you trust, in the real app or website. Make it new, strong and unique.\n3. **Sign out of other devices**, from the account's security settings. That kicks out anyone else.\n4. **Turn on [[two-step sign-in]]**, so a password alone can't get in again.\n5. **Check the recovery email and phone**, and remove anything that isn't yours.\n\nThen change that password anywhere else you used it, and warn friends if they got strange messages.\n\nCan't get in at all? Use the app's official **\"Forgot password\"** or account recovery. **Never pay** someone who offers to get it back for you: that's a [[scam]]."
+      "body": "1. **Tell a trusted adult.** You're not in trouble, and two heads are better than one.\n2. **Change the password**, on a device you trust, in the real app or website. Make it new, strong and unique.\n3. **Check the recovery email and phone** straight away, and remove anything that isn't yours. Otherwise the attacker could use them to reset your new password.\n4. **Sign out of other devices**, from the account's security settings. That kicks out anyone else.\n5. **Turn on [[two-step sign-in]]**, so a password alone can't get in again.\n\nThen change that password anywhere else you used it, and warn friends if they got strange messages.\n\nCan't get in at all? Use the app's official **\"Forgot password\"** or account recovery. **Never pay** someone who offers to get it back for you: that's a [[scam]]."
     },
     {
       "id": "order-the-steps",
@@ -92,21 +92,21 @@
           "label": "Change the password"
         },
         {
+          "id": "recovery",
+          "label": "Check the recovery email and phone"
+        },
+        {
           "id": "sign-out",
           "label": "Sign out of other devices"
         },
         {
           "id": "two-step",
           "label": "Turn on two-step sign-in"
-        },
-        {
-          "id": "recovery",
-          "label": "Check the recovery email and phone"
         }
       ],
-      "explanation": "**Tell a trusted adult**, **change the password**, **sign out of other devices**, **turn on two-step sign-in**, then **check the recovery email and phone**.",
-      "hint": "Start with getting help. Then lock the door with a new password, kick out whoever is inside, and add a second lock.",
-      "nudge": "Getting help comes first. A new password comes before signing others out, so they can't just sign in again."
+      "explanation": "**Tell a trusted adult**, **change the password**, **check the recovery email and phone** (so they can't reset it again), **sign out of other devices**, then **turn on two-step sign-in**.",
+      "hint": "Think about the reason for each step: getting help, a new lock, stopping them resetting it, kicking them out, then a second lock.",
+      "nudge": "Look back at the steps and the reason each one was given. Each step only works if the one before it is done."
     },
     {
       "id": "weird-messages",
@@ -145,8 +145,8 @@
           "choices": [
             {
               "id": "lock-down",
-              "text": "Sign out other devices, turn on two-step sign-in, and warn your friends",
-              "consequence": "Whoever was in is kicked out, can't get back in, and your friends know not to click.",
+              "text": "Check recovery details, sign out other devices, turn on two-step",
+              "consequence": "Whoever was in is kicked out and can't get back in. Then you warn your friends not to click.",
               "outcome": "success"
             },
             {
@@ -158,7 +158,7 @@
           ]
         }
       ],
-      "explanation": "Tell an adult and change the password first. Then **sign out other devices**, turn on **two-step sign-in**, and warn your friends.",
+      "explanation": "Tell an adult and change the password first. Then **check the recovery details**, **sign out other devices**, turn on **two-step sign-in**, and warn your friends.",
       "hint": "Follow the steps from the lesson in order. Is changing the password enough on its own if someone is still signed in?"
     },
     {
@@ -252,7 +252,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- Signs: a password that stops working, **alerts you didn't cause**, messages you didn't send, unknown devices.\n- Steps: **tell an adult**, **change the password**, **sign out other devices**, **turn on two-step sign-in**, **check recovery details**.\n- Locked out? Use the **official recovery**. Never pay a \"recovery\" stranger.\n\nNext: who to tell, and where to get help in Australia."
+      "body": "- Signs: a password that stops working, **alerts you didn't cause**, messages you didn't send, unknown devices.\n- Steps: **tell an adult**, **change the password**, **check recovery details**, **sign out other devices**, **turn on two-step sign-in**.\n- Locked out? Use the **official recovery**. Never pay a \"recovery\" stranger.\n\nNext: who to tell, and where to get help in Australia."
     }
   ]
 }

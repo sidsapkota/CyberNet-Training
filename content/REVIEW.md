@@ -1257,8 +1257,8 @@ like `.com.au`, have two parts, and the examples only use `.example`.
 ### 4.1 Signs of a Hack (`signs-of-a-hack`)
 **Key claims:**
 - The signs of an account take-over.
-- The steps, in order: tell a trusted adult, change the password, sign out other devices, turn on
-  two-step sign-in, check the recovery details. Then change reused passwords and warn friends.
+- The steps, in order: tell a trusted adult, change the password, check the recovery details, sign
+  out other devices, turn on two-step sign-in. Then change reused passwords and warn friends.
 - Use the official recovery. Paid "recovery" offers are scams.
 
 **Simplifications:** real apps word these settings differently. The order is a sensible default,
@@ -1280,3 +1280,38 @@ not a rule every service states.
 - 3.1 `band-name-quiz`, `friendly-stranger` and `username-check` relied on security questions,
   block-and-report, and safe usernames. All three are now taught in `keep-private` and
   `privacy-settings`.
+
+## Beginner audit: Stay Safe Online (30 September 2026)
+
+**Method:** as for the other courses. A fresh agent that hadn't seen the content played the whole
+course in order as a 12-year-old with no online-safety knowledge. It saw only the on-screen text
+(with glossary definitions and optional hints) and screenshots of the three scenes, and committed
+to each answer before reading the key.
+
+**Result:**
+- No blockers and no teach-before-test failures.
+- 87 graded cards (60 lesson cards including challenges, and 27 quiz cards): all right first try,
+  with no hints needed.
+- Tone was judged calm and empowering throughout, and the sensitive cards gentle and correct.
+- Help details and simulator numbers were checked and found accurate.
+- Nothing teaches attacking, and no real brands or addresses appear.
+
+| Where | Issue | Fix |
+|---|---|---|
+| 2.1 `spot-the-signs`, `name-the-signs`; 2.2 `spot-the-text`, `label-the-text`; 2.3 `spot-the-site`, `label-the-site` | Hints and nudges named the targets or placed labels | Rewritten to point at the warning-sign list ("take one sign at a time") without naming parts |
+| 1.2 `know-have-are`, 4.1 `order-the-steps`, 4.2 `where-to-go` | Nudges answered part of the card | Now point to the method ("in your head, pocket or part of you"; "the reason for each step"; "start with the one you're surest of") |
+| 4.1 `order-the-steps`, final `q-steps` | **Accuracy:** recovery details were checked last, but an attacker who controls the recovery email can reset the new password. The last three steps were rote in a one-try quiz | Recovery details are now step 3, straight after the password change, with the reason taught. The final orders only the first three steps, each with a taught reason |
+| 2.1 `check-the-sender` | A correct address was implied to prove an email is real | "A right address is a good sign, but not proof: addresses can be faked too" |
+| 2.3 `padlock` | Some browsers no longer show a padlock | Notes that some browsers show a different icon, or none |
+| 2.2 `hang-up-or-ok` | "A friend calls from their saved number" as OK contradicted caller-ID and voice spoofing | "You call a friend on their saved number" |
+| 1.2 `strongest-proof` | "Text codes are the weakest of the three" was wrong for its options; security questions weren't taught | New explainer `strongest-proofs` (passkey, app, SMS; security questions are weak; backup codes); explanation fixed; `security-question` glossary term |
+| 1.2 `what-two-step-is` | Too dense | Split: kinds of proof here, strongest options in `strongest-proofs` |
+| 2.3 `read-the-address` | `/signin` and `/help` not explained; referred to the other course | "Anything after a `/` is just a page on that site"; cross-course reference removed |
+| Glossary `domain-name` | Relied on "IP address", which this course doesn't teach | Now says what an IP address is in the same sentence |
+| 3.2 `wi-fi-ok` | "The café's real Wi-Fi" contradicted the reason for using mobile data | "A café's public Wi-Fi"; explanation says you can't always be sure a network is real |
+| 4.1 `hacked-or-normal`, final `q-hacked` | "Changed it" was unclear; "a code just after you signed in" was odd | "An email after you changed your password"; "A code while you were signing in" |
+| 1.1 `best-passphrase` | The right answer reused the explainer's example words | Fresh words |
+| 1.1 `how-guessing-works` | "Scrambled" unexplained | "Scrambled so they can't just be read" |
+| 1.1 `easy-or-hard` | "A random one from an app" came before password managers | "A long random one made by a password app" |
+| 2.2 `spot-the-text` | Fee and deadline are two targets inside one bubble | Kept: each line gets its own tap highlight, and the prompt names the new message |
+| M2 quiz, final | Quiz hotspots reuse the lesson scenes | Kept for now (noted): variants need new scene artwork |
