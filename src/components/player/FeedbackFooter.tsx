@@ -5,6 +5,8 @@ import { useId, useState } from "react";
 import { Button, type ButtonVariant } from "@/components/ui/Button";
 import { CheckIcon, ChevronDownIcon, XIcon, XpIcon } from "@/components/ui/icons";
 import { Markdown } from "@/components/ui/Markdown";
+import { Mascot } from "@/components/mascot/Mascot";
+import type { MascotExpression } from "@/components/mascot/poses";
 
 export type FeedbackTone = "neutral" | "correct" | "incorrect";
 
@@ -24,6 +26,8 @@ interface FeedbackFooterProps {
   collapseExplanation?: boolean;
   primary: FooterAction;
   secondary?: FooterAction;
+  /** A small mascot beside the feedback (lessons use it for wrong answers only). */
+  mascot?: MascotExpression;
 }
 
 const toneStyles: Record<FeedbackTone, { panel: string; text: string; button: ButtonVariant }> = {
@@ -75,6 +79,7 @@ export function FeedbackFooter({
   collapseExplanation = false,
   primary,
   secondary,
+  mascot,
 }: FeedbackFooterProps) {
   const [showExplanation, setShowExplanation] = useState(!collapseExplanation);
   const explanationId = useId();
@@ -105,6 +110,7 @@ export function FeedbackFooter({
                   <p className={`text-lead font-semibold ${style.text}`}>{heading}</p>
                   {subheading && <p className="text-small text-ink-muted">{subheading}</p>}
                 </div>
+                {mascot && <Mascot expression={mascot} size={60} className="-my-3" />}
                 {xpAwarded > 0 && (
                   <motion.span
                     initial={{ opacity: 0, y: 6 }}

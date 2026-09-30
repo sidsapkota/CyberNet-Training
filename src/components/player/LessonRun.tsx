@@ -195,6 +195,8 @@ export function LessonRun({
         <FeedbackFooter
           key={`${index}-${run.status}`}
           tone={tone}
+          // Wrong answers get a small confused mascot; correct ones keep the usual feedback only.
+          mascot={run.status === "incorrect" ? "confused" : undefined}
           heading={
             run.status === "correct"
               ? PRAISE[index % PRAISE.length]

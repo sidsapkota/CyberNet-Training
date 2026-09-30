@@ -1,8 +1,8 @@
 "use client";
 
-import { NetworkMark } from "@/components/network/NetworkMark";
+import { Mascot } from "@/components/mascot/Mascot";
 import { Button, ButtonLink } from "@/components/ui/Button";
-import { ExploreModeIcon, LockIcon } from "@/components/ui/icons";
+import { ExploreModeIcon } from "@/components/ui/icons";
 import type { CourseOutline, Lesson } from "@/lib/content/schema";
 import { useProgress } from "@/lib/progress/ProgressProvider";
 import { getBlockingLesson, resumeIndex } from "@/lib/progress/state";
@@ -28,12 +28,7 @@ export function LessonPlayer({ lesson, course }: { lesson: Lesson; course: Cours
         exitHref={`/course/${course.id}`}
       >
         <div className="flex min-h-[60dvh] flex-col items-center justify-center text-center">
-          <div className="relative">
-            <NetworkMark mode="dim" className="size-24" />
-            <span className="absolute -right-1 -bottom-1 grid size-9 place-items-center rounded-node border-2 border-line-strong bg-surface text-ink-muted">
-              <LockIcon className="size-4" />
-            </span>
-          </div>
+          <Mascot expression="presenting" size={150} idle />
           <h1 className="mt-6 text-title font-semibold text-balance">{lesson.title}</h1>
           <p className="mt-3 max-w-sm text-ink-muted">
             On the path, <strong className="font-semibold text-ink">{blocking.title}</strong> comes first. Or

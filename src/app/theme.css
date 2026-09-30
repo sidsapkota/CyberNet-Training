@@ -23,6 +23,13 @@
   --color-screen-accent: #00c2ff;
   --color-screen-success: #3ddc97;
   --color-screen-danger: #ff7a7a;
+
+  /* Mascot: fixed in both themes (like the screen panel) so the character never changes. */
+  --color-mascot-body: #122b52;
+  --color-mascot-line: #00c2ff;
+  --color-mascot-pupil: #041937;
+  --color-mascot-shine: #ffffff;
+  --color-mascot-alert: #ff7a7a;
   --color-line: light-dark(#d3ddea, #1c3a66);
   --color-line-strong: light-dark(#aebdd2, #2a4f85);
   /* Background node-grid dots. Never cyan. */

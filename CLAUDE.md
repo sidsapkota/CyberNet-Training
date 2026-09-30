@@ -21,6 +21,7 @@ npm test                  # vitest run
 npm run typecheck         # next typegen && tsc --noEmit
 npm run validate-content  # validate every JSON file under /content
 npm run brand:assets      # regenerate logo SVGs + favicon from src/components/brand/geometry.ts
+npm run brand:mascot      # regenerate public/brand/mascot/<expression>.svg from the Mascot parts
 npm run check:supabase    # verify the Supabase URL + publishable key in .env.local (health check)
 ```
 
@@ -154,6 +155,8 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
 - **Dev only:** `src/app/dev/cards/page.dev.tsx` is only a route under `next dev`, because
   `next.config.ts` adds the `dev.tsx` page extension in the development phase only. Production
   builds never compile it.
+- **Also:** `/dev/mascot` shows every mascot expression at 48, 96 and 200px on both canvases, with
+  the idle animation and an expression switcher (to see the bounce).
 - **What it does:** plays `src/dev/card-samples.ts` (one or more samples per type) through the real
   `LessonRun` / `QuizRun`, as a whole lesson, a whole quiz, or card by card.
 - **Throwaway progress:** it uses an in-memory store (`MemoryStorage`), so real progress is never
@@ -263,7 +266,9 @@ keep their focused player shell.
 
 ```
 content/                 lesson content (JSON), see above
-public/brand/            logo files (colour, mono, tile, lockups), app-icon PNGs, icon-source.png (original)
+public/brand/            logo files (colour, mono, tile, lockups), app-icon PNGs, icon-source.png (original),
+                         mascot/<expression>.svg (generated exports)
+docs/brand/mascot/       the mascot's AI concept sheet (reference only; not served)
 public/illustrations/    SVGs used by explainer cards (drawn for the navy `screen` panel)
 scripts/                 validate-content.ts, generate-brand-assets.ts
 src/app/                 routes, layout (fonts), globals.css, theme.css (design tokens), icon.svg,
@@ -276,6 +281,7 @@ src/components/nav/      site header and phone tab bar
 src/components/dashboard/ dashboard (hero, stats, activity, rings, welcome), reset button
 src/components/course/   course path, path nodes + popovers, mode toggle, course card, catalog
 src/components/illustrations/ course covers (CourseCover registry, keyed by course id)
+src/components/mascot/   the mascot: geometry + palette, poses, SVG parts, <Mascot>
 src/components/ui/       Button, Markdown, icons (lucide wrappers), CountUp, ProgressRing, ThemeToggle
 src/lib/content/         schemas, fs loader (load.ts), server accessors (server.ts)
 src/lib/progress/        ProgressStore, localStorage impl, provider, xp, derived state
@@ -353,7 +359,7 @@ visual language of the whole app:** learning means connecting nodes.
   diamonds; skipped challenges are amber outlines.
 - **Feedback:** a correct answer sends a pulse along the trace to the card's node (~370ms). A wrong
   answer gives a ~250ms soft shake, with no pulse.
-- **Completion:** the logo network assembles (`NetworkMark mode="assemble"`). Quiz results use a
+- **Completion:** the mascot celebrates on lesson complete (see [Mascot](#mascot)). Quiz results use a
   ring of question nodes around a hub (`QuizNetwork`), switching to a compact grid above 8
   questions (`QUIZ_RING_MAX`). Passing lights the hub.
 - **Loading and empty states** use `NetworkMark` too: `loading` lights nodes in sequence, and `dim`
@@ -421,7 +427,7 @@ text pairing meets WCAG AA (≥ 4.5:1), and UI outlines meet 3:1.
 ### Icons
 - **lucide-react only,** imported from `src/components/ui/icons.tsx`, which sets `strokeWidth` 1.75
   and round caps/joins to match the logo. Add new icons there.
-- **Custom drawing** is allowed only for the logo, node shapes and illustrations (explainer SVGs and
+- **Custom drawing** is allowed only for the logo, node shapes, the mascot and illustrations (explainer SVGs and
   course covers). No emoji as icons.
 
 ### Motion
@@ -441,6 +447,68 @@ text pairing meets WCAG AA (≥ 4.5:1), and UI outlines meet 3:1.
   on course covers.
 - **`prefers-reduced-motion`:** every animation must render its final state instantly. Use
   `useReducedMotion()` for motion components; CSS keyframes are neutralised in `globals.css`.
+
+### Mascot
+The mascot (called `Mascot` in code; the character's name isn't decided) is the logo come to life.
+Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shipped).
+
+- **Anatomy** (`src/components/mascot/`, 200 × 232 viewBox):
+  - **Head:** the exact logo shield path, scaled 2.3× and tilted per pose.
+  - **Face:** built on the logo's nodes. The top two are large eyes (cyan, navy pupils, white
+    highlight), the hub is a small nose/core, and the bottom two are cheek lights joined to it by
+    the logo's connectors. A small smile sits below.
+  - **Body:** chibi proportions. The head is about half the height, above a small torso with a belt.
+  - **Limbs:** outlined tube arms and legs, with glowing joints at the shoulders, elbows and knees,
+    and boots.
+  - **Antenna:** rises from the shield apex and ends in a glowing node that works as a mood light.
+- **Fixed shapes:** the mouth (`MOUTH_PATH`), mitten hand (`HAND_PATH`) and boots (`BOOT_PATH`) are
+  defined once in `geometry.ts` and are identical in every pose. The only other hand is
+  `POINTING_HAND_PATH`, used by `presenting` alone. Tests enforce both.
+- **Expressions** (`poses.ts`), which are data only:
+
+  | Expression | Pose |
+  |---|---|
+  | `happy` | waving |
+  | `thinking` | hand to chin, antenna dimmed |
+  | `celebrating` | arms up, happy arc eyes, hop, bright antenna |
+  | `confused` | shrug, eyes looking different ways, flickering antenna |
+  | `alert` | wide eyes; face nodes, joints and antenna in coral |
+  | `presenting` | pointing the way |
+- **Colours:** fixed in both themes, like the `screen` panel, via the `--color-mascot-*` tokens:
+
+  | Part | Colour |
+  |---|---|
+  | Body and head fill | `#122B52` |
+  | Line, eyes and lights | cyan `#00C2FF` |
+  | Pupils | `#041937` |
+  | Highlight | white |
+  | Alert | coral `#FF7A7A` |
+
+  The navy fill keeps the silhouette readable on both canvases. `MASCOT_HEX` mirrors the tokens
+  for static exports, and a test keeps them in sync.
+- **Motion:**
+  - `idle` adds an occasional blink, the antenna's mood pulse, and a short wave when happy.
+  - Changing `expression` plays a small spring bounce (`PRESS_SPRING`).
+  - Motion wrappers are always rendered, so server HTML never depends on the reduced-motion
+    setting.
+  - Under reduced motion it's static.
+- **Accessibility:** decorative by default (`aria-hidden`). Pass `label` (or `label` alone for the
+  default description) when it carries meaning.
+- **Where it appears** (restrained, to delight, not distract):
+  - the dashboard's first-visit welcome (`happy`, waving)
+  - lesson complete (`celebrating`)
+  - module quiz pass (`celebrating`, with the confetti)
+  - quiz fail (`thinking`, with encouraging copy)
+  - wrong answers in lessons (a small `confused` beside the feedback)
+  - the locked lesson screen, the 404 page and empty states (`presenting`, pointing at the next
+    step)
+- **Where it must not appear:**
+  - inside cards or card content, or in the lesson header
+  - on correct answers (so it never gets repetitive)
+  - on the course path or in navigation
+  - more than once per screen
+- **Static exports:** `npm run brand:mascot` renders the same parts, with hex colours and no motion,
+  to `public/brand/mascot/<expression>.svg` for videos and socials. A test fails if they go stale.
 
 ### Anti-generic rules
 - No purple, pink or rainbow gradients. No gradients at all, apart from the faint background

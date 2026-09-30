@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { NetworkMark } from "@/components/network/NetworkMark";
+import { Mascot } from "@/components/mascot/Mascot";
 import { ButtonLink } from "@/components/ui/Button";
 import { CountUp } from "@/components/ui/CountUp";
 import { ArrowRightIcon, ChallengeIcon, XpIcon } from "@/components/ui/icons";
@@ -31,7 +31,7 @@ export function LessonComplete({
 }) {
   return (
     <div className="flex min-h-[60dvh] flex-col items-center justify-center text-center">
-      <NetworkMark mode="assemble" className="size-36" label="Lesson complete: network connected" />
+      <Mascot expression="celebrating" size={170} idle />
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}

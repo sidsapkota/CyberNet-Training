@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
+import { Mascot } from "@/components/mascot/Mascot";
 import { NetworkMark } from "@/components/network/NetworkMark";
 import type { CourseOutline } from "@/lib/content/schema";
 import { EASE_OUT_QUICK, staggerDelay } from "@/lib/motion";
@@ -22,6 +23,16 @@ export function CourseCatalog({ courses }: { courses: CourseOutline[] }) {
     return (
       <div className="grid min-h-[40dvh] place-items-center">
         <NetworkMark mode="loading" className="size-16" label="Loading courses" />
+      </div>
+    );
+  }
+
+  if (courses.length === 0) {
+    return (
+      <div className="mt-10 flex flex-col items-center text-center">
+        <Mascot expression="presenting" size={140} idle />
+        <p className="mt-4 text-lead font-semibold">No courses yet</p>
+        <p className="mt-1 text-ink-muted">New courses will appear here.</p>
       </div>
     );
   }

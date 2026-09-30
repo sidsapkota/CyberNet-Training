@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 import type { ComponentType, ReactNode } from "react";
 import { CourseCard } from "@/components/course/CourseCard";
 import { CourseCover } from "@/components/illustrations/CourseCover";
+import { Mascot } from "@/components/mascot/Mascot";
 import { NetworkMark } from "@/components/network/NetworkMark";
 import { ButtonLink } from "@/components/ui/Button";
 import { CountUp } from "@/components/ui/CountUp";
@@ -263,7 +264,7 @@ function Welcome({ course }: { course: CourseOutline | undefined }) {
   const reduceMotion = useReducedMotion();
   return (
     <div className="flex min-h-[65dvh] flex-col items-center justify-center text-center">
-      <NetworkMark mode="assemble" className="size-32" label="CyberNet Training" />
+      <Mascot expression="happy" size={200} idle label="The CyberNet mascot waving hello" />
       <motion.div
         initial={reduceMotion ? false : { opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}

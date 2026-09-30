@@ -15,6 +15,7 @@
     "test:watch": "vitest",
     "validate-content": "tsx scripts/validate-content.ts",
     "brand:assets": "tsx scripts/generate-brand-assets.ts",
+    "brand:mascot": "tsx --tsconfig tsconfig.json scripts/generate-mascot-assets.tsx",
     "check:supabase": "tsx scripts/check-supabase.ts"
   },
   "dependencies": {

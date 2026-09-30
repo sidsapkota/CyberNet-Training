@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { useEffect } from "react";
 import { getCardDefinition } from "@/cards/registry";
 import { isInteractiveCard } from "@/cards/schema";
+import { Mascot } from "@/components/mascot/Mascot";
 import { QuizNetwork } from "@/components/network/QuizNetwork";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { CountUp } from "@/components/ui/CountUp";
@@ -44,7 +45,10 @@ export function QuizResults({
   return (
     <div>
       <div className="text-center">
-        <QuizNetwork results={results} passed={attempt.passed} />
+        <div className="flex items-end justify-center gap-1">
+          <QuizNetwork results={results} passed={attempt.passed} />
+          <Mascot expression={attempt.passed ? "celebrating" : "thinking"} size={112} idle className="-ml-4" />
+        </div>
         <p
           className={`mt-6 inline-flex items-center gap-1.5 font-mono text-caption font-semibold tracking-widest uppercase ${
             attempt.passed ? "text-success" : "text-ink-muted"
@@ -61,7 +65,7 @@ export function QuizResults({
           <span className="font-mono text-ink">{threshold}%</span>.{" "}
           {attempt.passed
             ? "Great work!"
-            : "Read through the explanations below, then give it another go."}
+            : "Check the explanations below, then have another go. You've got this."}
         </p>
         {attempt.xp > 0 && (
           <div className="mt-4 inline-flex items-center gap-1.5 rounded-control border border-line bg-surface px-3 py-1.5 font-mono text-lead font-semibold text-accent-ink">
