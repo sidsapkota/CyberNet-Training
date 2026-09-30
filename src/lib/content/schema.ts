@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { CardId, nonEmpty } from "@/cards/base";
 import { CardSchema, isInteractiveCard } from "@/cards/schema";
+import { LESSON_ICONS, type LessonIconName } from "./lessonIcons";
 
 /** Shared id format for courses, modules and lessons (lesson ids appear in URLs). */
 export const ContentId = CardId;
@@ -34,7 +35,12 @@ const uniqueCardIds = (l: { cards: { id: string }[] }) =>
 export const DEFAULT_PASS_THRESHOLD = 0.7;
 
 export const RegularLessonSchema = z
-  .object({ ...lessonBase, kind: z.literal("lesson") })
+  .object({
+    ...lessonBase,
+    kind: z.literal("lesson"),
+    /** The icon on its course path node (from the allow-list). Quizzes keep the network hub. */
+    icon: z.enum(LESSON_ICONS, { error: "must be an icon from LESSON_ICONS (src/lib/content/lessonIcons.ts)" }),
+  })
   .refine(uniqueCardIds, { message: "card ids must be unique within a lesson", path: ["cards"] })
   .refine((l) => l.cards.some((c) => c.difficulty === "core"), {
     message: "a lesson needs at least one core card",
@@ -79,6 +85,8 @@ export interface LessonOutline {
   moduleId: string;
   cardCount: number;
   coreCardIds: string[];
+  /** Only set for regular lessons (quizzes use the network hub). */
+  icon?: LessonIconName;
   /** Only set for quizzes. */
   passThreshold?: number;
 }
@@ -105,6 +113,6 @@ export function toLessonOutline(lesson: Lesson): LessonOutline {
     moduleId: lesson.moduleId,
     cardCount: lesson.cards.length,
     coreCardIds: lesson.cards.filter((c) => c.difficulty === "core").map((c) => c.id),
-    ...(lesson.kind === "quiz" ? { passThreshold: lesson.passThreshold } : {}),
+    ...(lesson.kind === "quiz" ? { passThreshold: lesson.passThreshold } : { icon: lesson.icon }),
   };
 }

@@ -4,6 +4,7 @@
   "title": "What Happens When You Type a URL",
   "order": 3,
   "isFree": true,
+  "icon": "keyboard",
   "cards": [
     {
       "id": "press-enter",

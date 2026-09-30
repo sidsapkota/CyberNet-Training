@@ -4,6 +4,7 @@
   "title": "Slow and Full",
   "order": 1,
   "isFree": true,
+  "icon": "gauge",
   "cards": [
     {
       "id": "not-broken",

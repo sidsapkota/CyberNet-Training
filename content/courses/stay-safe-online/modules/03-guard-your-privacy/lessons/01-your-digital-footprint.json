@@ -4,6 +4,7 @@
   "title": "Your Digital Footprint",
   "order": 1,
   "isFree": false,
+  "icon": "footprints",
   "cards": [
     {
       "id": "wet-cement",

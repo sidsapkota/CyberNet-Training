@@ -4,6 +4,7 @@
   "title": "Bits and Binary: How Computers Count",
   "order": 1,
   "isFree": true,
+  "icon": "binary",
   "cards": [
     {
       "id": "switches-and-bits",

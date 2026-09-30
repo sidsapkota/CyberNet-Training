@@ -42,6 +42,62 @@ import {
   Snowflake,
   Target,
 } from "lucide-react";
+import {
+  AppWindow,
+  ArrowRightLeft,
+  BatteryCharging,
+  BatteryWarning,
+  Binary,
+  BookUser,
+  Box,
+  Bug,
+  Cable,
+  Calculator,
+  Code,
+  Cpu,
+  DoorOpen,
+  Download,
+  Earth,
+  Expand,
+  EyeOff,
+  FileDigit,
+  FileText,
+  Fingerprint,
+  Folder,
+  FolderOpen,
+  Footprints,
+  Gauge,
+  Globe,
+  Handshake,
+  HardDrive,
+  Hash,
+  Image as ImageIcon,
+  Keyboard,
+  KeyRound,
+  Layers,
+  LifeBuoy,
+  Link,
+  MailWarning,
+  MapPin,
+  MemoryStick,
+  MessageSquareWarning,
+  Monitor,
+  Package,
+  Phone,
+  Plug,
+  Radar,
+  ScrollText,
+  Search,
+  ShieldAlert,
+  Signal,
+  Smartphone,
+  Split,
+  Thermometer,
+  Users,
+  Wifi,
+  Wrench,
+} from "lucide-react";
+import type { LessonIconName } from "@/lib/content/lessonIcons";
 
 /**
  * The app's icon set: lucide-react, normalised to the brand stroke (1.75, round caps/joins)
@@ -118,3 +174,80 @@ export const RatingIcon = brandIcon(Star, "RatingIcon");
 // Daily goals and streaks (the streak itself uses the drawn node chain, StreakIcon).
 export const GoalIcon = brandIcon(Target, "GoalIcon");
 export const FreezeIcon = brandIcon(Snowflake, "FreezeIcon");
+
+/**
+ * Lesson icons (the `icon` field of every lesson, from `LESSON_ICONS`), shown on course path
+ * nodes, in the node popover and on the lesson-complete screen. `satisfies` makes the compiler
+ * catch a name on the allow-list without an icon here, or the other way round.
+ */
+export const LESSON_ICON_COMPONENTS = {
+  binary: Binary,
+  "file-digit": FileDigit,
+  hash: Hash,
+  "map-pin": MapPin,
+  house: House,
+  globe: Globe,
+  earth: Earth,
+  expand: Expand,
+  package: Package,
+  router: Router,
+  split: Split,
+  network: Network,
+  signal: Signal,
+  cable: Cable,
+  radar: Radar,
+  "book-user": BookUser,
+  search: Search,
+  "square-terminal": SquareTerminal,
+  "door-open": DoorOpen,
+  handshake: Handshake,
+  "scroll-text": ScrollText,
+  "arrow-right-left": ArrowRightLeft,
+  keyboard: Keyboard,
+  link: Link,
+  cloud: Cloud,
+  server: Server,
+  download: Download,
+  code: Code,
+  calculator: Calculator,
+  box: Box,
+  "memory-stick": MemoryStick,
+  cpu: Cpu,
+  "hard-drive": HardDrive,
+  monitor: Monitor,
+  laptop: Laptop,
+  smartphone: Smartphone,
+  "app-window": AppWindow,
+  folder: Folder,
+  "folder-open": FolderOpen,
+  "file-text": FileText,
+  image: ImageIcon,
+  gauge: Gauge,
+  thermometer: Thermometer,
+  "battery-warning": BatteryWarning,
+  "battery-charging": BatteryCharging,
+  plug: Plug,
+  wifi: Wifi,
+  wrench: Wrench,
+  bug: Bug,
+  layers: Layers,
+  "shield-check": ShieldCheck,
+  "shield-alert": ShieldAlert,
+  "key-round": KeyRound,
+  fingerprint: Fingerprint,
+  "mail-warning": MailWarning,
+  "message-square-warning": MessageSquareWarning,
+  phone: Phone,
+  footprints: Footprints,
+  "eye-off": EyeOff,
+  users: Users,
+  "life-buoy": LifeBuoy,
+} satisfies Record<LessonIconName, LucideIcon>;
+
+/** A lesson's icon, with the brand stroke. Decorative: the lesson title always carries the meaning. */
+export function LessonIcon({ name, ...props }: LucideProps & { name: LessonIconName }) {
+  const Icon = LESSON_ICON_COMPONENTS[name];
+  return (
+    <Icon strokeWidth={ICON_STROKE} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false" {...props} />
+  );
+}

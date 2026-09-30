@@ -4,6 +4,7 @@
   "title": "What's in the Box",
   "order": 1,
   "isFree": true,
+  "icon": "box",
   "cards": [
     {
       "id": "same-few-parts",

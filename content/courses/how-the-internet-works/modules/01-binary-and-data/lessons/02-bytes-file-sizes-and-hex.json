@@ -4,6 +4,7 @@
   "title": "Bytes, File Sizes and Hex",
   "order": 2,
   "isFree": true,
+  "icon": "file-digit",
   "cards": [
     {
       "id": "three-mb-of-what",

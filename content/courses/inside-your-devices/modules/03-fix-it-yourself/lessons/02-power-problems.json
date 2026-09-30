@@ -4,6 +4,7 @@
   "title": "Power Problems",
   "order": 2,
   "isFree": true,
+  "icon": "battery-warning",
   "cards": [
     {
       "id": "one-percent",

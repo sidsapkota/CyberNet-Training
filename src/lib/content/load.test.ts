@@ -64,6 +64,18 @@ describe("real content in /content", () => {
     }
   });
 
+  it("gives every lesson an icon, never the same one twice in a module (quizzes keep the hub)", () => {
+    const { courses } = loadContent();
+    for (const course of courses) {
+      for (const mod of course.modules) {
+        const icons = mod.lessons.filter((l) => l.kind === "lesson").map((l) => l.icon);
+        expect(icons.every(Boolean), mod.id).toBe(true);
+        expect(new Set(icons).size, `${mod.id} repeats an icon: ${icons.join(", ")}`).toBe(icons.length);
+        expect(mod.lessons.filter((l) => l.kind === "quiz").every((q) => q.icon === undefined), mod.id).toBe(true);
+      }
+    }
+  });
+
   it("quizzes have 5-8 core, interactive questions", () => {
     for (const lesson of loadContent().lessons.values()) {
       if (lesson.kind !== "quiz") continue;
@@ -282,6 +294,7 @@ describe("loadContent validation", () => {
     title: id,
     order,
     isFree: true,
+    icon: "binary",
     cards: [explainer()],
   });
   const quiz = (id: string, order: number) => ({

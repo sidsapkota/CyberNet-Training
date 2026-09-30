@@ -4,6 +4,7 @@
   "title": "Files and Folders",
   "order": 2,
   "isFree": true,
+  "icon": "folder-open",
   "cards": [
     {
       "id": "where-did-it-go",

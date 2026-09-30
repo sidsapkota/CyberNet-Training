@@ -69,6 +69,12 @@ content/courses/<course-dir>/modules/<module-dir>/lessons/*.json
 
 - A lesson file holds `{ id, kind: "lesson" | "quiz", title, order, isFree, cards[] }`. Quizzes also
   take `passThreshold` (0 to 1, default 0.7).
+- **Lesson icons:** every regular lesson has an `icon` from the allow-list in
+  `src/lib/content/lessonIcons.ts` (lucide names, drawn by `LessonIcon` in
+  `src/components/ui/icons.tsx` with the brand stroke; `satisfies` keeps the two in sync). Pick one
+  that clearly matches the topic, and never the same icon twice in a module (`load.test.ts`). `lock`
+  and `check` aren't allowed: they're the node's state badges. Quizzes have no icon; they keep the
+  network hub.
 - **Parents come from the folder path.** Lesson JSON never repeats `courseId`/`moduleId`.
 - **`order` decides sequence.** Folder and file number prefixes (`01-`, `99-`) only make the tree
   readable.
@@ -696,10 +702,13 @@ The logo is a shield containing a hub node joined to four nodes. **Nodes and con
 visual language of the whole app:** learning means connecting nodes.
 - **Course path:** lessons are large nodes (72px, the quiz hub 96px) zig-zagging down 45° circuit
   traces. States are shown by shape and icon, never repeated words:
-  - Done: filled cyan with a check.
+  - Every lesson node shows its **lesson icon** (the quiz hub shows the network mark):
+  - Done: filled cyan with the icon, plus a small check badge in the corner.
   - Current: a cyan ring, a pulse and a "Start"/"Continue" bubble.
-  - Available: a cyan outline with the number.
-  - Locked: dim, with a lock glyph.
+  - Available: a cyan outline with the icon.
+  - Locked: dim, with the icon faded and a small lock badge in the corner.
+  - Screen-reader labels stay "Lesson 3, Routers and Hops, locked". The popover and the
+    lesson-complete screen show the icon beside the title.
   Nodes sit on a solid "lip" (`shadow-node`, `shadow-node-lit`). Connections light up once the node
   before is done.
 - **Lesson progress:** `NodeProgress` shows one node per card on a trace. Challenge cards are

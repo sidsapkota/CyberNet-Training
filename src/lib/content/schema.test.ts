@@ -8,6 +8,7 @@ const lesson = (over: Record<string, unknown> = {}) => ({
   title: "Bits",
   order: 1,
   isFree: true,
+  icon: "binary",
   cards: [explainer(), multipleChoice({ difficulty: "challenge" })],
   ...over,
 });
@@ -25,6 +26,13 @@ const quiz = (over: Record<string, unknown> = {}) => ({
 describe("LessonFileSchema: lessons", () => {
   it("accepts a valid lesson", () => {
     expect(LessonFileSchema.safeParse(lesson()).success).toBe(true);
+  });
+
+  it("requires an icon from the allow-list", () => {
+    expect(LessonFileSchema.safeParse(lesson({ icon: undefined })).success).toBe(false);
+    expect(LessonFileSchema.safeParse(lesson({ icon: "rocket" })).success).toBe(false);
+    expect(LessonFileSchema.safeParse(lesson({ icon: "lock" })).success).toBe(false); // the locked badge
+    expect(LessonFileSchema.safeParse(lesson({ icon: "router" })).success).toBe(true);
   });
 
   it("requires at least one card", () => {
@@ -102,11 +110,14 @@ describe("toLessonOutline", () => {
       moduleId: "m",
       cardCount: 2,
       coreCardIds: ["intro"],
+      icon: "binary",
     });
   });
 
   it("includes the pass threshold for quizzes", () => {
     const parsed = LessonFileSchema.parse(quiz());
-    expect(toLessonOutline({ ...parsed, courseId: "c", moduleId: "m" }).passThreshold).toBe(0.7);
+    const outline = toLessonOutline({ ...parsed, courseId: "c", moduleId: "m" });
+    expect(outline.passThreshold).toBe(0.7);
+    expect(outline.icon).toBeUndefined();
   });
 });

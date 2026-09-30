@@ -4,6 +4,7 @@
   "title": "Scam Texts and Calls",
   "order": 2,
   "isFree": false,
+  "icon": "message-square-warning",
   "cards": [
     {
       "id": "in-your-pocket",

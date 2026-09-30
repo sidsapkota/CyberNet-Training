@@ -4,6 +4,7 @@
   "title": "Phishing Emails",
   "order": 1,
   "isFree": false,
+  "icon": "mail-warning",
   "cards": [
     {
       "id": "something-fishy",

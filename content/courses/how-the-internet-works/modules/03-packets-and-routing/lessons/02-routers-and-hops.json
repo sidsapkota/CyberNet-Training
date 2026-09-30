@@ -4,6 +4,7 @@
   "title": "Routers and Hops",
   "order": 2,
   "isFree": true,
+  "icon": "router",
   "cards": [
     {
       "id": "who-decides",

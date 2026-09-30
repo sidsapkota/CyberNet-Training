@@ -4,6 +4,7 @@
   "title": "Apps and Public Wi-Fi",
   "order": 2,
   "isFree": false,
+  "icon": "wifi",
   "cards": [
     {
       "id": "torch-app",

@@ -4,6 +4,7 @@
   "title": "Meet the CPU",
   "order": 3,
   "isFree": true,
+  "icon": "cpu",
   "cards": [
     {
       "id": "billions-of-steps",

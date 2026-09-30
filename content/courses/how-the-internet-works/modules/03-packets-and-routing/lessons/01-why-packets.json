@@ -4,6 +4,7 @@
   "title": "Why Data Travels in Packets",
   "order": 1,
   "isFree": true,
+  "icon": "package",
   "cards": [
     {
       "id": "sharing-the-wifi",

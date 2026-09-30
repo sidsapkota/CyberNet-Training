@@ -4,6 +4,7 @@
   "title": "HTTPS and the Padlock",
   "order": 2,
   "isFree": true,
+  "icon": "shield-check",
   "cards": [
     {
       "id": "cafe-wifi",

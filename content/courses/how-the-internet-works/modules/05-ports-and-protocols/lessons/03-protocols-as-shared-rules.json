@@ -4,6 +4,7 @@
   "title": "Protocols: Shared Rules",
   "order": 3,
   "isFree": true,
+  "icon": "scroll-text",
   "cards": [
     {
       "id": "same-rules",

@@ -4,6 +4,7 @@
   "title": "The Lookup Journey",
   "order": 2,
   "isFree": true,
+  "icon": "search",
   "cards": [
     {
       "id": "milliseconds",

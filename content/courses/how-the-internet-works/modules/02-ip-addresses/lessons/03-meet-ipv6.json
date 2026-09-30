@@ -4,6 +4,7 @@
   "title": "Running Out: Meet IPv6",
   "order": 3,
   "isFree": true,
+  "icon": "expand",
   "cards": [
     {
       "id": "what-happens-when-you-run-out",

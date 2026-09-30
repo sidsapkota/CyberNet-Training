@@ -4,6 +4,7 @@
   "title": "Getting Help",
   "order": 2,
   "isFree": true,
+  "icon": "life-buoy",
   "cards": [
     {
       "id": "not-alone",

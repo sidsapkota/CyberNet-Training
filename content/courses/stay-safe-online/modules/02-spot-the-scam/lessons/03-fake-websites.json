@@ -4,6 +4,7 @@
   "title": "Fake Websites",
   "order": 3,
   "isFree": false,
+  "icon": "globe",
   "cards": [
     {
       "id": "perfect-copy",

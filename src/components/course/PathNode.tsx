@@ -5,7 +5,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { useRouter } from "next/navigation";
 import { NetworkMark } from "@/components/network/NetworkMark";
 import { Button, ButtonLink } from "@/components/ui/Button";
-import { CheckIcon, ExploreModeIcon, LockIcon, PlayIcon, RetryIcon } from "@/components/ui/icons";
+import { CheckIcon, ExploreModeIcon, LessonIcon, LockIcon, PlayIcon, RetryIcon } from "@/components/ui/icons";
 import { estimateMinutes } from "@/lib/content/estimate";
 import type { LessonOutline } from "@/lib/content/schema";
 import { EASE_OUT_QUICK, POPOVER_SPRING, PRESS_SPRING } from "@/lib/motion";
@@ -135,7 +135,7 @@ export function PathNode({
                 transition={{ duration: 0.7, ease: EASE_OUT_QUICK }}
               />
             )}
-            <NodeGlyph look={look} isQuiz={isQuiz} number={number} />
+            <NodeGlyph look={look} lesson={lesson} />
           </motion.button>
         </Popover.Trigger>
       </motion.div>
@@ -155,7 +155,10 @@ export function PathNode({
             className={`rounded-card border-2 p-4 shadow-lift ${look === "locked" ? "border-line-strong bg-surface" : "border-accent-ink bg-surface"}`}
           >
             <p className="font-mono text-caption tracking-widest text-ink-faint uppercase">{kindLabel}</p>
-            <p className="mt-1 text-lead leading-snug font-semibold text-balance">{lesson.title}</p>
+            <p className="mt-1 flex items-start gap-2 text-lead leading-snug font-semibold text-balance">
+              {lesson.icon && <LessonIcon name={lesson.icon} className="mt-0.5 size-6 shrink-0 text-ink-muted" />}
+              {lesson.title}
+            </p>
             <p className="mt-1 text-small text-ink-muted">{snapshot ? summary(state, look, snapshot, blocking) : ""}</p>
             <div className="mt-4 flex flex-col gap-2">
               {look === "locked" ? (
@@ -191,25 +194,35 @@ export function PathNode({
   );
 }
 
-function NodeGlyph({ look, isQuiz, number }: { look: NodeLook; isQuiz: boolean; number: number }) {
-  if (isQuiz) {
+/** A small round badge on the node's corner: a check when done, a lock when locked. */
+function StateBadge({ look, size }: { look: "done" | "locked"; size: "lesson" | "quiz" }) {
+  const box = size === "quiz" ? "size-8" : "size-7";
+  const colours = look === "done" ? "border-accent-ink bg-accent text-on-accent" : "border-line-strong bg-surface-raised text-ink-muted";
+  return (
+    <span className={`absolute -right-1 -bottom-1 grid ${box} place-items-center rounded-node border-2 ring-2 ring-canvas ${colours}`}>
+      {look === "done" ? <CheckIcon className="size-4" strokeWidth={2.5} /> : <LockIcon className="size-4" />}
+    </span>
+  );
+}
+
+/**
+ * What's inside a node. Lessons show their icon in every state (done, current, available and
+ * locked differ by fill, ring and badge); the module quiz keeps the network hub.
+ */
+function NodeGlyph({ look, lesson }: { look: NodeLook; lesson: LessonOutline }) {
+  const badge = look === "done" || look === "locked" ? look : null;
+  if (lesson.kind === "quiz") {
     return (
       <>
         <NetworkMark mode={look === "locked" ? "dim" : "lit"} shield={false} className="size-14" />
-        {look === "done" && (
-          <span className="absolute -right-1 -bottom-1 grid size-8 place-items-center rounded-node border-2 border-accent-ink bg-accent text-on-accent">
-            <CheckIcon className="size-4" strokeWidth={2.5} />
-          </span>
-        )}
-        {look === "locked" && (
-          <span className="absolute -right-1 -bottom-1 grid size-8 place-items-center rounded-node border-2 border-line-strong bg-surface-raised">
-            <LockIcon className="size-4" />
-          </span>
-        )}
+        {badge && <StateBadge look={badge} size="quiz" />}
       </>
     );
   }
-  if (look === "done") return <CheckIcon className="size-8" strokeWidth={2.5} />;
-  if (look === "locked") return <LockIcon className="size-6" />;
-  return <span className="font-mono text-title font-semibold">{number}</span>;
+  return (
+    <>
+      {lesson.icon && <LessonIcon name={lesson.icon} className={`size-8 ${look === "locked" ? "opacity-70" : ""}`} />}
+      {badge && <StateBadge look={badge} size="lesson" />}
+    </>
+  );
 }

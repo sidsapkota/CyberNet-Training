@@ -4,6 +4,7 @@
   "title": "Different Roads, Same Destination",
   "order": 3,
   "isFree": true,
+  "icon": "split",
   "cards": [
     {
       "id": "no-promises",

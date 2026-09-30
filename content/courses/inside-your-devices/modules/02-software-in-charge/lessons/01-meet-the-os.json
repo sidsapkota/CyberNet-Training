@@ -4,6 +4,7 @@
   "title": "Meet the OS",
   "order": 1,
   "isFree": true,
+  "icon": "app-window",
   "cards": [
     {
       "id": "who-is-in-charge",

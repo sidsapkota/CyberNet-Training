@@ -4,6 +4,7 @@
   "title": "Signs of a Hack",
   "order": 1,
   "isFree": true,
+  "icon": "shield-alert",
   "cards": [
     {
       "id": "somethings-off",

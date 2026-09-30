@@ -8,7 +8,8 @@ import { DailyGoalSummary } from "@/components/streak/DailyGoalSummary";
 import { Mascot } from "@/components/mascot/Mascot";
 import { ButtonLink } from "@/components/ui/Button";
 import { CountUp } from "@/components/ui/CountUp";
-import { ArrowRightIcon, ChallengeIcon, XpIcon, FeedbackIcon } from "@/components/ui/icons";
+import { ArrowRightIcon, ChallengeIcon, FeedbackIcon, LessonIcon, XpIcon } from "@/components/ui/icons";
+import type { LessonIconName } from "@/lib/content/lessonIcons";
 import type { LessonOutline } from "@/lib/content/schema";
 import { useFeedback } from "@/lib/feedback";
 
@@ -18,6 +19,7 @@ export function nextLessonLabel(next: LessonOutline) {
 
 export function LessonComplete({
   title,
+  icon,
   xpEarned,
   alreadyCompleted,
   challengesCompleted,
@@ -37,6 +39,8 @@ export function LessonComplete({
   /** The course path, with `?completed=` so the new node fills in there. */
   pathHref: string;
   title: string;
+  /** The lesson's icon, beside its title (as on its course path node). */
+  icon?: LessonIconName;
   xpEarned: number;
   alreadyCompleted: boolean;
   challengesCompleted: number;
@@ -62,7 +66,10 @@ export function LessonComplete({
         <p className="font-mono text-caption font-semibold tracking-widest text-accent-ink uppercase">
           Lesson complete
         </p>
-        <h1 className="mt-2 text-headline font-semibold text-balance">{title}</h1>
+        <h1 className="mt-2 text-headline font-semibold text-balance">
+          {icon && <LessonIcon name={icon} className="mr-2 inline-block size-8 align-[-0.15em] text-ink-muted" />}
+          {title}
+        </h1>
 
         <div className="mx-auto mt-8 grid max-w-sm grid-cols-2 gap-2.5">
           <div className="rounded-card border border-line bg-surface p-4">

@@ -4,6 +4,7 @@
   "title": "Memory vs Storage",
   "order": 2,
   "isFree": true,
+  "icon": "memory-stick",
   "cards": [
     {
       "id": "two-kinds-of-space",

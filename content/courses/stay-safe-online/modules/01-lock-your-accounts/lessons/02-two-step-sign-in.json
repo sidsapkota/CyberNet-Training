@@ -4,6 +4,7 @@
   "title": "Two-Step Sign-In",
   "order": 2,
   "isFree": true,
+  "icon": "smartphone",
   "cards": [
     {
       "id": "two-locks",

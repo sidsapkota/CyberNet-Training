@@ -27,7 +27,7 @@ function buildRun(mode: Mode, cardIds: string[]) {
   const base = { order: 1, isFree: true, courseId: "dev", moduleId: "dev-module" };
   const lesson: RegularLesson | Quiz =
     mode === "lesson"
-      ? { ...base, id: "dev-lesson", kind: "lesson", title: "Card playground (lesson)", cards }
+      ? { ...base, id: "dev-lesson", kind: "lesson", title: "Card playground (lesson)", icon: "layers", cards }
       : {
           ...base,
           id: "dev-quiz",

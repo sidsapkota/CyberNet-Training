@@ -4,6 +4,7 @@
   "title": "Public and Private Addresses",
   "order": 2,
   "isFree": true,
+  "icon": "house",
   "cards": [
     {
       "id": "one-address-many-devices",

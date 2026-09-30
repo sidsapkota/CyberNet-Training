@@ -4,6 +4,7 @@
   "title": "DNS Records and Tools",
   "order": 3,
   "isFree": true,
+  "icon": "square-terminal",
   "cards": [
     {
       "id": "many-answers",
