@@ -18,6 +18,11 @@
   --color-screen: #061630;
   --color-on-screen: #e6eef9;
   --color-on-screen-muted: #a3b6d2;
+  /* Colours for content ON the screen panel (fixed: the panel is navy in both themes). */
+  --color-screen-line: #1c3a66;
+  --color-screen-accent: #00c2ff;
+  --color-screen-success: #3ddc97;
+  --color-screen-danger: #ff7a7a;
   --color-line: light-dark(#d3ddea, #1c3a66);
   --color-line-strong: light-dark(#aebdd2, #2a4f85);
   /* Background node-grid dots. Never cyan. */

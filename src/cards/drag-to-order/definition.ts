@@ -2,7 +2,7 @@ import type { InteractiveCardDefinition } from "../types";
 import { DragToOrderCardView } from "./DragToOrderCardView";
 import { describeDragToOrderAnswer, describeDragToOrderCorrect, gradeDragToOrder } from "./grade";
 import type { DragToOrderAnswer, DragToOrderCard } from "./schema";
-import { seededShuffle } from "./shuffle";
+import { seededShuffle } from "../shared/shuffle";
 
 export const dragToOrderDefinition: InteractiveCardDefinition<DragToOrderCard, DragToOrderAnswer> = {
   type: "drag_to_order",

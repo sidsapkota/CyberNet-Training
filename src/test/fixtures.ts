@@ -1,7 +1,11 @@
 import type { BinaryToggleCard } from "@/cards/binary-toggle/schema";
 import type { DragToOrderCard } from "@/cards/drag-to-order/schema";
 import type { ExplainerCard } from "@/cards/explainer/schema";
+import type { MatchPairsCard } from "@/cards/match-pairs/schema";
 import type { MultipleChoiceCard } from "@/cards/multiple-choice/schema";
+import type { NumericInputCard } from "@/cards/numeric-input/schema";
+import type { PacketPathCard } from "@/cards/packet-path/schema";
+import type { TerminalCard } from "@/cards/terminal/schema";
 import type { CourseOutline, LessonOutline, ModuleOutline } from "@/lib/content/schema";
 
 export const explainer = (over: Partial<ExplainerCard> = {}): ExplainerCard => ({
@@ -49,6 +53,84 @@ export const binaryToggle = (over: Partial<BinaryToggleCard> = {}): BinaryToggle
   prompt: "Make 42",
   target: 42,
   explanation: "32 + 8 + 2",
+  ...over,
+});
+
+export const numericInput = (over: Partial<NumericInputCard> = {}): NumericInputCard => ({
+  id: "num",
+  type: "numeric_input",
+  difficulty: "core",
+  prompt: "Write 13 in binary",
+  base: "binary",
+  answer: 13,
+  explanation: "8 + 4 + 1",
+  ...over,
+});
+
+export const matchPairs = (over: Partial<MatchPairsCard> = {}): MatchPairsCard => ({
+  id: "pairs",
+  type: "match_pairs",
+  difficulty: "core",
+  prompt: "Match the ports",
+  pairs: [
+    { id: "http", left: "HTTP", right: "`80`" },
+    { id: "https", left: "HTTPS", right: "`443`" },
+    { id: "dns", left: "DNS", right: "`53`" },
+  ],
+  explanation: "Well-known ports.",
+  ...over,
+});
+
+/** laptop - home - (a | b) - server, plus a dead-end printer off home. */
+export const packetPath = (over: Partial<PacketPathCard> = {}): PacketPathCard => ({
+  id: "path",
+  type: "packet_path",
+  difficulty: "core",
+  prompt: "Route the packet",
+  nodes: [
+    { id: "laptop", kind: "device", label: "Laptop", address: "192.168.1.20", col: 0, row: 0 },
+    { id: "home", kind: "router", label: "Home router", col: 1, row: 0 },
+    { id: "printer", kind: "device", label: "Printer", col: 1, row: 1 },
+    { id: "a", kind: "router", label: "Router A", col: 2, row: 0 },
+    { id: "b", kind: "router", label: "Router B", col: 2, row: 1 },
+    { id: "server", kind: "server", label: "Server", address: "198.51.100.7", col: 3, row: 0 },
+  ],
+  links: [
+    { from: "laptop", to: "home" },
+    { from: "home", to: "printer" },
+    { from: "home", to: "a" },
+    { from: "home", to: "b" },
+    { from: "a", to: "server" },
+    { from: "b", to: "server" },
+  ],
+  source: "laptop",
+  destination: "server",
+  validPaths: [
+    ["laptop", "home", "a", "server"],
+    ["laptop", "home", "b", "server"],
+  ],
+  explanation: "Either router works.",
+  ...over,
+});
+
+export const terminal = (over: Partial<TerminalCard> = {}): TerminalCard => ({
+  id: "term",
+  type: "terminal",
+  difficulty: "core",
+  prompt: "Look up example.com",
+  promptLabel: "learner@cybernet:~$",
+  caseSensitive: false,
+  commands: [
+    {
+      command: "nslookup example.com",
+      aliases: ["nslookup www.example.com"],
+      description: "Look up example.com",
+      output: "Name:\texample.com\nAddress: 203.0.113.10",
+    },
+    { command: "hostname", output: "learner-laptop" },
+  ],
+  success: { type: "ran_command", command: "nslookup example.com" },
+  explanation: "nslookup asks DNS.",
   ...over,
 });
 

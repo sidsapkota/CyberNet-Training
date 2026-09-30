@@ -107,7 +107,7 @@ export function LessonRun({
 
   function check() {
     if (!definition.interactive || run.status !== "answering") return;
-    if (!definition.isAnswerReady(run.answer)) return;
+    if (!definition.isAnswerReady(run.answer, card)) return;
 
     const attempts = run.attempts + 1;
     const { correct } = definition.grade(card, run.answer);
@@ -131,7 +131,7 @@ export function LessonRun({
   if (!definition.interactive) {
     primary = { label: "Continue", onClick: advance };
   } else if (run.status === "answering") {
-    primary = { label: "Check", onClick: check, disabled: !definition.isAnswerReady(run.answer) };
+    primary = { label: "Check", onClick: check, disabled: !definition.isAnswerReady(run.answer, card) };
   } else if (run.status === "incorrect") {
     primary = { label: "Try again", onClick: tryAgain };
   } else {

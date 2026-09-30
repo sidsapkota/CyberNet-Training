@@ -37,6 +37,8 @@ if (typeof window !== "undefined") {
  */
 export function isPassthroughTarget(target: EventTarget | null): boolean {
   if (!(target instanceof Element)) return false;
+  // Opt-in for single-answer text fields: Enter submits (runs Check) instead of being swallowed.
+  if (target.closest("[data-enter-submits]")) return false;
   if (target.closest(NATIVE_SELECTOR)) return true;
   const region = target.closest("[data-keyboard-passthrough]");
   if (!region) return false;

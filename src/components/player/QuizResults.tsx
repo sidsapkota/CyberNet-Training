@@ -98,7 +98,7 @@ export function QuizResults({
             const given = attempt.answers.find((a) => a.cardId === card.id);
             const right = given?.correct ?? false;
             // Mono is for technical values (bits, addresses), not sentences.
-            const valueFont = card.type === "binary_toggle" ? "font-mono" : "";
+            const valueFont = ["binary_toggle", "numeric_input", "terminal"].includes(card.type) ? "font-mono" : "";
             return (
               <motion.li
                 key={card.id}

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { dragToOrder } from "@/test/fixtures";
 import { describeDragToOrderAnswer, describeDragToOrderCorrect, gradeDragToOrder } from "./grade";
-import { seededShuffle } from "./shuffle";
+import { seededShuffle } from "../shared/shuffle";
 
 describe("gradeDragToOrder", () => {
   const card = dragToOrder();

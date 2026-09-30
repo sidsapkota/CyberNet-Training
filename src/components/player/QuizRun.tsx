@@ -63,7 +63,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
 
   function check() {
     if (!definition.interactive || run.status !== "answering") return;
-    if (!definition.isAnswerReady(run.answer)) return;
+    if (!definition.isAnswerReady(run.answer, card)) return;
     const { correct } = definition.grade(card, run.answer);
     setRun({ ...run, status: correct ? "correct" : "incorrect" });
     setAnswers((current) => [...current, { cardId: card.id, answer: run.answer, correct }]);
@@ -107,7 +107,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
           ? {
               label: "Check",
               onClick: check,
-              disabled: !definition.interactive || !definition.isAnswerReady(run.answer),
+              disabled: !definition.interactive || !definition.isAnswerReady(run.answer, card),
             }
           : { label: isLast ? "See results" : "Next question", onClick: next }
         : null;

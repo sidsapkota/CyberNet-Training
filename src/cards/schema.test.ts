@@ -1,5 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { binaryToggle, dragToOrder, explainer, multipleChoice } from "@/test/fixtures";
+import {
+  binaryToggle,
+  dragToOrder,
+  explainer,
+  matchPairs,
+  multipleChoice,
+  numericInput,
+  packetPath,
+  terminal,
+} from "@/test/fixtures";
 import { BinaryToggleCardSchema } from "./binary-toggle/schema";
 import { DragToOrderCardSchema } from "./drag-to-order/schema";
 import { ExplainerCardSchema } from "./explainer/schema";
@@ -28,7 +37,16 @@ describe("card base fields", () => {
 
 describe("CardSchema (discriminated union)", () => {
   it("accepts every card type", () => {
-    for (const card of [explainer(), multipleChoice(), dragToOrder(), binaryToggle()]) {
+    for (const card of [
+      explainer(),
+      multipleChoice(),
+      dragToOrder(),
+      binaryToggle(),
+      numericInput(),
+      matchPairs(),
+      packetPath(),
+      terminal(),
+    ]) {
       expect(CardSchema.safeParse(card).success).toBe(true);
     }
   });
@@ -47,6 +65,9 @@ describe("CardSchema (discriminated union)", () => {
     expect(isInteractiveCard(multipleChoice())).toBe(true);
     expect(isInteractiveCard(dragToOrder())).toBe(true);
     expect(isInteractiveCard(binaryToggle())).toBe(true);
+    for (const card of [numericInput(), matchPairs(), packetPath(), terminal()]) {
+      expect(isInteractiveCard(card)).toBe(true);
+    }
   });
 });
 

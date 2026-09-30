@@ -1,7 +1,11 @@
 import { binaryToggleDefinition } from "./binary-toggle/definition";
 import { dragToOrderDefinition } from "./drag-to-order/definition";
 import { explainerDefinition } from "./explainer/definition";
+import { matchPairsDefinition } from "./match-pairs/definition";
 import { multipleChoiceDefinition } from "./multiple-choice/definition";
+import { numericInputDefinition } from "./numeric-input/definition";
+import { packetPathDefinition } from "./packet-path/definition";
+import { terminalDefinition } from "./terminal/definition";
 import type { Card, CardType } from "./schema";
 import type { InteractiveCardDefinition, StaticCardDefinition } from "./types";
 
@@ -15,6 +19,10 @@ const definitions = {
   multiple_choice: multipleChoiceDefinition,
   drag_to_order: dragToOrderDefinition,
   binary_toggle: binaryToggleDefinition,
+  numeric_input: numericInputDefinition,
+  match_pairs: matchPairsDefinition,
+  packet_path: packetPathDefinition,
+  terminal: terminalDefinition,
 } satisfies { [K in CardType]: { type: K } };
 
 /** Type-erased views used by the player, which treats answers as opaque values. */

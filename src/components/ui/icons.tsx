@@ -2,15 +2,24 @@ import {
   ArrowRight,
   Check,
   ChevronDown,
+  CircleAlert,
+  Cloud,
   Diamond,
   GripVertical,
+  Laptop,
+  Lightbulb,
   Lock,
   type LucideIcon,
   type LucideProps,
   Moon,
+  Network,
   Play,
   RotateCcw,
+  Router,
+  Server,
   Sun,
+  SquareTerminal,
+  Undo2,
   X,
   Zap,
 } from "lucide-react";
@@ -51,3 +60,13 @@ export const ArrowRightIcon = brandIcon(ArrowRight, "ArrowRightIcon");
 export const RetryIcon = brandIcon(RotateCcw, "RetryIcon");
 export const SunIcon = brandIcon(Sun, "SunIcon");
 export const MoonIcon = brandIcon(Moon, "MoonIcon");
+export const WarningIcon = brandIcon(CircleAlert, "WarningIcon");
+export const HintIcon = brandIcon(Lightbulb, "HintIcon");
+export const UndoIcon = brandIcon(Undo2, "UndoIcon");
+export const TerminalIcon = brandIcon(SquareTerminal, "TerminalIcon");
+// Network node kinds (packet_path)
+export const DeviceIcon = brandIcon(Laptop, "DeviceIcon");
+export const RouterIcon = brandIcon(Router, "RouterIcon");
+export const SwitchIcon = brandIcon(Network, "SwitchIcon");
+export const ServerIcon = brandIcon(Server, "ServerIcon");
+export const InternetIcon = brandIcon(Cloud, "InternetIcon");

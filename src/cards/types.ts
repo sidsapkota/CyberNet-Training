@@ -25,8 +25,11 @@ export interface InteractiveCardDefinition<C extends { type: string }, A> {
   type: C["type"];
   interactive: true;
   initialAnswer: (card: C) => A;
-  /** Whether the Check button is enabled. */
-  isAnswerReady: (answer: A) => boolean;
+  /**
+   * Whether the Check button is enabled. Return false for input that isn't a real attempt yet
+   * (e.g. an invalid number format) so it never counts as a wrong answer.
+   */
+  isAnswerReady: (answer: A, card: C) => boolean;
   grade: (card: C, answer: A) => GradeResult;
   /** Human-readable answer for the quiz review screen. */
   describeAnswer: (card: C, answer: A) => string;

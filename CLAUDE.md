@@ -100,13 +100,71 @@ src/cards/<type>/
   catch a missing or mis-keyed entry. The player uses `getCardDefinition(card)`, which erases the
   answer type to `unknown`.
 
+### Card types and data format
+All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Interactive cards also have
+`prompt` and `explanation` (markdown). Try each one at **`/dev/cards`** (dev server only).
+
+| `type` | Extra fields | Answer (JSON) | Correct when |
+|---|---|---|---|
+| `explainer` | `title`, `body` (md), `image?` `{src, alt, width, height, caption?}` | none | read (Continue) |
+| `multiple_choice` | `options` (2–5 `{id, text}`), `correctOptionId` | option id | right option picked |
+| `drag_to_order` | `items` (3–7 `{id, label}`, **authored in the correct order**) | item ids | exact order |
+| `binary_toggle` | `target` (0–255) | 8 booleans | bits sum to target |
+| `numeric_input` | `base` (`decimal` \| `binary` \| `hex`, default decimal), `answer` (number or number[]), `hint?` (md), `unit?` | raw string | parsed value is accepted |
+| `match_pairs` | `pairs` (3–6 `{id, left, right}`, unique texts) | `{leftId: rightId}` | every pair matched |
+| `packet_path` | `nodes`, `links`, `source`, `destination`, `validPaths` (see below) | node ids from source | equals a valid path |
+| `terminal` | `commands`, `success`, `promptLabel?`, `intro?`, `caseSensitive?` (see below) | `{history, response}` | success condition met |
+
+- **`numeric_input`:**
+  - Spaces and underscores are ignored.
+  - Binary accepts `0b`, and hex accepts `0x` in any case.
+  - Decimal accepts `,` thousands separators and a sign.
+  - Invalid input (e.g. a `2` in binary) shows a warning and keeps Check disabled, so it never counts
+    as a wrong attempt.
+  - Binary and hex answers must be whole numbers ≥ 0.
+- **`match_pairs`:** the right column is shuffled per card. Wrap technical text in backticks
+  (`` `443` ``) for Plex Mono; the same applies to `packet_path` labels.
+- **`packet_path`:**
+  - `nodes` (2–8): `{ id, kind: device|router|switch|server|internet, label (≤24), address? (≤15, mono),
+    col: 0–3, row: 0–3 }`, one node per cell.
+  - `links`: `{from, to}`, undirected.
+  - `validPaths`: every accepted route, each starting at `source`, ending at `destination`, following
+    links and never repeating a node.
+  - Narrow screens rotate wide layouts 90°, so keep networks small.
+  - Wrong routes animate the packet up to the first wrong hop.
+- **`terminal`:**
+  - `commands` (1–12): `{ command, aliases?, output (printed verbatim), description? (shown by help) }`.
+  - `help`, `clear` and `cls` are built in and can't be redefined.
+  - `success` is either `{type: "ran_command", command}` (must be a defined command or alias) or
+    `{type: "answer", question, accepted[]}`. Answers are compared trimmed, case-insensitive,
+    ignoring a trailing full stop.
+  - **Nothing is ever executed:** output is only the card's data, and a test enforces no
+    eval/fetch/Function in the terminal code.
+  - Outputs must look realistic for the chosen OS and use only documentation addresses.
+- **Enter key:** single-answer text fields (`numeric_input`, the terminal's answer box) carry
+  `data-enter-submits`, so Enter runs Check. The terminal's command line keeps Enter for running
+  commands.
+- **Readiness:** `isAnswerReady(answer, card)` receives the card, so readiness can depend on card
+  settings (e.g. the numeric base).
+
+### Dev playground (`/dev/cards`)
+- **Dev only:** `src/app/dev/cards/page.dev.tsx` is only a route under `next dev`, because
+  `next.config.ts` adds the `dev.tsx` page extension in the development phase only. Production
+  builds never compile it.
+- **What it does:** plays `src/dev/card-samples.ts` (one or more samples per type) through the real
+  `LessonRun` / `QuizRun`, as a whole lesson, a whole quiz, or card by card.
+- **Throwaway progress:** it uses an in-memory store (`MemoryStorage`), so real progress is never
+  touched.
+- **When adding a card type,** add a sample. A test checks that every type has one.
+
 ### Adding a new card type
 1. Create `src/cards/<new-type>/` with `schema.ts` (spread `interactiveCardBase` or `cardBase`, and
    add `type: z.literal("new_type")`), `grade.ts`, the view component, `definition.ts` and
    `grade.test.ts`.
 2. Add the schema to the union in `src/cards/schema.ts`.
 3. Add the definition to `definitions` in `src/cards/registry.ts`.
-4. Add schema cases to `src/cards/schema.test.ts` and a fixture to `src/test/fixtures.ts`.
+4. Add schema cases to `src/cards/schema.test.ts`, a fixture to `src/test/fixtures.ts` and a sample to
+   `src/dev/card-samples.ts`, then try it on `/dev/cards`.
 
 Nothing in the player, quiz review, progress or content loader needs to change. If the type isn't
 interactive, update `isInteractiveCard` / `InteractiveCard` in `schema.ts`.
@@ -174,7 +232,7 @@ public/illustrations/    SVGs used by explainer cards (drawn for the navy `scree
 scripts/                 validate-content.ts, generate-brand-assets.ts
 src/app/                 routes, layout (fonts), globals.css, theme.css (design tokens), icon.svg,
                          apple-icon.png, manifest.ts
-src/cards/               card types, contract, union schema, registry
+src/cards/               card types, contract, union schema, registry; shared/ (seeded shuffle, InlineText)
 src/components/player/   lesson/quiz player UI
 src/components/brand/    logo geometry (single source of truth) and <LogoMark>/<LogoLockup>
 src/components/network/  the network motif: NetworkMark, NodeProgress, QuizNetwork
@@ -187,6 +245,7 @@ src/lib/supabase/        env validation, typed browser/server clients, generated
 supabase/                Supabase CLI project (config.toml; migrations go in supabase/migrations/)
 src/lib/network/         pure layout maths for the motif (quiz ring/grid, map lanes)
 src/test/fixtures.ts     test data builders
+src/dev/                 dev-only card samples + playground (served at /dev/cards under next dev)
 ```
 
 ## Conventions
