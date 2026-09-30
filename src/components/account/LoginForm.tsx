@@ -8,6 +8,7 @@ import { MailIcon } from "@/components/ui/icons";
 import { markAgePending } from "@/lib/auth/age";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import { GoogleSignInButton } from "./GoogleSignInButton";
 
 type Status = { kind: "idle" } | { kind: "sending" } | { kind: "sent"; email: string } | { kind: "error"; message: string };
 
@@ -93,9 +94,7 @@ export function LoginForm({ linkError }: { linkError: boolean }) {
             />
             I&apos;m 13 or older
           </label>
-          <Button variant="secondary" onClick={() => void google()} disabled={!over13} className="w-full">
-            Continue with Google
-          </Button>
+          <GoogleSignInButton onClick={() => void google()} disabled={!over13} />
           <div className="my-5 flex items-center gap-3 text-caption text-ink-faint" aria-hidden="true">
             <span className="h-px flex-1 bg-line" />
             or

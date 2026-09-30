@@ -477,11 +477,16 @@ src/dev/                 dev-only card samples + playground (served at /dev/card
   `http://localhost:3000/auth/callback` and `https://cyber-net-training.vercel.app/auth/callback`
   are allowed (see `docs/launch-checklist.md`, which also covers preview deployments). Any other
   origin (a phone on the LAN) must be added there, or sign-in falls back to the Site URL.
-- **Google sign-in** is in Testing mode (only allow-listed test accounts can use it).
-  **Before publishing the Google app out of Testing mode, the "Continue with Google" button must use
-  Google's official "G" logo** per Google's sign-in branding guidelines. For now it's text-only
-  (`src/components/account/LoginForm.tsx`). The logo is a third-party brand asset: use Google's
-  file as-is, as an exception to the lucide-only icon rule.
+- **Google sign-in** is in Testing mode (only allow-listed test accounts can use it). The
+  "Continue with Google" button (`src/components/account/GoogleSignInButton.tsx`) follows Google's
+  Sign in with Google branding guidelines, so the app can be published:
+  - Google's official full-colour "G" (`public/brand/google/google-g.png`, from Google's asset pack;
+    the README there says exactly how, and a test pins the file) at its fixed 20px.
+  - Google's light theme (white, `#747775` stroke) or dark theme (`#131314`, `#8E918F` stroke),
+    following ours via the `google-*` tokens; Google Sans Medium 14/20 (`next/font`, loaded only
+    there); 12px / 10px / 12px padding; 4px corners; 44px tall for our tap targets.
+  - It's the one third-party brand in the UI, an exception to the lucide-only icon rule and the
+    palette. Don't restyle it to match our buttons, and don't use the `google-*` tokens elsewhere.
 - **Identity on the server** comes only from `requireUserId()` (`src/lib/auth/server.ts`), which
   calls `auth.getUser()`. **Never use `getSession()` on the server, and never accept a user id from
   the client.** `src/lib/auth/server-actions.test.ts` checks every action, and that `getSession(`
@@ -668,7 +673,8 @@ text pairing meets WCAG AA (≥ 4.5:1), and UI outlines meet 3:1.
 - **lucide-react only,** imported from `src/components/ui/icons.tsx`, which sets `strokeWidth` 1.75
   and round caps/joins to match the logo. Add new icons there.
 - **Custom drawing** is allowed only for the logo, node shapes, the mascot and illustrations (explainer SVGs and
-  course covers). No emoji as icons.
+  course covers). No emoji as icons. The only third-party logo is Google's "G" on the sign-in
+  button (see Auth).
 
 ### Motion
 - **Purposeful and quick:** feedback animations stay under 400ms, and celebrations about 1s.

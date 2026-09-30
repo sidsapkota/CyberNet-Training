@@ -44,9 +44,13 @@ Google Cloud console → **Google Auth Platform**:
    - **Privacy policy link**: `https://cybernettrainer.com/privacy`
    - **Terms of service link**: `https://cybernettrainer.com/terms`
    - **Authorised domains**: add `cybernettrainer.com` (keep `supabase.co` if it's there).
-4. Before publishing the app out of **Testing**: the "Continue with Google" button must use Google's
-   official "G" logo (see CLAUDE.md → Accounts and sync), and the privacy and terms drafts must be
-   reviewed (their repo banners list what to check).
+4. Before publishing the app out of **Testing**: the privacy and terms drafts must be reviewed (their
+   repo banners list what to check). The "Continue with Google" button already follows Google's
+   branding guidelines (official "G", Google's colours, font and padding; see CLAUDE.md → Auth).
+5. **Audience → Publish app**. With only basic scopes (email, profile, openid) Google usually
+   doesn't need a full verification review, but it may check the branding (name, logo, home page,
+   privacy link and authorised domain), which can take a few days. Keep the app name matching the
+   site.
 
 ## 4. Email through Resend (sign-in emails from noreply@cybernettrainer.com)
 

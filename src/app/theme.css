@@ -39,6 +39,14 @@
   --color-mascot-pupil: #041937;
   --color-mascot-shine: #ffffff;
   --color-mascot-alert: #ff7a7a;
+
+  /* "Continue with Google" button: Google's own light and dark themes, exactly as its sign-in
+     branding guidelines specify (a third-party brand, so not our palette). Hover is Material's
+     8% state layer of the text colour. Used only by GoogleSignInButton. */
+  --color-google-fill: light-dark(#ffffff, #131314);
+  --color-google-fill-hover: light-dark(#ededed, #242425);
+  --color-google-stroke: light-dark(#747775, #8e918f);
+  --color-google-ink: light-dark(#1f1f1f, #e3e3e3);
   --color-line: light-dark(#d3ddea, #1c3a66);
   --color-line-strong: light-dark(#aebdd2, #2a4f85);
   /* Background node-grid dots. Never cyan. */
@@ -89,6 +97,9 @@
   --text-headline--line-height: 2.375rem;
   --text-display: 2.375rem;
   --text-display--line-height: 2.75rem;
+  /* Google's sign-in button text (Google Sans Medium 14/20, per its branding guidelines). Only there. */
+  --text-google-button: 0.875rem;
+  --text-google-button--line-height: 1.25rem;
 
   /* ── Shape: tighter than typical SaaS. Fully round = nodes only. ───── */
   --radius-sm: 4px;
