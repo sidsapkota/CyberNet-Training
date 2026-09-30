@@ -1,0 +1,225 @@
+{
+  "id": "scam-texts-and-calls",
+  "kind": "lesson",
+  "title": "Scam Texts and Calls",
+  "order": 2,
+  "isFree": false,
+  "cards": [
+    {
+      "id": "in-your-pocket",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Scams in your pocket",
+      "body": "The same tricks as [[phishing]] emails also arrive as **text messages** and **phone calls**. Texts are short and urgent, and a phone ringing makes people act fast.\n\nKnowing the patterns takes the pressure off."
+    },
+    {
+      "id": "scam-texts",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Scam texts",
+      "body": "Common scam texts say you owe a **parcel fee** or a **road toll**, that you've won something, or \"Hi Mum, this is my new number\".\n\nSender names can be faked, so a scam text can even land **in the same thread** as real messages from that company.\n\nWarning signs: a **small fee** to pay, a **deadline**, and an **unfamiliar link**. Real companies let you check in their **official app or website**, so go there instead of tapping the link."
+    },
+    {
+      "id": "spot-the-text",
+      "type": "hotspot",
+      "difficulty": "core",
+      "prompt": "Tap the **three** warning signs in the **new** message.",
+      "scene": "text-message",
+      "mode": "tap",
+      "targets": [
+        "sms-fee",
+        "sms-deadline",
+        "sms-link"
+      ],
+      "explanation": "The new message asks for a **small fee**, sets a **deadline**, and links to `parcels-redelivery.example`, an **unfamiliar link**. The older message and the sender name look normal, which is exactly how these scams blend in.",
+      "hint": "Only look at the new message. Which parts match the warning signs: a fee, a deadline and a link?",
+      "nudge": "Three parts of the new message match the warning signs for texts. Go through those signs one at a time."
+    },
+    {
+      "id": "scam-calls",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Scam calls and cloned voices",
+      "body": "Scam callers pretend to be your bank, the government, tech support or even the police. They may ask for a **sign-in code**, your **password**, to **control your computer**, or for payment in **gift cards**.\n\nComputers can now **copy a voice** from a short clip, so a call can sound just like someone you know.\n\nTwo simple defences:\n- **Hang up and call back** on a number you already know: your contact list, or the one on the official website.\n- Agree a **family safe word**, one that isn't posted anywhere, to ask for in an emergency.\n\nBeing told to **keep it secret** or to **stay on the line** is a warning sign too."
+    },
+    {
+      "id": "sounds-like-cousin",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "Your phone rings. It sounds exactly like your cousin.",
+      "start": "start",
+      "steps": [
+        {
+          "id": "start",
+          "text": "**\"It's me! I'm in trouble and need $200 in gift cards right now. Don't tell anyone!\"** What do you do?",
+          "choices": [
+            {
+              "id": "buy",
+              "text": "Buy the gift cards. It's their voice",
+              "consequence": "Voices can be copied, and gift cards are a favourite scam payment. The money would be gone.",
+              "outcome": "fail"
+            },
+            {
+              "id": "secret",
+              "text": "Keep it secret, like they asked",
+              "consequence": "Secrecy is a warning sign. It stops anyone helping you check.",
+              "outcome": "fail"
+            },
+            {
+              "id": "call-back",
+              "text": "Hang up and call your cousin on their saved number",
+              "consequence": "Your cousin answers, confused, and fine. It was a scam, and you stopped it.",
+              "outcome": "success"
+            }
+          ]
+        }
+      ],
+      "explanation": "A familiar voice can be faked. **Hang up and call back** on a number you already know, or ask for your family safe word. Secrecy and gift cards are warning signs.",
+      "hint": "Remember the two defences for calls. And what did the lesson say about keeping secrets and gift cards?"
+    },
+    {
+      "id": "hang-up-or-ok",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Hang up, or that's OK?",
+      "bins": [
+        {
+          "id": "hang-up",
+          "label": "Hang up"
+        },
+        {
+          "id": "ok",
+          "label": "That's OK"
+        }
+      ],
+      "items": [
+        {
+          "id": "code",
+          "label": "Caller asks for the code texted to you",
+          "bin": "hang-up"
+        },
+        {
+          "id": "remote",
+          "label": "Caller wants to control your computer",
+          "bin": "hang-up"
+        },
+        {
+          "id": "gift-cards",
+          "label": "\"Pay in gift cards or be arrested\"",
+          "bin": "hang-up"
+        },
+        {
+          "id": "secret",
+          "label": "Caller says to keep it from your family",
+          "bin": "hang-up"
+        },
+        {
+          "id": "bank-site",
+          "label": "You call the number on the bank's site",
+          "bin": "ok"
+        },
+        {
+          "id": "friend",
+          "label": "You call a friend on their saved number",
+          "bin": "ok"
+        }
+      ],
+      "explanation": "Asking for codes, remote control of your computer, gift-card payments and secrecy are all scam signs: **hang up**. Calling a number you found yourself, or a friend on their saved number, is fine.",
+      "hint": "Check each against the warning signs for calls: codes, controlling your computer, gift cards, secrecy. Who made the call, and with what number?",
+      "nudge": "Check each against the warning signs for calls. It also matters who made the call, and to what number."
+    },
+    {
+      "id": "too-good",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Too good to be true",
+      "body": "Some scams offer something amazing: a prize you never entered, a free phone, \"double your money\", **free game coins or skins**, or a job paying lots for very little work.\n\nWatch for **paying a fee to get a prize**, and for payment by **gift cards**, crypto or a money-transfer app. Real prizes don't cost money to claim."
+    },
+    {
+      "id": "always-a-sign",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Which of these is **always** a warning sign?",
+      "options": [
+        {
+          "id": "fee-gift-cards",
+          "text": "Paying a fee with gift cards to claim a prize"
+        },
+        {
+          "id": "receipt",
+          "text": "An email receipt for something you just bought",
+          "nudge": "A receipt for something you really bought is normal. Look for a request that real companies never make."
+        },
+        {
+          "id": "excursion",
+          "text": "A text from your school about an excursion",
+          "nudge": "Schools do send reminders. Look for the one that asks you to pay for a prize."
+        }
+      ],
+      "correctOptionId": "fee-gift-cards",
+      "explanation": "Real prizes never cost money to claim, and gift cards are a favourite way for scammers to be paid. A receipt or a school reminder can be perfectly normal.",
+      "hint": "Think about what the lesson said about prizes and ways of paying."
+    },
+    {
+      "id": "free-coins",
+      "type": "scenario",
+      "difficulty": "challenge",
+      "prompt": "A website promises **10,000 free coins** for your favourite game.",
+      "start": "start",
+      "steps": [
+        {
+          "id": "start",
+          "text": "It asks for your **game username and password** to \"send the coins\". What do you do?",
+          "choices": [
+            {
+              "id": "enter",
+              "text": "Type them in. Free coins!",
+              "consequence": "The site keeps your password and takes over your account. There were never any coins.",
+              "outcome": "fail"
+            },
+            {
+              "id": "close",
+              "text": "Close the page. Coins only come from the game itself",
+              "consequence": "Your account stays yours. Free-coin generators are a common trick to steal accounts.",
+              "outcome": "success"
+            }
+          ]
+        }
+      ],
+      "explanation": "\"Free coins\" sites are **too good to be true**. Never type your game password anywhere except the game's own app or website.",
+      "hint": "Is this too good to be true? And who should ever see your password?"
+    },
+    {
+      "id": "label-the-text",
+      "type": "hotspot",
+      "difficulty": "challenge",
+      "prompt": "Label the three warning signs in the new message.",
+      "scene": "text-message",
+      "mode": "label",
+      "labels": [
+        {
+          "part": "sms-fee",
+          "label": "Small fee"
+        },
+        {
+          "part": "sms-deadline",
+          "label": "Deadline"
+        },
+        {
+          "part": "sms-link",
+          "label": "Unfamiliar link"
+        }
+      ],
+      "explanation": "The **small fee** and the **deadline** are the pressure. The **unfamiliar link** is where they want you to go.",
+      "hint": "Match each label to one part of the new message: what it wants paid, how long you have, and where it sends you.",
+      "nudge": "Each label is one of the three warning signs for texts. Take one at a time and find the line that shows it."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- Scam texts use a **small fee**, a **deadline** and an **unfamiliar link**. Check in the official app instead.\n- Scam calls can use a **copied voice**. **Hang up and call back** on a number you know, and use a family safe word.\n- Codes, remote control, gift cards and secrecy are **warning signs**.\n- **Too good to be true** usually is.\n\nNext: websites that are copies of the real thing."
+    }
+  ]
+}

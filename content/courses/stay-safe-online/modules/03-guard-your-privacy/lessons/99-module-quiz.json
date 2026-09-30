@@ -1,0 +1,184 @@
+{
+  "id": "guard-your-privacy-quiz",
+  "kind": "quiz",
+  "title": "Guard Your Privacy: Module Quiz",
+  "order": 99,
+  "isFree": false,
+  "passThreshold": 0.7,
+  "cards": [
+    {
+      "id": "q-share-or-private",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Fine to share, or keep private?",
+      "bins": [
+        {
+          "id": "share",
+          "label": "Fine to share"
+        },
+        {
+          "id": "private",
+          "label": "Keep it private"
+        }
+      ],
+      "items": [
+        {
+          "id": "hobby",
+          "label": "Your favourite hobby",
+          "bin": "share"
+        },
+        {
+          "id": "art",
+          "label": "A painting you made",
+          "bin": "share"
+        },
+        {
+          "id": "school",
+          "label": "Your school's name",
+          "bin": "private"
+        },
+        {
+          "id": "now",
+          "label": "Where you are right now",
+          "bin": "private"
+        }
+      ],
+      "explanation": "Hobbies and things you make are fine. Your school and your location right now help strangers find you."
+    },
+    {
+      "id": "q-quiz-post",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "A post asks for your first pet's name and your street \"for fun\". What's the risk?",
+      "options": [
+        {
+          "id": "security",
+          "text": "They're common security question answers"
+        },
+        {
+          "id": "none",
+          "text": "There's no risk: it's just a game"
+        },
+        {
+          "id": "slow",
+          "text": "It slows your phone down"
+        }
+      ],
+      "correctOptionId": "security",
+      "explanation": "Pet names and streets are common security questions, so sharing them can help someone reset your accounts."
+    },
+    {
+      "id": "q-permissions",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Needs it, or doesn't?",
+      "bins": [
+        {
+          "id": "needs",
+          "label": "Needs it"
+        },
+        {
+          "id": "doesnt",
+          "label": "Doesn't need it"
+        }
+      ],
+      "items": [
+        {
+          "id": "camera",
+          "label": "Camera app → camera",
+          "bin": "needs"
+        },
+        {
+          "id": "maps",
+          "label": "Maps → location",
+          "bin": "needs"
+        },
+        {
+          "id": "torch",
+          "label": "Torch app → contacts",
+          "bin": "doesnt"
+        },
+        {
+          "id": "calc",
+          "label": "Calculator → microphone",
+          "bin": "doesnt"
+        }
+      ],
+      "explanation": "Allow what fits the app's job. A torch or calculator doesn't need contacts or the microphone."
+    },
+    {
+      "id": "q-stranger",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "Someone you only know from a game asks for a photo and your school.",
+      "start": "start",
+      "steps": [
+        {
+          "id": "start",
+          "text": "What do you do?",
+          "choices": [
+            {
+              "id": "safe",
+              "text": "Don't send anything, block and report, and tell a trusted adult",
+              "consequence": "Right. You're not in trouble.",
+              "outcome": "success"
+            },
+            {
+              "id": "send",
+              "text": "Send it, they seem nice",
+              "consequence": "Friendly online doesn't show who someone really is.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "explanation": "Keep photos and your school away from people you only know online. Block, report and tell a trusted adult."
+    },
+    {
+      "id": "q-wi-fi",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "What's the safest way to check your bank account at a café?",
+      "options": [
+        {
+          "id": "mobile",
+          "text": "Use mobile data"
+        },
+        {
+          "id": "any",
+          "text": "Join any free network"
+        },
+        {
+          "id": "strongest",
+          "text": "Join the network with the strongest signal"
+        }
+      ],
+      "correctOptionId": "mobile",
+      "explanation": "Mobile data avoids the risk of a fake hotspot."
+    },
+    {
+      "id": "q-settings",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each setting to what it does.",
+      "pairs": [
+        {
+          "id": "private",
+          "left": "Private account",
+          "right": "Only approved followers see your posts"
+        },
+        {
+          "id": "location",
+          "left": "Location sharing off",
+          "right": "Nobody can see where you are right now"
+        },
+        {
+          "id": "tags",
+          "left": "Tag review",
+          "right": "You approve photos you're tagged in"
+        }
+      ],
+      "explanation": "Private accounts, location off and tag review each protect a different part of your privacy."
+    }
+  ]
+}

@@ -6,7 +6,7 @@
  */
 
 export const SITE_NAME = "CyberNet Training";
-export const SITE_TAGLINE = "Short, hands-on lessons on how devices and the internet really work.";
+export const SITE_TAGLINE = "Short, hands-on lessons on how devices and the internet really work, and how to stay safe online.";
 export const CONTACT_EMAIL = "hello@cybernettrainer.com";
 export const DEFAULT_SITE_URL = "https://cybernettrainer.com";
 

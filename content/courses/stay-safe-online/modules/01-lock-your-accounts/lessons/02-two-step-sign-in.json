@@ -1,0 +1,276 @@
+{
+  "id": "two-step-sign-in",
+  "kind": "lesson",
+  "title": "Two-Step Sign-In",
+  "order": 2,
+  "isFree": true,
+  "cards": [
+    {
+      "id": "two-locks",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Two locks on the door",
+      "body": "Even a great password can be stolen, for example in a [[data breach]] or by a fake website.\n\nSo many accounts let you add a **second lock**. Then a stolen password on its own isn't enough to get in."
+    },
+    {
+      "id": "what-two-step-is",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "What two-step sign-in is",
+      "body": "**Two-step sign-in** means proving it's you in two different ways. You'll also see it called **two-factor** or **multi-factor authentication (MFA)**. The proofs come in three kinds:\n\n- something you **know**: a password or PIN\n- something you **have**: your phone, or a small security key\n- something you **are**: your fingerprint or face"
+    },
+    {
+      "id": "know-have-are",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Sort each proof: something you **know**, **have** or **are**.",
+      "bins": [
+        {
+          "id": "know",
+          "label": "Something you know"
+        },
+        {
+          "id": "have",
+          "label": "Something you have"
+        },
+        {
+          "id": "are",
+          "label": "Something you are"
+        }
+      ],
+      "items": [
+        {
+          "id": "password",
+          "label": "Your password",
+          "bin": "know"
+        },
+        {
+          "id": "pin",
+          "label": "A PIN",
+          "bin": "know"
+        },
+        {
+          "id": "phone-app",
+          "label": "Your phone with an authenticator app",
+          "bin": "have"
+        },
+        {
+          "id": "key",
+          "label": "A security key on your keyring",
+          "bin": "have"
+        },
+        {
+          "id": "fingerprint",
+          "label": "Your fingerprint",
+          "bin": "are"
+        },
+        {
+          "id": "face",
+          "label": "Your face",
+          "bin": "are"
+        }
+      ],
+      "explanation": "Passwords and PINs are things you **know**. Your phone and a security key are things you **have**. Fingerprints and faces are part of who you **are**. Two-step sign-in uses two different kinds.",
+      "hint": "Ask of each one: is it in your head, in your pocket, or part of your body?",
+      "nudge": "For each one, ask where it lives: in your head, in your pocket or bag, or as part of you."
+    },
+    {
+      "id": "strongest-proofs",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Which second proof is strongest?",
+      "body": "Strongest first:\n\n1. A **[[passkey]]**: your device signs you in with your fingerprint, face or PIN, and it won't work on a fake website.\n2. A code from an **[[authenticator app]]** on your phone.\n3. A code sent by **text message** (SMS), which can be intercepted.\n\nOld-style **security questions**, like \"What was your first pet's name?\", are weak: the answers can often be guessed or found online.\n\nWhen you turn two-step sign-in on, save the **backup codes** it gives you somewhere safe, in case you lose your phone."
+    },
+    {
+      "id": "never-share-codes",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Never share a sign-in code",
+      "body": "A sign-in code is the second key to your account. **No real company, bank, game or friend will ever ask you to read it out or send it to them.**\n\nIf someone asks for a code, it's a scam. And if a code arrives that you didn't ask for, someone may already know your password: change it."
+    },
+    {
+      "id": "the-code-text",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "You're watching a video when your phone buzzes.",
+      "start": "text",
+      "steps": [
+        {
+          "id": "text",
+          "text": "A text arrives: **\"Your sign-in code is 481 902.\"** You weren't signing in to anything. What does it probably mean?",
+          "choices": [
+            {
+              "id": "someone-trying",
+              "text": "Someone knows my password and is trying to sign in",
+              "consequence": "Right. The code stopped them, but they have your password.",
+              "next": "friend"
+            },
+            {
+              "id": "random",
+              "text": "Nothing, codes just arrive sometimes",
+              "consequence": "Codes are sent when someone tries to sign in. Someone tried, and it wasn't you.",
+              "outcome": "fail"
+            }
+          ]
+        },
+        {
+          "id": "friend",
+          "text": "A minute later, a message from a friend's account: **\"Oops, I sent you my code by mistake! Can you send it back?\"**",
+          "choices": [
+            {
+              "id": "send",
+              "text": "Send the code, to be helpful",
+              "consequence": "That was the attacker. The code was for **your** account, and now they're in.",
+              "outcome": "fail"
+            },
+            {
+              "id": "dont-send",
+              "text": "Don't send it. Change your password, and warn your friend another way",
+              "consequence": "The attacker has no way in, and your friend learns their account was taken over.",
+              "outcome": "success"
+            }
+          ]
+        }
+      ],
+      "explanation": "A code you didn't ask for means someone has your password: **change it**. Never send a sign-in code to anyone, even a friend. Their account may have been taken over.",
+      "hint": "Codes arrive when someone tries to sign in. And remember the rule: nobody real ever asks you to send them a code."
+    },
+    {
+      "id": "strongest-proof",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Which second proof is the **hardest** for an attacker to steal?",
+      "options": [
+        {
+          "id": "passkey",
+          "text": "A passkey on your phone"
+        },
+        {
+          "id": "sms",
+          "text": "A code sent by text message",
+          "nudge": "Text codes are better than nothing, but they can be intercepted or talked out of you. Look for the one listed as strongest."
+        },
+        {
+          "id": "question",
+          "text": "A security question like your first pet's name",
+          "nudge": "Answers like your pet's name can often be found or guessed from what you post. Look for proof that uses your device."
+        }
+      ],
+      "correctOptionId": "passkey",
+      "explanation": "A **passkey** is the strongest: your device proves it's you, and it won't work on a fake website. A text code is weaker, and a security question is the weakest of these three, because the answer can be guessed or found.",
+      "hint": "Think back to the list: strongest first, and what it said about security questions."
+    },
+    {
+      "id": "password-managers",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Password managers",
+      "body": "A **password manager** is an app that creates a **long random password** for every account, remembers them all, and fills them in for you. Many phones and browsers have one built in.\n\nYou only remember **one main password**: make it a strong passphrase, and protect the manager with two-step sign-in.\n\nBonus: it fills in passwords only on the **real** website. If it doesn't offer your password, check the address carefully: you might be on a fake site."
+    },
+    {
+      "id": "match-tools",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each one to what it does.",
+      "pairs": [
+        {
+          "id": "passphrase",
+          "left": "Passphrase",
+          "right": "Four or more random words"
+        },
+        {
+          "id": "manager",
+          "left": "Password manager",
+          "right": "Remembers a different password for each account"
+        },
+        {
+          "id": "two-step",
+          "left": "Two-step sign-in",
+          "right": "A second proof as well as your password"
+        },
+        {
+          "id": "passkey",
+          "left": "Passkey",
+          "right": "Signs you in with your device and fingerprint, face or PIN"
+        },
+        {
+          "id": "code",
+          "left": "Sign-in code",
+          "right": "Never share it with anyone"
+        }
+      ],
+      "explanation": "A **passphrase** is long and memorable, a **password manager** keeps one password per account, **two-step sign-in** adds a second proof, a **passkey** signs in with your device, and a **sign-in code** is never shared.",
+      "hint": "Start with the ones you're surest of. Two of them are about remembering passwords, and three are about signing in.",
+      "nudge": "A passphrase is something you make up; a password manager is an app. A code is the one you must never share."
+    },
+    {
+      "id": "rank-proofs",
+      "type": "drag_to_order",
+      "difficulty": "challenge",
+      "prompt": "Put these ways to sign in in order, from **strongest** to **weakest**.",
+      "items": [
+        {
+          "id": "passkey",
+          "label": "Passkey"
+        },
+        {
+          "id": "app",
+          "label": "Password + authenticator app code"
+        },
+        {
+          "id": "sms",
+          "label": "Password + text message code"
+        },
+        {
+          "id": "password-only",
+          "label": "Password on its own"
+        }
+      ],
+      "explanation": "A **passkey** is strongest, then a password with an **authenticator app**, then a password with a **text code**. A password alone is the weakest: one leak and it's open.",
+      "hint": "The lesson listed the second proofs strongest first. And any second proof beats none.",
+      "nudge": "A password with any second proof beats a password on its own. Among the second proofs, remember the order from the lesson."
+    },
+    {
+      "id": "lost-phone",
+      "type": "scenario",
+      "difficulty": "challenge",
+      "prompt": "Your phone, with your authenticator app on it, falls in a lake.",
+      "start": "start",
+      "steps": [
+        {
+          "id": "start",
+          "text": "You try to sign in on a laptop, and it asks for the code from the app. What can you use?",
+          "choices": [
+            {
+              "id": "backup",
+              "text": "One of the backup codes you saved when you set it up",
+              "consequence": "You're in. Now set two-step sign-in up again on your new phone.",
+              "outcome": "success"
+            },
+            {
+              "id": "turn-off",
+              "text": "Ask the website to switch two-step sign-in off for good",
+              "consequence": "That leaves your account with one lock. Use the backup codes you saved.",
+              "outcome": "fail"
+            },
+            {
+              "id": "stranger",
+              "text": "Ask someone online who says they can get you in",
+              "consequence": "Anyone offering to get into accounts for you is a scammer.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "explanation": "That's why you save **backup codes** when you turn two-step sign-in on. Keep them somewhere safe, like in your password manager or printed at home.",
+      "hint": "When you turned two-step sign-in on, it gave you something to save for exactly this moment."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- **Two-step sign-in** adds a second proof: something you know, have or are.\n- Strongest: a **passkey**, then an [[authenticator app]], then a text code. Save your **backup codes**.\n- **Never share a sign-in code.** One you didn't ask for means: change your password.\n- A **password manager** keeps a different strong password for every account.\n\nThat's your accounts locked. Next module: spotting scams."
+    }
+  ]
+}

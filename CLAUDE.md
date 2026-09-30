@@ -54,8 +54,12 @@ All of `build`, `lint`, `test` and `typecheck` must pass with zero errors and wa
 `kind: "quiz"` that reuses the normal card types.
 
 Courses, in catalog order: **Inside Your Devices** (`inside-your-devices`, hardware, the OS and
-troubleshooting, built on the hands-on card types) and **How the Internet Works**
-(`how-the-internet-works`).
+troubleshooting, built on the hands-on card types), **How the Internet Works**
+(`how-the-internet-works`) and **Stay Safe Online** (`stay-safe-online`: passwords and two-step
+sign-in, spotting scams, privacy, and what to do when things go wrong; modules 1 and 4 free,
+modules 2 and 3 Pro).
+Each `module.json` may carry `"access": "free" | "pro"`, which the Pro branch reads; until then
+it's ignored.
 
 ```
 content/courses/<course-dir>/course.json                   { id, title, description, order }
@@ -175,8 +179,14 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - `manifests.ts` is pure data: part ids, accessible names, hit boxes, draw order, `coveredBy` and
     named `views` (e.g. `open` = cover off), plus an optional `labelAt` point where a label marker
     must not cover the part (file names). `art.tsx` draws each part as its own group.
-  - Scenes: `laptop`, `phone`, `file-browser`. Generic devices only: no brands, logos or real
-    designs (a test checks for brand names).
+  - Scenes: `laptop`, `phone`, `file-browser`, and for Stay Safe Online `email`, `text-message`
+    and `fake-website`. Generic only: no brands, logos or real designs (a test checks for brand
+    names). The three scam scenes show one fictional example each; every address in them uses
+    the reserved `.example` domain (a test checks), and each part's name is exactly the text
+    shown, so screen readers get the same clues and nothing more.
+  - **Self-labelled scenes** (`file-browser`, `email`, `text-message`, `fake-website`) show their
+    own text, so they need no explore card first; each clue they test must be taught in an
+    explainer before the card (`selfLabelled` in `load.test.ts`).
   - Parts under a cover that's still on can't be seen, tapped or announced. Schemas check every part
     id, view and visibility at load.
   - Add a scene by adding its manifest and its drawing; `scenes.test.ts` checks every part is drawn.
@@ -201,8 +211,10 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - The schema rejects cycles, refits before removal, and acting on parts already off.
 - **`simulator`:**
   - `model` names a registered pure function in `src/cards/simulator/models/`: `memory`,
-    `cpu-cores`, `thermal`, `task-manager`, `storage` or `battery`. Each has its own params schema,
-    inputs and outputs, and a unit test.
+    `cpu-cores`, `thermal`, `task-manager`, `storage`, `battery` or `password` (time to try every
+    combination of a random password at an illustrative billion guesses a second; outputs `years`
+    and a `strength` list). Each has its own params schema, inputs and outputs, and a unit test.
+  - Slider units are trimmed by the schema; the view adds the space (none before `%` or `°`).
   - **Never eval.** Content only configures models, and goals are declarative conditions.
   - Control and output ids are model input/output names (camelCase allowed). The schema checks they
     exist with the right kind.
@@ -966,6 +978,18 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
 - **Physical safety:** no brands, and never instructions for opening a real device. Any physical
   action (cleaning a port, a hot or swollen battery) stays gentle and says "ask an adult" or a
   repair shop. List each one under **Safety** in `content/REVIEW.md`.
+- **Online safety content (Stay Safe Online):** teach **defence only**, never how to make a scam
+  or attack anyone. Every scam example is fictional ("Your Bank", "Parcels") and uses only
+  reserved `.example` addresses; `load.test.ts` fails on any other address except the verified
+  help services (`esafety.gov.au`, `scamwatch.gov.au`, `idcare.org`, `cyber.gov.au`,
+  `accce.gov.au`). Verify every
+  help service, number and piece of password/MFA advice against its official source before citing
+  it, and record the date in `content/REVIEW.md`. Calm and empowering, never scary: it's never the
+  learner's fault, and a trusted adult is always an option.
+- **Help is always free:** any lesson about getting help, reporting harm or recovering from an
+  incident (a hack, a scam, abuse) is always in a free module, never behind Pro. Safety and help
+  information must never be behind a paywall. `load.test.ts` checks the modules this covers
+  (currently Stay Safe Online's "When Things Go Wrong"); add new ones to its `alwaysFree` list.
 - **Safe examples only:** IPv4 documentation ranges (`192.0.2.0/24`, `198.51.100.0/24`,
   `203.0.113.0/24`) stand in for public addresses, alongside the private ranges, `2001:db8::/32`
   and `example.com`/`example.org`. Never use a real person's or company's address. `load.test.ts`

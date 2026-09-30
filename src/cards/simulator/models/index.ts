@@ -251,6 +251,78 @@ export const batteryModel: SimulatorModel<z.infer<typeof BatteryParams>> = {
   },
 };
 
+
+/* ── password: how long it takes to try every combination ─────────────────────────────── */
+
+const SECONDS_PER_YEAR = 365.25 * 24 * 3600;
+/** Lowercase, uppercase, digits and the 33 printable symbols on a keyboard. */
+export const CHARACTER_SETS = { lowercase: 26, uppercase: 26, digits: 10, symbols: 33 } as const;
+
+/** Plain words for a length of time: "21 seconds", "3 days", "about 1,900 years". */
+export function describeDuration(seconds: number): string {
+  if (!Number.isFinite(seconds) || seconds > SECONDS_PER_YEAR * 1e12) return "more than a trillion years";
+  if (seconds < 1) return "less than a second";
+  const units: [number, string][] = [
+    [SECONDS_PER_YEAR, "year"],
+    [86400, "day"],
+    [3600, "hour"],
+    [60, "minute"],
+    [1, "second"],
+  ];
+  const [size, name] = units.find(([u]) => seconds >= u)!;
+  const n = seconds / size;
+  if (name === "year" && n >= 1e9) return `about ${Math.round(n / 1e9).toLocaleString("en-AU")} billion years`;
+  if (name === "year" && n >= 1e6) return `about ${Math.round(n / 1e6).toLocaleString("en-AU")} million years`;
+  const whole = Math.round(n);
+  return `${name === "year" && whole >= 10 ? "about " : ""}${whole.toLocaleString("en-AU")} ${name}${whole === 1 ? "" : "s"}`;
+}
+
+const PasswordParams = z.object({
+  /** How fast the guessing computer is. Illustrative: real speeds vary enormously. */
+  guessesPerSecond: z.number().min(1).max(1e12).default(1e9),
+});
+
+/**
+ * A random password's strength as the time a computer would need to try every possible
+ * combination: (characters to choose from) ^ (length) ÷ guesses per second. Only true for
+ * RANDOM passwords: real guessers try common passwords, words and patterns first, so
+ * "Password123!" falls instantly however long it is. Teaches that length matters most.
+ */
+export const passwordModel: SimulatorModel<z.infer<typeof PasswordParams>> = {
+  id: "password",
+  summary: "Slider `length`; toggles `lowercase`, `uppercase`, `digits`, `symbols`. Outputs the time to try every combination.",
+  params: PasswordParams,
+  inputs: () => ({
+    length: { type: "number", default: 8, min: 4, max: 24 },
+    lowercase: { type: "boolean", default: true },
+    uppercase: { type: "boolean", default: false },
+    digits: { type: "boolean", default: false },
+    symbols: { type: "boolean", default: false },
+  }),
+  outputs: () => ({ years: { type: "number" }, pool: { type: "number" }, strength: { type: "list" } }),
+  run(inputs, p) {
+    const length = Math.round(clamp(num(inputs.length, 8), 1, 64));
+    const pool = (Object.keys(CHARACTER_SETS) as (keyof typeof CHARACTER_SETS)[])
+      .filter((set) => bool(inputs[set], set === "lowercase"))
+      .reduce((sum, set) => sum + CHARACTER_SETS[set], 0);
+    if (pool === 0) {
+      return { years: 0, pool: 0, strength: [{ id: "time", label: "Time to try every one", value: 0, detail: "pick a kind of character" }] };
+    }
+    const seconds = pool ** length / p.guessesPerSecond;
+    const years = seconds / SECONDS_PER_YEAR;
+    // Bar: 0 at "under a second", full at a million years (log scale).
+    const bar = clamp(Math.log10(Math.max(seconds, 1)) / Math.log10(SECONDS_PER_YEAR * 1e6));
+    return {
+      years: years >= 1e15 ? 1e15 : round(years, 2),
+      pool,
+      strength: [
+        { id: "pool", label: "Characters to choose from", value: pool / 95, detail: String(pool) },
+        { id: "time", label: "Time to try every one", value: bar, detail: describeDuration(seconds) },
+      ],
+    };
+  },
+};
+
 /* ── Registry ───────────────────────────────────────────────────────────────────────────── */
 
 // Each model has its own params type; the registry erases it (params are validated on load).
@@ -261,6 +333,7 @@ export const MODELS: Record<string, SimulatorModel<unknown>> = {
   "task-manager": taskManagerModel as SimulatorModel<unknown>,
   storage: storageModel as SimulatorModel<unknown>,
   battery: batteryModel as SimulatorModel<unknown>,
+  password: passwordModel as SimulatorModel<unknown>,
 };
 export const MODEL_IDS = Object.keys(MODELS) as [string, ...string[]];
 

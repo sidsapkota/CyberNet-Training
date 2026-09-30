@@ -238,9 +238,58 @@ function DevicesCover() {
   );
 }
 
+/* ── Stay Safe Online: a padlock hub, joined to a message, an email and a key ────────────── */
+
+function SafeOnlineCover() {
+  const trace = "var(--color-screen-line)";
+  const lit = "var(--color-screen-accent)";
+  const node = (cx: number, cy: number) => (
+    <circle cx={cx} cy={cy} r={22} fill="var(--color-screen)" stroke="var(--color-scene-edge)" strokeWidth={2} />
+  );
+  return (
+    <>
+      <DotGrid />
+      {/* 45° traces from the hub to three nodes; the key's trace is lit (your accounts, locked) */}
+      <g fill="none" strokeWidth={3} strokeLinejoin="round">
+        <path d="M160 90L112 42H72" stroke={trace} />
+        <path d="M160 90L208 42H248" stroke={trace} />
+        <path d="M160 90L208 138H248" stroke={lit} />
+      </g>
+      {/* Email */}
+      {node(72, 42)}
+      <g fill="none" stroke="var(--color-on-screen-muted)" strokeWidth={1.75} strokeLinejoin="round">
+        <rect x={60} y={34} width={24} height={16} rx={2} />
+        <path d="M60 36L72 45L84 36" />
+      </g>
+      {/* Message */}
+      {node(248, 42)}
+      <path
+        d="M237 33H259A3 3 0 0 1 262 36V47A3 3 0 0 1 259 50H246L240 55V50H237A3 3 0 0 1 234 47V36A3 3 0 0 1 237 33Z"
+        fill="none"
+        stroke="var(--color-on-screen-muted)"
+        strokeWidth={1.75}
+        strokeLinejoin="round"
+      />
+      {/* Key */}
+      <circle cx={248} cy={138} r={22} fill="var(--color-screen)" stroke={lit} strokeWidth={2} />
+      <g fill="none" stroke="var(--color-on-screen)" strokeWidth={1.75} strokeLinecap="round">
+        <circle cx={241} cy={138} r={5} />
+        <path d="M246 138H258M254 138V142M258 138V141" />
+      </g>
+      {/* Padlock hub */}
+      <circle cx={160} cy={90} r={30} fill="var(--color-screen)" stroke={lit} strokeWidth={2.5} />
+      <path d="M150 88V81A10 10 0 0 1 170 81V88" fill="none" stroke="var(--color-on-screen)" strokeWidth={2.5} />
+      <rect x={145} y={87} width={30} height={22} rx={4} fill="var(--color-on-screen)" />
+      <circle cx={160} cy={96} r={2.5} fill="var(--color-screen)" />
+      <path d="M160 97V102" stroke="var(--color-screen)" strokeWidth={2} strokeLinecap="round" />
+    </>
+  );
+}
+
 const COVERS: Record<string, ComponentType> = {
   "how-the-internet-works": InternetCover,
   "inside-your-devices": DevicesCover,
+  "stay-safe-online": SafeOnlineCover,
 };
 
 /** Cover for a course. Courses without a custom cover get the logo network on the grid. */

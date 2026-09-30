@@ -1,0 +1,269 @@
+{
+  "id": "getting-help",
+  "kind": "lesson",
+  "title": "Getting Help",
+  "order": 2,
+  "isFree": true,
+  "cards": [
+    {
+      "id": "not-alone",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "You're not alone",
+      "body": "Scams and online bullying happen to lots of people, including adults and experts. Scammers **count on people feeling embarrassed** and staying quiet.\n\n**It's never your fault**, and telling someone is the brave and smart thing to do."
+    },
+    {
+      "id": "trusted-adults",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Who to tell",
+      "body": "A **trusted adult** is someone you feel safe talking to: a parent or carer, a teacher, a school counsellor, or an older relative.\n\nIf you'd rather talk to someone outside your family, **Kids Helpline** is free, private and open any time, for ages 5 to 25: call **1800 55 1800**."
+    },
+    {
+      "id": "where-to-report",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Where to report in Australia",
+      "body": "- **The app or website first:** use its report button.\n- **eSafety Commissioner** (esafety.gov.au): serious [[cyberbullying]] of anyone under 18 that the app hasn't dealt with, adult cyber abuse, and someone sharing or threatening to share a **private or nude image** of you (report that straight away).\n- **ACCCE**, the Australian Centre to Counter Child Exploitation (accce.gov.au/report), run by the Australian Federal Police: if you're **under 18** and someone is pressuring or threatening you with a private image. You won't be in trouble.\n- **Scamwatch** (scamwatch.gov.au): report a scam, to help warn others.\n- **Your bank, straight away**, if money or card details are involved.\n- **IDCARE** (idcare.org or 1800 595 160): free help to make a plan if your personal details were stolen.\n- **ReportCyber** (cyber.gov.au): report cybercrime to the police.\n- **In danger right now:** call **000**."
+    },
+    {
+      "id": "where-to-go",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each problem to where to go.",
+      "pairs": [
+        {
+          "id": "bullying",
+          "left": "Bullying the app won't remove",
+          "right": "eSafety Commissioner"
+        },
+        {
+          "id": "warn",
+          "left": "A scam you want to warn others about",
+          "right": "Scamwatch"
+        },
+        {
+          "id": "card",
+          "left": "Money taken from your card",
+          "right": "Your bank, straight away"
+        },
+        {
+          "id": "details",
+          "left": "Your personal details were stolen",
+          "right": "IDCARE"
+        },
+        {
+          "id": "danger",
+          "left": "Someone is in danger right now",
+          "right": "Call 000"
+        }
+      ],
+      "explanation": "Serious bullying goes to **eSafety** once the app has had a chance; scams to **Scamwatch**; card problems to **your bank** straight away; stolen details to **IDCARE**; and danger right now is always **000**.",
+      "hint": "Look back at the list: what is each service for?",
+      "nudge": "Look back at the list, and start with the one you're surest of. What is each service for?"
+    },
+    {
+      "id": "save-evidence",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Save the evidence",
+      "body": "Before you block someone, **take screenshots** of the messages, their username, the web address and the date. Reports are much easier to act on with evidence.\n\nOne exception: if it's a **private or nude image**, **don't copy, save or share the image itself**. Write down the username and where it is, and report it.\n\nThen **block** and **report**."
+    },
+    {
+      "id": "group-chat",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "In a group chat, some people start posting mean messages about you.",
+      "start": "start",
+      "steps": [
+        {
+          "id": "start",
+          "text": "It keeps going. What do you do first?",
+          "choices": [
+            {
+              "id": "reply",
+              "text": "Reply with something just as mean",
+              "consequence": "It usually makes things worse, and it can get you in trouble too.",
+              "outcome": "fail"
+            },
+            {
+              "id": "evidence",
+              "text": "Screenshot the messages, and tell a trusted adult",
+              "consequence": "You have evidence, and someone on your side.",
+              "next": "next"
+            },
+            {
+              "id": "delete",
+              "text": "Delete the chat so you don't have to see it",
+              "consequence": "That deletes the evidence too. Save it first.",
+              "outcome": "fail"
+            }
+          ]
+        },
+        {
+          "id": "next",
+          "text": "What's the next step?",
+          "choices": [
+            {
+              "id": "report",
+              "text": "Report the messages in the app, and block or leave the chat",
+              "consequence": "The app can remove them. If it doesn't, eSafety can help.",
+              "outcome": "success"
+            },
+            {
+              "id": "wait",
+              "text": "Wait and hope it stops",
+              "consequence": "Reporting gives the app, and eSafety if needed, the chance to stop it.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "explanation": "Don't reply. **Save the evidence**, **tell a trusted adult**, then **report and block**. If the app doesn't act on serious bullying, report it to **eSafety**.",
+      "hint": "Think about the order: evidence and a trusted adult first, then reporting."
+    },
+    {
+      "id": "helps-or-worse",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Does it help, or make things worse?",
+      "bins": [
+        {
+          "id": "helps",
+          "label": "Helps"
+        },
+        {
+          "id": "worse",
+          "label": "Makes it worse"
+        }
+      ],
+      "items": [
+        {
+          "id": "screenshot",
+          "label": "Screenshot the mean messages",
+          "bin": "helps"
+        },
+        {
+          "id": "tell",
+          "label": "Tell a trusted adult",
+          "bin": "helps"
+        },
+        {
+          "id": "report",
+          "label": "Report and block the account",
+          "bin": "helps"
+        },
+        {
+          "id": "insult",
+          "label": "Reply with insults",
+          "bin": "worse"
+        },
+        {
+          "id": "pay",
+          "label": "Pay a scammer to go away",
+          "bin": "worse"
+        },
+        {
+          "id": "delete-all",
+          "label": "Delete everything before anyone sees it",
+          "bin": "worse"
+        }
+      ],
+      "explanation": "Evidence, a trusted adult and reporting all help. Replying with insults, paying a scammer (they usually ask for more) and deleting the evidence make things worse.",
+      "hint": "Look back at the steps: evidence, telling someone, reporting. Which of these undo those?",
+      "nudge": "Anything that removes the evidence, or gives a scammer or bully what they want, makes it worse."
+    },
+    {
+      "id": "card-money",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "A scam took money from your card. What's the **first** thing to do?",
+      "options": [
+        {
+          "id": "bank",
+          "text": "Contact the bank straight away (with an adult)"
+        },
+        {
+          "id": "wait",
+          "text": "Wait to see if it happens again",
+          "nudge": "Every hour counts with money. The lesson said who to contact straight away."
+        },
+        {
+          "id": "post",
+          "text": "Post about it online to warn people",
+          "nudge": "Warning people is good later. First, stop more money going."
+        }
+      ],
+      "correctOptionId": "bank",
+      "explanation": "Contact the **bank straight away**: it may be able to stop the payment or cancel the card. Then report it to **Scamwatch**.",
+      "hint": "Which service did the lesson say to contact straight away when money is involved?"
+    },
+    {
+      "id": "photo-threat",
+      "type": "scenario",
+      "difficulty": "challenge",
+      "prompt": "Someone you met online says they'll share a private photo of you unless you pay them. If this ever happens: **it is never your fault**, and you won't be in trouble.",
+      "start": "start",
+      "steps": [
+        {
+          "id": "start",
+          "text": "You feel scared and embarrassed. What do you do?",
+          "choices": [
+            {
+              "id": "pay",
+              "text": "Pay them so it goes away",
+              "consequence": "Paying usually leads to more demands, not fewer. It's never your fault, and help is there.",
+              "outcome": "fail"
+            },
+            {
+              "id": "delete-hide",
+              "text": "Delete everything and tell nobody",
+              "consequence": "You'd lose the evidence and face it alone. It's never your fault, and you don't have to deal with it by yourself.",
+              "outcome": "fail"
+            },
+            {
+              "id": "get-help",
+              "text": "Stop replying, tell a trusted adult, and report it",
+              "consequence": "You did the right thing. Report it to the app and eSafety (which can help remove images), and if you're under 18, to the ACCCE. Kids Helpline is there any time: 1800 55 1800.",
+              "outcome": "success"
+            }
+          ]
+        }
+      ],
+      "explanation": "**It is never your fault**, and you won't be in trouble. **Don't pay** and stop replying. Screenshot the messages and their profile (never the image itself), block them, and **tell a trusted adult**. Report it to the app and to **eSafety** (esafety.gov.au/report). If you're **under 18**, also report it to the **ACCCE** (accce.gov.au/report), run by the Australian Federal Police. Anyone in danger right now: **000**. To talk to someone, any time, for free: **Kids Helpline, 1800 55 1800**.",
+      "hint": "Look back at where to report a threat about a private image (including for under-18s), and who to tell."
+    },
+    {
+      "id": "call-000",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "prompt": "When should you call **000**?",
+      "options": [
+        {
+          "id": "danger",
+          "text": "When someone is in danger right now"
+        },
+        {
+          "id": "scam-text",
+          "text": "When a scam text arrives",
+          "nudge": "Scam texts can be reported to Scamwatch. 000 is for emergencies."
+        },
+        {
+          "id": "mean-comment",
+          "text": "When someone posts a mean comment",
+          "nudge": "Report it in the app, and to eSafety if it's serious. 000 is for danger right now."
+        }
+      ],
+      "correctOptionId": "danger",
+      "explanation": "**000** is for emergencies: someone in danger right now. Scams go to Scamwatch, and online abuse to the app and eSafety.",
+      "hint": "The lesson's list ended with the one to use in an emergency."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- It's **never your fault**. Tell a **trusted adult**, or call **Kids Helpline** on 1800 55 1800.\n- **Report** in the app first. Then: **eSafety** for serious abuse and private images (and the **ACCCE** if you're under 18), **Scamwatch** for scams, your **bank** for money, **IDCARE** for stolen details, **000** for danger.\n- **Save evidence** (never a private image itself), then **block and report**.\n\nThat's the course. You now know more about staying safe online than most adults!"
+    }
+  ]
+}

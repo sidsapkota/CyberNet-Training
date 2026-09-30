@@ -1,0 +1,7 @@
+{
+  "id": "lock-your-accounts",
+  "title": "Lock Your Accounts",
+  "description": "Strong passwords, passphrases and two-step sign-in.",
+  "order": 1,
+  "access": "free"
+}
