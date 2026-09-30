@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { getCardDefinition } from "@/cards/registry";
 import { type Card, isInteractiveCard } from "@/cards/schema";
 import type { CardStatus } from "@/cards/types";
@@ -10,6 +10,7 @@ import { useProgress } from "@/lib/progress/ProgressProvider";
 import { getNextLesson } from "@/lib/progress/state";
 import { emptySnapshot, isCardCompleted } from "@/lib/progress/types";
 import { cardXpToAward, lessonBonusToAward, XP } from "@/lib/progress/xp";
+import { type ProgressNode } from "@/components/network/NodeProgress";
 import { CardStage, useFeedbackAnimation } from "./CardStage";
 import { FeedbackFooter, type FeedbackTone, type FooterAction } from "./FeedbackFooter";
 import { LessonComplete } from "./LessonComplete";
@@ -58,18 +59,19 @@ export function LessonRun({
   const [sessionXp, setSessionXp] = useState(0);
   const [result, setResult] = useState<LessonResult | null>(null);
   /** Cards completed during this visit (the snapshot can lag one render behind). */
-  const completedThisVisit = useRef(new Set<string>());
-  const { scope, playCorrect, playIncorrect } = useFeedbackAnimation();
+  const [completedThisVisit, setCompletedThisVisit] = useState<ReadonlySet<string>>(() => new Set());
+  /** Drives the pulse along the progress trace after a correct answer. */
+  const [pulse, setPulse] = useState<{ key: number; from: number; to: number } | null>(null);
+  const { scope, playIncorrect } = useFeedbackAnimation();
 
   const card = lesson.cards[index] as Card;
   const definition = getCardDefinition(card);
   const total = lesson.cards.length;
 
-  const isDone = (c: Card) =>
-    completedThisVisit.current.has(c.id) || isCardCompleted(snapshot, lesson.id, c.id);
+  const isDone = (c: Card) => completedThisVisit.has(c.id) || isCardCompleted(snapshot, lesson.id, c.id);
 
   function markComplete(c: Card, xp: number) {
-    completedThisVisit.current.add(c.id);
+    setCompletedThisVisit((current) => new Set(current).add(c.id));
     void store.completeCard(lesson.id, c.id, xp);
   }
 
@@ -114,7 +116,7 @@ export function LessonRun({
       setRun({ ...run, status: "correct", attempts, xpAwarded: xp });
       setSessionXp((current) => current + xp);
       markComplete(card, xp);
-      playCorrect();
+      setPulse((current) => ({ key: (current?.key ?? 0) + 1, from: index - 1, to: index }));
     } else {
       setRun({ ...run, status: "incorrect", attempts });
       playIncorrect();
@@ -141,6 +143,14 @@ export function LessonRun({
       ? { label: "Skip challenge", onClick: advance }
       : undefined;
 
+  const progressNodes: ProgressNode[] = lesson.cards.map((c, i) => {
+    const challenge = c.difficulty === "challenge";
+    if (result) return { state: isDone(c) ? "done" : "skipped", challenge };
+    if (i < index) return { state: isDone(c) ? "done" : "skipped", challenge };
+    if (i === index) return { state: run.status === "correct" ? "done" : "current", challenge };
+    return { state: "upcoming", challenge };
+  });
+
   useGlobalKeyDown((event) => {
     if (event.key !== "Enter" || event.repeat) return;
     event.preventDefault();
@@ -150,7 +160,7 @@ export function LessonRun({
   if (result) {
     const next = getNextLesson(course, lesson.id);
     return (
-      <PlayerShell progress={1} progressLabel="Lesson progress">
+      <PlayerShell nodes={progressNodes} progressLabel="Lesson progress: complete">
         <LessonComplete
           title={lesson.title}
           xpEarned={result.xpEarned}
@@ -165,12 +175,12 @@ export function LessonRun({
 
   const tone: FeedbackTone =
     run.status === "correct" ? "correct" : run.status === "incorrect" ? "incorrect" : "neutral";
-  const progress = (index + (run.status === "correct" ? 1 : 0)) / total;
   const challengeXp = XP.card.challenge.firstTry;
 
   return (
     <PlayerShell
-      progress={progress}
+      nodes={progressNodes}
+      pulse={pulse}
       progressLabel={`Lesson progress: card ${index + 1} of ${total}`}
       footer={
         <FeedbackFooter

@@ -1,65 +1,119 @@
 /*
- * THEME: the single place to rebrand.
+ * CYBERNET TRAINING: BRAND TOKENS. The single source for every colour, font size, radius
+ * and shadow. See "Brand" in CLAUDE.md for usage rules.
  *
- * Every colour is written as light-dark(<light>, <dark>), so both modes sit side by
- * side. Tailwind turns each token into utilities, e.g. --color-primary → bg-primary,
- * text-primary, border-primary; --radius-card → rounded-card.
+ * Colours are light-dark(<light>, <dark>). Dark (navy) is the flagship theme.
+ * Tailwind turns each token into utilities: --color-accent → bg-accent / text-accent / border-accent,
+ * --radius-card → rounded-card, --text-body → text-body, etc.
  *
- * Brand colours below are neutral placeholders.
+ * Contrast (WCAG AA ≥ 4.5:1 for text) was measured for every text/background pairing below.
  */
 @theme {
-  /* Surfaces */
-  --color-canvas: light-dark(#f6f7f9, #0d1014);
-  --color-surface: light-dark(#ffffff, #161a20);
-  --color-surface-muted: light-dark(#eef0f3, #1e232b);
-  --color-line: light-dark(#dfe3e8, #2a303a);
-  --color-line-strong: light-dark(#c3c9d2, #3a424e);
+  /* ── Surfaces (navy family) ─────────────────────────────────────────── */
+  --color-canvas: light-dark(#f4f7fb, #061630);
+  --color-surface: light-dark(#ffffff, #0b2142);
+  --color-surface-raised: light-dark(#e8eef6, #122b52);
+  /* Always-navy "screen" panel for diagrams and illustrations, in both themes.
+     (Not named "display": that would collide with the --text-display font size.) */
+  --color-screen: #061630;
+  --color-on-screen: #e6eef9;
+  --color-on-screen-muted: #a3b6d2;
+  --color-line: light-dark(#d3ddea, #1c3a66);
+  --color-line-strong: light-dark(#aebdd2, #2a4f85);
+  /* Background node-grid dots. Never cyan. */
+  --color-grid-dot: light-dark(rgb(10 31 63 / 0.07), rgb(230 238 249 / 0.05));
 
-  /* Text */
-  --color-ink: light-dark(#14181f, #eef1f5);
-  --color-ink-muted: light-dark(#5a6372, #9aa4b2);
-  --color-ink-faint: light-dark(#8a93a1, #6b7482);
+  /* ── Text ───────────────────────────────────────────────────────────── */
+  --color-ink: light-dark(#0a1f3f, #e6eef9);
+  --color-ink-muted: light-dark(#3d5575, #a3b6d2);
+  --color-ink-faint: light-dark(#546a8a, #7d93b5);
 
-  /* Brand (placeholder) */
-  --color-primary: light-dark(#3d5afe, #7c8dff);
-  --color-primary-strong: light-dark(#2c44d6, #9aa7ff);
-  --color-primary-soft: light-dark(#e8ecff, #1f2547);
-  --color-on-primary: light-dark(#ffffff, #0d1014);
+  /* ── Accent: cyan. ONLY for interactive and progress states. ─────────── */
+  /* Fill colour (buttons, lit nodes, progress). Identical in both themes. */
+  --color-accent: #00c2ff;
+  --color-accent-strong: light-dark(#00aee6, #5cd6ff);
+  /* Cyan used AS TEXT or thin strokes on a surface: darker in light mode for contrast. */
+  --color-accent-ink: light-dark(#006e9e, #00c2ff);
+  --color-accent-soft: light-dark(#dcf3fc, #0a3558);
+  /* Text on an accent fill. */
+  --color-on-accent: #041937;
 
-  /* Feedback */
-  --color-success: light-dark(#15803d, #4ade80);
-  --color-success-soft: light-dark(#e7f7ec, #10291a);
-  --color-danger: light-dark(#c2410c, #fb923c);
-  --color-danger-soft: light-dark(#fdeee6, #2e1a10);
+  /* ── Feedback ───────────────────────────────────────────────────────── */
+  --color-success: light-dark(#0b7a4e, #3ddc97);
+  --color-success-soft: light-dark(#e2f4ec, #0d3a3a);
+  --color-on-success: light-dark(#ffffff, #041937);
+  --color-danger: light-dark(#c4323a, #ff7a7a);
+  --color-danger-soft: light-dark(#fbe7e8, #3a1d33);
+  --color-on-danger: light-dark(#ffffff, #041937);
+  /* Amber: challenge cards and cautions. */
+  --color-warning: light-dark(#9a5b00, #ffb547);
+  --color-warning-soft: light-dark(#fbefd9, #33301f);
 
-  /* Challenge cards */
-  --color-challenge: light-dark(#8b5cf6, #b197fc);
-  --color-challenge-soft: light-dark(#f1ebff, #251c3d);
+  /* ── Type ───────────────────────────────────────────────────────────── */
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
 
-  /* XP accent */
-  --color-xp: light-dark(#b45309, #fbbf24);
-  --color-xp-soft: light-dark(#fef3c7, #2d2410);
+  /* Scale: ~1.2 ratio on a 17px base (readable for ages 12+). */
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.125rem;
+  --text-small: 0.9375rem;
+  --text-small--line-height: 1.375rem;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.65rem;
+  --text-lead: 1.25rem;
+  --text-lead--line-height: 1.8rem;
+  --text-title: 1.5rem;
+  --text-title--line-height: 2rem;
+  --text-headline: 1.875rem;
+  --text-headline--line-height: 2.375rem;
+  --text-display: 2.375rem;
+  --text-display--line-height: 2.75rem;
 
-  /* Shape */
-  --radius-card: 1.25rem;
-  --radius-control: 0.875rem;
-  --radius-pill: 9999px;
+  /* ── Shape: tighter than typical SaaS. Fully round = nodes only. ───── */
+  --radius-sm: 4px;
+  --radius-control: 8px;
+  --radius-card: 12px;
+  --radius-node: 9999px;
 
-  /* Spacing (in addition to Tailwind's default scale) */
+  /* ── Spacing (Tailwind's 4px scale plus these) ───────────────────────── */
   --spacing-gutter: 1rem;
-  --spacing-section: 3rem;
+  --spacing-section: 3.5rem;
   --container-lesson: 40rem;
-  --container-page: 56rem;
+  --container-page: 48rem;
 
-  /* Type */
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
-    sans-serif;
-  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, Consolas, monospace;
+  /* ── Depth & glow ───────────────────────────────────────────────────── */
+  --shadow-card: 0 1px 0 rgb(4 25 55 / 0.04), 0 6px 20px -12px rgb(4 25 55 / 0.35);
+  --shadow-lift: 0 14px 30px -12px rgb(4 25 55 / 0.45);
+  /* Glow: ONLY on lit cyan nodes and the primary button. */
+  --shadow-glow: 0 0 12px rgb(0 194 255 / 0.4);
 
-  /* Motion */
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px -12px rgb(0 0 0 / 0.12);
-  --shadow-lift: 0 12px 32px -12px rgb(0 0 0 / 0.28);
+  /* ── Motion ─────────────────────────────────────────────────────────── */
+  --ease-out-quick: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-node-pulse: node-pulse 2.4s ease-in-out infinite;
+  --animate-node-seq: node-seq 1.6s ease-in-out infinite;
+
+  @keyframes node-pulse {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.55;
+    }
+    50% {
+      transform: scale(1.35);
+      opacity: 0;
+    }
+  }
+
+  @keyframes node-seq {
+    0%,
+    100% {
+      opacity: 0.25;
+    }
+    30% {
+      opacity: 1;
+    }
+  }
 }
 
 /* Colour scheme: follow the OS unless the user picked one (data-theme on <html>). */

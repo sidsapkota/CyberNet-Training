@@ -19,8 +19,9 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
-import { GripIcon } from "@/components/ui/icons";
+import { CheckIcon, GripIcon, XIcon } from "@/components/ui/icons";
 import { CardPrompt } from "../CardPrompt";
+import { CardStatusNote } from "../CardStatusNote";
 import type { CardComponentProps, CardStatus } from "../types";
 import type { DragToOrderAnswer, DragToOrderCard } from "./schema";
 
@@ -49,14 +50,14 @@ function SortableItem({
       : status === "incorrect"
         ? "border-danger bg-danger-soft"
         : isDragging
-          ? "border-primary bg-surface shadow-lift"
+          ? "border-accent-ink bg-surface shadow-lift"
           : "border-line bg-surface hover:border-line-strong";
 
   return (
     <li
       ref={setNodeRef}
       style={{ transform: CSS.Translate.toString(transform), transition }}
-      className={`relative flex touch-none items-center gap-3 rounded-control border-2 px-3 py-3 select-none sm:px-4 ${tone} ${
+      className={`relative flex touch-none items-center gap-3 rounded-control border-2 px-3 py-3 select-none ${tone} ${
         isDragging ? "z-10 scale-[1.02]" : ""
       } ${locked ? "" : "cursor-grab active:cursor-grabbing"} transition-[border-color,background-color,box-shadow]`}
       {...attributes}
@@ -66,16 +67,18 @@ function SortableItem({
     >
       <span
         aria-hidden="true"
-        className="grid size-8 shrink-0 place-items-center rounded-lg bg-surface-muted text-sm font-bold text-ink-muted"
+        className="relative z-10 grid size-7 shrink-0 place-items-center rounded-node border-2 border-line-strong bg-surface font-mono text-caption font-semibold text-ink-muted"
       >
         {position}
       </span>
       <span
-        className={`flex-1 text-base font-medium sm:text-lg ${BINARY_LIKE.test(label) ? "font-mono tracking-wider" : ""}`}
+        className={`flex-1 font-medium ${BINARY_LIKE.test(label) ? "font-mono text-lead tracking-wide" : "text-body"}`}
       >
         {label}
       </span>
       {!locked && <GripIcon className="size-5 shrink-0 text-ink-faint" />}
+      {status === "correct" && <CheckIcon className="size-5 shrink-0 text-success" />}
+      {status === "incorrect" && <XIcon className="size-5 shrink-0 text-danger" />}
     </li>
   );
 }
@@ -119,7 +122,11 @@ export function DragToOrderCardView({
       >
         <SortableContext items={answer} strategy={verticalListSortingStrategy}>
           {/* While an item is held, Enter drops it instead of checking the answer. */}
-          <ol className="mt-8 grid gap-3" data-keyboard-passthrough={dragging ? "" : undefined}>
+          <ol
+            // The trace linking the position nodes, drawn behind the items.
+            className="relative mt-8 grid gap-2.5 before:absolute before:top-6 before:bottom-6 before:left-[27px] before:w-0.5 before:bg-line"
+            data-keyboard-passthrough={dragging ? "" : undefined}
+          >
             {answer.map((id, i) => (
               <SortableItem
                 key={id}
@@ -132,7 +139,12 @@ export function DragToOrderCardView({
           </ol>
         </SortableContext>
       </DndContext>
-      <p className="mt-4 text-sm text-ink-faint">
+      <CardStatusNote
+        status={status}
+        correctText="Correct order"
+        incorrectText="Not the right order"
+      />
+      <p className="mt-4 text-caption text-ink-faint">
         Drag to reorder. With a keyboard: focus an item, press Space to pick it up, move it with the
         arrow keys, then press Space to drop it.
       </p>

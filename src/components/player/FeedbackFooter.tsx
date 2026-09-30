@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useId, useState } from "react";
 import { Button, type ButtonVariant } from "@/components/ui/Button";
-import { CheckIcon, ChevronDownIcon, XIcon } from "@/components/ui/icons";
+import { CheckIcon, ChevronDownIcon, XIcon, XpIcon } from "@/components/ui/icons";
 import { Markdown } from "@/components/ui/Markdown";
 
 export type FeedbackTone = "neutral" | "correct" | "incorrect";
@@ -28,13 +28,43 @@ interface FeedbackFooterProps {
 
 const toneStyles: Record<FeedbackTone, { panel: string; text: string; button: ButtonVariant }> = {
   neutral: { panel: "border-line bg-canvas", text: "text-ink", button: "primary" },
-  correct: { panel: "border-success/30 bg-success-soft", text: "text-success", button: "success" },
-  incorrect: { panel: "border-danger/30 bg-danger-soft", text: "text-danger", button: "danger" },
+  correct: { panel: "border-success bg-success-soft", text: "text-success", button: "success" },
+  incorrect: { panel: "border-danger bg-danger-soft", text: "text-danger", button: "danger" },
 };
 
 /**
- * Sticky bottom bar: shows feedback after checking and holds the primary action.
- * The parent should change its `key` per card and status so local state resets.
+ * Status node: fills in with a check (correct) or shows a cross (wrong). Icon + heading text
+ * mean right/wrong never depends on colour alone.
+ */
+function StatusNode({ correct }: { correct: boolean }) {
+  return (
+    <span className="relative grid size-9 shrink-0 place-items-center">
+      {correct && (
+        <motion.span
+          aria-hidden="true"
+          className="absolute inset-0 rounded-node border-2 border-success"
+          initial={{ scale: 1, opacity: 0.8 }}
+          animate={{ scale: 1.7, opacity: 0 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+        />
+      )}
+      <motion.span
+        initial={{ scale: 0.5 }}
+        animate={{ scale: 1 }}
+        transition={{ type: "spring", stiffness: 600, damping: 24 }}
+        className={`grid size-9 place-items-center rounded-node border-2 ${
+          correct ? "border-success bg-success text-on-success" : "border-danger bg-surface text-danger"
+        }`}
+      >
+        {correct ? <CheckIcon className="size-5" strokeWidth={2.5} /> : <XIcon className="size-5" strokeWidth={2.5} />}
+      </motion.span>
+    </span>
+  );
+}
+
+/**
+ * Sticky bottom bar: feedback after checking plus the primary action.
+ * The parent changes its `key` per card and status so local state resets.
  */
 export function FeedbackFooter({
   tone,
@@ -54,48 +84,35 @@ export function FeedbackFooter({
   return (
     <motion.footer
       layout
-      className={`sticky bottom-0 z-20 border-t-2 transition-colors duration-200 ${style.panel}`}
+      className={`sticky bottom-0 z-20 border-t-2 ${style.panel}`}
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
-      <div className="mx-auto max-w-lesson px-gutter py-4 sm:py-5">
+      <div className="mx-auto max-w-lesson px-gutter py-4">
         <AnimatePresence initial={false}>
           {hasFeedback && heading && (
             <motion.div
               key="feedback"
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.22 }}
+              transition={{ duration: 0.18 }}
               className="mb-4"
               role="status"
               aria-live="polite"
             >
-              <div className={`flex items-center gap-3 ${style.text}`}>
-                <motion.span
-                  initial={{ scale: 0.4 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: "spring", stiffness: 500, damping: 18 }}
-                  className={`grid size-9 place-items-center rounded-pill text-on-primary ${
-                    tone === "correct" ? "bg-success" : "bg-danger"
-                  }`}
-                >
-                  {tone === "correct" ? (
-                    <CheckIcon className="size-5" strokeWidth={3} />
-                  ) : (
-                    <XIcon className="size-5" strokeWidth={3} />
-                  )}
-                </motion.span>
+              <div className="flex items-center gap-3">
+                <StatusNode correct={tone === "correct"} />
                 <div className="flex-1">
-                  <p className="text-xl font-bold">{heading}</p>
-                  {subheading && <p className="text-sm font-medium opacity-90">{subheading}</p>}
+                  <p className={`text-lead font-semibold ${style.text}`}>{heading}</p>
+                  {subheading && <p className="text-small text-ink-muted">{subheading}</p>}
                 </div>
                 {xpAwarded > 0 && (
                   <motion.span
-                    initial={{ opacity: 0, y: 8, scale: 0.8 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ delay: 0.15, type: "spring", stiffness: 400, damping: 16 }}
-                    className="rounded-pill bg-xp-soft px-3 py-1 text-sm font-bold text-xp"
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.12, duration: 0.2 }}
+                    className="inline-flex items-center gap-1 rounded-control border border-line bg-surface px-2.5 py-1 font-mono text-small font-semibold text-accent-ink"
                   >
-                    +{xpAwarded} XP
+                    <XpIcon className="size-4" />+{xpAwarded} XP
                   </motion.span>
                 )}
               </div>
@@ -107,7 +124,7 @@ export function FeedbackFooter({
                   aria-expanded={showExplanation}
                   aria-controls={explanationId}
                   onClick={() => setShowExplanation((v) => !v)}
-                  className={`mt-3 inline-flex items-center gap-1 text-sm font-semibold underline-offset-2 hover:underline ${style.text}`}
+                  className="mt-3 inline-flex items-center gap-1 text-small font-semibold text-ink underline-offset-2 hover:underline"
                 >
                   {showExplanation ? "Hide explanation" : "Show explanation"}
                   <ChevronDownIcon
@@ -127,7 +144,7 @@ export function FeedbackFooter({
                     transition={{ duration: 0.2 }}
                     className="overflow-hidden"
                   >
-                    <Markdown className="mt-3 max-h-[38dvh] overflow-y-auto text-base leading-relaxed text-ink">
+                    <Markdown className="mt-3 max-h-[38dvh] overflow-y-auto text-body text-ink">
                       {explanation}
                     </Markdown>
                   </motion.div>
@@ -137,7 +154,7 @@ export function FeedbackFooter({
           )}
         </AnimatePresence>
 
-        <div className="flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-end">
+        <div className="flex flex-col-reverse gap-2 sm:flex-row sm:items-center sm:justify-end">
           {secondary && (
             <Button
               variant="ghost"

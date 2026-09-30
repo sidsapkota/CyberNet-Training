@@ -1,23 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 240" width="640" height="240" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 240" width="640" height="240" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
   <title>Eight switches, some on and some off</title>
+  <!-- Drawn for the navy screen panel (#061630) used in both themes. -->
   <style>
-    .track-off { fill: #94a3b8; fill-opacity: 0.25; stroke: #94a3b8; stroke-width: 2; }
-    .track-on { fill: #3d5afe; }
-    .knob { fill: #ffffff; stroke: #64748b; stroke-opacity: 0.35; stroke-width: 1.5; }
-    .digit { font-family: ui-monospace, SF Mono, Cascadia Code, Menlo, Consolas, monospace; font-size: 30px; font-weight: 700; text-anchor: middle; }
-    .on { fill: #3d5afe; }
-    .off { fill: #94a3b8; }
-    .label { font-size: 15px; font-weight: 600; text-anchor: middle; fill: #94a3b8; letter-spacing: 1px; }
+    .track-off { fill: #0b2142; stroke: #2a4f85; stroke-width: 3; }
+    .track-on { fill: #00c2ff; }
+    .knob-on { fill: #041937; }
+    .knob-off { fill: #7d93b5; }
+    .digit { font-family: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace; font-size: 30px; font-weight: 600; text-anchor: middle; }
+    .on { fill: #00c2ff; }
+    .off { fill: #7d93b5; }
+    .label { font-size: 14px; font-weight: 600; text-anchor: middle; fill: #a3b6d2; letter-spacing: 1.5px; }
   </style>
-  <!-- pattern: 1 0 1 1 0 0 1 0 ; each switch is a vertical toggle -->
+  <!-- pattern: 1 0 1 1 0 0 1 0 -->
   <g transform="translate(36 30)">
-    <g transform="translate(0 0)"><rect class="track-on" x="10" y="0" width="44" height="100" rx="22"/><circle class="knob" cx="32" cy="26" r="17"/><text class="digit on" x="32" y="150">1</text><text class="label" x="32" y="180">ON</text></g>
-    <g transform="translate(72 0)"><rect class="track-off" x="10" y="0" width="44" height="100" rx="22"/><circle class="knob" cx="32" cy="74" r="17"/><text class="digit off" x="32" y="150">0</text><text class="label" x="32" y="180">OFF</text></g>
-    <g transform="translate(144 0)"><rect class="track-on" x="10" y="0" width="44" height="100" rx="22"/><circle class="knob" cx="32" cy="26" r="17"/><text class="digit on" x="32" y="150">1</text><text class="label" x="32" y="180">ON</text></g>
-    <g transform="translate(216 0)"><rect class="track-on" x="10" y="0" width="44" height="100" rx="22"/><circle class="knob" cx="32" cy="26" r="17"/><text class="digit on" x="32" y="150">1</text><text class="label" x="32" y="180">ON</text></g>
-    <g transform="translate(288 0)"><rect class="track-off" x="10" y="0" width="44" height="100" rx="22"/><circle class="knob" cx="32" cy="74" r="17"/><text class="digit off" x="32" y="150">0</text><text class="label" x="32" y="180">OFF</text></g>
-    <g transform="translate(360 0)"><rect class="track-off" x="10" y="0" width="44" height="100" rx="22"/><circle class="knob" cx="32" cy="74" r="17"/><text class="digit off" x="32" y="150">0</text><text class="label" x="32" y="180">OFF</text></g>
-    <g transform="translate(432 0)"><rect class="track-on" x="10" y="0" width="44" height="100" rx="22"/><circle class="knob" cx="32" cy="26" r="17"/><text class="digit on" x="32" y="150">1</text><text class="label" x="32" y="180">ON</text></g>
-    <g transform="translate(504 0)"><rect class="track-off" x="10" y="0" width="44" height="100" rx="22"/><circle class="knob" cx="32" cy="74" r="17"/><text class="digit off" x="32" y="150">0</text><text class="label" x="32" y="180">OFF</text></g>
+    <g transform="translate(0 0)"><rect class="track-on" x="10" y="0" width="44" height="100" rx="22"/><circle class="knob-on" cx="32" cy="26" r="15"/><text class="digit on" x="32" y="150">1</text><text class="label" x="32" y="180">ON</text></g>
+    <g transform="translate(72 0)"><rect class="track-off" x="10" y="0" width="44" height="100" rx="22"/><circle class="knob-off" cx="32" cy="74" r="15"/><text class="digit off" x="32" y="150">0</text><text class="label" x="32" y="180">OFF</text></g>
+    <g transform="translate(144 0)"><rect class="track-on" x="10" y="0" width="44" height="100" rx="22"/><circle class="knob-on" cx="32" cy="26" r="15"/><text class="digit on" x="32" y="150">1</text><text class="label" x="32" y="180">ON</text></g>
+    <g transform="translate(216 0)"><rect class="track-on" x="10" y="0" width="44" height="100" rx="22"/><circle class="knob-on" cx="32" cy="26" r="15"/><text class="digit on" x="32" y="150">1</text><text class="label" x="32" y="180">ON</text></g>
+    <g transform="translate(288 0)"><rect class="track-off" x="10" y="0" width="44" height="100" rx="22"/><circle class="knob-off" cx="32" cy="74" r="15"/><text class="digit off" x="32" y="150">0</text><text class="label" x="32" y="180">OFF</text></g>
+    <g transform="translate(360 0)"><rect class="track-off" x="10" y="0" width="44" height="100" rx="22"/><circle class="knob-off" cx="32" cy="74" r="15"/><text class="digit off" x="32" y="150">0</text><text class="label" x="32" y="180">OFF</text></g>
+    <g transform="translate(432 0)"><rect class="track-on" x="10" y="0" width="44" height="100" rx="22"/><circle class="knob-on" cx="32" cy="26" r="15"/><text class="digit on" x="32" y="150">1</text><text class="label" x="32" y="180">ON</text></g>
+    <g transform="translate(504 0)"><rect class="track-off" x="10" y="0" width="44" height="100" rx="22"/><circle class="knob-off" cx="32" cy="74" r="15"/><text class="digit off" x="32" y="150">0</text><text class="label" x="32" y="180">OFF</text></g>
   </g>
 </svg>

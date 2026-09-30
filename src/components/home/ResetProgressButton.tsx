@@ -15,7 +15,7 @@ export function ResetProgressButton() {
           void store.resetAll();
         }
       }}
-      className="text-sm text-ink-faint underline-offset-2 hover:text-ink-muted hover:underline"
+      className="text-small text-ink-faint underline-offset-2 hover:text-ink-muted hover:underline"
     >
       Reset all progress
     </button>

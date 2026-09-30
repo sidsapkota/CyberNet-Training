@@ -4,17 +4,18 @@ import { useState } from "react";
 import { getCardDefinition } from "@/cards/registry";
 import type { Card } from "@/cards/schema";
 import type { CardStatus } from "@/cards/types";
+import { NetworkMark } from "@/components/network/NetworkMark";
+import type { ProgressNode } from "@/components/network/NodeProgress";
+import { Button } from "@/components/ui/Button";
 import type { CourseOutline, Quiz } from "@/lib/content/schema";
 import { useGlobalKeyDown } from "@/lib/keyboard";
 import { useProgress } from "@/lib/progress/ProgressProvider";
 import { getNextLesson } from "@/lib/progress/state";
 import { emptySnapshot, type QuizAttempt } from "@/lib/progress/types";
 import { quizXpToAward, scoreQuiz } from "@/lib/progress/xp";
-import { Button } from "@/components/ui/Button";
-import { QuizIcon } from "@/components/ui/icons";
 import { CardStage, useFeedbackAnimation } from "./CardStage";
 import { FeedbackFooter, type FooterAction } from "./FeedbackFooter";
-import { PlayerShell } from "./PlayerShell";
+import { PlayerShell, uniformNodes } from "./PlayerShell";
 import { QuizResults } from "./QuizResults";
 
 type Phase = "intro" | "playing" | "results";
@@ -42,7 +43,8 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
   const [run, setRun] = useState<QuestionRun>(() => freshRun(quiz.cards[0] as Card));
   const [answers, setAnswers] = useState<QuizAttempt["answers"]>([]);
   const [attempt, setAttempt] = useState<QuizAttempt | null>(null);
-  const { scope, playCorrect, playIncorrect } = useFeedbackAnimation();
+  const [pulse, setPulse] = useState<{ key: number; from: number; to: number } | null>(null);
+  const { scope, playIncorrect } = useFeedbackAnimation();
 
   const card = quiz.cards[index] as Card;
   const definition = getCardDefinition(card);
@@ -55,6 +57,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
     setRun(freshRun(quiz.cards[0] as Card));
     setAnswers([]);
     setAttempt(null);
+    setPulse(null);
     window.scrollTo({ top: 0 });
   }
 
@@ -64,7 +67,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
     const { correct } = definition.grade(card, run.answer);
     setRun({ ...run, status: correct ? "correct" : "incorrect" });
     setAnswers((current) => [...current, { cardId: card.id, answer: run.answer, correct }]);
-    if (correct) playCorrect();
+    if (correct) setPulse((current) => ({ key: (current?.key ?? 0) + 1, from: index - 1, to: index }));
     else playIncorrect();
   }
 
@@ -117,13 +120,8 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
 
   if (phase === "results" && attempt) {
     return (
-      <PlayerShell progress={1} progressLabel="Quiz progress">
-        <QuizResults
-          quiz={quiz}
-          attempt={attempt}
-          next={getNextLesson(course, quiz.id)}
-          onRetake={start}
-        />
+      <PlayerShell nodes={uniformNodes(total, "done")} progressLabel="Quiz progress: complete">
+        <QuizResults quiz={quiz} attempt={attempt} next={getNextLesson(course, quiz.id)} onRetake={start} />
       </PlayerShell>
     );
   }
@@ -132,24 +130,37 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
     const needed = Math.ceil(quiz.passThreshold * total - 1e-9);
     const previous = snapshot.quizzes[quiz.id];
     return (
-      <PlayerShell progress={0} progressLabel="Quiz progress">
+      <PlayerShell nodes={uniformNodes(total, "upcoming")} progressLabel="Quiz progress: not started">
         <div className="flex min-h-[60dvh] flex-col items-center justify-center text-center">
-          <div className="grid size-20 place-items-center rounded-pill bg-primary-soft text-primary">
-            <QuizIcon className="size-10" />
-          </div>
-          <p className="mt-6 text-sm font-semibold uppercase tracking-wider text-primary">Module quiz</p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight text-balance">{quiz.title}</h1>
+          <NetworkMark mode="lit" className="size-24" />
+          <p className="mt-6 font-mono text-caption font-semibold tracking-widest text-ink-faint uppercase">
+            Module quiz
+          </p>
+          <h1 className="mt-2 text-headline font-semibold text-balance">{quiz.title}</h1>
           <ul className="mx-auto mt-6 max-w-sm space-y-2 text-left text-ink-muted">
-            <li>• {total} questions, one try each</li>
-            <li>
-              • Get {needed} of {total} right ({Math.round(quiz.passThreshold * 100)}%) to pass and
-              finish the module
+            <li className="flex gap-2">
+              <span className="font-mono text-ink-faint">→</span>
+              <span>
+                <span className="font-mono text-ink">{total}</span> questions, one try each
+              </span>
             </li>
-            <li>• You&apos;ll see if you&apos;re right straight away; explanations come at the end</li>
+            <li className="flex gap-2">
+              <span className="font-mono text-ink-faint">→</span>
+              <span>
+                Get <span className="font-mono text-ink">{needed}</span> of{" "}
+                <span className="font-mono text-ink">{total}</span> right (
+                <span className="font-mono text-ink">{Math.round(quiz.passThreshold * 100)}%</span>) to pass and
+                finish the module
+              </span>
+            </li>
+            <li className="flex gap-2">
+              <span className="font-mono text-ink-faint">→</span>
+              <span>You&apos;ll see if you&apos;re right straight away; explanations come at the end</span>
+            </li>
           </ul>
           {previous && (
-            <p className="mt-4 text-sm text-ink-muted">
-              Your best so far: {Math.round(previous.bestScore * 100)}%
+            <p className="mt-4 text-small text-ink-muted">
+              Your best so far: <span className="font-mono">{Math.round(previous.bestScore * 100)}%</span>
               {previous.passedAt ? " (passed)" : ""}
             </p>
           )}
@@ -161,30 +172,33 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
     );
   }
 
-  const progress = (index + (run.status === "answering" ? 0 : 1)) / total;
+  const progressNodes: ProgressNode[] = quiz.cards.map((_, i) =>
+    i < index || (i === index && run.status !== "answering")
+      ? { state: "done" }
+      : i === index
+        ? { state: "current" }
+        : { state: "upcoming" },
+  );
 
   return (
     <PlayerShell
-      progress={progress}
+      nodes={progressNodes}
+      pulse={pulse}
       progressLabel={`Quiz progress: question ${index + 1} of ${total}`}
       footer={
         primary && (
           <FeedbackFooter
             key={`${index}-${run.status}`}
             tone={run.status === "correct" ? "correct" : run.status === "incorrect" ? "incorrect" : "neutral"}
-            heading={
-              run.status === "correct" ? "Correct" : run.status === "incorrect" ? "Incorrect" : undefined
-            }
-            subheading={
-              run.status === "answering" ? undefined : "You'll see the full explanation at the end."
-            }
+            heading={run.status === "correct" ? "Correct" : run.status === "incorrect" ? "Incorrect" : undefined}
+            subheading={run.status === "answering" ? undefined : "You'll see the full explanation at the end."}
             primary={primary}
           />
         )
       }
     >
-      <p className="mb-4 text-sm font-semibold text-ink-muted">
-        Question {index + 1} of {total}
+      <p className="mb-4 font-mono text-caption font-semibold tracking-wider text-ink-faint uppercase">
+        Question {index + 1} / {total}
       </p>
       <CardStage cardKey={`${quiz.id}-${index}`} card={card} scope={scope}>
         {definition.interactive && (

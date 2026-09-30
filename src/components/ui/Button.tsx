@@ -4,16 +4,17 @@ import type { ButtonHTMLAttributes, ComponentProps } from "react";
 export type ButtonVariant = "primary" | "success" | "danger" | "secondary" | "ghost";
 
 const base =
-  "inline-flex min-h-12 items-center justify-center gap-2 rounded-control px-6 text-base font-semibold " +
-  "transition-[background-color,color,box-shadow,transform] duration-150 active:scale-[0.98] " +
-  "disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100";
+  "inline-flex min-h-12 items-center justify-center gap-2 rounded-control px-6 text-body font-semibold " +
+  "transition-[background-color,color,box-shadow,transform,border-color] duration-150 active:translate-y-px " +
+  "disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none disabled:active:translate-y-0";
 
 const variants: Record<ButtonVariant, string> = {
-  primary: "bg-primary text-on-primary shadow-card hover:bg-primary-strong",
-  success: "bg-success text-on-primary shadow-card hover:brightness-110",
-  danger: "bg-danger text-on-primary shadow-card hover:brightness-110",
-  secondary: "border border-line-strong bg-surface text-ink hover:bg-surface-muted",
-  ghost: "text-ink-muted hover:bg-surface-muted hover:text-ink",
+  // The primary action is the one place besides lit nodes that may glow.
+  primary: "bg-accent text-on-accent shadow-glow hover:bg-accent-strong",
+  success: "bg-success text-on-success hover:brightness-110",
+  danger: "bg-danger text-on-danger hover:brightness-110",
+  secondary: "border border-line-strong bg-surface text-ink hover:border-accent-ink hover:text-accent-ink",
+  ghost: "text-ink-muted hover:bg-surface-raised hover:text-ink",
 };
 
 export function buttonClasses(variant: ButtonVariant = "primary", className = "") {

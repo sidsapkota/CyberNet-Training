@@ -2,17 +2,18 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { useProgress } from "@/lib/progress/ProgressProvider";
-import { BoltIcon } from "./ui/icons";
+import { XpIcon } from "./ui/icons";
 
+/** Total XP. XP is progress, so it uses the accent (as text: accent-ink). */
 export function XpPill() {
   const { snapshot } = useProgress();
   const xp = snapshot?.totalXp;
   return (
     <div
-      className="inline-flex h-9 min-w-16 items-center justify-center gap-1 rounded-pill bg-xp-soft px-3 text-sm font-bold text-xp tabular-nums"
+      className="inline-flex h-9 min-w-18 items-center justify-center gap-1.5 rounded-control border border-line bg-surface px-3 font-mono text-small font-semibold text-accent-ink tabular-nums"
       aria-label={xp === undefined ? "Loading XP" : `${xp} XP total`}
     >
-      <BoltIcon className="size-4" />
+      <XpIcon className="size-4" />
       <span className="relative overflow-hidden">
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.span
@@ -21,11 +22,13 @@ export function XpPill() {
             initial={{ y: 12, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -12, opacity: 0 }}
+            transition={{ duration: 0.2 }}
           >
             {xp ?? "–"}
           </motion.span>
         </AnimatePresence>
       </span>
+      <span className="text-caption font-medium text-ink-faint">XP</span>
     </div>
   );
 }

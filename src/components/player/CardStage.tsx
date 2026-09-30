@@ -3,24 +3,22 @@
 import { AnimatePresence, motion, useAnimate, useReducedMotion } from "motion/react";
 import { type ReactNode, type RefObject, useCallback } from "react";
 import type { Card } from "@/cards/schema";
-import { SparkIcon } from "@/components/ui/icons";
+import { ChallengeIcon } from "@/components/ui/icons";
 
-/** Shake on a wrong answer, a small bounce on a right one. No-ops under reduced motion. */
+/**
+ * A short, soft shake for a wrong answer (~250ms). Correct answers don't move the card; their
+ * feedback is the pulse along the progress trace. No-op under reduced motion.
+ */
 export function useFeedbackAnimation() {
   const [scope, animate] = useAnimate<HTMLDivElement>();
   const reduceMotion = useReducedMotion();
 
-  const playCorrect = useCallback(() => {
-    if (reduceMotion || !scope.current) return;
-    void animate(scope.current, { scale: [1, 1.025, 0.995, 1] }, { duration: 0.45, ease: "easeOut" });
-  }, [animate, reduceMotion, scope]);
-
   const playIncorrect = useCallback(() => {
     if (reduceMotion || !scope.current) return;
-    void animate(scope.current, { x: [0, -10, 9, -6, 4, -2, 0] }, { duration: 0.45, ease: "easeInOut" });
+    void animate(scope.current, { x: [0, -6, 6, -4, 3, 0] }, { duration: 0.25, ease: "easeInOut" });
   }, [animate, reduceMotion, scope]);
 
-  return { scope, playCorrect, playIncorrect };
+  return { scope, playIncorrect };
 }
 
 /** Animated container for the current card. Changing `cardKey` slides the next card in. */
@@ -41,18 +39,18 @@ export function CardStage({
     <AnimatePresence mode="wait" initial={false}>
       <motion.section
         key={cardKey}
-        initial={{ opacity: 0, x: 40 }}
+        initial={{ opacity: 0, x: 24 }}
         animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: -40 }}
-        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+        exit={{ opacity: 0, x: -24 }}
+        transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
       >
         {card.difficulty === "challenge" && (
           <div className="mb-5 flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-pill bg-challenge-soft px-3 py-1 text-sm font-bold text-challenge">
-              <SparkIcon className="size-4" />
+            <span className="inline-flex items-center gap-1.5 rounded-sm border border-warning/40 bg-warning-soft px-2 py-1 font-mono text-caption font-semibold tracking-wider text-warning uppercase">
+              <ChallengeIcon className="size-3.5" />
               Challenge
             </span>
-            <span className="text-sm text-ink-muted">
+            <span className="text-small text-ink-muted">
               Optional{challengeXp ? ` · +${challengeXp} bonus XP` : ""}
             </span>
           </div>

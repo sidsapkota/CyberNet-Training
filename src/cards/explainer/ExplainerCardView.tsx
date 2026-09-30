@@ -5,11 +5,11 @@ import type { ExplainerCard } from "./schema";
 export function ExplainerCardView({ card }: { card: ExplainerCard }) {
   return (
     <article>
-      <h2 className="text-2xl font-bold leading-tight tracking-tight text-balance sm:text-3xl">
+      <h2 className="text-title font-semibold text-balance sm:text-headline">
         {card.title}
       </h2>
       {card.image && (
-        <figure className="mt-6 overflow-hidden rounded-card border border-line bg-surface-muted p-4 sm:p-6">
+        <figure className="mt-6 overflow-hidden rounded-card border border-line bg-screen p-4 sm:p-6">
           <Image
             src={card.image.src}
             alt={card.image.alt}
@@ -20,13 +20,13 @@ export function ExplainerCardView({ card }: { card: ExplainerCard }) {
             unoptimized={card.image.src.endsWith(".svg")}
           />
           {card.image.caption && (
-            <figcaption className="mt-3 text-center text-sm text-ink-muted">
+            <figcaption className="mt-3 text-center text-small text-on-screen-muted">
               {card.image.caption}
             </figcaption>
           )}
         </figure>
       )}
-      <Markdown className="mt-6 text-lg leading-relaxed text-ink-muted">{card.body}</Markdown>
+      <Markdown className="mt-6 text-body text-ink-muted sm:text-lead">{card.body}</Markdown>
     </article>
   );
 }

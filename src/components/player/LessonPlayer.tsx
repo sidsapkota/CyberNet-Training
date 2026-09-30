@@ -1,12 +1,13 @@
 "use client";
 
+import { NetworkMark } from "@/components/network/NetworkMark";
 import { ButtonLink } from "@/components/ui/Button";
 import { LockIcon } from "@/components/ui/icons";
 import type { CourseOutline, Lesson } from "@/lib/content/schema";
 import { useProgress } from "@/lib/progress/ProgressProvider";
 import { getBlockingLesson, resumeIndex } from "@/lib/progress/state";
 import { LessonRun } from "./LessonRun";
-import { PlayerShell, PlayerSkeleton } from "./PlayerShell";
+import { PlayerShell, PlayerSkeleton, uniformNodes } from "./PlayerShell";
 import { QuizRun } from "./QuizRun";
 
 /**
@@ -20,19 +21,20 @@ export function LessonPlayer({ lesson, course }: { lesson: Lesson; course: Cours
   const blocking = getBlockingLesson(snapshot, course, lesson.id);
   if (blocking) {
     return (
-      <PlayerShell progress={0} progressLabel="Locked">
+      <PlayerShell nodes={uniformNodes(lesson.cards.length, "upcoming")} progressLabel="Locked">
         <div className="flex min-h-[60dvh] flex-col items-center justify-center text-center">
-          <div className="grid size-20 place-items-center rounded-pill bg-surface-muted text-ink-muted">
-            <LockIcon className="size-9" />
+          <div className="relative">
+            <NetworkMark mode="dim" className="size-24" />
+            <span className="absolute -right-1 -bottom-1 grid size-9 place-items-center rounded-node border-2 border-line-strong bg-surface text-ink-muted">
+              <LockIcon className="size-4" />
+            </span>
           </div>
-          <h1 className="mt-6 text-2xl font-bold tracking-tight text-balance">
-            {lesson.title} is locked
-          </h1>
+          <h1 className="mt-6 text-title font-semibold text-balance">{lesson.title} is locked</h1>
           <p className="mt-3 max-w-sm text-ink-muted">
-            Lessons unlock in order. Finish <strong className="text-ink">{blocking.title}</strong>{" "}
-            first and this one will open up.
+            Lessons unlock in order. Finish <strong className="font-semibold text-ink">{blocking.title}</strong>{" "}
+            first and this one will connect.
           </p>
-          <div className="mt-8 flex w-full max-w-sm flex-col gap-3">
+          <div className="mt-8 flex w-full max-w-sm flex-col gap-2">
             <ButtonLink href={`/lesson/${blocking.id}`}>Go to {blocking.title}</ButtonLink>
             <ButtonLink href="/" variant="ghost">
               Back to courses
