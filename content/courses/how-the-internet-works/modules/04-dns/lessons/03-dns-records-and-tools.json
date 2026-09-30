@@ -1,0 +1,145 @@
+{
+  "id": "dns-records-and-tools",
+  "kind": "lesson",
+  "title": "DNS Records and Tools",
+  "order": 3,
+  "isFree": true,
+  "cards": [
+    {
+      "id": "many-answers",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "One name, many answers",
+      "body": "So far, DNS has turned a name into an address. But a domain like example.com needs more than one answer. There's the website's IPv4 address, its IPv6 address, and somewhere for email to go.\n\nDNS keeps each kind of answer in a different **record**. When you look something up, you ask for a particular **record type**."
+    },
+    {
+      "id": "record-types",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Four record types",
+      "body": "- An **A** record holds an **IPv4** address, like `198.51.100.10`. (A is for address.)\n- An **AAAA** record holds an **IPv6** address, like `2001:db8::10`. It's called *quad-A* because an IPv6 address is four times as long as an IPv4 one: 128 bits instead of 32.\n- A **CNAME** record says \"this name is an alias: go and look up this *other* name instead\". For example, `www.example.com` can point to `example.com`.\n- An **MX** record (mail exchange) names the server that receives **email** for the domain, with a priority number, like `10 mail.example.com`."
+    },
+    {
+      "id": "match-records",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each record type to a value it could hold for example.com.",
+      "pairs": [
+        { "id": "a", "left": "A", "right": "`198.51.100.10`" },
+        { "id": "aaaa", "left": "AAAA", "right": "`2001:db8::10`" },
+        { "id": "cname", "left": "CNAME (for www)", "right": "`example.com`" },
+        { "id": "mx", "left": "MX", "right": "`10 mail.example.com`" }
+      ],
+      "explanation": "**A** holds an IPv4 address (dots), and **AAAA** holds an IPv6 address (colons and hex). **CNAME** holds another *name* to look up instead. **MX** holds a priority number and the name of a mail server."
+    },
+    {
+      "id": "quad-a",
+      "type": "numeric_input",
+      "difficulty": "core",
+      "prompt": "An IPv6 address is 128 bits and an IPv4 address is 32 bits. How many times longer is the IPv6 address?",
+      "base": "decimal",
+      "answer": 4,
+      "explanation": "128 ÷ 32 = **4**. That's where the name AAAA comes from: four times the length of an A record's address."
+    },
+    {
+      "id": "lookup-aaaa",
+      "type": "terminal",
+      "difficulty": "core",
+      "prompt": "Ask DNS for example.com's **AAAA** record by running `nslookup -type=AAAA example.com`.",
+      "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
+      "commands": [
+        {
+          "command": "nslookup -type=AAAA example.com",
+          "aliases": ["nslookup -query=AAAA example.com", "nslookup -q=AAAA example.com"],
+          "description": "Look up example.com's IPv6 address",
+          "output": "Server:\t\t127.0.0.53\nAddress:\t127.0.0.53#53\n\nNon-authoritative answer:\nName:\texample.com\nAddress: 2001:db8::10"
+        }
+      ],
+      "success": {
+        "type": "answer",
+        "question": "What is example.com's IPv6 address?",
+        "accepted": ["2001:db8::10", "2001:db8:0:0:0:0:0:10"]
+      },
+      "explanation": "The answer is `2001:db8::10`, an IPv6 address, because AAAA records hold IPv6 addresses. The address on the `Address:` line near the top, `127.0.0.53`, belongs to the DNS helper on this computer that answered the question, not to example.com."
+    },
+    {
+      "id": "record-for-email",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Someone sends an email to `hello@example.com`. Which record type tells their mail server where to deliver it?",
+      "options": [
+        { "id": "mx", "text": "MX" },
+        { "id": "a", "text": "A" },
+        { "id": "aaaa", "text": "AAAA" },
+        { "id": "cname", "text": "CNAME" }
+      ],
+      "correctOptionId": "mx",
+      "explanation": "**MX** (mail exchange) records name the server that receives email for a domain. The website and the mail server are often different machines, which is why email has its own record type. A and AAAA give addresses, and CNAME points to another name."
+    },
+    {
+      "id": "dig-cname",
+      "type": "terminal",
+      "difficulty": "core",
+      "prompt": "Run `dig www.example.com` and look at the ANSWER SECTION. There are two lines this time.",
+      "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
+      "commands": [
+        {
+          "command": "dig www.example.com",
+          "aliases": ["dig www.example.com."],
+          "description": "Look up www.example.com and show the full answer",
+          "output": "; <<>> DiG 9.18.28 <<>> www.example.com\n;; global options: +cmd\n;; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 5170\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 65494\n;; QUESTION SECTION:\n;www.example.com.\t\tIN\tA\n\n;; ANSWER SECTION:\nwww.example.com.\t1800\tIN\tCNAME\texample.com.\nexample.com.\t\t1800\tIN\tA\t198.51.100.10\n\n;; Query time: 31 msec\n;; SERVER: 127.0.0.53#53(127.0.0.53) (UDP)\n;; WHEN: Tue Sep 29 10:16:40 UTC 2026\n;; MSG SIZE  rcvd: 74"
+        }
+      ],
+      "success": {
+        "type": "answer",
+        "question": "www.example.com is an alias for which name?",
+        "accepted": ["example.com", "example.com."]
+      },
+      "explanation": "The first line is a **CNAME** record: `www.example.com` is an alias for `example.com`. The resolver followed it and looked up example.com's **A** record on the second line, giving `198.51.100.10`. The dot at the end of `example.com.` is the root from lesson 1."
+    },
+    {
+      "id": "follow-cname",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "Put the steps in order for a browser opening `www.example.com`.",
+      "items": [
+        { "id": "ask-www", "label": "Look up www.example.com" },
+        { "id": "get-alias", "label": "Get a CNAME record: it's an alias for example.com" },
+        { "id": "ask-a", "label": "Look up the A record for example.com" },
+        { "id": "get-address", "label": "Get the address 198.51.100.10" },
+        { "id": "connect", "label": "Connect to 198.51.100.10" }
+      ],
+      "explanation": "A CNAME doesn't contain an address, just another name. So the lookup continues with **example.com** until it reaches an **A** record with an actual address. Only then can the browser connect."
+    },
+    {
+      "id": "lookalikes",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "prompt": "A message says \"Log in to your example.com account\" and offers four links. Which one really belongs to **example.com**?",
+      "options": [
+        { "id": "digit-one", "text": "examp1e.com/login" },
+        { "id": "subdomain-trick", "text": "example.com.account-check.example.org" },
+        { "id": "hyphen", "text": "example-com.example.org" },
+        { "id": "real", "text": "login.example.com" }
+      ],
+      "correctOptionId": "real",
+      "explanation": "Read from the right. `login.example.com` ends in **example.com**, so it's a subdomain that example.com's owner controls.\n\n- `examp1e.com` uses the digit **1** instead of the letter **l**. It's a completely different domain that anyone could register.\n- The other two end in **example.org**, so they belong to whoever owns example.org, whatever the start of the name says.\n\nScammers register lookalike names like these to trick people into typing their passwords. Always check the right-hand end of the name."
+    },
+    {
+      "id": "mx-priority",
+      "type": "numeric_input",
+      "difficulty": "challenge",
+      "prompt": "example.com has two MX records: `10 mail.example.com` and `20 backup.example.com`. Which **priority number** does a sending mail server try first?",
+      "base": "decimal",
+      "answer": 10,
+      "explanation": "With MX records, the **lower** number is tried first, so the priority **10** server, mail.example.com, gets the email. If it doesn't answer, the sender tries priority 20, the backup. It's like a to-do list: number 10 comes before number 20."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- DNS stores different kinds of answer in **records**.\n- **A**: an IPv4 address. **AAAA**: an IPv6 address. **CNAME**: an alias for another name. **MX**: the mail server, with a priority (lower is tried first).\n- `nslookup` and `dig` let you ask DNS questions yourself.\n- Watch out for **lookalike** names: always check the right-hand end.\n\nThat's the end of the DNS lessons. Take the quiz to unlock Ports and Protocols."
+    }
+  ]
+}

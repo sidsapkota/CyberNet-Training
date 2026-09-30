@@ -1,0 +1,191 @@
+{
+  "id": "what-happens-when-you-type-a-url",
+  "kind": "lesson",
+  "title": "What Happens When You Type a URL",
+  "order": 3,
+  "isFree": true,
+  "cards": [
+    {
+      "id": "press-enter",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "One press of Enter",
+      "body": "You type `https://www.example.com/news` and press **Enter**. Less than a second later, the page is on your screen.\n\nIn that second, almost everything in this course happens: binary, addresses, NAT, packets, routers, DNS, ports, TCP, TLS and HTTP. In this lesson you'll follow the whole journey, step by step, and do each part yourself."
+    },
+    {
+      "id": "url-parts",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Reading the address",
+      "body": "The web address you type is called a **URL** (Uniform Resource Locator). `https://www.example.com/news` has three parts:\n\n- `https` is the **scheme**: which protocol to use. HTTPS means HTTP inside TLS, on port 443 unless the URL says otherwise.\n- `www.example.com` is the **host**: the name DNS will turn into an IP address.\n- `/news` is the **path**: which page to ask the server for."
+    },
+    {
+      "id": "url-parts-jobs",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each part of `https://www.example.com/news` to what the browser does with it.",
+      "pairs": [
+        { "id": "scheme", "left": "`https`", "right": "Use TLS, on port 443" },
+        { "id": "host", "left": "`www.example.com`", "right": "Look it up with DNS" },
+        { "id": "path", "left": "`/news`", "right": "Ask for it in an HTTP GET request" }
+      ],
+      "explanation": "The **scheme** picks the protocol and port, the **host** is looked up with DNS to find the server, and the **path** goes into the HTTP request so the server knows which page you want."
+    },
+    {
+      "id": "step-dns",
+      "type": "terminal",
+      "difficulty": "core",
+      "prompt": "**Step 1: DNS.** The browser needs an IP address for `www.example.com`. Do the lookup yourself with `nslookup www.example.com`.",
+      "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
+      "commands": [
+        {
+          "command": "nslookup www.example.com",
+          "aliases": ["nslookup www.example.com."],
+          "description": "Ask DNS for the address of www.example.com",
+          "output": "Server:\t\t127.0.0.53\nAddress:\t127.0.0.53#53\n\nNon-authoritative answer:\nwww.example.com\tcanonical name = example.com.\nName:\texample.com\nAddress: 198.51.100.10\nName:\texample.com\nAddress: 2001:db8::10"
+        }
+      ],
+      "success": {
+        "type": "answer",
+        "question": "Which IPv4 address will the browser connect to?",
+        "accepted": ["198.51.100.10"]
+      },
+      "explanation": "`www.example.com` is a **CNAME** (an alias) for `example.com`, whose **A** record is `198.51.100.10`. It also has an IPv6 address, `2001:db8::10`, from its **AAAA** record, and many browsers would try that first. Either way, the lookup probably went through caches, a resolver and maybe the root, `.com` and authoritative servers, all in a few milliseconds."
+    },
+    {
+      "id": "step-route",
+      "type": "packet_path",
+      "difficulty": "core",
+      "prompt": "**Step 2: the first packet leaves.** Send the laptop's first packet (a TCP SYN to `198.51.100.10:443`) to the web server.",
+      "nodes": [
+        { "id": "laptop", "kind": "device", "label": "Laptop", "address": "192.168.1.20", "col": 0, "row": 1 },
+        { "id": "tv", "kind": "device", "label": "Smart TV", "address": "192.168.1.31", "col": 0, "row": 2 },
+        { "id": "home", "kind": "router", "label": "Home router (NAT)", "address": "203.0.113.7", "col": 1, "row": 1 },
+        { "id": "isp-a", "kind": "router", "label": "ISP router A", "address": "203.0.113.1", "col": 2, "row": 0 },
+        { "id": "isp-b", "kind": "router", "label": "ISP router B", "address": "203.0.113.2", "col": 2, "row": 2 },
+        { "id": "server", "kind": "server", "label": "example.com", "address": "198.51.100.10", "col": 3, "row": 1 }
+      ],
+      "links": [
+        { "from": "laptop", "to": "home" },
+        { "from": "tv", "to": "home" },
+        { "from": "home", "to": "isp-a" },
+        { "from": "home", "to": "isp-b" },
+        { "from": "isp-a", "to": "server" },
+        { "from": "isp-b", "to": "server" }
+      ],
+      "source": "laptop",
+      "destination": "server",
+      "validPaths": [
+        ["laptop", "home", "isp-a", "server"],
+        ["laptop", "home", "isp-b", "server"]
+      ],
+      "explanation": "Either ISP router works: routers pick the next hop from their routing tables. On the way out, the home router used **NAT** to swap the laptop's `192.168.1.20` and its temporary port for its own public address `203.0.113.7` and a public port, recording the swap in its NAT table. The router shows its public address here because that's the one the server will see."
+    },
+    {
+      "id": "order-handshakes",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "**Step 3: connecting securely.** Put the steps in order, from the first packet to the page arriving.",
+      "items": [
+        { "id": "syn", "label": "Laptop sends SYN to 198.51.100.10:443" },
+        { "id": "syn-ack", "label": "Server replies SYN-ACK" },
+        { "id": "ack", "label": "Laptop sends ACK: the TCP connection is open" },
+        { "id": "tls", "label": "TLS handshake: keys agreed and the certificate checked" },
+        { "id": "request", "label": "Laptop sends an encrypted GET /news request" },
+        { "id": "response", "label": "Server sends an encrypted 200 OK response" }
+      ],
+      "explanation": "First **TCP** opens a reliable connection with its three-way handshake. Then the **TLS** handshake agrees secret keys and proves the server is really example.com. Only then does the **HTTP** request travel, encrypted, followed by the response."
+    },
+    {
+      "id": "step-curl",
+      "type": "terminal",
+      "difficulty": "core",
+      "prompt": "**Steps 1 to 4 in one go.** Run `curl -v https://www.example.com/news` and watch DNS, TCP, TLS and HTTP happen. Then find which **port** curl connected to.",
+      "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
+      "commands": [
+        {
+          "command": "curl -v https://www.example.com/news",
+          "description": "Fetch the page over HTTPS and show every step",
+          "output": "* Host www.example.com:443 was resolved.\n* IPv6: 2001:db8::10\n* IPv4: 198.51.100.10\n*   Trying [2001:db8::10]:443...\n* Immediate connect fail for 2001:db8::10: Network is unreachable\n*   Trying 198.51.100.10:443...\n* Connected to www.example.com (198.51.100.10) port 443\n* ALPN: curl offers h2,http/1.1\n* TLSv1.3 (OUT), TLS handshake, Client hello (1):\n* TLSv1.3 (IN), TLS handshake, Server hello (2):\n* TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):\n* TLSv1.3 (IN), TLS handshake, Certificate (11):\n* TLSv1.3 (IN), TLS handshake, CERT verify (15):\n* TLSv1.3 (IN), TLS handshake, Finished (20):\n* TLSv1.3 (OUT), TLS handshake, Finished (20):\n* SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384 / X25519 / RSASSA-PSS\n* ALPN: server accepted h2\n* Server certificate:\n*  subject: CN=example.com\n*  subjectAltName: host \"www.example.com\" matched cert's \"www.example.com\"\n*  issuer: C=XX; O=Example Certificate Authority; CN=Example CA R1\n*  SSL certificate verify ok.\n> GET /news HTTP/2\n> Host: www.example.com\n> User-Agent: curl/8.5.0\n> Accept: */*\n>\n< HTTP/2 200\n< content-type: text/html; charset=UTF-8\n< content-length: 4312\n<\n[4312 bytes of page data]"
+        }
+      ],
+      "success": {
+        "type": "answer",
+        "question": "Which port did curl connect to?",
+        "accepted": ["443", "port 443"]
+      },
+      "explanation": "`Connected to www.example.com (198.51.100.10) port 443`: port **443**, the standard HTTPS port. Reading from the top, you can see the whole course: the **DNS** answer (`198.51.100.10`), the **TCP** connection (`Connected`), the **TLS** handshake and certificate check, the encrypted **HTTP** request (`GET /news`), and the response (`HTTP/2 200`). (curl tried the IPv6 address first, but this network has no IPv6 connection, so it fell back to IPv4.)"
+    },
+    {
+      "id": "page-rebuilt",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Rebuilding the page",
+      "body": "The response comes back as a stream of **packets**, hop by hop, to your router's public address and port. The router's **NAT table** sends them on to your laptop.\n\nSome packets may take a different route or arrive out of order. In Module 3 we said packets *usually* take one route, and now you know it doesn't matter either way: **TCP** uses its byte-counting sequence numbers to put everything back in order, and gets any lost data sent again. Then **TLS** decrypts it.\n\nFinally the browser reads the HTML, sends more requests for the images and styles it mentions, and draws the page. Done: all in under a second."
+    },
+    {
+      "id": "whole-journey",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "Put the whole journey in order, from pressing Enter to seeing the page.",
+      "items": [
+        { "id": "dns", "label": "DNS turns www.example.com into 198.51.100.10" },
+        { "id": "tcp", "label": "TCP handshake with the server on port 443" },
+        { "id": "tls", "label": "TLS handshake: keys agreed and the certificate checked" },
+        { "id": "get", "label": "The browser sends an encrypted GET request for /news" },
+        { "id": "response", "label": "The server replies with 200 OK and the page's HTML" },
+        { "id": "reassemble", "label": "TCP puts the packets back in order and TLS decrypts them" },
+        { "id": "draw", "label": "The browser fetches images and styles, then draws the page" }
+      ],
+      "explanation": "Find the address (**DNS**), open a reliable connection (**TCP**), secure it (**TLS**), ask (**HTTP GET**), get the answer (**200 OK**), rebuild and decrypt it (**TCP and TLS**), then draw it. Every one of these messages travelled as **packets**, hop by hop, through your router's **NAT**, as **bits**."
+    },
+    {
+      "id": "which-step-failed",
+      "type": "match_pairs",
+      "difficulty": "challenge",
+      "prompt": "When a page won't load, the error tells you which step failed. Match each error to the step.",
+      "pairs": [
+        { "id": "not-found", "left": "Server not found", "right": "The DNS lookup failed" },
+        { "id": "timed-out", "left": "Connection timed out", "right": "Nothing answered the TCP handshake" },
+        { "id": "not-private", "left": "Your connection is not private", "right": "The TLS certificate check failed" },
+        { "id": "404", "left": "404 Not Found", "right": "The server has no page at that path" }
+      ],
+      "explanation": "**Server not found** means DNS couldn't turn the name into an address. **Timed out** means the SYN never got a SYN-ACK back. **Not private** is a failed certificate check during the TLS handshake. And **404** means everything worked right up to HTTP, but there's nothing at that path. Each error points to a different step of the journey."
+    },
+    {
+      "id": "route-the-reply",
+      "type": "packet_path",
+      "difficulty": "challenge",
+      "prompt": "Now the **reply**. The server sends the page to `203.0.113.7:40001`, the router's public address and port. **Router A is down.** Route the reply back to the laptop.",
+      "nodes": [
+        { "id": "phone", "kind": "device", "label": "Phone", "address": "192.168.1.21", "col": 0, "row": 0 },
+        { "id": "laptop", "kind": "device", "label": "Laptop", "address": "192.168.1.20", "col": 0, "row": 1 },
+        { "id": "home", "kind": "router", "label": "Home router (NAT)", "address": "203.0.113.7", "col": 1, "row": 1 },
+        { "id": "rc", "kind": "router", "label": "Router C", "address": "203.0.113.3", "col": 1, "row": 2 },
+        { "id": "ra", "kind": "router", "label": "Router A (down)", "address": "203.0.113.1", "col": 2, "row": 0 },
+        { "id": "rb", "kind": "router", "label": "Router B", "address": "203.0.113.2", "col": 2, "row": 2 },
+        { "id": "server", "kind": "server", "label": "example.com", "address": "198.51.100.10", "col": 3, "row": 1 }
+      ],
+      "links": [
+        { "from": "server", "to": "ra" },
+        { "from": "server", "to": "rb" },
+        { "from": "ra", "to": "home" },
+        { "from": "rb", "to": "rc" },
+        { "from": "rc", "to": "home" },
+        { "from": "home", "to": "laptop" },
+        { "from": "home", "to": "phone" }
+      ],
+      "source": "server",
+      "destination": "laptop",
+      "validPaths": [["server", "rb", "rc", "home", "laptop"]],
+      "explanation": "With Router A down, the reply goes **B → C → home router**, which is a longer route than the request may have taken. That's fine: routes don't have to match in both directions. At the home router, **NAT** looks up port 40001 in its table, finds `192.168.1.20`, and passes the reply to the laptop, not the phone."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap: How the Internet Works",
+      "body": "You've followed a web page all the way from a key press to your screen:\n\n- Everything is **bits**, grouped into bytes and written in binary or hex.\n- Devices have **IP addresses**. Homes share one public address using **NAT** and ports.\n- Data travels as **packets**, passed hop by hop by **routers**.\n- **DNS** turns names into addresses.\n- **Ports** pick the program. **TCP** makes delivery reliable, and **UDP** keeps it quick.\n- **HTTP** asks and answers, and **TLS** makes it private.\n\nTake the final quiz to finish the course. After that, you'll never look at a loading page the same way again."
+    }
+  ]
+}

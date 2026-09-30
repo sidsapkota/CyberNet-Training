@@ -1,0 +1,110 @@
+{
+  "id": "the-web-quiz",
+  "kind": "quiz",
+  "title": "The Web: Course Final",
+  "order": 99,
+  "isFree": true,
+  "passThreshold": 0.7,
+  "cards": [
+    {
+      "id": "octet-203",
+      "type": "binary_toggle",
+      "difficulty": "core",
+      "prompt": "Your router's public address is `203.0.113.7`. Build its first octet, **203**, in binary.",
+      "target": 203,
+      "explanation": "203 = 128 + 64 + 8 + 2 + 1, which is `11001011`. Start with the biggest position that fits: 128 leaves 75, 64 leaves 11, 8 leaves 3, 2 leaves 1, and 1 leaves 0."
+    },
+    {
+      "id": "server-sees",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Your phone at `192.168.1.21` loads a page. Your router's public address is `203.0.113.7`. Which address does the web server see as the sender?",
+      "options": [
+        { "id": "public", "text": "203.0.113.7" },
+        { "id": "phone", "text": "192.168.1.21" },
+        { "id": "router-inside", "text": "192.168.1.1" },
+        { "id": "none", "text": "No address, because HTTPS hides it" }
+      ],
+      "correctOptionId": "public",
+      "explanation": "The router uses **NAT** to swap the phone's private address (and port) for its public address `203.0.113.7` and a public port. HTTPS encrypts the content, but packets still need addresses to be delivered."
+    },
+    {
+      "id": "packet-count",
+      "type": "numeric_input",
+      "difficulty": "core",
+      "prompt": "A file is **4,500 bytes**. If each packet carries exactly **1,500 bytes of data**, how many packets are needed?",
+      "base": "decimal",
+      "answer": 3,
+      "unit": "packets",
+      "explanation": "4,500 ÷ 1,500 = **3** packets. (Real packets use part of their space for the IP and TCP information, so in practice it would take one more.)"
+    },
+    {
+      "id": "lookup-order",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "Nobody has looked up example.com recently. Put the DNS lookup in order.",
+      "items": [
+        { "id": "cache", "label": "Your device checks its cache" },
+        { "id": "resolver", "label": "Your device asks a resolver" },
+        { "id": "root", "label": "The resolver asks a root server" },
+        { "id": "tld", "label": "The resolver asks a .com TLD server" },
+        { "id": "authoritative", "label": "The resolver asks example.com's authoritative server" }
+      ],
+      "explanation": "Cache first, then the resolver does the asking: **root**, then **TLD**, then the **authoritative** server, which holds the real answer."
+    },
+    {
+      "id": "ports-final",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each service to its standard port.",
+      "pairs": [
+        { "id": "https", "left": "HTTPS", "right": "`443`" },
+        { "id": "http", "left": "HTTP", "right": "`80`" },
+        { "id": "dns", "left": "DNS", "right": "`53`" },
+        { "id": "ssh", "left": "SSH", "right": "`22`" }
+      ],
+      "explanation": "HTTPS **443**, HTTP **80**, DNS **53**, SSH **22**."
+    },
+    {
+      "id": "status-final",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each HTTP status code to its meaning.",
+      "pairs": [
+        { "id": "s200", "left": "`200`", "right": "OK" },
+        { "id": "s301", "left": "`301`", "right": "Moved permanently" },
+        { "id": "s404", "left": "`404`", "right": "Not found" },
+        { "id": "s500", "left": "`500`", "right": "Server error" }
+      ],
+      "explanation": "2xx success, 3xx redirect, 4xx a problem with the request, 5xx a problem on the server: **200** OK, **301** Moved Permanently, **404** Not Found, **500** Internal Server Error."
+    },
+    {
+      "id": "padlock-final",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "What does the padlock next to a web address mean?",
+      "options": [
+        { "id": "encrypted", "text": "Your connection to that site's name is encrypted" },
+        { "id": "trustworthy", "text": "The site is trustworthy and safe" },
+        { "id": "invisible", "text": "Nobody can tell which site you're visiting" },
+        { "id": "virus-free", "text": "The site has been checked for viruses" }
+      ],
+      "correctOptionId": "encrypted",
+      "explanation": "The padlock means the connection is **encrypted** with TLS, to the name in the address bar. Scam sites can have padlocks too, and the site you're visiting is usually still visible to the network."
+    },
+    {
+      "id": "journey-final",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "Put the journey of loading `https://example.com` in order.",
+      "items": [
+        { "id": "dns", "label": "DNS lookup finds the server's IP address" },
+        { "id": "tcp", "label": "TCP handshake: SYN, SYN-ACK, ACK" },
+        { "id": "tls", "label": "TLS handshake: keys agreed and the certificate checked" },
+        { "id": "get", "label": "Encrypted HTTP GET request" },
+        { "id": "response", "label": "200 OK response, and the page is drawn" }
+      ],
+      "explanation": "**DNS** finds the address, **TCP** connects, **TLS** secures the connection, **HTTP** asks, and the response is drawn as the page. That's the whole course in five steps."
+    }
+  ]
+}

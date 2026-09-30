@@ -1,0 +1,141 @@
+{
+  "id": "http-requests-and-responses",
+  "kind": "lesson",
+  "title": "HTTP Requests and Responses",
+  "order": 1,
+  "isFree": true,
+  "cards": [
+    {
+      "id": "you-asked",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Nothing arrives unless you ask",
+      "body": "Every web page, picture and video you've ever seen online arrived because your browser **asked** for it. Websites never just push pages at you.\n\nThe asking and answering follows a protocol you met in the last module: **HTTP**. Let's see what those messages actually look like."
+    },
+    {
+      "id": "request-and-response",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Requests and responses",
+      "body": "**HTTP** stands for **HyperText Transfer Protocol**. Your browser (the **client**) sends a **request**, and the server sends back a **response**. A simple request looks like this:\n\n`GET /news HTTP/1.1`\n`Host: example.com`\n\nThe first line says what to do (`GET`, a **method**), which page (`/news`, the **path**), and the HTTP version. The `Host` line is a **header** that says which website you mean, because one server can host many sites.\n\nThe response starts with a **status line**, like `HTTP/1.1 200 OK`, then more headers, then the **body**: the page's content itself."
+    },
+    {
+      "id": "request-parts",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each part of an HTTP message to its job.",
+      "pairs": [
+        { "id": "method", "left": "The method (`GET`)", "right": "What you want the server to do" },
+        { "id": "path", "left": "The path (`/news`)", "right": "Which page or file you want" },
+        { "id": "host", "left": "The `Host` header", "right": "Which website on the server you mean" },
+        { "id": "body", "left": "The response body", "right": "The content itself, like the page's HTML" }
+      ],
+      "explanation": "The **method** is the action, the **path** is which item, and the **Host** header picks the website. The response **body** carries the actual content, like the HTML that describes the page."
+    },
+    {
+      "id": "get-and-post",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "GET and POST",
+      "body": "The two methods you'll meet most are:\n\n- **GET**: \"please give me this\". It's used for loading pages, pictures and videos. Almost everything you do while browsing is a GET.\n- **POST**: \"please take this data\". It's used for sending something to the server, like filling in a form, logging in, posting a comment or uploading a photo. The data travels in the request's body.\n\nThere are a few other methods too, but GET and POST do most of the work on the web."
+    },
+    {
+      "id": "sign-up-method",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "You fill in a sign-up form and press **Create account**. Which method does the browser most likely use?",
+      "options": [
+        { "id": "post", "text": "POST" },
+        { "id": "get", "text": "GET" },
+        { "id": "syn", "text": "SYN" },
+        { "id": "mx", "text": "MX" }
+      ],
+      "correctOptionId": "post",
+      "explanation": "You're **sending** data (your name, email and password) to the server, so it's a **POST**. GET is for fetching things. SYN is part of TCP's handshake, and MX is a DNS record type: neither is an HTTP method."
+    },
+    {
+      "id": "status-codes",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Status codes",
+      "body": "Every response has a three-digit **status code**. The **first digit** tells you the kind of answer:\n\n- **2xx**: success\n- **3xx**: redirect (look somewhere else)\n- **4xx**: a problem with the request, like asking for something that isn't there\n- **5xx**: a problem on the server\n\nFour you'll see often: **200 OK** (here it is), **301 Moved Permanently** (it's at a new address now, go there), **404 Not Found** (there's nothing at that path) and **500 Internal Server Error** (something broke on the server)."
+    },
+    {
+      "id": "match-status",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each status code to its meaning.",
+      "pairs": [
+        { "id": "s200", "left": "`200`", "right": "OK: here's what you asked for" },
+        { "id": "s301", "left": "`301`", "right": "Moved permanently to a new address" },
+        { "id": "s404", "left": "`404`", "right": "Not found: nothing at that path" },
+        { "id": "s500", "left": "`500`", "right": "Something went wrong on the server" }
+      ],
+      "explanation": "**200** is success, **301** is a permanent redirect, **404** means the path doesn't exist, and **500** means the server hit an error. Check the first digit: 2 success, 3 redirect, 4 request problem, 5 server problem."
+    },
+    {
+      "id": "curl-headers",
+      "type": "terminal",
+      "difficulty": "core",
+      "prompt": "`curl -I` asks a server for just the headers of a response, without the page itself. Try it on `http://example.com/`, `http://example.com/old-news` and `http://example.com/missing`, then find where `/old-news` has moved to.",
+      "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
+      "commands": [
+        {
+          "command": "curl -I http://example.com/",
+          "aliases": ["curl -I http://example.com", "curl -I example.com"],
+          "description": "Get the response headers for the home page",
+          "output": "HTTP/1.1 200 OK\nContent-Type: text/html; charset=UTF-8\nContent-Length: 1256\nDate: Tue, 29 Sep 2026 10:20:15 GMT\nServer: nginx"
+        },
+        {
+          "command": "curl -I http://example.com/old-news",
+          "aliases": ["curl -I example.com/old-news"],
+          "description": "Get the response headers for /old-news",
+          "output": "HTTP/1.1 301 Moved Permanently\nLocation: http://example.com/news\nContent-Type: text/html\nContent-Length: 169\nDate: Tue, 29 Sep 2026 10:20:21 GMT\nServer: nginx"
+        },
+        {
+          "command": "curl -I http://example.com/missing",
+          "aliases": ["curl -I example.com/missing"],
+          "description": "Get the response headers for /missing",
+          "output": "HTTP/1.1 404 Not Found\nContent-Type: text/html\nContent-Length: 153\nDate: Tue, 29 Sep 2026 10:20:27 GMT\nServer: nginx"
+        }
+      ],
+      "success": {
+        "type": "answer",
+        "question": "Where has /old-news moved to?",
+        "accepted": ["http://example.com/news", "example.com/news", "/news"]
+      },
+      "explanation": "`/old-news` answered **301 Moved Permanently**, and its `Location` header says the new address: `http://example.com/news`. A browser would follow that automatically. The home page gave **200 OK**, and `/missing` gave **404 Not Found**.\n\n(`curl -I` actually sends a **HEAD** request, which is like GET but asks for the headers only.)"
+    },
+    {
+      "id": "requests-per-page",
+      "type": "numeric_input",
+      "difficulty": "challenge",
+      "prompt": "A web page is made of 1 HTML file, 3 images and 1 stylesheet (a file describing colours and layout). The browser has none of them saved yet. At least how many HTTP requests does it make to load the page?",
+      "base": "decimal",
+      "answer": 5,
+      "unit": "requests",
+      "explanation": "Each file is fetched with its own request: 1 + 3 + 1 = **5**. First the browser GETs the HTML, reads it, discovers it needs 3 images and a stylesheet, and requests those too. Big websites can need over a hundred requests for a single page."
+    },
+    {
+      "id": "error-500",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "prompt": "A page shows **500 Internal Server Error**. What does that tell you?",
+      "options": [
+        { "id": "server-problem", "text": "Something went wrong on the server, but your connection works: a response arrived" },
+        { "id": "wifi", "text": "Your Wi-Fi isn't working" },
+        { "id": "missing", "text": "The page doesn't exist" },
+        { "id": "typo", "text": "You typed the address wrong" }
+      ],
+      "correctOptionId": "server-problem",
+      "explanation": "A **5xx** code means the **server** had a problem. And the fact that you got any response at all proves your connection, DNS and the route to the server all worked. A page that doesn't exist or a typo in the path would give a **4xx** code, like 404, instead."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- **HTTP** is request and response: the browser asks, the server answers.\n- A request has a **method**, a **path** and **headers** like `Host`. A response has a **status code**, headers and a **body**.\n- **GET** fetches things, and **POST** sends data.\n- Status codes: **2xx** success, **3xx** redirect, **4xx** request problem, **5xx** server problem. Know 200, 301, 404 and 500.\n\nNext: keeping all of this private with HTTPS."
+    }
+  ]
+}

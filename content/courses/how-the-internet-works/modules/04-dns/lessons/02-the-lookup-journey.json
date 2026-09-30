@@ -1,0 +1,145 @@
+{
+  "id": "the-lookup-journey",
+  "kind": "lesson",
+  "title": "The Lookup Journey",
+  "order": 2,
+  "isFree": true,
+  "cards": [
+    {
+      "id": "milliseconds",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Millions of names, one answer",
+      "body": "There are hundreds of millions of domain names. No single computer keeps a list of them all, and no single computer could answer everyone's questions.\n\nYet a DNS lookup usually takes just a few milliseconds, and often the answer comes back without your question ever leaving your house. How?"
+    },
+    {
+      "id": "cache-and-resolver",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "First stop: memory",
+      "body": "Your device keeps recent answers in a **cache**: a short-term memory of lookups it has already done. If you visited example.com a minute ago, the address is probably still there, and no question needs to be sent at all.\n\nIf it isn't, your device asks a **resolver**. That's a server whose job is to find answers for you, usually run by your internet provider or by a public DNS service you've chosen. The resolver has its own cache too, shared by everyone who uses it, so popular names are often answered straight away."
+    },
+    {
+      "id": "resolver-trip",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "The resolver's trip",
+      "body": "When the resolver doesn't know the answer, it works it out step by step, like asking for directions by country, then town, then street:\n\n1. It asks a **root server**: \"Who handles `.com`?\" There are 13 named root servers, run as well over a thousand copies around the world.\n2. It asks a **`.com` TLD server**: \"Who's in charge of `example.com`?\"\n3. It asks example.com's **authoritative server**, the one that holds example.com's actual records: \"What's the address?\"\n\nThe resolver sends the answer back to your device, and both of them keep a copy in their cache for next time."
+    },
+    {
+      "id": "lookup-steps",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "Nobody has looked up example.com recently. Put the steps of the lookup in order.",
+      "items": [
+        { "id": "cache", "label": "Your device checks its own cache" },
+        { "id": "ask-resolver", "label": "Your device asks a resolver" },
+        { "id": "root", "label": "The resolver asks a root server who handles .com" },
+        { "id": "tld", "label": "The resolver asks a .com server who's in charge of example.com" },
+        { "id": "authoritative", "label": "The resolver asks example.com's authoritative server for the address" },
+        { "id": "answer", "label": "The answer comes back, and copies are kept in the caches" }
+      ],
+      "explanation": "Your device always checks its **cache** first. Then the resolver goes from general to specific: **root**, then **TLD**, then the **authoritative** server, which is the only one that actually knows example.com's address. Finally, the answer is saved so the next lookup is instant."
+    },
+    {
+      "id": "server-roles",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each DNS server to its job.",
+      "pairs": [
+        { "id": "resolver", "left": "Resolver", "right": "Does the asking for you and caches answers" },
+        { "id": "root", "left": "Root server", "right": "Knows where to find each TLD's servers" },
+        { "id": "tld", "left": "TLD server", "right": "Knows who's in charge of each domain" },
+        { "id": "authoritative", "left": "Authoritative server", "right": "Holds a domain's actual records" }
+      ],
+      "explanation": "The **resolver** works for you. The **root** servers point to the TLD servers, the **TLD** servers point to each domain's authoritative servers, and the **authoritative** server holds the real answer."
+    },
+    {
+      "id": "who-has-answer",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Which server holds the official IP address of example.com?",
+      "options": [
+        { "id": "authoritative", "text": "example.com's authoritative server" },
+        { "id": "root", "text": "A root server" },
+        { "id": "tld", "text": "The .com TLD server" },
+        { "id": "device", "text": "Your own device" }
+      ],
+      "correctOptionId": "authoritative",
+      "explanation": "Only example.com's **authoritative** server holds its official records. The root and TLD servers just point the way, like signposts. Your device and the resolver may keep *copies* in their caches, but copies come from the authoritative server in the first place."
+    },
+    {
+      "id": "dns-ttl",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "How long to remember: TTL again",
+      "body": "A cached answer can't be kept forever, because a website might move to a new address. So every DNS answer comes with a **TTL** in **seconds**: how long it may be kept in a cache before it has to be looked up again. A TTL of 300 means \"remember this for 5 minutes\".\n\nYou've seen the letters TTL before! In Module 3, a packet's **TTL** was a **hop limit**, lowered by 1 at each router. They share a name (*time to live*) but they are **different things**:\n\n- A packet's TTL counts **hops**, and stops lost packets looping forever.\n- A DNS answer's TTL counts **seconds**, and decides how long it can be cached."
+    },
+    {
+      "id": "ttl-minutes",
+      "type": "numeric_input",
+      "difficulty": "core",
+      "prompt": "A DNS answer has a TTL of **3,600**. How many **minutes** can it be cached for?",
+      "base": "decimal",
+      "answer": 60,
+      "unit": "minutes",
+      "explanation": "DNS TTLs are in seconds, and there are 60 seconds in a minute, so 3,600 ÷ 60 = **60 minutes**: one hour. If you typed 3,600, that's the number of seconds."
+    },
+    {
+      "id": "read-dig-ttl",
+      "type": "terminal",
+      "difficulty": "core",
+      "prompt": "`dig` is another tool for DNS lookups, and it shows more detail. Run `dig example.com`, then find the **TTL** in the ANSWER SECTION. It's the number just after the name.",
+      "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
+      "commands": [
+        {
+          "command": "dig example.com",
+          "aliases": ["dig example.com.", "dig example.com a", "dig a example.com"],
+          "description": "Look up example.com and show the full answer",
+          "output": "; <<>> DiG 9.18.28 <<>> example.com\n;; global options: +cmd\n;; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 41253\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 65494\n;; QUESTION SECTION:\n;example.com.\t\t\tIN\tA\n\n;; ANSWER SECTION:\nexample.com.\t\t1800\tIN\tA\t198.51.100.10\n\n;; Query time: 24 msec\n;; SERVER: 127.0.0.53#53(127.0.0.53) (UDP)\n;; WHEN: Tue Sep 29 10:14:02 UTC 2026\n;; MSG SIZE  rcvd: 56"
+        }
+      ],
+      "success": {
+        "type": "answer",
+        "question": "What is the TTL of this answer, in seconds?",
+        "accepted": ["1800", "1,800", "1800 seconds", "1,800 seconds"]
+      },
+      "explanation": "The answer line reads `example.com. 1800 IN A 198.51.100.10`. From left to right, that's the name, the **TTL** (1,800 seconds, which is 30 minutes), the class (`IN`, for internet), the record type (`A`, an address), and the IP address itself. You'll learn about record types in the next lesson."
+    },
+    {
+      "id": "when-new-address",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "prompt": "At **11:50** you look up a website, and the answer has a TTL of **3,600**. At **12:00** the website moves to a new IP address. By what time can you be sure your device will use the new address?",
+      "options": [
+        { "id": "1250", "text": "By 12:50" },
+        { "id": "1200", "text": "Straight away at 12:00" },
+        { "id": "1300", "text": "By 13:00" },
+        { "id": "never", "text": "Never: the old address is cached forever" }
+      ],
+      "correctOptionId": "1250",
+      "explanation": "Your device may keep the old answer for 3,600 seconds (one hour) from when it got it: **11:50 + 1 hour = 12:50**. After that it must look the name up again and gets the new address. It won't happen at 12:00, because nothing tells your cache the site moved. It's also not 13:00, because the hour started when you looked it up, not when the site moved.\n\nTTL is the rule, but in practice some apps and resolvers cache a little differently (for example, a browser may keep its own copy for a short time), so real changes can take slightly longer to reach everyone. That's why website owners often lower the TTL before a move."
+    },
+    {
+      "id": "two-ttls",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "prompt": "Which statement about the two kinds of TTL is **true**?",
+      "options": [
+        { "id": "hops-and-seconds", "text": "A packet's TTL counts router hops; a DNS answer's TTL counts seconds of caching" },
+        { "id": "both-seconds", "text": "Both kinds count seconds" },
+        { "id": "both-hops", "text": "Both kinds count router hops" },
+        { "id": "copied", "text": "They're the same number: the DNS TTL is copied into each packet" }
+      ],
+      "correctOptionId": "hops-and-seconds",
+      "explanation": "A **packet's** TTL is lowered by 1 at every router, and the packet is dropped at 0. It counts **hops**. A **DNS answer's** TTL says how many **seconds** it may be cached. Same letters, same idea of a limit, but completely separate numbers that are used for different jobs."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- Your device checks its **cache** first, then asks a **resolver**.\n- The resolver asks a **root server**, then a **TLD server**, then the domain's **authoritative server**, which holds the real answer.\n- Answers are cached for their **TTL**, measured in seconds.\n- DNS TTL (seconds of caching) is different from a packet's TTL (a hop limit).\n\nNext: the different kinds of answer DNS can give, and how to read them."
+    }
+  ]
+}

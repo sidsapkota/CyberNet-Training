@@ -1,0 +1,108 @@
+{
+  "id": "dns-quiz",
+  "kind": "quiz",
+  "title": "DNS: Module Quiz",
+  "order": 99,
+  "isFree": true,
+  "passThreshold": 0.7,
+  "cards": [
+    {
+      "id": "dns-job",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "What is the main job of DNS?",
+      "options": [
+        { "id": "names-to-addresses", "text": "Turning names like example.com into IP addresses" },
+        { "id": "routing", "text": "Choosing the route packets take between routers" },
+        { "id": "encrypt", "text": "Encrypting websites so nobody can read them" },
+        { "id": "private", "text": "Giving devices at home their private addresses" }
+      ],
+      "correctOptionId": "names-to-addresses",
+      "explanation": "DNS, the **Domain Name System**, turns names into addresses, like a contacts app for the internet. Routers choose routes, and encryption is a different job entirely."
+    },
+    {
+      "id": "blog-name-parts",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "Put the parts of `blog.example.org` in order, from the **most general** at the top to the **most specific** at the bottom.",
+      "items": [
+        { "id": "root", "label": "The root (.)" },
+        { "id": "tld", "label": "org" },
+        { "id": "domain", "label": "example" },
+        { "id": "subdomain", "label": "blog" }
+      ],
+      "explanation": "Names are read right to left: the **root**, then the TLD `org`, then the domain `example`, then the subdomain `blog`."
+    },
+    {
+      "id": "server-jobs",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each DNS server to its job.",
+      "pairs": [
+        { "id": "resolver", "left": "Resolver", "right": "Asks the other servers for you" },
+        { "id": "root", "left": "Root server", "right": "Points to the servers for each TLD" },
+        { "id": "tld", "left": "TLD server", "right": "Points to each domain's own servers" },
+        { "id": "authoritative", "left": "Authoritative server", "right": "Holds the domain's real records" }
+      ],
+      "explanation": "The **resolver** does the legwork. **Root** servers point to TLD servers, **TLD** servers point to a domain's authoritative servers, and the **authoritative** server has the actual answer."
+    },
+    {
+      "id": "ttl-300",
+      "type": "numeric_input",
+      "difficulty": "core",
+      "prompt": "A DNS answer has a TTL of **300**. How many **minutes** can it be cached?",
+      "base": "decimal",
+      "answer": 5,
+      "unit": "minutes",
+      "explanation": "DNS TTLs are in seconds: 300 ÷ 60 = **5 minutes**."
+    },
+    {
+      "id": "record-values",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each record type for example.org to what it holds.",
+      "pairs": [
+        { "id": "a", "left": "A", "right": "`203.0.113.80`" },
+        { "id": "aaaa", "left": "AAAA", "right": "`2001:db8::80`" },
+        { "id": "cname", "left": "CNAME", "right": "Another name to look up instead" },
+        { "id": "mx", "left": "MX", "right": "The server that receives email" }
+      ],
+      "explanation": "**A** holds an IPv4 address and **AAAA** an IPv6 address. **CNAME** is an alias pointing to another name, and **MX** names the mail server."
+    },
+    {
+      "id": "lookup-example-org",
+      "type": "terminal",
+      "difficulty": "core",
+      "prompt": "Run `nslookup example.org` and find its **IPv4** address.",
+      "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
+      "commands": [
+        {
+          "command": "nslookup example.org",
+          "aliases": ["nslookup example.org."],
+          "description": "Ask DNS for the address of example.org",
+          "output": "Server:\t\t127.0.0.53\nAddress:\t127.0.0.53#53\n\nNon-authoritative answer:\nName:\texample.org\nAddress: 203.0.113.80\nName:\texample.org\nAddress: 2001:db8::80"
+        }
+      ],
+      "success": {
+        "type": "answer",
+        "question": "What is example.org's IPv4 address?",
+        "accepted": ["203.0.113.80"]
+      },
+      "explanation": "example.org's IPv4 address is `203.0.113.80`. The other answer, `2001:db8::80`, is its IPv6 address, and `127.0.0.53` at the top is the DNS helper that answered the question."
+    },
+    {
+      "id": "ttl-difference",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "How is a DNS answer's TTL different from a packet's TTL?",
+      "options": [
+        { "id": "seconds-vs-hops", "text": "DNS TTL counts seconds of caching; a packet's TTL counts router hops" },
+        { "id": "same", "text": "They're the same thing" },
+        { "id": "reversed", "text": "DNS TTL counts router hops; a packet's TTL counts seconds" },
+        { "id": "dns-only", "text": "Only DNS has a TTL; packets don't" }
+      ],
+      "correctOptionId": "seconds-vs-hops",
+      "explanation": "They share a name but not a job. A DNS TTL says how many **seconds** an answer may be cached. A packet's TTL is a **hop** limit that each router lowers by 1."
+    }
+  ]
+}

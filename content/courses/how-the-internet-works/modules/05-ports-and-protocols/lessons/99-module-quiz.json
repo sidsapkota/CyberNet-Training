@@ -1,0 +1,102 @@
+{
+  "id": "ports-and-protocols-quiz",
+  "kind": "quiz",
+  "title": "Ports and Protocols: Module Quiz",
+  "order": 99,
+  "isFree": true,
+  "passThreshold": 0.7,
+  "cards": [
+    {
+      "id": "port-count",
+      "type": "numeric_input",
+      "difficulty": "core",
+      "prompt": "Port numbers are 16 bits. How many different port numbers are there?",
+      "base": "decimal",
+      "answer": 65536,
+      "unit": "ports",
+      "explanation": "2¹⁶ = **65,536**, so ports go from 0 to 65,535."
+    },
+    {
+      "id": "standard-ports",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each port to its service.",
+      "pairs": [
+        { "id": "p443", "left": "`443`", "right": "HTTPS" },
+        { "id": "p80", "left": "`80`", "right": "HTTP" },
+        { "id": "p53", "left": "`53`", "right": "DNS" },
+        { "id": "p22", "left": "`22`", "right": "SSH" },
+        { "id": "p25", "left": "`25`", "right": "SMTP" }
+      ],
+      "explanation": "**443** is HTTPS, **80** is HTTP, **53** is DNS, **22** is SSH and **25** is SMTP (email between servers)."
+    },
+    {
+      "id": "handshake-order",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "Put TCP's three-way handshake in order, followed by the first data.",
+      "items": [
+        { "id": "syn", "label": "SYN" },
+        { "id": "syn-ack", "label": "SYN-ACK" },
+        { "id": "ack", "label": "ACK" },
+        { "id": "data", "label": "The request is sent" }
+      ],
+      "explanation": "**SYN** (can we talk?), **SYN-ACK** (yes, and can I?), **ACK** (yes). Then the connection is open for data."
+    },
+    {
+      "id": "game-protocol",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "An online game sends every player's position 30 times a second. A late update is useless, because a newer one is already on its way. Which is the better fit?",
+      "options": [
+        { "id": "udp", "text": "UDP, because it doesn't wait to resend lost data" },
+        { "id": "tcp", "text": "TCP, because every update must arrive" },
+        { "id": "dns", "text": "DNS, because it's the fastest protocol" },
+        { "id": "smtp", "text": "SMTP, because it delivers messages" }
+      ],
+      "correctOptionId": "udp",
+      "explanation": "When fresh data matters more than complete data, **UDP** fits: a lost update is simply replaced by the next one. TCP would pause to resend the old update, making the game lag. DNS and SMTP are for names and email, not game data."
+    },
+    {
+      "id": "nat-table",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "What does a home router's NAT table record?",
+      "options": [
+        { "id": "port-mapping", "text": "Which public port it gave to each device's private address and port" },
+        { "id": "websites", "text": "A list of websites that are allowed" },
+        { "id": "passwords", "text": "The Wi-Fi passwords of each device" },
+        { "id": "dns", "text": "The IP address of every domain name" }
+      ],
+      "correctOptionId": "port-mapping",
+      "explanation": "Each entry links a **public port**, like `203.0.113.7:40001`, to a **private address and port**, like `192.168.1.20:51000`. That's how the router knows where each reply belongs."
+    },
+    {
+      "id": "protocol-jobs",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each protocol to its job.",
+      "pairs": [
+        { "id": "dns", "left": "DNS", "right": "Turns names into IP addresses" },
+        { "id": "ssh", "left": "SSH", "right": "Securely controls another computer" },
+        { "id": "smtp", "left": "SMTP", "right": "Sends email" },
+        { "id": "imap", "left": "IMAP", "right": "Reads email kept on a server" }
+      ],
+      "explanation": "**DNS** looks up names, **SSH** is secure remote control, **SMTP** sends email and **IMAP** reads it."
+    },
+    {
+      "id": "sequence-owner",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Which protocol adds the **sequence numbers** that let data be put back in order?",
+      "options": [
+        { "id": "tcp", "text": "TCP" },
+        { "id": "ip", "text": "IP" },
+        { "id": "udp", "text": "UDP" },
+        { "id": "dns", "text": "DNS" }
+      ],
+      "correctOptionId": "tcp",
+      "explanation": "**TCP** adds sequence numbers, and they count bytes. IP adds the addresses, and UDP has no sequence numbers at all."
+    }
+  ]
+}

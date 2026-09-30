@@ -1,0 +1,145 @@
+{
+  "id": "https-and-the-padlock",
+  "kind": "lesson",
+  "title": "HTTPS and the Padlock",
+  "order": 2,
+  "isFree": true,
+  "cards": [
+    {
+      "id": "cafe-wifi",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Who else is on the path?",
+      "body": "You're on café Wi-Fi. From Module 3, you know your packets pass through the café's router, then your provider's routers, then a string of other routers, all owned by people you've never met.\n\nIf those packets are plain HTTP, every one of those devices could read them, including any password you type."
+    },
+    {
+      "id": "plain-vs-https",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "HTTPS: HTTP in a locked box",
+      "body": "Plain **HTTP** sends everything as readable text, a bit like writing on a postcard.\n\n**HTTPS** is the same HTTP, but carried inside another protocol called **TLS** (**Transport Layer Security**). TLS **encrypts** the data: it scrambles it with a secret key so that only your browser and the server can unscramble it. To anyone in between, it looks like random noise.\n\nHTTPS also lets your browser check that it's really talking to the site whose name you typed. It normally uses port **443**, while plain HTTP uses 80."
+    },
+    {
+      "id": "who-can-read",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "You log in to a site using **plain HTTP**, without the S. Who could read your password on its way?",
+      "options": [
+        { "id": "anyone-on-path", "text": "Anyone who controls a device along the route, like the café's Wi-Fi router" },
+        { "id": "only-server", "text": "Only the website's server" },
+        { "id": "nobody", "text": "Nobody, because passwords are always hidden" },
+        { "id": "only-dns", "text": "Only the DNS resolver" }
+      ],
+      "correctOptionId": "anyone-on-path",
+      "explanation": "Without encryption, the password travels as readable text through **every** device on the route: the Wi-Fi router, your provider's routers and more. The dots you see when typing a password only hide it on your screen, not on the network. DNS never sees your password at all: it only looks up names."
+    },
+    {
+      "id": "tls-handshake",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "The TLS handshake",
+      "body": "Right after TCP's handshake, TLS does a handshake of its own. In it, the browser and server **say hello and agree secret keys**, and the server **proves its identity with its certificate**.\n\nA **certificate** is like a digital ID card for a website. It says \"this server really is example.com\", and it's issued by a **certificate authority**: an organisation your browser trusts to check who owns a domain before vouching for it. If the certificate is valid and matches the name you typed, the handshake finishes.\n\nFrom then on, every HTTP request and response is encrypted with the agreed keys."
+    },
+    {
+      "id": "order-https",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "Put the steps of loading an HTTPS page in order.",
+      "items": [
+        { "id": "tcp", "label": "TCP handshake: SYN, SYN-ACK, ACK" },
+        { "id": "tls", "label": "TLS handshake: keys agreed and the certificate checked" },
+        { "id": "request", "label": "The browser sends an encrypted GET request" },
+        { "id": "response", "label": "The server sends back an encrypted response" }
+      ],
+      "explanation": "TCP opens the connection first. Then the **TLS handshake** agrees the secret keys and proves the server's identity with its certificate. Only after that does any HTTP travel, and it's all encrypted."
+    },
+    {
+      "id": "https-terms",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each HTTPS term to what it means.",
+      "pairs": [
+        { "id": "encryption", "left": "Encryption", "right": "Scrambling data so only the two ends can read it" },
+        { "id": "certificate", "left": "Certificate", "right": "A digital ID card for a website's name" },
+        { "id": "ca", "left": "Certificate authority", "right": "A trusted organisation that issues certificates" },
+        { "id": "padlock", "left": "The padlock icon", "right": "Shows the connection is encrypted" }
+      ],
+      "explanation": "**Encryption** keeps the data private on the way. The **certificate** proves the server's name, and it's issued by a **certificate authority** your browser trusts. The **padlock** means the connection is encrypted, and that's all it means, as you'll see next."
+    },
+    {
+      "id": "padlock-meaning",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "What the padlock doesn't mean",
+      "body": "The padlock means your connection to **that name** is encrypted. It does **not** mean the site is honest or safe.\n\nAnyone can get a certificate for a domain they own, including a scammer who registered a lookalike name like `examp1e.com`. Their site gets a padlock too. The padlock just means nobody in between can read what you send them. Always check the name itself.\n\nHTTPS also doesn't hide everything. People on the network can usually still see **which site** you're connecting to (from the address and the name) and how much data flows. What they can't see is **which pages** you visit on it or **what you type**."
+    },
+    {
+      "id": "read-certificate",
+      "type": "terminal",
+      "difficulty": "core",
+      "prompt": "Run `curl -v https://example.com` to watch a real HTTPS connection being made, then find **who issued** the certificate. Look for `O=` on the issuer line.",
+      "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
+      "commands": [
+        {
+          "command": "curl -v https://example.com",
+          "aliases": ["curl -v https://example.com/"],
+          "description": "Fetch example.com over HTTPS and show every step",
+          "output": "*   Trying 198.51.100.10:443...\n* Connected to example.com (198.51.100.10) port 443\n* ALPN: curl offers h2,http/1.1\n* TLSv1.3 (OUT), TLS handshake, Client hello (1):\n* TLSv1.3 (IN), TLS handshake, Server hello (2):\n* TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):\n* TLSv1.3 (IN), TLS handshake, Certificate (11):\n* TLSv1.3 (IN), TLS handshake, CERT verify (15):\n* TLSv1.3 (IN), TLS handshake, Finished (20):\n* TLSv1.3 (OUT), TLS handshake, Finished (20):\n* SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384 / X25519 / RSASSA-PSS\n* ALPN: server accepted h2\n* Server certificate:\n*  subject: CN=example.com\n*  start date: Aug  3 00:00:00 2026 GMT\n*  expire date: Nov  1 23:59:59 2026 GMT\n*  subjectAltName: host \"example.com\" matched cert's \"example.com\"\n*  issuer: C=XX; O=Example Certificate Authority; CN=Example CA R1\n*  SSL certificate verify ok.\n> GET / HTTP/2\n> Host: example.com\n> User-Agent: curl/8.5.0\n> Accept: */*\n>\n< HTTP/2 200\n< content-type: text/html; charset=UTF-8\n< content-length: 1256\n<\n[1256 bytes of page data]"
+        }
+      ],
+      "success": {
+        "type": "answer",
+        "question": "Which organisation issued example.com's certificate?",
+        "accepted": ["Example Certificate Authority", "Example CA R1", "Example CA"]
+      },
+      "explanation": "The issuer line says `O=Example Certificate Authority`: that's the **certificate authority** vouching that this server really is example.com. (This one is made up for the course. Real certificate authorities are organisations your browser has a built-in list of.)\n\nYou can see the whole story in the output: TCP connects to port **443**, the **TLS handshake** runs (the hellos, then the certificate), `SSL certificate verify ok` means the check passed, and only then is the `GET` request sent. Lines starting `>` are the request, and `<` lines are the response."
+    },
+    {
+      "id": "lookalike-padlock",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "You land on a login page at `examp1e.com` (with a digit 1), and it shows a **padlock**. What does the padlock prove?",
+      "options": [
+        { "id": "encrypted-only", "text": "Only that your connection to examp1e.com is encrypted" },
+        { "id": "real-site", "text": "That it's the real example.com" },
+        { "id": "safe-password", "text": "That it's safe to type your password" },
+        { "id": "checked-scams", "text": "That your browser has checked the site for scams" }
+      ],
+      "correctOptionId": "encrypted-only",
+      "explanation": "The padlock proves your connection is encrypted, to **examp1e.com**, which is whoever registered that lookalike name. It says nothing about whether they're honest, and it's certainly not the real example.com. Nobody can read what you type on the way, but the scammer receives it at the other end!"
+    },
+    {
+      "id": "cafe-can-see",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "prompt": "On café Wi-Fi you open `https://example.com/account/settings` and change your password. What can the café's network most likely see?",
+      "options": [
+        { "id": "site-only", "text": "That you're connecting to example.com, but not the page or what you type" },
+        { "id": "everything", "text": "Everything, including your new password" },
+        { "id": "page-not-password", "text": "The page /account/settings, but not the password" },
+        { "id": "nothing", "text": "Nothing at all, not even which site" }
+      ],
+      "correctOptionId": "site-only",
+      "explanation": "The **path** (`/account/settings`) and everything you send are inside the encrypted HTTP request, so they're hidden. But the network can usually still tell **which site** you're visiting, from the server's IP address and from the name, which normally appears in your DNS lookup and at the start of the TLS handshake. Newer technology can hide the name in some cases, but not the address you're connecting to."
+    },
+    {
+      "id": "certificate-warnings",
+      "type": "match_pairs",
+      "difficulty": "challenge",
+      "prompt": "Browsers show a warning when a certificate check fails. Match each warning to what went wrong.",
+      "pairs": [
+        { "id": "expired", "left": "Certificate has expired", "right": "Its valid dates have run out" },
+        { "id": "mismatch", "left": "Name doesn't match", "right": "It was issued for a different domain name" },
+        { "id": "untrusted", "left": "Issuer isn't trusted", "right": "No trusted certificate authority vouches for it" }
+      ],
+      "explanation": "Each certificate is only valid **between two dates**, only for the **names** listed in it, and only if a **trusted** certificate authority issued it. If any of these checks fails, the browser warns you. On a site where you'd log in or pay, don't click past the warning."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- **HTTPS** is HTTP inside **TLS**, which **encrypts** everything between your browser and the server (port 443).\n- In the **TLS handshake**, the two sides agree secret keys and the server proves its identity with a **certificate** from a **certificate authority**.\n- The **padlock** means *encrypted*, not *trustworthy*: scam sites can have one too.\n- Others can usually still see which site you visit, but not the pages or what you type.\n\nNext: the grand tour. Everything in this course, in one click."
+    }
+  ]
+}

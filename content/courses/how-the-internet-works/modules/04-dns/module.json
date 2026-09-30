@@ -1,0 +1,6 @@
+{
+  "id": "dns",
+  "title": "DNS",
+  "description": "Find out how a name like example.com becomes an address, through a chain of servers that answer in milliseconds.",
+  "order": 4
+}

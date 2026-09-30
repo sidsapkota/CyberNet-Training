@@ -16,7 +16,14 @@ describe("real content in /content", () => {
   it("orders How the Internet Works modules and lessons, each module ending in its quiz", () => {
     const { courses } = loadContent();
     const course = courses.find((c) => c.id === "how-the-internet-works");
-    expect(course?.modules.map((m) => m.id)).toEqual(["binary-and-data", "ip-addresses", "packets-and-routing"]);
+    expect(course?.modules.map((m) => m.id)).toEqual([
+      "binary-and-data",
+      "ip-addresses",
+      "packets-and-routing",
+      "dns",
+      "ports-and-protocols",
+      "the-web",
+    ]);
     expect(course?.modules.map((m) => m.lessons.map((l) => l.id))).toEqual([
       ["bits-and-binary", "bytes-file-sizes-and-hex", "binary-and-data-quiz"],
       ["what-is-an-ip-address", "public-and-private-addresses", "meet-ipv6", "ip-addresses-quiz"],
@@ -25,6 +32,14 @@ describe("real content in /content", () => {
         "routers-and-hops",
         "different-roads-same-destination",
         "packets-and-routing-quiz",
+      ],
+      ["names-and-numbers", "the-lookup-journey", "dns-records-and-tools", "dns-quiz"],
+      ["ports", "tcp-and-udp", "protocols-as-shared-rules", "ports-and-protocols-quiz"],
+      [
+        "http-requests-and-responses",
+        "https-and-the-padlock",
+        "what-happens-when-you-type-a-url",
+        "the-web-quiz",
       ],
     ]);
   });
