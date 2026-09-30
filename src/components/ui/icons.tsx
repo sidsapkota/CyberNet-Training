@@ -11,6 +11,9 @@ import {
   House,
   Laptop,
   LibraryBig,
+  LogIn,
+  LogOut,
+  Mail,
   Lightbulb,
   Lock,
   type LucideIcon,
@@ -24,6 +27,7 @@ import {
   Server,
   Sun,
   SquareTerminal,
+  Trash2,
   Undo2,
   Waypoints,
   X,
@@ -84,3 +88,9 @@ export const PathModeIcon = brandIcon(Route, "PathModeIcon");
 export const ExploreModeIcon = brandIcon(Compass, "ExploreModeIcon");
 export const LessonsIcon = brandIcon(BookCheck, "LessonsIcon");
 export const ModulesIcon = brandIcon(Waypoints, "ModulesIcon");
+
+// Accounts
+export const SignInIcon = brandIcon(LogIn, "SignInIcon");
+export const SignOutIcon = brandIcon(LogOut, "SignOutIcon");
+export const MailIcon = brandIcon(Mail, "MailIcon");
+export const DeleteIcon = brandIcon(Trash2, "DeleteIcon");

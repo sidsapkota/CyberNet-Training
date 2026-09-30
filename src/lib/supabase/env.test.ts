@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isSecretKey, parseSupabaseEnv, SupabaseEnvError } from "./env";
+import { isSecretKey, parseSecretKey, parseSupabaseEnv, SupabaseEnvError } from "./env";
 
 /** Builds an unsigned JWT-shaped string with the given role (tests only). */
 function fakeJwt(role: string): string {
@@ -59,5 +59,16 @@ describe("isSecretKey", () => {
     expect(isSecretKey(fakeJwt("anon"))).toBe(false);
     expect(isSecretKey("sb_publishable_abc")).toBe(false);
     expect(isSecretKey("eyJnot-a-jwt")).toBe(false);
+  });
+});
+
+describe("parseSecretKey", () => {
+  it("accepts secret keys and trims them", () => {
+    expect(parseSecretKey("  sb_secret_abc123  ")).toBe("sb_secret_abc123");
+  });
+
+  it("rejects empty values and publishable keys", () => {
+    expect(() => parseSecretKey(undefined)).toThrow(/SUPABASE_SECRET_KEY is empty/);
+    expect(() => parseSecretKey("sb_publishable_abc")).toThrow(/doesn't look like a secret key/);
   });
 });

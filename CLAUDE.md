@@ -6,9 +6,9 @@ lessons made of interactive **cards** and get instant, satisfying feedback.
 
 Audience: everyone from about **age 12 to adults**. See [Content style guide](#content-style-guide).
 
-Current state: v1. There is **no auth, database or payments yet**. Progress lives in `localStorage`
-behind the `ProgressStore` interface, so a Supabase implementation can replace it later. Supabase
-clients and config are prepared but unused (see [Environment and Supabase](#environment-and-supabase)).
+Current state: guests learn with progress in `localStorage`; learners who sign in (Google or email
+magic link) get progress synced to Supabase. Both sit behind the same `ProgressStore` interface. No
+payments or premium gating yet. See [Accounts and sync](#accounts-and-sync).
 Code is on GitHub: `sidsapkota/CyberNet-Training`, branch `main`.
 
 ## Commands
@@ -23,6 +23,7 @@ npm run validate-content  # validate every JSON file under /content
 npm run brand:assets      # regenerate logo SVGs + favicon from src/components/brand/geometry.ts
 npm run brand:mascot      # regenerate public/brand/mascot/<expression>.svg from the Mascot parts
 npm run check:supabase    # verify the Supabase URL + publishable key in .env.local (health check)
+npm run check:rls         # prove users can't read/write each other's rows (needs SUPABASE_SECRET_KEY)
 ```
 
 All of `build`, `lint`, `test` and `typecheck` must pass with zero errors and warnings.
@@ -169,6 +170,7 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
    `grade.test.ts`.
 2. Add the schema to the union in `src/cards/schema.ts`.
 3. Add the definition to `definitions` in `src/cards/registry.ts`.
+   Also add its pure grade function to `src/cards/grading.ts` (the server re-grades quiz answers with it).
 4. Add schema cases to `src/cards/schema.test.ts`, a fixture to `src/test/fixtures.ts` and a sample to
    `src/dev/card-samples.ts`, then try it on `/dev/cards`.
 
@@ -286,7 +288,10 @@ src/components/ui/       Button, Markdown, icons (lucide wrappers), CountUp, Pro
 src/lib/content/         schemas, fs loader (load.ts), server accessors (server.ts)
 src/lib/progress/        ProgressStore, localStorage impl, provider, xp, derived state
 src/lib/keyboard.ts      global keyboard shortcut helpers
-src/lib/supabase/        env validation, typed browser/server clients, generated DB types
+src/lib/supabase/        env validation, typed browser/server/admin clients, generated DB types
+src/lib/auth/            AuthProvider, verified user id, display-name rules, safe redirects
+src/app/actions/         Server Actions: progress writes (server-side XP), merge, account
+src/components/account/  login form, account panel, guest save-progress prompt
 supabase/                Supabase CLI project (config.toml; migrations go in supabase/migrations/)
 src/lib/network/         pure layout maths for the motif (quiz ring/grid, course path zig-zag + traces)
 src/lib/motion.ts        shared springs, easing and stagger for UI motion
@@ -324,23 +329,137 @@ src/dev/                 dev-only card samples + playground (served at /dev/card
   - `NEXT_PUBLIC_SUPABASE_URL` is the project URL.
   - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` is the publishable key (`sb_publishable_…`), called the
     "anon" key in older projects.
+  - `SUPABASE_SECRET_KEY` is the **server-only** secret key (`sb_secret_…`). It bypasses RLS. It's
+    read only by `src/lib/supabase/admin.ts` (`import "server-only"`), which only Server Actions in
+    `src/app/actions/` may import. Tests enforce both rules.
   - **Never put a secret or service_role key in a `NEXT_PUBLIC_` variable.** Those values are
-    bundled into browser JavaScript. `parseSupabaseEnv` rejects secret keys. Future server-only
-    secrets get unprefixed names and must only be read in server code.
+    bundled into browser JavaScript. `parseSupabaseEnv` rejects secret keys.
 - **Clients** (`src/lib/supabase/`):
   - `getSupabaseBrowserClient()` (`client.ts`) is for Client Components.
   - `createSupabaseServerClient()` (`server.ts`, `server-only`, cookie-based via `@supabase/ssr`)
     is for Server Components, Server Actions and Route Handlers; create one per request.
-  - Both read env through `getSupabaseEnv()` and throw `SupabaseEnvError` with setup
-    instructions if values are missing.
-  - **Nothing calls them yet,** so the app builds and runs with empty env values. Keep it that way
-    for anything that isn't Supabase-specific.
-- **Types:** `database.types.ts` is a placeholder. After tables exist, regenerate it with
+  - `createSupabaseAdminClient()` (`admin.ts`, `server-only`) uses the secret key. Only Server
+    Actions use it, after `requireUserId()`.
+  - All read env through `getSupabaseEnv()` and throw `SupabaseEnvError` with setup instructions
+    if values are missing. **Without Supabase env vars the app still builds and runs guest-only**
+    (the Proxy, AuthProvider and header all check). Keep it that way.
+- **Types:** regenerate `database.types.ts` after any schema change with
   `npx supabase gen types typescript --linked > src/lib/supabase/database.types.ts`.
-- **CLI:** use `npx supabase …`. Migrations go in `supabase/migrations/` and are created with
-  `npx supabase migration new <name>`. No tables exist yet.
-- **Progress:** when adding Supabase-backed progress, implement the existing `ProgressStore`
-  interface rather than changing components.
+- **CLI:** use `npx supabase …`. Migrations live in `supabase/migrations/`; create them with
+  `npx supabase migration new <name>`. Docker isn't available here, so verify the remote schema
+  with `npx supabase db query --linked -f <file>` (catalog queries) rather than `db diff`. If SQL
+  was applied by hand in the dashboard, check it matches, then run
+  `npx supabase migration repair --status applied <version> --linked`.
+
+## Accounts and sync
+
+### Auth (`@supabase/ssr`, App Router)
+- **Sign-in:** Google, or an email magic link (`/login`). The only personal data we collect is the
+  email and a display name. Learners may be 12, so there are no avatars, birthdays or real names:
+  - `/account` suggests a nickname.
+  - A trigger strips `avatar_url`, `picture`, `full_name` and `name` from auth user metadata.
+    Supabase still keeps the provider's data in `auth.identities`, which account deletion removes.
+- **`src/proxy.ts`** (Next 16's name for Middleware) refreshes the session cookie on each request
+  with `getClaims()`. It doesn't gate pages.
+- **`/auth/callback`** exchanges `?code=` (Google, and the default magic-link email, which uses PKCE
+  and so needs the same browser) or `?token_hash=&type=` (`verifyOtp`). Redirects only go to
+  same-site paths (`safeNextPath`). New users without a display name go to `/account?welcome=1`.
+- **Redirect URLs** (Supabase → Auth → URL Configuration): `http://localhost:3000/auth/callback`
+  and `https://cyber-net-training.vercel.app/auth/callback` are allowed. Any other origin (a phone
+  on the LAN, a preview deployment) must be added there, or sign-in falls back to the Site URL.
+- **Google sign-in** is in Testing mode (only allow-listed test accounts can use it).
+  **Before publishing the Google app out of Testing mode, the "Continue with Google" button must use
+  Google's official "G" logo** per Google's sign-in branding guidelines. For now it's text-only
+  (`src/components/account/LoginForm.tsx`). The logo is a third-party brand asset: use Google's
+  file as-is, as an exception to the lucide-only icon rule.
+- **Identity on the server** comes only from `requireUserId()` (`src/lib/auth/server.ts`), which
+  calls `auth.getUser()`. **Never use `getSession()` on the server, and never accept a user id from
+  the client.** `src/lib/auth/server-actions.test.ts` checks every action, and that `getSession(`
+  appears nowhere in `src/`.
+- **`AuthProvider`** (`src/lib/auth/AuthProvider.tsx`) holds the UI's auth state from
+  `onAuthStateChange`, plus the display name.
+  - It creates the browser client only in effects, so server and client render the same markup.
+  - It also chooses the progress store (see below).
+  - `useAuth()` exposes the auth state, whether accounts are available, `refreshProfile()` and
+    `signOut()`.
+- **Header:** guests see "Sign in" (desktop header, and the third phone tab). Signed-in learners
+  see their initial as a node, plus their name on desktop, linking to `/account`.
+- **`/account`:** edit the display name (via the user's own session, so RLS and the column grant
+  apply), sign out, and delete the account after a confirmation step.
+- **Account deletion:** `deleteAccountAction` calls `auth.admin.deleteUser`. Every table references
+  `auth.users` with `ON DELETE CASCADE`, so the profile and all progress go with it.
+
+### Progress: which store, and who decides XP
+- **Guests:** `LocalStorageProgressStore`, unchanged.
+- **Signed in:** `SupabaseProgressStore` (`src/lib/progress/supabaseProgressStore.ts`):
+  - **Reads** use the browser client with the user's session; RLS limits them to their own rows.
+    `rows.ts` maps rows to the snapshot, deriving best score and first pass from attempts.
+  - **Writes** call Server Actions (`src/app/actions/progress.ts`). The UI updates optimistically,
+    then takes whatever the server stored, and re-reads everything if a write fails.
+- **Swapping stores:** `ProgressProvider` accepts a changing store (`null` means not ready), so
+  components never know which store is in use.
+- **The server is the XP authority** (`src/lib/progress/authority.ts`, pure and tested):
+  - **Cards:** XP comes from the content's difficulty and `xp.ts`. The client's number only
+    signals first try or retry, so at worst a tampered client earns the first-try amount.
+  - **Lessons:** +20, only once every core card is recorded.
+  - **Quizzes:** attempts are **re-graded on the server** from their raw answers, using
+    `src/cards/grading.ts` (card type → pure grade function, no React). +50 for the first pass
+    only.
+- **Adding a card type** now includes registering its grader in `src/cards/grading.ts`; the
+  compiler enforces it.
+
+### Guest → account merge (`src/lib/progress/merge.ts`, tested)
+- **When it runs:** on sign-in, if this browser has guest progress, `mergeGuestProgressAction`
+  merges it on the server. The browser then clears local progress (`LocalStorageProgressStore.clear()`).
+  If the merge fails, local progress is kept for the next try.
+- **Rules:**
+  - Cards and lessons: the union, keeping the **earliest** `completedAt` (the activity chart
+    depends on it).
+  - Quiz attempts: the union, de-duplicated by time, and re-graded.
+  - XP is **recomputed** from the content, never added up.
+  - Unknown ids are dropped.
+  - Path/Explore: the guest's non-default choice wins.
+  - Merging is idempotent, so repeated sign-ins are safe.
+- **Save prompt:** guests see "Save your progress?" on the lesson-complete screen. Dismissing it
+  sets `cybernet.savePrompt.dismissed`, and it never shows again in that browser.
+
+### Schema (`supabase/migrations/`)
+Two migrations, both applied to the linked project:
+- `20260930120000_accounts_and_progress.sql`: the tables, RLS, grants and triggers.
+- `20260930130000_revoke_extra_authenticated_privileges.sql`: removes Supabase's default
+  `TRUNCATE`, `REFERENCES` and `TRIGGER` from `authenticated`. TRUNCATE ignores RLS.
+
+| Table | Holds |
+|---|---|
+| `profiles` | `id` (= auth user), `display_name` (1 to 40 chars, nullable until chosen), `is_premium` (default false), `learning_mode` (`path` or `explore`) |
+| `card_completions` | `(user_id, lesson_id, card_id)` primary key, `completed_at`, `xp` (0 to 20) |
+| `lesson_completions` | `(user_id, lesson_id)` primary key, `completed_at`, `xp` (0 to 20) |
+| `quiz_attempts` | `id`, `user_id`, `quiz_id`, `attempted_at` (unique per user and quiz), `score` 0 to 1, `passed`, `xp` (0 to 50), `answers` jsonb |
+
+- **Not stored:** best score and first pass are derived from attempts, and total XP is summed from
+  rows.
+- **Triggers:** `on_auth_user_created` creates the profile; `strip_provider_metadata` removes
+  avatar and real-name fields.
+
+### Row Level Security rules
+- RLS is **on for every table**.
+- **Reads:** `authenticated` users may **select only their own rows** (`auth.uid() = user_id`, or
+  `= id` for profiles).
+- **Writes:**
+  - Users may **update only `profiles.display_name`**, on their own row. There's a column-level
+    grant and an update policy; `is_premium` and `learning_mode` aren't writable.
+  - Progress tables have **no write policies or privileges** for `anon` or `authenticated`. All
+    progress writes go through Server Actions with the secret key, so users can never set their
+    own XP.
+- **`anon`** has no privileges at all, and `authenticated` has only `SELECT` plus `UPDATE
+  (display_name)` on profiles. The second migration removed Supabase's default `TRUNCATE`,
+  `REFERENCES` and `TRIGGER`. New tables get those defaults again, so revoke them in the same
+  migration.
+- **`npm run check:rls`** proves all of this against the linked project. It uses two throwaway
+  users, signed in with admin-generated magic-link tokens, so no emails are sent. It also checks
+  the triggers and the delete cascade, then cleans up. Run it after any schema or policy change.
+- **Testing sign-in without email:** Supabase's built-in email sender has a low hourly limit. For
+  automated tests, use `auth.admin.generateLink()` and open `/auth/callback?token_hash=…&type=magiclink`.
 
 ## Brand
 

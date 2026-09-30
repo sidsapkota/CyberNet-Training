@@ -1,0 +1,146 @@
+/**
+ * `npm run check:rls`: proves one user can't read or write another user's rows, and that users
+ * can't write their own XP or premium flag, against the LINKED Supabase project.
+ *
+ * - Creates two throwaway users (…@example.com, confirmed, no emails are sent) and signs each in
+ *   with an admin-generated magic-link token.
+ * - As user A, tries to read and modify user B's rows, and to write XP / is_premium directly.
+ * - Deletes both users at the end and checks the cascade removed all their rows.
+ *
+ * Needs SUPABASE_SECRET_KEY in .env.local. Never prints keys or tokens.
+ */
+import fs from "node:fs";
+import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "../src/lib/supabase/database.types";
+import { parseSecretKey, parseSupabaseEnv } from "../src/lib/supabase/env";
+
+for (const file of [".env.local", ".env"]) if (fs.existsSync(file)) process.loadEnvFile(file);
+
+const env = parseSupabaseEnv({
+  url: process.env.NEXT_PUBLIC_SUPABASE_URL,
+  publishableKey: process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+});
+const secret = parseSecretKey(process.env.SUPABASE_SECRET_KEY);
+const noSession = { auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false } };
+const admin = createClient<Database>(env.url, secret, noSession);
+
+type Client = SupabaseClient<Database>;
+const results: { check: string; ok: boolean; detail?: string }[] = [];
+const record = (check: string, ok: boolean, detail?: string) => results.push({ check, ok, detail });
+
+async function makeUser(tag: string): Promise<{ id: string; email: string; client: Client }> {
+  const email = `rls-check-${Date.now()}-${tag}@example.com`;
+  const { data, error } = await admin.auth.admin.createUser({
+    email,
+    email_confirm: true,
+    user_metadata: { avatar_url: "https://example.com/a.png", full_name: "Real Name", note: "kept" },
+  });
+  if (error || !data.user) throw new Error(`createUser failed: ${error?.message}`);
+  const link = await admin.auth.admin.generateLink({ type: "magiclink", email });
+  if (link.error) throw new Error(`generateLink failed: ${link.error.message}`);
+  const client = createClient<Database>(env.url, env.publishableKey, noSession);
+  const { error: otpError } = await client.auth.verifyOtp({ token_hash: link.data.properties.hashed_token, type: "magiclink" });
+  if (otpError) throw new Error(`verifyOtp failed: ${otpError.message}`);
+  return { id: data.user.id, email, client };
+}
+
+/** A write "failed safely" if it errored or changed nothing. */
+function blocked(result: { error: unknown; data?: unknown[] | null; count?: number | null }) {
+  return Boolean(result.error) || (Array.isArray(result.data) && result.data.length === 0) || result.count === 0;
+}
+
+async function main() {
+  console.log(`Checking Row Level Security on ${new URL(env.url).host}…\n`);
+  const a = await makeUser("a");
+  const b = await makeUser("b");
+
+  try {
+    // Seed B's data with the admin client (as the Server Actions would).
+    const now = new Date().toISOString();
+    await admin.from("card_completions").insert({ user_id: b.id, lesson_id: "bits-and-binary", card_id: "make-5", completed_at: now, xp: 10 });
+    await admin.from("lesson_completions").insert({ user_id: b.id, lesson_id: "bits-and-binary", completed_at: now, xp: 20 });
+    await admin.from("quiz_attempts").insert({ user_id: b.id, quiz_id: "binary-and-data-quiz", attempted_at: now, score: 1, passed: true, xp: 50 });
+    await admin.from("profiles").update({ display_name: "Bee" }).eq("id", b.id);
+
+    // Triggers
+    const profileA = await admin.from("profiles").select("id, is_premium").eq("id", a.id).maybeSingle();
+    record("New users get a profile row (trigger)", profileA.data?.id === a.id && profileA.data.is_premium === false);
+    const meta = (await admin.auth.admin.getUserById(a.id)).data.user?.user_metadata ?? {};
+    record("Avatar and real-name metadata are stripped (trigger)", !("avatar_url" in meta) && !("full_name" in meta) && meta.note === "kept");
+
+    // Reads: A sees only A's rows.
+    for (const table of ["card_completions", "lesson_completions", "quiz_attempts"] as const) {
+      const all = await a.client.from(table).select("user_id");
+      const theirs = await a.client.from(table).select("user_id").eq("user_id", b.id);
+      record(`A can't read B's ${table}`, !all.error && (all.data ?? []).every((r) => r.user_id === a.id) && (theirs.data ?? []).length === 0);
+    }
+    const bProfile = await a.client.from("profiles").select("id").eq("id", b.id);
+    record("A can't read B's profile", (bProfile.data ?? []).length === 0);
+    const ownProfile = await a.client.from("profiles").select("id").eq("id", a.id);
+    record("A can read their own profile (control)", (ownProfile.data ?? []).length === 1);
+
+    // Writes into B's rows.
+    record(
+      "A can't insert rows for B",
+      blocked(await a.client.from("card_completions").insert({ user_id: b.id, lesson_id: "x", card_id: "y", completed_at: now, xp: 10 }).select()),
+    );
+    record("A can't update B's XP", blocked(await a.client.from("card_completions").update({ xp: 20 }).eq("user_id", b.id).select()));
+    record("A can't delete B's rows", blocked(await a.client.from("quiz_attempts").delete().eq("user_id", b.id).select()));
+    record("A can't rename B", blocked(await a.client.from("profiles").update({ display_name: "Hacked" }).eq("id", b.id).select()));
+
+    // Writes to A's own XP and premium flag.
+    record(
+      "A can't insert their own XP",
+      blocked(await a.client.from("card_completions").insert({ user_id: a.id, lesson_id: "x", card_id: "y", completed_at: now, xp: 20 }).select()),
+    );
+    record(
+      "A can't insert their own quiz pass",
+      blocked(
+        await a.client
+          .from("quiz_attempts")
+          .insert({ user_id: a.id, quiz_id: "q", attempted_at: now, score: 1, passed: true, xp: 50 })
+          .select(),
+      ),
+    );
+    record("A can't make themselves premium", blocked(await a.client.from("profiles").update({ is_premium: true }).eq("id", a.id).select()));
+    record("A can't change learning_mode directly", blocked(await a.client.from("profiles").update({ learning_mode: "explore" }).eq("id", a.id).select()));
+    const rename = await a.client.from("profiles").update({ display_name: "Ace" }).eq("id", a.id).select("display_name");
+    record("A can change their own display name (control)", !rename.error && rename.data?.[0]?.display_name === "Ace");
+
+    // B's data is untouched.
+    const bCard = await admin.from("card_completions").select("xp").eq("user_id", b.id).single();
+    const bName = await admin.from("profiles").select("display_name, is_premium").eq("id", b.id).single();
+    const bQuiz = await admin.from("quiz_attempts").select("id").eq("user_id", b.id);
+    record("B's data is unchanged afterwards", bCard.data?.xp === 10 && bName.data?.display_name === "Bee" && (bQuiz.data ?? []).length === 1);
+
+    // Signed-out visitors see nothing.
+    const anon = createClient<Database>(env.url, env.publishableKey, noSession);
+    let anonClean = true;
+    for (const table of ["profiles", "card_completions", "lesson_completions", "quiz_attempts"] as const) {
+      const r = await anon.from(table).select("*");
+      if (!r.error && (r.data ?? []).length > 0) anonClean = false;
+    }
+    record("Signed-out visitors can't read any rows", anonClean);
+  } finally {
+    // Delete both users; ON DELETE CASCADE must remove every row.
+    for (const user of [a, b]) await admin.auth.admin.deleteUser(user.id);
+    let leftovers = 0;
+    for (const table of ["card_completions", "lesson_completions", "quiz_attempts"] as const) {
+      const r = await admin.from(table).select("user_id").in("user_id", [a.id, b.id]);
+      leftovers += (r.data ?? []).length;
+    }
+    const profiles = await admin.from("profiles").select("id").in("id", [a.id, b.id]);
+    leftovers += (profiles.data ?? []).length;
+    record("Deleting a user removes all their rows (cascade)", leftovers === 0);
+  }
+
+  for (const r of results) console.log(`${r.ok ? "✓" : "✗"} ${r.check}${r.detail ? ` (${r.detail})` : ""}`);
+  const failed = results.filter((r) => !r.ok).length;
+  console.log(failed ? `\n${failed} check(s) FAILED` : `\nAll ${results.length} checks passed.`);
+  process.exitCode = failed ? 1 : 0;
+}
+
+main().catch((error: unknown) => {
+  console.error(error instanceof Error ? error.message : error);
+  process.exitCode = 1;
+});

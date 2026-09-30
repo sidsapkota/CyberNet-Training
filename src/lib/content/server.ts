@@ -1,5 +1,6 @@
 import "server-only";
 import { cache } from "react";
+import { buildContentIndex, type ContentIndex } from "@/lib/progress/authority";
 import { loadContent } from "./load";
 import type { CourseOutline, Lesson } from "./schema";
 
@@ -20,3 +21,6 @@ export function getLesson(id: string): Lesson | undefined {
 export function getAllLessonIds(): string[] {
   return [...getContent().lessons.keys()];
 }
+
+/** Lesson facts the server uses to award XP and grade quizzes (see progress/authority.ts). */
+export const getContentIndex = cache((): ContentIndex => buildContentIndex(getContent().lessons.values()));

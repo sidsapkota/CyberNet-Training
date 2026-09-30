@@ -82,3 +82,23 @@ export function getSupabaseEnv(): SupabaseEnv {
     publishableKey: process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
   });
 }
+
+/**
+ * Validates the server-only secret key (`SUPABASE_SECRET_KEY`). Pure, so it can be tested; only
+ * `admin.ts` (which is `server-only`) ever reads the real value.
+ */
+export function parseSecretKey(raw: string | undefined): string {
+  const key = raw?.trim() ?? "";
+  if (!key) {
+    throw new SupabaseEnvError([
+      "SUPABASE_SECRET_KEY is empty. Add the secret key (sb_secret_...) to .env.local. Never commit it or " +
+        "put it in a NEXT_PUBLIC_ variable.",
+    ]);
+  }
+  if (!isSecretKey(key)) {
+    throw new SupabaseEnvError([
+      "SUPABASE_SECRET_KEY doesn't look like a secret key (expected sb_secret_... or a service_role JWT).",
+    ]);
+  }
+  return key;
+}

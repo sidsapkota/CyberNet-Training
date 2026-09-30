@@ -5,9 +5,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ComponentType } from "react";
 import { LogoLockup } from "@/components/brand/Logo";
-import { CoursesIcon, DashboardIcon } from "@/components/ui/icons";
+import { CoursesIcon, DashboardIcon, SignInIcon } from "@/components/ui/icons";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { XpPill } from "@/components/XpPill";
+import { useAuth } from "@/lib/auth/AuthProvider";
+import { FALLBACK_DISPLAY_NAME, initialOf } from "@/lib/auth/profile";
 
 interface NavItem {
   href: string;
@@ -64,9 +66,50 @@ export function SiteHeader() {
             <XpPill />
           </Link>
           <ThemeToggle />
+          <HeaderAccount />
         </div>
       </div>
     </header>
+  );
+}
+
+/** The learner as a node: their initial, in the network style. */
+function UserNode({ name, className = "" }: { name: string | null; className?: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`grid shrink-0 place-items-center rounded-node border-2 border-accent-ink bg-accent-soft font-mono font-semibold text-accent-ink ${className}`}
+    >
+      {initialOf(name)}
+    </span>
+  );
+}
+
+/** Desktop header (from `sm`): "Sign in" for guests, the learner's node and name when signed in. */
+function HeaderAccount() {
+  const { auth, available } = useAuth();
+  if (!available) return null;
+  if (auth.status === "loading") return <span className="hidden w-24 sm:block" aria-hidden="true" />;
+  if (auth.status === "guest") {
+    return (
+      <Link
+        href="/login"
+        className="hidden min-h-9 items-center gap-1.5 rounded-control border border-line-strong px-3 text-small font-semibold text-ink transition-colors hover:border-accent-ink hover:text-accent-ink sm:inline-flex"
+      >
+        <SignInIcon className="size-4" /> Sign in
+      </Link>
+    );
+  }
+  const name = auth.displayName ?? FALLBACK_DISPLAY_NAME;
+  return (
+    <Link
+      href="/account"
+      aria-label={`Account: ${name}`}
+      className="hidden items-center gap-2 rounded-control px-1.5 py-1 text-small font-semibold text-ink transition-colors hover:bg-surface-raised sm:flex"
+    >
+      <UserNode name={auth.displayName} className="size-8 text-small" />
+      <span className="hidden max-w-32 truncate md:inline">{name}</span>
+    </Link>
   );
 }
 
@@ -78,7 +121,7 @@ export function BottomNav() {
       aria-label="Main"
       className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-canvas pb-[env(safe-area-inset-bottom)] sm:hidden"
     >
-      <ul className="grid grid-cols-2">
+      <ul className="grid auto-cols-fr grid-flow-col">
         {NAV.map(({ href, label, Icon, isActive }) => {
           const active = isActive(pathname);
           return (
@@ -103,7 +146,38 @@ export function BottomNav() {
             </li>
           );
         })}
+        <AccountTab pathname={pathname} />
       </ul>
     </nav>
+  );
+}
+
+/** Third phone tab: "Sign in" for guests, "Account" with the learner's node when signed in. */
+function AccountTab({ pathname }: { pathname: string }) {
+  const { auth, available } = useAuth();
+  if (!available) return null;
+  const signedIn = auth.status === "signed-in";
+  const href = signedIn ? "/account" : "/login";
+  const active = pathname.startsWith("/account") || pathname.startsWith("/login");
+  return (
+    <li>
+      <Link
+        href={href}
+        aria-current={active ? "page" : undefined}
+        className={`relative flex h-16 flex-col items-center justify-center gap-0.5 text-caption font-semibold ${
+          active ? "text-accent-ink" : "text-ink-muted"
+        }`}
+      >
+        {active && (
+          <motion.span
+            layoutId="tab-active"
+            aria-hidden="true"
+            className="absolute inset-x-8 top-0 h-0.5 rounded-sm bg-accent"
+          />
+        )}
+        {signedIn ? <UserNode name={auth.displayName} className="size-6 text-[0.7rem]" /> : <SignInIcon className="size-6" />}
+        {signedIn ? "Account" : "Sign in"}
+      </Link>
+    </li>
   );
 }

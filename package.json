@@ -16,7 +16,8 @@
     "validate-content": "tsx scripts/validate-content.ts",
     "brand:assets": "tsx scripts/generate-brand-assets.ts",
     "brand:mascot": "tsx --tsconfig tsconfig.json scripts/generate-mascot-assets.tsx",
-    "check:supabase": "tsx scripts/check-supabase.ts"
+    "check:supabase": "tsx scripts/check-supabase.ts",
+    "check:rls": "tsx scripts/check-rls.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

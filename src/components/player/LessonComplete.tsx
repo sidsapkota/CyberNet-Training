@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { SaveProgressPrompt } from "@/components/account/SaveProgressPrompt";
 import { Mascot } from "@/components/mascot/Mascot";
 import { ButtonLink } from "@/components/ui/Button";
 import { CountUp } from "@/components/ui/CountUp";
@@ -71,6 +72,8 @@ export function LessonComplete({
             You can come back any time to try the challenges you skipped.
           </p>
         )}
+
+        <SaveProgressPrompt />
 
         <div className="mx-auto mt-10 flex max-w-sm flex-col gap-2">
           {next ? (

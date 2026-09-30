@@ -5,11 +5,15 @@ export const CardCompletionSchema = z.object({
   xp: z.number().int().nonnegative(),
 });
 
+export type CardCompletion = z.infer<typeof CardCompletionSchema>;
+
 export const LessonCompletionSchema = z.object({
   completedAt: z.string(),
   /** Completion bonus only; per-card XP is recorded on the cards. */
   xp: z.number().int().nonnegative(),
 });
+
+export type LessonCompletion = z.infer<typeof LessonCompletionSchema>;
 
 export const QuizAttemptSchema = z.object({
   at: z.string(),

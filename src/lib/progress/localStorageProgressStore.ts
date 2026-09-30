@@ -117,6 +117,19 @@ export class LocalStorageProgressStore implements ProgressStore {
     this.write({ ...emptySnapshot(), preferences: this.read().preferences });
   }
 
+  /**
+   * Removes this browser's guest progress entirely (after it has been merged into an account).
+   * Not part of ProgressStore: only the sign-in merge uses it.
+   */
+  clear(): void {
+    try {
+      this.getStorage()?.removeItem(this.key);
+    } catch {
+      // Storage blocked: nothing to clear.
+    }
+    this.emit(emptySnapshot());
+  }
+
   subscribe(listener: Listener): () => void {
     this.listeners.add(listener);
 
