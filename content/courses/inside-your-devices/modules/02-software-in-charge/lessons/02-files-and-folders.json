@@ -10,20 +10,20 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Where did it go?",
-      "body": "You press **Save** and your essay disappears from the screen. But where did it actually go?\n\nIt became a **file** in storage, filed away by the operating system so you (and your apps) can find it again."
+      "body": "You press **Save** and your essay disappears from the screen. But where did it actually go?\n\nIt became a **file** in [[storage]], filed away by the [[operating system]] so you (and your apps) can find it again."
     },
     {
       "id": "files-folders-extensions",
       "type": "explainer",
       "difficulty": "core",
       "title": "Files, folders and extensions",
-      "body": "A **file** is one named piece of saved data: a photo, a song, an essay or an app.\n\nFiles go in **folders**, and folders can hold other folders, like boxes inside boxes. The route through the boxes to a file is its **path**: `Documents > School > essay.docx`.\n\nThe end of a file's name, after the last dot, is its **extension**. It tells the OS what kind of file it is and which app should open it: `.jpg` is a photo, `.mp3` a song, `.mp4` a video, `.docx` a document and `.txt` plain text. `.exe` is a **program**: opening it runs it."
+      "body": "A **file** is one named piece of saved data: a photo, a song, an essay or an app.\n\nFiles go in **folders**, and folders can hold other folders, like boxes inside boxes. The route through the boxes to a file is its **path**: `Documents > School > essay.docx`.\n\nThe end of a file's name, after the last dot, is its **extension**. It tells the OS what kind of file it is and which app should open it: `.jpg` and `.png` are pictures, `.mp3` a song, `.mp4` a video, `.docx` a document (with styles like bold and headings) and `.txt` plain text (just letters, no styles). `.exe` is a **program**: opening it runs it."
     },
     {
       "id": "match-extensions",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Match each extension to the kind of file it marks.",
+      "prompt": "Match each [[extension]] to the kind of file it marks.",
       "pairs": [
         { "id": "jpg", "left": "`.jpg`", "right": "A photo" },
         { "id": "mp3", "left": "`.mp3`", "right": "A song" },
@@ -31,7 +31,9 @@
         { "id": "docx", "left": "`.docx`", "right": "A written document" },
         { "id": "exe", "left": "`.exe`", "right": "A program that runs when opened" }
       ],
-      "explanation": "`.jpg` is a photo, `.mp3` a song, `.mp4` a video and `.docx` a document. `.exe` is different: it's a **program**. Opening it *runs* it, so only open ones you trust."
+      "explanation": "`.jpg` is a photo, `.mp3` a song, `.mp4` a video and `.docx` a document. `.exe` is different: it's a **program**. Opening it *runs* it, so only open ones you trust.",
+      "hint": "The extension tells the OS what kind of file it is. Think back to the list: pictures, songs, videos, documents and programs.",
+      "nudge": "Look again at the letters: `.mp3` and `.mp4` look alike but mark different things, and one extension means a program."
     },
     {
       "id": "label-the-files",
@@ -47,14 +49,16 @@
         { "part": "file-fake-photo", "label": "Program" },
         { "part": "file-notes", "label": "Plain text" }
       ],
-      "explanation": "`photo.jpg.exe` ends in **.exe**, so it's a program, whatever the `.jpg` in the middle says. `notes.txt` is plain text with no formatting."
+      "explanation": "`photo.jpg.exe` ends in **.exe**, so it's a program, whatever the `.jpg` in the middle says. `notes.txt` is plain text: just letters, with no styles like bold or headings.",
+      "hint": "Read each file name right to the end. Only the [[extension]] after the **last** dot counts.",
+      "nudge": "A name can have more than one dot. Ignore anything in the middle and look only at what comes after the last dot."
     },
     {
       "id": "the-cloud",
       "type": "explainer",
       "difficulty": "core",
       "title": "The cloud",
-      "body": "Not every file lives on your device. When you save to **the cloud**, the file is stored on a company's **server**: a powerful computer in a data centre, reached over the internet.\n\nThe cloud isn't in the sky. It's someone else's computer, kept safe and backed up.\n\nCloud files are handy: you can open them on any device and they survive if your phone is lost. But you need the internet to reach them, unless you've kept a copy on the device."
+      "body": "Not every file lives on your device. When you save to **the cloud**, the file is stored on a company's **server**: a powerful computer in a data centre, reached over the internet.\n\nThe cloud isn't in the sky. It's someone else's computer, kept safe and [[backed up|backup]].\n\nCloud files are handy: you can open them on any device and they survive if your phone is lost. But you need the internet to reach them, unless you've kept a copy on the device."
     },
     {
       "id": "local-or-cloud",
@@ -72,7 +76,9 @@
         { "id": "web-email", "label": "Emails in a web mail inbox", "bin": "cloud" },
         { "id": "online-save", "label": "A game save kept in your online account", "bin": "cloud" }
       ],
-      "explanation": "Files you **downloaded** or **saved to the device** are in its storage. Files you reach through a **website or online account** live on the company's servers, in the cloud."
+      "explanation": "Files you **downloaded** or **saved to the device** are in its storage. Files you reach through a **website or online account** live on the company's servers, in the cloud.",
+      "hint": "Ask yourself: did you download or save it to the device, or do you reach it through a website or online account?",
+      "nudge": "Files downloaded or saved to the device live in its storage. Files you reach through a website or account live on a company's [[server]]."
     },
     {
       "id": "suspicious-download",
@@ -88,7 +94,7 @@
             {
               "id": "is-photo",
               "text": "A photo: it says .jpg",
-              "consequence": "Only the **last** extension counts. The `.jpg` in the middle is a disguise.",
+              "consequence": "Only the **last** [[extension]] counts. The `.jpg` in the middle is a disguise.",
               "outcome": "fail"
             },
             {
@@ -124,37 +130,41 @@
           ]
         }
       ],
-      "explanation": "Read to the **last** dot. `photo.jpg.exe` is a program in disguise. Some computers hide the last extension, so it might even show as `photo.jpg`. Delete files like this without opening them, and tell an adult."
+      "explanation": "Read to the **last** dot. `photo.jpg.exe` is a program in disguise. Some computers hide the last extension, so it might even show as `photo.jpg`. Delete files like this without opening them, and tell an adult.",
+      "hint": "Read the file name right to the last dot. What does that extension mean happens when you open it?"
     },
     {
       "id": "order-the-path",
       "type": "drag_to_order",
       "difficulty": "challenge",
-      "prompt": "Your science essay is saved here. Put its path in order, from the **outermost folder** to the file.",
+      "prompt": "Your science essay is saved inside these folders. Put its path in order, from the **biggest folder** (the one holding everything else) to the file.",
       "items": [
         { "id": "documents", "label": "`Documents`" },
         { "id": "school", "label": "`School`" },
         { "id": "science", "label": "`Science`" },
         { "id": "essay", "label": "`volcanoes.docx`" }
       ],
-      "explanation": "A path goes from the biggest box inwards: `Documents > School > Science > volcanoes.docx`. The file itself always comes last."
+      "explanation": "A path goes from the biggest box inwards: `Documents > School > Science > volcanoes.docx`. The file itself always comes last.",
+      "hint": "Think of boxes inside boxes: start with the biggest box that holds everything, then go inwards.",
+      "nudge": "A path goes from the biggest folder inwards, one box at a time. The file itself always comes last."
     },
     {
       "id": "photos-per-gb",
       "type": "numeric_input",
       "difficulty": "challenge",
-      "prompt": "Each photo you take is about **4 MB**. There are **1,000 MB** in 1 GB. How many photos fit in **1 GB**?",
+      "prompt": "Each photo you take is about **4 [[MB|megabyte]]**. There are **1,000 MB** in 1 [[GB|gigabyte]]. How many photos fit in **1 GB**?",
       "answer": 250,
       "unit": "photos",
       "hint": "Divide 1,000 MB by the size of one photo.",
-      "explanation": "1,000 ÷ 4 = **250** photos in every gigabyte. So a phone with 64 GB free could hold about 16,000 of them."
+      "explanation": "1,000 ÷ 4 = **250** photos in every gigabyte. So a phone with 64 GB free could hold about 16,000 of them.",
+      "nudge": "Check you divided rather than multiplied: how many 4 MB photos fit into 1,000 MB?"
     },
     {
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- A **file** is saved data with a name. **Folders** hold files and other folders, and the route to a file is its **path**.\n- The **extension** after the last dot says what kind of file it is. `.exe` means a program.\n- **Cloud** files live on a company's servers, reached over the internet.\n- A name like `photo.jpg.exe` is a program in disguise: delete it and tell an adult.\n\nThat's the software side. Next module: fixing things yourself."
+      "body": "- A **file** is saved data with a name. **Folders** hold files and other folders, and the route to a file is its **path**.\n- The **extension** after the last dot says what kind of file it is. `.exe` means a program.\n- **Cloud** files live on a company's [[servers|server]], reached over the internet.\n- A name like `photo.jpg.exe` is a program in disguise: delete it and tell an adult.\n\nThat's the software side. Next module: fixing things yourself."
     }
   ]
 }

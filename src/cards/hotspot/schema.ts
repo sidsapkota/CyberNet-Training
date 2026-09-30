@@ -25,11 +25,11 @@ export const HotspotCardSchema = z
       .min(2)
       .max(6)
       .optional(),
-    /** Explore mode: the parts to discover, each with a one-line job (plain text). */
+    /** Explore mode: the parts to discover, each with a one-line job and look (plain text). */
     parts: z
-      .array(z.object({ part: CardId, job: nonEmpty.max(100) }))
+      .array(z.object({ part: CardId, job: nonEmpty.max(140) }))
       .min(2)
-      .max(8)
+      .max(10)
       .optional(),
   })
   .superRefine((card, ctx) => {

@@ -9,6 +9,8 @@ import type { ProgressNode } from "@/components/network/NodeProgress";
 import { Button } from "@/components/ui/Button";
 import type { CourseOutline, Quiz } from "@/lib/content/schema";
 import { useGlobalKeyDown } from "@/lib/keyboard";
+import { CoachPanel } from "./coach/CoachPanel";
+import { useCoach } from "./coach/useCoach";
 import { useProgress } from "@/lib/progress/ProgressProvider";
 import { useFeedback } from "@/lib/feedback";
 import { getNextLesson } from "@/lib/progress/state";
@@ -51,6 +53,8 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
   const card = quiz.cards[index] as Card;
   const definition = getCardDefinition(card);
   const total = quiz.cards.length;
+  const coach = useCoach(card);
+  const showCoach = phase === "playing" && run.status === "answering" ? coach.coachKey : null;
   const isLast = index + 1 >= total;
 
   function start() {
@@ -66,6 +70,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
   function check() {
     if (!definition.interactive || run.status !== "answering") return;
     if (!definition.isAnswerReady(run.answer, card)) return;
+    if (showCoach) coach.dismiss();
     const { correct } = definition.grade(card, run.answer);
     setRun({ ...run, status: correct ? "correct" : "incorrect" });
     setAnswers((current) => [...current, { cardId: card.id, answer: run.answer, correct }]);
@@ -119,7 +124,11 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
   useGlobalKeyDown((event) => {
     if (event.key !== "Enter" || event.repeat || !primary) return;
     event.preventDefault();
-    if (!primary.disabled) primary.onClick();
+    // With the how-to-play panel open, Enter means "Got it", unless it came from an answer box
+    // (the learner has clearly started; Check dismisses the panel too).
+    const fromAnswerBox = event.target instanceof Element && event.target.closest("[data-enter-submits]");
+    if (showCoach && !fromAnswerBox) coach.dismiss();
+    else if (!primary.disabled) primary.onClick();
   }, primary !== null);
 
   if (phase === "results" && attempt) {
@@ -211,6 +220,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
       <p className="mb-4 font-mono text-caption font-semibold tracking-wider text-ink-faint uppercase">
         Question {index + 1} / {total}
       </p>
+      {showCoach && <CoachPanel key={showCoach} coachKey={showCoach} onDone={coach.dismiss} />}
       <CardStage cardKey={`${quiz.id}-${index}`} card={card} scope={scope}>
         {definition.interactive && (
           <definition.Component

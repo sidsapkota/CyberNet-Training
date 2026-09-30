@@ -10,20 +10,20 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "The internet makes no promises",
-      "body": "Here's a surprise: the Internet Protocol **doesn't promise** that packets arrive in order. It doesn't even promise they arrive at all.\n\nYet when you download a photo, it shows up perfectly, every single time. In this lesson you'll see how the internet turns an unreliable journey into a reliable delivery."
+      "body": "Here's a surprise: the Internet [[Protocol]] **doesn't promise** that [[packets|packet]] arrive in order. It doesn't even promise they arrive at all.\n\nYet when you download a photo, it shows up perfectly, every single time. In this lesson you'll see how the internet turns an unreliable journey into a reliable delivery."
     },
     {
       "id": "routes-change",
       "type": "explainer",
       "difficulty": "core",
       "title": "Routes can change",
-      "body": "Routers keep updating their routing tables. If a connection breaks, or gets very busy, they find another way round.\n\nSo the route can change partway through a conversation. Most of the time a conversation's packets all follow the same road, but when the route changes, packets that took different roads can arrive in a **different order** from the one they were sent in."
+      "body": "[[Routers|router]] keep updating their [[routing tables|routing-table]]. If a connection breaks, or gets very busy, they find another way round.\n\nSo the route can change partway through a conversation. Most of the time a conversation's [[packets|packet]] all follow the same road, but when the route changes, packets that took different roads can arrive in a **different order** from the one they were sent in."
     },
     {
       "id": "cut-cable",
       "type": "packet_path",
       "difficulty": "core",
-      "prompt": "The cable from **Router A** straight to the web server has been cut, so it's no longer on the map. Get the packet to the **web server** another way.",
+      "prompt": "The cable from **Router A** straight to the web [[server]] has been cut, so it's no longer on the map. Get the [[packet]] to the **web server** another way.",
       "nodes": [
         { "id": "laptop", "kind": "device", "label": "Laptop", "address": "192.168.1.20", "col": 0, "row": 1 },
         { "id": "home", "kind": "router", "label": "Home router", "address": "192.168.1.1", "col": 1, "row": 1 },
@@ -46,7 +46,9 @@
         ["laptop", "home", "ra", "rc", "server"],
         ["laptop", "home", "rb", "server"]
       ],
-      "explanation": "Either detour works: through **Router B**, or through **Router A** and on to **Router C**. A broken cable doesn't stop the whole internet, because routers simply send packets another way. But if some packets take one road and some take the other, they may arrive in a different order."
+      "explanation": "Either detour works: through **Router B**, or through **Router A** and on to **Router C**. A broken cable doesn't stop the whole internet, because routers simply send packets another way. But if some packets take one road and some take the other, they may arrive in a different order.",
+      "hint": "The cut cable is gone from the map, so only follow the links you can see. There's more than one way round.",
+      "nudge": "Check that every step follows a line on the map. The link from [[Router]] A straight to the server has been removed."
     },
     {
       "id": "rebuild-message",
@@ -59,37 +61,54 @@
         { "id": "p3", "label": "#3 ARRIVE" },
         { "id": "p4", "label": "#4 JUMBLED" }
       ],
-      "explanation": "Sorting by sequence number gives **#1, #2, #3, #4**: *PACKETS CAN ARRIVE JUMBLED*. The receiver doesn't care what order packets turn up in. The sequence numbers say where each piece belongs."
+      "explanation": "Sorting by sequence number gives **#1, #2, #3, #4**: *PACKETS CAN ARRIVE JUMBLED*. The receiver doesn't care what order packets turn up in. The sequence numbers say where each piece belongs.",
+      "hint": "Ignore the words for a moment and look at the number after the # on each packet.",
+      "nudge": "Sort by the number after the #, from smallest to largest. The order they arrived in doesn't matter."
     },
     {
       "id": "arrive-2-1-3",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Packets arrive in the order **2, 1, 3**. What does the receiving computer do?",
+      "prompt": "[[Packets|packet]] arrive in the order **2, 1, 3**. What does the receiving computer do?",
       "options": [
         { "id": "reorder", "text": "Uses the sequence numbers to put them back as 1, 2, 3" },
-        { "id": "as-arrived", "text": "Uses them in the order they arrived: 2, 1, 3" },
-        { "id": "discard", "text": "Throws them all away and asks for everything again" },
-        { "id": "complain", "text": "Asks the sender to send them in the right order next time" }
+        {
+          "id": "as-arrived",
+          "text": "Uses them in the order they arrived: 2, 1, 3",
+          "nudge": "Using packets in the order they turned up would scramble the data. Think about what the sequence numbers are for."
+        },
+        {
+          "id": "discard",
+          "text": "Throws them all away and asks for everything again",
+          "nudge": "Nothing is wrong with these packets, and none are missing. They just arrived in a different order."
+        },
+        {
+          "id": "complain",
+          "text": "Asks the sender to send them in the right order next time",
+          "nudge": "The sender can't control which road each packet takes, and the receiver doesn't need it to."
+        }
       ],
       "correctOptionId": "reorder",
-      "explanation": "Every packet carries its **sequence number**, so the receiver simply puts them back as 1, 2, 3. Using them as they arrived would scramble your data. And nothing is wrong with the packets, so there's no need to throw them away or send them again."
+      "explanation": "Every packet carries its **sequence number**, so the receiver simply puts them back as 1, 2, 3. Using them as they arrived would scramble your data. And nothing is wrong with the packets, so there's no need to throw them away or send them again.",
+      "hint": "Every packet carries a sequence number. How could the receiver use it when packets turn up jumbled?"
     },
     {
       "id": "lost-packets",
       "type": "explainer",
       "difficulty": "core",
       "title": "Missing packets and TCP",
-      "body": "Sometimes a packet never arrives. A router that's too busy might have to drop it, or interference on Wi-Fi might scramble it.\n\nFor things like web pages, photos and downloads, computers follow a set of rules called **TCP**, short for **Transmission Control Protocol**. TCP is the partner set of rules that adds the sequence numbers. The receiver keeps telling the sender which packets have arrived. If there's a gap in the sequence numbers, the sender sends the missing packet again.\n\nPut together, IP gets packets across the internet, and TCP makes sure they all arrive and end up in the right order. You'll look closer at TCP in a later module."
+      "body": "Sometimes a [[packet]] never arrives. A [[router]] that's too busy might have to drop it, or interference on Wi-Fi might scramble it.\n\nFor things like web pages, photos and downloads, computers follow a set of rules called **TCP**, short for **Transmission Control [[Protocol]]**. TCP is the partner set of rules that adds the [[sequence numbers|sequence-number]]. The receiver keeps telling the sender which packets have arrived. If there's a gap in the sequence numbers, the sender sends the missing packet again.\n\nPut together, IP gets packets across the internet, and TCP makes sure they all arrive and end up in the right order. You'll look closer at TCP in a later module."
     },
     {
       "id": "which-is-missing",
       "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "A message was sent as packets 1 to 6. Packets **1, 2, 3, 5 and 6** arrived. Which packet number needs to be sent again?",
+      "prompt": "A message was sent as [[packets|packet]] 1 to 6. Packets **1, 2, 3, 5 and 6** arrived. Which packet number needs to be sent again?",
       "base": "decimal",
       "answer": 4,
-      "explanation": "The sequence numbers jump from 3 to 5, so **packet 4** is missing. Only that one needs to be sent again. The receiver can keep 5 and 6 and slot 4 in when it arrives."
+      "explanation": "The [[sequence numbers|sequence-number]] jump from 3 to 5, so **packet 4** is missing. Only that one needs to be sent again. The receiver can keep 5 and 6 and slot 4 in when it arrives.",
+      "hint": "Count along from 1 to 6 and look for the gap in the numbers that arrived.",
+      "nudge": "List the numbers 1 to 6 and tick off each one that arrived. The one without a tick is the answer."
     },
     {
       "id": "problems-and-fixes",
@@ -101,7 +120,9 @@
         { "id": "missing", "left": "A packet goes missing", "right": "Send that packet again" },
         { "id": "broken", "left": "A connection breaks", "right": "Routers find another route" }
       ],
-      "explanation": "Out-of-order packets are **sorted** using their sequence numbers. A missing packet is **sent again**, thanks to TCP. And when a connection breaks, routers update their tables and **send packets another way**."
+      "explanation": "Out-of-order packets are **sorted** using their sequence numbers. A missing packet is **sent again**, thanks to [[TCP]]. And when a connection breaks, routers [[update]] their tables and **send packets another way**.",
+      "hint": "Think about which fix uses sequence numbers, which one sends a piece again, and which one is a job for routers.",
+      "nudge": "Sequence numbers fix order, resending fixes a missing piece, and routers deal with problems along the road."
     },
     {
       "id": "video-call-glitch",
@@ -110,18 +131,27 @@
       "prompt": "On a video call, a lost packet makes the picture glitch for a moment. The call doesn't pause to wait for the packet to be sent again. Why not?",
       "options": [
         { "id": "live", "text": "Waiting would make the call lag. For live video, fresh data is more useful than late data" },
-        { "id": "no-packets", "text": "Video calls don't use packets" },
-        { "id": "never-lost", "text": "Video packets can never be lost" },
-        { "id": "too-big", "text": "Video packets are too big to send twice" }
+        { "id": "no-packets", "text": "Video calls don't use packets", "nudge": "Everything on the internet travels in packets, video calls included." },
+        {
+          "id": "never-lost",
+          "text": "Video packets can never be lost",
+          "nudge": "Any packet can go missing, video ones too. The question says a lost packet caused the glitch."
+        },
+        {
+          "id": "too-big",
+          "text": "Video packets are too big to send twice",
+          "nudge": "Packet size isn't the reason. Think about timing: what happens to a live call while it waits?"
+        }
       ],
       "correctOptionId": "live",
-      "explanation": "In a live call, a packet that arrives half a second late is useless: that moment has already passed. So live apps usually skip lost packets and keep going, often using a simpler set of rules called **UDP** (User Datagram Protocol), which doesn't resend anything. A short glitch is better than the whole call freezing. For a download, it's the other way round: every byte has to be perfect, so TCP waits and resends."
+      "explanation": "In a live call, a packet that arrives half a second late is useless: that moment has already passed. So live apps usually skip lost packets and keep going, often using a simpler set of rules called **UDP** (User Datagram [[Protocol]]), which doesn't resend anything. A short glitch is better than the whole call freezing. For a download, it's the other way round: every [[byte]] has to be perfect, so [[TCP]] waits and resends.",
+      "hint": "In a live call, what's the use of a picture from half a second ago that turns up late?"
     },
     {
       "id": "route-changed",
       "type": "terminal",
       "difficulty": "challenge",
-      "prompt": "Yesterday's traceroute to example.com is shown in the terminal. Run `traceroute example.com` now and compare the two. The route has changed.",
+      "prompt": "Yesterday's [[traceroute]] to example.com is saved at the top of the [[terminal]]. Run `traceroute example.com` now and compare the two, [[hop]] by hop (the numbered lines). One hop has changed.",
       "intro": "Saved from yesterday:\n\n$ traceroute example.com\ntraceroute to example.com (198.51.100.10), 30 hops max, 60 byte packets\n 1  192.168.1.1 (192.168.1.1)  1.912 ms  1.804 ms  1.765 ms\n 2  203.0.113.1 (203.0.113.1)  9.483 ms  9.412 ms  9.377 ms\n 3  203.0.113.65 (203.0.113.65)  11.207 ms  11.164 ms  11.122 ms\n 4  198.51.100.1 (198.51.100.1)  18.930 ms  18.842 ms  19.004 ms\n 5  example.com (198.51.100.10)  19.315 ms  19.271 ms  19.233 ms\n\nType help to see the commands you can use here.",
       "commands": [
         {
@@ -133,17 +163,19 @@
       ],
       "success": {
         "type": "answer",
-        "question": "Which router is on today's route but wasn't on yesterday's?",
+        "question": "What is the address of the router that's on today's route but wasn't on yesterday's?",
         "accepted": ["203.0.113.129"]
       },
-      "explanation": "Hop 3 was `203.0.113.65` yesterday and is `203.0.113.129` today. Every other hop is the same. Maybe the old router was busy or being repaired, so traffic was sent another way. The detour is a little slower (about 22 ms to the end instead of 19 ms), but your packets still get there."
+      "explanation": "Hop 3 was `203.0.113.65` yesterday and is `203.0.113.129` today. Every other hop is the same. Maybe the old [[router]] was busy or being repaired, so traffic was sent another way. The detour is a little slower (about 22 ms to the end instead of 19 ms), but your [[packets|packet]] still get there.",
+      "hint": "Run `traceroute example.com`, then compare the address on each numbered line with yesterday's, one line at a time.",
+      "nudge": "The times change a little on every line, so compare only the addresses. Give the address that appears today, not yesterday's."
     },
     {
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap: Packets and Routing",
-      "body": "- Data travels in **packets**, each with addresses and a **sequence number** added.\n- **Routers** pass packets hop by hop, using their routing tables. **Traceroute** shows the hops.\n- Routes can **change**, so packets may arrive out of order. Some may go missing.\n- **TCP** puts packets back in order and gets missing ones sent again. Live apps often use **UDP** and skip lost packets instead.\n\nTake the module quiz to finish Packets and Routing."
+      "body": "- Data travels in **packets**, each with addresses and a **sequence number** added.\n- **Routers** pass packets [[hop]] by hop, using their [[routing tables|routing-table]]. **Traceroute** shows the hops.\n- Routes can **change**, so packets may arrive out of order. Some may go missing.\n- **TCP** puts packets back in order and gets missing ones sent again. Some live apps, like video calls, skip lost packets instead of waiting for them.\n\nTake the module quiz to finish Packets and Routing."
     }
   ]
 }

@@ -40,7 +40,7 @@
       "id": "q-end-frozen",
       "type": "simulator",
       "difficulty": "core",
-      "prompt": "The laptop is frozen. End the process that's hogging the CPU, **without crashing the laptop**.",
+      "prompt": "The laptop is frozen. End **only** the process that's hogging the CPU: keep **Notes** open, and don't crash the laptop.",
       "model": "task-manager",
       "params": {
         "ramGb": 8,
@@ -85,12 +85,7 @@
               "consequence": "Your comic is safe in storage, and the update installs.",
               "outcome": "success"
             },
-            {
-              "id": "restart-unsaved",
-              "text": "Restart without saving",
-              "consequence": "Unsaved work is only in RAM, so restarting loses it.",
-              "outcome": "fail"
-            },
+            { "id": "restart-unsaved", "text": "Restart without saving", "consequence": "Unsaved work is only in RAM, so restarting loses it.", "outcome": "fail" },
             {
               "id": "switch-off",
               "text": "Switch updates off forever",

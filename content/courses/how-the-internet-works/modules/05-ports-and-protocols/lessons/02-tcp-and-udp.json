@@ -17,43 +17,47 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Reliable or fast",
-      "body": "**TCP** (Transmission Control Protocol) is the tracked parcel. It sets up a connection first, numbers the data, and the receiver confirms what arrived. Anything lost is sent again, and everything is put back in order.\n\n**UDP** (User Datagram Protocol) is the postcard. There's no setup and no confirmation: it just sends. That makes it quick and simple, but lost data stays lost and may arrive out of order.\n\nBoth travel inside IP packets, and both use **ports** to reach the right program."
+      "body": "**TCP** (Transmission Control [[Protocol]]) is the tracked parcel. It sets up a connection first, numbers the data, and the receiver confirms what arrived. Anything lost is sent again, and everything is put back in order.\n\n**UDP** (User Datagram Protocol) is the postcard. There's no setup and no confirmation: it just sends. That makes it quick and simple, but lost data stays lost and may arrive out of order.\n\nBoth travel inside IP [[packets|packet]], and both use **ports** to reach the right program."
     },
     {
       "id": "sequence-numbers-properly",
       "type": "explainer",
       "difficulty": "core",
       "title": "Sequence numbers, properly",
-      "body": "In Module 3 we said each packet carries a **sequence number**. Here's the more exact picture:\n\n- **IP** adds the source and destination **addresses**.\n- **TCP** adds its own information inside, including the **ports** and the **sequence number**.\n\nAnd TCP's sequence number counts **bytes**, not packets. It says where the packet's data starts in the whole stream. If one packet carries bytes 1 to 1,000, the next one starts at byte 1,001, so that's its sequence number. (Real sequence numbers start from a random-looking number chosen for each connection, but they count up the same way.) UDP doesn't use sequence numbers at all."
+      "body": "In Module 3 we said each [[packet]] carries a **sequence number**. Here's the more exact picture:\n\n- **IP** adds the source and destination **addresses**.\n- **TCP** adds its own information inside, including the **ports** and the **sequence number**.\n\nAnd TCP's sequence number counts **bytes**, not packets. It says where the packet's data starts in the whole stream. If one packet carries bytes 1 to 1,000, the next one starts at byte 1,001, so that's its sequence number. (Real sequence numbers start from a random-looking number chosen for each connection, but they count up the same way.) [[UDP]] doesn't use sequence numbers at all."
     },
     {
       "id": "next-sequence",
       "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "A TCP packet has sequence number **1** and carries **1,000 bytes** of data. What is the sequence number of the **next** packet?",
+      "prompt": "A [[TCP]] [[packet]] has [[sequence number]] **1** and carries **1,000 [[bytes|byte]]** of data. What is the sequence number of the **next** packet?",
       "base": "decimal",
       "answer": 1001,
-      "explanation": "The first packet covers bytes 1 to 1,000, so the next one starts at byte **1,001**. If you typed 2, that's counting packets. TCP counts bytes, so the receiver knows exactly which bytes it has, even if packets are different sizes."
+      "explanation": "The first packet covers bytes 1 to 1,000, so the next one starts at byte **1,001**. If you typed 2, that's counting packets. TCP counts bytes, so the receiver knows exactly which bytes it has, even if packets are different sizes.",
+      "hint": "TCP's sequence number counts bytes, not packets. Work out which bytes the first packet carries, then where the next one starts.",
+      "nudge": "Did you count packets? TCP counts bytes: the next packet starts at the byte right after the last one the first packet carried."
     },
     {
       "id": "handshake",
       "type": "explainer",
       "difficulty": "core",
       "title": "The three-way handshake",
-      "body": "Before any data flows, TCP sets up the connection with three short messages, called the **three-way handshake**:\n\n1. **SYN** (*synchronise*): your browser asks \"Can we talk?\"\n2. **SYN-ACK** (*synchronise-acknowledge*): the server replies \"Yes, and can I talk to you too?\"\n3. **ACK** (*acknowledge*): your browser answers \"Yes!\"\n\nIn the SYN and SYN-ACK, each side also shares the sequence number it will start counting from. After the ACK, the connection is open and the real data can flow."
+      "body": "Before any data flows, [[TCP]] sets up the connection with three short messages, called the **three-way [[handshake]]**:\n\n1. **SYN** (*synchronise*): your [[browser]] asks \"Can we talk?\"\n2. **SYN-ACK** (*synchronise-acknowledge*): the [[server]] replies \"Yes, and can I talk to you too?\"\n3. **ACK** (*acknowledge*): your browser answers \"Yes!\"\n\nIn the SYN and SYN-ACK, each side also shares the [[sequence number]] it will start counting from. After the ACK, the connection is open and the real data can flow."
     },
     {
       "id": "order-handshake",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "Put the start of a TCP connection in order.",
+      "prompt": "Put the start of a [[TCP]] connection in order.",
       "items": [
         { "id": "syn", "label": "Browser sends SYN" },
         { "id": "syn-ack", "label": "Server replies SYN-ACK" },
         { "id": "ack", "label": "Browser sends ACK" },
         { "id": "request", "label": "Browser sends its request for the web page" }
       ],
-      "explanation": "The browser asks (**SYN**), the server agrees and asks back (**SYN-ACK**), and the browser confirms (**ACK**). Only then is the connection open for the request."
+      "explanation": "The browser asks (**SYN**), the server agrees and asks back (**SYN-ACK**), and the browser confirms (**ACK**). Only then is the connection open for the request.",
+      "hint": "It's called a **three-way [[handshake]]**: ask, agree and ask back, then confirm. The name of each message gives a clue.",
+      "nudge": "The data can't flow until the handshake is done, and each message answers the one before it. Who asks first: browser or server?"
     },
     {
       "id": "which-and-why",
@@ -65,7 +69,9 @@
         { "id": "call", "left": "A live video call (usually UDP)", "right": "Fresh data matters more than late data" },
         { "id": "dns", "left": "A DNS lookup (usually UDP)", "right": "One tiny question and answer, so skip the setup" }
       ],
-      "explanation": "A download is useless with a single byte missing, so it uses **TCP**. A video call would rather skip a lost moment than freeze waiting for it, so it usually uses **UDP**. A DNS lookup is one small question, so a handshake would take longer than the question itself: it usually uses **UDP**, and switches to TCP for large answers."
+      "explanation": "A download is useless with a single byte missing, so it uses **TCP**. A video call would rather skip a lost moment than freeze waiting for it, so it usually uses **UDP**. A DNS lookup is one small question, so a handshake would take longer than the question itself: it usually uses **UDP**, and switches to TCP for large answers.",
+      "hint": "Ask of each one: would it be ruined by one missing piece, would it rather skip old data, or is it too small to be worth a setup?",
+      "nudge": "Think tracked parcel vs postcard. A file needs every byte; a live call can't wait for late data; a tiny question isn't worth a [[handshake]]."
     },
     {
       "id": "udp-true",
@@ -74,12 +80,21 @@
       "prompt": "Which statement about **UDP** is true?",
       "options": [
         { "id": "no-handshake", "text": "It sends without a handshake and doesn't resend lost data" },
-        { "id": "orders", "text": "It doesn't resend lost data, but it always delivers in order" },
-        { "id": "no-ip", "text": "UDP data doesn't travel inside IP packets" },
-        { "id": "no-ports", "text": "UDP doesn't use port numbers" }
+        {
+          "id": "orders",
+          "text": "It doesn't resend lost data, but it always delivers in order",
+          "nudge": "Putting data back in order is one of TCP's jobs. UDP makes no promises, so data can arrive jumbled."
+        },
+        {
+          "id": "no-ip",
+          "text": "UDP data doesn't travel inside IP packets",
+          "nudge": "Both TCP and UDP travel inside IP packets. IP gets the data to the right computer either way."
+        },
+        { "id": "no-ports", "text": "UDP doesn't use port numbers", "nudge": "Both TCP and UDP need to reach the right program on a computer. What does that job?" }
       ],
       "correctOptionId": "no-handshake",
-      "explanation": "UDP has **no handshake** and **no resending**. It doesn't guarantee order either: data can arrive jumbled. Like TCP, it travels inside IP packets and uses ports. DNS on port 53 is a UDP example."
+      "explanation": "UDP has **no handshake** and **no resending**. It doesn't guarantee order either: data can arrive jumbled. Like [[TCP]], it travels inside IP packets and uses ports. [[DNS]] on port 53 is a UDP example.",
+      "hint": "UDP is the postcard: no setup, no confirmation, it just sends. Which statement fits that and nothing more?"
     },
     {
       "id": "lost-syn-ack",
@@ -88,28 +103,43 @@
       "prompt": "Your browser sends a SYN and the server replies with a SYN-ACK, but the SYN-ACK is **lost** on the way. What happens?",
       "options": [
         { "id": "both-retry", "text": "Neither side gets the reply it expects in time, so they try again until the handshake completes or they give up" },
-        { "id": "opens-anyway", "text": "The connection opens anyway, because the server received the SYN" },
-        { "id": "no-handshake", "text": "The browser starts sending data without finishing the handshake" },
-        { "id": "switch-udp", "text": "The browser automatically switches to UDP instead" }
+        {
+          "id": "opens-anyway",
+          "text": "The connection opens anyway, because the server received the SYN",
+          "nudge": "The connection needs all three steps, not just the first one. The browser never heard back, so it isn't finished yet."
+        },
+        {
+          "id": "no-handshake",
+          "text": "The browser starts sending data without finishing the handshake",
+          "nudge": "TCP never sends data before the handshake is complete. Think about what a side does when a reply doesn't come."
+        },
+        {
+          "id": "switch-udp",
+          "text": "The browser automatically switches to UDP instead",
+          "nudge": "TCP doesn't change into a different protocol on its own. It has its own way of dealing with lost messages."
+        }
       ],
       "correctOptionId": "both-retry",
-      "explanation": "Both sides are waiting. The browser never got a SYN-ACK, so after a short wait it **sends its SYN again**. The server never got an ACK, so it **sends its SYN-ACK again**. Once a SYN-ACK gets through and the ACK comes back, the connection opens. If nothing gets through after several tries, the browser gives up and shows an error.\n\nThe connection can't open without all three steps, TCP never sends data before the handshake finishes, and it doesn't switch to UDP."
+      "explanation": "Both sides are waiting. The browser never got a SYN-ACK, so after a short wait it **sends its SYN again**. The server never got an ACK, so it **sends its SYN-ACK again**. Once a SYN-ACK gets through and the ACK comes back, the connection opens. If nothing gets through after several tries, the browser gives up and shows an error.\n\nThe connection can't open without all three steps, [[TCP]] never sends data before the handshake finishes, and it doesn't switch to UDP.",
+      "hint": "The connection only opens after all three messages arrive. If one goes missing, what is each side still waiting for?"
     },
     {
       "id": "which-bytes-resent",
       "type": "numeric_input",
       "difficulty": "challenge",
-      "prompt": "Three TCP packets are sent, carrying bytes **1–1,000**, **1,001–2,000** and **2,001–3,000**. The **middle** one is lost. What is the sequence number of the data that must be sent again?",
+      "prompt": "Three [[TCP]] [[packets|packet]] are sent, carrying [[bytes|byte]] **1–1,000**, **1,001–2,000** and **2,001–3,000**. The **middle** one is lost. What is the [[sequence number]] of the data that must be sent again?",
       "base": "decimal",
       "answer": 1001,
-      "explanation": "The lost packet's data started at byte **1,001**, so that's its sequence number. This is what Module 3 was hinting at: the receiver notices the gap in the byte numbers, and TCP sends just the missing bytes again."
+      "explanation": "The lost packet's data started at byte **1,001**, so that's its sequence number. This is what Module 3 was hinting at: the receiver notices the gap in the byte numbers, and TCP sends just the missing bytes again.",
+      "hint": "A TCP sequence number is where a packet's data starts in the stream. Which byte does the lost middle packet start with?",
+      "nudge": "It's not the packet's position in the line. Look at the byte range the lost packet carried and find where it starts."
     },
     {
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- **TCP** is reliable: a handshake, numbered bytes, confirmations, resending and correct order.\n- **UDP** is quick and simple: no handshake, no resending, no guaranteed order.\n- TCP's handshake is **SYN**, **SYN-ACK**, **ACK**.\n- **Sequence numbers** belong to TCP, not IP, and they count **bytes**.\n- Downloads and web pages use TCP. Live calls, games and DNS lookups usually use UDP.\n\nNext: the rules that sit on top, like HTTP, DNS and email."
+      "body": "- **TCP** is reliable: a [[handshake]], numbered bytes, confirmations, resending and correct order.\n- **UDP** is quick and simple: no handshake, no resending, no guaranteed order.\n- TCP's handshake is **SYN**, **SYN-ACK**, **ACK**.\n- **Sequence numbers** belong to TCP, not IP, and they count **bytes**.\n- Downloads and web pages use TCP. Live calls, games and [[DNS]] lookups usually use UDP.\n\nNext: the rules that sit on top, like [[HTTP]], DNS and email."
     }
   ]
 }

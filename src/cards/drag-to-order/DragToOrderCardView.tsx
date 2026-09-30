@@ -22,6 +22,8 @@ import { useState } from "react";
 import { CheckIcon, GripIcon, XIcon } from "@/components/ui/icons";
 import { CardPrompt } from "../CardPrompt";
 import { CardStatusNote } from "../CardStatusNote";
+import { InlineText } from "../shared/InlineText";
+import { plainText } from "../shared/text";
 import type { CardComponentProps, CardStatus } from "../types";
 import type { DragToOrderAnswer, DragToOrderCard } from "./schema";
 
@@ -63,7 +65,7 @@ function SortableItem({
       {...attributes}
       {...listeners}
       aria-roledescription="sortable item"
-      aria-label={`${label}, position ${position}`}
+      aria-label={`${plainText(label)}, position ${position}`}
     >
       <span
         aria-hidden="true"
@@ -74,7 +76,7 @@ function SortableItem({
       <span
         className={`flex-1 font-medium ${BINARY_LIKE.test(label) ? "font-mono text-lead tracking-wide" : "text-body"}`}
       >
-        {label}
+        <InlineText>{label}</InlineText>
       </span>
       {!locked && <GripIcon className="size-5 shrink-0 text-ink-faint" />}
       {status === "correct" && <CheckIcon className="size-5 shrink-0 text-success" />}

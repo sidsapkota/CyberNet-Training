@@ -10,14 +10,14 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Who's in charge?",
-      "body": "Right now your music app, your browser and your messages all want the CPU, a slice of RAM and a spot on the screen, **all at the same time**.\n\nIf they just grabbed what they wanted, they'd crash into each other. Something has to be in charge."
+      "body": "Right now your music app, your [[browser]] and your messages all want the [[CPU]], a slice of [[RAM]] and a spot on the screen, **all at the same time**.\n\nIf they just grabbed what they wanted, they'd crash into each other. Something has to be in charge."
     },
     {
       "id": "the-operating-system",
       "type": "explainer",
       "difficulty": "core",
       "title": "The operating system",
-      "body": "That something is the **operating system**, or **OS**. It's the first program to start when you switch a device on, and it runs until you switch it off.\n\nThink of it as a referee:\n\n- It gives each app **turns on the CPU**, switching between them so fast it looks like they all run at once.\n- It **shares out RAM** and stops apps reading each other's data.\n- It talks to the hardware (screen, keyboard, Wi-Fi) so apps don't have to.\n- It looks after your **files** in storage.\n\nIt also installs **updates**, which fix bugs and close security holes. Save your work first, and let an update finish: switching off halfway can leave the OS broken."
+      "body": "That something is the **operating system**, or **OS**. It's the first program to start when you switch a device on, and it runs until you switch it off.\n\nThink of it as a referee:\n\n- It gives each app **turns on the [[CPU]]**, switching between them so fast it looks like they all run at once.\n- It **shares out [[RAM]]** and stops apps reading each other's data.\n- It talks to the **hardware** (the physical parts: screen, keyboard, Wi-Fi) so apps don't have to.\n- It looks after your **files** in [[storage]].\n\nIt also installs **updates**, which fix **bugs** (mistakes in a program's instructions) and close **security holes** (weak spots attackers could use). Save your work first, and let an update finish: switching off halfway can leave the OS broken."
     },
     {
       "id": "os-or-app",
@@ -34,23 +34,25 @@
         { "id": "hardware", "label": "Talk to the keyboard, screen and Wi-Fi", "bin": "os" },
         { "id": "keep-apart", "label": "Stop apps reading each other's data", "bin": "os" },
         { "id": "filter", "label": "Add a funny filter to a selfie", "bin": "app" },
-        { "id": "spelling", "label": "Check the spelling in your essay", "bin": "app" },
+        { "id": "sticker", "label": "Add a sticker to a video", "bin": "app" },
         { "id": "score", "label": "Keep score in a game", "bin": "app" }
       ],
-      "explanation": "The **OS** manages the shared things every app needs: CPU time, RAM, the hardware and safety. **Apps** do one particular job for you, and ask the OS for what they need."
+      "explanation": "The **OS** manages the shared things every app needs: CPU time, RAM, the hardware and safety. **Apps** do one particular job for you, and ask the OS for what they need.",
+      "hint": "Think of the OS as the referee. Is this job about sharing something every app needs, or one particular thing an app does for you?",
+      "nudge": "The OS handles the shared things: CPU turns, RAM, [[hardware]] and keeping apps apart. Apps do one particular job for you."
     },
     {
       "id": "behind-the-scenes",
       "type": "explainer",
       "difficulty": "core",
       "title": "The task manager",
-      "body": "Every running program is called a **process**. The OS's **task manager** lists them all, with how much CPU and RAM each one uses.\n\nMany processes have no window. These **background processes** check for updates, sync your files, or scan for viruses (leave security apps running). **System processes** are the OS itself: end one and the device crashes or restarts.\n\nIf an app freezes, ending its process is the safe fix. You'll lose anything unsaved in it, but nothing else. Only the OS and security apps can see what's running. A web page can't, so a page that says it \"found viruses\" is lying."
+      "body": "Every running program is called a **process**. The OS's **task manager** lists them all, with how much [[CPU]] and [[RAM]] each one uses.\n\n**System processes** are the OS itself: end one and the device crashes or restarts.\n\nIf an app freezes, ending its process is the safe fix. You'll lose anything unsaved in it, but nothing else."
     },
     {
       "id": "end-the-frozen-app",
       "type": "simulator",
       "difficulty": "core",
-      "prompt": "Your laptop has frozen up. Open the **task manager** and end whatever is hogging the CPU, but **keep your music and your homework browser open**.",
+      "prompt": "Your laptop has frozen up. Here's its **task manager**. End whatever is hogging the [[CPU]], but **keep your music and your homework [[browser]] open**.",
       "model": "task-manager",
       "params": {
         "ramGb": 8,
@@ -82,7 +84,16 @@
           { "target": "control", "id": "end-browser", "op": "==", "value": false }
         ]
       },
-      "explanation": "The **drawing app** was stuck using 85% of the CPU. Ending it freed the CPU, and everything else carried on. Ending **System** would have crashed the whole laptop."
+      "explanation": "The **drawing app** was stuck using 85% of the CPU. Ending it freed the CPU, and everything else carried on. Ending **System** would have crashed the whole laptop.",
+      "hint": "Look at the CPU number for each [[process]]. Which one is taking far more than the rest?",
+      "nudge": "End only the process hogging the CPU. Never end **System**, and keep your music and browser running."
+    },
+    {
+      "id": "background-helpers",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Helpers in the background",
+      "body": "Many [[processes|process]] have no window at all. These **background processes** do jobs for you: checking for [[updates|update]], keeping your files matched up with [[the cloud|cloud]] (**syncing**), or scanning for [[viruses|virus]]. Leave security apps running.\n\nOnly the OS and security apps can see what's running on your device. A web page can't, so a page that says it \"found viruses\" is lying."
     },
     {
       "id": "update-time",
@@ -98,19 +109,19 @@
             {
               "id": "restart-now",
               "text": "Restart straight away",
-              "consequence": "The unsaved essay was only in RAM. Restarting cleared it, and your work is gone.",
+              "consequence": "The unsaved essay was only in [[RAM]]. Restarting cleared it, and your work is gone.",
               "outcome": "fail"
             },
             {
               "id": "save-first",
               "text": "Save the essay first, then restart",
-              "consequence": "Smart. The essay is safe in storage, and the update can start.",
+              "consequence": "Smart. The essay is safe in [[storage]], and the update can start.",
               "next": "installing"
             },
             {
               "id": "never",
               "text": "Turn updates off for good",
-              "consequence": "Updates fix security holes that attackers use. Without them, your laptop gets less safe over time.",
+              "consequence": "Updates fix [[security holes|security-hole]] that attackers use. Without them, your laptop gets less safe over time.",
               "outcome": "fail"
             }
           ]
@@ -134,27 +145,33 @@
           ]
         }
       ],
-      "explanation": "**Save your work**, then let updates install. Keep the device plugged in, and never switch it off halfway through. Updates fix bugs and close security holes."
+      "explanation": "**Save your work**, then let updates install. Keep the device plugged in, and never switch it off halfway through. Updates fix [[bugs|bug]] and close security holes.",
+      "hint": "Think about where unsaved work lives, and what happens to it when a device restarts. Then think about switching off halfway."
     },
     {
       "id": "why-update",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "What's the most important reason to install OS updates?",
+      "prompt": "What's the most important reason to install OS [[updates|update]]?",
       "options": [
         { "id": "security", "text": "They fix bugs and security holes" },
-        { "id": "ram", "text": "They add more RAM to your device" },
-        { "id": "faster", "text": "They always make the device faster" },
-        { "id": "storage", "text": "They free up lots of storage" }
+        { "id": "ram", "text": "They add more RAM to your device", "nudge": "RAM is hardware, a physical part. An update only changes software, so it can't add more." },
+        {
+          "id": "faster",
+          "text": "They always make the device faster",
+          "nudge": "Some updates speed things up, but not always. Look for the reason that holds for every update."
+        },
+        { "id": "storage", "text": "They free up lots of storage", "nudge": "Updates add new code to your device, so they don't usually free up space." }
       ],
       "correctOptionId": "security",
-      "explanation": "Updates patch **security holes** and fix bugs. They can't add hardware like RAM, and they often use a bit *more* storage, not less. Some make things faster, but not always."
+      "explanation": "Updates patch **security holes** and fix bugs. They can't add [[hardware]] like RAM, and they often use a little *more* storage, not less. Some make things faster, but not always.",
+      "hint": "Think about what an update actually changes: the code, or the physical parts inside your device?"
     },
     {
       "id": "memory-leak",
       "type": "simulator",
       "difficulty": "challenge",
-      "prompt": "This laptop gets slower the longer it's on. Some apps have a **memory leak**: they keep grabbing RAM and never give it back. Move time forward to **at least 40 minutes**, find the leaky app and end it. Keep the **music** playing.",
+      "prompt": "This laptop has **8 [[GB|gigabyte]] of [[RAM]]**, and it gets slower the longer it's on. Some apps have a **memory leak**: they keep grabbing RAM and never give it back. Move time forward to **at least 40 minutes**, find the leaky app and end it. Keep the **music** playing.",
       "model": "task-manager",
       "params": {
         "ramGb": 8,
@@ -176,7 +193,7 @@
       ],
       "outputs": [
         { "id": "smooth", "kind": "device", "label": "Laptop", "frame": "laptop" },
-        { "id": "ramUsed", "kind": "meter", "label": "RAM in use", "unit": "GB" },
+        { "id": "ramUsed", "kind": "meter", "label": "RAM in use (of 8 GB)", "unit": "GB" },
         { "id": "processes", "kind": "list", "label": "Running" }
       ],
       "goal": {
@@ -187,7 +204,9 @@
           { "target": "control", "id": "end-music", "op": "==", "value": false }
         ]
       },
-      "explanation": "The **chat app** grew by 0.15 GB every minute. After 40 minutes it was using 6.5 GB and filled RAM on its own. Ending it gives the memory back. Restarting the app (or the laptop) is the everyday fix for a leak until the app's makers fix it."
+      "explanation": "The **chat app** grew by 0.15 GB every minute. After 40 minutes it was using 6.5 GB and filled RAM on its own. Ending it gives the memory back. Restarting the app (or the laptop) is the everyday fix for a leak until the app's makers fix it.",
+      "hint": "Slide time forward first, then watch the RAM each app uses. Which one keeps growing when the others stay the same?",
+      "nudge": "A leaky app's RAM keeps climbing over time. Move time to 40 minutes or more, and don't end the music or **System**."
     },
     {
       "id": "fake-virus-popup",
@@ -198,7 +217,7 @@
       "steps": [
         {
           "id": "popup",
-          "text": "**\"WARNING! Your laptop has 5 viruses! Download CleanerPro now or call this number!\"**",
+          "text": "**\"WARNING! Your laptop has 5 [[viruses|virus]]! Download CleanerPro now or call this number!\"**",
           "choices": [
             {
               "id": "download",
@@ -234,14 +253,15 @@
           ]
         }
       ],
-      "explanation": "A web page can't see what's on your laptop, so a pop-up claiming to have found viruses is **fake**. Don't click anything inside it. Close the browser (using the task manager if you need to) and tell an adult."
+      "explanation": "A web page can't see what's on your laptop, so a pop-up claiming to have found viruses is **fake**. Don't click anything inside it. Close the browser (using the task manager if you need to) and tell an adult.",
+      "hint": "Can a web page really see what's on your laptop? Think about who can, and whether you should click anything it shows you."
     },
     {
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- The **operating system** is the referee. It shares out the CPU and RAM, talks to the hardware and looks after files.\n- The **task manager** shows every **process**, including background and system ones.\n- End a frozen app's process to fix it, but never a system process.\n- **Save your work**, then let updates finish.\n\nNext: where your files actually live."
+      "body": "- The **operating system** is the referee. It shares out the [[CPU]] and [[RAM]], talks to the [[hardware]] and looks after files.\n- The **task manager** shows every **process**, including background and system ones.\n- End a frozen app's process to fix it, but never a [[system process]].\n- **Save your work**, then let [[updates|update]] finish.\n\nNext: where your files actually live."
     }
   ]
 }

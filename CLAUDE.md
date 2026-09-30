@@ -108,6 +108,10 @@ src/cards/<type>/
   - `base.ts`: every card has `id` and `difficulty` (`"core" | "challenge"`, required).
   - Every interactive card also has `prompt` and `explanation` (markdown). This is what lets the quiz
     review screen treat every card type the same way.
+  - Every interactive card may have a `hint` (≤300, markdown; lessons only, behind a "Hint" button)
+    and a `nudge` (≤220, markdown; shown after a wrong attempt in place of "Have another go").
+    Multiple-choice options may have their own `nudge` (never the correct option); `nudgeFor()`
+    in `src/cards/nudge.ts` picks the picked option's nudge, then the card's.
 - **`schema.ts`** is the discriminated union of all card types (registration step 1).
 - **`registry.ts`** maps card type → definition (registration step 2). `satisfies` makes the compiler
   catch a missing or mis-keyed entry. The player uses `getCardDefinition(card)`, which erases the
@@ -120,7 +124,7 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
 | `type` | Extra fields | Answer (JSON) | Correct when |
 |---|---|---|---|
 | `explainer` | `title`, `body` (md), `image?` `{src, alt, width, height, caption?}`, `mascot?` (`"presenting"`, safety notes only) | none | read (Continue) |
-| `multiple_choice` | `options` (2–5 `{id, text}`), `correctOptionId` | option id | right option picked |
+| `multiple_choice` | `options` (2–5 `{id, text, nudge?}`), `correctOptionId` | option id | right option picked |
 | `drag_to_order` | `items` (3–7 `{id, label}`, **authored in the correct order**) | item ids | exact order |
 | `binary_toggle` | `target` (0–255) | 8 booleans | bits sum to target |
 | `numeric_input` | `base` (`decimal` \| `binary` \| `hex`, default decimal), `answer` (number or number[]), `hint?` (md), `unit?` | raw string | parsed value is accepted |
@@ -144,7 +148,10 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   (`` `443` ``) for Plex Mono; the same applies to `packet_path` labels.
 - **`packet_path`:**
   - `nodes` (2–8): `{ id, kind: device|router|switch|server|internet, label (≤24), address? (≤15, mono),
-    col: 0–3, row: 0–3 }`, one node per cell.
+    col: 0–3, row: 0–3, down? }`, one node per cell.
+  - `down: true` draws a node as broken (dashed red outline, cross, "down" tag, dashed links) and
+    is never on a valid path. Use it instead of writing "(down)" in the label, so an outage is
+    visible, not a reading trick.
   - `links`: `{from, to}`, undirected.
   - `validPaths`: every accepted route, each starting at `source`, ending at `destination`, following
     links and never repeating a node.
@@ -159,6 +166,9 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - **Nothing is ever executed:** output is only the card's data, and a test enforces no
     eval/fetch/Function in the terminal code.
   - Outputs must look realistic for the chosen OS and use only documentation addresses.
+  - Output keeps its columns (no wrapping) and scrolls inside the terminal box, so tables like
+    `netstat` line up on a phone. An `intro` of 3+ lines is treated as saved output the same way;
+    shorter intros wrap as prose.
 - **Scenes** (`src/cards/shared/scenes/`) power `hotspot` and `teardown`:
   - `manifests.ts` is pure data: part ids, accessible names, hit boxes, draw order, `coveredBy` and
     named `views` (e.g. `open` = cover off), plus an optional `labelAt` point where a label marker
@@ -245,6 +255,17 @@ interactive, update `isInteractiveCard` / `InteractiveCard` in `schema.ts`.
   - Right answer: a cyan pulse travels along the progress trace to this card's node, which
     ripples. The footer status node fills with a check, and the explanation and XP earned show.
   - Continue unlocks only after a correct answer. Challenge cards also get a Skip button.
+  - **Hints** (`HintReveal`): a "Hint" button under the card, with the cost up front ("Using it:
+    +5 XP instead of +10"). Opening it once makes the card pay retry XP. Rules live in
+    `src/lib/hints.ts` (`visibleHint`: lessons only, graded cards with a hint, until correct).
+  - **Nudges:** a wrong answer shows `nudgeFor(card, answer)` under "Not quite"; the full
+    explanation stays collapsed.
+  - **How to play** (`src/components/player/coach/`): the first time a learner meets an interaction
+    style (`COACH_KEYS` in `src/lib/coach.ts`: every graded type except multiple choice, and each
+    hotspot mode separately), an inline panel above the card explains it with a one-shot animated
+    demo ("Show again" replays; final frame under reduced motion). "Got it", ✕, Enter (unless
+    typed in an answer box), Check or Continue dismiss it for good: `preferences.coachSeen`, synced
+    like the other preferences. It also shows in quizzes, which have no hints.
   - Explainers are marked complete when the learner presses Continue.
 - **`QuizRun`**:
   - An intro screen, then one attempt per question with right/wrong shown immediately and no
@@ -272,14 +293,15 @@ interactive, update `isInteractiveCard` / `InteractiveCard` in `schema.ts`.
   - Syncs across tabs via the `storage` event.
 - **Swapping in Supabase:** implement `ProgressStore`, then pass it as
   `<ProgressProvider store={…}>` in `src/components/Providers.tsx`.
-- **Preferences:** the snapshot's `preferences` (currently `mode: "path" | "explore"`) are saved with
+- **Preferences:** the snapshot's `preferences` (`mode: "path" | "explore"`, `sound`, and
+  `coachSeen`, the how-to-play panels already dismissed) are saved with
   progress via `store.setPreferences()`, so they sync once progress does. The field is optional in
   stored data (Zod default), so progress saved before it existed still loads. `resetAll` keeps it.
 - **Timestamps:** cards and lessons record `completedAt`, and quizzes `passedAt` and attempt `at`.
   `activity.ts` derives the dashboard's per-day activity and totals from them (pure, takes `now`).
 - **`xp.ts`** holds every XP rule and number, and callers use it to decide awards:
-  - core cards: 10 on the first try, 5 after retries
-  - challenge cards: 20 on the first try, 10 after retries
+  - core cards: 10 on the first try, 5 after retries (or after using the hint)
+  - challenge cards: 20 on the first try, 10 after retries (or after using the hint)
   - lesson complete: +20
   - quiz first pass: +50
   - explore card (hotspot explore mode) finished: 5; explainers: 0
@@ -325,7 +347,7 @@ keep their focused player shell.
 ## Folder structure
 
 ```
-content/                 lesson content (JSON), see above
+content/                 lesson content (JSON), see above; glossary.json (shared tap-to-define terms)
 public/brand/            logo files (colour, mono, tile, lockups), app-icon PNGs, icon-source.png (original),
                          mascot/<expression>.svg (generated exports)
 docs/brand/mascot/       the mascot's AI concept sheet (reference only; not served)
@@ -334,7 +356,7 @@ scripts/                 validate-content.ts, generate-brand-assets.ts
 src/app/                 routes, layout (fonts), globals.css, theme.css (design tokens), icon.svg,
                          apple-icon.png, manifest.ts
 src/cards/               card types, contract, union schema, registry; shared/ (seeded shuffle, InlineText)
-src/components/player/   lesson/quiz player UI
+src/components/player/   lesson/quiz player UI, HintReveal, coach/ (how-to-play panels and demos)
 src/components/brand/    logo geometry (single source of truth) and <LogoMark>/<LogoLockup>
 src/components/network/  the network motif: NetworkMark, NodeProgress, QuizNetwork
 src/components/nav/      site header and phone tab bar
@@ -346,6 +368,8 @@ src/components/ui/       Button, Markdown, icons (lucide wrappers), CountUp, Pro
 src/lib/content/         schemas, fs loader (load.ts), server accessors (server.ts)
 src/lib/progress/        ProgressStore, localStorage impl, provider, xp, derived state
 src/lib/keyboard.ts      global keyboard shortcut helpers
+src/lib/glossary.ts      glossary schema, lookup and the [[term]] mark syntax (content/glossary.json)
+src/lib/coach.ts         how-to-play panel keys and "seen" rules; hints.ts: hint display and XP note rules
 src/lib/supabase/        env validation, typed browser/server/admin clients, generated DB types
 src/lib/auth/            AuthProvider, verified user id, display-name rules, safe redirects
 src/app/actions/         Server Actions: progress writes (server-side XP), merge, account
@@ -487,10 +511,11 @@ Migrations, all applied to the linked project:
 - `20260930130000_revoke_extra_authenticated_privileges.sql`: removes Supabase's default
   `TRUNCATE`, `REFERENCES` and `TRIGGER` from `authenticated`. TRUNCATE ignores RLS.
 - `20260930140000_profiles_sound_enabled.sql`: `profiles.sound_enabled` (default true).
+- `20260930150000_profiles_coach_seen.sql`: `profiles.coach_seen` (text[], default empty, at most 32).
 
 | Table | Holds |
 |---|---|
-| `profiles` | `id` (= auth user), `display_name` (1 to 40 chars, nullable until chosen), `is_premium` (default false), `learning_mode` (`path` or `explore`), `sound_enabled` (default true) |
+| `profiles` | `id` (= auth user), `display_name` (1 to 40 chars, nullable until chosen), `is_premium` (default false), `learning_mode` (`path` or `explore`), `sound_enabled` (default true), `coach_seen` (how-to-play panels dismissed) |
 | `card_completions` | `(user_id, lesson_id, card_id)` primary key, `completed_at`, `xp` (0 to 20) |
 | `lesson_completions` | `(user_id, lesson_id)` primary key, `completed_at`, `xp` (0 to 20) |
 | `quiz_attempts` | `id`, `user_id`, `quiz_id`, `attempted_at` (unique per user and quiz), `score` 0 to 1, `passed`, `xp` (0 to 50), `answers` jsonb |
@@ -506,7 +531,7 @@ Migrations, all applied to the linked project:
   `= id` for profiles).
 - **Writes:**
   - Users may **update only `profiles.display_name`**, on their own row. There's a column-level
-    grant and an update policy; `is_premium`, `learning_mode` and `sound_enabled` aren't writable.
+    grant and an update policy; `is_premium`, `learning_mode`, `sound_enabled` and `coach_seen` aren't writable.
   - Progress tables have **no write policies or privileges** for `anon` or `authenticated`. All
     progress writes go through Server Actions with the secret key, so users can never set their
     own XP.
@@ -743,6 +768,25 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   what a safe action is. A card's own explanation doesn't count (it comes after answering), and core
   cards and quizzes can't rely on a challenge card. `load.test.ts` checks the scene part of this
   automatically; check the rest by reading the lesson in order.
+- **Glossary (tap to define):** `content/glossary.json` is shared by every course: `{ id, term,
+  definition }`, one or two plain sentences (≤220). In markdown text (explainer body, prompt, hint,
+  nudge, explanation, scenario step text and consequences) mark a term as `[[router]]` or
+  `[[routers|router]]`; it renders as a dotted, tappable term with a Radix popover. Mark only the
+  **first use per card**, never in button labels (options, items, choices), and not where the card
+  defines the term in bold. Don't mark terms in quizzes or in a card whose answers use the term (a
+  definition could give the answer away). The loader fails on unknown terms, repeat marks and marks
+  in the wrong field.
+- **Hints and nudges:** every graded lesson card has a `hint` and a `nudge` (or, for multiple choice,
+  a nudge on every wrong option); scenarios and teardowns only need the hint. `load.test.ts` checks
+  it. A hint points the way (the idea, the method, where to look) **without giving the answer**; a
+  nudge addresses the likely misconception **without revealing the correct option**. Neither may
+  add anything the lesson hasn't taught or anything inaccurate. Quizzes never show hints.
+- **One-try quiz cards test understanding, not reading tricks:** the goal must be fully stated in
+  the question ("End **only** the process…, keep Notes open"), broken things must look broken
+  (`down: true`), and confusing output lines must be explained before a quiz relies on them.
+- **Beginner audit:** after big content changes, have a fresh agent play the course as a 12-year-old
+  with no prior knowledge (on-screen text and screenshots only, answers hidden until it commits).
+  Record findings and fixes in the Beginner Audit section of `content/REVIEW.md`.
 - **Challenge cards** (`difficulty: "challenge"`) are optional stretch questions. Core cards alone must
   fully teach the lesson, and nothing later may depend on a challenge card. Aim for about 2 per lesson.
 - **Quizzes** have about 5 core, interactive questions covering the module's lessons, and nothing

@@ -24,7 +24,13 @@
           "after": ["screw-1", "screw-2", "screw-3", "screw-4"],
           "nudge": "All four screws have to come out first."
         },
-        { "id": "unplug", "part": "battery-connector", "verb": "unplug", "after": ["panel"], "nudge": "Lift the panel off first." }
+        {
+          "id": "unplug",
+          "part": "battery-connector",
+          "verb": "unplug",
+          "after": ["panel"],
+          "nudge": "Lift the panel off first."
+        }
       ],
       "explanation": "Screws, then the panel, then **unplug the battery** before touching any other part."
     },
@@ -98,8 +104,8 @@
       "prompt": "A laptop gets very hot while gaming and suddenly runs slower. What's happening?",
       "options": [
         { "id": "throttle", "text": "The CPU is slowing itself down to stay safe" },
-        { "id": "storage-full", "text": "The storage has filled up with heat" },
-        { "id": "ram-melting", "text": "The RAM is being deleted" }
+        { "id": "storage-full", "text": "The battery is running out" },
+        { "id": "ram-melting", "text": "It needs more RAM" }
       ],
       "correctOptionId": "throttle",
       "explanation": "Too much heat makes the CPU **throttle**: it lowers its clock speed to protect itself. Clear vents and a working fan help it stay at full speed."

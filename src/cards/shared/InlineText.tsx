@@ -10,7 +10,7 @@ export function InlineText({ children }: { children: string }) {
     <>
       {parts.map((part, i) =>
         part.startsWith("`") && part.endsWith("`") && part.length > 2 ? (
-          <code key={i} className="font-mono text-[0.95em] tracking-tight">
+          <code key={i} className="font-mono text-[0.95em] tracking-tight [overflow-wrap:anywhere]">
             {part.slice(1, -1)}
           </code>
         ) : (

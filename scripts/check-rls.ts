@@ -107,6 +107,11 @@ async function main() {
     record("A can't change sound_enabled directly", blocked(await a.client.from("profiles").update({ sound_enabled: false }).eq("id", a.id).select()));
     const profileDefaults = await admin.from("profiles").select("sound_enabled").eq("id", a.id).single();
     record("New profiles have sound on by default", profileDefaults.data?.sound_enabled === true);
+    record("A can't change coach_seen directly", blocked(await a.client.from("profiles").update({ coach_seen: ["sort_bins"] }).eq("id", a.id).select()));
+    const coachDefaults = await admin.from("profiles").select("coach_seen").eq("id", a.id).single();
+    record("New profiles have seen no coach panels", Array.isArray(coachDefaults.data?.coach_seen) && coachDefaults.data.coach_seen.length === 0);
+    const tooMany = await admin.from("profiles").update({ coach_seen: Array.from({ length: 33 }, (_, i) => `k${i}`) }).eq("id", a.id).select();
+    record("coach_seen is capped at 32 entries (even for the server)", Boolean(tooMany.error));
     const rename = await a.client.from("profiles").update({ display_name: "Ace" }).eq("id", a.id).select("display_name");
     record("A can change their own display name (control)", !rename.error && rename.data?.[0]?.display_name === "Ace");
 

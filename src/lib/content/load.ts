@@ -1,6 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { z } from "zod";
+import { GlossarySchema } from "@/lib/glossary";
+import { checkGlossaryMarks } from "./glossaryCheck";
 import {
   CourseFileSchema,
   type CourseOutline,
@@ -19,6 +21,7 @@ import {
  *   content/courses/<course>/course.json
  *   content/courses/<course>/modules/<module>/module.json
  *   content/courses/<course>/modules/<module>/lessons/<lesson>.json
+ *   content/glossary.json   (shared by every course; optional for test fixtures)
  */
 
 export const DEFAULT_CONTENT_ROOT = path.join(process.cwd(), "content");
@@ -113,6 +116,10 @@ export function loadContent(root: string = DEFAULT_CONTENT_ROOT): LoadedContent 
   const courses: CourseOutline[] = [];
   const lessons = new Map<string, Lesson>();
 
+  const glossaryFile = path.join(root, "glossary.json");
+  const glossary = fs.existsSync(glossaryFile) ? readJson(glossaryFile, GlossarySchema) : { terms: [] };
+  const glossaryIds = new Set((glossary?.terms ?? []).map((t) => t.id));
+
   for (const courseDir of listDirs(coursesDir)) {
     const coursePath = path.join(coursesDir, courseDir);
     const courseFile = path.join(coursePath, "course.json");
@@ -134,6 +141,9 @@ export function loadContent(root: string = DEFAULT_CONTENT_ROOT): LoadedContent 
         const parsed = readJson(lessonFile, LessonFileSchema);
         if (!parsed) continue;
         claimId("lesson", parsed.id, lessonFile);
+        parsed.cards.forEach((card, i) => {
+          for (const problem of checkGlossaryMarks(card, glossaryIds)) problems.push(`${rel(lessonFile)} → cards[${i}].${problem}`);
+        });
         moduleLessons.push({ ...parsed, courseId: course.id, moduleId: mod.id });
       }
 

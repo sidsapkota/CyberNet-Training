@@ -308,8 +308,8 @@ const PHONE: Record<string, ReactNode> = {
   "charging-port": (
     <g>
       {/* On the bottom edge, so it's visible with the cover on. */}
-      <rect x={80} y={305} width={40} height={8} rx={4} fill={C.bg} stroke={C.edge} strokeWidth={1.2} />
-      <path d="M88 309H112" stroke={C.contact} strokeWidth={1.5} strokeLinecap="round" />
+      <rect x={76} y={302} width={48} height={12} rx={6} fill={C.bg} stroke={C.edge} strokeWidth={1.5} />
+      <path d="M86 308H114" stroke={C.contact} strokeWidth={2.5} strokeLinecap="round" />
     </g>
   ),
   "back-cover": (

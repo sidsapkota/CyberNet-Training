@@ -69,8 +69,14 @@ export function PacketPathCardView({
   const inPath = (a: string, b: string) =>
     answer.some((id, i) => i > 0 && ((answer[i - 1] === a && id === b) || (answer[i - 1] === b && id === a)));
 
+  const downIds = new Set(card.nodes.filter((n) => n.down).map((n) => n.id));
   function linkStroke(a: string, b: string) {
-    if (!inPath(a, b)) return { stroke: "var(--color-line-strong)", width: 2, dash: undefined };
+    if (!inPath(a, b)) {
+      // Links to a node that's down are dashed, so the outage is visible, not just in its label.
+      return downIds.has(a) || downIds.has(b)
+        ? { stroke: "var(--color-line-strong)", width: 2, dash: "4 6" }
+        : { stroke: "var(--color-line-strong)", width: 2, dash: undefined };
+    }
     if (locked && wrongAt !== null) {
       const ia = answer.indexOf(a);
       const ib = answer.indexOf(b);
@@ -84,8 +90,8 @@ export function PacketPathCardView({
     <div>
       <CardPrompt>{card.prompt}</CardPrompt>
       <p className="mt-2 text-small text-ink-muted">
-        Tap the next hop, starting from <strong className="font-semibold text-ink">{byId.get(card.source)?.label}</strong>.
-        Tap the last hop again to undo.
+        Tap the next stop along a line, starting from <strong className="font-semibold text-ink">{byId.get(card.source)?.label}</strong>.
+        Tap the last stop again to undo.
       </p>
 
       <div
@@ -128,8 +134,11 @@ export function PacketPathCardView({
           const isWrong = wrongAt !== null && step === wrongAt;
           const reachedCorrectly = status === "correct" && node.id === card.destination;
 
+          const down = Boolean(node.down);
           const tone = isWrong
             ? "border-danger bg-danger-soft text-danger"
+            : down && step < 0
+              ? "border-dashed border-danger bg-surface text-danger"
             : reachedCorrectly
               ? "border-success bg-success text-on-success"
               : step >= 0
@@ -141,7 +150,8 @@ export function PacketPathCardView({
           const role =
             node.id === card.source ? "start" : node.id === card.destination ? "destination" : null;
           const state =
-            step >= 0 ? `hop ${step + 1} of your route` : selectable ? "can be the next hop" : "not reachable from here";
+            step >= 0 ? `stop ${step + 1} of your route` : selectable ? "can be the next stop" : "not reachable from here";
+          const downNote = down ? ", down (not working)" : "";
 
           return (
             <div
@@ -155,10 +165,15 @@ export function PacketPathCardView({
                 onClick={() => onAnswerChange(tapNode(card, answer, node.id))}
                 aria-label={`${node.label}${node.address ? `, ${node.address}` : ""}, ${name}${
                   role ? `, ${role}` : ""
-                }, ${state}${isWrong ? ", wrong hop" : ""}`}
+                }${downNote}, ${state}${isWrong ? ", wrong stop" : ""}`}
                 className={`relative grid size-12 place-items-center rounded-node border-2 transition-colors disabled:cursor-default ${tone}`}
               >
                 <Icon className="size-5" />
+                {down && !isWrong && (
+                  <span className="absolute -bottom-1.5 -right-1.5 grid size-5 place-items-center rounded-node border-2 border-danger bg-surface text-danger">
+                    <XIcon className="size-3" strokeWidth={3} />
+                  </span>
+                )}
                 {step > 0 && !isWrong && !reachedCorrectly && (
                   <span className="absolute -top-1.5 -right-1.5 grid size-5 place-items-center rounded-node border border-accent-ink bg-surface font-mono text-[0.65rem] font-semibold text-accent-ink">
                     {step}
@@ -185,6 +200,11 @@ export function PacketPathCardView({
                 )}
                 {node.label}
               </span>
+              {down && (
+                <span className="rounded-sm bg-danger-soft px-1 font-mono text-[0.65rem] leading-tight font-semibold tracking-wider text-danger uppercase">
+                  down
+                </span>
+              )}
               {node.address && (
                 <span className="rounded-sm bg-surface px-1 font-mono text-[0.68rem] leading-tight break-all text-ink-muted">
                   {node.address}

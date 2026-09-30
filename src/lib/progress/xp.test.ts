@@ -9,6 +9,14 @@ describe("cardXp", () => {
     expect(cardXp("core", 7)).toBe(XP.card.core.retry);
   });
 
+  it("pays the retry amount when the hint was used, even on the first try", () => {
+    expect(cardXp("core", 1, true)).toBe(5);
+    expect(cardXp("challenge", 1, true)).toBe(10);
+    expect(cardXp("core", 3, true)).toBe(5);
+    expect(cardXpToAward(false, "core", 1, true)).toBe(5);
+    expect(cardXpToAward(true, "core", 1, true)).toBe(0);
+  });
+
   it("pays a bonus for challenge cards", () => {
     expect(cardXp("challenge", 1)).toBe(XP.card.challenge.firstTry);
     expect(cardXp("challenge", 3)).toBe(XP.card.challenge.retry);

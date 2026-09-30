@@ -7,7 +7,8 @@ This file is for anyone checking the course content for accuracy. For each lesso
 
 **Inside Your Devices** is reviewed [at the end of this file](#content-review-inside-your-devices),
 including its [Safety](#safety) list. [Teach before test](#teach-before-test-review-both-courses)
-lists every change made to both courses when that rule was checked.
+lists every change made to both courses when that rule was checked. [Beginner audit](#beginner-audit-both-courses)
+lists what two fresh-beginner play-throughs found, and how each issue was fixed.
 
 The course has 6 modules. [Later corrections](#later-corrections-of-earlier-simplifications), at
 the end, lists every place a later module corrects or deepens an earlier simplification.
@@ -782,8 +783,7 @@ files live.
 - Recognise a swollen battery and respond safely.
 
 **Key claims:**
-- Phones and laptops use lithium-ion batteries, rated in watt-hours. A phone holds about 15 Wh,
-  and a laptop a few times more.
+- Phones and laptops use lithium-ion batteries. Power is measured in watts (W).
 - The biggest drains are usually the screen's brightness, location (GPS) and background apps.
 - Batteries hold noticeably less after a few hundred full charges; heat speeds this up.
 - Cables and chargers fail more often than phones.
@@ -795,7 +795,8 @@ files live.
 
 **Simplifications:**
 - The drains are simplified. Weak mobile signal is also a major drain and isn't mentioned.
-- "About 15 Wh" is typical of recent phones (roughly 12–20 Wh).
+- The battery simulator uses a 15 Wh phone battery (typical of recent phones, roughly 12–20 Wh);
+  the lesson itself no longer names watt-hours.
 - "Heat wears batteries out faster" leaves out the chemistry.
 - Low power mode is modelled as stopping background apps and cutting everything else by 15%.
 
@@ -953,3 +954,155 @@ changed, and every lesson still has 8 to 12 cards.
 Lessons with no changes: `bits-and-binary`, `what-is-an-ip-address`, `public-and-private-addresses`,
 `meet-ipv6`, `different-roads-same-destination`, `the-lookup-journey`, `ports`, `tcp-and-udp`,
 `what-happens-when-you-type-a-url`, and all six module quizzes.
+
+---
+---
+
+# Beginner audit (both courses)
+
+**Goal:** a 12-year-old with no prior knowledge can complete every graded card using only what the
+course has shown so far, or what the card itself teaches while they do it.
+
+**Method:** a fresh agent that had never seen the content played each course in order as a
+12-year-old with no tech knowledge. It saw only an on-screen transcript and a screenshot of every
+card, committed to an answer before reading the feedback, and recorded every card where it couldn't
+answer, was confused by wording, or didn't know how to interact. One agent per course, so neither
+course could lean on the other. After the fixes, two *new* agents repeated the play-through with the
+glossary, hints and how-to-play panels visible ([second audit](#second-audit-after-the-fixes)).
+
+**What was added for beginners (both courses):**
+- **Glossary:** 97 plain-language terms in `content/glossary.json`, tappable at their first use per
+  card in lessons (not in quizzes, and not in a card whose answers use the term).
+- **Hints and nudges:** every graded lesson card (162) has a hint (points the way, never the answer)
+  and a nudge after a wrong attempt (addresses the misconception, never names the correct option);
+  multiple choice has one nudge per wrong option. Drafted per module, then every one reviewed for
+  accuracy and for giving answers away. Nine drafts were changed in review (for example
+  `lost-packet`'s hint gave the answer; `port-8080`'s hex nudge needed a skill only a challenge card
+  practises; `where-photos-live`'s nudge described the answer's position).
+- **How to play:** a one-time panel with an animated demo for each interaction style.
+- **Display fixes:** drag-to-order labels showed literal backticks; five internet cards scrolled
+  sideways at 390px (long IPv6 addresses and URLs now wrap); the "DEC" badge on number cards made
+  beginners think they needed a decimal point, so decimal cards no longer show a badge.
+
+## First audit: Inside Your Devices (23 issues)
+
+| Where | Issue | Fix |
+|---|---|---|
+| M2 quiz `q-end-frozen` | **Blocker:** the goal secretly required keeping Notes open (one try) | Prompt: "End **only** the process that's hogging the CPU: keep **Notes** open, and don't crash the laptop." |
+| 1.1 `where-photos-live`, `label-the-laptop`, `label-the-phone` | Explore cards gave jobs but not looks; phone RAM and storage looked alike | Explore job lines now say what each part looks like (shiny lid, row of chips, stripes, bolt); phone explore adds the speaker, so the grille isn't mistaken for the port |
+| 1.1 `explore-the-phone`, 3.2 `find-the-port` | Charging port hard to spot | Port drawn larger; job says "middle of the bottom edge" |
+| 1.1 `swap-the-camera` | "Swap" suggested a new camera | "Take the camera out, fit it back in, then close the phone up again"; hint mentions refitting in reverse |
+| 1.2 `fill-the-ram` | "Smooth" shown next to a red "Full" bar; RAM total never stated | Prompt says 4 GB; a "RAM in use (of 4 GB)" readout; starting apps no longer exactly fill RAM |
+| 1.2 `two-kinds-of-space` | GB named, never described | "a way of counting how much data something can hold" (and glossary) |
+| 1.2 `storage-full` | "Backed up" used long before it was defined | Choice says "(copied somewhere else)"; glossary |
+| All number cards | "DEC" badge suggested a decimal point | Badge removed for decimal |
+| 1.3 `add-cores` | "Exporting" unknown | "Saving your finished video (called **exporting** it)"; task renamed |
+| 1.3 `split-or-not` | Awkward savings item; "frames" felt sequential | "Savings: each month adds to the last"; "Draw 1,000 separate cartoon frames" |
+| 1.3 `too-hot` | "Load" and "flat out" unexplained | "(how hard it's working)" in prompt and slider label |
+| 2.1 `os-or-app` | Spell-check felt like a system job (keyboard autocorrect) | Replaced with "Add a sticker to a video" |
+| 2.1 `behind-the-scenes` | Eight ideas on one screen; "sync" unexplained | Split: "The task manager" (processes, system processes, frozen apps) and a new "Helpers in the background" (background processes, syncing, security apps, fake virus pages) |
+| 2.1 `end-the-frozen-app` | "Open the task manager" when it's already open | "Here's its task manager." |
+| 2.1 `the-operating-system` | "bugs", "security holes", "hardware" unexplained | Short glosses inline (and glossary) |
+| 2.2 `order-the-path` | Backticks shown; "outermost" hard | Rendering fixed; "from the biggest folder (the one holding everything else)" |
+| 3.1 `safe-to-delete` | "Setup files" unexplained | "(the installers you downloaded)" |
+| 3.1 `slow-start` | "Antivirus" not tied to "security app" | "Stop the antivirus (the security app) from starting" |
+| 3.2 `how-batteries-work` | Longest card; watt-hours unused; "W" unexplained | Shortened; says power is measured in watts; swelling moved to its own card |
+| 3.2 new `swollen-batteries` | (part of the split) | "When a battery swells": what it looks like and what to do, before the `swollen-battery` question |
+| 3.2 `last-the-journey` | "Low power mode" and "W" unexplained | Prompt defines low power mode; readout says "(watts)" |
+| 3.2 `label-power-parts` | Hard-to-parse prompt | "Label five parts: the three that bring power in, store it and pass it on, plus the CPU and the camera." |
+| 3.2 `swollen-battery` | "Trackpad" unknown | "(the touch pad)" |
+| Final `q-disguised-file` | `.png` never taught | Extensions explainer now says "`.jpg` and `.png` are pictures" |
+
+## First audit: How the Internet Works (30 issues, no blockers)
+
+| Where | Issue | Fix |
+|---|---|---|
+| 2.1 `finding-one-device` | "Network" never defined | Defined inline at first use (and glossary) |
+| 2.1 `read-ipconfig`, 2.2 | "Router" used from 2.1, defined only in 3.2 | Defined in 2.1's feedback and in 2.2's opening explainer before `private-ranges` relies on it |
+| 2.1 `running-out` | "Server" undefined, then everywhere | Defined inline (and glossary) |
+| 3.2 `routers` | Dense card: router, routing table, hop, switch, access point | Split into "Routers and routing tables" and a new "Switches, and the box at home" |
+| 3.2 `meet-traceroute`; 3.2 `first-hop`; **M3 quiz `traceroute-first-hop`** | **Quiz trap:** the header line's address looks like hop 1 (one try) | Explainer: "The first line just repeats where you're going… one numbered line per hop"; quiz prompt: "(the line numbered 1)" |
+| 3.2 `router-down`; **M3 quiz `avoid-the-outage`**; 6.3 `route-the-reply` | **Quiz trap:** a "(down)" router looked like a working one, even highlighted as tappable | New `down` node style: dashed red outline, cross, "down" tag, dashed links, never highlighted; the schema rejects valid routes through it |
+| 3.3 `route-changed` | Long wrapped output hard to compare | "Compare the two, hop by hop (the numbered lines). One hop has changed." |
+| 4.2 `dns-ttl` | "You've seen TTL before" assumed an optional challenge | Reworded to introduce the packet TTL without relying on it |
+| 4.2 `resolver-trip` | "Authoritative" hard | "(the one in charge of that name)" |
+| 4.1 `parts-of-a-name` | Root as most general only inferable | "the most general of all: the **root**" |
+| 4.3 `dig-cname` | "the root from lesson 1" (lesson 1 was binary) | "from the first DNS lesson" |
+| 5.1 `meet-ports` | "Flats" is regional; "listens on" unexplained | "apartment building / apartment number"; "waits for packets on its own port (it **listens on** that port)" |
+| 5.1 `which-program` | "Remote login" unexplained | "(for controlling the computer from far away)" |
+| 5.3 `email-protocols` | "Encrypted" used before it's defined | Inline gloss (and glossary) |
+| 6.1 `request-and-response` | HTML never defined | "usually written in **HTML** (the code that describes a web page)" |
+| 6.1 `curl-headers` | `-I` looked like l or 1; three long commands to type | "(that's a capital **I**…)"; only `/old-news` needed |
+| 6.2 `read-certificate` | "O=" could be zero | "(the letter O, for *organisation*)" |
+| 6.3 `step-route` | Home router shown with a new address | Labelled "Home router (public IP)" and explained in the prompt |
+| 6.3 `step-curl`, 4.x dig cards | Scary output (failed first try, long dig output) | Hints say which line to read |
+| 1.2 `thousand-or-1024`, `meet-hex` | 2¹⁰ notation, "base 16" | "(2 multiplied by itself 10 times)"; "16 digits instead of our usual 10" |
+| 2.3 `shortening`, `read-ip-addr` | "A run of groups"; Linux, wlan0, lo | "one row of all-zero groups that sit side by side"; prompt explains the connection names |
+| 3.1 `whats-in-a-packet` (for the M3 quiz `packet-info`) | "Source = where replies go" only by elimination | "who sent it, and so where any reply goes back to" |
+| Elsewhere | "Browser", "ISP", "TLS", "protocol" acronyms, ports | Glossary |
+
+## Second audit (after the fixes)
+
+Two new agents that had never seen the content played both courses again, this time with the
+glossary, hints, how-to-play panels and nudges visible. **No blockers in either course.** Both
+praised the analogies, the nudges (which "target real misconceptions") and the down-router drawing.
+
+**Not real issues (audit-packet artefacts):** both agents saw a "hint shown under the box" on
+number cards. That was the transcript generator printing the old under-the-box hint; the app now
+shows hints only behind the Hint button. The same goes for the "Type a decimal number" wording, and
+for the sticky Check bar "covering" parts in full-page screenshots (on a phone, the page scrolls).
+
+### Inside Your Devices (18 findings)
+
+| Where | Issue | Fix |
+|---|---|---|
+| 2.1 `fake-virus-popup` | "popping back up" linked to the *backed up* definition | Mark removed; the glossary marker no longer matches "back up" |
+| 2.1 `why-update` | "a bit more storage" linked to *bit* (0 or 1) | Reworded "a little more"; the other "a bit" idioms in both courses too ("rather like", "just over") |
+| 1.1 `where-photos-live` | Nudge didn't help a learner who tapped the camera | "The camera takes photos, but it doesn't keep them…" |
+| 1.1 `swap-the-camera` | Refitting from the Parts out tray never explained | Teardown how-to-play panel and the hint both explain the tray |
+| 1.1 `label-the-laptop`, `label-the-phone` | Numbered spots covered the very clues the hints mention | Label spots moved to each part's corner (`labelAt`) |
+| 1.3 `split-or-not` | "Savings" still felt splittable | "Knitting a scarf, row by row" |
+| 1.2 `fill-the-ram`, final | "System" in RAM before the OS is taught | "(The phone's own system always needs some RAM too.)" |
+| 1.2 `storage-full` | First choice's wording gave the answer | Choices are now just "Storage space" / "RAM space" |
+| M1 quiz `q-throttling` | Wrong options too silly | "The battery is running out" / "It needs more RAM" |
+| 2.1 `memory-leak` | RAM total never shown | "8 GB of RAM" in prompt and readout |
+| 2.2 `label-the-files` | Document vs plain text unclear | Extensions explainer: document = "with styles like bold and headings", `.txt` = "just letters" |
+| 2.2 `order-the-path` | "saved here" pointed at nothing | "saved inside these folders" |
+| 3.1 `free-up-space`, `room-for-update` | Unlabelled "Downloads" | "Old setup files" (matches the safe-to-delete explainer) |
+| 2.2 `photos-per-gb` | MB never taught | Glossary: megabyte |
+| Several | "tab", "code", "short circuit", "formatting", "sluggish", "installers" | Glossary (tab, short circuit) or reworded ("a program's instructions", "slow", "the files you downloaded to install an app") |
+
+### How the Internet Works (27 findings)
+
+| Where | Issue | Fix |
+|---|---|---|
+| All packet_path cards | Instructions said "hop" before lesson 3.2 | "Tap the next stop along a line…" (screen reader too) |
+| Terminal cards (netstat, curl, dig) | Output wrapped, so table columns didn't line up | Terminal output keeps its columns and scrolls sideways inside the box; the box is taller on phones |
+| 3.3 `route-changed` | Hard to compare wrapped outputs; "Which router" asked for an address | Yesterday's output keeps its columns; question asks for "the address of the router…" |
+| 1.1 binary coach | "The total underneath" (it's above) | "The number above them…" |
+| 1.2 `thousand-or-1024` | "Powers of 2" unexplained; "2 multiplied by itself 10 times" misreadable | "the numbers you get by doubling"; "ten 2s multiplied together" |
+| 1.2 `meet-hex` | 4-bit place values assumed | "the places are worth 8, 4, 2 and 1, so `1111` is 15" |
+| 2.1 `read-ipconfig` | First terminal: "terminal"/"command" unexplained; where to type the answer | Prompt explains both and points to the answer box; the terminal panel says so too |
+| 2.2 `why-unreachable` | Correct option longest; nudges repeated the answer | Options balanced; each nudge addresses its own misconception |
+| 2 quiz `phone-to-server` | "ISP router" node | "Your ISP's router" |
+| 3.1 `packet-parts` | "bit of story" linked to *bit* | "piece of the story" |
+| 3.3 recap | UDP introduced only in a challenge | Recap describes the idea without the name |
+| 3.2 `routers` | "Hop" definition didn't cover device → first router | "from your device to the first router, then from router to router" (glossary too) |
+| 4.1 `who-translates` | "Module 2" (it was Module 3) | "you learned earlier" |
+| 4.2 `dns-ttl` | "TTL again" when the packet TTL was only in a challenge | Retitled; the card introduces both TTLs itself |
+| 4.2 `resolver-trip` | Root-server sentence hard; "records" early | Reworded; "records (its DNS entries, like its address)" |
+| 4.3 `mx-priority` | "backup" server linked to *backed up* | Mark removed |
+| 5.3 `email-journey` | "Four protocols" (there are three) | "Four steps and three protocols" |
+| 6.1 `request-and-response` | Densest card (ten terms); "HyperText" unexplained | Split into "Requests" and a new "Responses"; "*hypertext* just means text with links" |
+| 6.2 `tls-handshake` | "Vouching" | "before issuing its certificate" |
+| 6.3 `step-dns` | "canonical name" in the output | Prompt explains it's the CNAME |
+| 5.3 `port-8080` | "convention" | "agreement" |
+
+**Left as they are, with reasons:** the agent's note that five ports are listed once and matched
+two cards later (`match-ports`) describes a recall exercise, which is the point of the card; its
+hint and nudge support it without giving pairs away. `email-protocols` and the "random-looking"
+starting sequence number are dense but accurate and short. Several multiple-choice cards have a
+longer correct option; `why-unreachable` was rebalanced, and the rest are listed for a future
+wording pass. Drag lists can sit partly below the Check bar with a how-to-play panel open; the page
+scrolls, and the panel goes after one "Got it".
+

@@ -17,6 +17,8 @@ const NetworkNode = z.object({
   /** Position on a small grid (0-based). Narrow screens may rotate the layout to fit. */
   col: z.number().int().min(0).max(GRID_MAX - 1),
   row: z.number().int().min(0).max(GRID_MAX - 1),
+  /** Broken (e.g. a router that's down): drawn dashed with a cross, links dashed. Never on a valid path. */
+  down: z.boolean().optional(),
 });
 
 export const PacketPathCardSchema = z
@@ -63,6 +65,16 @@ export const PacketPathCardSchema = z
     if (card.source === card.destination) {
       ctx.addIssue({ code: "custom", message: "source and destination must differ", path: ["destination"] });
     }
+
+    const downIds = new Set(card.nodes.filter((n) => n.down).map((n) => n.id));
+    for (const end of ["source", "destination"] as const) {
+      if (downIds.has(card[end])) ctx.addIssue({ code: "custom", message: `the ${end} can't be down`, path: [end] });
+    }
+    card.validPaths.forEach((path, i) => {
+      if (path.some((id) => downIds.has(id))) {
+        ctx.addIssue({ code: "custom", message: "a valid path can't go through a node that's down", path: ["validPaths", i] });
+      }
+    });
 
     const seenPaths = new Set<string>();
     card.validPaths.forEach((path, i) => {

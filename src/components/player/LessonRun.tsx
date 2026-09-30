@@ -2,18 +2,23 @@
 
 import { useRef, useState } from "react";
 import { getCardDefinition, isGuidedDefinition } from "@/cards/registry";
+import { nudgeFor } from "@/cards/nudge";
 import { type Card, isInteractiveCard } from "@/cards/schema";
 import type { CardStatus } from "@/cards/types";
 import type { CourseOutline, RegularLesson } from "@/lib/content/schema";
 import { useFeedback } from "@/lib/feedback";
 import { useGlobalKeyDown } from "@/lib/keyboard";
 import { useProgress } from "@/lib/progress/ProgressProvider";
+import { hintXpNote, visibleHint } from "@/lib/hints";
 import { getNextLesson, lessonFinishState } from "@/lib/progress/state";
 import { emptySnapshot, isCardCompleted } from "@/lib/progress/types";
 import { cardXpToAward, exploreXpToAward, lessonBonusToAward, XP } from "@/lib/progress/xp";
 import { type ProgressNode } from "@/components/network/NodeProgress";
 import { CardStage, useFeedbackAnimation } from "./CardStage";
 import { FeedbackFooter, type FeedbackTone, type FooterAction } from "./FeedbackFooter";
+import { HintReveal } from "./HintReveal";
+import { CoachPanel } from "./coach/CoachPanel";
+import { useCoach } from "./coach/useCoach";
 import { LessonComplete } from "./LessonComplete";
 import { PlayerShell } from "./PlayerShell";
 
@@ -23,6 +28,8 @@ interface CardRun {
   /** Number of times Check was pressed on this card. */
   attempts: number;
   xpAwarded: number;
+  /** The learner opened the hint (the card then pays retry XP). */
+  hintUsed: boolean;
 }
 
 function freshRun(card: Card): CardRun {
@@ -33,6 +40,7 @@ function freshRun(card: Card): CardRun {
     status: "answering",
     attempts: 0,
     xpAwarded: 0,
+    hintUsed: false,
   };
 }
 
@@ -70,6 +78,8 @@ export function LessonRun({
   const card = lesson.cards[index] as Card;
   const definition = getCardDefinition(card);
   const total = lesson.cards.length;
+  const coach = useCoach(card);
+  const showCoach = result === null && run.status === "answering" ? coach.coachKey : null;
 
   const isDone = (c: Pick<Card, "id">) => completedThisVisit.has(c.id) || isCardCompleted(snapshot, lesson.id, c.id);
 
@@ -110,6 +120,7 @@ export function LessonRun({
   }
 
   function advance() {
+    if (showCoach) coach.dismiss();
     feedback.play("complete");
     // Explainers and explore cards are completed by Continue. Explore cards pay a small XP once.
     const completedByContinue = !definition.interactive;
@@ -125,11 +136,12 @@ export function LessonRun({
   function check() {
     if (!definition.interactive || run.status !== "answering") return;
     if (!definition.isAnswerReady(run.answer, card)) return;
+    if (showCoach) coach.dismiss();
 
     const attempts = run.attempts + 1;
     const { correct } = definition.grade(card, run.answer);
     if (correct) {
-      const xp = cardXpToAward(isDone(card), card.difficulty, attempts);
+      const xp = cardXpToAward(isDone(card), card.difficulty, attempts, run.hintUsed);
       setRun({ ...run, status: "correct", attempts, xpAwarded: xp });
       setSessionXp((current) => current + xp);
       markComplete(card, xp);
@@ -177,7 +189,11 @@ export function LessonRun({
   useGlobalKeyDown((event) => {
     if (event.key !== "Enter" || event.repeat) return;
     event.preventDefault();
-    if (!primary.disabled) primary.onClick();
+    // With the how-to-play panel open, Enter means "Got it", unless it came from an answer box
+    // (the learner has clearly started; Check dismisses the panel too).
+    const fromAnswerBox = event.target instanceof Element && event.target.closest("[data-enter-submits]");
+    if (showCoach && !fromAnswerBox) coach.dismiss();
+    else if (!primary.disabled) primary.onClick();
   }, result === null);
 
   if (result) {
@@ -197,6 +213,7 @@ export function LessonRun({
     );
   }
 
+  const hint = visibleHint(card, "lesson", run.status);
   const tone: FeedbackTone =
     run.status === "correct" ? "correct" : run.status === "incorrect" ? "incorrect" : "neutral";
   const challengeXp = XP.card.challenge.firstTry;
@@ -220,7 +237,11 @@ export function LessonRun({
                 ? "Not quite"
                 : undefined
           }
-          subheading={run.status === "incorrect" ? "Have another go. You've got this." : undefined}
+          subheading={
+            run.status === "incorrect"
+              ? ((isInteractiveCard(card) ? nudgeFor(card, run.answer) : undefined) ?? "Have another go. You've got this.")
+              : undefined
+          }
           xpAwarded={run.xpAwarded}
           explanation={isInteractiveCard(card) && run.status !== "answering" ? card.explanation : undefined}
           collapseExplanation={run.status === "incorrect"}
@@ -229,6 +250,7 @@ export function LessonRun({
         />
       }
     >
+      {showCoach && <CoachPanel key={showCoach} coachKey={showCoach} onDone={coach.dismiss} />}
       <CardStage cardKey={`${lesson.id}-${index}`} card={card} scope={scope} challengeXp={challengeXp}>
         {definition.interactive || isGuidedDefinition(definition) ? (
           <definition.Component
@@ -239,6 +261,15 @@ export function LessonRun({
           />
         ) : (
           <definition.Component card={card} />
+        )}
+        {hint && (
+          <HintReveal
+            key={`${lesson.id}-${index}-hint`}
+            hint={hint}
+            used={run.hintUsed}
+            onUse={() => setRun((current) => ({ ...current, hintUsed: true }))}
+            xpNote={hintXpNote(card, isDone(card))}
+          />
         )}
       </CardStage>
     </PlayerShell>

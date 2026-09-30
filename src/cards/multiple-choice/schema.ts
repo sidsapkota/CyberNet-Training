@@ -6,7 +6,14 @@ export const MultipleChoiceCardSchema = z
     ...interactiveCardBase,
     type: z.literal("multiple_choice"),
     options: z
-      .array(z.object({ id: CardId, text: nonEmpty }))
+      .array(
+        z.object({
+          id: CardId,
+          text: nonEmpty,
+          /** Shown when this (wrong) option is picked: the misconception it reflects. Markdown. */
+          nudge: nonEmpty.max(220).optional(),
+        }),
+      )
       .min(2, "needs at least 2 options")
       .max(5, "allows at most 5 options"),
     correctOptionId: CardId,
@@ -18,6 +25,10 @@ export const MultipleChoiceCardSchema = z
   .refine((c) => c.options.some((o) => o.id === c.correctOptionId), {
     message: "correctOptionId must match one of the option ids",
     path: ["correctOptionId"],
+  })
+  .refine((c) => !c.options.find((o) => o.id === c.correctOptionId)?.nudge, {
+    message: "the correct option can't have a nudge (nudges are for wrong answers)",
+    path: ["options"],
   });
 
 export type MultipleChoiceCard = z.infer<typeof MultipleChoiceCardSchema>;

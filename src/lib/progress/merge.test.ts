@@ -180,17 +180,23 @@ describe("mergeProgress", () => {
   });
 
   it("keeps the guest's Explore choice, otherwise the account's", () => {
-    const explore = snapshot({ preferences: { mode: "explore", sound: true } });
+    const explore = snapshot({ preferences: { mode: "explore", sound: true, coachSeen: [] } });
     expect(mergeProgress(snapshot(), explore, index).preferences.mode).toBe("explore");
     expect(mergeProgress(explore, snapshot(), index).preferences.mode).toBe("explore");
     expect(mergeProgress(snapshot(), snapshot(), index).preferences.mode).toBe("path");
   });
 
   it("keeps the guest's sound-off choice, otherwise the account's", () => {
-    const quiet = snapshot({ preferences: { mode: "path", sound: false } });
+    const quiet = snapshot({ preferences: { mode: "path", sound: false, coachSeen: [] } });
     expect(mergeProgress(snapshot(), quiet, index).preferences.sound).toBe(false);
     expect(mergeProgress(quiet, snapshot(), index).preferences.sound).toBe(false);
     expect(mergeProgress(snapshot(), snapshot(), index).preferences.sound).toBe(true);
+  });
+
+  it("keeps every how-to-play panel seen on either side, once, dropping unknown keys", () => {
+    const account = snapshot({ preferences: { mode: "path", sound: true, coachSeen: ["sort_bins", "terminal"] } });
+    const local = snapshot({ preferences: { mode: "path", sound: true, coachSeen: ["terminal", "hotspot-tap", "not-a-key"] } });
+    expect(mergeProgress(account, local, index).preferences.coachSeen).toEqual(["sort_bins", "terminal", "hotspot-tap"]);
   });
 
   it("is idempotent: signing in again with the same local progress changes nothing", () => {

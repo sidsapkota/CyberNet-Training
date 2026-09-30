@@ -10,8 +10,9 @@
  * - XP is RECOMPUTED from the content, never added up, so nothing is counted twice.
  * - Records for lessons or cards that no longer exist are dropped.
  * - Path/Explore and sound: the guest's choice wins if they changed it from the default
- *   ("path", sound on).
+ *   ("path", sound on). "How to play" panels seen: the union of both.
  */
+import { cleanCoachSeen } from "@/lib/coach";
 import { type ContentIndex, cardXpFor } from "./authority";
 import {
   type CardCompletion,
@@ -115,6 +116,7 @@ export function mergeProgress(
       preferences: {
         mode: local.preferences.mode !== "path" ? local.preferences.mode : account.preferences.mode,
         sound: local.preferences.sound === false ? false : account.preferences.sound,
+        coachSeen: cleanCoachSeen([...account.preferences.coachSeen, ...local.preferences.coachSeen]),
       },
     },
     index,

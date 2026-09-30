@@ -7,6 +7,7 @@
  * 3. computes XP on the server (progress/authority.ts), then writes with the secret key.
  * Users can only READ their progress tables directly (RLS); they can't write them.
  */
+import { cleanCoachSeen } from "@/lib/coach";
 import { z } from "zod";
 import { requireUserId } from "@/lib/auth/server";
 import { getContentIndex } from "@/lib/content/server";
@@ -37,7 +38,7 @@ async function loadAccountSnapshot(admin: ReturnType<typeof createSupabaseAdminC
     admin.from("card_completions").select("lesson_id, card_id, completed_at, xp").eq("user_id", userId),
     admin.from("lesson_completions").select("lesson_id, completed_at, xp").eq("user_id", userId),
     admin.from("quiz_attempts").select("quiz_id, attempted_at, score, passed, xp, answers").eq("user_id", userId),
-    admin.from("profiles").select("learning_mode, sound_enabled").eq("id", userId).maybeSingle(),
+    admin.from("profiles").select("learning_mode, sound_enabled, coach_seen").eq("id", userId).maybeSingle(),
   ]);
   const error = cards.error ?? lessons.error ?? attempts.error ?? profile.error;
   if (error) fail("Couldn't load progress", error);
@@ -47,6 +48,7 @@ async function loadAccountSnapshot(admin: ReturnType<typeof createSupabaseAdminC
     attempts: attempts.data ?? [],
     learningMode: profile.data?.learning_mode,
     soundEnabled: profile.data?.sound_enabled,
+    coachSeen: profile.data?.coach_seen,
   });
 }
 
@@ -130,9 +132,10 @@ export async function recordQuizAttemptAction(
 
 export async function setPreferencesAction(preferences: Partial<Preferences>): Promise<void> {
   const userId = await requireUserId();
-  const update: { learning_mode?: LearningMode; sound_enabled?: boolean } = {};
+  const update: { learning_mode?: LearningMode; sound_enabled?: boolean; coach_seen?: string[] } = {};
   if (preferences.mode !== undefined) update.learning_mode = LearningModeSchema.parse(preferences.mode);
   if (preferences.sound !== undefined) update.sound_enabled = z.boolean().parse(preferences.sound);
+  if (preferences.coachSeen !== undefined) update.coach_seen = cleanCoachSeen(z.array(z.string()).max(64).parse(preferences.coachSeen));
   if (Object.keys(update).length === 0) return;
   const { error } = await createSupabaseAdminClient().from("profiles").update(update).eq("id", userId);
   if (error) fail("Couldn't save the setting", error);
@@ -198,7 +201,11 @@ export async function mergeGuestProgressAction(local: unknown): Promise<Progress
       : null,
     admin
       .from("profiles")
-      .update({ learning_mode: merged.preferences.mode, sound_enabled: merged.preferences.sound })
+      .update({
+        learning_mode: merged.preferences.mode,
+        sound_enabled: merged.preferences.sound,
+        coach_seen: merged.preferences.coachSeen,
+      })
       .eq("id", userId),
   ]);
   const error = writes.find((w) => w?.error)?.error;

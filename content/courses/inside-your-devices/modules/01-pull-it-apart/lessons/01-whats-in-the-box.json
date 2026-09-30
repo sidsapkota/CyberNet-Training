@@ -18,7 +18,7 @@
       "difficulty": "core",
       "title": "Before we open anything",
       "mascot": "presenting",
-      "body": "Everything you take apart in this course is a **simulation**: tap and drag as much as you like.\n\nReal phones and laptops are different. **Don't open one without an adult or a repair shop.** It can break parts, it can end the device's warranty (the maker's promise to fix it for free), and the **lithium battery inside can catch fire if it's bent or punctured**."
+      "body": "Everything you take apart in this course is a **simulation**: tap and drag as much as you like.\n\nReal phones and laptops are different. **Don't open one without an adult or a repair shop.** It can break parts, it can end the device's [[warranty]] (the maker's promise to fix it for free), and the **lithium battery inside can catch fire if it's bent or punctured**."
     },
     {
       "id": "explore-the-laptop",
@@ -30,14 +30,14 @@
       "mode": "explore",
       "parts": [
         { "part": "motherboard", "job": "The big board everything plugs into. Its thin lines carry signals between the parts, like roads." },
-        { "part": "cpu", "job": "The brain (central processing unit). It follows the instructions that make apps work." },
-        { "part": "fan", "job": "Blows hot air out through the vents, so the CPU doesn't overheat." },
-        { "part": "ram", "job": "RAM (random-access memory): a fast workspace for whatever you're using right now." },
-        { "part": "storage", "job": "Keeps your photos, apps and files, even when the power is off." },
-        { "part": "battery", "job": "Stores the energy that runs everything. It's the biggest part inside." },
+        { "part": "cpu", "job": "The CPU, the brain. It follows the instructions that make apps work. Look for the square chip with a shiny metal lid." },
+        { "part": "fan", "job": "Blows hot air out through the vents, so the CPU doesn't overheat. It's the round part with blades." },
+        { "part": "ram", "job": "RAM: a fast workspace for whatever you're using right now. It's the long stick with a row of black chips." },
+        { "part": "storage", "job": "Storage keeps your photos, apps and files, even when the power is off. It's the short card with a striped chip." },
+        { "part": "battery", "job": "Stores the energy that runs everything. It's the biggest part: three fat cells with a lightning bolt." },
         { "part": "battery-connector", "job": "Joins the battery to the board. Technicians unplug it first, so nothing gets power." }
       ],
-      "explanation": "Almost every laptop has these same parts. Look for the clues: the fan's blades, the RAM's row of chips, the storage chip's stacked layers and the battery's lightning bolt."
+      "explanation": "Almost every laptop has these same parts. Remember the clues: the fan's blades, the [[CPU]]'s shiny lid, [[RAM]]'s row of chips, [[storage]]'s stripes and the battery's lightning bolt."
     },
     {
       "id": "open-the-laptop",
@@ -65,7 +65,8 @@
           "nudge": "Lift the panel off first."
         }
       ],
-      "explanation": "Screws first, then the panel. Then technicians **unplug the battery** before they touch any other part, so nothing gets a jolt of power while they work."
+      "explanation": "Screws first, then the panel. Then technicians **unplug the battery** before they touch any other part, so nothing gets a jolt of power while they work.",
+      "hint": "Follow the order in the prompt. The panel is held on by screws, and the battery connector only shows once the panel is off."
     },
     {
       "id": "label-the-laptop",
@@ -82,7 +83,9 @@
         { "part": "battery", "label": "Battery" },
         { "part": "fan", "label": "Fan" }
       ],
-      "explanation": "The **battery** is the biggest part. The square chip is the **CPU**, cooled by the round **fan** next to it. The long stick with little chips is **RAM**, and the smaller card is **storage**."
+      "explanation": "The **battery** is the biggest part. The square chip is the **CPU**, cooled by the round **fan** next to it. The long stick with little chips is **RAM**, and the smaller card is **storage**.",
+      "hint": "Use the clues from exploring: blades, a shiny lid, a row of black chips, a striped chip and a lightning bolt.",
+      "nudge": "Look again at the shapes. RAM and storage are easy to swap: one is a long stick of chips, the other a short card with a striped chip."
     },
     {
       "id": "match-parts",
@@ -96,7 +99,9 @@
         { "id": "motherboard", "left": "Motherboard", "right": "Connects all the parts" },
         { "id": "battery", "left": "Battery", "right": "Stores energy" }
       ],
-      "explanation": "The **CPU** does the work, **RAM** holds what's in use, **storage** keeps things for later, the **motherboard** links everything, and the **battery** powers it all."
+      "explanation": "The **CPU** does the work, **RAM** holds what's in use, **storage** keeps things for later, the **motherboard** links everything, and the **battery** powers it all.",
+      "hint": "Think back to what each part did when you tapped it inside the laptop. Start with the one you're surest of.",
+      "nudge": "RAM and storage are easy to mix up: one is a fast workspace for right now, the other keeps things when the power is off."
     },
     {
       "id": "explore-the-phone",
@@ -109,14 +114,15 @@
       "parts": [
         { "part": "logic-board", "job": "The phone's motherboard. The main chips are packed onto this one small board." },
         { "part": "camera", "job": "Takes your photos and videos, through a lens in the back cover." },
-        { "part": "cpu", "job": "The same job as in a laptop: it follows the instructions, on a smaller chip." },
-        { "part": "ram", "job": "A fast workspace for the apps open right now. It's cleared when the phone turns off." },
-        { "part": "storage", "job": "Keeps your photos, apps and messages, even when the phone is off." },
-        { "part": "battery", "job": "Stores the energy. It fills most of the phone, so it can last all day." },
+        { "part": "cpu", "job": "The same job as in a laptop: it follows the instructions. The square chip with the shiny lid, just smaller." },
+        { "part": "ram", "job": "A fast workspace for the apps open right now, cleared when the phone turns off. The chip with two small squares." },
+        { "part": "storage", "job": "Keeps your photos, apps and messages, even when the phone is off. The chip marked with stripes." },
+        { "part": "battery", "job": "Stores the energy. It fills most of the phone, so it can last all day. Look for the lightning bolt." },
         { "part": "battery-connector", "job": "Joins the battery to the board. It's unplugged first in every repair." },
-        { "part": "charging-port", "job": "Where the charger plugs in. It's on the outside edge, so pocket fluff can get in." }
+        { "part": "charging-port", "job": "Where the charger plugs in, in the middle of the bottom edge. It's open to the outside, so pocket fluff can get in." },
+        { "part": "speaker", "job": "Plays sounds and music. It's the small grille of holes near the bottom." }
       ],
-      "explanation": "Same parts, same looks as the laptop, just smaller: the CPU's shiny lid, RAM's row of chips and storage's stacked layers. Most phones have no fan."
+      "explanation": "Same parts, same looks as the laptop, just smaller: the [[CPU]]'s shiny lid, [[RAM]]'s row of chips and [[storage]]'s stacked layers. Most phones have no fan."
     },
     {
       "id": "open-the-phone",
@@ -142,7 +148,8 @@
           "nudge": "Take the back cover off first."
         }
       ],
-      "explanation": "Same pattern as the laptop: screws, cover, then **unplug the battery** first, the way technicians keep themselves and the phone safe. Real phones are also sealed with strong glue, which repair shops soften with gentle heat."
+      "explanation": "Same pattern as the laptop: screws, cover, then **unplug the battery** first, the way technicians keep themselves and the phone safe. Real phones are also sealed with strong glue, which repair shops soften with gentle heat.",
+      "hint": "It's the same pattern as the laptop. What has to come out before the back cover will lift?"
     },
     {
       "id": "where-photos-live",
@@ -153,7 +160,9 @@
       "view": "open",
       "mode": "tap",
       "targets": ["storage"],
-      "explanation": "Photos live in **storage**, which keeps everything when the power is off. RAM only holds what's in use right now, and forgets it all when the phone turns off."
+      "explanation": "Photos live in **storage**, which keeps everything when the power is off. RAM only holds what's in use right now, and forgets it all when the phone turns off.",
+      "hint": "Your photos have to survive the phone being switched off. Which part keeps things when the power goes?",
+      "nudge": "The camera takes photos, but it doesn't keep them, and [[RAM]] forgets everything when the phone turns off. Which part keeps your files for good?"
     },
     {
       "id": "label-the-phone",
@@ -170,13 +179,15 @@
         { "part": "battery", "label": "Battery" },
         { "part": "camera", "label": "Camera" }
       ],
-      "explanation": "A phone squeezes the **CPU**, **RAM** and **storage** onto one small board at the top, with the **camera** beside them. The **battery** takes up most of the space, because it has to last all day."
+      "explanation": "A phone squeezes the **CPU**, **RAM** and **storage** onto one small board at the top, with the **camera** beside them. The **battery** takes up most of the space, because it has to last all day.",
+      "hint": "The same clues work here, just smaller: a shiny lid, stripes and a lightning bolt. The camera sits beside the main chips.",
+      "nudge": "The main chips are packed close together. Check each one's look: the shiny lid, the two small squares and the stripes."
     },
     {
       "id": "swap-the-camera",
       "type": "teardown",
       "difficulty": "challenge",
-      "prompt": "A repair: swap this phone's camera, then put the phone back together in a safe order.",
+      "prompt": "A repair: take the camera out, fit it back in, then close the phone up again in a safe order.",
       "scene": "phone",
       "actions": [
         { "id": "screw-1", "part": "screw-1", "verb": "unscrew", "nudge": "Unscrew this one first." },
@@ -238,7 +249,8 @@
           "nudge": "Put the back cover on first."
         }
       ],
-      "explanation": "Putting a device back together is taking it apart in reverse. The battery is **unplugged first** and **plugged back in last**, just before the cover goes on, so no part is ever worked on with power connected."
+      "explanation": "Putting a device back together is taking it apart in reverse. The battery is **unplugged first** and **plugged back in last**, just before the cover goes on, so no part is ever worked on with power connected.",
+      "hint": "Open it the way you did before. Parts you take out wait in the **Parts out** tray: tap one there to fit it back. Close up in reverse order, battery last before the cover."
     },
     {
       "id": "recap",

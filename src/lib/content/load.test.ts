@@ -2,6 +2,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
+import { isInteractiveCard } from "@/cards/schema";
 import { getScene } from "@/cards/shared/scenes/manifests";
 import { goalMet, initialSimulatorAnswer, sliderRange } from "@/cards/simulator/grade";
 import type { InputValue } from "@/cards/simulator/models/types";
@@ -118,6 +119,22 @@ describe("real content in /content", () => {
       const full = loadContent().lessons.get(lesson.id);
       const used = new Set(full?.cards.map((c) => c.type).filter((t) => handsOn.has(t)));
       expect(used.size, lesson.id).toBeGreaterThanOrEqual(2);
+    }
+  });
+
+  it("gives every graded lesson card a hint and a nudge for wrong answers", () => {
+    for (const lesson of loadContent().lessons.values()) {
+      if (lesson.kind !== "lesson") continue;
+      for (const card of lesson.cards) {
+        if (!isInteractiveCard(card)) continue;
+        const where = `${lesson.id}/${card.id}`;
+        expect(card.hint, `${where} needs a hint`).toBeTruthy();
+        // Scenarios and teardowns already answer each wrong move with its own feedback.
+        if (card.type === "scenario" || card.type === "teardown") continue;
+        const everyWrongOptionNudged =
+          card.type === "multiple_choice" && card.options.every((o) => o.id === card.correctOptionId || o.nudge);
+        expect(Boolean(card.nudge) || everyWrongOptionNudged, `${where} needs a nudge`).toBe(true);
+      }
     }
   });
 

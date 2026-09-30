@@ -26,4 +26,14 @@ export const interactiveCardBase = {
   prompt: nonEmpty,
   /** Shown after answering (lessons) or on the review screen (quizzes). Markdown. */
   explanation: nonEmpty,
+  /**
+   * Lessons only (hidden in quizzes), behind a "Hint" button. Points the way without giving the
+   * answer. Using it pays the retry XP. Markdown.
+   */
+  hint: nonEmpty.max(300).optional(),
+  /**
+   * Lessons only: shown after a wrong attempt, instead of "Have another go". Addresses the likely
+   * misconception without revealing the answer. Markdown.
+   */
+  nudge: nonEmpty.max(220).optional(),
 };

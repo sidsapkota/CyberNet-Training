@@ -135,6 +135,38 @@ describe("MultipleChoiceCardSchema", () => {
     expect(MultipleChoiceCardSchema.safeParse(multipleChoice({ prompt: "" })).success).toBe(false);
     expect(MultipleChoiceCardSchema.safeParse(multipleChoice({ explanation: "" })).success).toBe(false);
   });
+  it("allows nudges on wrong options only", () => {
+    const base = multipleChoice();
+    const wrong = base.options.find((o) => o.id !== base.correctOptionId)!;
+    const withWrongNudge = { ...base, options: base.options.map((o) => (o.id === wrong.id ? { ...o, nudge: "Not quite this idea." } : o)) };
+    expect(MultipleChoiceCardSchema.safeParse(withWrongNudge).success).toBe(true);
+    const withRightNudge = { ...base, options: base.options.map((o) => (o.id === base.correctOptionId ? { ...o, nudge: "Hmm" } : o)) };
+    expect(messages(MultipleChoiceCardSchema.safeParse(withRightNudge))).toContain(
+      "the correct option can't have a nudge (nudges are for wrong answers)",
+    );
+  });
+});
+
+describe("hints and nudges (every interactive card)", () => {
+  it("are optional, but can't be empty or too long", () => {
+    expect(CardSchema.safeParse(numericInput({ hint: "Divide first.", nudge: "Check which number you divided by." })).success).toBe(true);
+    expect(CardSchema.safeParse(numericInput({ hint: "" })).success).toBe(false);
+    expect(CardSchema.safeParse(numericInput({ hint: "x".repeat(301) })).success).toBe(false);
+    expect(CardSchema.safeParse(numericInput({ nudge: "x".repeat(221) })).success).toBe(false);
+  });
+});
+
+describe("PacketPathCardSchema: nodes that are down", () => {
+  it("never lets a valid route go through a node that's down", () => {
+    const card = packetPath();
+    const downB = { ...card, nodes: card.nodes.map((n) => (n.id === "b" ? { ...n, down: true } : n)) };
+    expect(messages(CardSchema.safeParse(downB))).toContain("a valid path can't go through a node that's down");
+    expect(
+      CardSchema.safeParse({ ...downB, validPaths: [["laptop", "home", "a", "server"]] }).success,
+    ).toBe(true);
+    const downStart = { ...card, nodes: card.nodes.map((n) => (n.id === "laptop" ? { ...n, down: true } : n)) };
+    expect(messages(CardSchema.safeParse(downStart))).toContain("the source can't be down");
+  });
 });
 
 describe("DragToOrderCardSchema", () => {

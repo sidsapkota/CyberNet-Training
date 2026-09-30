@@ -86,6 +86,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          coach_seen: string[]
           created_at: string
           display_name: string | null
           id: string
@@ -94,6 +95,7 @@ export type Database = {
           sound_enabled: boolean
         }
         Insert: {
+          coach_seen?: string[]
           created_at?: string
           display_name?: string | null
           id: string
@@ -102,6 +104,7 @@ export type Database = {
           sound_enabled?: boolean
         }
         Update: {
+          coach_seen?: string[]
           created_at?: string
           display_name?: string | null
           id?: string

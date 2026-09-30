@@ -11,7 +11,7 @@ const raw: unknown[] = [
     type: "explainer",
     difficulty: "core",
     title: "Explainer card",
-    body: "Explainers teach one idea with **markdown**, `inline code` and an optional illustration.",
+    body: "Explainers teach one idea with **markdown**, `inline code` and an optional illustration. Tap a dotted term, like [[router]], for its glossary definition.",
     image: {
       src: "/illustrations/ipv4-octets.svg",
       alt: "The address 192.168.1.10 split into four boxes, each labelled 8 bits.",
@@ -23,13 +23,14 @@ const raw: unknown[] = [
     id: "sample-multiple-choice",
     type: "multiple_choice",
     difficulty: "core",
-    prompt: "Which of these is a **private** IPv4 address?",
+    prompt: "Which of these is a **private** [[IPv4]] address?",
     options: [
       { id: "private", text: "192.168.0.20" },
-      { id: "doc-a", text: "203.0.113.20" },
-      { id: "doc-b", text: "198.51.100.20" },
+      { id: "doc-a", text: "203.0.113.20", nudge: "`203.0.113.x` is one of the ranges this course uses for **public** addresses." },
+      { id: "doc-b", text: "198.51.100.20", nudge: "`198.51.100.x` stands in for a **public** address here, not a private one." },
     ],
     correctOptionId: "private",
+    hint: "Private addresses start with `10.`, `172.16.` to `172.31.`, or `192.168.`.",
     explanation: "Addresses starting `192.168.` are in a private range reserved for home and office networks.",
   },
   {
@@ -80,6 +81,8 @@ const raw: unknown[] = [
     base: "decimal",
     answer: 256,
     unit: "values",
+    hint: "Each extra bit doubles the number of patterns. Start from 2 for one bit.",
+    nudge: "Count the patterns, not the biggest value: zero is a pattern too.",
     explanation: "8 bits give 2⁸ = 256 patterns (0 to 255).",
   },
   {
@@ -105,7 +108,7 @@ const raw: unknown[] = [
       { id: "printer", kind: "device", label: "Printer", address: "192.168.1.30", col: 1, row: 1 },
       { id: "home", kind: "router", label: "Home router", address: "192.168.1.1", col: 1, row: 0 },
       { id: "isp-a", kind: "router", label: "ISP router A", address: "203.0.113.1", col: 2, row: 0 },
-      { id: "isp-b", kind: "router", label: "ISP router B (down)", address: "203.0.113.2", col: 2, row: 1 },
+      { id: "isp-b", kind: "router", label: "ISP router B", address: "203.0.113.2", col: 2, row: 1, down: true },
       { id: "server", kind: "server", label: "Web server", address: "198.51.100.7", col: 3, row: 0 },
     ],
     links: [

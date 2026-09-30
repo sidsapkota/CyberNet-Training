@@ -10,8 +10,6 @@ export const NumericInputCardSchema = z
   .object({
     ...interactiveCardBase,
     type: z.literal("numeric_input"),
-    /** Optional nudge, revealed behind a "Show hint" toggle. Markdown. */
-    hint: nonEmpty.optional(),
     /** Number system the learner types in. Binary and hex get a mono field with a badge. */
     base: NumericBase.default("decimal"),
     /** One accepted value, or several (e.g. 255 or 256 when both are defensible). */

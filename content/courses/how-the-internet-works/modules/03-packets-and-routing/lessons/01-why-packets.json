@@ -10,14 +10,14 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Sharing one connection",
-      "body": "Someone at home is streaming a film while you play an online game, on the same Wi-Fi, at the same time. Both work. How does the network share?\n\nIf the film were sent as one giant piece, your game would have to wait until the whole film had finished arriving. Instead, the internet chops all data into small pieces called **packets**, and sends them one at a time."
+      "body": "Someone at home is streaming a film while you play an online game, on the same Wi-Fi, at the same time. Both work. How does the [[network]] share?\n\nIf the film were sent as one giant piece, your game would have to wait until the whole film had finished arriving. Instead, the internet chops all data into small pieces called **packets**, and sends them one at a time."
     },
     {
       "id": "whats-in-a-packet",
       "type": "explainer",
       "difficulty": "core",
       "title": "Numbered postcards",
-      "body": "Imagine posting a long story as a stack of numbered postcards. Each packet works like one of those postcards. It carries a small piece of the data, called the **payload**, plus some information added to help it arrive:\n\n- the **source address**: who sent it\n- the **destination address**: where it's going\n- a **sequence number**: its place in the message, so the pieces can be put back in order\n\nThe addresses come from the Internet Protocol you met in the last module. The sequence number comes from a partner set of rules you'll meet later in this module. On Wi-Fi and most home networks, a packet can be up to about **1,500 bytes**, and the added information takes up some of that space."
+      "body": "Imagine posting a long story as a stack of numbered postcards. Each [[packet]] works like one of those postcards. It carries a small piece of the data, called the **payload**, plus some information added to help it arrive:\n\n- the **source address**: who sent it, and so where any reply goes back to\n- the **destination address**: where it's going\n- a **sequence number**: its place in the message, so the pieces can be put back in order\n\nThe addresses come from the Internet [[Protocol]] you met in the last module. The sequence number comes from a partner set of rules you'll meet later in this module. On Wi-Fi and most home [[networks|network]], a packet can be up to about **1,500 [[bytes|byte]]**, and the added information takes up some of that space."
     },
     {
       "id": "packet-parts",
@@ -30,38 +30,55 @@
         { "id": "sequence", "left": "Sequence number", "right": "The packet's place in the message" },
         { "id": "payload", "left": "Payload", "right": "The piece of data being carried" }
       ],
-      "explanation": "The **source** and **destination addresses** work like the from and to on an envelope. The **sequence number** lets the receiver put the pieces back in order. The **payload** is the actual piece of your photo, message or video."
+      "explanation": "The **source** and **destination addresses** work like the from and to on an envelope. The **sequence number** lets the receiver put the pieces back in order. The **payload** is the actual piece of your photo, message or video.",
+      "hint": "Think of the numbered postcards: the from and to on each card, the number that says its place, and the piece of the story it carries.",
+      "nudge": "The two addresses are like the from and to on an envelope. The number is for putting pieces back in order, and the payload is the data itself."
     },
     {
       "id": "count-packets",
       "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "A message is **6,000 bytes** long. If each packet carries exactly **1,500 bytes of data**, how many packets are needed?",
+      "prompt": "A message is **6,000 [[bytes|byte]]** long. If each [[packet]] carries exactly **1,500 bytes of data**, how many packets are needed?",
       "base": "decimal",
       "answer": 4,
       "unit": "packets",
-      "explanation": "6,000 ÷ 1,500 = **4** packets. In real networks, part of each packet's 1,500 bytes is used by the added information like addresses, so each one carries a little less data, and the message would need one more packet."
+      "explanation": "6,000 ÷ 1,500 = **4** packets. In real [[networks|network]], part of each packet's 1,500 bytes is used by the added information like addresses, so each one carries a little less data, and the message would need one more packet.",
+      "hint": "Each packet holds 1,500 bytes. Work out 6,000 ÷ 1,500.",
+      "nudge": "Each packet carries 1,500 bytes of the message. How many lots of 1,500 make 6,000?"
     },
     {
       "id": "taking-turns",
       "type": "explainer",
       "difficulty": "core",
       "title": "Taking turns",
-      "body": "Think of cars from lots of side streets merging onto one main road. Packets from different conversations do the same thing: they **take turns** on the same connection.\n\nYour game sends small packets, and they slip in between the film's packets, so both keep going at the same time. And if a packet goes missing along the way, only that one packet needs to be sent again, not the whole film."
+      "body": "Think of cars from lots of side streets merging onto one main road. [[Packets|packet]] from different conversations do the same thing: they **take turns** on the same connection.\n\nYour game sends small packets, and they slip in between the film's packets, so both keep going at the same time. And if a packet goes missing along the way, only that one packet needs to be sent again, not the whole film."
     },
     {
       "id": "why-packets",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Why does the internet split data into packets instead of sending it as one long stream?",
+      "prompt": "Why does the internet split data into [[packets|packet]] instead of sending it as one long stream?",
       "options": [
         { "id": "share-and-resend", "text": "Many conversations can share the same connections, and a lost piece can be sent again on its own" },
-        { "id": "smaller", "text": "Splitting data up makes files smaller" },
-        { "id": "secret", "text": "Splitting data up keeps it secret" },
-        { "id": "one-letter", "text": "Cables can only carry one letter at a time" }
+        {
+          "id": "smaller",
+          "text": "Splitting data up makes files smaller",
+          "nudge": "Splitting a file into pieces doesn't shrink it. Each piece even gets extra information added, like addresses."
+        },
+        {
+          "id": "secret",
+          "text": "Splitting data up keeps it secret",
+          "nudge": "Anyone who collects all the packets can put them back together, so splitting doesn't hide anything."
+        },
+        {
+          "id": "one-letter",
+          "text": "Cables can only carry one letter at a time",
+          "nudge": "Cables aren't limited to one letter at a time. Think about why many conversations need to take turns."
+        }
       ],
       "correctOptionId": "share-and-resend",
-      "explanation": "Packets let lots of conversations **take turns** on the same connections, and if one goes missing, only that piece needs sending again. Splitting doesn't make data smaller (the extra information actually adds a little), and it doesn't hide anything: anyone who collects the packets can put them back together. Keeping data secret is a job for **encryption**, which you'll learn about later."
+      "explanation": "Packets let lots of conversations **take turns** on the same connections, and if one goes missing, only that piece needs sending again. Splitting doesn't make data smaller (the extra information actually adds a little), and it doesn't hide anything: anyone who collects the packets can put them back together. Keeping data secret is a job for **encryption**, which you'll learn about later.",
+      "hint": "Think back to the film and the game sharing the Wi-Fi, and what happens when one piece goes missing."
     },
     {
       "id": "message-journey",
@@ -74,17 +91,21 @@
         { "id": "travel", "label": "The packets travel across the network" },
         { "id": "rebuild", "label": "The receiver uses the sequence numbers to rebuild the message" }
       ],
-      "explanation": "The data is **split** first, then each piece gets its **addresses and sequence number**, which turns it into a packet ready to travel. The receiver can only rebuild the message once packets have arrived, using the sequence numbers to put them in order."
+      "explanation": "The data is **split** first, then each piece gets its **addresses and sequence number**, which turns it into a packet ready to travel. The receiver can only rebuild the message once packets have arrived, using the sequence numbers to put them in order.",
+      "hint": "Something has to exist before it can be labelled, and a message can only be rebuilt once its pieces have arrived.",
+      "nudge": "The addresses and sequence number are added to each piece, so the pieces must exist first. Rebuilding happens at the very end of the trip."
     },
     {
       "id": "photo-packets",
       "type": "numeric_input",
       "difficulty": "challenge",
-      "prompt": "A 3 MB photo is **3,000,000 bytes**. If each packet carries exactly **1,500 bytes of data**, how many packets does the photo need?",
+      "prompt": "A 3 [[MB|megabyte]] photo is **3,000,000 [[bytes|byte]]**. If each [[packet]] carries exactly **1,500 bytes of data**, how many packets does the photo need?",
       "base": "decimal",
       "answer": 2000,
       "unit": "packets",
-      "explanation": "3,000,000 ÷ 1,500 = **2,000** packets, all for one photo. Real packets use some of their 1,500 bytes for the added information, so in practice it would take a few more. Your phone sends and receives thousands of packets every second without you noticing."
+      "explanation": "3,000,000 ÷ 1,500 = **2,000** packets, all for one photo. Real packets use some of their 1,500 bytes for the added information, so in practice it would take a few more. Your phone sends and receives thousands of packets every second without you noticing.",
+      "hint": "Divide the photo's size by what one packet carries. Tip: work out 3,000 ÷ 1,500 first, then multiply that by 1,000.",
+      "nudge": "Check your zeros: 3,000,000 ÷ 1,500. Working out 3,000 ÷ 1,500 first can help, then multiply by 1,000."
     },
     {
       "id": "lost-packet",
@@ -93,19 +114,32 @@
       "prompt": "You're downloading a file split into 10 packets. **Packet 7** gets lost on the way. What happens?",
       "options": [
         { "id": "resend-7", "text": "The receiver notices it's missing, and packet 7 is sent again" },
-        { "id": "restart", "text": "The whole file is sent again from the start" },
-        { "id": "hole", "text": "The file arrives with a hole in it, and nobody notices" },
-        { "id": "stop", "text": "The download stops forever" }
+        {
+          "id": "restart",
+          "text": "The whole file is sent again from the start",
+          "nudge": "The other nine packets arrived safely. With packets, only the missing piece needs sending again, not the whole file."
+        },
+        {
+          "id": "hole",
+          "text": "The file arrives with a hole in it, and nobody notices",
+          "nudge": "The sequence numbers show a gap between 6 and 8, so the receiver can tell something is missing."
+        },
+        {
+          "id": "stop",
+          "text": "The download stops forever",
+          "nudge": "One lost packet isn't the end. Think about what the sequence numbers let the receiver notice and ask for."
+        }
       ],
       "correctOptionId": "resend-7",
-      "explanation": "Thanks to the sequence numbers, the receiver can see there's a gap between 6 and 8, so **packet 7** is sent again. The other packets already arrived safely, so there's no need to start over. For downloads, a set of rules called **TCP** takes care of this. You'll see how in the last lesson of this module."
+      "explanation": "Thanks to the sequence numbers, the receiver can see there's a gap between 6 and 8, so **packet 7** is sent again. The other packets already arrived safely, so there's no need to start over. For downloads, a set of rules called **TCP** takes care of this. You'll see how in the last lesson of this module.",
+      "hint": "Each packet carries a [[sequence number]]. What could the receiver notice when number 7 never turns up?"
     },
     {
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- Data travels in small pieces called **packets**, typically up to about 1,500 bytes each.\n- Each packet carries a piece of data (the **payload**) plus added information: the **source** and **destination addresses**, and a **sequence number**.\n- Packets from many conversations **take turns** on the same connections.\n- If a packet is lost, only that packet needs to be sent again.\n\nNext: how packets find their way across the internet, one router at a time."
+      "body": "- Data travels in small pieces called **packets**, typically up to about 1,500 [[bytes|byte]] each.\n- Each packet carries a piece of data (the **payload**) plus added information: the **source** and **destination addresses**, and a **sequence number**.\n- Packets from many conversations **take turns** on the same connections.\n- If a packet is lost, only that packet needs to be sent again.\n\nNext: how packets find their way across the internet, one [[router]] at a time."
     }
   ]
 }

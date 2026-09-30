@@ -47,11 +47,13 @@ export const PreferencesSchema = z.object({
   mode: LearningModeSchema.default("path"),
   /** Sound effects and haptics. On by default; nothing plays before the first interaction. */
   sound: z.boolean().default(true),
+  /** First-time "how to play" panels already dismissed (keys from src/lib/coach.ts). */
+  coachSeen: z.array(z.string().max(40)).max(32).default([]),
 });
 export type Preferences = z.infer<typeof PreferencesSchema>;
 
 export function defaultPreferences(): Preferences {
-  return { mode: "path", sound: true };
+  return { mode: "path", sound: true, coachSeen: [] };
 }
 
 export const ProgressSnapshotSchema = z.object({

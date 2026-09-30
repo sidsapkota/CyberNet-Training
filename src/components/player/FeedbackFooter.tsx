@@ -108,7 +108,7 @@ export function FeedbackFooter({
                 <StatusNode correct={tone === "correct"} />
                 <div className="flex-1">
                   <p className={`text-lead font-semibold ${style.text}`}>{heading}</p>
-                  {subheading && <p className="text-small text-ink-muted">{subheading}</p>}
+                  {subheading && <Markdown className="text-small text-ink">{subheading}</Markdown>}
                 </div>
                 {mascot && <Mascot expression={mascot} size={60} className="-my-3" />}
                 {xpAwarded > 0 && (

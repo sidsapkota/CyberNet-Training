@@ -24,7 +24,10 @@ export interface ScenePart {
   exit?: { x: number; y: number };
   /** The part covering this one; it can't be seen or tapped until that part is off. */
   coveredBy?: string;
-  /** Where a label-mode marker sits, in viewBox units, when the centre would hide something (a file name). */
+  /**
+   * Where a label-mode marker sits, in viewBox units, when the centre would hide something: a file
+   * name, or the clue that identifies a part (the CPU's lid, RAM's chips, storage's stripes).
+   */
   labelAt?: { x: number; y: number };
 }
 
@@ -55,11 +58,11 @@ export const SCENES = {
     height: 220,
     parts: [
       { id: "motherboard", name: "Motherboard", box: { x: 32, y: 32, w: 160, h: 156 }, coveredBy: "panel" },
-      { id: "cpu", name: "CPU (processor)", box: { x: 48, y: 44, w: 44, h: 44 }, exit: { x: 0, y: -60 }, coveredBy: "panel" },
-      { id: "fan", name: "Cooling fan", box: { x: 114, y: 40, w: 52, h: 52 }, exit: { x: 0, y: -60 }, coveredBy: "panel" },
-      { id: "ram", name: "RAM (memory)", box: { x: 42, y: 104, w: 76, h: 28 }, exit: { x: -70, y: 0 }, coveredBy: "panel" },
-      { id: "storage", name: "Storage drive (SSD)", box: { x: 120, y: 106, w: 64, h: 30 }, exit: { x: 0, y: 60 }, coveredBy: "panel" },
-      { id: "battery", name: "Battery", box: { x: 202, y: 34, w: 88, h: 152 }, exit: { x: 70, y: 0 }, coveredBy: "panel" },
+      { id: "cpu", name: "CPU (processor)", box: { x: 48, y: 44, w: 44, h: 44 }, labelAt: { x: 47, y: 43 }, exit: { x: 0, y: -60 }, coveredBy: "panel" },
+      { id: "fan", name: "Cooling fan", box: { x: 114, y: 40, w: 52, h: 52 }, labelAt: { x: 116, y: 42 }, exit: { x: 0, y: -60 }, coveredBy: "panel" },
+      { id: "ram", name: "RAM (memory)", box: { x: 42, y: 104, w: 76, h: 28 }, labelAt: { x: 44, y: 106 }, exit: { x: -70, y: 0 }, coveredBy: "panel" },
+      { id: "storage", name: "Storage drive (SSD)", box: { x: 120, y: 106, w: 64, h: 30 }, labelAt: { x: 182, y: 108 }, exit: { x: 0, y: 60 }, coveredBy: "panel" },
+      { id: "battery", name: "Battery", box: { x: 202, y: 34, w: 88, h: 152 }, labelAt: { x: 206, y: 38 }, exit: { x: 70, y: 0 }, coveredBy: "panel" },
       { id: "battery-connector", name: "Battery connector", box: { x: 182, y: 96, w: 30, h: 22 }, exit: { x: 6, y: -8 }, coveredBy: "panel" },
       { id: "panel", name: "Bottom panel", box: { x: 24, y: 24, w: 272, h: 172 }, exit: { x: 0, y: -40 } },
       screw("screw-1", "Top-left screw", 40, 40),
@@ -79,11 +82,11 @@ export const SCENES = {
     height: 320,
     parts: [
       { id: "logic-board", name: "Logic board (motherboard)", box: { x: 30, y: 20, w: 140, h: 92 }, coveredBy: "back-cover" },
-      { id: "camera", name: "Camera", box: { x: 38, y: 28, w: 36, h: 36 }, exit: { x: -50, y: 0 }, coveredBy: "back-cover" },
-      { id: "cpu", name: "CPU (processor)", box: { x: 84, y: 28, w: 38, h: 38 }, coveredBy: "back-cover" },
-      { id: "ram", name: "RAM (memory)", box: { x: 122, y: 30, w: 34, h: 30 }, coveredBy: "back-cover" },
-      { id: "storage", name: "Storage chip", box: { x: 122, y: 66, w: 38, h: 30 }, coveredBy: "back-cover" },
-      { id: "battery", name: "Battery", box: { x: 34, y: 126, w: 132, h: 144 }, exit: { x: 0, y: 60 }, coveredBy: "back-cover" },
+      { id: "camera", name: "Camera", box: { x: 38, y: 28, w: 36, h: 36 }, labelAt: { x: 40, y: 30 }, exit: { x: -50, y: 0 }, coveredBy: "back-cover" },
+      { id: "cpu", name: "CPU (processor)", box: { x: 84, y: 28, w: 38, h: 38 }, labelAt: { x: 88, y: 30 }, coveredBy: "back-cover" },
+      { id: "ram", name: "RAM (memory)", box: { x: 122, y: 30, w: 34, h: 30 }, labelAt: { x: 156, y: 31 }, coveredBy: "back-cover" },
+      { id: "storage", name: "Storage chip", box: { x: 122, y: 66, w: 38, h: 30 }, labelAt: { x: 158, y: 94 }, coveredBy: "back-cover" },
+      { id: "battery", name: "Battery", box: { x: 34, y: 126, w: 132, h: 144 }, labelAt: { x: 40, y: 131 }, exit: { x: 0, y: 60 }, coveredBy: "back-cover" },
       { id: "battery-connector", name: "Battery connector", box: { x: 84, y: 104, w: 32, h: 22 }, exit: { x: 0, y: -10 }, coveredBy: "back-cover" },
       { id: "speaker", name: "Speaker", box: { x: 32, y: 282, w: 34, h: 20 }, coveredBy: "back-cover" },
       { id: "charging-port", name: "Charging port", box: { x: 76, y: 298, w: 48, h: 20 } },

@@ -60,7 +60,7 @@
         { "id": "phone", "kind": "device", "label": "Phone", "address": "192.168.0.30", "col": 0, "row": 0 },
         { "id": "tv", "kind": "device", "label": "Smart TV", "address": "192.168.0.31", "col": 0, "row": 1 },
         { "id": "home", "kind": "router", "label": "Home router", "address": "192.168.0.1", "col": 1, "row": 0 },
-        { "id": "isp", "kind": "router", "label": "ISP router", "address": "203.0.113.1", "col": 2, "row": 0 },
+        { "id": "isp", "kind": "router", "label": "Your ISP's router", "address": "203.0.113.1", "col": 2, "row": 0 },
         { "id": "server", "kind": "server", "label": "Web server", "address": "198.51.100.10", "col": 3, "row": 0 }
       ],
       "links": [
@@ -71,7 +71,9 @@
       ],
       "source": "phone",
       "destination": "server",
-      "validPaths": [["phone", "home", "isp", "server"]],
+      "validPaths": [
+        ["phone", "home", "isp", "server"]
+      ],
       "explanation": "Every device at home reaches the internet through the **home router**, which passes the request to your ISP's router, which sends it on towards the server. The smart TV is on the same home network, but it isn't a way out."
     },
     {

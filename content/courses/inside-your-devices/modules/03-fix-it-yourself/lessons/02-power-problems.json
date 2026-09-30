@@ -17,14 +17,14 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Inside the battery",
-      "body": "Phones and laptops use **lithium-ion batteries**. They store a lot of energy in a small, light pack. The amount they hold is measured in **watt-hours (Wh)**: a phone battery holds about 15 Wh, and a laptop's a few times more.\n\nEverything the device does uses some energy, but the biggest drains are usually the **screen's brightness**, **location (GPS)** and **apps busy in the background**.\n\nBatteries also wear out slowly. After a few hundred full charges they hold noticeably less, and **heat** wears them out faster, so keep devices out of hot cars and don't charge them under a pillow. If one gets too hot, stop, unplug it and let it cool on a table out of the sun (never in the fridge or freezer).\n\nAn old battery can also **swell**: the case bulges or the screen lifts. Stop using it, don't press it, and tell an adult."
+      "body": "Phones and laptops use **lithium-ion batteries**. They store a lot of energy in a small, light pack.\n\nEverything the device does uses some power (measured in **watts**, W), but the biggest drains are usually the **screen's brightness**, **location (GPS)** and **apps busy in the background**.\n\nBatteries also wear out slowly: after a few hundred full charges they hold less. **Heat** wears them out faster, so keep devices out of hot cars and don't charge them under a pillow. If one gets too hot, stop, unplug it and let it cool on a table out of the sun (never in the fridge or freezer)."
     },
     {
       "id": "charging-trouble",
       "type": "explainer",
       "difficulty": "core",
       "title": "When it won't charge",
-      "body": "Cables and chargers wear out far more often than phones, so first try **another cable and another socket**.\n\nPocket fluff can also pack into the **charging port**. With the phone switched off, an adult can help brush it out gently with a soft, dry brush. **Never use metal** (like a pin or paper clip) **or water**. If that doesn't work, a repair shop can clean it safely."
+      "body": "Cables and chargers wear out far more often than phones, so first try **another cable and another socket**.\n\nPocket fluff can also pack into the **charging [[port]]**. With the phone switched off, an adult can help brush it out gently with a soft, dry brush. **Never use metal** (like a pin or paper clip) **or water**. If that doesn't work, a repair shop can clean it safely."
     },
     {
       "id": "wont-charge",
@@ -46,7 +46,7 @@
             {
               "id": "pin",
               "text": "Poke a pin into the charging port",
-              "consequence": "Never put metal in the port. It can scratch the contacts or cause a short circuit.",
+              "consequence": "Never put metal in the port. It can scratch the contacts or cause a [[short circuit]].",
               "outcome": "fail"
             }
           ]
@@ -76,24 +76,27 @@
           ]
         }
       ],
-      "explanation": "Start with the simplest fix: **another cable and socket**. Fluff in the port is common: with the phone off, an adult can gently brush it out with something soft and dry. **Never metal, never water.** If in doubt, a repair shop can do it."
+      "explanation": "Start with the simplest fix: **another cable and socket**. Fluff in the port is common: with the phone off, an adult can gently brush it out with something soft and dry. **Never metal, never water.** If in doubt, a repair shop can do it.",
+      "hint": "Start with the simplest, safest fix: cables and chargers wear out more often than phones. For fluff, think soft, dry and an adult's help."
     },
     {
       "id": "find-the-port",
       "type": "hotspot",
       "difficulty": "core",
-      "prompt": "Tap the **charging port**, where the fluff was hiding.",
+      "prompt": "Tap the **charging [[port]]**, where the fluff was hiding.",
       "scene": "phone",
       "view": "closed",
       "mode": "tap",
       "targets": ["charging-port"],
-      "explanation": "The **charging port** is on the bottom edge. It's open to the outside, which is why pocket fluff collects in it."
+      "explanation": "The **charging port** is on the bottom edge. It's open to the outside, which is why pocket fluff collects in it.",
+      "hint": "The charging port is where the charger plugs in. It's open to the outside, which is how pocket fluff gets in. Check the edges of the phone.",
+      "nudge": "Think about where you plug a charger into a phone. That opening is on the outside of the phone, along one of its edges."
     },
     {
       "id": "last-the-journey",
       "type": "simulator",
       "difficulty": "core",
-      "prompt": "You've got a long coach trip. Make the battery last **at least 8 hours**, and keep your **music** playing.",
+      "prompt": "You've got a long coach trip. Make the battery last **at least 8 hours**, and keep your **music** playing. (**Low power mode** is a setting that makes the phone save energy.)",
       "model": "battery",
       "params": { "wattHours": 15 },
       "controls": [
@@ -105,7 +108,7 @@
       ],
       "outputs": [
         { "id": "hours", "kind": "meter", "label": "Battery lasts", "unit": "hours" },
-        { "id": "watts", "kind": "meter", "label": "Power used", "unit": "W" }
+        { "id": "watts", "kind": "meter", "label": "Power used (watts)", "unit": "W" }
       ],
       "goal": {
         "all": [
@@ -113,7 +116,9 @@
           { "target": "control", "id": "music", "op": "==", "value": true }
         ]
       },
-      "explanation": "The screen at full brightness was the biggest drain. Turning it down, switching off location and stopping background apps (or using **low power mode**) all stretch the battery. Music on its own uses very little."
+      "explanation": "The screen at full brightness was the biggest drain. Turning it down, switching off location and stopping background apps (or using **low power mode**) all stretch the battery. Music on its own uses very little.",
+      "hint": "Change one setting at a time and watch the [[watts|watt]] meter. Which one uses the most power? Keep the music on.",
+      "nudge": "Music uses very little power, so it can stay on. The lesson named the biggest drains: find them and turn them down or off."
     },
     {
       "id": "helps-or-harms",
@@ -132,20 +137,38 @@
         { "id": "pillow", "label": "Charging it under your pillow", "bin": "harms" },
         { "id": "gps-always", "label": "Location on for every app, all day", "bin": "harms" }
       ],
-      "explanation": "Lower brightness and low power mode save charge. **Heat** is a battery's enemy: hot cars and charging under a pillow (which traps heat) wear it out faster. Location on all day keeps draining it."
+      "explanation": "Lower brightness and low power mode save charge. **Heat** is a battery's enemy: hot cars and charging under a pillow (which traps heat) wear it out faster. Location on all day keeps draining it.",
+      "hint": "Two things drain or damage a battery: heavy use, like location on all day, and **heat**. Ask which habits save energy or keep it cool.",
+      "nudge": "Heat is a battery's enemy, including heat trapped while charging. Settings that save energy help; anything left running all day drains it."
+    },
+    {
+      "id": "swollen-batteries",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "When a battery swells",
+      "body": "Very old or damaged batteries can **swell** up. You might see the case bulge, the screen lift at one edge, or a laptop's trackpad (the touch pad) get pushed up.\n\nA swollen battery can catch fire if it's pressed or punctured. Stop using the device, don't press it, and tell an adult. A repair shop can replace the battery safely."
     },
     {
       "id": "swollen-battery",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "An old laptop's case is **bulging**, and the trackpad is being pushed up from underneath. What should you do?",
+      "prompt": "An old laptop's case is **bulging**, and the trackpad (the touch pad) is being pushed up from underneath. What should you do?",
       "options": [
         { "id": "stop-tell", "text": "Stop using it, unplug it, and tell an adult" },
-        { "id": "press-flat", "text": "Press the case flat again" },
-        { "id": "keep-charging", "text": "Keep using it, as long as it still turns on" }
+        {
+          "id": "press-flat",
+          "text": "Press the case flat again",
+          "nudge": "Pressing is the risky part. A swollen battery can catch fire if it's pressed or punctured, so hands off."
+        },
+        {
+          "id": "keep-charging",
+          "text": "Keep using it, as long as it still turns on",
+          "nudge": "Turning on doesn't mean it's safe. A bulge can mean the battery is swelling, and that's not something to keep using."
+        }
       ],
       "correctOptionId": "stop-tell",
-      "explanation": "A bulge often means the **battery is swelling**. A swollen lithium battery can catch fire if it's pressed, bent or punctured. Stop using it, unplug it, keep it away from anything that can burn, and **tell an adult**. A repair shop can replace the battery safely."
+      "explanation": "A bulge often means the **battery is swelling**. A swollen [[lithium battery|lithium-ion]] can catch fire if it's pressed, bent or punctured. Stop using it, unplug it, keep it away from anything that can burn, and **tell an adult**. A repair shop can replace the battery safely.",
+      "hint": "A bulging case often means something inside is swelling. Think about what the lesson said is dangerous to do to a swollen battery."
     },
     {
       "id": "too-hot-to-handle",
@@ -192,13 +215,14 @@
           ]
         }
       ],
-      "explanation": "An overheating phone needs to **stop, unplug and cool down slowly** on a hard surface out of the sun. Never freeze it. A phone that looks puffed up may have a **swollen battery**: stop using it, don't press it, and tell an adult."
+      "explanation": "An overheating phone needs to **stop, unplug and cool down slowly** on a hard surface out of the sun. Never freeze it. A phone that looks puffed up may have a **swollen battery**: stop using it, don't press it, and tell an adult.",
+      "hint": "Heat and batteries don't mix, and sudden cold isn't the answer either. Cool it gently, and if something looks swollen, hands off."
     },
     {
       "id": "label-power-parts",
       "type": "hotspot",
       "difficulty": "challenge",
-      "prompt": "Label the parts of the phone that power flows through, plus two that use lots of it.",
+      "prompt": "Label five parts: the three that bring power in, store it and pass it on, plus the CPU and the camera.",
       "scene": "phone",
       "view": "open",
       "mode": "label",
@@ -209,14 +233,16 @@
         { "part": "cpu", "label": "CPU" },
         { "part": "camera", "label": "Camera" }
       ],
-      "explanation": "Power comes in through the **charging port**, is stored in the **battery**, and reaches the board through the **battery connector**. The **CPU** and **camera** are two of the hungriest parts, along with the screen."
+      "explanation": "Power comes in through the **charging port**, is stored in the **battery**, and reaches the board through the **battery connector**. The **CPU** and **camera** are two of the hungriest parts, along with the screen.",
+      "hint": "Follow the power: in from the outside, stored in the part with the lightning bolt, then joined to the board. The CPU has a shiny lid.",
+      "nudge": "Recall the clues: the battery's lightning bolt, the CPU's shiny square lid, the camera's lens, and the port open on the bottom edge."
     },
     {
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- **Brightness, location and background apps** drain the battery most. Low power mode helps.\n- **Heat** wears batteries out. Keep devices out of the sun and don't charge them under pillows.\n- Won't charge? Try **another cable and socket** first. For fluff, an adult can gently brush the port with something soft and dry: never metal or water.\n- A **bulging** device may have a swollen battery. Stop using it, don't press it, and tell an adult.\n\nOne quiz left: the course final."
+      "body": "- **Brightness, location and background apps** drain the battery most. [[Low power mode]] helps.\n- **Heat** wears batteries out. Keep devices out of the sun and don't charge them under pillows.\n- Won't charge? Try **another cable and socket** first. For fluff, an adult can gently brush the [[port]] with something soft and dry: never metal or water.\n- A **bulging** device may have a swollen battery. Stop using it, don't press it, and tell an adult.\n\nOne quiz left: the course final."
     }
   ]
 }

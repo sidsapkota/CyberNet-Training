@@ -38,7 +38,7 @@
         { "id": "laptop", "kind": "device", "label": "Laptop", "address": "192.168.1.20", "col": 0, "row": 1 },
         { "id": "home", "kind": "router", "label": "Home router", "address": "192.168.1.1", "col": 1, "row": 1 },
         { "id": "ra", "kind": "router", "label": "Router A", "address": "203.0.113.1", "col": 2, "row": 0 },
-        { "id": "rb", "kind": "router", "label": "Router B (down)", "address": "203.0.113.2", "col": 2, "row": 2 },
+        { "id": "rb", "kind": "router", "label": "Router B", "address": "203.0.113.2", "col": 2, "row": 2, "down": true },
         { "id": "server", "kind": "server", "label": "Web server", "address": "198.51.100.10", "col": 3, "row": 1 }
       ],
       "links": [
@@ -50,7 +50,9 @@
       ],
       "source": "laptop",
       "destination": "server",
-      "validPaths": [["laptop", "home", "ra", "server"]],
+      "validPaths": [
+        ["laptop", "home", "ra", "server"]
+      ],
       "explanation": "With Router B down, the only working route is **laptop → home router → Router A → web server**. Real routers do this automatically: they update their routing tables and send packets around the problem."
     },
     {
@@ -80,7 +82,7 @@
       "id": "traceroute-first-hop",
       "type": "terminal",
       "difficulty": "core",
-      "prompt": "Run `traceroute example.org`, then find the address of the **first hop**.",
+      "prompt": "Run `traceroute example.org`, then find the address of the **first hop** (the line numbered 1).",
       "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
       "commands": [
         {

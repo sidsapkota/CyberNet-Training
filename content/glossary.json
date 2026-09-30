@@ -1,0 +1,169 @@
+{
+  "terms": [
+    { "id": "antivirus", "term": "antivirus", "definition": "A security app that looks for harmful programs, like viruses, and stops them." },
+    { "id": "app", "term": "app", "definition": "A program you use for one job, like a game, a browser or a music player." },
+    {
+      "id": "authoritative-server",
+      "term": "authoritative server",
+      "definition": "The DNS server that's in charge of a domain name and holds its records, so it has the real answer."
+    },
+    {
+      "id": "background-process",
+      "term": "background process",
+      "definition": "A program running without a window, doing a job for you, like checking for updates or syncing files."
+    },
+    {
+      "id": "backup",
+      "term": "backed up",
+      "definition": "Copied somewhere else (like the cloud or another drive), so it isn't lost if the original is deleted or broken."
+    },
+    { "id": "binary", "term": "binary", "definition": "Counting with only two digits, 0 and 1. Computers store everything this way." },
+    { "id": "bit", "term": "bit", "definition": "The smallest piece of data: a single 0 or 1, like a switch that's off or on." },
+    { "id": "browser", "term": "browser", "definition": "The app you use to visit websites." },
+    { "id": "browser-tab", "term": "browser tab", "definition": "One open page in your browser. You can have several tabs open at once and switch between them." },
+    { "id": "bug", "term": "bug", "definition": "A mistake in a program's code that makes it go wrong." },
+    { "id": "byte", "term": "byte", "definition": "A group of 8 bits. It can hold a number from 0 to 255, or roughly one letter of plain English text." },
+    { "id": "cache", "term": "cache", "definition": "A place that keeps a copy of something you used recently, so it's quicker to get next time." },
+    {
+      "id": "certificate",
+      "term": "certificate",
+      "definition": "A website's digital ID card. It proves the site really owns its name, and it's checked when you connect with HTTPS."
+    },
+    {
+      "id": "certificate-authority",
+      "term": "certificate authority",
+      "definition": "A trusted organisation that checks who owns a website's name and then issues its certificate."
+    },
+    { "id": "client", "term": "client", "definition": "The device or app that asks a server for something. Your browser is a client." },
+    { "id": "cloud", "term": "the cloud", "definition": "Storage and services on a company's servers, which you reach over the internet." },
+    { "id": "cname", "term": "CNAME record", "definition": "A DNS record that says a name is an alias: look up this other name instead." },
+    { "id": "command", "term": "command", "definition": "An instruction you type into a terminal, like ipconfig, then run by pressing Enter." },
+    { "id": "core", "term": "core", "definition": "One complete worker inside a CPU. A CPU with 4 cores can work on 4 things at once." },
+    { "id": "cpu", "term": "CPU", "definition": "Central processing unit: the chip that follows a program's instructions. The device's brain." },
+    {
+      "id": "default-gateway",
+      "term": "default gateway",
+      "definition": "The router a device sends data to when it's going outside its own network. At home, it's your home router."
+    },
+    { "id": "dns", "term": "DNS", "definition": "Domain Name System: the internet's phone book. It turns names like example.com into IP addresses." },
+    { "id": "domain-name", "term": "domain name", "definition": "A website's name, like example.com. Easier for people to remember than an IP address." },
+    { "id": "encryption", "term": "encryption", "definition": "Scrambling data with a secret key so that only the right people or devices can unscramble and read it." },
+    { "id": "export", "term": "export", "definition": "To save a finished piece of work, like a video, as a file that other apps and people can use." },
+    {
+      "id": "extension",
+      "term": "file extension",
+      "definition": "The end of a file's name after the last dot, like .jpg. It tells the computer what kind of file it is."
+    },
+    { "id": "file", "term": "file", "definition": "One named piece of saved data, like a photo, a song or an essay." },
+    { "id": "folder", "term": "folder", "definition": "A container for files, and for other folders, like a box inside a box." },
+    { "id": "ghz", "term": "GHz", "definition": "Gigahertz: a billion ticks per second. A CPU's clock speed is measured in GHz." },
+    { "id": "gigabyte", "term": "gigabyte (GB)", "definition": "A unit for amounts of data: 1,000 megabytes. Phone storage and RAM are measured in GB." },
+    { "id": "gps", "term": "GPS", "definition": "The system a phone uses to work out where it is, using signals from satellites. Also called location." },
+    { "id": "handshake", "term": "handshake", "definition": "A few quick messages two devices swap to set up a connection before sending the real data." },
+    { "id": "hardware", "term": "hardware", "definition": "The physical parts of a device that you could touch, like the screen, battery and chips." },
+    { "id": "header", "term": "header", "definition": "An extra line of information at the start of a message, like which website a request is for." },
+    { "id": "hex", "term": "hexadecimal (hex)", "definition": "Counting with 16 digits: 0 to 9, then A to F. One hex digit stands for exactly 4 bits." },
+    { "id": "hop", "term": "hop", "definition": "One step of a packet's journey: from your device to the first router, then from each router to the next." },
+    { "id": "html", "term": "HTML", "definition": "The code that describes a web page: its headings, text, links and pictures." },
+    { "id": "http", "term": "HTTP", "definition": "HyperText Transfer Protocol: the rules browsers and web servers use to ask for and send web pages." },
+    { "id": "https", "term": "HTTPS", "definition": "HTTP sent inside an encrypted connection, so people in between can't read or change it." },
+    { "id": "imap", "term": "IMAP", "definition": "The protocol email apps usually use to read mail that's kept on your mail provider's server." },
+    { "id": "ip-address", "term": "IP address", "definition": "The number that works as a device's address on a network, so data can find it." },
+    { "id": "ipv4", "term": "IPv4", "definition": "The original kind of IP address: 32 bits, written as four numbers from 0 to 255, like 192.168.1.20." },
+    { "id": "ipv6", "term": "IPv6", "definition": "The newer, much bigger kind of IP address: 128 bits, written in hex groups, like 2001:db8::1." },
+    { "id": "isp", "term": "ISP", "definition": "Internet service provider: the company that connects your home to the internet." },
+    { "id": "linux", "term": "Linux", "definition": "A family of operating systems, like Windows but free to use. Many servers and some laptops run it." },
+    {
+      "id": "lithium-ion",
+      "term": "lithium-ion battery",
+      "definition": "The kind of rechargeable battery in phones and laptops. It holds a lot of energy for its size, so it must be treated with care."
+    },
+    {
+      "id": "low-power-mode",
+      "term": "low power mode",
+      "definition": "A setting that makes a device save energy, for example by pausing background apps, so the battery lasts longer."
+    },
+    { "id": "megabyte", "term": "megabyte (MB)", "definition": "A unit for amounts of data: 1,000 kilobytes, or a million bytes. A phone photo is a few MB." },
+    { "id": "memory-leak", "term": "memory leak", "definition": "A bug where an app keeps taking RAM and never gives it back, so it uses more and more over time." },
+    { "id": "millisecond", "term": "millisecond (ms)", "definition": "A thousandth of a second." },
+    { "id": "motherboard", "term": "motherboard", "definition": "The main circuit board that all a device's parts plug into and send signals through." },
+    { "id": "mx-record", "term": "MX record", "definition": "A DNS record that names the server that receives email for a domain." },
+    {
+      "id": "nat",
+      "term": "NAT",
+      "definition": "Network address translation: how a home router lets many devices share one public address, by swapping addresses and keeping a table."
+    },
+    { "id": "network", "term": "network", "definition": "A group of devices connected so they can send data to each other, like everything on your home Wi-Fi." },
+    { "id": "octet", "term": "octet", "definition": "A group of 8 bits. Each of the four numbers in an IPv4 address is one octet, from 0 to 255." },
+    {
+      "id": "operating-system",
+      "term": "operating system (OS)",
+      "definition": "The main software that runs a device: it shares out the CPU and RAM, runs apps and looks after files."
+    },
+    { "id": "packet", "term": "packet", "definition": "A small piece of data sent across a network, with addresses added so it can find its way." },
+    {
+      "id": "path",
+      "term": "path",
+      "definition": "The route through folders to a file, like Documents > School > essay.docx. Also the part of a web address after the name."
+    },
+    { "id": "payload", "term": "payload", "definition": "The actual data a packet carries, apart from the addresses and other added information." },
+    { "id": "port", "term": "port", "definition": "A number that picks which program on a computer a packet is for, like an apartment number in a building." },
+    {
+      "id": "private-address",
+      "term": "private address",
+      "definition": "An IP address for use inside a home, school or office network. The same private addresses are reused in millions of networks."
+    },
+    { "id": "process", "term": "process", "definition": "A program that's running right now. The task manager lists them all." },
+    { "id": "protocol", "term": "protocol", "definition": "A set of rules that devices agree to follow so they can understand each other." },
+    { "id": "public-address", "term": "public address", "definition": "An IP address that's unique across the whole internet, so anyone on the internet can reach it." },
+    { "id": "ram", "term": "RAM", "definition": "Random-access memory: the fast workspace for what's in use right now. It's cleared when the power goes off." },
+    { "id": "resolver", "term": "resolver", "definition": "The DNS server that looks up a name for your device, asking other DNS servers if it doesn't already know." },
+    { "id": "root-server", "term": "root server", "definition": "The DNS servers at the top of the system. They know who handles each ending, like .com or .org." },
+    {
+      "id": "router",
+      "term": "router",
+      "definition": "A device that passes data between networks, choosing the next step each time. Your home router links your home to the internet."
+    },
+    { "id": "routing-table", "term": "routing table", "definition": "A router's list of where to send packets next, depending on their destination address." },
+    { "id": "security-hole", "term": "security hole", "definition": "A weak spot in software that an attacker could use to get in. Updates fix them." },
+    { "id": "sequence-number", "term": "sequence number", "definition": "A number that marks where a piece of data belongs, so the pieces can be put back in order." },
+    { "id": "server", "term": "server", "definition": "A computer that provides something, like a website, email or files, to other devices over a network." },
+    {
+      "id": "short-circuit",
+      "term": "short circuit",
+      "definition": "When electricity takes a wrong shortcut between two contacts. It can damage a device or make it dangerously hot."
+    },
+    { "id": "smtp", "term": "SMTP", "definition": "The protocol used to send email, from your app to your mail server and between mail servers." },
+    { "id": "ssh", "term": "SSH", "definition": "Secure Shell: a protocol for safely controlling another computer from far away." },
+    { "id": "startup-app", "term": "startup app", "definition": "An app set to open by itself as soon as the device switches on." },
+    { "id": "status-code", "term": "status code", "definition": "The number a web server sends back to say how a request went, like 200 (OK) or 404 (not found)." },
+    { "id": "storage", "term": "storage", "definition": "The part that keeps apps, photos and files, even when the power is off." },
+    { "id": "subdomain", "term": "subdomain", "definition": "An extra part added on the left of a domain name by its owner, like www in www.example.com." },
+    {
+      "id": "subnet-mask",
+      "term": "subnet mask",
+      "definition": "A setting that says how big the local network is, meaning which addresses count as nearby. It isn't a device's address."
+    },
+    { "id": "switch", "term": "switch", "definition": "A device that joins devices inside one network and passes data between them." },
+    { "id": "sync", "term": "sync", "definition": "To keep two copies matched up, so a change on one (like your phone) also appears on the other (like the cloud)." },
+    {
+      "id": "system-process",
+      "term": "system process",
+      "definition": "A process that's part of the operating system itself. Ending one can crash or restart the device."
+    },
+    { "id": "task-manager", "term": "task manager", "definition": "A tool in the operating system that lists every running process and lets you end one." },
+    { "id": "tcp", "term": "TCP", "definition": "A protocol that makes sure data arrives complete and in order, resending anything that gets lost." },
+    { "id": "terminal", "term": "terminal", "definition": "A window where you control a computer by typing commands instead of tapping or clicking." },
+    { "id": "throttling", "term": "throttling", "definition": "When a CPU slows itself down because it's too hot, to protect itself." },
+    { "id": "tld", "term": "top-level domain (TLD)", "definition": "The last part of a domain name, like com in example.com, or uk in example.co.uk." },
+    { "id": "tls", "term": "TLS", "definition": "Transport Layer Security: the protocol that encrypts HTTPS connections and checks the server's certificate." },
+    { "id": "traceroute", "term": "traceroute", "definition": "A tool that lists the routers (hops) your packets pass through on the way to a destination." },
+    { "id": "udp", "term": "UDP", "definition": "A quick protocol that sends data without checking it arrived. Good for live video and games, where speed matters most." },
+    { "id": "update", "term": "update", "definition": "A new version of software that fixes bugs and security holes, and sometimes adds features." },
+    { "id": "url", "term": "URL", "definition": "A full web address, like https://www.example.com/news, saying which protocol, which site and which page." },
+    { "id": "virus", "term": "virus", "definition": "A harmful program that spreads to other files or devices. Security apps look for them." },
+    { "id": "warranty", "term": "warranty", "definition": "The maker's promise to repair a device for free if it breaks by itself within a set time." },
+    { "id": "watt", "term": "watt (W)", "definition": "A unit for how fast energy is used. A phone uses a few watts; the more watts, the faster the battery empties." },
+    { "id": "wi-fi-access-point", "term": "Wi-Fi access point", "definition": "The part of a network that sends out the Wi-Fi signal, so wireless devices can join." }
+  ]
+}

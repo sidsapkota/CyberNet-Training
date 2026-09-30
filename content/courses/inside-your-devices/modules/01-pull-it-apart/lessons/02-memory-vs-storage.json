@@ -10,7 +10,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Two kinds of space",
-      "body": "A phone might say it has \"8 GB\" of one thing and \"256 GB\" of another. Both are measured in gigabytes (**GB**), but they're two very different parts: **RAM** and **storage**.\n\nMixing them up is one of the most common tech mistakes. By the end of this lesson, you won't."
+      "body": "A phone might say it has \"8 GB\" of one thing and \"256 GB\" of another. Both are measured in gigabytes (**GB**), a way of counting how much data something can hold, but they're two very different parts: **RAM** and **storage**.\n\nMixing them up is one of the most common tech mistakes. By the end of this lesson, you won't."
     },
     {
       "id": "desk-and-cupboard",
@@ -23,14 +23,14 @@
       "id": "fill-the-ram",
       "type": "simulator",
       "difficulty": "core",
-      "prompt": "You want to play the **racing game** while your **music** keeps playing. Get the phone running **smoothly**.",
+      "prompt": "This phone has **4 [[GB|gigabyte]] of RAM**. You want to play the **racing game** while your **music** keeps playing. Get the phone running **smoothly**. (The phone's own system always needs some RAM too.)",
       "model": "memory",
       "params": {
         "ramGb": 4,
         "systemGb": 1.5,
         "apps": [
           { "id": "music", "label": "Music", "gb": 0.3 },
-          { "id": "browser", "label": "Web browser", "gb": 1 },
+          { "id": "browser", "label": "Web browser", "gb": 0.8 },
           { "id": "video-call", "label": "Video call", "gb": 1.2 },
           { "id": "game", "label": "Racing game", "gb": 2 }
         ]
@@ -43,6 +43,7 @@
       ],
       "outputs": [
         { "id": "smooth", "kind": "device", "label": "Phone", "frame": "phone" },
+        { "id": "used", "kind": "meter", "label": "RAM in use (of 4 GB)", "unit": "GB" },
         { "id": "usedPct", "kind": "bar", "label": "RAM used" },
         { "id": "apps", "kind": "list", "label": "What's in RAM" }
       ],
@@ -53,7 +54,9 @@
           { "target": "output", "id": "smooth", "op": ">=", "value": 0.9 }
         ]
       },
-      "explanation": "Every open app needs room in **RAM**. With the game added, the apps needed more than the phone's 4 GB, so it lagged. Closing the browser and the video call made room for the game and the music."
+      "explanation": "Every open app needs room in **RAM**. With the game added, the apps needed 5.8 GB, more than the phone's 4 GB, so it lagged. Closing the [[browser]] and the video call made room for the game and the music.",
+      "hint": "Every open app takes room in RAM. The game and the music must stay on, so which apps don't you need?",
+      "nudge": "If it still lags, the open apps need more room than the phone's 4 GB of RAM. Keep the game and music on, and close what you don't need."
     },
     {
       "id": "sort-ram-storage",
@@ -72,17 +75,20 @@
         { "id": "page", "label": "The web page open on your screen", "bin": "ram" },
         { "id": "songs", "label": "Downloaded songs", "bin": "storage" }
       ],
-      "explanation": "**RAM** holds what's in use right now, like the open game and page. That's why an unsaved essay is lost if the power cuts out. **Storage** keeps everything else, even when the device is off."
+      "explanation": "**RAM** holds what's in use right now, like the open game and page. That's why an unsaved essay is lost if the power cuts out. **Storage** keeps everything else, even when the device is off.",
+      "hint": "For each one, ask: is it open and in use right now, or kept for later, even when the device is off?",
+      "nudge": "RAM is the desk for whatever is open now. Storage is the cupboard for things kept until you delete them."
     },
     {
       "id": "films-that-fit",
       "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "Your laptop has **256 GB** of free storage. Each film you download takes up **8 GB**. How many films fit?",
+      "prompt": "Your laptop has **256 [[GB|gigabyte]]** of free [[storage]]. Each film you download takes up **8 GB**. How many films fit?",
       "answer": 32,
       "unit": "films",
       "hint": "Divide the free space by the size of one film.",
-      "explanation": "256 ÷ 8 = **32** films. Storage is what fills up when you download things. RAM doesn't change when you download a film."
+      "explanation": "256 ÷ 8 = **32** films. Storage is what fills up when you download things. [[RAM]] doesn't change when you download a film.",
+      "nudge": "Every film takes the same 8 GB, so work out how many 8 GB pieces fit into 256 GB."
     },
     {
       "id": "storage-full",
@@ -95,15 +101,10 @@
           "id": "message",
           "text": "**\"Not enough space. Can't save photo.\"** Which kind of space has run out?",
           "choices": [
-            {
-              "id": "storage",
-              "text": "Storage: where photos are saved",
-              "consequence": "Right. Saving a photo needs room in storage, and yours is full.",
-              "next": "fix"
-            },
+            { "id": "storage", "text": "Storage space", "consequence": "Right. Saving a photo needs room in storage, and yours is full.", "next": "fix" },
             {
               "id": "ram",
-              "text": "RAM: the workspace for open apps",
+              "text": "RAM space",
               "consequence": "RAM only holds what's running right now. A photo you *save* goes to storage, and that's what's full.",
               "outcome": "fail"
             }
@@ -121,7 +122,7 @@
             },
             {
               "id": "delete-videos",
-              "text": "Delete a few big videos you've already backed up",
+              "text": "Delete big videos you've backed up (copied somewhere else)",
               "consequence": "Videos take up lots of storage, so deleting a few you've backed up frees plenty of room. You get the shot!",
               "outcome": "success"
             },
@@ -134,27 +135,41 @@
           ]
         }
       ],
-      "explanation": "A \"not enough space\" message when you **save** something means **storage** is full. Only removing files frees storage. Closing apps and restarting only clear RAM."
+      "explanation": "A \"not enough space\" message when you **save** something means **storage** is full. Only removing files frees storage. Closing apps and restarting only clear RAM.",
+      "hint": "The message appeared when you tried to save a photo. Which kind of space keeps saved files?"
     },
     {
       "id": "why-restart-helps",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A laptop has been on for weeks and feels sluggish. Why does restarting it often help?",
+      "prompt": "A laptop has been on for weeks and feels slow. Why does restarting it often help?",
       "options": [
         { "id": "clears-ram", "text": "It clears RAM, so the laptop starts again with a tidy desk" },
-        { "id": "deletes-files", "text": "It deletes old files from storage" },
-        { "id": "faster-cpu", "text": "It makes the CPU run at a higher speed" },
-        { "id": "more-ram", "text": "It adds more RAM to the laptop" }
+        {
+          "id": "deletes-files",
+          "text": "It deletes old files from storage",
+          "nudge": "Restarting doesn't touch storage: every file is still there afterwards. Think about which space is cleared when the power goes off."
+        },
+        {
+          "id": "faster-cpu",
+          "text": "It makes the CPU run at a higher speed",
+          "nudge": "A restart doesn't change the CPU at all. Think about the desk: what happens to it when the power goes off?"
+        },
+        {
+          "id": "more-ram",
+          "text": "It adds more RAM to the laptop",
+          "nudge": "The amount of RAM is fixed by the parts inside, so a restart can't add any. Think about what happens to what's already in it."
+        }
       ],
       "correctOptionId": "clears-ram",
-      "explanation": "Turning off clears **RAM**, including leftovers from apps that didn't tidy up after themselves. Your files in **storage** stay exactly where they were, and the amount of RAM never changes."
+      "explanation": "Turning off clears **RAM**, including leftovers from apps that didn't tidy up after themselves. Your files in **storage** stay exactly where they were, and the amount of RAM never changes.",
+      "hint": "Think of the desk and the cupboard. Which one is cleared when the power goes off?"
     },
     {
       "id": "choose-the-ram",
       "type": "simulator",
       "difficulty": "challenge",
-      "prompt": "You're choosing a new laptop for video editing. More RAM costs more money. Pick the **smallest** amount of RAM that runs everything **smoothly**.",
+      "prompt": "You're choosing a new laptop for video editing. More [[RAM]] costs more money. Pick the **smallest** amount of RAM that runs everything **smoothly**.",
       "model": "memory",
       "params": {
         "ramGb": 4,
@@ -185,13 +200,15 @@
           { "target": "control", "id": "ramGb", "op": "<=", "value": 8 }
         ]
       },
-      "explanation": "The system and the three apps need 2 + 3 + 1.5 + 0.5 = **7 GB**. The smallest choice that fits is **8 GB**. Anything more works too, but costs more than you need."
+      "explanation": "The system and the three apps need 2 + 3 + 1.5 + 0.5 = **7 [[GB|gigabyte]]**. The smallest choice that fits is **8 GB**. Anything more works too, but costs more than you need.",
+      "hint": "Keep all three apps open. Watch the RAM needed meter, then find the smallest amount of RAM that fits it.",
+      "nudge": "All three apps must stay open. Too little RAM and it lags; too much costs more than you need. Look for the smallest setting that runs smoothly."
     },
     {
       "id": "apps-keep-reloading",
       "type": "scenario",
       "difficulty": "challenge",
-      "prompt": "Your phone has **40 GB of free storage**, but something's wrong.",
+      "prompt": "Your phone has **40 [[GB|gigabyte]] of free storage**, but something's wrong.",
       "start": "symptom",
       "steps": [
         {
@@ -237,14 +254,15 @@
           ]
         }
       ],
-      "explanation": "Apps that keep **reloading** are a sign of full **RAM**, not full storage. Closing apps you aren't using gives the others room. Deleting files only frees storage."
+      "explanation": "Apps that keep **reloading** are a sign of full **RAM**, not full storage. Closing apps you aren't using gives the others room. Deleting files only frees storage.",
+      "hint": "Notice there's 40 GB of storage free. Think back to what a phone does when its desk gets full."
     },
     {
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- **RAM** is the fast desk for what's in use right now. It's small, and it's cleared when the power goes off.\n- **Storage** is the big cupboard that keeps apps and files until you delete them.\n- **Full RAM:** apps lag or reload. Close what you aren't using, or restart.\n- **Full storage:** you can't save or download. Delete files you don't need (after backing them up).\n\nNext: the CPU, the part that does the work."
+      "body": "- **RAM** is the fast desk for what's in use right now. It's small, and it's cleared when the power goes off.\n- **Storage** is the big cupboard that keeps apps and files until you delete them.\n- **Full RAM:** apps lag or reload. Close what you aren't using, or restart.\n- **Full storage:** you can't save or download. Delete files you don't need (after [[backing them up|backup]]).\n\nNext: the [[CPU]], the part that does the work."
     }
   ]
 }

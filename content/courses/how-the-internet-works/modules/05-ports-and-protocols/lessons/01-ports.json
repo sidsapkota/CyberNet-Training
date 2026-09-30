@@ -10,31 +10,32 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Which program gets the packet?",
-      "body": "The server at `198.51.100.10` runs a website, an email service and a remote login service, all at the same time, all on one IP address.\n\nA packet arrives, addressed to `198.51.100.10`. The address got it to the right computer, but which **program** on that computer should it go to?"
+      "body": "The [[server]] at `198.51.100.10` runs a website, an email service and a remote login service (for controlling the computer from far away), all at the same time, all on one [[IP address]].\n\nA [[packet]] arrives, addressed to `198.51.100.10`. The address got it to the right computer, but which **program** on that computer should it go to?"
     },
     {
       "id": "meet-ports",
       "type": "explainer",
       "difficulty": "core",
-      "title": "Ports are flat numbers",
-      "body": "Think of a block of flats. The street address gets a letter to the right **building**, and the flat number gets it to the right **door**.\n\nOn the internet, the IP address is the building, and a **port** number is the door. Each program listens on its own port, and every packet says which port it's for. You'll often see them written together with a colon: `198.51.100.10:443` means port 443 at that address.\n\nSome ports are standard, so everyone knows where to knock:\n\n- `80`: websites (HTTP)\n- `443`: secure websites (HTTPS)\n- `53`: DNS\n- `22`: remote login (SSH)\n- `25`: email between servers (SMTP)"
+      "title": "Ports are like apartment numbers",
+      "body": "Think of an apartment building. The street address gets a letter to the right **building**, and the apartment number gets it to the right **door**.\n\nOn the internet, the [[IP address]] is the building, and a **port** number is the door. Each program waits for [[packets|packet]] on its own port (it **listens on** that port), and every packet says which port it's for. You'll often see them written together with a colon: `198.51.100.10:443` means port 443 at that address.\n\nSome ports are standard, so everyone knows where to knock:\n\n- `80`: websites ([[HTTP]])\n- `443`: secure websites ([[HTTPS]])\n- `53`: [[DNS]]\n- `22`: remote login (SSH)\n- `25`: email between servers (SMTP)"
     },
     {
       "id": "how-many-ports",
       "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "A port number is stored in **16 bits**. How many different port numbers are possible?",
+      "prompt": "A [[port]] number is stored in **16 [[bits|bit]]**. How many different port numbers are possible?",
       "base": "decimal",
       "answer": 65536,
       "unit": "ports",
       "hint": "Each extra bit doubles the number of patterns. 8 bits give 256, so 16 bits give 256 × 256.",
-      "explanation": "16 bits give 2¹⁶ = 256 × 256 = **65,536** patterns, so ports run from 0 to 65,535. It's the same rule you learned with bytes in Module 1: 8 bits give 256 values, from 0 to 255."
+      "explanation": "16 bits give 2¹⁶ = 256 × 256 = **65,536** patterns, so ports run from 0 to 65,535. It's the same rule you learned with [[bytes|byte]] in Module 1: 8 bits give 256 values, from 0 to 255.",
+      "nudge": "Count patterns, not the biggest number. Don't forget that 0 counts as one of the patterns too."
     },
     {
       "id": "match-ports",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Match each service to its standard port.",
+      "prompt": "Match each service to its standard [[port]].",
       "pairs": [
         { "id": "http", "left": "Websites (HTTP)", "right": "`80`" },
         { "id": "https", "left": "Secure websites (HTTPS)", "right": "`443`" },
@@ -42,7 +43,9 @@
         { "id": "ssh", "left": "Remote login (SSH)", "right": "`22`" },
         { "id": "smtp", "left": "Email between servers (SMTP)", "right": "`25`" }
       ],
-      "explanation": "HTTP uses **80**, HTTPS **443**, DNS **53**, SSH **22** and SMTP **25**. Remember the `#53` in the nslookup output from Module 4? That was the DNS port."
+      "explanation": "HTTP uses **80**, HTTPS **443**, DNS **53**, SSH **22** and SMTP **25**. Remember the `#53` in the nslookup output from Module 4? That was the DNS port.",
+      "hint": "These are the five standard ports from the apartment-building card. The two website ones are HTTP and its secure version, HTTPS.",
+      "nudge": "Check the two website ports: the plain one and the secure one are easy to swap. Look back at the list of standard ports."
     },
     {
       "id": "colon-443",
@@ -51,26 +54,39 @@
       "prompt": "What does the `:443` mean in `198.51.100.10:443`?",
       "options": [
         { "id": "port", "text": "Port 443: the door for the HTTPS program on that server" },
-        { "id": "fifth-octet", "text": "A fifth octet of the IP address" },
-        { "id": "hops", "text": "The packet can travel up to 443 hops" },
-        { "id": "time", "text": "The server takes 443 milliseconds to answer" }
+        {
+          "id": "fifth-octet",
+          "text": "A fifth octet of the IP address",
+          "nudge": "An IPv4 address always has exactly four octets. The colon marks the start of something separate from the address."
+        },
+        {
+          "id": "hops",
+          "text": "The packet can travel up to 443 hops",
+          "nudge": "Hops are how many routers a packet passes through. The number after the colon is about what happens once it reaches the computer."
+        },
+        {
+          "id": "time",
+          "text": "The server takes 443 milliseconds to answer",
+          "nudge": "Nothing in an address measures time. Think about which program on the server the packet should reach."
+        }
       ],
       "correctOptionId": "port",
-      "explanation": "The part after the colon is the **port**. 443 is the standard port for HTTPS, so this means \"the secure website program at 198.51.100.10\". It isn't part of the IP address, which always has exactly four octets, and it has nothing to do with hops or timing."
+      "explanation": "The part after the colon is the **port**. 443 is the standard port for HTTPS, so this means \"the secure website program at 198.51.100.10\". It isn't part of the IP address, which always has exactly four octets, and it has nothing to do with hops or timing.",
+      "hint": "Think of the apartment building: the IP address is the building. What does the number after the colon pick out?"
     },
     {
       "id": "your-side",
       "type": "explainer",
       "difficulty": "core",
       "title": "Your side has a port too",
-      "body": "When your laptop connects to `198.51.100.10:443`, it also picks a port for **its own** end of the conversation: a temporary one, usually a high number like `51000`. Replies come back to that port, so they reach the right tab or app.\n\nSo a conversation is really identified by **four** numbers: your address and port, and the server's address and port. That's how you can have ten tabs open on the same website without the replies getting mixed up."
+      "body": "When your laptop connects to `198.51.100.10:443`, it also picks a [[port]] for **its own** end of the conversation: a temporary one, usually a high number like `51000`. Replies come back to that port, so they reach the right [[tab|browser-tab]] or app.\n\nSo a conversation is really identified by **four** numbers: your address and port, and the [[server]]'s address and port. That's how you can have ten tabs open on the same website without the replies getting mixed up."
     },
     {
       "id": "nat-with-ports",
       "type": "explainer",
       "difficulty": "core",
       "title": "NAT, the full story",
-      "body": "In Module 2 you learned that your home router uses **NAT** to swap private addresses for its public one, and \"notes down who asked\". Now you can see how it really does that: with **ports**.\n\nWhen your laptop sends from `192.168.1.20:51000`, the router rewrites the sender as `203.0.113.7:40001`, using its public address and a port it picks. It writes both in its **NAT table**:\n\n- `203.0.113.7:40001` → `192.168.1.20:51000`\n\nThe reply comes back to port 40001. The router looks that port up in its table and knows exactly which device, and which port, to pass it to."
+      "body": "In Module 2 you learned that your home [[router]] uses **NAT** to swap [[private addresses|private-address]] for its public one, and \"notes down who asked\". Now you can see how it really does that: with **ports**.\n\nWhen your laptop sends from `192.168.1.20:51000`, the router rewrites the sender as `203.0.113.7:40001`, using its [[public address]] and a port it picks. It writes both in its **NAT table**:\n\n- `203.0.113.7:40001` → `192.168.1.20:51000`\n\nThe reply comes back to port 40001. The router looks that port up in its table and knows exactly which device, and which port, to pass it to."
     },
     {
       "id": "nat-port-steps",
@@ -83,13 +99,15 @@
         { "id": "reply", "label": "The server replies to 203.0.113.7:40001" },
         { "id": "lookup", "label": "The router finds port 40001 in its table and passes the reply to 192.168.1.20:51000" }
       ],
-      "explanation": "The router rewrites the sender on the way **out** and records it. The server only ever sees `203.0.113.7:40001`, so it replies there. The router then uses the port number to look up which device the reply belongs to."
+      "explanation": "The router rewrites the sender on the way **out** and records it. The server only ever sees `203.0.113.7:40001`, so it replies there. The router then uses the port number to look up which device the reply belongs to.",
+      "hint": "Follow one [[packet]] out and its reply back in. The router has to write something in its table before it can look it up.",
+      "nudge": "The server only ever sees the router's [[public address]] and port. So what must happen before the server can reply there?"
     },
     {
       "id": "netstat",
       "type": "terminal",
       "difficulty": "core",
-      "prompt": "On Windows, `netstat -n` lists this computer's connections. Run it and find which **port on the server** `198.51.100.10` this laptop is connected to.",
+      "prompt": "On Windows, `netstat -n` lists this computer's connections. Run it and find which **port on the [[server]]** `198.51.100.10` this laptop is connected to.",
       "promptLabel": "C:\\Users\\learner>",
       "intro": "Microsoft Windows [simulated Command Prompt]\nType help to see the commands you can use here.",
       "commands": [
@@ -105,37 +123,54 @@
         "question": "Which port on 198.51.100.10 is the laptop connected to?",
         "accepted": ["443", "port 443"]
       },
-      "explanation": "The first connection's **Foreign Address** (the other end) is `198.51.100.10:443`, so it's port **443**: a secure website. `51544` is the laptop's own temporary port, under **Local Address**. The last line is a connection to port 22, so this laptop also has a remote login (SSH) open to a different server."
+      "explanation": "The first connection's **Foreign Address** (the other end) is `198.51.100.10:443`, so it's port **443**: a secure website. `51544` is the laptop's own temporary port, under **Local Address**. The last line is a connection to port 22, so this laptop also has a remote login ([[SSH]]) open to a different server.",
+      "hint": "Run `netstat -n`, find the line with `198.51.100.10`, and look at the number after its colon under **Foreign Address**.",
+      "nudge": "**Local Address** is your laptop's own end. The server's [[port]] is in the **Foreign Address** column, after the colon."
     },
     {
       "id": "same-port-twice",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "Two laptops at home both happen to use port **51000** to reach the same website. How does the router keep their replies apart?",
+      "prompt": "Two laptops at home both happen to use port **51000** to reach the same website. How does the [[router]] keep their replies apart?",
       "options": [
         { "id": "different-public-ports", "text": "It gives each one a different public port, like 40001 and 40002" },
-        { "id": "one-fails", "text": "It can't, so one laptop's connection fails" },
-        { "id": "send-both", "text": "It sends every reply to both laptops" },
-        { "id": "private-in-reply", "text": "The server puts each laptop's private address in its reply" }
+        {
+          "id": "one-fails",
+          "text": "It can't, so one laptop's connection fails",
+          "nudge": "Lots of devices share one home router without problems. Think about what the router gets to choose when it rewrites the sender."
+        },
+        {
+          "id": "send-both",
+          "text": "It sends every reply to both laptops",
+          "nudge": "The NAT table exists so each reply goes to exactly one device. What could make the two replies look different when they arrive?"
+        },
+        {
+          "id": "private-in-reply",
+          "text": "The server puts each laptop's private address in its reply",
+          "nudge": "The server never sees the private addresses: the router swaps them out on the way. The answer lies in the router's own table."
+        }
       ],
       "correctOptionId": "different-public-ports",
-      "explanation": "The router picks a **different public port** for each conversation, so the replies arrive on different ports and its NAT table says which laptop each one belongs to. Nothing fails, nothing is sent to both, and the server never even learns the private addresses."
+      "explanation": "The router picks a **different public port** for each conversation, so the replies arrive on different ports and its NAT table says which laptop each one belongs to. Nothing fails, nothing is sent to both, and the server never even learns the private addresses.",
+      "hint": "Think about the [[NAT]] table. The router picks the public port for each conversation, so what could it do differently for each laptop?"
     },
     {
       "id": "nat-table-lookup",
       "type": "numeric_input",
       "difficulty": "challenge",
-      "prompt": "The router's NAT table says:\n\n- `203.0.113.7:40001` → `192.168.1.20:51000`\n- `203.0.113.7:40002` → `192.168.1.21:51000`\n\nA reply arrives for `203.0.113.7:40002`. Which device gets it? Type the **last number** of its private address.",
+      "prompt": "The [[router]]'s [[NAT]] table says:\n\n- `203.0.113.7:40001` → `192.168.1.20:51000`\n- `203.0.113.7:40002` → `192.168.1.21:51000`\n\nA reply arrives for `203.0.113.7:40002`. Which device gets it? Type the **last number** of its [[private address]].",
       "base": "decimal",
       "answer": 21,
-      "explanation": "Port **40002** maps to `192.168.1.21:51000`, so the device ending in **21** gets it. Both laptops used port 51000, but the router's different public ports keep them apart."
+      "explanation": "Port **40002** maps to `192.168.1.21:51000`, so the device ending in **21** gets it. Both laptops used port 51000, but the router's different public ports keep them apart.",
+      "hint": "Match the full [[public address]] and [[port]] of the reply to a line in the table, then read the private address on the right.",
+      "nudge": "Both laptops use port 51000, so that won't tell them apart. Look at the router's public port in the reply to pick the right line."
     },
     {
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- A **port** picks which program on a computer gets the data. The IP address is the building, and the port is the door.\n- Ports are 16-bit numbers, from **0 to 65,535**. Standard ones: 80 (HTTP), 443 (HTTPS), 53 (DNS), 22 (SSH), 25 (SMTP).\n- Your device uses a temporary port for its end of each conversation.\n- **NAT** really works with ports: the router gives each conversation its own public port and records it in its **NAT table**.\n\nNext: the two main ways data gets delivered, TCP and UDP."
+      "body": "- A **port** picks which program on a computer gets the data. The [[IP address]] is the building, and the port is the door.\n- Ports are 16-bit numbers, from **0 to 65,535**. Standard ones: 80 ([[HTTP]]), 443 ([[HTTPS]]), 53 ([[DNS]]), 22 (SSH), 25 (SMTP).\n- Your device uses a temporary port for its end of each conversation.\n- **NAT** really works with ports: the [[router]] gives each conversation its own public port and records it in its **NAT table**.\n\nNext: the two main ways data gets delivered, TCP and UDP."
     }
   ]
 }

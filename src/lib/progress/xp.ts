@@ -16,10 +16,11 @@ export const XP = {
 /**
  * XP for answering an interactive card correctly.
  * @param attempts number of checks including the correct one (1 = first try).
+ * @param usedHint the learner opened the hint: pays the retry amount, even on the first try.
  */
-export function cardXp(difficulty: Difficulty, attempts: number): number {
+export function cardXp(difficulty: Difficulty, attempts: number, usedHint = false): number {
   const table = XP.card[difficulty];
-  return attempts <= 1 ? table.firstTry : table.retry;
+  return attempts <= 1 && !usedHint ? table.firstTry : table.retry;
 }
 
 /** XP for a card, or 0 if the learner already earned XP for it before. */
@@ -27,8 +28,9 @@ export function cardXpToAward(
   alreadyCompleted: boolean,
   difficulty: Difficulty,
   attempts: number,
+  usedHint = false,
 ): number {
-  return alreadyCompleted ? 0 : cardXp(difficulty, attempts);
+  return alreadyCompleted ? 0 : cardXp(difficulty, attempts, usedHint);
 }
 
 /** XP for finishing an explore card, or 0 if it was already done. */

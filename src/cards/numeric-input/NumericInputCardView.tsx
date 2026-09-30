@@ -1,15 +1,15 @@
 "use client";
 
-import { useId, useState } from "react";
-import { ChevronDownIcon, HintIcon, WarningIcon } from "@/components/ui/icons";
-import { Markdown } from "@/components/ui/Markdown";
+import { useId } from "react";
+import { WarningIcon } from "@/components/ui/icons";
 import { CardPrompt } from "../CardPrompt";
 import { CardStatusNote } from "../CardStatusNote";
 import type { CardComponentProps } from "../types";
 import { parseNumericInput } from "./grade";
 import type { NumericInputAnswer, NumericInputCard } from "./schema";
 
-const BADGE = { decimal: "DEC", binary: "BIN", hex: "HEX" } as const;
+// Only non-decimal bases get a badge: "DEC" made beginners think they had to type a decimal point.
+const BADGE = { decimal: null, binary: "BIN", hex: "HEX" } as const;
 const INPUT_MODE = { decimal: "decimal", binary: "numeric", hex: "text" } as const;
 
 export function NumericInputCardView({
@@ -20,8 +20,6 @@ export function NumericInputCardView({
 }: CardComponentProps<NumericInputCard, NumericInputAnswer>) {
   const promptId = useId();
   const messageId = useId();
-  const hintId = useId();
-  const [showHint, setShowHint] = useState(false);
   const locked = status !== "answering";
   const parsed = parseNumericInput(answer, card.base);
   const invalid = parsed.status === "invalid";
@@ -43,12 +41,14 @@ export function NumericInputCardView({
         <div
           className={`flex min-h-14 w-full max-w-sm items-center gap-3 rounded-control border-2 px-3 transition-colors ${border}`}
         >
-          <span
-            className="shrink-0 rounded-sm border border-line px-1.5 py-0.5 font-mono text-caption font-semibold text-ink-muted"
-            title={`${card.base} number`}
-          >
-            {BADGE[card.base]}
-          </span>
+          {BADGE[card.base] && (
+            <span
+              className="shrink-0 rounded-sm border border-line px-1.5 py-0.5 font-mono text-caption font-semibold text-ink-muted"
+              title={`${card.base} number`}
+            >
+              {BADGE[card.base]}
+            </span>
+          )}
           <input
             type="text"
             value={answer}
@@ -81,28 +81,6 @@ export function NumericInputCardView({
       </p>
 
       <CardStatusNote status={status} correctText="That's the right number" incorrectText="Not the right number" />
-
-      {card.hint && (
-        <div className="mt-4">
-          <button
-            type="button"
-            data-keyboard-passthrough
-            aria-expanded={showHint}
-            aria-controls={hintId}
-            onClick={() => setShowHint((v) => !v)}
-            className="inline-flex items-center gap-1.5 text-small font-semibold text-ink-muted hover:text-ink"
-          >
-            <HintIcon className="size-4" />
-            {showHint ? "Hide hint" : "Show hint"}
-            <ChevronDownIcon className={`size-4 transition-transform ${showHint ? "rotate-180" : ""}`} />
-          </button>
-          {showHint && (
-            <div id={hintId} className="mt-2 rounded-control border border-line bg-surface-raised px-3 py-2">
-              <Markdown className="text-small text-ink-muted">{card.hint}</Markdown>
-            </div>
-          )}
-        </div>
-      )}
     </div>
   );
 }

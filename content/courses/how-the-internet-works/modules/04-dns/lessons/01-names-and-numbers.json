@@ -10,7 +10,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Who translates?",
-      "body": "You type **example.com** into your browser. But you learned in Module 2 that routers deliver packets using IP addresses, like `198.51.100.10`. They have no idea what \"example.com\" means.\n\nPeople are good at remembering names and bad at remembering long numbers. Computers are the opposite. So before your browser can connect to example.com, something has to translate the name into an address. What does that?"
+      "body": "You type **example.com** into your [[browser]]. But you learned earlier that [[routers|router]] deliver [[packets|packet]] using [[IP addresses|ip-address]], like `198.51.100.10`. They have no idea what \"example.com\" means.\n\nPeople are good at remembering names and bad at remembering long numbers. Computers are the opposite. So before your browser can connect to example.com, something has to translate the name into an address. What does that?"
     },
     {
       "id": "why-dns",
@@ -19,19 +19,32 @@
       "prompt": "Why does the internet need a way to turn names into IP addresses?",
       "options": [
         { "id": "routers-need-numbers", "text": "Packets are delivered using IP addresses, but people find names easier to remember" },
-        { "id": "names-faster", "text": "Names make packets travel faster than numbers do" },
-        { "id": "secret", "text": "Names keep IP addresses secret from hackers" },
-        { "id": "no-addresses", "text": "Websites don't have IP addresses, only names" }
+        {
+          "id": "names-faster",
+          "text": "Names make packets travel faster than numbers do",
+          "nudge": "A name doesn't change how fast a packet moves. Think about what routers actually read to deliver it."
+        },
+        {
+          "id": "secret",
+          "text": "Names keep IP addresses secret from hackers",
+          "nudge": "Names don't hide anything: anyone can look up a website's address. Think about who finds names easier."
+        },
+        {
+          "id": "no-addresses",
+          "text": "Websites don't have IP addresses, only names",
+          "nudge": "Every website runs on a server, and every server on the internet has an IP address. The name just points to it."
+        }
       ],
       "correctOptionId": "routers-need-numbers",
-      "explanation": "Every packet needs a destination **IP address**, because that's what routers use to deliver it. Names exist for people. Names don't change a packet's speed, and they don't hide anything: anyone can look up a website's address. Every website's server does have an IP address, and the name just points to it."
+      "explanation": "Every packet needs a destination **IP address**, because that's what routers use to deliver it. Names exist for people. Names don't change a packet's speed, and they don't hide anything: anyone can look up a website's address. Every website's [[server]] does have an IP address, and the name just points to it.",
+      "hint": "Think about who uses names and what [[routers|router]] need to deliver a packet."
     },
     {
       "id": "phone-book",
       "type": "explainer",
       "difficulty": "core",
       "title": "The internet's phone book",
-      "body": "Think of the contacts app on a phone. You tap a friend's **name**, and the phone looks up their **number** to make the call.\n\nThe internet has the same thing, called the **Domain Name System**, or **DNS**. You give it a name like `example.com`, and it gives back an IP address like `198.51.100.10`. That's called a **DNS lookup**.\n\nA lookup happens before almost every connection you make: loading a website, sending a message, or starting a game."
+      "body": "Think of the contacts app on a phone. You tap a friend's **name**, and the phone looks up their **number** to make the call.\n\nThe internet has the same thing, called the **Domain Name System**, or **DNS**. You give it a name like `example.com`, and it gives back an [[IP address]] like `198.51.100.10`. That's called a **DNS lookup**.\n\nA lookup happens before almost every connection you make: loading a website, sending a message, or starting a game."
     },
     {
       "id": "contacts-analogy",
@@ -44,14 +57,16 @@
         { "id": "app", "left": "The contacts app", "right": "DNS" },
         { "id": "call", "left": "Making the call", "right": "Connecting to the server" }
       ],
-      "explanation": "The **name** is what people use, the **number** (IP address) is what the network uses, and **DNS** is the look-up service that connects the two. Once your device has the address, it can connect, just like a phone dials once it has the number."
+      "explanation": "The **name** is what people use, the **number** (IP address) is what the network uses, and **DNS** is the look-up service that connects the two. Once your device has the address, it can connect, just like a phone dials once it has the number.",
+      "hint": "Ask what each thing is used for: people remember the name, the [[network]] uses the number, and something looks one up from the other.",
+      "nudge": "Keep the two sides lined up by job: what you remember, what the network uses, the look-up service, and the step that happens once you have the number."
     },
     {
       "id": "parts-of-a-name",
       "type": "explainer",
       "difficulty": "core",
       "title": "Reading a name from right to left",
-      "body": "Domain names are read from **right to left**, from the most general part to the most specific. Take `www.example.com`:\n\n- `com` is the **top-level domain**, or **TLD**: the last part of the name.\n- `example` is the **domain** someone registered, so together it's `example.com`.\n- `www` is a **subdomain**: a name the owner of example.com chose to add on the left.\n\nThere's even a hidden part: the **root**, written as a dot at the very end, `www.example.com.`. Browsers let you leave it off."
+      "body": "[[Domain names|domain-name]] are read from **right to left**, from the most general part to the most specific. Take `www.example.com`:\n\n- `com` is the **top-level domain**, or **TLD**: the last part of the name.\n- `example` is the **domain** someone registered, so together it's `example.com`.\n- `www` is a **subdomain**: a name the owner of example.com chose to add on the left.\n\nThere's even a hidden part, the most general of all: the **root**, written as a dot at the very end, `www.example.com.`. [[Browsers|browser]] let you leave it off."
     },
     {
       "id": "order-name-parts",
@@ -64,7 +79,9 @@
         { "id": "domain", "label": "example" },
         { "id": "subdomain", "label": "mail" }
       ],
-      "explanation": "Read right to left: the **root** comes first, then the TLD `org`, then the domain `example` (making `example.org`), and finally the subdomain `mail`."
+      "explanation": "Read right to left: the **root** comes first, then the [[TLD]] `org`, then the domain `example` (making `example.org`), and finally the [[subdomain]] `mail`.",
+      "hint": "Read the name from right to left. Don't forget the hidden part that sits after the very last letter.",
+      "nudge": "Names go from general on the right to specific on the left. The invisible dot at the far right is the most general of all."
     },
     {
       "id": "spot-the-tld",
@@ -73,18 +90,23 @@
       "prompt": "In `shop.example.com`, which part is the **top-level domain**?",
       "options": [
         { "id": "com", "text": "com" },
-        { "id": "shop", "text": "shop" },
-        { "id": "example", "text": "example" },
-        { "id": "whole", "text": "shop.example.com" }
+        {
+          "id": "shop",
+          "text": "shop",
+          "nudge": "It comes first when you read left to right, but domain names are read from right to left. This part is the most specific."
+        },
+        { "id": "example", "text": "example", "nudge": "This is the part someone registered. The top-level domain sits further to the right." },
+        { "id": "whole", "text": "shop.example.com", "nudge": "That's the full name. The top-level domain is just one part of it." }
       ],
       "correctOptionId": "com",
-      "explanation": "The top-level domain is the **last** part: `com`. It's easy to pick `shop` because it comes first, but names are read from right to left. `shop` is a subdomain, and `example` is the registered domain."
+      "explanation": "The top-level domain is the **last** part: `com`. It's easy to pick `shop` because it comes first, but names are read from right to left. `shop` is a [[subdomain]], and `example` is the registered domain.",
+      "hint": "The top-level domain is the most general part of the name. Which end of the name is that?"
     },
     {
       "id": "first-lookup",
       "type": "terminal",
       "difficulty": "core",
-      "prompt": "Time for a real lookup. Run `nslookup example.com` to ask DNS for example.com's address.",
+      "prompt": "Time for a real lookup. Run `nslookup example.com` to ask [[DNS]] for example.com's address.",
       "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
       "commands": [
         {
@@ -95,7 +117,9 @@
         }
       ],
       "success": { "type": "ran_command", "command": "nslookup example.com" },
-      "explanation": "DNS answered with **two** addresses for example.com: an IPv4 address, `198.51.100.10`, and an IPv6 address, `2001:db8::10`. Your device can use either one.\n\nThe `Server` lines at the top show who answered the question, and `#53` is a hint for Module 5. \"Non-authoritative\" means a helper server passed the answer on, rather than it coming straight from the server in charge of example.com's records. You'll meet both kinds of server in the next lesson."
+      "explanation": "DNS answered with **two** addresses for example.com: an [[IPv4]] address, `198.51.100.10`, and an [[IPv6]] address, `2001:db8::10`. Your device can use either one.\n\nThe `Server` lines at the top show who answered the question, and `#53` is a hint for Module 5. \"Non-authoritative\" means a helper [[server]] passed the answer on, rather than it coming straight from the server in charge of example.com's records. You'll meet both kinds of server in the next lesson.",
+      "hint": "Type the [[command]] exactly as it's shown in the prompt, then press Enter.",
+      "nudge": "Check the spelling and the space: the tool name comes first, then the website name."
     },
     {
       "id": "who-controls",
@@ -104,12 +128,25 @@
       "prompt": "Who controls the name `login.example.com.example.org`?",
       "options": [
         { "id": "org-owner", "text": "Whoever owns example.org" },
-        { "id": "com-owner", "text": "Whoever owns example.com" },
-        { "id": "both", "text": "Both owners share it" },
-        { "id": "login", "text": "Whoever owns login" }
+        {
+          "id": "com-owner",
+          "text": "Whoever owns example.com",
+          "nudge": "That name appears in the middle, not at the end. What matters is the registered domain on the right-hand side."
+        },
+        {
+          "id": "both",
+          "text": "Both owners share it",
+          "nudge": "Only one domain is actually registered here. Read from the right to find it; the rest is just a subdomain."
+        },
+        {
+          "id": "login",
+          "text": "Whoever owns login",
+          "nudge": "The leftmost part is the most specific, a subdomain chosen by the owner. Look at the right-hand end instead."
+        }
       ],
       "correctOptionId": "org-owner",
-      "explanation": "Read from the right: the TLD is `org` and the registered domain is `example.org`. Everything to the left, including `login.example.com`, is just a subdomain that **example.org's owner** chose to add. It says \"example.com\" in the middle, but the owner of example.com has nothing to do with it. Tricksters use this to make links *look* like they belong to a site they don't."
+      "explanation": "Read from the right: the TLD is `org` and the registered domain is `example.org`. Everything to the left, including `login.example.com`, is just a subdomain that **example.org's owner** chose to add. It says \"example.com\" in the middle, but the owner of example.com has nothing to do with it. Tricksters use this to make links *look* like they belong to a site they don't.",
+      "hint": "Read from the right. Find the [[TLD]], then the registered domain next to it. Everything to its left is a [[subdomain]]."
     },
     {
       "id": "country-tlds",
@@ -122,14 +159,16 @@
         { "id": "de", "left": "`.de`", "right": "Germany" },
         { "id": "com", "left": "`.com`", "right": "A general TLD anyone can register in" }
       ],
-      "explanation": "Two-letter TLDs are **country codes**: `.uk` is the United Kingdom, `.jp` is Japan, and `.de` is Germany (*Deutschland* in German). Longer ones like `.com`, `.org` and `.net` are **generic** TLDs that aren't tied to one country."
+      "explanation": "Two-letter TLDs are **country codes**: `.uk` is the United Kingdom, `.jp` is Japan, and `.de` is Germany (*Deutschland* in German). Longer ones like `.com`, `.org` and `.net` are **generic** TLDs that aren't tied to one country.",
+      "hint": "Two-letter TLDs are country codes, sometimes from the country's own-language name. One of these isn't two letters.",
+      "nudge": "A country code can come from what the country calls itself, not its English name. And longer TLDs aren't tied to one country."
     },
     {
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- Packets are delivered using **IP addresses**, but people prefer **names**.\n- **DNS** (the Domain Name System) turns names into addresses, like a contacts app for the internet.\n- Names are read **right to left**: the root, then the **TLD** (`com`), then the **domain** (`example`), then any **subdomain** (`www`).\n- The owner of a domain controls every subdomain to its left.\n\nNext: the journey a DNS question takes to find its answer."
+      "body": "- [[Packets|packet]] are delivered using **IP addresses**, but people prefer **names**.\n- **DNS** (the [[Domain Name]] System) turns names into addresses, like a contacts app for the internet.\n- Names are read **right to left**: the root, then the **TLD** (`com`), then the **domain** (`example`), then any **subdomain** (`www`).\n- The owner of a domain controls every subdomain to its left.\n\nNext: the journey a DNS question takes to find its answer."
     }
   ]
 }

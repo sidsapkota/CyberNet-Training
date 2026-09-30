@@ -10,14 +10,14 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Probably not broken",
-      "body": "When a device crawls or says it's full, it can feel broken. Usually it isn't.\n\nMost slow or full devices need a **few minutes of tidying**, not a repair shop. And now that you know what RAM, storage and the CPU do, you can work out which one is struggling."
+      "body": "When a device crawls or says it's full, it can feel broken. Usually it isn't.\n\nMost slow or full devices need a **few minutes of tidying**, not a repair shop. And now that you know what [[RAM]], [[storage]] and the [[CPU]] do, you can work out which one is struggling."
     },
     {
       "id": "fix-it-loop",
       "type": "explainer",
       "difficulty": "core",
       "title": "The fix-it loop",
-      "body": "Technicians fix problems with a simple loop:\n\n1. **Describe** exactly what's wrong. \"Slow\" is vague. \"Slow when 30 tabs are open\" is a clue.\n2. **Guess** the most likely cause.\n3. **Try** the simplest, safest fix first.\n4. **Check** whether it worked. If not, go back to step 2.\n\nCommon causes of a slow device: too many apps or tabs open (full RAM), too many **startup apps** (apps that open by themselves when it switches on), and heat.\n\nOne rule before any fix: **never delete something unless you're sure it's backed up or not needed.**"
+      "body": "Technicians fix problems with a simple loop:\n\n1. **Describe** exactly what's wrong. \"Slow\" is vague. \"Slow when 30 [[tabs|browser-tab]] are open\" is a clue.\n2. **Guess** the most likely cause.\n3. **Try** the simplest, safest fix first.\n4. **Check** whether it worked. If not, go back to step 2.\n\nCommon causes of a slow device: too many apps or tabs open (full [[RAM]]), too many **startup apps** (apps that open by themselves when it switches on), and heat.\n\nOne rule before any fix: **never delete something unless you're sure it's [[backed up|backup]] or not needed.**"
     },
     {
       "id": "slow-afternoon",
@@ -42,32 +42,33 @@
         },
         {
           "id": "clue",
-          "text": "The task manager shows **RAM 97% full**. You have **30 browser tabs** open. What's the simplest fix?",
+          "text": "The task manager shows **RAM 97% full**. You have **30 [[browser]] tabs** open. What's the simplest fix?",
           "choices": [
             {
               "id": "close-tabs",
               "text": "Close the tabs you don't need",
-              "consequence": "Each tab uses RAM. With fewer open, the laptop speeds up. Check: it's working!",
+              "consequence": "Each tab uses [[RAM]]. With fewer open, the laptop speeds up. Check: it's working!",
               "outcome": "success"
             },
             { "id": "delete-photos", "text": "Delete some photos", "consequence": "Photos are in storage. The problem was RAM, so nothing changes.", "outcome": "fail" }
           ]
         }
       ],
-      "explanation": "Describe, guess, try, check. The task manager showed **full RAM**, so the fix was closing tabs. Deleting files only frees **storage**."
+      "explanation": "Describe, guess, try, check. The task manager showed **full RAM**, so the fix was closing tabs. Deleting files only frees **storage**.",
+      "hint": "Think of the fix-it loop: before you fix anything, find out what's actually busy. Then match the fix to the part that's full."
     },
     {
       "id": "safe-to-delete",
       "type": "explainer",
       "difficulty": "core",
       "title": "What's safe to delete",
-      "body": "When storage is full, go for big things you don't need:\n\n- files that are **backed up** somewhere else (like the cloud)\n- **duplicates**, like five blurry copies of one photo\n- apps you **never use** (you can reinstall them later)\n- **setup files** for apps you've already installed\n\nKeep anything that's your **only copy**, anything you still need, and any **system file** you don't recognise: deleting those can stop the device working."
+      "body": "When [[storage]] is full, go for big things you don't need:\n\n- files that are **backed up** somewhere else (like [[the cloud|cloud]])\n- **duplicates**, like five blurry copies of one photo\n- apps you **never use** (you can reinstall them later)\n- **setup files** (the files you downloaded to install an app) for apps you've already installed\n\nKeep anything that's your **only copy**, anything you still need, and any **system file** you don't recognise: deleting those can stop the device working."
     },
     {
       "id": "free-up-space",
       "type": "simulator",
       "difficulty": "core",
-      "prompt": "This phone is completely full. Free up at least **15 GB**, but **keep your photos and your homework**.",
+      "prompt": "This phone is completely full. Free up at least **15 [[GB|gigabyte]]**, but **keep your photos and your homework**.",
       "model": "storage",
       "params": {
         "capacityGb": 64,
@@ -75,7 +76,7 @@
         "files": [
           { "id": "photos", "label": "Photos", "gb": 14 },
           { "id": "homework", "label": "Homework", "gb": 0.5 },
-          { "id": "old-downloads", "label": "Old downloads", "gb": 6 },
+          { "id": "old-downloads", "label": "Old setup files", "gb": 6 },
           { "id": "unused-game", "label": "Game you never play", "gb": 9 },
           { "id": "videos", "label": "Videos (backed up)", "gb": 20 }
         ]
@@ -83,7 +84,7 @@
       "controls": [
         { "id": "delete-photos", "kind": "toggle", "label": "Delete Photos" },
         { "id": "delete-homework", "kind": "toggle", "label": "Delete Homework" },
-        { "id": "delete-old-downloads", "kind": "toggle", "label": "Delete Old downloads" },
+        { "id": "delete-old-downloads", "kind": "toggle", "label": "Delete Old setup files" },
         { "id": "delete-unused-game", "kind": "toggle", "label": "Delete Game you never play" },
         { "id": "delete-videos", "kind": "toggle", "label": "Delete Videos (backed up)" }
       ],
@@ -99,13 +100,15 @@
           { "target": "control", "id": "delete-homework", "op": "==", "value": false }
         ]
       },
-      "explanation": "Big things you don't need are the quickest wins. The game plus the old downloads free 15 GB, and so do the backed-up videos on their own. Photos and homework were never in danger."
+      "explanation": "Big things you don't need are the quickest wins. The game plus the old downloads free 15 GB, and so do the backed-up videos on their own. Photos and homework were never in danger.",
+      "hint": "Look for big things you don't need: files that are [[backed up|backup]], or things you never use. Watch the free space meter as you go.",
+      "nudge": "Photos and homework must stay. Pick big items that are backed up or unused, and keep going until the free space meter reaches the goal."
     },
     {
       "id": "delete-or-keep",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Tidying up storage. Is each one **safe to delete** or one to **keep**?",
+      "prompt": "Tidying up [[storage]]. Is each one **safe to delete** or one to **keep**?",
       "bins": [
         { "id": "delete", "label": "Safe to delete" },
         { "id": "keep", "label": "Keep" }
@@ -119,7 +122,9 @@
         { "id": "homework", "label": "Homework due next week", "bin": "keep" },
         { "id": "system-files", "label": "System files you don't recognise", "bin": "keep" }
       ],
-      "explanation": "Delete things that are **backed up, duplicated or unused**. Keep anything that's your **only copy**, anything you still need, and any **system file** you don't recognise: deleting those can stop the device working."
+      "explanation": "Delete things that are **backed up, duplicated or unused**. Keep anything that's your **only copy**, anything you still need, and any **system file** you don't recognise: deleting those can stop the device working.",
+      "hint": "Ask of each one: is it backed up, a duplicate or unused? Or is it your only copy, still needed, or a system file you don't know?",
+      "nudge": "Only copies, things you still need and unknown system files are risky to delete. Backed-up, duplicated or unused things are the safe ones."
     },
     {
       "id": "order-the-loop",
@@ -132,7 +137,9 @@
         { "id": "try", "label": "Try the simplest, safest fix" },
         { "id": "check", "label": "Check whether it worked" }
       ],
-      "explanation": "**Describe, guess, try, check.** If the check fails, you loop back and try the next most likely cause."
+      "explanation": "**Describe, guess, try, check.** If the check fails, you loop back and try the next most likely cause.",
+      "hint": "Think like a technician: you can't guess a cause until you know the problem, and you can't check a fix you haven't tried yet.",
+      "nudge": "Each step needs the one before it. Start with what you'd do before you know anything, and end with seeing if it worked."
     },
     {
       "id": "slow-start",
@@ -143,12 +150,12 @@
       "steps": [
         {
           "id": "cause",
-          "text": "The task manager has a **Startup** list with **15 apps** that open by themselves when the laptop switches on. What's the likely cause?",
+          "text": "The [[task manager]] has a **Startup** list with **15 apps** that open by themselves when the laptop switches on. What's the likely cause?",
           "choices": [
             {
               "id": "startup-apps",
               "text": "Too many apps starting at once",
-              "consequence": "Yes. They all fight for the CPU and RAM just as you're trying to start.",
+              "consequence": "Yes. They all fight for the [[CPU]] and [[RAM]] just as you're trying to start.",
               "next": "fix"
             },
             {
@@ -171,7 +178,7 @@
             },
             {
               "id": "disable-antivirus",
-              "text": "Stop the antivirus from starting",
+              "text": "Stop the antivirus (the security app) from starting",
               "consequence": "That's the one to keep. It protects you from the moment you log in.",
               "outcome": "fail"
             },
@@ -179,13 +186,14 @@
           ]
         }
       ],
-      "explanation": "**Startup apps** open by themselves when the device switches on. Turning off the ones you don't need makes starting up faster. Keep security software running, and never delete system files."
+      "explanation": "**Startup apps** open by themselves when the device switches on. Turning off the ones you don't need makes starting up faster. Keep security software running, and never delete system files.",
+      "hint": "The clue is the **Startup** list. What happens when lots of apps all try to open at the same moment? And which app protects you?"
     },
     {
       "id": "room-for-update",
       "type": "simulator",
       "difficulty": "challenge",
-      "prompt": "An update needs **12 GB free**. Make room without losing anything that **isn't saved somewhere else**.",
+      "prompt": "An [[update]] needs **12 [[GB|gigabyte]] free**. Make room without losing anything that **isn't saved somewhere else**.",
       "model": "storage",
       "params": {
         "capacityGb": 34,
@@ -196,7 +204,7 @@
           { "id": "music", "label": "Music (also in cloud)", "gb": 5 },
           { "id": "old-videos", "label": "Old videos (backed up)", "gb": 4 },
           { "id": "maps", "label": "Maps (can re-download)", "gb": 2 },
-          { "id": "downloads", "label": "Downloads", "gb": 1.5 }
+          { "id": "downloads", "label": "Old setup files", "gb": 1.5 }
         ]
       },
       "controls": [
@@ -205,7 +213,7 @@
         { "id": "delete-music", "kind": "toggle", "label": "Delete Music" },
         { "id": "delete-old-videos", "kind": "toggle", "label": "Delete Old videos" },
         { "id": "delete-maps", "kind": "toggle", "label": "Delete Maps" },
-        { "id": "delete-downloads", "kind": "toggle", "label": "Delete Downloads" }
+        { "id": "delete-downloads", "kind": "toggle", "label": "Delete Old setup files" }
       ],
       "outputs": [
         { "id": "freeGb", "kind": "meter", "label": "Free space", "unit": "GB" },
@@ -219,14 +227,16 @@
           { "target": "control", "id": "delete-notes", "op": "==", "value": false }
         ]
       },
-      "explanation": "Music is in the cloud, the videos are backed up, and maps can be downloaded again, so deleting those three frees enough. The photos and notes are your **only copies**, so they stay."
+      "explanation": "Music is in the cloud, the videos are backed up, and maps can be downloaded again, so deleting those three frees enough. The photos and notes are your **only copies**, so they stay.",
+      "hint": "Read each label closely. Anything saved somewhere else, or that you can download again, can go. An **only copy** can't.",
+      "nudge": "Files marked **only copy** have to stay. Look for the ones that say they're also in [[the cloud|cloud]], [[backed up|backup]], or can be downloaded again."
     },
     {
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- Use the loop: **describe, guess, try, check**.\n- **Slow?** Check the task manager. Full RAM means closing apps or tabs; too many **startup apps** means a slow start.\n- **Full?** Delete big things that are backed up, duplicated or unused. Keep your only copies and system files.\n\nNext: batteries, chargers and heat."
+      "body": "- Use the loop: **describe, guess, try, check**.\n- **Slow?** Check the [[task manager]]. Full [[RAM]] means closing apps or [[tabs|browser-tab]]; too many **startup apps** means a slow start.\n- **Full?** Delete big things that are [[backed up|backup]], duplicated or unused. Keep your only copies and system files.\n\nNext: batteries, chargers and heat."
     }
   ]
 }

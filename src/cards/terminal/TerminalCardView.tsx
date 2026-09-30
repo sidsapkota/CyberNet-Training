@@ -87,9 +87,14 @@ export function TerminalCardView({
           role="log"
           aria-live="polite"
           aria-label="Terminal output"
-          className="max-h-72 min-h-40 overflow-y-auto px-3 py-3 font-mono text-small leading-relaxed break-words whitespace-pre-wrap"
+          className="max-h-[min(60dvh,28rem)] min-h-40 overflow-auto px-3 py-3 font-mono text-small leading-relaxed whitespace-pre"
         >
-          {card.intro && <p className="mb-2 text-on-screen-muted">{card.intro}</p>}
+          {/* Intros of 3+ lines are saved output (keep the columns); shorter ones are prose (wrap). */}
+          {card.intro && (
+            <p className={`mb-2 text-on-screen-muted ${card.intro.split("\n").length >= 3 ? "whitespace-pre" : "whitespace-pre-wrap"}`}>
+              {card.intro}
+            </p>
+          )}
           {entries.map((entry, i) => (
             <div key={i} className="mb-1">
               <p>

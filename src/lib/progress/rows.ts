@@ -2,6 +2,7 @@
  * Maps between the database rows (see supabase/migrations) and the ProgressSnapshot shape the app
  * uses. Pure, shared by the browser store (reads) and Server Actions (writes).
  */
+import { cleanCoachSeen } from "@/lib/coach";
 import type { Database, Json } from "@/lib/supabase/database.types";
 import { quizProgressFrom } from "./merge";
 import {
@@ -27,6 +28,7 @@ export interface ProgressRows {
   attempts: AttemptRow[];
   learningMode: string | null | undefined;
   soundEnabled?: boolean | null;
+  coachSeen?: string[] | null;
 }
 
 const iso = (value: string) => new Date(value).toISOString();
@@ -59,7 +61,11 @@ export function rowsToSnapshot(rows: ProgressRows): ProgressSnapshot {
     cards,
     lessons,
     quizzes,
-    preferences: { mode: mode.success ? mode.data : ("path" as const), sound: rows.soundEnabled ?? true },
+    preferences: {
+      mode: mode.success ? mode.data : ("path" as const),
+      sound: rows.soundEnabled ?? true,
+      coachSeen: cleanCoachSeen(rows.coachSeen),
+    },
   };
   return { ...next, totalXp: sumXp(next) };
 }

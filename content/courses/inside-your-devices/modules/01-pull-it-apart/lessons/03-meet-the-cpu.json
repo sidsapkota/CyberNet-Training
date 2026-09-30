@@ -17,17 +17,18 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "The clock",
-      "body": "A CPU works to a beat, like a drummer keeping time. Each beat is a **tick** of its **clock**, and the CPU moves its work forward on every tick.\n\nClock speed is measured in **gigahertz (GHz)**. One gigahertz means **one billion ticks per second**, so a 3 GHz CPU ticks three billion times a second.\n\nTo keep the maths simple, this course counts **one step per tick**. Real CPUs can manage several steps in a tick, or need a few ticks for a hard step."
+      "body": "A [[CPU]] works to a beat, like a drummer keeping time. Each beat is a **tick** of its **clock**, and the CPU moves its work forward on every tick.\n\nClock speed is measured in **gigahertz (GHz)**. One gigahertz means **one billion ticks per second**, so a 3 GHz CPU ticks three billion times a second.\n\nTo keep the maths simple, this course counts **one step per tick**. Real CPUs can manage several steps in a tick, or need a few ticks for a hard step."
     },
     {
       "id": "how-long",
       "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "A CPU runs at **2 GHz** and does one step per tick. A job takes **10 billion** steps. How many seconds does it take?",
+      "prompt": "A [[CPU]] runs at **2 [[GHz]]** and does one step per tick. A job takes **10 billion** steps. How many seconds does it take?",
       "answer": 5,
       "unit": "seconds",
       "hint": "2 GHz means 2 billion steps every second.",
-      "explanation": "2 GHz is 2 billion steps a second, so 10 billion steps take 10 ÷ 2 = **5 seconds**."
+      "explanation": "2 GHz is 2 billion steps a second, so 10 billion steps take 10 ÷ 2 = **5 seconds**.",
+      "nudge": "Think of GHz as billions of steps each second. How many seconds of those steps add up to the whole job?"
     },
     {
       "id": "cores",
@@ -40,11 +41,11 @@
       "id": "add-cores",
       "type": "simulator",
       "difficulty": "core",
-      "prompt": "Exporting this video takes too long. Add **cores** until it finishes in **3 seconds or less**.",
+      "prompt": "Saving your finished video (called **exporting** it) takes too long. Add **cores** until it finishes in **3 seconds or less**.",
       "model": "cpu-cores",
       "params": {
         "tasks": [
-          { "id": "export", "label": "Export a video", "work": 24, "splittable": true }
+          { "id": "export", "label": "Save a finished video", "work": 24, "splittable": true }
         ]
       },
       "controls": [
@@ -59,7 +60,9 @@
           { "target": "output", "id": "seconds", "op": "<=", "value": 3 }
         ]
       },
-      "explanation": "A video is made of separate frames, so the work splits evenly. One core takes 12 seconds, two take 6, and **four** take 3."
+      "explanation": "A video is made of separate frames, so the work splits evenly. One core takes 12 seconds, two take 6, and **four** take 3.",
+      "hint": "This job splits evenly, so each extra core takes a share. Watch the timer as you add cores.",
+      "nudge": "Keep adding cores and watch the timer. The job has to finish in 3 seconds or less."
     },
     {
       "id": "split-or-not",
@@ -73,12 +76,14 @@
       "items": [
         { "id": "photos", "label": "Resize 500 separate photos", "bin": "split" },
         { "id": "scan", "label": "Check 1,000 files for viruses", "bin": "split" },
-        { "id": "frames", "label": "Draw the frames of a cartoon", "bin": "split" },
+        { "id": "frames", "label": "Draw 1,000 separate cartoon frames", "bin": "split" },
         { "id": "treasure", "label": "Treasure hunt: each clue finds the next", "bin": "in-order" },
-        { "id": "savings", "label": "A savings total, month after month", "bin": "in-order" },
+        { "id": "savings", "label": "Knitting a scarf, row by row", "bin": "in-order" },
         { "id": "dice", "label": "A board game played one turn at a time", "bin": "in-order" }
       ],
-      "explanation": "Photos, files and frames are separate pieces, so each core can take some. A treasure hunt, a running savings total and a turn-by-turn game all **need the answer to the step before**, so extra cores just wait."
+      "explanation": "Photos, files and frames are separate pieces, so each core can take some. A treasure hunt, a scarf knitted row by row and a turn-by-turn game all **need the answer to the step before**, so extra cores just wait.",
+      "hint": "For each job, ask: does every piece need the answer from the piece before it?",
+      "nudge": "Separate pieces can be shared out between cores. If each step needs the step before, extra cores just wait."
     },
     {
       "id": "find-the-cooling",
@@ -89,17 +94,19 @@
       "view": "open",
       "mode": "tap",
       "targets": ["cpu", "fan"],
-      "explanation": "The **fan** sits right beside the **CPU** and blows the heat out through vents in the case. If the vents are blocked, the heat stays in, and a CPU that gets too hot **slows itself down** to stay safe. This is called **throttling**. Most phones have no fan: they spread the heat through the body, and throttle too."
+      "explanation": "The **fan** sits right beside the **CPU** and blows the heat out through vents in the case. If the vents are blocked, the heat stays in, and a CPU that gets too hot **slows itself down** to stay safe. This is called **throttling**. Most phones have no fan: they spread the heat through the body, and throttle too.",
+      "hint": "You need two parts. The CPU is the square chip with a shiny lid. What have you met that moves hot air?",
+      "nudge": "Tap both parts: the CPU, and the part that blows hot air out through the vents so the CPU doesn't overheat."
     },
     {
       "id": "too-hot",
       "type": "simulator",
       "difficulty": "challenge",
-      "prompt": "This laptop is on a blanket, working flat out, and it's slowing down. Get it back to its full **3 GHz** without lowering the **load**.",
+      "prompt": "This laptop is on a blanket, working as hard as it can, and it's slowing down. Get it back to its full **3 [[GHz]]** without lowering the **load** (how hard it's working).",
       "model": "thermal",
       "params": {},
       "controls": [
-        { "id": "load", "kind": "slider", "label": "Load", "min": 0, "max": 100, "step": 10, "unit": "%" },
+        { "id": "load", "kind": "slider", "label": "Load (how hard it works)", "min": 0, "max": 100, "step": 10, "unit": "%" },
         { "id": "fan", "kind": "toggle", "label": "Fan on" },
         { "id": "ventsClear", "kind": "toggle", "label": "Move it off the blanket" }
       ],
@@ -114,27 +121,34 @@
           { "target": "output", "id": "ghz", "op": ">=", "value": 3 }
         ]
       },
-      "explanation": "When a CPU gets too hot, it **slows itself down** to stay safe. This is called **throttling**. The blanket blocked the vents and the fan was off. With both fixed, the heat can escape and the CPU runs at full speed."
+      "explanation": "When a CPU gets too hot, it **slows itself down** to stay safe. This is called **throttling**. The blanket blocked the vents and the fan was off. With both fixed, the heat can escape and the CPU runs at full speed.",
+      "hint": "Keep the load at full. What's stopping the heat from escaping, and what could move it away?",
+      "nudge": "Lowering the load isn't allowed here. A hot [[CPU]] slows itself down, so look for everything that traps heat or could blow it out."
     },
     {
       "id": "more-cores-one-file",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "Laptop A has **4 cores** at 3 GHz. Laptop B has **8 cores** at 3 GHz. Which saves one big file faster, if the job **can't be split**?",
+      "prompt": "Laptop A has **4 cores** at 3 [[GHz]]. Laptop B has **8 cores** at 3 GHz. Which saves one big file faster, if the job **can't be split**?",
       "options": [
-        { "id": "a", "text": "Laptop A" },
-        { "id": "b", "text": "Laptop B, because it has twice the cores" },
+        { "id": "a", "text": "Laptop A", "nudge": "Fewer cores doesn't make the one core doing this job any quicker. Compare how fast each laptop's cores tick." },
+        {
+          "id": "b",
+          "text": "Laptop B, because it has twice the cores",
+          "nudge": "Extra cores only help when a job can be split into pieces. This one can't, so how many cores actually work on it?"
+        },
         { "id": "same", "text": "They take the same time" }
       ],
       "correctOptionId": "same",
-      "explanation": "A job that can't be split runs on **one core**, whichever laptop it's on. Both cores tick at 3 GHz, so they finish together. Laptop B's extra cores only help with jobs that split."
+      "explanation": "A job that can't be split runs on **one core**, whichever laptop it's on. Both cores tick at 3 GHz, so they finish together. Laptop B's extra cores only help with jobs that split.",
+      "hint": "Think of the cooks: can extra cooks help with a job that can't be split? Then compare the clock speeds."
     },
     {
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- The **CPU** follows billions of tiny instructions every second.\n- **Clock speed** in **GHz** is billions of ticks per second.\n- **Cores** are separate workers. They only speed up jobs that can be split.\n- A CPU that gets too hot **throttles** (slows down). The fan and clear vents keep it cool.\n\nThat's the hardware. Next module: the software that runs the show."
+      "body": "- The **CPU** follows billions of tiny instructions every second.\n- **Clock speed** in **GHz** is billions of ticks per second.\n- **Cores** are separate workers. They only speed up jobs that can be split.\n- A CPU that gets too hot **throttles** (slows down). The fan and clear vents keep it cool.\n\nThat's the [[hardware]]. Next module: the software that runs the show."
     }
   ]
 }
