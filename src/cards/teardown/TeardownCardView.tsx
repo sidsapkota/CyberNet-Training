@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, type PanInfo, useReducedMotion } from "motion/react";
 import { type ReactNode, useState } from "react";
 import { HintIcon, WarningIcon } from "@/components/ui/icons";
+import { Markdown } from "@/components/ui/Markdown";
 import { useFeedback } from "@/lib/feedback";
 import { CardPrompt } from "../CardPrompt";
 import { CardStatusNote } from "../CardStatusNote";
@@ -36,6 +37,10 @@ function partMotion(state: PartState | undefined, verb: TeardownAction["verb"] |
       animate: { x: exit.x, y: exit.y, opacity: 0, scale: 1.04 },
       transition: instant ? quick : { type: "spring" as const, stiffness: 260, damping: 18, opacity: { delay: 0.25, duration: 0.2 } },
     };
+  }
+  if (state === "heated") {
+    // Warmed, still in place: the warm outline (drawn in `wrap`) shows it; the part doesn't move.
+    return { animate: { x: 0, y: 0, opacity: 1, scale: 1, rotate: 0 }, transition: quick };
   }
   if (state === "unplugged") {
     return { animate: { x: exit.x, y: exit.y, opacity: 0.55 }, transition: instant ? quick : { type: "spring" as const, stiffness: 400, damping: 22 } };
@@ -72,6 +77,7 @@ export function TeardownCardView({ card, answer, onAnswerChange, status }: CardC
       setNudge(null);
       const removing = (REMOVE_VERBS as readonly string[]).includes(result.action.verb);
       feedback.play(removing ? "remove" : "snap");
+      // (Heating makes the "snap" sound too: a small confirmation, nothing moves.)
       feedback.haptic("tap");
     } else {
       setNudge((previous) => ({ text: result.action.nudge, key: (previous?.key ?? 0) + 1, part: partId }));
@@ -96,9 +102,23 @@ export function TeardownCardView({ card, answer, onAnswerChange, status }: CardC
   const wrap = (partId: string, node: ReactNode) => {
     const part = scene.parts.find((p) => p.id === partId)!;
     const m = partMotion(states.get(partId), lastVerb.get(partId), part, Boolean(reduceMotion));
+    const heated = states.get(partId) === "heated";
     return (
       <motion.g style={{ transformBox: "fill-box", transformOrigin: "center" }} initial={false} animate={m.animate} transition={m.transition}>
         {node}
+        {heated && (
+          <rect
+            x={part.box.x + 2}
+            y={part.box.y + 2}
+            width={part.box.w - 4}
+            height={part.box.h - 4}
+            rx={16}
+            fill="none"
+            stroke="var(--color-scene-heat)"
+            strokeWidth={3}
+            strokeDasharray="6 4"
+          />
+        )}
       </motion.g>
     );
   };
@@ -107,13 +127,16 @@ export function TeardownCardView({ card, answer, onAnswerChange, status }: CardC
   return (
     <div>
       <CardPrompt>{card.prompt}</CardPrompt>
-      <p className="mt-3 flex items-start gap-2 rounded-control border border-line bg-surface-raised px-3 py-2 text-small text-ink-muted">
+      <div className="mt-3 flex items-start gap-2 rounded-control border border-line bg-surface-raised px-3 py-2 text-small text-ink-muted">
         <WarningIcon className="mt-0.5 size-4 shrink-0 text-warning" />
-        <span>
-          <strong className="font-semibold text-ink">This is a simulation.</strong> Real phones and laptops should only be
-          opened by an adult or a repair shop.
-        </span>
-      </p>
+        <div>
+          <p>
+            <strong className="font-semibold text-ink">This is a simulation.</strong> Real phones and laptops should only be
+            opened by an adult or a repair shop.
+          </p>
+          {card.safety && <Markdown className="mt-1 text-small text-ink-muted">{card.safety}</Markdown>}
+        </div>
+      </div>
 
       <div className="mt-4 flex items-center gap-3" aria-live="polite">
         <div className="h-1.5 flex-1 overflow-hidden rounded-sm bg-line">

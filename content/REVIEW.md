@@ -585,23 +585,67 @@ before any card tests them. Tests check that every lesson uses at least 2 hands-
 simulator card starts unsolved and has a solution, and that every drawn part is explored before a
 card tests it.
 
-**Devices and names used.** Only generic devices appear: "a laptop", "a phone", "a tablet". There are no
-brands, models or operating-system names. App names are generic ("Music player", "Chat app"). The
+**Devices and names used.** The scenes and lesson text use only generic devices: "a laptop", "a phone", "a tablet", with no
+brands, models or operating-system names. The exception is the credited [real photos](#real-photos), whose captions name the device shown
+plainly, without implying any link to its maker. App names are generic ("Music player", "Chat app"). The
 one product-like name, **"CleanerPro"**, is made up for the fake pop-up scenario.
 
-**Scenes are drawings, not photos.** Part positions in the `laptop` and `phone` scenes are
-simplified and roughly where the parts sit in many devices, but real layouts vary a lot. The
-laptop's RAM is drawn as a removable stick. Many thin laptops solder RAM to the board.
-Each kind of part carries a drawn clue so beginners can tell them apart, and the clues are teaching
-hints rather than real markings: the **lightning bolt** on batteries (real ones carry printed
-labels), the **stacked lines** on storage chips (real flash chips look plain; inside, they really
-are built from stacked layers), the CPU's **shiny metal lid** (a heat spreader; many phone chips
-don't have one), and **gold contacts** along RAM and the storage card (real ones do have these).
+**Scenes are simplified diagrams, not photos** (each shows a "Simplified diagram" label). Part
+positions follow real devices: a laptop's battery across the bottom, with a heat pipe carrying the
+CPU's heat to the fan; a phone's battery filling most of its body, with the processor, RAM and
+storage chips soldered to one small board. Real layouts still vary a lot.
+- The **laptop** is an example with a removable RAM stick and SSD; every card that shows it says
+  many thin laptops have them soldered.
+- The **phone's RAM and storage** are soldered chips and are never shown as removable. The text
+  says RAM is often stacked on the processor (drawn beside it here so both can be tapped).
+- **Phones are glued shut.** The phone teardowns soften the glue (`heat`), lift the back, remove
+  two small screws and a bracket, then unplug the battery. Real repairs use more steps (more
+  screws, new glue, testing); the explanations say so.
+- Each kind of part carries a drawn clue so beginners can tell them apart. The **lightning bolt**
+  on batteries (real ones carry printed labels) and the **stacked lines** on storage chips (real
+  flash chips look plain; inside, they really are built from stacked layers) are teaching marks.
+  The CPU is a **small shiny die on a square base**, which is how laptop and phone processors
+  really look (no metal lid; a laptop's is normally hidden under the heat pipe's plate). **Gold
+  contacts** along the RAM stick and SSD are real.
 
 **Simulator numbers are illustrative** (see [Simulator models](#simulator-models)). They show the
 right relationships, not measured figures.
 
 **[Safety](#safety)** lists every physical-action or safety statement, for review.
+
+## Accuracy corrections (devices-accuracy)
+
+What changed after the accuracy review of Inside Your Devices, and why.
+
+| Was | Now |
+|---|---|
+| The phone scene showed RAM and storage like the laptop's, as if they could be taken out | Soldered chips on the phone's board; the explore card says they can't be swapped, and that RAM is often stacked on the processor |
+| The laptop's RAM stick and SSD were shown as how every laptop works | "An example with removable RAM and an SSD; many thin laptops have them soldered" (explore card, photo caption, recap, RAM photo) |
+| The phone opened by unscrewing the back | Phones are glued: soften the glue, lift the back, two screws, the bracket, then unplug the battery. Every phone teardown adds the fire-risk line to its safety note |
+| The CPU was drawn with a shiny metal lid | A small shiny die on a square base (laptop and phone chips have no lid) |
+| The laptop had no heat pipe; cooling was "the fan" | A copper heat pipe from the CPU to the fan's fins; `find-the-cooling` taps the CPU, heat pipe and fan |
+| `too-hot` had a "Fan on" switch, as if laptop fans were switched on by hand | "Clean the dusty fan"; the explanation says laptop fans switch on by themselves and dust stops them cooling |
+| "The OS is the first program to start" (the firmware starts first) | "The main program that starts" (`meet-the-os/the-operating-system`) |
+| "Cloud files are kept safe and backed up" | "usually kept safe and backed up" (`files-and-folders/the-cloud`) |
+| Opening the laptop made four screws look like the whole job | The prompt says real laptops often have more screws and clips |
+| Scenes looked like photos of real layouts | Each carries a "Simplified diagram" label, backed by a real, credited photo |
+
+## Real photos
+
+Six real photos back up the simplified diagrams. All come from Wikimedia Commons under CC0 or
+CC BY / CC BY-SA, are saved **unmodified** in `public/photos/`, and are credited on the card
+(author, licence link, "via Wikimedia Commons", "Unmodified"). Captions describe the device
+plainly and never suggest a link to its maker; `/terms` says product names belong to their owners.
+Each caption and alt text was checked against the photo itself.
+
+| File | Card | Device | Author | Licence | Source |
+|---|---|---|---|---|---|
+| `/photos/framework-laptop-13-inside.jpg` | `whats-in-the-box/real-laptop` | Framework Laptop 13 (2023, AMD Ryzen) | Ogidya | CC BY 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Framework_Laptop_13_-_2023_AMD_Ryzen_-_Internal_motherboard_and_component_view.jpg) |
+| `/photos/iphone-4-inside.jpg` | `whats-in-the-box/real-phone` | iPhone 4 | MyXyloto | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:IPhone_Structure.jpg) |
+| `/photos/laptop-heat-pipe.jpg` | `meet-the-cpu/real-heat-pipe` | A laptop (model not recorded) | Kristoferb | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Laptop_Heat_Pipe.JPG) |
+| `/photos/laptop-dusty-heatsink.jpg` | `meet-the-cpu/real-dust` | A laptop (model not recorded) | Audrius Meskauskas (Audriusa) | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Laptop_dust.jpg) |
+| `/photos/laptop-ram-stick.jpg` | `memory-vs-storage/real-ram` | Samsung 8 GB DDR4 SO-DIMM | D-Kuru | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:DDR_4_RAM_SO-DIMM_8GB_by_Samsung-top_front_PNr%C2%B00838.jpg) |
+| `/photos/swollen-phone-battery.jpg` | `power-problems/real-swollen-battery` | Samsung EB-BA136ABY (from a Galaxy A13) | Saimmx | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:20250807_200837_Swollen_Samsung_battery,_back.jpg) |
 
 ## Module 1: Pull It Apart
 
@@ -701,7 +745,7 @@ storage · 64 ÷ 4 = 16 videos · which job gains from more cores · throttling.
 - Spot a fake virus pop-up (challenge).
 
 **Key claims:**
-- The OS is the first program to start and runs until shutdown.
+- The OS is the main program that starts when the device switches on, and it runs until shutdown. (Firmware runs briefly first to start it; not taught.)
 - The OS switches between apps so quickly they seem to run at once (time-slicing).
 - Every running program is a process. Background processes (updaters, sync, antivirus) have no
   window.
@@ -834,22 +878,31 @@ a real device.
    parts and void the warranty; the lithium battery can catch fire if bent or punctured.
 2. **Every teardown card** shows the built-in note: "This is a simulation. Real phones and laptops
    should only be opened by an adult or a repair shop."
-3. "Unplug the battery first" is framed as **how technicians work safely** (`open-the-laptop`,
+3. **Phone teardowns (heat and pry):** `open-the-phone`, `swap-the-camera` and
+   `inside-your-devices-final/q-open-phone` soften the glue and lift the glued back, in the
+   simulation only. Each adds, inside its built-in safety note right above the scene: "**Heating
+   or prying a phone can damage its battery and start a fire.** That's why repair shops use special
+   tools and training. It's never something to try at home." The prompts describe what
+   *repairers* do; there are no temperatures, tools or methods. The `real-phone` photo shows the
+   battery's own printed warning (don't disassemble, puncture, crush, heat or burn).
+4. **Photos:** the dusty heatsink and swollen battery captions end with a repair shop, not a
+   fix to try.
+5. "Unplug the battery first" is framed as **how technicians work safely** (`open-the-laptop`,
    `open-the-phone`, `swap-the-camera`, `pull-it-apart-quiz/q-open-safely`,
    `inside-your-devices-final/q-open-phone`), and repeated in the 1.1 recap with "Real devices
    should only be opened by an adult or a repair shop."
-4. `open-the-phone` mentions that repair shops soften phone glue with gentle heat. It describes
+6. `open-the-phone` mentions that repair shops soften phone glue with gentle heat. It describes
    what shops do; it isn't an instruction.
-5. `inside-your-devices-final/q-no-charge`: "Open the tablet" is a wrong choice: "Opening a device
+7. `inside-your-devices-final/q-no-charge`: "Open the tablet" is a wrong choice: "Opening a device
    is for adults and repair shops, and it should never be the first step."
 
 **Charging ports:**
-6. `power-problems/wont-charge`: first try another cable and socket. The right fix for fluff is
+8. `power-problems/wont-charge`: first try another cable and socket. The right fix for fluff is
    "Phone off, ask an adult to help brush it out with a soft, dry brush", with a repair shop as the
    fallback. Wrong choices teach **never metal** (pin, paper clip: damage or short circuit) and
    **never water**.
-7. `inside-your-devices-final/q-no-charge`: "Never put metal in a charging port."
-8. The 3.2 recap repeats: an adult can gently brush the port with something soft and dry; never
+9. `inside-your-devices-final/q-no-charge`: "Never put metal in a charging port."
+10. The 3.2 recap repeats: an adult can gently brush the port with something soft and dry; never
    metal or water.
 8a. `power-problems/charging-trouble` (explainer, before the scenario): try another cable and
     socket first; "With the phone switched off, an adult can help brush it out gently with a soft,
@@ -859,17 +912,17 @@ a real device.
     describes, and gives no instruction.
 
 **Heat and batteries:**
-9. `meet-the-cpu/too-hot`: the fix is "Move it off the blanket" (clear the vents) and the fan. There
+11. `meet-the-cpu/too-hot`: the fix is "Move it off the blanket" (clear the vents) and the fan. There
    is no cleaning of vents or opening the case.
-10. `power-problems/helps-or-harms`: hot cars and charging under a pillow harm the battery.
-11. `power-problems/swollen-battery` (core): a bulging case → stop using it, unplug it, keep it away
+12. `power-problems/helps-or-harms`: hot cars and charging under a pillow harm the battery.
+13. `power-problems/swollen-battery` (core): a bulging case → stop using it, unplug it, keep it away
     from anything that can burn, and **tell an adult**; a repair shop can replace the battery.
     Wrong choices ("press the case flat", "keep using it") are explained as dangerous: a swollen
     lithium battery can catch fire if pressed, bent or punctured.
-12. `power-problems/too-hot-to-handle` (challenge): stop, unplug and let it cool on a table out of
+14. `power-problems/too-hot-to-handle` (challenge): stop, unplug and let it cool on a table out of
     the sun; **never the freezer** (condensation). If it later looks puffed up: stop using it, don't
     press it, tell an adult so it can go to a repair shop.
-13. The 3.2 recap: "A bulging device may have a swollen battery. Stop using it, don't press it, and
+15. The 3.2 recap: "A bulging device may have a swollen battery. Stop using it, don't press it, and
     tell an adult."
 13a. `power-problems/how-batteries-work` (explainer): keep devices out of hot cars and don't charge
      them under a pillow; if one gets too hot, "stop, unplug it and let it cool on a table out of
@@ -879,11 +932,11 @@ a real device.
      (the battery connector), framed as how technicians work, like item 3.
 
 **Software safety (no physical action, listed for completeness):**
-14. `meet-the-os/fake-virus-popup`: don't click anything in the pop-up, don't call the number,
+16. `meet-the-os/fake-virus-popup`: don't click anything in the pop-up, don't call the number,
     close the browser (with the task manager if needed), and tell an adult.
-15. `files-and-folders/suspicious-download` and `slow-and-full/delete-or-keep`: delete disguised
+17. `files-and-folders/suspicious-download` and `slow-and-full/delete-or-keep`: delete disguised
     programs without opening them and tell an adult; never delete system files you don't recognise.
-16. Ending processes: the task manager cards teach that ending a system process crashes the device.
+18. Ending processes: the task manager cards teach that ending a system process crashes the device.
     Ending an app loses only its unsaved work.
 
 ## Teach before test: review (both courses)

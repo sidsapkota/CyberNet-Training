@@ -35,6 +35,8 @@ export interface SceneManifest {
   id: string;
   /** What the illustration shows, for screen readers. */
   description: string;
+  /** A device diagram: shows a "Simplified diagram" label (real layouts vary; photos show the real thing). */
+  simplified?: boolean;
   width: number;
   height: number;
   /** Parts in draw order: back to front. */
@@ -53,17 +55,20 @@ const screw = (id: string, name: string, x: number, y: number): ScenePart => ({
 export const SCENES = {
   laptop: {
     id: "laptop",
-    description: "The underside of a generic laptop. With the bottom panel off you can see the parts inside.",
+    description:
+      "Simplified diagram of the underside of a generic laptop, an example with removable RAM and an SSD. With the bottom panel off you can see the parts inside.",
+    simplified: true,
     width: 320,
     height: 220,
     parts: [
-      { id: "motherboard", name: "Motherboard", box: { x: 32, y: 32, w: 160, h: 156 }, coveredBy: "panel" },
-      { id: "cpu", name: "CPU (processor)", box: { x: 48, y: 44, w: 44, h: 44 }, labelAt: { x: 47, y: 43 }, exit: { x: 0, y: -60 }, coveredBy: "panel" },
-      { id: "fan", name: "Cooling fan", box: { x: 114, y: 40, w: 52, h: 52 }, labelAt: { x: 116, y: 42 }, exit: { x: 0, y: -60 }, coveredBy: "panel" },
-      { id: "ram", name: "RAM (memory)", box: { x: 42, y: 104, w: 76, h: 28 }, labelAt: { x: 44, y: 106 }, exit: { x: -70, y: 0 }, coveredBy: "panel" },
-      { id: "storage", name: "Storage drive (SSD)", box: { x: 120, y: 106, w: 64, h: 30 }, labelAt: { x: 182, y: 108 }, exit: { x: 0, y: 60 }, coveredBy: "panel" },
-      { id: "battery", name: "Battery", box: { x: 202, y: 34, w: 88, h: 152 }, labelAt: { x: 206, y: 38 }, exit: { x: 70, y: 0 }, coveredBy: "panel" },
-      { id: "battery-connector", name: "Battery connector", box: { x: 182, y: 96, w: 30, h: 22 }, exit: { x: 6, y: -8 }, coveredBy: "panel" },
+      { id: "motherboard", name: "Motherboard", box: { x: 32, y: 30, w: 256, h: 86 }, coveredBy: "panel" },
+      { id: "heat-pipe", name: "Heat pipe", box: { x: 30, y: 30, w: 82, h: 18 }, labelAt: { x: 60, y: 39 }, coveredBy: "panel" },
+      { id: "fan", name: "Cooling fan", box: { x: 42, y: 52, w: 54, h: 54 }, labelAt: { x: 46, y: 56 }, exit: { x: 0, y: -60 }, coveredBy: "panel" },
+      { id: "cpu", name: "CPU (processor)", box: { x: 118, y: 52, w: 36, h: 36 }, labelAt: { x: 121, y: 55 }, exit: { x: 0, y: -60 }, coveredBy: "panel" },
+      { id: "ram", name: "RAM (memory)", box: { x: 192, y: 34, w: 88, h: 38 }, labelAt: { x: 196, y: 38 }, exit: { x: 70, y: 0 }, coveredBy: "panel" },
+      { id: "storage", name: "Storage drive (SSD)", box: { x: 172, y: 80, w: 112, h: 28 }, labelAt: { x: 276, y: 84 }, exit: { x: 70, y: 0 }, coveredBy: "panel" },
+      { id: "battery", name: "Battery", box: { x: 38, y: 124, w: 244, h: 64 }, labelAt: { x: 44, y: 130 }, exit: { x: 0, y: 70 }, coveredBy: "panel" },
+      { id: "battery-connector", name: "Battery connector", box: { x: 144, y: 106, w: 32, h: 20 }, exit: { x: 0, y: -10 }, coveredBy: "panel" },
       { id: "panel", name: "Bottom panel", box: { x: 24, y: 24, w: 272, h: 172 }, exit: { x: 0, y: -40 } },
       screw("screw-1", "Top-left screw", 40, 40),
       screw("screw-2", "Top-right screw", 280, 40),
@@ -77,26 +82,32 @@ export const SCENES = {
   },
   phone: {
     id: "phone",
-    description: "The back of a generic smartphone. With the back cover off you can see the parts inside.",
+    description:
+      "Simplified diagram of the back of a generic smartphone. With the glued back cover off you can see the parts inside: the battery takes up most of the space.",
+    simplified: true,
     width: 200,
     height: 320,
     parts: [
-      { id: "logic-board", name: "Logic board (motherboard)", box: { x: 30, y: 20, w: 140, h: 92 }, coveredBy: "back-cover" },
-      { id: "camera", name: "Camera", box: { x: 38, y: 28, w: 36, h: 36 }, labelAt: { x: 40, y: 30 }, exit: { x: -50, y: 0 }, coveredBy: "back-cover" },
-      { id: "cpu", name: "CPU (processor)", box: { x: 84, y: 28, w: 38, h: 38 }, labelAt: { x: 88, y: 30 }, coveredBy: "back-cover" },
-      { id: "ram", name: "RAM (memory)", box: { x: 122, y: 30, w: 34, h: 30 }, labelAt: { x: 156, y: 31 }, coveredBy: "back-cover" },
-      { id: "storage", name: "Storage chip", box: { x: 122, y: 66, w: 38, h: 30 }, labelAt: { x: 158, y: 94 }, coveredBy: "back-cover" },
-      { id: "battery", name: "Battery", box: { x: 34, y: 126, w: 132, h: 144 }, labelAt: { x: 40, y: 131 }, exit: { x: 0, y: 60 }, coveredBy: "back-cover" },
-      { id: "battery-connector", name: "Battery connector", box: { x: 84, y: 104, w: 32, h: 22 }, exit: { x: 0, y: -10 }, coveredBy: "back-cover" },
-      { id: "speaker", name: "Speaker", box: { x: 32, y: 282, w: 34, h: 20 }, coveredBy: "back-cover" },
+      { id: "logic-board", name: "Logic board (motherboard)", box: { x: 30, y: 18, w: 140, h: 94 }, coveredBy: "back-cover" },
+      { id: "camera", name: "Camera module", box: { x: 34, y: 24, w: 42, h: 42 }, labelAt: { x: 37, y: 27 }, exit: { x: -50, y: 0 }, coveredBy: "back-cover" },
+      { id: "cpu", name: "Processor (CPU)", box: { x: 82, y: 26, w: 38, h: 38 }, labelAt: { x: 85, y: 29 }, coveredBy: "back-cover" },
+      { id: "ram", name: "RAM chip (memory)", box: { x: 126, y: 26, w: 36, h: 30 }, labelAt: { x: 159, y: 29 }, coveredBy: "back-cover" },
+      { id: "storage", name: "Storage chip", box: { x: 126, y: 60, w: 36, h: 30 }, labelAt: { x: 159, y: 87 }, coveredBy: "back-cover" },
+      { id: "battery-connector", name: "Battery connector", box: { x: 88, y: 98, w: 28, h: 16 }, exit: { x: 0, y: -12 }, coveredBy: "back-cover" },
+      { id: "connector-cover", name: "Connector bracket", box: { x: 74, y: 84, w: 56, h: 13 }, exit: { x: 0, y: -40 }, coveredBy: "back-cover" },
+      { id: "battery", name: "Battery", box: { x: 36, y: 118, w: 112, h: 158 }, labelAt: { x: 42, y: 124 }, exit: { x: 0, y: 60 }, coveredBy: "back-cover" },
+      { id: "flex-cable", name: "Ribbon cable", box: { x: 152, y: 112, w: 18, h: 168 }, labelAt: { x: 161, y: 196 }, coveredBy: "back-cover" },
+      { id: "speaker", name: "Speaker", box: { x: 34, y: 282, w: 40, h: 16 }, coveredBy: "back-cover" },
+      { id: "vibration-motor", name: "Vibration motor", box: { x: 80, y: 282, w: 28, h: 16 }, coveredBy: "back-cover" },
       { id: "charging-port", name: "Charging port", box: { x: 76, y: 298, w: 48, h: 20 } },
+      // The bracket's screws sit under the glued back, so they're drawn before (beneath) it.
+      { ...screw("screw-1", "Left bracket screw", 80, 90), coveredBy: "back-cover" },
+      { ...screw("screw-2", "Right bracket screw", 124, 90), coveredBy: "back-cover" },
       { id: "back-cover", name: "Back cover", box: { x: 26, y: 14, w: 148, h: 292 }, exit: { x: 0, y: -40 } },
-      screw("screw-1", "Left screw", 44, 296),
-      screw("screw-2", "Right screw", 156, 296),
     ],
     views: {
       closed: [],
-      open: ["back-cover", "screw-1", "screw-2"],
+      open: ["back-cover"],
     },
   },
   "file-browser": {

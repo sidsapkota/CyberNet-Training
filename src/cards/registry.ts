@@ -5,6 +5,7 @@ import { matchPairsDefinition } from "./match-pairs/definition";
 import { multipleChoiceDefinition } from "./multiple-choice/definition";
 import { numericInputDefinition } from "./numeric-input/definition";
 import { packetPathDefinition } from "./packet-path/definition";
+import { photoDefinition } from "./photo/definition";
 import { hotspotDefinition, hotspotExploreDefinition } from "./hotspot/definition";
 import { scenarioDefinition } from "./scenario/definition";
 import { simulatorDefinition } from "./simulator/definition";
@@ -21,6 +22,7 @@ import type { GuidedCardDefinition, InteractiveCardDefinition, StaticCardDefinit
  */
 const definitions = {
   explainer: explainerDefinition,
+  photo: photoDefinition,
   multiple_choice: multipleChoiceDefinition,
   drag_to_order: dragToOrderDefinition,
   binary_toggle: binaryToggleDefinition,

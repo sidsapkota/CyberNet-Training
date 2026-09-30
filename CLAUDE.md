@@ -126,6 +126,7 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
 | `type` | Extra fields | Answer (JSON) | Correct when |
 |---|---|---|---|
 | `explainer` | `title`, `body` (md), `image?` `{src, alt, width, height, caption?}`, `mascot?` (`"presenting"`, safety notes only) | none | read (Continue) |
+| `photo` | `title`, `photo` `{src: /photos/…, alt, width, height}`, `caption` (md), `credit` `{author, licence, licenceUrl, sourceUrl, device?}` | none | read (Continue) |
 | `multiple_choice` | `options` (2–5 `{id, text, nudge?}`), `correctOptionId` | option id | right option picked |
 | `drag_to_order` | `items` (3–7 `{id, label}`, **authored in the correct order**) | item ids | exact order |
 | `binary_toggle` | `target` (0–255) | 8 booleans | bits sum to target |
@@ -177,27 +178,41 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
     must not cover the part (file names). `art.tsx` draws each part as its own group.
   - Scenes: `laptop`, `phone`, `file-browser`. Generic devices only: no brands, logos or real
     designs (a test checks for brand names).
+  - **Realistic but simplified:** part positions follow real devices (a laptop's battery across
+    the bottom and a heat pipe from the CPU to the fan; a phone's battery filling most of its body,
+    with the processor, RAM and storage chips soldered to one small board). Scenes that stand in for
+    real hardware set `simplified: true`, which shows a **"Simplified diagram"** chip on the scene.
+  - **Accuracy:** phone RAM and storage are never removable. The laptop is an *example* with a
+    removable RAM stick and SSD; any card that shows it says many thin laptops have them soldered.
+    Phones are glued shut: phone teardowns start with `heat` then `lift` on the back cover, and a
+    screwed bracket holds the battery connector.
   - Parts under a cover that's still on can't be seen, tapped or announced. Schemas check every part
     id, view and visibility at load.
   - Add a scene by adding its manifest and its drawing; `scenes.test.ts` checks every part is drawn.
   - **Each kind of part has one look in every scene,** so learners can tell them apart and a
-    phone's parts match a laptop's: CPU = square package with a shiny metal lid, pin-1 mark and
-    contact dots; RAM = small board with a row of identical chips and gold contacts along a side;
-    storage = chip with stacked layers; battery = cells or a pouch with a lightning bolt and gold
-    terminal; fan = blades in a housing. Gold details use `--color-scene-contact`. No text on
-    parts: labels would give answers away.
+    phone's parts match a laptop's: CPU = a small shiny die on a square base (no metal lid), with a
+    pin-1 mark and contact dots; RAM = a row of identical chips (a stick with gold contacts in the
+    laptop, one soldered chip of little squares in the phone); storage = chip with stacked layers
+    (on a long, narrow SSD card in the laptop); battery = cells or a pouch with a lightning bolt and
+    gold terminal; fan = blades in a housing; heat pipe = a copper tube to metal fins. The bolt and
+    stacked layers are teaching marks, not real markings. Gold details use `--color-scene-contact`.
+    No text on parts: labels would give answers away.
 - **`hotspot`:** tap mode selects exactly `targets` (tap again to unselect). Label mode places label
   chips on numbered spots (spots don't name the part, or the answer would be given away).
   **Explore mode** (not graded, core only) teaches a scene: each tap highlights a part and shows its
   name and one-line `job`; hollow nodes turn into checked ones as parts are explored, and Continue
   unlocks once every listed part has been tapped. Put one before a scene's parts are first tested.
 - **`teardown`:**
-  - Verbs: `unscrew`, `lift`, `slide-out`, `unplug` (remove) and `insert`, `fasten`, `plug-in`
-    (refit).
+  - Verbs: `unscrew`, `lift`, `slide-out`, `unplug` (remove), `insert`, `fasten`, `plug-in`
+    (refit), and `heat` (prep: "Soften the glue on", for a phone's glued back). A heated part stays
+    in place with a warm dashed outline (`--color-scene-heat`) until it's lifted.
   - Tapping a part does its next action if its `after` steps are done; otherwise it shows that
     action's `nudge` and counts it. Lift and slide actions can also be dragged.
-  - Every card shows a built-in **"This is a simulation"** safety note. Removed parts go to a
-    "Parts out" tray, which is used for refitting.
+  - Every card shows a built-in **"This is a simulation"** safety note. `safety?` (≤240, markdown)
+    adds a line to that note, right above the scene: every phone teardown that heats or pries uses
+    it to say this can damage the battery and start a fire, which is why repairers use special
+    tools and training. Never a how-to. Removed parts go to a "Parts out" tray, which is used for
+    refitting.
   - The schema rejects cycles, refits before removal, and acting on parts already off.
 - **`simulator`:**
   - `model` names a registered pure function in `src/cards/simulator/models/`: `memory`,
@@ -212,6 +227,20 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
 - **`scenario`:** a wrong ending shows its consequence (that's the teaching). After Check → Try
   again, the failed choice is crossed out and the learner picks again at that step. The schema
   requires every step to be reachable, no loops, and at least one success.
+- **`photo`** (static, like an explainer): a real photo that backs up a simplified scene. Rules:
+  - **Wikimedia Commons only,** under **CC0, public domain, CC BY or CC BY-SA** (no NC or ND). The
+    schema only accepts those licences and a `commons.wikimedia.org/wiki/File:` source.
+  - **Saved unmodified** in `public/photos/` (no crops, edits or re-encoding; `next/image` scales
+    them). `width`/`height` must be the file's real size, and `load.test.ts` checks the file
+    exists, is credited and is used.
+  - The card always shows the credit: author, licence link, "via Wikimedia Commons", "Unmodified".
+    Record `device` (the model shown) when it's known.
+  - **Captions describe, never endorse:** name the device plainly ("A Framework Laptop 13 with its
+    cover off"), with no wording that implies a link to its maker. `/terms` says product names
+    belong to their owners.
+  - Check every caption and `alt` against the photo itself. List each photo, with its source,
+    author and licence, in `content/REVIEW.md`.
+  - **Not counted** in the 8–12 cards per lesson, and never in quizzes.
 - **`sort_bins`:** tap an item then a bin, or drag (dnd-kit). Snap sound; wrong items go back to the
   tray after Try again.
 - **Enter key:** single-answer text fields (`numeric_input`, the terminal's answer box) carry
@@ -931,7 +960,8 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   (explore a scene before a hotspot or teardown tests its parts), a term, a number, a command, and
   what a safe action is. A card's own explanation doesn't count (it comes after answering), and core
   cards and quizzes can't rely on a challenge card. `load.test.ts` checks the scene part of this
-  automatically; check the rest by reading the lesson in order.
+  automatically (screws, `*-cover` parts and the laptop `panel` explain themselves, so teardowns
+  can use them unexplored); check the rest by reading the lesson in order.
 - **Glossary (tap to define):** `content/glossary.json` is shared by every course: `{ id, term,
   definition }`, one or two plain sentences (≤220). In markdown text (explainer body, prompt, hint,
   nudge, explanation, scenario step text and consequences) mark a term as `[[router]]` or
@@ -957,13 +987,14 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   that wasn't taught.
 - **Technical accuracy is non-negotiable.** Double-check numbers, and prefer precise-but-simple over
   simplified-but-wrong.
-- **Lesson shape:** 8–12 cards, opening with a hook explainer and ending with a recap explainer,
+- **Lesson shape:** 8–12 cards (photo cards don't count), opening with a hook explainer and ending with a recap explainer,
   at most 3 multiple choice cards, exactly 2 challenge cards. Quizzes have 5–8 core, interactive
   questions. `load.test.ts` enforces all of this for every lesson and quiz. It also checks that
   every simulator card starts unsolved and has a solution, that every drawn part is explored before
   a card tests it, and that every Inside Your Devices
   lesson uses at least 2 hands-on types (hotspot, teardown, simulator, scenario, sort_bins).
-- **Physical safety:** no brands, and never instructions for opening a real device. Any physical
+- **Physical safety:** no brands (in scenes and text; real photos may show a maker's name), and
+  never instructions for opening a real device. Any physical
   action (cleaning a port, a hot or swollen battery) stays gentle and says "ask an adult" or a
   repair shop. List each one under **Safety** in `content/REVIEW.md`.
 - **Safe examples only:** IPv4 documentation ranges (`192.0.2.0/24`, `198.51.100.0/24`,

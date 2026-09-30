@@ -6,6 +6,7 @@ import { MatchPairsCardSchema } from "./match-pairs/schema";
 import { MultipleChoiceCardSchema } from "./multiple-choice/schema";
 import { NumericInputCardSchema } from "./numeric-input/schema";
 import { PacketPathCardSchema } from "./packet-path/schema";
+import { PhotoCardSchema } from "./photo/schema";
 import { HotspotCardSchema } from "./hotspot/schema";
 import { ScenarioCardSchema } from "./scenario/schema";
 import { SimulatorCardSchema } from "./simulator/schema";
@@ -19,6 +20,7 @@ import { TerminalCardSchema } from "./terminal/schema";
  */
 export const CardSchema = z.discriminatedUnion("type", [
   ExplainerCardSchema,
+  PhotoCardSchema,
   MultipleChoiceCardSchema,
   DragToOrderCardSchema,
   BinaryToggleCardSchema,
@@ -37,7 +39,7 @@ export type Card = z.infer<typeof CardSchema>;
 export type CardType = Card["type"];
 
 /** Card types that can be graded (everything except read-only ones). */
-export type InteractiveCard = Exclude<Card, { type: "explainer" }>;
+export type InteractiveCard = Exclude<Card, { type: "explainer" | "photo" }>;
 
 /** A hotspot in explore mode: hands-on but never graded (see `GuidedCardDefinition`). */
 export function isExploreCard(card: Card): boolean {
@@ -45,9 +47,9 @@ export function isExploreCard(card: Card): boolean {
 }
 
 /**
- * Whether a card is graded. False for explainers and explore-mode hotspots. (Only the true branch
+ * Whether a card is graded. False for explainers, photos and explore-mode hotspots. (Only the true branch
  * narrows usefully: a false result can also be a hotspot in explore mode.)
  */
 export function isInteractiveCard(card: Card): card is InteractiveCard {
-  return card.type !== "explainer" && !isExploreCard(card);
+  return card.type !== "explainer" && card.type !== "photo" && !isExploreCard(card);
 }

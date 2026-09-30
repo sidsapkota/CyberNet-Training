@@ -8,6 +8,7 @@ import {
   multipleChoice,
   numericInput,
   packetPath,
+  photo,
   scenario,
   simulator,
   sortBins,
@@ -201,5 +202,33 @@ describe("BinaryToggleCardSchema", () => {
 
   it.each([-1, 256, 3.5])("rejects target %s", (target) => {
     expect(BinaryToggleCardSchema.safeParse(binaryToggle({ target })).success).toBe(false);
+  });
+});
+
+describe("photo cards", () => {
+  const valid = photo();
+
+  it("accepts a credited photo with an allowed licence", () => {
+    expect(CardSchema.safeParse(valid).success).toBe(true);
+  });
+
+  it("rejects NonCommercial and NoDerivatives licences", () => {
+    for (const licence of ["CC BY-NC 4.0", "CC BY-ND 4.0", "CC BY-NC-SA 4.0", "All rights reserved"]) {
+      expect(CardSchema.safeParse({ ...valid, credit: { ...valid.credit, licence } }).success, licence).toBe(false);
+    }
+  });
+
+  it("requires an author, a licence link and a Wikimedia Commons source", () => {
+    expect(CardSchema.safeParse({ ...valid, credit: { ...valid.credit, author: undefined } }).success).toBe(false);
+    expect(CardSchema.safeParse({ ...valid, credit: { ...valid.credit, sourceUrl: "https://example.com/photo.jpg" } }).success).toBe(false);
+    expect(CardSchema.safeParse({ ...valid, credit: undefined }).success).toBe(false);
+  });
+
+  it("only uses files from /public/photos", () => {
+    expect(CardSchema.safeParse({ ...valid, photo: { ...valid.photo, src: "https://example.com/x.jpg" } }).success).toBe(false);
+  });
+
+  it("isn't graded", () => {
+    expect(isInteractiveCard(valid)).toBe(false);
   });
 });

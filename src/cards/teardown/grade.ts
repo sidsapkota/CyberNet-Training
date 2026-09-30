@@ -1,7 +1,7 @@
 import type { GradeResult } from "../types";
-import { REMOVE_VERBS, type TeardownAction, type TeardownAnswer, type TeardownCard } from "./schema";
+import { PREP_VERBS, REMOVE_VERBS, type TeardownAction, type TeardownAnswer, type TeardownCard } from "./schema";
 
-export type PartState = "in" | "out" | "unplugged";
+export type PartState = "in" | "out" | "unplugged" | "heated";
 
 const safe = (answer: TeardownAnswer | null | undefined): TeardownAnswer => ({
   done: Array.isArray(answer?.done) ? answer.done : [],
@@ -41,6 +41,10 @@ export function partStates(card: TeardownCard, answer: TeardownAnswer): Map<stri
   for (const id of safe(answer).done) {
     const action = byId.get(id);
     if (!action) continue;
+    if ((PREP_VERBS as readonly string[]).includes(action.verb)) {
+      states.set(action.part, "heated");
+      continue;
+    }
     const removing = (REMOVE_VERBS as readonly string[]).includes(action.verb);
     states.set(action.part, removing ? (action.verb === "unplug" ? "unplugged" : "out") : "in");
   }
@@ -77,6 +81,7 @@ const VERB_LABEL: Record<TeardownAction["verb"], string> = {
   insert: "Put back",
   fasten: "Screw in",
   "plug-in": "Plug in",
+  heat: "Soften the glue on",
 };
 
 export function describeAction(action: TeardownAction, partName: string): string {

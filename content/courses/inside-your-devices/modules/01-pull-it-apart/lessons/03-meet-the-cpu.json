@@ -86,28 +86,47 @@
       "nudge": "Separate pieces can be shared out between cores. If each step needs the step before, extra cores just wait."
     },
     {
+      "id": "real-heat-pipe",
+      "type": "photo",
+      "difficulty": "core",
+      "title": "A real heat pipe",
+      "photo": {
+        "src": "/photos/laptop-heat-pipe.jpg",
+        "alt": "Inside a laptop: copper heat pipes curve from the processor area to a round fan.",
+        "width": 3648,
+        "height": 2432
+      },
+      "caption": "Inside a laptop: **copper heat pipes** curve from the processor to the round **fan**. The processor itself is hidden under the pipes' metal plate.",
+      "credit": {
+        "author": "Kristoferb",
+        "licence": "CC BY-SA 3.0",
+        "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Laptop_Heat_Pipe.JPG"
+      }
+    },
+    {
       "id": "find-the-cooling",
       "type": "hotspot",
       "difficulty": "core",
-      "prompt": "Working hard makes the CPU hot. Tap the **CPU** and the part that **cools it down**.",
+      "prompt": "Working hard makes the CPU hot. Tap the **CPU** and the **two parts** that carry its heat away.",
       "scene": "laptop",
       "view": "open",
       "mode": "tap",
-      "targets": ["cpu", "fan"],
-      "explanation": "The **fan** sits right beside the **CPU** and blows the heat out through vents in the case. If the vents are blocked, the heat stays in, and a CPU that gets too hot **slows itself down** to stay safe. This is called **throttling**. Most phones have no fan: they spread the heat through the body, and throttle too.",
-      "hint": "You need two parts. The CPU is the square chip with a shiny lid. What have you met that moves hot air?",
-      "nudge": "Tap both parts: the CPU, and the part that blows hot air out through the vents so the CPU doesn't overheat."
+      "targets": ["cpu", "heat-pipe", "fan"],
+      "explanation": "The **heat pipe** carries heat from the **CPU** to metal fins, and the **fan** blows air through them and out of the vents. If the vents are blocked, the heat stays in, and a CPU that gets too hot **slows itself down** to stay safe. This is called **throttling**. Most phones have no fan: they spread the heat through the body, and throttle too.",
+      "hint": "You need three parts. The CPU is the small shiny chip. What carries heat away from it, and what moves the air?",
+      "nudge": "Tap all three: the CPU, the copper pipe that carries its heat, and the part that blows the air out."
     },
     {
       "id": "too-hot",
       "type": "simulator",
       "difficulty": "challenge",
-      "prompt": "This laptop is on a blanket, working as hard as it can, and it's slowing down. Get it back to its full **3 [[GHz]]** without lowering the **load** (how hard it's working).",
+      "prompt": "This laptop is on a blanket, its fan is clogged with dust, and it's working as hard as it can, so it's slowing down. Get it back to its full **3 [[GHz]]** without lowering the **load** (how hard it's working).",
       "model": "thermal",
       "params": {},
       "controls": [
         { "id": "load", "kind": "slider", "label": "Load (how hard it works)", "min": 0, "max": 100, "step": 10, "unit": "%" },
-        { "id": "fan", "kind": "toggle", "label": "Fan on" },
+        { "id": "fan", "kind": "toggle", "label": "Clean the dusty fan" },
         { "id": "ventsClear", "kind": "toggle", "label": "Move it off the blanket" }
       ],
       "outputs": [
@@ -121,9 +140,28 @@
           { "target": "output", "id": "ghz", "op": ">=", "value": 3 }
         ]
       },
-      "explanation": "When a CPU gets too hot, it **slows itself down** to stay safe. This is called **throttling**. The blanket blocked the vents and the fan was off. With both fixed, the heat can escape and the CPU runs at full speed.",
-      "hint": "Keep the load at full. What's stopping the heat from escaping, and what could move it away?",
-      "nudge": "Lowering the load isn't allowed here. A hot [[CPU]] slows itself down, so look for everything that traps heat or could blow it out."
+      "explanation": "When a CPU gets too hot, it **slows itself down** to stay safe. This is called **throttling**. The blanket blocked the vents, and dust clogged the fan and its fins. With both fixed, the heat can escape and the CPU runs at full speed. (Laptop fans switch on by themselves; dust is what stops them cooling well.)",
+      "hint": "Keep the load at full. What's trapping the heat, and what's stopping the fan from moving air?",
+      "nudge": "Lowering the load isn't allowed here. A hot [[CPU]] slows itself down, so fix everything that traps heat or stops the fan cooling."
+    },
+    {
+      "id": "real-dust",
+      "type": "photo",
+      "difficulty": "core",
+      "title": "What dust does",
+      "photo": {
+        "src": "/photos/laptop-dusty-heatsink.jpg",
+        "alt": "A processor, gold pins facing up, resting on its copper heatsink. The heatsink's cooling fins are packed solid with grey dust.",
+        "width": 2986,
+        "height": 1114
+      },
+      "caption": "A laptop's processor on its heatsink, after three years of use. The cooling fins are **packed with dust**, so air couldn't get through: the laptop overheated and kept shutting down. A repair shop can clean it safely.",
+      "credit": {
+        "author": "Audrius Meskauskas (Audriusa)",
+        "licence": "CC BY-SA 3.0",
+        "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Laptop_dust.jpg"
+      }
     },
     {
       "id": "more-cores-one-file",
@@ -148,7 +186,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- The **CPU** follows billions of tiny instructions every second.\n- **Clock speed** in **GHz** is billions of ticks per second.\n- **Cores** are separate workers. They only speed up jobs that can be split.\n- A CPU that gets too hot **throttles** (slows down). The fan and clear vents keep it cool.\n\nThat's the [[hardware]]. Next module: the software that runs the show."
+      "body": "- The **CPU** follows billions of tiny instructions every second.\n- **Clock speed** in **GHz** is billions of ticks per second.\n- **Cores** are separate workers. They only speed up jobs that can be split.\n- A CPU that gets too hot **throttles** (slows down). The heat pipe, the fan and clear vents keep it cool.\n\nThat's the [[hardware]]. Next module: the software that runs the show."
     }
   ]
 }
