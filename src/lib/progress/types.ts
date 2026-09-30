@@ -35,6 +35,19 @@ export const QuizProgressSchema = z.object({
 });
 export type QuizProgress = z.infer<typeof QuizProgressSchema>;
 
+/** "path": lessons unlock in order. "explore": everything is open, in any order. */
+export const LearningModeSchema = z.enum(["path", "explore"]);
+export type LearningMode = z.infer<typeof LearningModeSchema>;
+
+export const PreferencesSchema = z.object({
+  mode: LearningModeSchema.default("path"),
+});
+export type Preferences = z.infer<typeof PreferencesSchema>;
+
+export function defaultPreferences(): Preferences {
+  return { mode: "path" };
+}
+
 export const ProgressSnapshotSchema = z.object({
   /** Keyed by `cardKey(lessonId, cardId)`. */
   cards: z.record(z.string(), CardCompletionSchema),
@@ -42,12 +55,14 @@ export const ProgressSnapshotSchema = z.object({
   lessons: z.record(z.string(), LessonCompletionSchema),
   /** Keyed by quiz (lesson) id. */
   quizzes: z.record(z.string(), QuizProgressSchema),
+  /** Learner settings. Optional in stored data: progress saved before it existed still loads. */
+  preferences: PreferencesSchema.default(defaultPreferences),
   totalXp: z.number().int().nonnegative(),
 });
 export type ProgressSnapshot = z.infer<typeof ProgressSnapshotSchema>;
 
 export function emptySnapshot(): ProgressSnapshot {
-  return { cards: {}, lessons: {}, quizzes: {}, totalXp: 0 };
+  return { cards: {}, lessons: {}, quizzes: {}, preferences: defaultPreferences(), totalXp: 0 };
 }
 
 export function cardKey(lessonId: string, cardId: string): string {

@@ -167,8 +167,9 @@ export function LessonRun({
   if (result) {
     const next = getNextLesson(course, lesson.id);
     return (
-      <PlayerShell nodes={progressNodes} progressLabel="Lesson progress: complete">
+      <PlayerShell nodes={progressNodes} progressLabel="Lesson progress: complete" exitHref={`/course/${course.id}`}>
         <LessonComplete
+          pathHref={`/course/${course.id}?completed=${lesson.id}`}
           title={lesson.title}
           xpEarned={result.xpEarned}
           alreadyCompleted={result.alreadyCompleted}
@@ -186,6 +187,7 @@ export function LessonRun({
 
   return (
     <PlayerShell
+      exitHref={`/course/${course.id}`}
       nodes={progressNodes}
       pulse={pulse}
       progressLabel={`Lesson progress: card ${index + 1} of ${total}`}

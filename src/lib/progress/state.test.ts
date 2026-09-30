@@ -2,8 +2,12 @@ import { describe, expect, it } from "vitest";
 import { twoModuleCourse } from "@/test/fixtures";
 import {
   computeCourseState,
+  courseProgress,
   getBlockingLesson,
+  getCurrentLesson,
   getNextLesson,
+  hasAnyProgress,
+  snapshotBefore,
   lessonFinishState,
   resumeIndex,
 } from "./state";
@@ -26,8 +30,8 @@ function passQuiz(snapshot: ProgressSnapshot, id: string, passed = true) {
   return snapshot;
 }
 
-function statuses(snapshot: ProgressSnapshot) {
-  const state = computeCourseState(snapshot, twoModuleCourse());
+function statuses(snapshot: ProgressSnapshot, mode?: "path" | "explore") {
+  const state = computeCourseState(snapshot, twoModuleCourse(), mode);
   return state.modules.map((m) => ({
     module: m.status,
     lessons: Object.fromEntries(m.lessons.map((l) => [l.lesson.id, l.status])),
@@ -82,6 +86,92 @@ describe("computeCourseState: unlocking", () => {
     expect(m1?.progress).toBeCloseTo(2 / 3);
     expect(m1?.lessons[2]?.bestScore).toBe(0.5);
     expect(state.completedModules).toBe(0);
+  });
+});
+
+describe("computeCourseState: Explore mode", () => {
+  it("opens every lesson and quiz, in every module, from the start", () => {
+    expect(statuses(emptySnapshot(), "explore")).toEqual([
+      { module: "available", lessons: { l1: "available", l2: "available", quiz1: "available" } },
+      { module: "available", lessons: { l3: "available", quiz2: "available" } },
+    ]);
+  });
+
+  it("still records completion and progress normally", () => {
+    const snapshot = passQuiz(withLessons("l3"), "quiz2");
+    expect(statuses(snapshot, "explore")).toEqual([
+      { module: "available", lessons: { l1: "available", l2: "available", quiz1: "available" } },
+      { module: "completed", lessons: { l3: "completed", quiz2: "completed" } },
+    ]);
+    const state = computeCourseState(snapshot, twoModuleCourse(), "explore");
+    expect(state.completedModules).toBe(1);
+    expect(courseProgress(state)).toEqual({ completed: 2, total: 5, fraction: 0.4 });
+  });
+
+  it("uses the learner's saved mode when none is passed", () => {
+    const snapshot = emptySnapshot();
+    snapshot.preferences.mode = "explore";
+    expect(statuses(snapshot)[1]?.lessons.quiz2).toBe("available");
+    expect(getBlockingLesson(snapshot, twoModuleCourse(), "quiz2")).toBeNull();
+  });
+
+  it("blocks the same item in Path mode", () => {
+    expect(getBlockingLesson(emptySnapshot(), twoModuleCourse(), "quiz2", "path")?.id).toBe("l1");
+    expect(getBlockingLesson(emptySnapshot(), twoModuleCourse(), "quiz2", "explore")).toBeNull();
+  });
+});
+
+describe("getCurrentLesson", () => {
+  const course = twoModuleCourse();
+  const current = (snapshot: ProgressSnapshot, mode: "path" | "explore") =>
+    getCurrentLesson(computeCourseState(snapshot, course, mode))?.lesson.id ?? null;
+
+  it("is the next unlocked item in Path mode", () => {
+    expect(current(emptySnapshot(), "path")).toBe("l1");
+    expect(current(withLessons("l1", "l2"), "path")).toBe("quiz1");
+  });
+
+  it("is the first unfinished item in path order in Explore mode, even after skipping ahead", () => {
+    expect(current(withLessons("l3"), "explore")).toBe("l1");
+    expect(current(withLessons("l1", "l3"), "explore")).toBe("l2");
+  });
+
+  it("is null when everything is done", () => {
+    const all = passQuiz(passQuiz(withLessons("l1", "l2", "l3"), "quiz1"), "quiz2");
+    expect(current(all, "path")).toBeNull();
+    expect(courseProgress(computeCourseState(all, course)).fraction).toBe(1);
+  });
+});
+
+describe("snapshotBefore", () => {
+  it("undoes a lesson completion so the path can animate it filling in", () => {
+    const after = withLessons("l1", "l2");
+    const before = snapshotBefore(after, "l2");
+    expect(statuses(before)[0]?.lessons).toEqual({ l1: "completed", l2: "available", quiz1: "locked" });
+    expect(statuses(after)[0]?.lessons.quiz1).toBe("available");
+    expect(after.lessons.l2).toBeDefined(); // the real snapshot is untouched
+  });
+
+  it("undoes a quiz pass, re-locking the next module in Path mode", () => {
+    const after = passQuiz(withLessons("l1", "l2"), "quiz1");
+    const before = snapshotBefore(after, "quiz1");
+    expect(statuses(before)[1]?.module).toBe("locked");
+    expect(statuses(after)[1]?.module).toBe("available");
+    expect(after.quizzes.quiz1?.passedAt).toBe("t");
+  });
+});
+
+describe("hasAnyProgress", () => {
+  it("is false for a new learner, even with a saved preference", () => {
+    const snapshot = emptySnapshot();
+    snapshot.preferences.mode = "explore";
+    expect(hasAnyProgress(snapshot)).toBe(false);
+  });
+
+  it("is true after a single card", () => {
+    const snapshot = emptySnapshot();
+    snapshot.cards[cardKey("l1", "c1")] = done;
+    expect(hasAnyProgress(snapshot)).toBe(true);
   });
 });
 

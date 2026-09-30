@@ -120,8 +120,14 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
 
   if (phase === "results" && attempt) {
     return (
-      <PlayerShell nodes={uniformNodes(total, "done")} progressLabel="Quiz progress: complete">
-        <QuizResults quiz={quiz} attempt={attempt} next={getNextLesson(course, quiz.id)} onRetake={start} />
+      <PlayerShell nodes={uniformNodes(total, "done")} progressLabel="Quiz progress: complete" exitHref={`/course/${course.id}`}>
+        <QuizResults
+          quiz={quiz}
+          attempt={attempt}
+          next={getNextLesson(course, quiz.id)}
+          onRetake={start}
+          pathHref={`/course/${course.id}?completed=${quiz.id}`}
+        />
       </PlayerShell>
     );
   }
@@ -130,7 +136,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
     const needed = Math.ceil(quiz.passThreshold * total - 1e-9);
     const previous = snapshot.quizzes[quiz.id];
     return (
-      <PlayerShell nodes={uniformNodes(total, "upcoming")} progressLabel="Quiz progress: not started">
+      <PlayerShell nodes={uniformNodes(total, "upcoming")} progressLabel="Quiz progress: not started" exitHref={`/course/${course.id}`}>
         <div className="flex min-h-[60dvh] flex-col items-center justify-center text-center">
           <NetworkMark mode="lit" className="size-24" />
           <p className="mt-6 font-mono text-caption font-semibold tracking-widest text-ink-faint uppercase">
@@ -182,6 +188,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
 
   return (
     <PlayerShell
+      exitHref={`/course/${course.id}`}
       nodes={progressNodes}
       pulse={pulse}
       progressLabel={`Quiz progress: question ${index + 1} of ${total}`}

@@ -55,9 +55,10 @@ export function LogoLockup({ className = "" }: { className?: string }) {
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
       <LogoMark variant="tile" className="size-9 shrink-0" />
-      <span className="text-lead leading-none tracking-tight">
-        <span className="font-semibold text-ink">CyberNet</span>{" "}
-        <span className="font-normal text-ink-muted">Training</span>
+      <span className="text-lead leading-none tracking-tight whitespace-nowrap">
+        <span className="font-semibold text-ink">CyberNet</span>
+        {/* Dropped on the narrowest phones so the header stays on one line. */}
+        <span className="font-normal text-ink-muted max-[399px]:hidden"> Training</span>
       </span>
     </span>
   );

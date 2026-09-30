@@ -2,6 +2,7 @@ import type { ProgressStore } from "./ProgressStore";
 import {
   cardKey,
   emptySnapshot,
+  type Preferences,
   type ProgressSnapshot,
   ProgressSnapshotSchema,
   type QuizAttempt,
@@ -93,6 +94,11 @@ export class LocalStorageProgressStore implements ProgressStore {
     });
   }
 
+  async setPreferences(preferences: Partial<Preferences>): Promise<void> {
+    const current = this.read();
+    this.write({ ...current, preferences: { ...current.preferences, ...preferences } });
+  }
+
   async resetLesson(lessonId: string): Promise<void> {
     const current = this.read();
     const prefix = cardKey(lessonId, "");
@@ -103,11 +109,12 @@ export class LocalStorageProgressStore implements ProgressStore {
     const quizzes = { ...current.quizzes };
     delete lessons[lessonId];
     delete quizzes[lessonId];
-    this.write({ cards, lessons, quizzes });
+    this.write({ cards, lessons, quizzes, preferences: current.preferences });
   }
 
+  /** Clears all progress. Settings like Path or Explore mode are kept. */
   async resetAll(): Promise<void> {
-    this.write(emptySnapshot());
+    this.write({ ...emptySnapshot(), preferences: this.read().preferences });
   }
 
   subscribe(listener: Listener): () => void {

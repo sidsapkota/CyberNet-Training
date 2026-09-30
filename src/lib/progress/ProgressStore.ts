@@ -1,4 +1,4 @@
-import type { ProgressSnapshot, QuizAttempt } from "./types";
+import type { Preferences, ProgressSnapshot, QuizAttempt } from "./types";
 
 /**
  * Persistence boundary for learner progress. Components never talk to storage
@@ -19,6 +19,9 @@ export interface ProgressStore {
 
   /** Appends an attempt; updates best score and first pass time. */
   recordQuizAttempt(quizId: string, attempt: QuizAttempt): Promise<void>;
+
+  /** Merges learner settings (e.g. Path or Explore mode). Stored with progress so it syncs later. */
+  setPreferences(preferences: Partial<Preferences>): Promise<void>;
 
   /** Clears card and completion records for one lesson or quiz. */
   resetLesson(lessonId: string): Promise<void>;

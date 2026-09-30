@@ -31,18 +31,3 @@ export function quizNetworkLayout(count: number, radius = 1): QuizNetworkLayout 
   });
   return { mode: "ring", positions };
 }
-
-/** Course-map lanes: nodes zig-zag between two lanes so connections form 45° traces. */
-export type MapLane = 0 | 1;
-
-export function mapLane(index: number): MapLane {
-  return index % 2 === 0 ? 0 : 1;
-}
-
-/**
- * The item a learner should do next: the first one that is neither completed nor locked.
- * Works on anything shaped like the course state's lesson entries.
- */
-export function findCurrentId<T extends { id: string; status: string }>(items: readonly T[]): string | null {
-  return items.find((i) => i.status === "available" || i.status === "in_progress")?.id ?? null;
-}

@@ -85,12 +85,17 @@
   --spacing-section: 3.5rem;
   --container-lesson: 40rem;
   --container-page: 48rem;
+  /* Dashboard, catalog and course path (with its side panel). */
+  --container-wide: 72rem;
 
   /* ── Depth & glow ───────────────────────────────────────────────────── */
   --shadow-card: 0 1px 0 rgb(4 25 55 / 0.04), 0 6px 20px -12px rgb(4 25 55 / 0.35);
   --shadow-lift: 0 14px 30px -12px rgb(4 25 55 / 0.45);
   /* Glow: ONLY on lit cyan nodes and the primary button. */
   --shadow-glow: 0 0 12px rgb(0 194 255 / 0.4);
+  /* Path nodes sit on a solid "lip" so they read as tappable. Lit nodes also get the glow. */
+  --shadow-node: 0 5px 0 var(--color-line-strong);
+  --shadow-node-lit: 0 5px 0 var(--color-accent-ink), 0 0 12px rgb(0 194 255 / 0.4);
 
   /* ── Motion ─────────────────────────────────────────────────────────── */
   --ease-out-quick: cubic-bezier(0.22, 1, 0.36, 1);

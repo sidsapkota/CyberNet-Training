@@ -25,6 +25,32 @@ describe("LocalStorageProgressStore", () => {
     expect(await store.getSnapshot()).toEqual(emptySnapshot());
   });
 
+  it("loads progress saved before preferences existed, defaulting to Path mode", async () => {
+    const saved = {
+      cards: { [cardKey("l1", "c1")]: { completedAt: "2026-01-01T00:00:00.000Z", xp: 10 } },
+      lessons: {},
+      quizzes: {},
+      totalXp: 10,
+    };
+    storage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(saved));
+    const snapshot = await store.getSnapshot();
+    expect(snapshot.preferences).toEqual({ mode: "path" });
+    expect(snapshot.cards[cardKey("l1", "c1")]?.xp).toBe(10);
+  });
+
+  it("saves the learning mode and keeps it through resets", async () => {
+    await store.setPreferences({ mode: "explore" });
+    await store.completeCard("l1", "c1", 10);
+    expect((await new LocalStorageProgressStore(() => storage).getSnapshot()).preferences.mode).toBe("explore");
+
+    await store.resetLesson("l1");
+    expect((await store.getSnapshot()).preferences.mode).toBe("explore");
+    await store.resetAll();
+    const reset = await store.getSnapshot();
+    expect(reset.preferences.mode).toBe("explore");
+    expect(reset.cards).toEqual({});
+  });
+
   it("persists across instances (i.e. a page refresh)", async () => {
     await store.completeCard("l1", "c1", 10);
     await store.completeLesson("l1", 20);

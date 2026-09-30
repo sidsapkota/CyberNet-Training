@@ -18,7 +18,10 @@ export function LessonComplete({
   challengesCompleted,
   challengesTotal,
   next,
+  pathHref,
 }: {
+  /** The course path, with `?completed=` so the new node fills in there. */
+  pathHref: string;
   title: string;
   xpEarned: number;
   alreadyCompleted: boolean;
@@ -75,12 +78,12 @@ export function LessonComplete({
               <ButtonLink href={`/lesson/${next.id}`}>
                 {nextLessonLabel(next)} <ArrowRightIcon className="size-5" />
               </ButtonLink>
-              <ButtonLink href="/" variant="ghost">
-                Back to courses
+              <ButtonLink href={pathHref} variant="ghost">
+                Back to path
               </ButtonLink>
             </>
           ) : (
-            <ButtonLink href="/">Back to courses</ButtonLink>
+            <ButtonLink href={pathHref}>Back to path</ButtonLink>
           )}
         </div>
       </motion.div>

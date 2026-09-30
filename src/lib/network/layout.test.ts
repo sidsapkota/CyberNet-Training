@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { findCurrentId, mapLane, QUIZ_RING_MAX, quizNetworkLayout } from "./layout";
+import { QUIZ_RING_MAX, quizNetworkLayout } from "./layout";
 
 describe("quizNetworkLayout", () => {
   it("places up to 8 questions on a ring, starting at the top, clockwise", () => {
@@ -32,32 +32,5 @@ describe("quizNetworkLayout", () => {
   it("uses a sensible column count for small grids", () => {
     const layout = quizNetworkLayout(9);
     expect(layout.mode === "grid" && layout.columns).toBe(5);
-  });
-});
-
-describe("mapLane", () => {
-  it("alternates lanes so connections zig-zag", () => {
-    expect([0, 1, 2, 3].map(mapLane)).toEqual([0, 1, 0, 1]);
-  });
-});
-
-describe("findCurrentId", () => {
-  it("returns the first item that is available or in progress", () => {
-    expect(
-      findCurrentId([
-        { id: "a", status: "completed" },
-        { id: "b", status: "in_progress" },
-        { id: "c", status: "available" },
-      ]),
-    ).toBe("b");
-  });
-
-  it("returns null when everything is completed or locked", () => {
-    expect(
-      findCurrentId([
-        { id: "a", status: "completed" },
-        { id: "b", status: "locked" },
-      ]),
-    ).toBeNull();
   });
 });

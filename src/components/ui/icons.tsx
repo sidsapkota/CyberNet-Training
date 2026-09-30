@@ -1,12 +1,16 @@
 import {
   ArrowRight,
+  BookCheck,
   Check,
   ChevronDown,
   CircleAlert,
   Cloud,
+  Compass,
   Diamond,
   GripVertical,
+  House,
   Laptop,
+  LibraryBig,
   Lightbulb,
   Lock,
   type LucideIcon,
@@ -15,11 +19,13 @@ import {
   Network,
   Play,
   RotateCcw,
+  Route,
   Router,
   Server,
   Sun,
   SquareTerminal,
   Undo2,
+  Waypoints,
   X,
   Zap,
 } from "lucide-react";
@@ -70,3 +76,11 @@ export const RouterIcon = brandIcon(Router, "RouterIcon");
 export const SwitchIcon = brandIcon(Network, "SwitchIcon");
 export const ServerIcon = brandIcon(Server, "ServerIcon");
 export const InternetIcon = brandIcon(Cloud, "InternetIcon");
+
+// Navigation, dashboard and course path
+export const DashboardIcon = brandIcon(House, "DashboardIcon");
+export const CoursesIcon = brandIcon(LibraryBig, "CoursesIcon");
+export const PathModeIcon = brandIcon(Route, "PathModeIcon");
+export const ExploreModeIcon = brandIcon(Compass, "ExploreModeIcon");
+export const LessonsIcon = brandIcon(BookCheck, "LessonsIcon");
+export const ModulesIcon = brandIcon(Waypoints, "ModulesIcon");

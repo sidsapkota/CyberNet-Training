@@ -35,6 +35,9 @@ All of `build`, `lint`, `test` and `typecheck` must pass with zero errors and wa
 - Zod v4 for content and stored-progress validation
 - `react-markdown` for card text (raw HTML is skipped)
 - `lucide-react` icons, always via the wrappers in `src/components/ui/icons.tsx`
+- `@radix-ui/react-popover` for the course-path node popovers (focus, Escape, outside click and
+  collision-aware positioning); `canvas-confetti` for the module-complete celebration, loaded on
+  demand by `src/lib/celebrate.ts`
 - IBM Plex Sans + IBM Plex Mono via `next/font/google` (self-hosted at build time)
 - `@supabase/supabase-js` + `@supabase/ssr` (clients prepared, not used yet); Supabase CLI via `npx supabase`
 - Vitest for unit tests
@@ -207,6 +210,11 @@ interactive, update `isInteractiveCard` / `InteractiveCard` in `schema.ts`.
   - Syncs across tabs via the `storage` event.
 - **Swapping in Supabase:** implement `ProgressStore`, then pass it as
   `<ProgressProvider store={…}>` in `src/components/Providers.tsx`.
+- **Preferences:** the snapshot's `preferences` (currently `mode: "path" | "explore"`) are saved with
+  progress via `store.setPreferences()`, so they sync once progress does. The field is optional in
+  stored data (Zod default), so progress saved before it existed still loads. `resetAll` keeps it.
+- **Timestamps:** cards and lessons record `completedAt`, and quizzes `passedAt` and attempt `at`.
+  `activity.ts` derives the dashboard's per-day activity and totals from them (pure, takes `now`).
 - **`xp.ts`** holds every XP rule and number, and callers use it to decide awards:
   - core cards: 10 on the first try, 5 after retries
   - challenge cards: 20 on the first try, 10 after retries
@@ -216,12 +224,40 @@ interactive, update `isInteractiveCard` / `InteractiveCard` in `schema.ts`.
 - **`state.ts`** holds pure derived state, and nothing derived is ever stored:
   - unlocks: lessons in order within a module; the quiz after all of the module's lessons; the next
     module after this module's quiz is passed
-  - statuses, module progress, the next lesson, the blocking lesson, and the resume position
+  - **Explore mode** (`preferences.mode === "explore"`): nothing is locked, in any order; completion
+    and XP work the same. Every state function takes an optional `mode`, defaulting to the
+    learner's saved one, so existing callers (like the lesson gate) respect it automatically.
+  - statuses, module progress, course progress, the current lesson (`getCurrentLesson`: the first
+    item in path order that isn't done or locked), the blocking lesson, and the resume position
+  - `snapshotBefore(snapshot, id)`: progress minus one completion, which the path draws first so a
+    newly completed node visibly fills in
 
 ### Pages
-- `/`: the **course map**. Each module is a card whose lessons form a vertical network path
-  (`src/components/home/CourseMap.tsx`), ending in the quiz as a hub node.
-- `/lesson/[id]`: statically generated for every lesson and quiz (`dynamicParams = false`).
+Pages with the site header live in the `src/app/(main)/` route group: a top bar (logo, Dashboard,
+Courses, XP, theme) and, on phones, a bottom tab bar (`src/components/nav/SiteNav.tsx`). Lessons
+keep their focused player shell.
+- `/`: **dashboard** (`src/components/dashboard/Dashboard.tsx`). A big "Continue" hero for the
+  current lesson, real stats (XP, lessons, modules), 14 days of activity, a progress ring per
+  course, and "Your courses". Learners with no progress see a one-button welcome instead.
+- `/courses`: **catalog**, a grid of `CourseCard`s (cover, title, one-line description, progress).
+  With a single course, a dim "More courses on the way" tile fills the grid.
+- `/course/[id]`: **course path** (`src/components/course/CoursePath.tsx`):
+  - A Duolingo-style zig-zag of large nodes joined by 45° traces, laid out by
+    `src/lib/network/path.ts`. Module banners show only the number and title.
+  - Tapping a node opens a popover: title, one generated line (state, `about N min` from
+    `estimateMinutes`, or what to finish first) and one button.
+  - Locked nodes offer "Open in Explore".
+  - Desktop adds a sticky side panel (cover, progress, Path/Explore toggle, up next).
+  - Lesson and quiz end screens link back with `?completed=<id>`. The path draws
+    `snapshotBefore` for a moment, then the real state, so the node fills and the trace lights.
+    The query is then removed.
+- `/lesson/[id]`: statically generated for every lesson and quiz (`dynamicParams = false`). In Path
+  mode a locked item offers "Switch to Explore". ✕ returns to the course path.
+- **Client-only rendering:** progress-dependent pages render the `NetworkMark` loading state until
+  progress loads, then draw. This also keeps reduced-motion entrances from mismatching the
+  server HTML.
+- **Time estimates:** `src/lib/content/estimate.ts` uses a conservative 45 seconds per card, rounded
+  to whole minutes. Keep estimates honest; don't hand-write durations.
 
 ## Folder structure
 
@@ -236,14 +272,19 @@ src/cards/               card types, contract, union schema, registry; shared/ (
 src/components/player/   lesson/quiz player UI
 src/components/brand/    logo geometry (single source of truth) and <LogoMark>/<LogoLockup>
 src/components/network/  the network motif: NetworkMark, NodeProgress, QuizNetwork
-src/components/home/     home page UI, course map
-src/components/ui/       Button, Markdown, icons (lucide wrappers), CountUp, ThemeToggle
+src/components/nav/      site header and phone tab bar
+src/components/dashboard/ dashboard (hero, stats, activity, rings, welcome), reset button
+src/components/course/   course path, path nodes + popovers, mode toggle, course card, catalog
+src/components/illustrations/ course covers (CourseCover registry, keyed by course id)
+src/components/ui/       Button, Markdown, icons (lucide wrappers), CountUp, ProgressRing, ThemeToggle
 src/lib/content/         schemas, fs loader (load.ts), server accessors (server.ts)
 src/lib/progress/        ProgressStore, localStorage impl, provider, xp, derived state
 src/lib/keyboard.ts      global keyboard shortcut helpers
 src/lib/supabase/        env validation, typed browser/server clients, generated DB types
 supabase/                Supabase CLI project (config.toml; migrations go in supabase/migrations/)
-src/lib/network/         pure layout maths for the motif (quiz ring/grid, map lanes)
+src/lib/network/         pure layout maths for the motif (quiz ring/grid, course path zig-zag + traces)
+src/lib/motion.ts        shared springs, easing and stagger for UI motion
+src/lib/celebrate.ts     module-complete confetti (brand colours, skipped under reduced motion)
 src/test/fixtures.ts     test data builders
 src/dev/                 dev-only card samples + playground (served at /dev/cards under next dev)
 ```
@@ -300,9 +341,14 @@ src/dev/                 dev-only card samples + playground (served at /dev/card
 ### Concept: the network
 The logo is a shield containing a hub node joined to four nodes. **Nodes and connections are the
 visual language of the whole app:** learning means connecting nodes.
-- **Course map:** lessons are nodes on a vertical path of 45° circuit traces, and the quiz is a
-  larger hub. Completed nodes are lit cyan with a check. The current node has a gentle pulse ring.
-  Locked nodes are dim outlines with a lock. Connections light up once the node before is done.
+- **Course path:** lessons are large nodes (72px, the quiz hub 96px) zig-zagging down 45° circuit
+  traces. States are shown by shape and icon, never repeated words:
+  - Done: filled cyan with a check.
+  - Current: a cyan ring, a pulse and a "Start"/"Continue" bubble.
+  - Available: a cyan outline with the number.
+  - Locked: dim, with a lock glyph.
+  Nodes sit on a solid "lip" (`shadow-node`, `shadow-node-lit`). Connections light up once the node
+  before is done.
 - **Lesson progress:** `NodeProgress` shows one node per card on a trace. Challenge cards are
   diamonds; skipped challenges are amber outlines.
 - **Feedback:** a correct answer sends a pulse along the trace to the card's node (~370ms). A wrong
@@ -369,19 +415,30 @@ text pairing meets WCAG AA (≥ 4.5:1), and UI outlines meet 3:1.
 - **Radii:** `rounded-sm` (4px) for chips and key hints, `rounded-control` (8px) for buttons and
   options, `rounded-card` (12px) for cards. These are tighter than typical SaaS, to feel technical.
 - **Fully round (`rounded-node`) is only for nodes,** which keeps the node shape special.
-- **Spacing:** Tailwind's 4px scale plus the `gutter` and `section` tokens and the `max-w-lesson`
-  and `max-w-page` containers.
+- **Spacing:** Tailwind's 4px scale plus the `gutter` and `section` tokens and the `max-w-lesson`,
+  `max-w-page` and `max-w-wide` (dashboard, catalog, course path) containers.
 
 ### Icons
 - **lucide-react only,** imported from `src/components/ui/icons.tsx`, which sets `strokeWidth` 1.75
   and round caps/joins to match the logo. Add new icons there.
-- **Custom drawing** is allowed only for the logo and node shapes. No emoji as icons.
+- **Custom drawing** is allowed only for the logo, node shapes and illustrations (explainer SVGs and
+  course covers). No emoji as icons.
 
 ### Motion
 - **Purposeful and quick:** feedback animations stay under 400ms, and celebrations about 1s.
   Easing is `ease-out-quick` (`cubic-bezier(0.22, 1, 0.36, 1)`).
-- **Correct:** a pulse along the trace plus a node ripple. **Wrong:** a small shake. **No bounces.**
-- **The only loops** are the current-node pulse (2.4s) and the loading sequence.
+- **Correct:** a pulse along the trace plus a node ripple. **Wrong:** a small shake. Feedback never
+  bounces.
+- **Springs:** presses, hovers and popovers may use a spring with a small overshoot
+  (`PRESS_SPRING`, `POPOVER_SPRING` in `src/lib/motion.ts`, about 7%). Nothing else bounces.
+- **Entrances:** dashboard blocks rise in with a 60ms stagger, and path nodes pop in with a 30ms
+  stagger, capped so long lists don't drag (`staggerDelay`).
+- **Numbers and rings** animate up to their value (`CountUp`, `ProgressRing`) and animate again
+  when the value changes.
+- **Module complete:** one short confetti burst in brand colours on the quiz pass screen
+  (`celebrate()`).
+- **The only loops** are the current-node pulse (2.4s), the loading sequence, and the slow packet
+  on course covers.
 - **`prefers-reduced-motion`:** every animation must render its final state instantly. Use
   `useReducedMotion()` for motion components; CSS keyframes are neutralised in `globals.css`.
 
@@ -392,8 +449,20 @@ text pairing meets WCAG AA (≥ 4.5:1), and UI outlines meet 3:1.
   hairline border.
 - No emoji as icons, and one icon set.
 - No generic grey or black dark mode: surfaces are navy.
-- Round shapes are for nodes only. Glow is for cyan interactive elements only.
+- Round shapes are for nodes (and progress rings) only. Glow is for cyan interactive elements only.
 - New screens should use the network motif for loading, empty, success and locked states.
+
+### Copy rules (dashboard, catalog, course path and any new page)
+- **Cut text.** Headings are at most about 4 words. Any description is one line at most (truncate
+  rather than wrap). No paragraphs of explanation on navigation pages.
+- **State is visual.** Show done, current, available and locked with shape, colour *and* icon, not
+  repeated labels like "Locked" on every row. The screen-reader label carries the words.
+- **No metadata clutter.** Card counts, "x/y done" and similar belong in a popover or side panel,
+  and only if they help a decision. Never put them on the path itself.
+- **Tap to reveal.** Details (title, the one-line status, the action) appear in a popover on tap,
+  not all at once.
+- **One primary action per view:** the dashboard's Continue, the popover's Start, the welcome's
+  Start learning.
 
 ## Content style guide
 

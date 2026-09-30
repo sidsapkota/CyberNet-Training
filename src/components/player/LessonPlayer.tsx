@@ -1,8 +1,8 @@
 "use client";
 
 import { NetworkMark } from "@/components/network/NetworkMark";
-import { ButtonLink } from "@/components/ui/Button";
-import { LockIcon } from "@/components/ui/icons";
+import { Button, ButtonLink } from "@/components/ui/Button";
+import { ExploreModeIcon, LockIcon } from "@/components/ui/icons";
 import type { CourseOutline, Lesson } from "@/lib/content/schema";
 import { useProgress } from "@/lib/progress/ProgressProvider";
 import { getBlockingLesson, resumeIndex } from "@/lib/progress/state";
@@ -15,13 +15,18 @@ import { QuizRun } from "./QuizRun";
  * friendly gate for locked items, then runs the lesson or quiz.
  */
 export function LessonPlayer({ lesson, course }: { lesson: Lesson; course: CourseOutline }) {
-  const { snapshot } = useProgress();
+  const { snapshot, store } = useProgress();
   if (!snapshot) return <PlayerSkeleton />;
 
+  // In Explore mode nothing is blocked; in Path mode, offer to switch rather than just refusing.
   const blocking = getBlockingLesson(snapshot, course, lesson.id);
   if (blocking) {
     return (
-      <PlayerShell nodes={uniformNodes(lesson.cards.length, "upcoming")} progressLabel="Locked">
+      <PlayerShell
+        nodes={uniformNodes(lesson.cards.length, "upcoming")}
+        progressLabel="Locked"
+        exitHref={`/course/${course.id}`}
+      >
         <div className="flex min-h-[60dvh] flex-col items-center justify-center text-center">
           <div className="relative">
             <NetworkMark mode="dim" className="size-24" />
@@ -29,15 +34,18 @@ export function LessonPlayer({ lesson, course }: { lesson: Lesson; course: Cours
               <LockIcon className="size-4" />
             </span>
           </div>
-          <h1 className="mt-6 text-title font-semibold text-balance">{lesson.title} is locked</h1>
+          <h1 className="mt-6 text-title font-semibold text-balance">{lesson.title}</h1>
           <p className="mt-3 max-w-sm text-ink-muted">
-            Lessons unlock in order. Finish <strong className="font-semibold text-ink">{blocking.title}</strong>{" "}
-            first and this one will connect.
+            On the path, <strong className="font-semibold text-ink">{blocking.title}</strong> comes first. Or
+            switch to Explore and take lessons in any order.
           </p>
           <div className="mt-8 flex w-full max-w-sm flex-col gap-2">
-            <ButtonLink href={`/lesson/${blocking.id}`}>Go to {blocking.title}</ButtonLink>
-            <ButtonLink href="/" variant="ghost">
-              Back to courses
+            {/* Switching mode updates the snapshot, which unblocks and renders this lesson. */}
+            <Button onClick={() => void store.setPreferences({ mode: "explore" })}>
+              <ExploreModeIcon className="size-5" /> Switch to Explore
+            </Button>
+            <ButtonLink href={`/lesson/${blocking.id}`} variant="ghost">
+              Go to {blocking.title}
             </ButtonLink>
           </div>
         </div>

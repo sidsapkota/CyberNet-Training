@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { useEffect } from "react";
 import { getCardDefinition } from "@/cards/registry";
 import { isInteractiveCard } from "@/cards/schema";
 import { QuizNetwork } from "@/components/network/QuizNetwork";
@@ -9,6 +10,7 @@ import { CountUp } from "@/components/ui/CountUp";
 import { ArrowRightIcon, CheckIcon, RetryIcon, XIcon, XpIcon } from "@/components/ui/icons";
 import { Markdown } from "@/components/ui/Markdown";
 import type { LessonOutline, Quiz } from "@/lib/content/schema";
+import { celebrate } from "@/lib/celebrate";
 import type { QuizAttempt } from "@/lib/progress/types";
 
 export function QuizResults({
@@ -16,7 +18,10 @@ export function QuizResults({
   attempt,
   next,
   onRetake,
+  pathHref,
 }: {
+  /** The course path, with `?completed=` so the hub fills in there. */
+  pathHref: string;
   quiz: Quiz;
   attempt: QuizAttempt;
   next: LessonOutline | null;
@@ -27,6 +32,14 @@ export function QuizResults({
   const percent = Math.round(attempt.score * 100);
   const threshold = Math.round(quiz.passThreshold * 100);
   const results = quiz.cards.map((card) => attempt.answers.find((a) => a.cardId === card.id)?.correct ?? false);
+
+  // Passing the quiz completes the module: a short confetti burst as the hub lights up.
+  // (celebrate() does nothing under prefers-reduced-motion.)
+  useEffect(() => {
+    if (!attempt.passed) return;
+    const timer = window.setTimeout(() => void celebrate(), 600);
+    return () => window.clearTimeout(timer);
+  }, [attempt]);
 
   return (
     <div>
@@ -67,7 +80,12 @@ export function QuizResults({
                   Start the next module <ArrowRightIcon className="size-5" />
                 </ButtonLink>
               ) : (
-                <ButtonLink href="/">Back to courses</ButtonLink>
+                <ButtonLink href={pathHref}>Back to path</ButtonLink>
+              )}
+              {next && (
+                <ButtonLink href={pathHref} variant="ghost">
+                  Back to path
+                </ButtonLink>
               )}
               <Button variant="ghost" onClick={onRetake}>
                 <RetryIcon className="size-4" /> Retake quiz
@@ -78,8 +96,8 @@ export function QuizResults({
               <Button onClick={onRetake}>
                 <RetryIcon className="size-5" /> Retake quiz
               </Button>
-              <ButtonLink href="/" variant="ghost">
-                Back to courses
+              <ButtonLink href={pathHref} variant="ghost">
+                Back to path
               </ButtonLink>
             </>
           )}

@@ -12,7 +12,10 @@ export function PlayerShell({
   progressLabel,
   children,
   footer,
+  exitHref = "/",
 }: {
+  /** Where ✕ goes: the lesson's course path. */
+  exitHref?: string;
   nodes: ProgressNode[];
   pulse?: { key: number; from: number; to: number } | null;
   progressLabel: string;
@@ -24,9 +27,9 @@ export function PlayerShell({
       <header className="sticky top-0 z-20 border-b border-line bg-canvas">
         <div className="mx-auto flex max-w-lesson items-center gap-3 px-gutter py-3">
           <Link
-            href="/"
-            aria-label="Exit to courses"
-            title="Exit to courses"
+            href={exitHref}
+            aria-label="Exit to the course path"
+            title="Exit to the course path"
             className="grid size-10 shrink-0 place-items-center rounded-control text-ink-muted transition-colors hover:bg-surface-raised hover:text-ink"
           >
             <XIcon className="size-5" />

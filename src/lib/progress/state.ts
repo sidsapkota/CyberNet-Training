@@ -1,6 +1,6 @@
 import type { Card } from "@/cards/schema";
 import type { CourseOutline, LessonOutline, ModuleOutline } from "@/lib/content/schema";
-import { isCardCompleted, type ProgressSnapshot } from "./types";
+import { isCardCompleted, type LearningMode, type ProgressSnapshot } from "./types";
 
 /**
  * Pure functions that derive display state (locked, completed, percentages,
@@ -12,6 +12,9 @@ import { isCardCompleted, type ProgressSnapshot } from "./types";
  * - Within an unlocked module, lessons unlock in order: each needs the previous one completed.
  * - The module quiz unlocks once every regular lesson in the module is completed.
  * - A module is complete when its quiz is passed.
+ *
+ * In Explore mode (the learner's `preferences.mode`) nothing is locked: every lesson and quiz can be
+ * taken in any order. Completion, XP and "what's next" work exactly the same.
  */
 
 export type ItemStatus = "locked" | "available" | "in_progress" | "completed";
@@ -70,6 +73,7 @@ export function computeModuleState(
   snapshot: ProgressSnapshot,
   mod: ModuleOutline,
   moduleUnlocked: boolean,
+  mode: LearningMode = snapshot.preferences.mode,
 ): ModuleState {
   const regular = mod.lessons.filter((l) => l.kind === "lesson");
   const allRegularDone = regular.every((l) => isLessonDone(snapshot, l));
@@ -77,7 +81,8 @@ export function computeModuleState(
   let previousDone = true;
   const lessons = mod.lessons.map((lesson) => {
     const unlocked =
-      moduleUnlocked && (lesson.kind === "quiz" ? allRegularDone : previousDone);
+      mode === "explore" ||
+      (moduleUnlocked && (lesson.kind === "quiz" ? allRegularDone : previousDone));
     if (lesson.kind === "lesson") previousDone = isLessonDone(snapshot, lesson);
     return lessonState(snapshot, lesson, unlocked);
   });
@@ -88,7 +93,7 @@ export function computeModuleState(
 
   let status: ItemStatus;
   if (quizPassed) status = "completed";
-  else if (!moduleUnlocked) status = "locked";
+  else if (!moduleUnlocked && mode === "path") status = "locked";
   else if (lessons.some((l) => l.status === "completed" || l.status === "in_progress"))
     status = "in_progress";
   else status = "available";
@@ -103,10 +108,14 @@ export function computeModuleState(
   };
 }
 
-export function computeCourseState(snapshot: ProgressSnapshot, course: CourseOutline): CourseState {
+export function computeCourseState(
+  snapshot: ProgressSnapshot,
+  course: CourseOutline,
+  mode: LearningMode = snapshot.preferences.mode,
+): CourseState {
   let previousModuleDone = true;
   const modules = course.modules.map((mod) => {
-    const state = computeModuleState(snapshot, mod, previousModuleDone);
+    const state = computeModuleState(snapshot, mod, previousModuleDone, mode);
     previousModuleDone = state.status === "completed";
     return state;
   });
@@ -115,6 +124,35 @@ export function computeCourseState(snapshot: ProgressSnapshot, course: CourseOut
     modules,
     completedModules: modules.filter((m) => m.status === "completed").length,
   };
+}
+
+/**
+ * The learner's next item: the first one, in path order, that isn't completed or locked. In Path
+ * mode that's the next unlocked lesson; in Explore mode it's the first unfinished one. Null once
+ * everything is done.
+ */
+export function getCurrentLesson(state: CourseState): LessonState | null {
+  for (const mod of state.modules) {
+    const found = mod.lessons.find((l) => l.status !== "completed" && l.status !== "locked");
+    if (found) return found;
+  }
+  return null;
+}
+
+/** Completed lessons and quizzes out of all of them. */
+export function courseProgress(state: CourseState): { completed: number; total: number; fraction: number } {
+  const all = state.modules.flatMap((m) => m.lessons);
+  const completed = all.filter((l) => l.status === "completed").length;
+  return { completed, total: all.length, fraction: all.length === 0 ? 0 : completed / all.length };
+}
+
+/** True once the learner has done anything at all (drives the first-visit welcome). */
+export function hasAnyProgress(snapshot: ProgressSnapshot): boolean {
+  return (
+    Object.keys(snapshot.cards).length > 0 ||
+    Object.keys(snapshot.lessons).length > 0 ||
+    Object.keys(snapshot.quizzes).length > 0
+  );
 }
 
 /** Every lesson and quiz of a course, in the order a learner takes them. */
@@ -126,8 +164,9 @@ export function findLessonState(
   snapshot: ProgressSnapshot,
   course: CourseOutline,
   lessonId: string,
+  mode: LearningMode = snapshot.preferences.mode,
 ): LessonState | undefined {
-  for (const mod of computeCourseState(snapshot, course).modules) {
+  for (const mod of computeCourseState(snapshot, course, mode).modules) {
     const found = mod.lessons.find((l) => l.lesson.id === lessonId);
     if (found) return found;
   }
@@ -143,14 +182,15 @@ export function getNextLesson(course: CourseOutline, lessonId: string): LessonOu
 
 /**
  * For a locked item, the earliest unfinished item the learner should do first.
- * Returns null if the item is not locked.
+ * Returns null if the item is not locked (always, in Explore mode).
  */
 export function getBlockingLesson(
   snapshot: ProgressSnapshot,
   course: CourseOutline,
   lessonId: string,
+  mode: LearningMode = snapshot.preferences.mode,
 ): LessonOutline | null {
-  const state = findLessonState(snapshot, course, lessonId);
+  const state = findLessonState(snapshot, course, lessonId, mode);
   if (!state || state.status !== "locked") return null;
   return flattenCourse(course).find((l) => !isLessonDone(snapshot, l)) ?? null;
 }
@@ -191,4 +231,18 @@ export function lessonFinishState(
     missingCore: cards.findIndex((c) => c.difficulty === "core" && !done(c)),
     challengesCompleted: cards.filter((c) => c.difficulty === "challenge" && done(c)).length,
   };
+}
+
+/**
+ * Progress as it was just before `lessonId` was completed (its lesson record, or its quiz pass,
+ * removed). The course path draws this first, then the real snapshot, so a newly completed node
+ * visibly fills in and the trace to the next node lights up.
+ */
+export function snapshotBefore(snapshot: ProgressSnapshot, lessonId: string): ProgressSnapshot {
+  const lessons = { ...snapshot.lessons };
+  delete lessons[lessonId];
+  const quizzes = { ...snapshot.quizzes };
+  const quiz = quizzes[lessonId];
+  if (quiz) quizzes[lessonId] = { ...quiz, passedAt: null };
+  return { ...snapshot, lessons, quizzes };
 }
