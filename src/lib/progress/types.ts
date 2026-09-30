@@ -45,11 +45,13 @@ export type LearningMode = z.infer<typeof LearningModeSchema>;
 
 export const PreferencesSchema = z.object({
   mode: LearningModeSchema.default("path"),
+  /** Sound effects and haptics. On by default; nothing plays before the first interaction. */
+  sound: z.boolean().default(true),
 });
 export type Preferences = z.infer<typeof PreferencesSchema>;
 
 export function defaultPreferences(): Preferences {
-  return { mode: "path" };
+  return { mode: "path", sound: true };
 }
 
 export const ProgressSnapshotSchema = z.object({

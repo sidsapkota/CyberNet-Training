@@ -172,10 +172,17 @@ describe("mergeProgress", () => {
   });
 
   it("keeps the guest's Explore choice, otherwise the account's", () => {
-    const explore = snapshot({ preferences: { mode: "explore" } });
+    const explore = snapshot({ preferences: { mode: "explore", sound: true } });
     expect(mergeProgress(snapshot(), explore, index).preferences.mode).toBe("explore");
     expect(mergeProgress(explore, snapshot(), index).preferences.mode).toBe("explore");
     expect(mergeProgress(snapshot(), snapshot(), index).preferences.mode).toBe("path");
+  });
+
+  it("keeps the guest's sound-off choice, otherwise the account's", () => {
+    const quiet = snapshot({ preferences: { mode: "path", sound: false } });
+    expect(mergeProgress(snapshot(), quiet, index).preferences.sound).toBe(false);
+    expect(mergeProgress(quiet, snapshot(), index).preferences.sound).toBe(false);
+    expect(mergeProgress(snapshot(), snapshot(), index).preferences.sound).toBe(true);
   });
 
   it("is idempotent: signing in again with the same local progress changes nothing", () => {

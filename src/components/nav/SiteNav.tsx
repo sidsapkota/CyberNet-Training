@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import type { ComponentType } from "react";
 import { LogoLockup } from "@/components/brand/Logo";
 import { CoursesIcon, DashboardIcon, SignInIcon } from "@/components/ui/icons";
+import { SoundToggle } from "@/components/ui/SoundToggle";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { XpPill } from "@/components/XpPill";
 import { useAuth } from "@/lib/auth/AuthProvider";
@@ -65,6 +66,7 @@ export function SiteHeader() {
           <Link href="/" aria-label="Your XP, on the dashboard" className="rounded-control">
             <XpPill />
           </Link>
+          <SoundToggle />
           <ThemeToggle />
           <HeaderAccount />
         </div>

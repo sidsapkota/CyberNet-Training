@@ -26,6 +26,7 @@ export interface ProgressRows {
   lessons: LessonRow[];
   attempts: AttemptRow[];
   learningMode: string | null | undefined;
+  soundEnabled?: boolean | null;
 }
 
 const iso = (value: string) => new Date(value).toISOString();
@@ -54,7 +55,12 @@ export function rowsToSnapshot(rows: ProgressRows): ProgressSnapshot {
   for (const [id, attempts] of byQuiz) quizzes[id] = quizProgressFrom(attempts);
 
   const mode = LearningModeSchema.safeParse(rows.learningMode);
-  const next = { cards, lessons, quizzes, preferences: { mode: mode.success ? mode.data : ("path" as const) } };
+  const next = {
+    cards,
+    lessons,
+    quizzes,
+    preferences: { mode: mode.success ? mode.data : ("path" as const), sound: rows.soundEnabled ?? true },
+  };
   return { ...next, totalXp: sumXp(next) };
 }
 

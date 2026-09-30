@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/Button";
 import type { CourseOutline, Quiz } from "@/lib/content/schema";
 import { useGlobalKeyDown } from "@/lib/keyboard";
 import { useProgress } from "@/lib/progress/ProgressProvider";
+import { useFeedback } from "@/lib/feedback";
 import { getNextLesson } from "@/lib/progress/state";
 import { emptySnapshot, type QuizAttempt } from "@/lib/progress/types";
 import { quizXpToAward, scoreQuiz } from "@/lib/progress/xp";
@@ -45,6 +46,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
   const [attempt, setAttempt] = useState<QuizAttempt | null>(null);
   const [pulse, setPulse] = useState<{ key: number; from: number; to: number } | null>(null);
   const { scope, playIncorrect } = useFeedbackAnimation();
+  const feedback = useFeedback();
 
   const card = quiz.cards[index] as Card;
   const definition = getCardDefinition(card);
@@ -69,6 +71,8 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
     setAnswers((current) => [...current, { cardId: card.id, answer: run.answer, correct }]);
     if (correct) setPulse((current) => ({ key: (current?.key ?? 0) + 1, from: index - 1, to: index }));
     else playIncorrect();
+    feedback.play(correct ? "correct" : "wrong");
+    feedback.haptic(correct ? "success" : "error");
   }
 
   async function finish() {

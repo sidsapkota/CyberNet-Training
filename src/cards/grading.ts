@@ -4,12 +4,17 @@
  * grader here too (registration step 3); `satisfies` makes the compiler insist.
  */
 import { gradeBinaryToggle } from "./binary-toggle/grade";
+import { gradeHotspot } from "./hotspot/grade";
 import { gradeDragToOrder } from "./drag-to-order/grade";
 import { gradeMatchPairs } from "./match-pairs/grade";
 import { gradeMultipleChoice } from "./multiple-choice/grade";
 import { gradeNumericInput } from "./numeric-input/grade";
 import { gradePacketPath } from "./packet-path/grade";
+import { gradeScenario } from "./scenario/grade";
 import type { InteractiveCard } from "./schema";
+import { gradeSimulator } from "./simulator/grade";
+import { gradeSortBins } from "./sort-bins/grade";
+import { gradeTeardown } from "./teardown/grade";
 import { gradeTerminal } from "./terminal/grade";
 import type { GradeResult } from "./types";
 
@@ -25,6 +30,11 @@ const GRADERS = {
   match_pairs: gradeMatchPairs,
   packet_path: gradePacketPath,
   terminal: gradeTerminal,
+  hotspot: gradeHotspot,
+  teardown: gradeTeardown,
+  simulator: gradeSimulator,
+  scenario: gradeScenario,
+  sort_bins: gradeSortBins,
 } satisfies Graders;
 
 /**

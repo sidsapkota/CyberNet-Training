@@ -3,10 +3,15 @@ import {
   binaryToggle,
   dragToOrder,
   explainer,
+  hotspot,
   matchPairs,
   multipleChoice,
   numericInput,
   packetPath,
+  scenario,
+  simulator,
+  sortBins,
+  teardown,
   terminal,
 } from "@/test/fixtures";
 import { BinaryToggleCardSchema } from "./binary-toggle/schema";
@@ -46,8 +51,13 @@ describe("CardSchema (discriminated union)", () => {
       matchPairs(),
       packetPath(),
       terminal(),
+      hotspot(),
+      teardown(),
+      simulator(),
+      scenario(),
+      sortBins(),
     ]) {
-      expect(CardSchema.safeParse(card).success).toBe(true);
+      expect(CardSchema.safeParse(card).success, card.type).toBe(true);
     }
   });
 

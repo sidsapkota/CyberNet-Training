@@ -15,6 +15,7 @@ import { mergeProgress } from "@/lib/progress/merge";
 import { rowsToSnapshot, snapshotToRows } from "@/lib/progress/rows";
 import {
   type CardCompletion,
+  type LearningMode,
   LearningModeSchema,
   type LessonCompletion,
   type Preferences,
@@ -36,7 +37,7 @@ async function loadAccountSnapshot(admin: ReturnType<typeof createSupabaseAdminC
     admin.from("card_completions").select("lesson_id, card_id, completed_at, xp").eq("user_id", userId),
     admin.from("lesson_completions").select("lesson_id, completed_at, xp").eq("user_id", userId),
     admin.from("quiz_attempts").select("quiz_id, attempted_at, score, passed, xp, answers").eq("user_id", userId),
-    admin.from("profiles").select("learning_mode").eq("id", userId).maybeSingle(),
+    admin.from("profiles").select("learning_mode, sound_enabled").eq("id", userId).maybeSingle(),
   ]);
   const error = cards.error ?? lessons.error ?? attempts.error ?? profile.error;
   if (error) fail("Couldn't load progress", error);
@@ -45,6 +46,7 @@ async function loadAccountSnapshot(admin: ReturnType<typeof createSupabaseAdminC
     lessons: lessons.data ?? [],
     attempts: attempts.data ?? [],
     learningMode: profile.data?.learning_mode,
+    soundEnabled: profile.data?.sound_enabled,
   });
 }
 
@@ -128,9 +130,11 @@ export async function recordQuizAttemptAction(
 
 export async function setPreferencesAction(preferences: Partial<Preferences>): Promise<void> {
   const userId = await requireUserId();
-  if (preferences.mode === undefined) return;
-  const mode = LearningModeSchema.parse(preferences.mode);
-  const { error } = await createSupabaseAdminClient().from("profiles").update({ learning_mode: mode }).eq("id", userId);
+  const update: { learning_mode?: LearningMode; sound_enabled?: boolean } = {};
+  if (preferences.mode !== undefined) update.learning_mode = LearningModeSchema.parse(preferences.mode);
+  if (preferences.sound !== undefined) update.sound_enabled = z.boolean().parse(preferences.sound);
+  if (Object.keys(update).length === 0) return;
+  const { error } = await createSupabaseAdminClient().from("profiles").update(update).eq("id", userId);
   if (error) fail("Couldn't save the setting", error);
 }
 
@@ -192,7 +196,10 @@ export async function mergeGuestProgressAction(local: unknown): Promise<Progress
     rows.attempts.length
       ? admin.from("quiz_attempts").upsert(rows.attempts, { onConflict: "user_id,quiz_id,attempted_at" })
       : null,
-    admin.from("profiles").update({ learning_mode: merged.preferences.mode }).eq("id", userId),
+    admin
+      .from("profiles")
+      .update({ learning_mode: merged.preferences.mode, sound_enabled: merged.preferences.sound })
+      .eq("id", userId),
   ]);
   const error = writes.find((w) => w?.error)?.error;
   if (error) fail("Couldn't save your progress", error);

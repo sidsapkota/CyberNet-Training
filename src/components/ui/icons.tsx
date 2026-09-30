@@ -29,6 +29,8 @@ import {
   SquareTerminal,
   Trash2,
   Undo2,
+  Volume2,
+  VolumeX,
   Waypoints,
   X,
   Zap,
@@ -94,3 +96,7 @@ export const SignInIcon = brandIcon(LogIn, "SignInIcon");
 export const SignOutIcon = brandIcon(LogOut, "SignOutIcon");
 export const MailIcon = brandIcon(Mail, "MailIcon");
 export const DeleteIcon = brandIcon(Trash2, "DeleteIcon");
+
+// Sound
+export const SoundOnIcon = brandIcon(Volume2, "SoundOnIcon");
+export const SoundOffIcon = brandIcon(VolumeX, "SoundOffIcon");

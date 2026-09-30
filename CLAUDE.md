@@ -119,6 +119,11 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
 | `match_pairs` | `pairs` (3–6 `{id, left, right}`, unique texts) | `{leftId: rightId}` | every pair matched |
 | `packet_path` | `nodes`, `links`, `source`, `destination`, `validPaths` (see below) | node ids from source | equals a valid path |
 | `terminal` | `commands`, `success`, `promptLabel?`, `intro?`, `caseSensitive?` (see below) | `{history, response}` | success condition met |
+| `hotspot` | `scene`, `view?`, `mode` (`tap` + `targets[]`, or `label` + `labels[] {part, label}`) | `{selected[], placed{part: labelIndex}}` | exactly the targets / every label on its part |
+| `teardown` | `scene`, `view?`, `actions[] {id, part, verb, after?, nudge}`, `maxNudges?` | `{done[], nudges}` | all actions, each after its `after`, nudges ≤ max |
+| `simulator` | `model`, `params`, `controls[]` (toggle/slider/button), `outputs[]` (meter/bar/timer/device/list), `goal.all[]` | `{controlId: value}` | every goal condition holds |
+| `scenario` | `start`, `steps[] {id, text, choices[] {id, text, consequence, next \| outcome}}` | choice ids in order | the last choice's outcome is `success` |
+| `sort_bins` | `bins[]` (2–3), `items[] {id, label, bin}` (4–10) | `{itemId: binId}` | every item in its bin |
 
 - **`numeric_input`:**
   - Spaces and underscores are ignored.
@@ -146,6 +151,39 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - **Nothing is ever executed:** output is only the card's data, and a test enforces no
     eval/fetch/Function in the terminal code.
   - Outputs must look realistic for the chosen OS and use only documentation addresses.
+- **Scenes** (`src/cards/shared/scenes/`) power `hotspot` and `teardown`:
+  - `manifests.ts` is pure data: part ids, accessible names, hit boxes, draw order, `coveredBy` and
+    named `views` (e.g. `open` = cover off). `art.tsx` draws each part as its own group.
+  - Scenes: `laptop`, `phone`, `file-browser`. Generic devices only: no brands, logos or real
+    designs (a test checks for brand names).
+  - Parts under a cover that's still on can't be seen, tapped or announced. Schemas check every part
+    id, view and visibility at load.
+  - Add a scene by adding its manifest and its drawing; `scenes.test.ts` checks every part is drawn.
+- **`hotspot`:** tap mode selects exactly `targets` (tap again to unselect). Label mode places label
+  chips on numbered spots (spots don't name the part, or the answer would be given away).
+- **`teardown`:**
+  - Verbs: `unscrew`, `lift`, `slide-out`, `unplug` (remove) and `insert`, `fasten`, `plug-in`
+    (refit).
+  - Tapping a part does its next action if its `after` steps are done; otherwise it shows that
+    action's `nudge` and counts it. Lift and slide actions can also be dragged.
+  - Every card shows a built-in **"This is a simulation"** safety note. Removed parts go to a
+    "Parts out" tray, which is used for refitting.
+  - The schema rejects cycles, refits before removal, and acting on parts already off.
+- **`simulator`:**
+  - `model` names a registered pure function in `src/cards/simulator/models/`: `memory`,
+    `cpu-cores`, `thermal`, `task-manager`, `storage` or `battery`. Each has its own params schema,
+    inputs and outputs, and a unit test.
+  - **Never eval.** Content only configures models, and goals are declarative conditions.
+  - Control and output ids are model input/output names (camelCase allowed). The schema checks they
+    exist with the right kind.
+  - The `device` output is a phone or laptop mockup that stutters as `smooth` drops, with its state
+    always in text too.
+  - Answers are ready once a control changes. The server re-grades by running the same model.
+- **`scenario`:** a wrong ending shows its consequence (that's the teaching). After Check → Try
+  again, the failed choice is crossed out and the learner picks again at that step. The schema
+  requires every step to be reachable, no loops, and at least one success.
+- **`sort_bins`:** tap an item then a bin, or drag (dnd-kit). Snap sound; wrong items go back to the
+  tray after Try again.
 - **Enter key:** single-answer text fields (`numeric_input`, the terminal's answer box) carry
   `data-enter-submits`, so Enter runs Check. The terminal's command line keeps Enter for running
   commands.
@@ -424,14 +462,15 @@ src/dev/                 dev-only card samples + playground (served at /dev/card
   sets `cybernet.savePrompt.dismissed`, and it never shows again in that browser.
 
 ### Schema (`supabase/migrations/`)
-Two migrations, both applied to the linked project:
+Migrations, all applied to the linked project:
 - `20260930120000_accounts_and_progress.sql`: the tables, RLS, grants and triggers.
 - `20260930130000_revoke_extra_authenticated_privileges.sql`: removes Supabase's default
   `TRUNCATE`, `REFERENCES` and `TRIGGER` from `authenticated`. TRUNCATE ignores RLS.
+- `20260930140000_profiles_sound_enabled.sql`: `profiles.sound_enabled` (default true).
 
 | Table | Holds |
 |---|---|
-| `profiles` | `id` (= auth user), `display_name` (1 to 40 chars, nullable until chosen), `is_premium` (default false), `learning_mode` (`path` or `explore`) |
+| `profiles` | `id` (= auth user), `display_name` (1 to 40 chars, nullable until chosen), `is_premium` (default false), `learning_mode` (`path` or `explore`), `sound_enabled` (default true) |
 | `card_completions` | `(user_id, lesson_id, card_id)` primary key, `completed_at`, `xp` (0 to 20) |
 | `lesson_completions` | `(user_id, lesson_id)` primary key, `completed_at`, `xp` (0 to 20) |
 | `quiz_attempts` | `id`, `user_id`, `quiz_id`, `attempted_at` (unique per user and quiz), `score` 0 to 1, `passed`, `xp` (0 to 50), `answers` jsonb |
@@ -447,7 +486,7 @@ Two migrations, both applied to the linked project:
   `= id` for profiles).
 - **Writes:**
   - Users may **update only `profiles.display_name`**, on their own row. There's a column-level
-    grant and an update policy; `is_premium` and `learning_mode` aren't writable.
+    grant and an update policy; `is_premium`, `learning_mode` and `sound_enabled` aren't writable.
   - Progress tables have **no write policies or privileges** for `anon` or `authenticated`. All
     progress writes go through Server Actions with the secret key, so users can never set their
     own XP.
@@ -628,6 +667,21 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   - more than once per screen
 - **Static exports:** `npm run brand:mascot` renders the same parts, with hex colours and no motion,
   to `public/brand/mascot/<expression>.svg` for videos and socials. A test fails if they go stale.
+
+### Sound and haptics
+- **Sounds are synthesised** with the Web Audio API in `src/lib/sound.ts`: short oscillator notes
+  with soft envelopes. **Source: original, written for this project; no audio files, nothing to
+  license.**
+- **Sounds:** correct, wrong, card complete, lesson complete, part removed and snap. All are under
+  300ms except the chime, and quiet.
+- **Never before interaction:** `installAudioUnlock()` (in `Providers`) only creates the audio
+  context on the first tap or key press. Before that, `playSound` is a no-op.
+- **The toggle:** `SoundToggle` in the header sets `preferences.sound` (default on). It's saved with
+  progress: `profiles.sound_enabled` for signed-in learners, written only by `setPreferencesAction`.
+- **Haptics:** `navigator.vibrate` (Android browsers; iOS ignores it), light patterns only. They
+  follow the sound switch and are off under reduced motion.
+- **Use `useFeedback()`** (`src/lib/feedback.ts`) from components; never call the Web Audio API
+  directly.
 
 ### Anti-generic rules
 - No purple, pink or rainbow gradients. No gradients at all, apart from the faint background

@@ -34,7 +34,7 @@ describe("LocalStorageProgressStore", () => {
     };
     storage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(saved));
     const snapshot = await store.getSnapshot();
-    expect(snapshot.preferences).toEqual({ mode: "path" });
+    expect(snapshot.preferences).toEqual({ mode: "path", sound: true });
     expect(snapshot.cards[cardKey("l1", "c1")]?.xp).toBe(10);
   });
 

@@ -5,6 +5,7 @@ import { getCardDefinition } from "@/cards/registry";
 import { type Card, isInteractiveCard } from "@/cards/schema";
 import type { CardStatus } from "@/cards/types";
 import type { CourseOutline, RegularLesson } from "@/lib/content/schema";
+import { useFeedback } from "@/lib/feedback";
 import { useGlobalKeyDown } from "@/lib/keyboard";
 import { useProgress } from "@/lib/progress/ProgressProvider";
 import { getNextLesson, lessonFinishState } from "@/lib/progress/state";
@@ -63,6 +64,7 @@ export function LessonRun({
   /** Drives the pulse along the progress trace after a correct answer. */
   const [pulse, setPulse] = useState<{ key: number; from: number; to: number } | null>(null);
   const { scope, playIncorrect } = useFeedbackAnimation();
+  const feedback = useFeedback();
 
   const card = lesson.cards[index] as Card;
   const definition = getCardDefinition(card);
@@ -106,6 +108,7 @@ export function LessonRun({
   }
 
   function advance() {
+    feedback.play("complete");
     const readExplainer = !definition.interactive;
     if (readExplainer) markComplete(card, 0);
     if (index + 1 < total) goTo(index + 1);
@@ -124,9 +127,13 @@ export function LessonRun({
       setSessionXp((current) => current + xp);
       markComplete(card, xp);
       setPulse((current) => ({ key: (current?.key ?? 0) + 1, from: index - 1, to: index }));
+      feedback.play("correct");
+      feedback.haptic("success");
     } else {
       setRun({ ...run, status: "incorrect", attempts });
       playIncorrect();
+      feedback.play("wrong");
+      feedback.haptic("error");
     }
   }
 

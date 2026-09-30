@@ -104,6 +104,9 @@ async function main() {
     );
     record("A can't make themselves premium", blocked(await a.client.from("profiles").update({ is_premium: true }).eq("id", a.id).select()));
     record("A can't change learning_mode directly", blocked(await a.client.from("profiles").update({ learning_mode: "explore" }).eq("id", a.id).select()));
+    record("A can't change sound_enabled directly", blocked(await a.client.from("profiles").update({ sound_enabled: false }).eq("id", a.id).select()));
+    const profileDefaults = await admin.from("profiles").select("sound_enabled").eq("id", a.id).single();
+    record("New profiles have sound on by default", profileDefaults.data?.sound_enabled === true);
     const rename = await a.client.from("profiles").update({ display_name: "Ace" }).eq("id", a.id).select("display_name");
     record("A can change their own display name (control)", !rename.error && rename.data?.[0]?.display_name === "Ace");
 

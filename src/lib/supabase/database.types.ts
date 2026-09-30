@@ -91,6 +91,7 @@ export type Database = {
           id: string
           is_premium: boolean
           learning_mode: string
+          sound_enabled: boolean
         }
         Insert: {
           created_at?: string
@@ -98,6 +99,7 @@ export type Database = {
           id: string
           is_premium?: boolean
           learning_mode?: string
+          sound_enabled?: boolean
         }
         Update: {
           created_at?: string
@@ -105,6 +107,7 @@ export type Database = {
           id?: string
           is_premium?: boolean
           learning_mode?: string
+          sound_enabled?: boolean
         }
         Relationships: []
       }

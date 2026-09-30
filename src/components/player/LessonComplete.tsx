@@ -1,12 +1,14 @@
 "use client";
 
 import { motion } from "motion/react";
+import { useEffect } from "react";
 import { SaveProgressPrompt } from "@/components/account/SaveProgressPrompt";
 import { Mascot } from "@/components/mascot/Mascot";
 import { ButtonLink } from "@/components/ui/Button";
 import { CountUp } from "@/components/ui/CountUp";
 import { ArrowRightIcon, ChallengeIcon, XpIcon } from "@/components/ui/icons";
 import type { LessonOutline } from "@/lib/content/schema";
+import { useFeedback } from "@/lib/feedback";
 
 export function nextLessonLabel(next: LessonOutline) {
   return next.kind === "quiz" ? "Take the module quiz" : "Next lesson";
@@ -30,6 +32,13 @@ export function LessonComplete({
   challengesTotal: number;
   next: LessonOutline | null;
 }) {
+  const feedback = useFeedback();
+  // The lesson-complete chime, once, as the screen appears.
+  const { play } = feedback;
+  useEffect(() => {
+    play("lessonComplete");
+  }, [play]);
+
   return (
     <div className="flex min-h-[60dvh] flex-col items-center justify-center text-center">
       <Mascot expression="celebrating" size={170} idle />

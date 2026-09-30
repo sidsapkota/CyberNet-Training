@@ -5,6 +5,11 @@ import { matchPairsDefinition } from "./match-pairs/definition";
 import { multipleChoiceDefinition } from "./multiple-choice/definition";
 import { numericInputDefinition } from "./numeric-input/definition";
 import { packetPathDefinition } from "./packet-path/definition";
+import { hotspotDefinition } from "./hotspot/definition";
+import { scenarioDefinition } from "./scenario/definition";
+import { simulatorDefinition } from "./simulator/definition";
+import { sortBinsDefinition } from "./sort-bins/definition";
+import { teardownDefinition } from "./teardown/definition";
 import { terminalDefinition } from "./terminal/definition";
 import type { Card, CardType } from "./schema";
 import type { InteractiveCardDefinition, StaticCardDefinition } from "./types";
@@ -23,6 +28,11 @@ const definitions = {
   match_pairs: matchPairsDefinition,
   packet_path: packetPathDefinition,
   terminal: terminalDefinition,
+  hotspot: hotspotDefinition,
+  teardown: teardownDefinition,
+  simulator: simulatorDefinition,
+  scenario: scenarioDefinition,
+  sort_bins: sortBinsDefinition,
 } satisfies { [K in CardType]: { type: K } };
 
 /** Type-erased views used by the player, which treats answers as opaque values. */

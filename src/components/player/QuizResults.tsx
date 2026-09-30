@@ -12,6 +12,7 @@ import { ArrowRightIcon, CheckIcon, RetryIcon, XIcon, XpIcon } from "@/component
 import { Markdown } from "@/components/ui/Markdown";
 import type { LessonOutline, Quiz } from "@/lib/content/schema";
 import { celebrate } from "@/lib/celebrate";
+import { useFeedback } from "@/lib/feedback";
 import type { QuizAttempt } from "@/lib/progress/types";
 
 export function QuizResults({
@@ -36,11 +37,13 @@ export function QuizResults({
 
   // Passing the quiz completes the module: a short confetti burst as the hub lights up.
   // (celebrate() does nothing under prefers-reduced-motion.)
+  const { play } = useFeedback();
   useEffect(() => {
     if (!attempt.passed) return;
+    play("lessonComplete");
     const timer = window.setTimeout(() => void celebrate(), 600);
     return () => window.clearTimeout(timer);
-  }, [attempt]);
+  }, [attempt, play]);
 
   return (
     <div>

@@ -41,7 +41,7 @@ export class SupabaseProgressStore implements ProgressStore {
         .from("quiz_attempts")
         .select("quiz_id, attempted_at, score, passed, xp, answers")
         .eq("user_id", this.userId),
-      this.client.from("profiles").select("learning_mode").eq("id", this.userId).maybeSingle(),
+      this.client.from("profiles").select("learning_mode, sound_enabled").eq("id", this.userId).maybeSingle(),
     ]);
     const error = cards.error ?? lessons.error ?? attempts.error ?? profile.error;
     if (error) throw new Error(`Couldn't load progress: ${error.message}`);
@@ -50,6 +50,7 @@ export class SupabaseProgressStore implements ProgressStore {
       lessons: lessons.data ?? [],
       attempts: attempts.data ?? [],
       learningMode: profile.data?.learning_mode,
+      soundEnabled: profile.data?.sound_enabled,
     });
   }
 

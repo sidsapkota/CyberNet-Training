@@ -5,6 +5,11 @@ import type { MatchPairsCard } from "@/cards/match-pairs/schema";
 import type { MultipleChoiceCard } from "@/cards/multiple-choice/schema";
 import type { NumericInputCard } from "@/cards/numeric-input/schema";
 import type { PacketPathCard } from "@/cards/packet-path/schema";
+import type { HotspotCard } from "@/cards/hotspot/schema";
+import type { ScenarioCard } from "@/cards/scenario/schema";
+import type { SimulatorCard } from "@/cards/simulator/schema";
+import type { SortBinsCard } from "@/cards/sort-bins/schema";
+import type { TeardownCard } from "@/cards/teardown/schema";
 import type { TerminalCard } from "@/cards/terminal/schema";
 import type { CourseOutline, LessonOutline, ModuleOutline } from "@/lib/content/schema";
 
@@ -131,6 +136,111 @@ export const terminal = (over: Partial<TerminalCard> = {}): TerminalCard => ({
   ],
   success: { type: "ran_command", command: "nslookup example.com" },
   explanation: "nslookup asks DNS.",
+  ...over,
+});
+
+export const hotspot = (over: Partial<HotspotCard> = {}): HotspotCard => ({
+  id: "spot",
+  type: "hotspot",
+  difficulty: "core",
+  prompt: "Tap the storage drive",
+  scene: "laptop",
+  view: "open",
+  mode: "tap",
+  targets: ["storage"],
+  explanation: "Storage keeps files.",
+  ...over,
+});
+
+export const teardown = (over: Partial<TeardownCard> = {}): TeardownCard => ({
+  id: "apart",
+  type: "teardown",
+  difficulty: "core",
+  prompt: "Open it",
+  scene: "phone",
+  actions: [
+    { id: "s1", part: "screw-1", verb: "unscrew", nudge: "Unscrew it." },
+    { id: "s2", part: "screw-2", verb: "unscrew", nudge: "Unscrew it." },
+    { id: "cover", part: "back-cover", verb: "lift", after: ["s1", "s2"], nudge: "Screws out first." },
+    { id: "unplug", part: "battery-connector", verb: "unplug", after: ["cover"], nudge: "Cover off first." },
+  ],
+  explanation: "Screws, cover, then battery.",
+  ...over,
+});
+
+export const simulator = (over: Partial<SimulatorCard> = {}): SimulatorCard => ({
+  id: "sim",
+  type: "simulator",
+  difficulty: "core",
+  prompt: "Make it smooth with music on",
+  model: "memory",
+  params: {
+    ramGb: 4,
+    systemGb: 1,
+    apps: [
+      { id: "music", label: "Music", gb: 0.5 },
+      { id: "game", label: "Game", gb: 3 },
+    ],
+  },
+  controls: [
+    { id: "music", kind: "toggle", label: "Music", initial: true },
+    { id: "game", kind: "toggle", label: "Game", initial: true },
+  ],
+  outputs: [{ id: "smooth", kind: "device", label: "Phone" }],
+  goal: {
+    all: [
+      { target: "control", id: "music", op: "==", value: true },
+      { target: "output", id: "smooth", op: ">=", value: 0.9 },
+    ],
+  },
+  explanation: "Close the game.",
+  ...over,
+});
+
+export const scenario = (over: Partial<ScenarioCard> = {}): ScenarioCard => ({
+  id: "story",
+  type: "scenario",
+  difficulty: "core",
+  prompt: "Your phone won't charge.",
+  start: "first",
+  steps: [
+    {
+      id: "first",
+      text: "What do you try first?",
+      choices: [
+        { id: "pin", text: "Poke the port with a pin", consequence: "Metal can damage the port.", outcome: "fail" },
+        { id: "cable", text: "Try another cable", consequence: "Still nothing.", next: "second" },
+      ],
+    },
+    {
+      id: "second",
+      text: "Now what?",
+      choices: [
+        { id: "plug", text: "Try another plug", consequence: "It charges!", outcome: "success" },
+        { id: "give-up", text: "Throw it away", consequence: "It was only the plug.", outcome: "fail" },
+      ],
+    },
+  ],
+  explanation: "Change one thing at a time.",
+  ...over,
+});
+
+export const sortBins = (over: Partial<SortBinsCard> = {}): SortBinsCard => ({
+  id: "bins",
+  type: "sort_bins",
+  difficulty: "core",
+  prompt: "RAM or storage?",
+  bins: [
+    { id: "ram", label: "RAM" },
+    { id: "storage", label: "Storage" },
+  ],
+  items: [
+    { id: "a", label: "Open game", bin: "ram" },
+    { id: "b", label: "Saved photos", bin: "storage" },
+    { id: "c", label: "Unsaved essay", bin: "ram" },
+    { id: "d", label: "Installed apps", bin: "storage" },
+  ],
+  explanation: "RAM is now; storage is kept.",
   ...over,
 });
 
