@@ -111,7 +111,16 @@ describe("real content in /content", () => {
     ]);
   });
 
-  it("lists Stay Safe Online's modules and lessons in order, with only its first module free", () => {
+  it("keeps help, reporting and recovery free for everyone (never behind Pro)", () => {
+    // CLAUDE.md content rule. `access` is read raw: main's schema ignores it, the Pro branch uses it.
+    const alwaysFree = ["content/courses/stay-safe-online/modules/04-when-things-go-wrong/module.json"];
+    for (const file of alwaysFree) {
+      const mod = JSON.parse(fs.readFileSync(path.join(process.cwd(), file), "utf8")) as { access?: string };
+      expect(mod.access, file).toBe("free");
+    }
+  });
+
+  it("lists Stay Safe Online's modules and lessons in order", () => {
     const course = loadContent().courses.find((c) => c.id === "stay-safe-online");
     expect(course?.modules.map((m) => m.lessons.map((l) => l.id))).toEqual([
       ["strong-passwords", "two-step-sign-in", "lock-your-accounts-quiz"],
@@ -123,7 +132,7 @@ describe("real content in /content", () => {
 
   it("uses only fictional addresses in Stay Safe Online, apart from the verified official services", () => {
     // Scam examples use the reserved .example domain; the real services are the ones in "Getting Help".
-    const official = new Set(["cyber.gov.au", "esafety.gov.au", "scamwatch.gov.au", "idcare.org"]);
+    const official = new Set(["cyber.gov.au", "esafety.gov.au", "scamwatch.gov.au", "idcare.org", "accce.gov.au"]);
     // Address endings named on their own when teaching how to read an address (".com.au").
     const endings = new Set(["com.au"]);
     const { courses, lessons } = loadContent();

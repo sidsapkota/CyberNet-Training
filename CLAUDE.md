@@ -56,7 +56,8 @@ All of `build`, `lint`, `test` and `typecheck` must pass with zero errors and wa
 Courses, in catalog order: **Inside Your Devices** (`inside-your-devices`, hardware, the OS and
 troubleshooting, built on the hands-on card types), **How the Internet Works**
 (`how-the-internet-works`) and **Stay Safe Online** (`stay-safe-online`: passwords and two-step
-sign-in, spotting scams, privacy, and what to do when things go wrong; module 1 free, the rest Pro).
+sign-in, spotting scams, privacy, and what to do when things go wrong; modules 1 and 4 free,
+modules 2 and 3 Pro).
 Each `module.json` may carry `"access": "free" | "pro"`, which the Pro branch reads; until then
 it's ignored.
 
@@ -980,10 +981,15 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
 - **Online safety content (Stay Safe Online):** teach **defence only**, never how to make a scam
   or attack anyone. Every scam example is fictional ("Your Bank", "Parcels") and uses only
   reserved `.example` addresses; `load.test.ts` fails on any other address except the verified
-  help services (`esafety.gov.au`, `scamwatch.gov.au`, `idcare.org`, `cyber.gov.au`). Verify every
+  help services (`esafety.gov.au`, `scamwatch.gov.au`, `idcare.org`, `cyber.gov.au`,
+  `accce.gov.au`). Verify every
   help service, number and piece of password/MFA advice against its official source before citing
   it, and record the date in `content/REVIEW.md`. Calm and empowering, never scary: it's never the
   learner's fault, and a trusted adult is always an option.
+- **Help is always free:** any lesson about getting help, reporting harm or recovering from an
+  incident (a hack, a scam, abuse) is always in a free module, never behind Pro. Safety and help
+  information must never be behind a paywall. `load.test.ts` checks the modules this covers
+  (currently Stay Safe Online's "When Things Go Wrong"); add new ones to its `alwaysFree` list.
 - **Safe examples only:** IPv4 documentation ranges (`192.0.2.0/24`, `198.51.100.0/24`,
   `203.0.113.0/24`) stand in for public addresses, alongside the private ranges, `2001:db8::/32`
   and `example.com`/`example.org`. Never use a real person's or company's address. `load.test.ts`

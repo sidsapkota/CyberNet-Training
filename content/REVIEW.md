@@ -1109,9 +1109,10 @@ scrolls, and the panel goes after one "Got it".
 
 # Content review: Stay Safe Online
 
-The third course. It has 4 modules, 8 lessons and 4 quizzes (the last is the course final). Module 1
-is free and modules 2 to 4 are Pro (`"access"` in each `module.json`; the Pro branch reads it, and
-main ignores it). It teaches **defence only**: how to recognise and respond to scams and account
+The third course. It has 4 modules, 8 lessons and 4 quizzes (the last is the course final). Modules
+1 and 4 are free, and modules 2 and 3 are Pro (`"access"` in each `module.json`; the Pro branch reads
+it, and main ignores it). "When Things Go Wrong" is free because help, reporting and recovery must
+never be behind a paywall (a CLAUDE.md rule, checked by a test). It teaches **defence only**: how to recognise and respond to scams and account
 take-overs, never how to make or run one.
 
 **Fictional examples only.** "Your Bank" and "Parcels" are made-up names. Every web and email
@@ -1130,6 +1131,14 @@ No real people, brands or logos appear. The three new scenes (`email`, `text-mes
 - ReportCyber at cyber.gov.au: report cybercrime to police. ASD's 24/7 hotline (1300 CYBER1) isn't
   mentioned, to keep the list short.
 - Kids Helpline, 1800 55 1800: free, private, 24/7, ages 5 to 25.
+- ACCCE, the Australian Centre to Counter Child Exploitation (accce.gov.au, AFP-led): under-18s
+  report sexual extortion ("sextortion") and other online child exploitation at
+  **accce.gov.au/report** (the "Report abuse" button). Its advice for young people
+  (accce.gov.au/sextortionhelp): stop the chat; don't pay, respond or send more; screenshot the
+  messages and the offender's profile; block and report to the platform; report to the ACCCE; get
+  support (Kids Helpline 1800 55 1800, Lifeline 13 11 14); eSafety can help remove images; "you
+  will not be in trouble with law enforcement". Immediate danger: 000. Anonymous reports: Crime
+  Stoppers 1800 333 000 (not mentioned in the course, to keep it short). Verified 30 September 2026.
 - cyber.gov.au passphrase advice: **four or more random words, at least 15 characters**. Some older
   pages say 14; the current page says 15.
 - cyber.gov.au MFA advice: passkeys first (phishing-resistant), then an authenticator app. SMS and
@@ -1140,8 +1149,10 @@ Re-check all of these before each review: services and numbers change.
 **Tone:** calm and practical. Every "what went wrong" card says it's not the learner's fault and
 points to a trusted adult. The one sensitive topic is 4.2 `photo-threat`: a threat to share a
 private photo. It is a challenge card, gives no detail beyond "a private photo", and follows
-eSafety's advice: don't pay, stop replying, keep the username (not the image), tell a trusted
-adult, and report to the app and to eSafety. **Please review that card in particular.**
+eSafety's and the ACCCE's advice: don't pay, stop replying, screenshot the messages and profile
+(never the image), block, tell a trusted adult, and report to the app, eSafety, and, for under-18s,
+the ACCCE. The card says plainly that it is **never the young person's fault** and that they won't be
+in trouble, and gives **Kids Helpline (1800 55 1800)** and **000** directly.
 
 ## Module 1: Lock Your Accounts (free)
 

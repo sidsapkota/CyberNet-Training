@@ -3,7 +3,7 @@
   "kind": "quiz",
   "title": "Stay Safe Online: Course Final",
   "order": 99,
-  "isFree": false,
+  "isFree": true,
   "passThreshold": 0.7,
   "cards": [
     {

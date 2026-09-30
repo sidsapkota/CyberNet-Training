@@ -3,7 +3,7 @@
   "kind": "lesson",
   "title": "Signs of a Hack",
   "order": 1,
-  "isFree": false,
+  "isFree": true,
   "cards": [
     {
       "id": "somethings-off",
