@@ -168,7 +168,6 @@ export type Database = {
           daily_goal_chosen: boolean
           display_name: string | null
           id: string
-          is_premium: boolean
           learning_mode: string
           sound_enabled: boolean
           time_zone: string | null
@@ -181,7 +180,6 @@ export type Database = {
           daily_goal_chosen?: boolean
           display_name?: string | null
           id: string
-          is_premium?: boolean
           learning_mode?: string
           sound_enabled?: boolean
           time_zone?: string | null
@@ -194,7 +192,6 @@ export type Database = {
           daily_goal_chosen?: boolean
           display_name?: string | null
           id?: string
-          is_premium?: boolean
           learning_mode?: string
           sound_enabled?: boolean
           time_zone?: string | null
