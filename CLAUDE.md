@@ -41,7 +41,7 @@ All of `build`, `lint`, `test` and `typecheck` must pass with zero errors and wa
   collision-aware positioning); `canvas-confetti` for the module-complete celebration, loaded on
   demand by `src/lib/celebrate.ts`
 - IBM Plex Sans + IBM Plex Mono via `next/font/google` (self-hosted at build time)
-- `@supabase/supabase-js` + `@supabase/ssr` (clients prepared, not used yet); Supabase CLI via `npx supabase`
+- `@supabase/supabase-js` + `@supabase/ssr` for auth and synced progress; Supabase CLI via `npx supabase`
 - Vitest for unit tests
 - Version pins: TypeScript stays on **6.0.x** (typescript-eslint doesn't support 7 yet) and ESLint on
   **9.x** (eslint-plugin-react doesn't support 10 yet).
