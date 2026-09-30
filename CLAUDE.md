@@ -233,11 +233,15 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - **Saved unmodified** in `public/photos/` (no crops, edits or re-encoding; `next/image` scales
     them). `width`/`height` must be the file's real size, and `load.test.ts` checks the file
     exists, is credited and is used.
-  - The card always shows the credit: author, licence link, "via Wikimedia Commons", "Unmodified".
+  - The card always shows the credit: author, a link to the licence deed, a link to the Commons
+    file page ("via Wikimedia Commons") and "Unmodified", as CC BY and CC BY-SA require. The schema
+    checks `licenceUrl` is the deed of the licence named; `PhotoCardView.test.ts` checks both links.
     Record `device` (the model shown) when it's known.
   - **Captions describe, never endorse:** name the device plainly ("A Framework Laptop 13 with its
     cover off"), with no wording that implies a link to its maker. `/terms` says product names
     belong to their owners.
+  - A photo must agree with what the lesson teaches (e.g. the phone photo shows a phone with a
+    glued back, not an older screwed one), and never shows a how-to (temperatures, tools).
   - Check every caption and `alt` against the photo itself. List each photo, with its source,
     author and licence, in `content/REVIEW.md`.
   - **Not counted** in the 8–12 cards per lesson, and never in quizzes.

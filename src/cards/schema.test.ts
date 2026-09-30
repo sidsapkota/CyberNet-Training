@@ -212,6 +212,16 @@ describe("photo cards", () => {
     expect(CardSchema.safeParse(valid).success).toBe(true);
   });
 
+  it("links to the deed of the licence it names", () => {
+    const withLicence = (licence: string, licenceUrl: string) => CardSchema.safeParse({ ...valid, credit: { ...valid.credit, licence, licenceUrl } }).success;
+    expect(withLicence("CC BY-SA 4.0", "https://creativecommons.org/licenses/by-sa/4.0")).toBe(true);
+    expect(withLicence("CC BY 2.0", "https://creativecommons.org/licenses/by/2.0/")).toBe(true);
+    expect(withLicence("CC0", "https://creativecommons.org/publicdomain/zero/1.0/deed.en")).toBe(true);
+    expect(withLicence("CC BY-SA 4.0", "https://creativecommons.org/licenses/by/4.0")).toBe(false);
+    expect(withLicence("CC BY 4.0", "https://creativecommons.org/licenses/by/3.0")).toBe(false);
+    expect(withLicence("CC BY 4.0", "https://example.com/licence")).toBe(false);
+  });
+
   it("rejects NonCommercial and NoDerivatives licences", () => {
     for (const licence of ["CC BY-NC 4.0", "CC BY-ND 4.0", "CC BY-NC-SA 4.0", "All rights reserved"]) {
       expect(CardSchema.safeParse({ ...valid, credit: { ...valid.credit, licence } }).success, licence).toBe(false);

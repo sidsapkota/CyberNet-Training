@@ -636,12 +636,12 @@ Six real photos back up the simplified diagrams. All come from Wikimedia Commons
 CC BY / CC BY-SA, are saved **unmodified** in `public/photos/`, and are credited on the card
 (author, licence link, "via Wikimedia Commons", "Unmodified"). Captions describe the device
 plainly and never suggest a link to its maker; `/terms` says product names belong to their owners.
-Each caption and alt text was checked against the photo itself.
+Each caption and alt text was checked against the photo itself. The phone photo is a 2019 phone with a **glued** back, so it matches what the lesson teaches (an earlier choice, an iPhone 4 from 2010, had a screwed-on back and was replaced). Photos showing heating temperatures or tools as a how-to are never used.
 
 | File | Card | Device | Author | Licence | Source |
 |---|---|---|---|---|---|
 | `/photos/framework-laptop-13-inside.jpg` | `whats-in-the-box/real-laptop` | Framework Laptop 13 (2023, AMD Ryzen) | Ogidya | CC BY 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Framework_Laptop_13_-_2023_AMD_Ryzen_-_Internal_motherboard_and_component_view.jpg) |
-| `/photos/iphone-4-inside.jpg` | `whats-in-the-box/real-phone` | iPhone 4 | MyXyloto | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:IPhone_Structure.jpg) |
+| `/photos/phone-glued-back-opened.jpg` | `whats-in-the-box/real-phone` | Huawei P Smart Z (2019), glued back | Raimond Spekking | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Huawei_Honor_P_Smart_Z_-_case_opened-8858.jpg) |
 | `/photos/laptop-heat-pipe.jpg` | `meet-the-cpu/real-heat-pipe` | A laptop (model not recorded) | Kristoferb | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Laptop_Heat_Pipe.JPG) |
 | `/photos/laptop-dusty-heatsink.jpg` | `meet-the-cpu/real-dust` | A laptop (model not recorded) | Audrius Meskauskas (Audriusa) | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Laptop_dust.jpg) |
 | `/photos/laptop-ram-stick.jpg` | `memory-vs-storage/real-ram` | Samsung 8 GB DDR4 SO-DIMM | D-Kuru | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:DDR_4_RAM_SO-DIMM_8GB_by_Samsung-top_front_PNr%C2%B00838.jpg) |

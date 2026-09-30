@@ -152,18 +152,18 @@
       "difficulty": "core",
       "title": "Here's the inside of a real phone",
       "photo": {
-        "src": "/photos/iphone-4-inside.jpg",
-        "alt": "A real smartphone with its back removed: the battery fills most of the right side, with the camera and small circuit boards around it.",
-        "width": 1327,
-        "height": 2493
+        "src": "/photos/phone-glued-back-opened.jpg",
+        "alt": "A real smartphone with its glued back removed: a large battery fills the middle, with metal plates covering the boards above and below it and the cameras at the top left.",
+        "width": 3202,
+        "height": 6157
       },
-      "caption": "An **iPhone 4** (from 2010) with its back removed. Even in this older phone, the **battery** takes up most of the space. The printed warning says not to heat, puncture or crush it.",
+      "caption": "A **Huawei P Smart Z** (2019) with its glued-on back removed. Just like in the diagram, the **battery** takes up most of the space. Its printed warning says: do not disassemble, puncture, crush, heat or burn.",
       "credit": {
-        "author": "MyXyloto",
-        "licence": "CC BY-SA 3.0",
-        "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:IPhone_Structure.jpg",
-        "device": "iPhone 4"
+        "author": "Raimond Spekking",
+        "licence": "CC BY-SA 4.0",
+        "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Huawei_Honor_P_Smart_Z_-_case_opened-8858.jpg",
+        "device": "Huawei P Smart Z (2019)"
       }
     },
     {
