@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "tsx scripts/print-lan-urls.ts",
     "dev": "next dev",
     "prebuild": "npm run validate-content",
     "build": "next build",

@@ -14,7 +14,7 @@ Code is on GitHub: `sidsapkota/CyberNet-Training`, branch `main`.
 ## Commands
 
 ```bash
-npm run dev               # dev server on http://localhost:3000
+npm run dev               # dev server on http://localhost:3000; predev prints LAN URLs for other devices
 npm run build             # runs validate-content first (prebuild), then next build
 npm run lint              # eslint . (Next 16 removed `next lint`)
 npm test                  # vitest run
