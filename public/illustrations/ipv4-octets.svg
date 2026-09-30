@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 200" width="640" height="200" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+  <title>An IPv4 address split into four octets of 8 bits each</title>
+  <style>
+    .box { fill: #3d5afe; fill-opacity: 0.12; stroke: #3d5afe; stroke-width: 2.5; }
+    .num { font-family: ui-monospace, SF Mono, Cascadia Code, Menlo, Consolas, monospace; font-size: 40px; font-weight: 700; text-anchor: middle; fill: #3d5afe; }
+    .dot { font-family: ui-monospace, SF Mono, Cascadia Code, Menlo, Consolas, monospace; font-size: 44px; font-weight: 700; text-anchor: middle; fill: #94a3b8; }
+    .bits { font-size: 16px; font-weight: 600; text-anchor: middle; fill: #94a3b8; }
+    .range { font-size: 13px; text-anchor: middle; fill: #94a3b8; }
+  </style>
+  <g transform="translate(4 30)">
+    <rect class="box" x="0" y="0" width="128" height="80" rx="16"/>
+    <text class="num" x="64" y="54">192</text>
+    <text class="bits" x="64" y="110">8 bits</text>
+    <text class="range" x="64" y="132">0–255</text>
+
+    <text class="dot" x="148" y="58">.</text>
+
+    <rect class="box" x="168" y="0" width="128" height="80" rx="16"/>
+    <text class="num" x="232" y="54">168</text>
+    <text class="bits" x="232" y="110">8 bits</text>
+    <text class="range" x="232" y="132">0–255</text>
+
+    <text class="dot" x="316" y="58">.</text>
+
+    <rect class="box" x="336" y="0" width="128" height="80" rx="16"/>
+    <text class="num" x="400" y="54">1</text>
+    <text class="bits" x="400" y="110">8 bits</text>
+    <text class="range" x="400" y="132">0–255</text>
+
+    <text class="dot" x="484" y="58">.</text>
+
+    <rect class="box" x="504" y="0" width="128" height="80" rx="16"/>
+    <text class="num" x="568" y="54">10</text>
+    <text class="bits" x="568" y="110">8 bits</text>
+    <text class="range" x="568" y="132">0–255</text>
+  </g>
+</svg>

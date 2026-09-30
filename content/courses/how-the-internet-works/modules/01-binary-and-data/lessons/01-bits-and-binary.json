@@ -1,0 +1,142 @@
+{
+  "id": "bits-and-binary",
+  "kind": "lesson",
+  "title": "Bits and Binary: How Computers Count",
+  "order": 1,
+  "isFree": true,
+  "cards": [
+    {
+      "id": "switches-and-bits",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Computers are made of switches",
+      "body": "Think about a light switch. It can only be **off** or **on**. Just two choices.\n\nInside every computer, phone and games console are billions of tiny switches like this, flipping on and off incredibly fast. Photos, messages, music, even this sentence: computers store all of it using nothing but on and off.\n\nWe write off as **0** and on as **1**. One single on/off switch is called a **bit**, short for *binary digit*.",
+      "image": {
+        "src": "/illustrations/switches.svg",
+        "alt": "A row of eight switches. Some are on, labelled 1, and some are off, labelled 0.",
+        "width": 640,
+        "height": 240
+      }
+    },
+    {
+      "id": "one-bit-values",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "How many different values can a single bit hold?",
+      "options": [
+        { "id": "one", "text": "1" },
+        { "id": "two", "text": "2" },
+        { "id": "ten", "text": "10" },
+        { "id": "two-five-six", "text": "256" }
+      ],
+      "correctOptionId": "two",
+      "explanation": "A bit is either **0** or **1**, so it has exactly **2** possible values. On its own that's only enough for yes/no, but computers get their power by using lots of bits together."
+    },
+    {
+      "id": "place-values",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Counting with only 0 and 1",
+      "body": "In everyday numbers, each position is worth **10 times** the one to its right: ones, tens, hundreds. That's because we have ten digits, 0 to 9.\n\nComputers only have two digits, 0 and 1. So in their number system, each position is worth **double** the one to its right. This is called **binary**. With 8 bits, the positions are worth:\n\n**128 · 64 · 32 · 16 · 8 · 4 · 2 · 1**\n\nTo read a binary number, add up the positions that are switched on. `00000101` has the **4** and the **1** on, so it means 4 + 1 = **5**."
+    },
+    {
+      "id": "make-5",
+      "type": "binary_toggle",
+      "difficulty": "core",
+      "prompt": "Tap the bits to switch them on and off. Make the number **5**.",
+      "target": 5,
+      "explanation": "5 = **4 + 1**, so the 4 bit and the 1 bit are on and everything else is off: `00000101`."
+    },
+    {
+      "id": "make-42",
+      "type": "binary_toggle",
+      "difficulty": "core",
+      "prompt": "Now a bigger one: make **42**.\n\nTip: start with the biggest position that fits, then work your way down.",
+      "target": 42,
+      "explanation": "The biggest position that fits in 42 is **32**, leaving 10. Then **8** fits, leaving 2. Then **2** fits, leaving 0. So 42 = 32 + 8 + 2, which is `00101010`."
+    },
+    {
+      "id": "order-binary",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "Drag these binary numbers into order, from **smallest** at the top to **largest** at the bottom.",
+      "items": [
+        { "id": "three", "label": "00000011" },
+        { "id": "six", "label": "00000110" },
+        { "id": "nine", "label": "00001001" },
+        { "id": "sixteen", "label": "00010000" }
+      ],
+      "explanation": "Add up the positions that are on:\n\n- `00000011` = 2 + 1 = **3**\n- `00000110` = 4 + 2 = **6**\n- `00001001` = 8 + 1 = **9**\n- `00010000` = **16**\n\nNotice 16 is the biggest even though it has only one bit on. A bit is worth more than all the bits to its right put together (8 + 4 + 2 + 1 is only 15)."
+    },
+    {
+      "id": "make-200",
+      "type": "binary_toggle",
+      "difficulty": "challenge",
+      "prompt": "Ready for a harder one? Make **200**.",
+      "target": 200,
+      "explanation": "Start from the left. **128** fits, leaving 72. **64** fits, leaving 8. 32 and 16 are too big. **8** fits, leaving 0. So 200 = 128 + 64 + 8, which is `11001000`."
+    },
+    {
+      "id": "bytes",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "8 bits make a byte",
+      "body": "Computers usually group bits in sets of eight. A group of 8 bits is called a **byte**.\n\nEvery bit you add **doubles** the number of patterns you can make. 1 bit gives 2 patterns, 2 bits give 4, 3 bits give 8, and so on. By 8 bits you get **256** different patterns.\n\nThe smallest pattern is every bit off: `00000000`, which is **0**. The biggest is every bit on: `11111111`. What number is that?"
+    },
+    {
+      "id": "largest-byte",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "What is the **largest** number you can make with 8 bits?",
+      "options": [
+        { "id": "eight", "text": "8" },
+        { "id": "one-two-eight", "text": "128" },
+        { "id": "two-five-five", "text": "255" },
+        { "id": "two-five-six", "text": "256" }
+      ],
+      "correctOptionId": "two-five-five",
+      "explanation": "With every bit on: 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1 = **255**.\n\nThere are 256 patterns, but one of them is 0. Counting 0, 1, 2 … all the way up uses 256 numbers and ends at 255."
+    },
+    {
+      "id": "ipv4-octets",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Why this matters for the internet",
+      "body": "Every device on the internet needs an address, so messages can find it, just like a letter needs a postal address. The most common kind is an **IPv4 address**. It looks like this: `192.168.1.10`\n\nIt's four numbers separated by dots, and each number is stored in exactly **8 bits**. In networking, a group of 8 bits is called an **octet** (*oct* means eight).\n\nYou already know what 8 bits can hold: **0 to 255**. That's why no part of an IPv4 address can ever be bigger than 255.",
+      "image": {
+        "src": "/illustrations/ipv4-octets.svg",
+        "alt": "The address 192.168.1.10 split into four boxes, each labelled 8 bits.",
+        "width": 640,
+        "height": 200
+      }
+    },
+    {
+      "id": "valid-ip",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Which of these is a **valid** IPv4 address?",
+      "options": [
+        { "id": "has-256", "text": "192.168.1.256" },
+        { "id": "valid", "text": "10.0.0.255" },
+        { "id": "has-300", "text": "172.16.300.1" },
+        { "id": "three-parts", "text": "8.8.8" }
+      ],
+      "correctOptionId": "valid",
+      "explanation": "`10.0.0.255` has four parts and each one is between 0 and 255. **256** and **300** are too big to fit in 8 bits, and `8.8.8` only has three parts instead of four."
+    },
+    {
+      "id": "ten-bit-octet",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "prompt": "Imagine each part of an address used **10 bits** instead of 8. What would the largest possible number be?",
+      "options": [
+        { "id": "one-thousand", "text": "1,000" },
+        { "id": "ten-twenty-three", "text": "1,023" },
+        { "id": "ten-twenty-four", "text": "1,024" },
+        { "id": "twenty-forty-seven", "text": "2,047" }
+      ],
+      "correctOptionId": "ten-twenty-three",
+      "explanation": "Each extra bit doubles the patterns. 8 bits give 256, 9 bits give 512 and 10 bits give **1,024**. Counting from 0, the largest is **1,023**. It's the same *one less than the number of patterns* rule that gives 255 for 8 bits."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+import { binaryToggleDefinition } from "./binary-toggle/definition";
+import { dragToOrderDefinition } from "./drag-to-order/definition";
+import { explainerDefinition } from "./explainer/definition";
+import { multipleChoiceDefinition } from "./multiple-choice/definition";
+import type { Card, CardType } from "./schema";
+import type { InteractiveCardDefinition, StaticCardDefinition } from "./types";
+
+/**
+ * card type → definition. Registration step 2 of 2 when adding a card type
+ * (step 1 is `schema.ts`). `satisfies` makes the compiler reject a missing
+ * type or a definition registered under the wrong key.
+ */
+const definitions = {
+  explainer: explainerDefinition,
+  multiple_choice: multipleChoiceDefinition,
+  drag_to_order: dragToOrderDefinition,
+  binary_toggle: binaryToggleDefinition,
+} satisfies { [K in CardType]: { type: K } };
+
+/** Type-erased views used by the player, which treats answers as opaque values. */
+export type AnyInteractiveDefinition = InteractiveCardDefinition<Card, unknown>;
+export type AnyStaticDefinition = StaticCardDefinition<Card>;
+export type AnyCardDefinition = AnyInteractiveDefinition | AnyStaticDefinition;
+
+export function getCardDefinition(card: Card): AnyCardDefinition {
+  // Safe: `definitions` is keyed by card type, and each definition only ever
+  // receives cards of its own type plus answers it created itself.
+  return definitions[card.type] as unknown as AnyCardDefinition;
+}

@@ -1,0 +1,6 @@
+{
+  "id": "binary-and-data",
+  "title": "Binary and Data",
+  "description": "Discover how computers store everything using just 0s and 1s, and why internet addresses stop at 255.",
+  "order": 1
+}

@@ -1,0 +1,73 @@
+{
+  "id": "binary-and-data-quiz",
+  "kind": "quiz",
+  "title": "Binary and Data: Module Quiz",
+  "order": 99,
+  "isFree": true,
+  "passThreshold": 0.7,
+  "cards": [
+    {
+      "id": "what-is-a-bit",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "What is a **bit**?",
+      "options": [
+        { "id": "zero-or-one", "text": "A single 0 or 1" },
+        { "id": "group-of-eight", "text": "A group of 8 numbers" },
+        { "id": "screen-dot", "text": "One tiny dot on a screen" },
+        { "id": "up-to-255", "text": "Any number from 0 to 255" }
+      ],
+      "correctOptionId": "zero-or-one",
+      "explanation": "A bit (binary digit) is one on/off value, written as **0** or **1**. A group of 8 bits is a byte, which can hold 0 to 255."
+    },
+    {
+      "id": "make-100",
+      "type": "binary_toggle",
+      "difficulty": "core",
+      "prompt": "Make the number **100**.",
+      "target": 100,
+      "explanation": "**64** fits in 100, leaving 36. **32** fits, leaving 4. 16 and 8 are too big. **4** fits, leaving 0. So 100 = 64 + 32 + 4, which is `01100100`."
+    },
+    {
+      "id": "read-17",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "What number does `00010001` stand for?",
+      "options": [
+        { "id": "two", "text": "2" },
+        { "id": "seventeen", "text": "17" },
+        { "id": "thirty-four", "text": "34" },
+        { "id": "ten-thousand-one", "text": "10,001" }
+      ],
+      "correctOptionId": "seventeen",
+      "explanation": "The bits that are on are in the **16** and **1** positions, so the value is 16 + 1 = **17**. (2 is just how many bits are on, and 10,001 is what you'd get reading it like an everyday base-10 number.)"
+    },
+    {
+      "id": "convert-13-steps",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "Put these steps for turning **13** into binary in the right order.",
+      "items": [
+        { "id": "eight", "label": "Does 8 fit in 13? Yes: switch on 8, leaving 5" },
+        { "id": "four", "label": "Does 4 fit in 5? Yes: switch on 4, leaving 1" },
+        { "id": "two", "label": "Does 2 fit in 1? No: leave 2 off" },
+        { "id": "one", "label": "Does 1 fit in 1? Yes: switch on 1, leaving 0" }
+      ],
+      "explanation": "Always work from the **biggest** position down: 8, then 4, then 2, then 1. That gives 8 + 4 + 1 = 13, which is `00001101`."
+    },
+    {
+      "id": "why-255",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Why can't any part of an IPv4 address be **300**?",
+      "options": [
+        { "id": "eight-bits", "text": "Each part is stored in 8 bits, and 8 bits can only go up to 255" },
+        { "id": "two-digits", "text": "Address parts can only have two digits" },
+        { "id": "reserved", "text": "300 is reserved for private home networks" },
+        { "id": "even-only", "text": "Address parts can only be even numbers" }
+      ],
+      "correctOptionId": "eight-bits",
+      "explanation": "Each part of an IPv4 address is an **octet**: exactly 8 bits. 8 bits make 256 patterns, which cover the numbers **0 to 255**, so 300 simply doesn't fit."
+    }
+  ]
+}
