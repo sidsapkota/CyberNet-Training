@@ -3,7 +3,6 @@
   "kind": "quiz",
   "title": "Pull It Apart: Module Quiz",
   "order": 99,
-  "isFree": true,
   "passThreshold": 0.7,
   "cards": [
     {

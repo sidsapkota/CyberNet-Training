@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { LessonPlayer } from "@/components/player/LessonPlayer";
-import { getAllLessonIds, getCourses, getLesson } from "@/lib/content/server";
+import { getAllLessonIds, getCourses, getLesson, getLessonPage } from "@/lib/content/server";
 
-// Every lesson is known at build time; unknown ids are a 404.
+// Every lesson is known at build time; unknown ids are a 404. Pro lessons are built as a shell
+// (title only): their cards come from /api/lessons/[id] after the server checks entitlement.
 export const dynamicParams = false;
 
 export function generateStaticParams() {
@@ -15,7 +16,10 @@ export async function generateMetadata({ params }: PageProps<"/lesson/[id]">): P
   const lesson = getLesson(id);
   const course = getCourses().find((c) => c.id === lesson?.courseId);
   if (!lesson || !course) return { title: "Lesson not found" };
-  const description = `A free, hands-on lesson from ${course.title}. No sign-up needed.`;
+  const description =
+    lesson.access === "free"
+      ? `A free, hands-on lesson from ${course.title}. No sign-up needed.`
+      : `A hands-on lesson from ${course.title}, part of CyberNet Pro.`;
   // The preview image is the course's (see ./opengraph-image.tsx), so a video's link shows the course.
   return {
     title: `${lesson.title} (${course.title})`,
@@ -27,9 +31,7 @@ export async function generateMetadata({ params }: PageProps<"/lesson/[id]">): P
 
 export default async function LessonPage({ params }: PageProps<"/lesson/[id]">) {
   const { id } = await params;
-  const lesson = getLesson(id);
-  const course = getCourses().find((c) => c.id === lesson?.courseId);
-  if (!lesson || !course) notFound();
-
-  return <LessonPlayer lesson={lesson} course={course} />;
+  const page = getLessonPage(id);
+  if (!page) notFound();
+  return <LessonPlayer lesson={page.lesson} outline={page.outline} course={page.course} />;
 }

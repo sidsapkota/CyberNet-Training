@@ -3,7 +3,6 @@
   "kind": "lesson",
   "title": "Files and Folders",
   "order": 2,
-  "isFree": true,
   "cards": [
     {
       "id": "where-did-it-go",

@@ -23,6 +23,8 @@ import {
   hasAnyProgress,
 } from "@/lib/progress/state";
 import { TodayPanel } from "@/components/streak/TodayPanel";
+import { EarlyUserThanks } from "@/components/pro/EarlyUserThanks";
+import { usePro } from "@/lib/pro/ProProvider";
 import { ResetProgressButton } from "./ResetProgressButton";
 
 /** Staggered fade-and-rise for dashboard blocks. */
@@ -44,8 +46,9 @@ const panel = "rounded-card border border-line bg-surface shadow-card";
 
 export function Dashboard({ courses }: { courses: CourseOutline[] }) {
   const { snapshot } = useProgress();
+  const { pro, hasPro } = usePro();
 
-  if (!snapshot) {
+  if (!snapshot || pro.loading) {
     return (
       <div className="grid min-h-[60dvh] place-items-center">
         <NetworkMark mode="loading" className="size-20" label="Loading your progress" />
@@ -56,7 +59,7 @@ export function Dashboard({ courses }: { courses: CourseOutline[] }) {
   const first = courses[0];
   if (!hasAnyProgress(snapshot) || !first) return <Welcome course={first} />;
 
-  const states = courses.map((course) => computeCourseState(snapshot, course));
+  const states = courses.map((course) => computeCourseState(snapshot, course, undefined, hasPro));
   const focus =
     states.find((s) => getCurrentLesson(s) && courseProgress(s).completed > 0) ??
     states.find((s) => getCurrentLesson(s)) ??
@@ -68,6 +71,7 @@ export function Dashboard({ courses }: { courses: CourseOutline[] }) {
   return (
     <>
       <h1 className="sr-only">Dashboard</h1>
+      <EarlyUserThanks />
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <Rise index={0} className="lg:col-span-2">
           <ContinueHero state={focus} />
@@ -113,6 +117,8 @@ function ContinueHero({ state }: { state: CourseState }) {
   const { course } = state;
   const moduleNumber = current ? course.modules.findIndex((m) => m.id === current.lesson.moduleId) + 1 : 0;
   const started = current && (current.status === "in_progress" || current.completedCoreCards > 0);
+  // Everything free is done and the rest is Pro: say so calmly, with one link.
+  const restIsPro = !current && state.modules.some((m) => m.needsPro && m.status !== "completed");
 
   return (
     <section aria-labelledby="continue-title" className={`${panel} flex h-full flex-col overflow-hidden md:flex-row`}>
@@ -124,7 +130,7 @@ function ContinueHero({ state }: { state: CourseState }) {
       <div className="flex flex-1 flex-col justify-center gap-5 p-5 sm:p-7">
         <div>
           <p className="font-mono text-caption font-semibold tracking-widest text-accent-ink uppercase">
-            {current ? (started ? "Continue" : "Up next") : "Course complete"}
+            {current ? (started ? "Continue" : "Up next") : restIsPro ? "Free modules done" : "Course complete"}
           </p>
           <h2 id="continue-title" className="mt-2 text-headline leading-tight font-semibold text-balance">
             {current ? current.lesson.title : course.title}
@@ -132,12 +138,18 @@ function ContinueHero({ state }: { state: CourseState }) {
           <p className="mt-1 truncate text-small text-ink-muted">
             {current
               ? `${course.title} · Module ${moduleNumber} · about ${estimateMinutes(current.lesson)} min`
-              : "Every lesson and quiz done. Nice work."}
+              : restIsPro
+                ? "The rest of this course is in Pro. Your progress is saved."
+                : "Every lesson and quiz done. Nice work."}
           </p>
         </div>
         {current ? (
           <ButtonLink href={`/lesson/${current.lesson.id}`} className="w-full sm:w-auto sm:self-start">
             <PlayIcon className="size-5" /> {started ? "Continue" : "Start"}
+          </ButtonLink>
+        ) : restIsPro ? (
+          <ButtonLink href="/pro" variant="secondary" className="w-full sm:w-auto sm:self-start">
+            See CyberNet Pro
           </ButtonLink>
         ) : (
           <ButtonLink href={`/course/${course.id}`} variant="secondary" className="w-full sm:w-auto sm:self-start">

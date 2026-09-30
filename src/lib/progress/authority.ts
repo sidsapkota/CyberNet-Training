@@ -11,6 +11,8 @@ import { practiceXp, scoreQuiz, XP } from "./xp";
 
 export interface IndexedLesson {
   kind: Lesson["kind"];
+  /** The lesson's module: Pro lessons need Pro before the server records anything. */
+  access: Lesson["access"];
   cards: Map<string, Card>;
   coreCardIds: string[];
   /** Quizzes only. */
@@ -25,6 +27,7 @@ export function buildContentIndex(lessons: Iterable<Lesson>): ContentIndex {
   for (const lesson of lessons) {
     index.set(lesson.id, {
       kind: lesson.kind,
+      access: lesson.access,
       cards: new Map(lesson.cards.map((c) => [c.id, c])),
       coreCardIds: lesson.cards.filter((c) => c.difficulty === "core").map((c) => c.id),
       ...(lesson.kind === "quiz" ? { passThreshold: lesson.passThreshold } : {}),

@@ -18,7 +18,7 @@ import { requireUserId } from "@/lib/auth/server";
 import { getContentIndex } from "@/lib/content/server";
 import { canCompleteLesson, cardXpFor, gradeQuizAttempt, practiceXpFor } from "@/lib/progress/authority";
 import { addDays, DEFAULT_DAILY_GOAL, isDailyGoal, localDay, safeTimeZone, type XpInput } from "@/lib/progress/daily";
-import { mergeLedger, mergeProgress } from "@/lib/progress/merge";
+import { mergeLedger, mergeProgress, withoutUnentitledPro } from "@/lib/progress/merge";
 import {
   eventToRow,
   GOAL_DAY_COLUMNS,
@@ -41,9 +41,19 @@ import {
   type XpEvent,
 } from "@/lib/progress/types";
 import { XP } from "@/lib/progress/xp";
+import { getEntitlement, proLaunchAt, ProRequiredError } from "@/lib/pro/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
 const Id = z.string().min(1).max(120);
+
+/**
+ * Pro lessons need Pro before anything is recorded or graded (the content is never sent without
+ * it either). Free lessons, and unknown ids (which the XP rules reject anyway), pass through.
+ */
+async function assertCanUse(userId: string, lessonId: string): Promise<void> {
+  if (getContentIndex().get(lessonId)?.access !== "pro") return;
+  if (!(await getEntitlement({ id: userId, createdAt: null })).hasPro) throw new ProRequiredError();
+}
 
 function fail(message: string, error?: { message: string } | null): never {
   throw new Error(error ? `${message}: ${error.message}` : message);
@@ -171,6 +181,7 @@ export async function completeCardAction(
   timeZone?: string,
 ): Promise<{ completion: CardCompletion | null; xp: XpWrite }> {
   const userId = await requireUserId();
+  await assertCanUse(userId, Id.parse(lessonId));
   const index = getContentIndex();
   const tz = safeTimeZone(timeZone);
   const xp = cardXpFor(index, Id.parse(lessonId), Id.parse(cardId), Number(claimedXp));
@@ -203,6 +214,7 @@ export async function completeLessonAction(
 ): Promise<{ completion: LessonCompletion | null; xp: XpWrite }> {
   const userId = await requireUserId();
   const id = Id.parse(lessonId);
+  await assertCanUse(userId, id);
   const admin = createSupabaseAdminClient();
 
   const { data: cards, error } = await admin
@@ -237,6 +249,7 @@ export async function recordQuizAttemptAction(
 ): Promise<{ attempt: QuizAttempt | null; xp: XpWrite }> {
   const userId = await requireUserId();
   const id = Id.parse(quizId);
+  await assertCanUse(userId, id);
   const admin = createSupabaseAdminClient();
 
   const { count, error: countError } = await admin
@@ -349,13 +362,16 @@ export async function mergeGuestProgressAction(local: unknown): Promise<Progress
   // Account events are only needed from the guest's earliest day (for day totals and duplicates).
   const earliest = regraded.xpEvents.reduce((min, e) => (e.day < min ? e.day : min), localDay(now, "UTC"));
   const account = await loadAccountSnapshot(admin, userId, addDays(earliest, -1));
-  const merged = mergeProgress(account, regraded, index, now);
+  // Guests can't open Pro lessons after launch, so Pro progress from after then only counts with Pro.
+  const { hasPro } = await getEntitlement({ id: userId, createdAt: null });
+  const guest = withoutUnentitledPro(regraded, index, proLaunchAt(), hasPro);
+  const merged = mergeProgress(account, guest, index, now);
   const passedQuizzes = new Set(
-    Object.entries(regraded.quizzes)
+    Object.entries(guest.quizzes)
       .filter(([, q]) => q.attempts.some((a) => a.passed))
       .map(([id]) => id),
   );
-  const ledger = mergeLedger(account, regraded, index, passedQuizzes, now);
+  const ledger = mergeLedger(account, guest, index, passedQuizzes, now);
   const rows = snapshotToRows(userId, merged);
 
   const writes = await Promise.all([

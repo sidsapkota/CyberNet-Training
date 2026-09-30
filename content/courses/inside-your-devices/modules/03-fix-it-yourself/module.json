@@ -2,5 +2,6 @@
   "id": "fix-it-yourself",
   "title": "Fix It Yourself",
   "description": "Troubleshoot slow, full and flat devices like a technician.",
-  "order": 3
+  "order": 3,
+  "access": "pro"
 }

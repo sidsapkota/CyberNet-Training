@@ -3,7 +3,6 @@
   "kind": "lesson",
   "title": "Memory vs Storage",
   "order": 2,
-  "isFree": true,
   "cards": [
     {
       "id": "two-kinds-of-space",

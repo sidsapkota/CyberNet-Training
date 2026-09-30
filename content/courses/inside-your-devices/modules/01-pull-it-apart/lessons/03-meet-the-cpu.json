@@ -3,7 +3,6 @@
   "kind": "lesson",
   "title": "Meet the CPU",
   "order": 3,
-  "isFree": true,
   "cards": [
     {
       "id": "billions-of-steps",

@@ -3,7 +3,6 @@
   "kind": "lesson",
   "title": "Ports: Many Doors, One Address",
   "order": 1,
-  "isFree": true,
   "cards": [
     {
       "id": "which-program",

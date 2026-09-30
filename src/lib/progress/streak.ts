@@ -57,7 +57,16 @@ export interface StreakState {
   ended: boolean;
 }
 
-export function computeStreak(goalDays: Readonly<Record<string, DailyGoalDay>>, today: DayRef): StreakState {
+/**
+ * `maxFreezesOn(day)` is the most freezes the learner can hold on that day (Pro holds one more;
+ * see src/lib/pro/entitlement.ts). Applied day by day: when Pro ends, an unused extra freeze drops
+ * away, but one already used stays used, so a lapse never breaks a streak after the fact.
+ */
+export function computeStreak(
+  goalDays: Readonly<Record<string, DailyGoalDay>>,
+  today: DayRef,
+  maxFreezesOn: (day: string) => number = () => MAX_FREEZES,
+): StreakState {
   const days = Object.keys(goalDays)
     .filter((d) => d <= today.day)
     .sort();
@@ -68,13 +77,15 @@ export function computeStreak(goalDays: Readonly<Record<string, DailyGoalDay>>, 
   let prev: DayRef | null = null;
 
   const cover = (from: DayRef, missed: number): boolean => {
-    if (missed === 0) return true;
-    if (missed > freezes) {
-      freezes = 0;
-      return false;
+    const covered: string[] = [];
+    for (let i = 1; i <= missed; i++) {
+      const day = addDays(from.day, i);
+      freezes = Math.min(freezes, maxFreezesOn(day));
+      if (freezes === 0) return false;
+      freezes -= 1;
+      covered.push(day);
     }
-    freezes -= missed;
-    for (let i = 1; i <= missed; i++) frozenDays.push(addDays(from.day, i));
+    frozenDays.push(...covered);
     return true;
   };
 
@@ -82,7 +93,9 @@ export function computeStreak(goalDays: Readonly<Record<string, DailyGoalDay>>, 
     const here: DayRef = { day, tz: goalDays[day]!.tz };
     if (prev && !cover(prev, missedDaysBetween(prev, here))) run = 0;
     run += 1;
-    if (run % FREEZE_EVERY === 0 && freezes < MAX_FREEZES) freezes += 1;
+    const cap = maxFreezesOn(day);
+    freezes = Math.min(freezes, cap);
+    if (run % FREEZE_EVERY === 0 && freezes < cap) freezes += 1;
     longest = Math.max(longest, run);
     prev = here;
   }
@@ -90,6 +103,7 @@ export function computeStreak(goalDays: Readonly<Record<string, DailyGoalDay>>, 
   const todayMet = Boolean(goalDays[today.day]);
   let current = run;
   if (prev && !todayMet && !cover(prev, missedDaysBetween(prev, today))) current = 0;
+  freezes = Math.min(freezes, maxFreezesOn(today.day));
 
   return { current, longest, freezes, todayMet, frozenDays, ended: prev !== null && current === 0 };
 }
@@ -115,9 +129,14 @@ export function dailyStatus(
   snapshot: Pick<ProgressSnapshot, "xpEvents" | "goalDays" | "preferences">,
   now: Date,
   tz: string,
-): DailyStatus {
+  maxFreezesOn?: (day: string) => number,
+): DailyStatus & { maxFreezes: number } {
   const today = todayProgress(snapshot, now, tz);
-  return { today, streak: computeStreak(snapshot.goalDays, { day: today.day, tz }) };
+  return {
+    today,
+    streak: computeStreak(snapshot.goalDays, { day: today.day, tz }, maxFreezesOn),
+    maxFreezes: maxFreezesOn?.(today.day) ?? MAX_FREEZES,
+  };
 }
 
 /** The streak in words, for screen readers (the header pill, the dashboard). */

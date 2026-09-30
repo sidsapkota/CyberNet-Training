@@ -3,7 +3,6 @@
   "kind": "lesson",
   "title": "Protocols: Shared Rules",
   "order": 3,
-  "isFree": true,
   "cards": [
     {
       "id": "same-rules",

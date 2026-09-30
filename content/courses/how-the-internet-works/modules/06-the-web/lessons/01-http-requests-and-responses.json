@@ -3,7 +3,6 @@
   "kind": "lesson",
   "title": "HTTP Requests and Responses",
   "order": 1,
-  "isFree": true,
   "cards": [
     {
       "id": "you-asked",

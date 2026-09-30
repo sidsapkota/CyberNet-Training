@@ -216,13 +216,12 @@ describe("loadContent validation", () => {
 
   const M = "courses/c1/modules/m1";
   const course = { id: "c1", title: "Course", description: "D", order: 1 };
-  const mod = { id: "m1", title: "Module", description: "D", order: 1 };
+  const mod = { id: "m1", title: "Module", description: "D", order: 1, access: "free" };
   const lesson = (id: string, order: number) => ({
     id,
     kind: "lesson",
     title: id,
     order,
-    isFree: true,
     cards: [explainer()],
   });
   const quiz = (id: string, order: number) => ({
@@ -230,7 +229,6 @@ describe("loadContent validation", () => {
     kind: "quiz",
     title: id,
     order,
-    isFree: true,
     cards: [multipleChoice(), binaryToggle()],
   });
 
@@ -312,6 +310,31 @@ describe("loadContent validation", () => {
     expect(problemsFor(two).join("\n")).toMatch(/exactly one quiz, found 2/);
   });
 
+  it("requires every module to say whether it's free or Pro", () => {
+    const files = validFiles();
+    files[`${M}/module.json`] = { ...mod, access: undefined };
+    expect(problemsFor(files).join("\n")).toMatch(/module\.json → access/);
+    files[`${M}/module.json`] = { ...mod, access: "premium" };
+    expect(problemsFor(files).join("\n")).toMatch(/module\.json → access/);
+  });
+
+  it("requires every course's first module to be free", () => {
+    const files = validFiles();
+    files[`${M}/module.json`] = { ...mod, access: "pro" };
+    expect(problemsFor(files).join("\n")).toMatch(/first module \(m1\) must have "access": "free"/);
+  });
+
+  it("gives every lesson its module's access", () => {
+    const files = validFiles();
+    files["courses/c1/modules/m2/module.json"] = { ...mod, id: "m2", order: 2, access: "pro" };
+    files["courses/c1/modules/m2/lessons/01.json"] = lesson("l3", 1);
+    files["courses/c1/modules/m2/lessons/99.json"] = quiz("q3", 99);
+    const loaded = loadContent(makeContent(files));
+    expect(loaded.lessons.get("l1")?.access).toBe("free");
+    expect(loaded.lessons.get("l3")?.access).toBe("pro");
+    expect(loaded.courses[0]?.modules[1]?.lessons.map((l) => l.access)).toEqual(["pro", "pro"]);
+  });
+
   it("requires the quiz to come last", () => {
     const files = validFiles();
     files[`${M}/lessons/99.json`] = quiz("q1", 0);
@@ -320,7 +343,7 @@ describe("loadContent validation", () => {
 
   it("collects every problem instead of stopping at the first", () => {
     const files = validFiles();
-    files[`${M}/lessons/01.json`] = { ...lesson("l1", 1), isFree: "yes" };
+    files[`${M}/lessons/01.json`] = { ...lesson("l1", 1), order: "first" };
     files[`${M}/lessons/02.json`] = { ...lesson("l2", 2), cards: [] };
     expect(problemsFor(files).length).toBeGreaterThanOrEqual(2);
   });

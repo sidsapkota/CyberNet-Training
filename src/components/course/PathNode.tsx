@@ -3,9 +3,11 @@
 import * as Popover from "@radix-ui/react-popover";
 import { motion, useReducedMotion } from "motion/react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { UpgradeSheet } from "@/components/pro/UpgradeSheet";
 import { NetworkMark } from "@/components/network/NetworkMark";
 import { Button, ButtonLink } from "@/components/ui/Button";
-import { CheckIcon, ExploreModeIcon, LockIcon, PlayIcon, RetryIcon } from "@/components/ui/icons";
+import { CheckIcon, ExploreModeIcon, LockIcon, PlayIcon, ProIcon, RetryIcon } from "@/components/ui/icons";
 import { estimateMinutes } from "@/lib/content/estimate";
 import type { LessonOutline } from "@/lib/content/schema";
 import { EASE_OUT_QUICK, POPOVER_SPRING, PRESS_SPRING } from "@/lib/motion";
@@ -13,11 +15,15 @@ import { useProgress } from "@/lib/progress/ProgressProvider";
 import type { LessonState } from "@/lib/progress/state";
 import { cardKey, type ProgressSnapshot } from "@/lib/progress/types";
 
-export type NodeLook = "done" | "current" | "available" | "locked";
+export type NodeLook = "done" | "current" | "available" | "locked" | "pro";
 
-/** Visual state of a node. "current" is the learner's next item, whatever its status. */
+/**
+ * Visual state of a node. "current" is the learner's next item, whatever its status. "pro": part
+ * of CyberNet Pro and the learner doesn't have it (a finished one still shows as done).
+ */
 export function nodeLook(state: LessonState, isCurrent: boolean): NodeLook {
   if (state.status === "completed") return "done";
+  if (state.needsPro) return "pro";
   if (isCurrent) return "current";
   return state.status === "locked" ? "locked" : "available";
 }
@@ -52,6 +58,7 @@ const LOOK_CLASSES: Record<NodeLook, string> = {
   current: "border-accent-ink bg-surface text-accent-ink shadow-node-lit",
   available: "border-accent-ink bg-surface text-accent-ink shadow-node",
   locked: "border-line-strong bg-surface-raised text-ink-faint shadow-node",
+  pro: "border-line-strong bg-surface text-ink-muted shadow-node",
 };
 /** A passed quiz hub keeps a soft fill so its lit network mark stays visible. */
 const QUIZ_DONE = "border-accent-ink bg-accent-soft text-accent-ink shadow-node-lit";
@@ -79,7 +86,41 @@ export function PathNode({
   const { lesson } = state;
   const isQuiz = lesson.kind === "quiz";
   const kindLabel = isQuiz ? "Module quiz" : `Lesson ${number}`;
-  const stateWord = { done: "completed", current: "up next", available: "available", locked: "locked" }[look];
+  const stateWord = { done: "completed", current: "up next", available: "available", locked: "locked", pro: "part of CyberNet Pro" }[look];
+  const [sheetOpen, setSheetOpen] = useState(false);
+
+  // Pro lessons without Pro open the gentle upgrade sheet instead of the popover.
+  if (state.needsPro) {
+    return (
+      <motion.div
+        className="relative"
+        initial={reduceMotion ? false : { opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ ...PRESS_SPRING, delay: entranceDelay }}
+      >
+        <motion.button
+          type="button"
+          aria-haspopup="dialog"
+          aria-label={`${kindLabel}, ${lesson.title}, ${look === "done" ? "completed, " : ""}part of CyberNet Pro`}
+          onClick={() => setSheetOpen(true)}
+          whileHover={reduceMotion ? undefined : { scale: 1.06 }}
+          whileTap={reduceMotion ? undefined : { scale: 0.92 }}
+          transition={PRESS_SPRING}
+          className={`relative grid ${SIZE[lesson.kind]} place-items-center rounded-node border-4 transition-colors focus-visible:outline-offset-4 ${
+            isQuiz && look === "done" ? QUIZ_DONE : LOOK_CLASSES[look]
+          }`}
+        >
+          <NodeGlyph look={look} isQuiz={isQuiz} number={number} />
+          {look === "done" && !isQuiz && (
+            <span className="absolute -right-1 -bottom-1 grid size-7 place-items-center rounded-node border-2 border-line-strong bg-surface text-ink-muted">
+              <ProIcon className="size-3.5" />
+            </span>
+          )}
+        </motion.button>
+        <UpgradeSheet title={lesson.title} open={sheetOpen} onClose={() => setSheetOpen(false)} />
+      </motion.div>
+    );
+  }
 
   const openInExplore = async () => {
     await store.setPreferences({ mode: "explore" });
@@ -195,7 +236,12 @@ function NodeGlyph({ look, isQuiz, number }: { look: NodeLook; isQuiz: boolean; 
   if (isQuiz) {
     return (
       <>
-        <NetworkMark mode={look === "locked" ? "dim" : "lit"} shield={false} className="size-14" />
+        <NetworkMark mode={look === "locked" || look === "pro" ? "dim" : "lit"} shield={false} className="size-14" />
+        {look === "pro" && (
+          <span className="absolute -right-1 -bottom-1 grid size-8 place-items-center rounded-node border-2 border-line-strong bg-surface text-ink-muted">
+            <ProIcon className="size-4" />
+          </span>
+        )}
         {look === "done" && (
           <span className="absolute -right-1 -bottom-1 grid size-8 place-items-center rounded-node border-2 border-accent-ink bg-accent text-on-accent">
             <CheckIcon className="size-4" strokeWidth={2.5} />
@@ -211,5 +257,6 @@ function NodeGlyph({ look, isQuiz, number }: { look: NodeLook; isQuiz: boolean; 
   }
   if (look === "done") return <CheckIcon className="size-8" strokeWidth={2.5} />;
   if (look === "locked") return <LockIcon className="size-6" />;
+  if (look === "pro") return <ProIcon className="size-6" />;
   return <span className="font-mono text-title font-semibold">{number}</span>;
 }

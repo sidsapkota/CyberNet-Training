@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { twoModuleCourse } from "@/test/fixtures";
+import { proCourse, twoModuleCourse } from "@/test/fixtures";
 import {
   computeCourseState,
   courseProgress,
@@ -298,3 +298,28 @@ describe("deepLinkGate (lesson links from videos)", () => {
   });
 });
 
+
+describe("CyberNet Pro in the course state", () => {
+  const afterModule1 = () => passQuiz(withLessons("l1", "l2"), "quiz1");
+
+  it("marks Pro lessons for learners without Pro, and not for Pro learners", () => {
+    const without = computeCourseState(afterModule1(), proCourse(), "path");
+    expect(without.modules.map((m) => m.needsPro)).toEqual([false, true]);
+    expect(without.modules[1]?.lessons.map((l) => l.needsPro)).toEqual([true, true]);
+    const withPro = computeCourseState(afterModule1(), proCourse(), "path", true);
+    expect(withPro.modules[1]?.lessons.map((l) => l.needsPro)).toEqual([false, false]);
+  });
+
+  it("never sends 'Continue' into a Pro lesson without Pro, even in Explore", () => {
+    expect(getCurrentLesson(computeCourseState(afterModule1(), proCourse(), "path"))).toBeNull();
+    expect(getCurrentLesson(computeCourseState(emptySnapshot(), proCourse(), "explore"))?.lesson.id).toBe("l1");
+    expect(getCurrentLesson(computeCourseState(afterModule1(), proCourse(), "path", true))?.lesson.id).toBe("l3");
+  });
+
+  it("keeps finished Pro lessons as completed (progress is never lost)", () => {
+    const state = computeCourseState(withLessons("l1", "l2", "l3"), proCourse(), "explore");
+    const l3 = state.modules[1]?.lessons[0];
+    expect(l3).toMatchObject({ status: "completed", needsPro: true });
+    expect(courseProgress(state).completed).toBe(3);
+  });
+});

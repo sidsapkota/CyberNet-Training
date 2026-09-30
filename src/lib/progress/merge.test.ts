@@ -13,9 +13,9 @@ const lessons: Lesson[] = [
     kind: "lesson",
     title: "L1",
     order: 1,
-    isFree: true,
     courseId: "c",
     moduleId: "m",
+    access: "free",
     cards: [
       explainer({ id: "intro" }),
       multipleChoice({ id: "core-q" }),
@@ -27,10 +27,10 @@ const lessons: Lesson[] = [
     kind: "quiz",
     title: "Q1",
     order: 99,
-    isFree: true,
     passThreshold: 0.5,
     courseId: "c",
     moduleId: "m",
+    access: "free",
     cards: [multipleChoice({ id: "a" }), binaryToggle({ id: "b", target: 5 })],
   },
   {
@@ -39,9 +39,9 @@ const lessons: Lesson[] = [
     kind: "lesson",
     title: "L2",
     order: 2,
-    isFree: true,
     courseId: "c",
     moduleId: "m",
+    access: "free",
     cards: [multipleChoice({ id: "p1", difficulty: "challenge" }), multipleChoice({ id: "p2", difficulty: "challenge" })],
   },
 ];

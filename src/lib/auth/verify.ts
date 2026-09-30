@@ -14,12 +14,17 @@ export class NotSignedInError extends Error {
 /** Anything with Supabase's `auth.getUser()`; lets tests pass a fake client. */
 export interface VerifiableAuthClient {
   auth: {
-    getUser(): Promise<{ data: { user: { id: string } | null }; error: unknown }>;
+    getUser(): Promise<{ data: { user: { id: string; created_at?: string } | null }; error: unknown }>;
   };
 }
 
 export async function verifiedUserId(client: VerifiableAuthClient): Promise<string> {
+  return (await verifiedUser(client)).id;
+}
+
+/** The verified user's id and when their account was created (for the early-user grant). */
+export async function verifiedUser(client: VerifiableAuthClient): Promise<{ id: string; createdAt: string | null }> {
   const { data, error } = await client.auth.getUser();
   if (error || !data.user?.id) throw new NotSignedInError();
-  return data.user.id;
+  return { id: data.user.id, createdAt: data.user.created_at ?? null };
 }

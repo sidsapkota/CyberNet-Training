@@ -3,7 +3,6 @@
   "kind": "lesson",
   "title": "Public and Private Addresses",
   "order": 2,
-  "isFree": true,
   "cards": [
     {
       "id": "one-address-many-devices",

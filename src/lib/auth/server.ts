@@ -1,6 +1,6 @@
 import "server-only";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { verifiedUserId } from "./verify";
+import { verifiedUser, verifiedUserId } from "./verify";
 
 /**
  * The signed-in user's id, verified by the Supabase Auth server from the request's session
@@ -9,4 +9,9 @@ import { verifiedUserId } from "./verify";
  */
 export async function requireUserId(): Promise<string> {
   return verifiedUserId(await createSupabaseServerClient());
+}
+
+/** Like `requireUserId()`, plus when the account was created (the early-user Pro grant needs it). */
+export async function requireUser(): Promise<{ id: string; createdAt: string | null }> {
+  return verifiedUser(await createSupabaseServerClient());
 }

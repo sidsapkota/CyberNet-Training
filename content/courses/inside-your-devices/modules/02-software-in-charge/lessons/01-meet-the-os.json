@@ -3,7 +3,6 @@
   "kind": "lesson",
   "title": "Meet the OS",
   "order": 1,
-  "isFree": true,
   "cards": [
     {
       "id": "who-is-in-charge",

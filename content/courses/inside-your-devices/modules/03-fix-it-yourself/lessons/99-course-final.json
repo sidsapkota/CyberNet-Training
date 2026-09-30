@@ -3,7 +3,6 @@
   "kind": "quiz",
   "title": "Inside Your Devices: Course Final",
   "order": 99,
-  "isFree": true,
   "passThreshold": 0.7,
   "cards": [
     {

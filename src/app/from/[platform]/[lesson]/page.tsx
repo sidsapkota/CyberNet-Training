@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { LessonPlayer } from "@/components/player/LessonPlayer";
 import { cleanSource } from "@/lib/analytics";
-import { getCourses, getLesson } from "@/lib/content/server";
+import { getLesson, getLessonPage } from "@/lib/content/server";
 
 /**
  * Tagged lesson links for videos: cybernettrainer.com/from/tiktok/<lesson-id> plays that lesson
@@ -20,8 +20,7 @@ export async function generateMetadata({ params }: PageProps<"/from/[platform]/[
 
 export default async function FromPlatformLesson({ params }: PageProps<"/from/[platform]/[lesson]">) {
   const { platform, lesson: id } = await params;
-  const lesson = getLesson(id);
-  const course = getCourses().find((c) => c.id === lesson?.courseId);
-  if (!cleanSource(platform) || !lesson || !course) notFound();
-  return <LessonPlayer lesson={lesson} course={course} />;
+  const page = getLessonPage(id);
+  if (!cleanSource(platform) || !page) notFound();
+  return <LessonPlayer lesson={page.lesson} outline={page.outline} course={page.course} />;
 }

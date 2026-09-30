@@ -144,7 +144,7 @@ export function loadContent(root: string = DEFAULT_CONTENT_ROOT): LoadedContent 
         parsed.cards.forEach((card, i) => {
           for (const problem of checkGlossaryMarks(card, glossaryIds)) problems.push(`${rel(lessonFile)} → cards[${i}].${problem}`);
         });
-        moduleLessons.push({ ...parsed, courseId: course.id, moduleId: mod.id });
+        moduleLessons.push({ ...parsed, courseId: course.id, moduleId: mod.id, access: mod.access });
       }
 
       const where = rel(modulePath);
@@ -168,6 +168,11 @@ export function loadContent(root: string = DEFAULT_CONTENT_ROOT): LoadedContent 
     modules.sort((a, b) => a.order - b.order);
     checkUniqueOrder(modules, rel(coursePath));
     if (modules.length === 0) problems.push(`${rel(coursePath)}: a course needs at least one module`);
+    // Everyone can start every course: its first module is always free.
+    const first = modules[0];
+    if (first && first.access !== "free") {
+      problems.push(`${rel(coursePath)}: the first module (${first.id}) must have "access": "free"`);
+    }
     courses.push({ ...course, modules });
   }
 

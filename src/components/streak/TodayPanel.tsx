@@ -60,7 +60,7 @@ export function TodayPanel({ className = "" }: { className?: string }) {
             <p className="text-small text-ink-muted">{streak.current === 1 ? "day" : "days"} in a row</p>
             <p className="mt-2 flex items-center gap-1.5 text-small text-ink-muted">
               <FreezeIcon className="size-4" />
-              {streak.freezes} of {MAX_FREEZES} freezes
+              {streak.freezes} of {daily.maxFreezes} freezes
             </p>
           </div>
         </div>
@@ -71,7 +71,7 @@ export function TodayPanel({ className = "" }: { className?: string }) {
         />
       </div>
       <p className="sr-only">
-        {streak.freezes} of {MAX_FREEZES} streak freezes held.
+        {streak.freezes} of {daily.maxFreezes} streak freezes held.
       </p>
 
       {streak.ended && !today.met && (
@@ -94,7 +94,7 @@ export function TodayPanel({ className = "" }: { className?: string }) {
         <ul className="mt-1 list-disc space-y-1 pl-5 text-ink-muted">
           <li>Reach your daily goal to add a day to your streak.</li>
           <li>Replaying lessons you&apos;ve finished counts toward today&apos;s goal too.</li>
-          <li>Every 7 days in a row earns a streak freeze (you can hold {MAX_FREEZES}).</li>
+          <li>Every 7 days in a row earns a streak freeze (you can hold {daily.maxFreezes}{daily.maxFreezes > MAX_FREEZES ? " with Pro" : ""}).</li>
           <li>A freeze covers a missed day for you, automatically.</li>
         </ul>
       </details>

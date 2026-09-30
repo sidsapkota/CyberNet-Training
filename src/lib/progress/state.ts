@@ -15,6 +15,11 @@ import { isCardCompleted, type LearningMode, type ProgressSnapshot } from "./typ
  *
  * In Explore mode (the learner's `preferences.mode`) nothing is locked: every lesson and quiz can be
  * taken in any order. Completion, XP and "what's next" work exactly the same.
+ *
+ * CyberNet Pro is separate from unlocking: a lesson in a Pro module has `needsPro` when the learner
+ * doesn't have Pro (`hasPro`, false by default). Its status still shows progress (a finished Pro
+ * lesson stays completed: progress is never lost), but it can't be opened, and "what's next" skips
+ * it. Explore mode never bypasses Pro. The server enforces all of this; this is only for display.
  */
 
 export type ItemStatus = "locked" | "available" | "in_progress" | "completed";
@@ -25,12 +30,16 @@ export interface LessonState {
   completedCoreCards: number;
   /** Quizzes only. 0 to 1, or null if never attempted. */
   bestScore: number | null;
+  /** In a Pro module, and the learner doesn't have Pro: shown with a Pro badge, can't be opened. */
+  needsPro: boolean;
 }
 
 export interface ModuleState {
   module: ModuleOutline;
   status: ItemStatus;
   lessons: LessonState[];
+  /** A Pro module, and the learner doesn't have Pro. */
+  needsPro: boolean;
   completedItems: number;
   totalItems: number;
   /** 0 to 1. */
@@ -53,6 +62,7 @@ function lessonState(
   snapshot: ProgressSnapshot,
   lesson: LessonOutline,
   unlocked: boolean,
+  hasPro: boolean,
 ): LessonState {
   const completedCoreCards = lesson.coreCardIds.filter((id) =>
     isCardCompleted(snapshot, lesson.id, id),
@@ -66,7 +76,7 @@ function lessonState(
   else if (completedCoreCards > 0 || (quiz?.attempts.length ?? 0) > 0) status = "in_progress";
   else status = "available";
 
-  return { lesson, status, completedCoreCards, bestScore };
+  return { lesson, status, completedCoreCards, bestScore, needsPro: lesson.access === "pro" && !hasPro };
 }
 
 export function computeModuleState(
@@ -74,6 +84,7 @@ export function computeModuleState(
   mod: ModuleOutline,
   moduleUnlocked: boolean,
   mode: LearningMode = snapshot.preferences.mode,
+  hasPro = false,
 ): ModuleState {
   const regular = mod.lessons.filter((l) => l.kind === "lesson");
   const allRegularDone = regular.every((l) => isLessonDone(snapshot, l));
@@ -84,7 +95,7 @@ export function computeModuleState(
       mode === "explore" ||
       (moduleUnlocked && (lesson.kind === "quiz" ? allRegularDone : previousDone));
     if (lesson.kind === "lesson") previousDone = isLessonDone(snapshot, lesson);
-    return lessonState(snapshot, lesson, unlocked);
+    return lessonState(snapshot, lesson, unlocked, hasPro);
   });
 
   const completedItems = lessons.filter((l) => l.status === "completed").length;
@@ -102,6 +113,7 @@ export function computeModuleState(
     module: mod,
     status,
     lessons,
+    needsPro: mod.access === "pro" && !hasPro,
     completedItems,
     totalItems,
     progress: totalItems === 0 ? 0 : completedItems / totalItems,
@@ -112,10 +124,11 @@ export function computeCourseState(
   snapshot: ProgressSnapshot,
   course: CourseOutline,
   mode: LearningMode = snapshot.preferences.mode,
+  hasPro = false,
 ): CourseState {
   let previousModuleDone = true;
   const modules = course.modules.map((mod) => {
-    const state = computeModuleState(snapshot, mod, previousModuleDone, mode);
+    const state = computeModuleState(snapshot, mod, previousModuleDone, mode, hasPro);
     previousModuleDone = state.status === "completed";
     return state;
   });
@@ -127,13 +140,13 @@ export function computeCourseState(
 }
 
 /**
- * The learner's next item: the first one, in path order, that isn't completed or locked. In Path
- * mode that's the next unlocked lesson; in Explore mode it's the first unfinished one. Null once
- * everything is done.
+ * The learner's next item: the first one, in path order, that isn't completed or locked (or Pro,
+ * without Pro). In Path mode that's the next unlocked lesson; in Explore mode it's the first
+ * unfinished one. Null once everything they can open is done.
  */
 export function getCurrentLesson(state: CourseState): LessonState | null {
   for (const mod of state.modules) {
-    const found = mod.lessons.find((l) => l.status !== "completed" && l.status !== "locked");
+    const found = mod.lessons.find((l) => l.status !== "completed" && l.status !== "locked" && !l.needsPro);
     if (found) return found;
   }
   return null;

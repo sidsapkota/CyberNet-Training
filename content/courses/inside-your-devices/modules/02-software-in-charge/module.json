@@ -2,5 +2,6 @@
   "id": "software-in-charge",
   "title": "Software in Charge",
   "description": "Meet the operating system, the apps it manages, and the files it keeps.",
-  "order": 2
+  "order": 2,
+  "access": "pro"
 }

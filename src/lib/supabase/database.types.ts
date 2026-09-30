@@ -135,6 +135,30 @@ export type Database = {
         }
         Relationships: []
       }
+      pro_grants: {
+        Row: {
+          expires_at: string
+          reason: string
+          starts_at: string
+          thanked_at: string | null
+          user_id: string
+        }
+        Insert: {
+          expires_at: string
+          reason: string
+          starts_at?: string
+          thanked_at?: string | null
+          user_id: string
+        }
+        Update: {
+          expires_at?: string
+          reason?: string
+          starts_at?: string
+          thanked_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           age_confirmed: boolean
@@ -207,6 +231,87 @@ export type Database = {
           score?: number
           user_id?: string
           xp?: number
+        }
+        Relationships: []
+      }
+      stripe_customers: {
+        Row: {
+          created_at: string
+          customer_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          customer_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          customer_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      stripe_events: {
+        Row: {
+          id: string
+          processed_at: string
+          type: string
+        }
+        Insert: {
+          id: string
+          processed_at?: string
+          type: string
+        }
+        Update: {
+          id?: string
+          processed_at?: string
+          type?: string
+        }
+        Relationships: []
+      }
+      subscriptions: {
+        Row: {
+          billing_interval: string | null
+          cancel_at_period_end: boolean
+          current_period_end: string | null
+          customer_id: string
+          ended_at: string | null
+          id: string
+          price_id: string
+          started_at: string
+          status: string
+          synced_at: string
+          trial_end: string | null
+          user_id: string
+        }
+        Insert: {
+          billing_interval?: string | null
+          cancel_at_period_end?: boolean
+          current_period_end?: string | null
+          customer_id: string
+          ended_at?: string | null
+          id: string
+          price_id: string
+          started_at: string
+          status: string
+          synced_at?: string
+          trial_end?: string | null
+          user_id: string
+        }
+        Update: {
+          billing_interval?: string | null
+          cancel_at_period_end?: boolean
+          current_period_end?: string | null
+          customer_id?: string
+          ended_at?: string | null
+          id?: string
+          price_id?: string
+          started_at?: string
+          status?: string
+          synced_at?: string
+          trial_end?: string | null
+          user_id?: string
         }
         Relationships: []
       }

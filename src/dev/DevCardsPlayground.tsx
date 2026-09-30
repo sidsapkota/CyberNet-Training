@@ -24,7 +24,7 @@ interface Run {
 
 function buildRun(mode: Mode, cardIds: string[]) {
   const cards = CARD_SAMPLES.filter((c) => cardIds.includes(c.id));
-  const base = { order: 1, isFree: true, courseId: "dev", moduleId: "dev-module" };
+  const base = { order: 1, courseId: "dev", moduleId: "dev-module", access: "free" as const };
   const lesson: RegularLesson | Quiz =
     mode === "lesson"
       ? { ...base, id: "dev-lesson", kind: "lesson", title: "Card playground (lesson)", cards }
@@ -43,7 +43,7 @@ function buildRun(mode: Mode, cardIds: string[]) {
     description: "Dev playground",
     order: 0,
     modules: [
-      { id: "dev-module", title: "Dev", description: "Dev", order: 0, courseId: "dev", lessons: [toLessonOutline(lesson)] },
+      { id: "dev-module", title: "Dev", description: "Dev", order: 0, access: "free", courseId: "dev", lessons: [toLessonOutline(lesson)] },
     ],
   };
   return { lesson, course };

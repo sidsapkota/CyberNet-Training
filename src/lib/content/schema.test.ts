@@ -7,7 +7,6 @@ const lesson = (over: Record<string, unknown> = {}) => ({
   kind: "lesson",
   title: "Bits",
   order: 1,
-  isFree: true,
   cards: [explainer(), multipleChoice({ difficulty: "challenge" })],
   ...over,
 });
@@ -17,7 +16,6 @@ const quiz = (over: Record<string, unknown> = {}) => ({
   kind: "quiz",
   title: "Quiz",
   order: 99,
-  isFree: true,
   cards: [multipleChoice(), binaryToggle()],
   ...over,
 });
@@ -51,11 +49,6 @@ describe("LessonFileSchema: lessons", () => {
     expect(result.error?.issues[0]?.path).toEqual(["cards", 1, "correctOptionId"]);
   });
 
-  it("requires isFree", () => {
-    const withoutIsFree: Record<string, unknown> = lesson();
-    delete withoutIsFree.isFree;
-    expect(LessonFileSchema.safeParse(withoutIsFree).success).toBe(false);
-  });
 });
 
 describe("LessonFileSchema: quizzes", () => {
@@ -91,13 +84,13 @@ describe("LessonFileSchema: quizzes", () => {
 describe("toLessonOutline", () => {
   it("summarises a lesson without card content", () => {
     const parsed = LessonFileSchema.parse(lesson());
-    const outline = toLessonOutline({ ...parsed, courseId: "c", moduleId: "m" });
+    const outline = toLessonOutline({ ...parsed, courseId: "c", moduleId: "m", access: "pro" });
     expect(outline).toEqual({
       id: "bits",
       kind: "lesson",
       title: "Bits",
       order: 1,
-      isFree: true,
+      access: "pro",
       courseId: "c",
       moduleId: "m",
       cardCount: 2,
@@ -107,6 +100,6 @@ describe("toLessonOutline", () => {
 
   it("includes the pass threshold for quizzes", () => {
     const parsed = LessonFileSchema.parse(quiz());
-    expect(toLessonOutline({ ...parsed, courseId: "c", moduleId: "m" }).passThreshold).toBe(0.7);
+    expect(toLessonOutline({ ...parsed, courseId: "c", moduleId: "m", access: "pro" }).passThreshold).toBe(0.7);
   });
 });

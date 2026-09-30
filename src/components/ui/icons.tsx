@@ -40,6 +40,7 @@ import {
   ShieldCheck,
   Star,
   Snowflake,
+  Gem,
   Target,
 } from "lucide-react";
 
@@ -118,3 +119,6 @@ export const RatingIcon = brandIcon(Star, "RatingIcon");
 // Daily goals and streaks (the streak itself uses the drawn node chain, StreakIcon).
 export const GoalIcon = brandIcon(Target, "GoalIcon");
 export const FreezeIcon = brandIcon(Snowflake, "FreezeIcon");
+
+// CyberNet Pro.
+export const ProIcon = brandIcon(Gem, "ProIcon");

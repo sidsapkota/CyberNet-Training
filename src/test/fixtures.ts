@@ -249,7 +249,7 @@ export const lessonOutline = (over: Partial<LessonOutline> = {}): LessonOutline 
   kind: "lesson",
   title: "Lesson",
   order: 1,
-  isFree: true,
+  access: "free",
   courseId: "course",
   moduleId: "module",
   cardCount: 3,
@@ -262,22 +262,25 @@ export function moduleOutline(
   order: number,
   lessonIds: string[],
   quizId: string,
+  access: ModuleOutline["access"] = "free",
 ): ModuleOutline {
   return {
     id,
     title: id,
     description: `${id} description`,
     order,
+    access,
     courseId: "course",
     lessons: [
       ...lessonIds.map((lessonId, i) =>
-        lessonOutline({ id: lessonId, order: i + 1, moduleId: id }),
+        lessonOutline({ id: lessonId, order: i + 1, moduleId: id, access }),
       ),
       lessonOutline({
         id: quizId,
         kind: "quiz",
         order: 99,
         moduleId: id,
+        access,
         coreCardIds: ["q1", "q2"],
         cardCount: 2,
         passThreshold: 0.7,
@@ -295,4 +298,9 @@ export function twoModuleCourse(): CourseOutline {
     order: 1,
     modules: [moduleOutline("m1", 1, ["l1", "l2"], "quiz1"), moduleOutline("m2", 2, ["l3"], "quiz2")],
   };
+}
+
+/** The same course with m2 as a Pro module: m1 = [l1, l2, quiz1] free, m2 = [l3, quiz2] Pro. */
+export function proCourse(): CourseOutline {
+  return { ...twoModuleCourse(), modules: [moduleOutline("m1", 1, ["l1", "l2"], "quiz1"), moduleOutline("m2", 2, ["l3"], "quiz2", "pro")] };
 }

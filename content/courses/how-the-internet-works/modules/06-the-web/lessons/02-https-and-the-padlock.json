@@ -3,7 +3,6 @@
   "kind": "lesson",
   "title": "HTTPS and the Padlock",
   "order": 2,
-  "isFree": true,
   "cards": [
     {
       "id": "cafe-wifi",

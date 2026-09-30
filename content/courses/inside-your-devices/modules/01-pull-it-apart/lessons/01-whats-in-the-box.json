@@ -3,7 +3,6 @@
   "kind": "lesson",
   "title": "What's in the Box",
   "order": 1,
-  "isFree": true,
   "cards": [
     {
       "id": "same-few-parts",

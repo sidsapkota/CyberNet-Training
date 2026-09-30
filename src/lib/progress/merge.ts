@@ -101,6 +101,34 @@ export function recomputeXp(snapshot: Omit<ProgressSnapshot, "totalXp">, index: 
   return { ...next, totalXp: sumXp(next) };
 }
 
+/**
+ * Guest progress in Pro lessons, at sign-in. Guests can't open Pro lessons once Pro has launched,
+ * so Pro records from after launch could only come from tampering: they're kept only if the
+ * account has Pro. Records from before launch (or before any launch date is set) always stay, so
+ * nobody loses progress they really made.
+ */
+export function withoutUnentitledPro(
+  local: ProgressSnapshot,
+  index: ContentIndex,
+  launchAt: Date | null,
+  hasPro: boolean,
+): ProgressSnapshot {
+  if (hasPro || !launchAt) return local;
+  const launch = launchAt.getTime();
+  const keep = (lessonId: string, at: string) => index.get(lessonId)?.access !== "pro" || time(at) < launch;
+  const cards = Object.fromEntries(Object.entries(local.cards).filter(([key, c]) => keep(key.slice(0, key.indexOf("/")), c.completedAt)));
+  const lessons = Object.fromEntries(Object.entries(local.lessons).filter(([id, l]) => keep(id, l.completedAt)));
+  const quizzes = Object.fromEntries(
+    Object.entries(local.quizzes).flatMap(([id, q]) => {
+      const attempts = q.attempts.filter((a) => keep(id, a.at));
+      return attempts.length ? [[id, quizProgressFrom(attempts)]] : [];
+    }),
+  );
+  const xpEvents = local.xpEvents.filter((e) => keep(e.lessonId, e.at));
+  const next = { ...local, cards, lessons, quizzes, xpEvents };
+  return { ...next, totalXp: sumXp(next) };
+}
+
 /** The XP an event is worth under the content rules, or null if it can't be (unknown ids, no XP). */
 export function priceEvent(index: ContentIndex, e: XpEvent, passedQuizzes: ReadonlySet<string>): number | null {
   let xp: number | null = null;

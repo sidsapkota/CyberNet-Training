@@ -3,7 +3,6 @@
   "kind": "lesson",
   "title": "Slow and Full",
   "order": 1,
-  "isFree": true,
   "cards": [
     {
       "id": "not-broken",

@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 import { CourseCover } from "@/components/illustrations/CourseCover";
 import { NetworkMark } from "@/components/network/NetworkMark";
+import { ProBadge } from "@/components/pro/ProBadge";
 import { ButtonLink } from "@/components/ui/Button";
 import { CheckIcon, PlayIcon } from "@/components/ui/icons";
 import { ProgressRing } from "@/components/ui/ProgressRing";
@@ -11,6 +12,7 @@ import { estimateMinutes } from "@/lib/content/estimate";
 import type { CourseOutline } from "@/lib/content/schema";
 import { EASE_OUT_QUICK, staggerDelay } from "@/lib/motion";
 import { modulePathLayout } from "@/lib/network/path";
+import { usePro } from "@/lib/pro/ProProvider";
 import { useProgress } from "@/lib/progress/ProgressProvider";
 import {
   computeCourseState,
@@ -40,6 +42,7 @@ function readCompletedParam(): string | null {
  */
 export function CoursePath({ course }: { course: CourseOutline }) {
   const { snapshot } = useProgress();
+  const { pro, hasPro } = usePro();
   const reduceMotion = useReducedMotion();
   const [justCompleted] = useState(readCompletedParam);
   const [revealed, setRevealed] = useState(false);
@@ -71,7 +74,8 @@ export function CoursePath({ course }: { course: CourseOutline }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [snapshot === null]);
 
-  if (!snapshot) {
+  // Wait for Pro status too, so Pro badges don't flash on for Pro learners.
+  if (!snapshot || pro.loading) {
     return (
       <div className="grid min-h-[60dvh] place-items-center">
         <NetworkMark mode="loading" className="size-20" label="Loading the course path" />
@@ -81,8 +85,9 @@ export function CoursePath({ course }: { course: CourseOutline }) {
 
   const showBefore = justCompleted !== null && !revealed;
   const shown: ProgressSnapshot = showBefore ? snapshotBefore(snapshot, justCompleted) : snapshot;
-  const state = computeCourseState(shown, course);
+  const state = computeCourseState(shown, course, undefined, hasPro);
   const current = getCurrentLesson(state);
+  const restIsPro = current === null && state.modules.some((m) => m.needsPro && m.status !== "completed");
 
   return (
     <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-12">
@@ -103,7 +108,7 @@ export function CoursePath({ course }: { course: CourseOutline }) {
             />
           ))}
         </div>
-        <CourseEnd done={current === null} />
+        <CourseEnd done={courseProgress(state).completed === courseProgress(state).total} restIsPro={restIsPro} />
       </div>
       <aside className="hidden lg:block">
         <SidePanel state={state} />
@@ -150,6 +155,7 @@ function SidePanel({ state }: { state: CourseState }) {
         </div>
       </div>
       <ModeToggle />
+      {!current && state.modules.some((m) => m.needsPro && m.status !== "completed") && <RestIsPro />}
       {current && (
         <div className="rounded-card border border-line bg-surface p-4 shadow-card">
           <p className="font-mono text-caption tracking-widest text-ink-faint uppercase">Up next</p>
@@ -165,6 +171,7 @@ function SidePanel({ state }: { state: CourseState }) {
 }
 
 function ModuleBanner({ state, number }: { state: ModuleState; number: number }) {
+  // Pro modules show the badge (for learners without Pro) instead of repeating it on every node.
   const done = state.status === "completed";
   const locked = state.status === "locked";
   return (
@@ -181,6 +188,7 @@ function ModuleBanner({ state, number }: { state: ModuleState; number: number })
           {state.module.title}
         </h2>
       </div>
+      {state.needsPro && <ProBadge />}
       {done && (
         <span className="grid size-8 shrink-0 place-items-center rounded-node bg-accent text-on-accent" aria-label="Module complete">
           <CheckIcon className="size-4" strokeWidth={2.5} />
@@ -275,11 +283,30 @@ function ModulePath({
   );
 }
 
-function CourseEnd({ done }: { done: boolean }) {
+function CourseEnd({ done, restIsPro }: { done: boolean; restIsPro: boolean }) {
   return (
     <div className="mt-14 flex flex-col items-center gap-3 pb-6 text-center">
       <NetworkMark mode={done ? "lit" : "dim"} className="size-16" label={done ? "Course complete" : "Course finish line"} />
       {done && <p className="font-semibold">Course complete</p>}
+      {restIsPro && (
+        <div className="lg:hidden">
+          <RestIsPro />
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** Shown when everything free is done and the rest of the course is Pro. Calm, one link. */
+function RestIsPro() {
+  return (
+    <div className="rounded-card border border-line bg-surface p-4 text-left shadow-card">
+      <ProBadge />
+      <p className="mt-2 leading-snug font-semibold">The rest is in Pro</p>
+      <p className="text-small text-ink-muted">Your progress is saved either way.</p>
+      <ButtonLink href="/pro" variant="secondary" className="mt-4 w-full">
+        See CyberNet Pro
+      </ButtonLink>
     </div>
   );
 }

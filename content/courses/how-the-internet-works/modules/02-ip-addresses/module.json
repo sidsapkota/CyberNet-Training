@@ -2,5 +2,6 @@
   "id": "ip-addresses",
   "title": "IP Addresses",
   "description": "Learn how every device gets an address, how a whole home shares one, and why the internet needed a bigger kind.",
-  "order": 2
+  "order": 2,
+  "access": "pro"
 }

@@ -3,7 +3,6 @@
   "kind": "lesson",
   "title": "Power Problems",
   "order": 2,
-  "isFree": true,
   "cards": [
     {
       "id": "one-percent",

@@ -16,15 +16,21 @@ const orderedMeta = {
 export const CourseFileSchema = z.object(orderedMeta);
 export type CourseFile = z.infer<typeof CourseFileSchema>;
 
+/**
+ * Who can open a module's lessons: "free" for everyone (no account needed), "pro" for CyberNet Pro.
+ * Every course's first module must be free (the loader checks). See src/lib/pro/access.ts.
+ */
+export const ModuleAccessSchema = z.enum(["free", "pro"]);
+export type ModuleAccess = z.infer<typeof ModuleAccessSchema>;
+
 /** content/courses/<course>/modules/<module>/module.json */
-export const ModuleFileSchema = z.object(orderedMeta);
+export const ModuleFileSchema = z.object({ ...orderedMeta, access: ModuleAccessSchema });
 export type ModuleFile = z.infer<typeof ModuleFileSchema>;
 
 const lessonBase = {
   id: ContentId,
   title: nonEmpty,
   order: z.number().int().nonnegative(),
-  isFree: z.boolean(),
   cards: z.array(CardSchema).min(1, "needs at least one card"),
 };
 
@@ -63,8 +69,8 @@ export const LessonFileSchema = z.discriminatedUnion("kind", [RegularLessonSchem
 export type LessonFile = z.infer<typeof LessonFileSchema>;
 export type LessonKind = LessonFile["kind"];
 
-/** A validated lesson plus where it lives in the hierarchy (derived from its folder). */
-export type Lesson = LessonFile & { courseId: string; moduleId: string };
+/** A validated lesson plus where it lives in the hierarchy (derived from its folder), and its module's access. */
+export type Lesson = LessonFile & { courseId: string; moduleId: string; access: ModuleAccess };
 export type RegularLesson = Extract<Lesson, { kind: "lesson" }>;
 export type Quiz = Extract<Lesson, { kind: "quiz" }>;
 
@@ -74,7 +80,8 @@ export interface LessonOutline {
   kind: LessonKind;
   title: string;
   order: number;
-  isFree: boolean;
+  /** From the lesson's module. */
+  access: ModuleAccess;
   courseId: string;
   moduleId: string;
   cardCount: number;
@@ -100,7 +107,7 @@ export function toLessonOutline(lesson: Lesson): LessonOutline {
     kind: lesson.kind,
     title: lesson.title,
     order: lesson.order,
-    isFree: lesson.isFree,
+    access: lesson.access,
     courseId: lesson.courseId,
     moduleId: lesson.moduleId,
     cardCount: lesson.cards.length,

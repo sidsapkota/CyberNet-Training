@@ -3,7 +3,6 @@
   "kind": "lesson",
   "title": "Bits and Binary: How Computers Count",
   "order": 1,
-  "isFree": true,
   "cards": [
     {
       "id": "switches-and-bits",

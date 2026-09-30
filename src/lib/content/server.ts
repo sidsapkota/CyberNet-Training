@@ -2,7 +2,8 @@ import "server-only";
 import { cache } from "react";
 import { buildContentIndex, type ContentIndex } from "@/lib/progress/authority";
 import { loadContent } from "./load";
-import type { CourseOutline, Lesson } from "./schema";
+import { publicLesson } from "@/lib/pro/access";
+import { type CourseOutline, type Lesson, type LessonOutline, toLessonOutline } from "./schema";
 
 /**
  * Server-side content access for pages. Reads and validates everything once per
@@ -16,6 +17,17 @@ export function getCourses(): CourseOutline[] {
 
 export function getLesson(id: string): Lesson | undefined {
   return getContent().lessons.get(id);
+}
+
+/**
+ * What a lesson page may render: its outline always, and the full lesson only if it's free. Pro
+ * lessons come from /api/lessons/[id] after an entitlement check, never from the page itself.
+ */
+export function getLessonPage(id: string): { outline: LessonOutline; lesson: Lesson | null; course: CourseOutline } | undefined {
+  const lesson = getLesson(id);
+  const course = getCourses().find((c) => c.id === lesson?.courseId);
+  if (!lesson || !course) return undefined;
+  return { outline: toLessonOutline(lesson), lesson: publicLesson(lesson), course };
 }
 
 export function getAllLessonIds(): string[] {
