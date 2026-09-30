@@ -21,10 +21,29 @@
       "body": "Everything you take apart in this course is a **simulation**: tap and drag as much as you like.\n\nReal phones and laptops are different. **Don't open one without an adult or a repair shop.** It can break parts, it can end the device's warranty (the maker's promise to fix it for free), and the **lithium battery inside can catch fire if it's bent or punctured**."
     },
     {
+      "id": "explore-the-laptop",
+      "type": "hotspot",
+      "difficulty": "core",
+      "prompt": "Here's the inside of a laptop, with its bottom panel off. **Tap each part** to find out what it is and what it does.",
+      "scene": "laptop",
+      "view": "open",
+      "mode": "explore",
+      "parts": [
+        { "part": "motherboard", "job": "The big board everything plugs into. Its thin lines carry signals between the parts, like roads." },
+        { "part": "cpu", "job": "The brain (central processing unit). It follows the instructions that make apps work." },
+        { "part": "fan", "job": "Blows hot air out through the vents, so the CPU doesn't overheat." },
+        { "part": "ram", "job": "RAM (random-access memory): a fast workspace for whatever you're using right now." },
+        { "part": "storage", "job": "Keeps your photos, apps and files, even when the power is off." },
+        { "part": "battery", "job": "Stores the energy that runs everything. It's the biggest part inside." },
+        { "part": "battery-connector", "job": "Joins the battery to the board. Technicians unplug it first, so nothing gets power." }
+      ],
+      "explanation": "Almost every laptop has these same parts. Look for the clues: the fan's blades, the RAM's row of chips, the storage chip's stacked layers and the battery's lightning bolt."
+    },
+    {
       "id": "open-the-laptop",
       "type": "teardown",
       "difficulty": "core",
-      "prompt": "Open the laptop. Take out the **four screws**, lift off the **bottom panel**, then **unplug the battery** before touching anything else.",
+      "prompt": "Now open a laptop yourself. Take out the **four screws**, lift off the **bottom panel**, then **unplug the battery** before touching anything else.",
       "scene": "laptop",
       "actions": [
         { "id": "screw-1", "part": "screw-1", "verb": "unscrew", "nudge": "Unscrew this one first." },
@@ -38,7 +57,13 @@
           "after": ["screw-1", "screw-2", "screw-3", "screw-4"],
           "nudge": "The panel won't lift until all four screws are out."
         },
-        { "id": "unplug", "part": "battery-connector", "verb": "unplug", "after": ["panel"], "nudge": "Lift the panel off first." }
+        {
+          "id": "unplug",
+          "part": "battery-connector",
+          "verb": "unplug",
+          "after": ["panel"],
+          "nudge": "Lift the panel off first."
+        }
       ],
       "explanation": "Screws first, then the panel. Then technicians **unplug the battery** before they touch any other part, so nothing gets a jolt of power while they work."
     },
@@ -60,13 +85,6 @@
       "explanation": "The **battery** is the biggest part. The square chip is the **CPU**, cooled by the round **fan** next to it. The long stick with little chips is **RAM**, and the smaller card is **storage**."
     },
     {
-      "id": "what-each-part-does",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "What each part does",
-      "body": "- The **CPU** (central processing unit) is the brain: it follows the instructions that make apps work.\n- **RAM** (random-access memory) is a fast workspace for whatever you're using right now.\n- **Storage** keeps your photos, apps and files, even when the power is off.\n- The **battery** stores the energy that runs everything.\n- The **motherboard** is the big board they all plug into. Its thin metal lines carry signals between the parts, like roads in a town."
-    },
-    {
       "id": "match-parts",
       "type": "match_pairs",
       "difficulty": "core",
@@ -81,6 +99,26 @@
       "explanation": "The **CPU** does the work, **RAM** holds what's in use, **storage** keeps things for later, the **motherboard** links everything, and the **battery** powers it all."
     },
     {
+      "id": "explore-the-phone",
+      "type": "hotspot",
+      "difficulty": "core",
+      "prompt": "A phone has the same jobs to do, squeezed into a much smaller space. **Tap each part** to meet it.",
+      "scene": "phone",
+      "view": "open",
+      "mode": "explore",
+      "parts": [
+        { "part": "logic-board", "job": "The phone's motherboard. The main chips are packed onto this one small board." },
+        { "part": "camera", "job": "Takes your photos and videos, through a lens in the back cover." },
+        { "part": "cpu", "job": "The same job as in a laptop: it follows the instructions, on a smaller chip." },
+        { "part": "ram", "job": "A fast workspace for the apps open right now. It's cleared when the phone turns off." },
+        { "part": "storage", "job": "Keeps your photos, apps and messages, even when the phone is off." },
+        { "part": "battery", "job": "Stores the energy. It fills most of the phone, so it can last all day." },
+        { "part": "battery-connector", "job": "Joins the battery to the board. It's unplugged first in every repair." },
+        { "part": "charging-port", "job": "Where the charger plugs in. It's on the outside edge, so pocket fluff can get in." }
+      ],
+      "explanation": "Same parts, same looks as the laptop, just smaller: the CPU's shiny lid, RAM's row of chips and storage's stacked layers. Most phones have no fan."
+    },
+    {
       "id": "open-the-phone",
       "type": "teardown",
       "difficulty": "core",
@@ -89,7 +127,13 @@
       "actions": [
         { "id": "screw-1", "part": "screw-1", "verb": "unscrew", "nudge": "Unscrew this one first." },
         { "id": "screw-2", "part": "screw-2", "verb": "unscrew", "nudge": "Unscrew this one first." },
-        { "id": "cover", "part": "back-cover", "verb": "lift", "after": ["screw-1", "screw-2"], "nudge": "Both screws have to come out first." },
+        {
+          "id": "cover",
+          "part": "back-cover",
+          "verb": "lift",
+          "after": ["screw-1", "screw-2"],
+          "nudge": "Both screws have to come out first."
+        },
         {
           "id": "unplug",
           "part": "battery-connector",
@@ -137,8 +181,20 @@
       "actions": [
         { "id": "screw-1", "part": "screw-1", "verb": "unscrew", "nudge": "Unscrew this one first." },
         { "id": "screw-2", "part": "screw-2", "verb": "unscrew", "nudge": "Unscrew this one first." },
-        { "id": "cover", "part": "back-cover", "verb": "lift", "after": ["screw-1", "screw-2"], "nudge": "Both screws have to come out first." },
-        { "id": "unplug", "part": "battery-connector", "verb": "unplug", "after": ["cover"], "nudge": "Take the back cover off first." },
+        {
+          "id": "cover",
+          "part": "back-cover",
+          "verb": "lift",
+          "after": ["screw-1", "screw-2"],
+          "nudge": "Both screws have to come out first."
+        },
+        {
+          "id": "unplug",
+          "part": "battery-connector",
+          "verb": "unplug",
+          "after": ["cover"],
+          "nudge": "Take the back cover off first."
+        },
         {
           "id": "camera-out",
           "part": "camera",
@@ -146,7 +202,13 @@
           "after": ["unplug"],
           "nudge": "Unplug the battery before touching any other part."
         },
-        { "id": "camera-in", "part": "camera", "verb": "insert", "after": ["camera-out"], "nudge": "Take the old camera out first." },
+        {
+          "id": "camera-in",
+          "part": "camera",
+          "verb": "insert",
+          "after": ["camera-out"],
+          "nudge": "Take the old camera out first."
+        },
         {
           "id": "replug",
           "part": "battery-connector",
@@ -154,9 +216,27 @@
           "after": ["camera-in"],
           "nudge": "Fit the new camera before reconnecting the battery."
         },
-        { "id": "cover-on", "part": "back-cover", "verb": "insert", "after": ["replug"], "nudge": "Reconnect the battery before closing it up." },
-        { "id": "fasten-1", "part": "screw-1", "verb": "fasten", "after": ["cover-on"], "nudge": "Put the back cover on first." },
-        { "id": "fasten-2", "part": "screw-2", "verb": "fasten", "after": ["cover-on"], "nudge": "Put the back cover on first." }
+        {
+          "id": "cover-on",
+          "part": "back-cover",
+          "verb": "insert",
+          "after": ["replug"],
+          "nudge": "Reconnect the battery before closing it up."
+        },
+        {
+          "id": "fasten-1",
+          "part": "screw-1",
+          "verb": "fasten",
+          "after": ["cover-on"],
+          "nudge": "Put the back cover on first."
+        },
+        {
+          "id": "fasten-2",
+          "part": "screw-2",
+          "verb": "fasten",
+          "after": ["cover-on"],
+          "nudge": "Put the back cover on first."
+        }
       ],
       "explanation": "Putting a device back together is taking it apart in reverse. The battery is **unplugged first** and **plugged back in last**, just before the cover goes on, so no part is ever worked on with power connected."
     },

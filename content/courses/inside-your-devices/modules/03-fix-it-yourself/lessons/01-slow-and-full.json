@@ -17,7 +17,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "The fix-it loop",
-      "body": "Technicians fix problems with a simple loop:\n\n1. **Describe** exactly what's wrong. \"Slow\" is vague. \"Slow when 30 tabs are open\" is a clue.\n2. **Guess** the most likely cause.\n3. **Try** the simplest, safest fix first.\n4. **Check** whether it worked. If not, go back to step 2.\n\nOne rule before any fix: **never delete something unless you're sure it's backed up or not needed.**"
+      "body": "Technicians fix problems with a simple loop:\n\n1. **Describe** exactly what's wrong. \"Slow\" is vague. \"Slow when 30 tabs are open\" is a clue.\n2. **Guess** the most likely cause.\n3. **Try** the simplest, safest fix first.\n4. **Check** whether it worked. If not, go back to step 2.\n\nCommon causes of a slow device: too many apps or tabs open (full RAM), too many **startup apps** (apps that open by themselves when it switches on), and heat.\n\nOne rule before any fix: **never delete something unless you're sure it's backed up or not needed.**"
     },
     {
       "id": "slow-afternoon",
@@ -30,24 +30,14 @@
           "id": "first",
           "text": "What do you do first?",
           "choices": [
-            {
-              "id": "task-manager",
-              "text": "Open the task manager to see what's busy",
-              "consequence": "Good: look before you fix.",
-              "next": "clue"
-            },
+            { "id": "task-manager", "text": "Open the task manager to see what's busy", "consequence": "Good: look before you fix.", "next": "clue" },
             {
               "id": "booster",
               "text": "Download a \"speed booster\" app",
               "consequence": "Booster apps rarely help, and some are junk or worse. Find the cause first.",
               "outcome": "fail"
             },
-            {
-              "id": "new-laptop",
-              "text": "Ask for a new laptop",
-              "consequence": "That's a very expensive guess. The fix is probably free.",
-              "outcome": "fail"
-            }
+            { "id": "new-laptop", "text": "Ask for a new laptop", "consequence": "That's a very expensive guess. The fix is probably free.", "outcome": "fail" }
           ]
         },
         {
@@ -60,16 +50,18 @@
               "consequence": "Each tab uses RAM. With fewer open, the laptop speeds up. Check: it's working!",
               "outcome": "success"
             },
-            {
-              "id": "delete-photos",
-              "text": "Delete some photos",
-              "consequence": "Photos are in storage. The problem was RAM, so nothing changes.",
-              "outcome": "fail"
-            }
+            { "id": "delete-photos", "text": "Delete some photos", "consequence": "Photos are in storage. The problem was RAM, so nothing changes.", "outcome": "fail" }
           ]
         }
       ],
       "explanation": "Describe, guess, try, check. The task manager showed **full RAM**, so the fix was closing tabs. Deleting files only frees **storage**."
+    },
+    {
+      "id": "safe-to-delete",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "What's safe to delete",
+      "body": "When storage is full, go for big things you don't need:\n\n- files that are **backed up** somewhere else (like the cloud)\n- **duplicates**, like five blurry copies of one photo\n- apps you **never use** (you can reinstall them later)\n- **setup files** for apps you've already installed\n\nKeep anything that's your **only copy**, anything you still need, and any **system file** you don't recognise: deleting those can stop the device working."
     },
     {
       "id": "free-up-space",
@@ -183,12 +175,7 @@
               "consequence": "That's the one to keep. It protects you from the moment you log in.",
               "outcome": "fail"
             },
-            {
-              "id": "delete-system",
-              "text": "Delete the system files that load first",
-              "consequence": "Then the laptop might not start at all.",
-              "outcome": "fail"
-            }
+            { "id": "delete-system", "text": "Delete the system files that load first", "consequence": "Then the laptop might not start at all.", "outcome": "fail" }
           ]
         }
       ],
@@ -208,7 +195,7 @@
           { "id": "notes", "label": "Notes (only copy)", "gb": 0.2 },
           { "id": "music", "label": "Music (also in cloud)", "gb": 5 },
           { "id": "old-videos", "label": "Old videos (backed up)", "gb": 4 },
-          { "id": "maps", "label": "Offline maps", "gb": 2 },
+          { "id": "maps", "label": "Maps (can re-download)", "gb": 2 },
           { "id": "downloads", "label": "Downloads", "gb": 1.5 }
         ]
       },
@@ -217,7 +204,7 @@
         { "id": "delete-notes", "kind": "toggle", "label": "Delete Notes" },
         { "id": "delete-music", "kind": "toggle", "label": "Delete Music" },
         { "id": "delete-old-videos", "kind": "toggle", "label": "Delete Old videos" },
-        { "id": "delete-maps", "kind": "toggle", "label": "Delete Offline maps" },
+        { "id": "delete-maps", "kind": "toggle", "label": "Delete Maps" },
         { "id": "delete-downloads", "kind": "toggle", "label": "Delete Downloads" }
       ],
       "outputs": [

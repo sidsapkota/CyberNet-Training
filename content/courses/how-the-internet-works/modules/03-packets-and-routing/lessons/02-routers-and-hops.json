@@ -74,7 +74,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Seeing the hops with traceroute",
-      "body": "You can see the routers your packets pass through using a tool called **traceroute** (on Windows it's called `tracert`).\n\nIt prints one line per hop, in order. Each line shows the router's address and three times, because traceroute tests each hop three times. The times are in **ms** (milliseconds, thousandths of a second), and they show how long the router took to reply.\n\nThe last line is the destination itself."
+      "body": "You can see the routers your packets pass through using a tool called **traceroute** (on Windows it's called `tracert`).\n\nIt prints one line per hop, in order. Each line shows the router's address and three times, because traceroute tests each hop three times. The times are in **ms** (milliseconds, thousandths of a second), and they show how long the router took to reply.\n\nThe last line is the destination itself.\n\nSome routers are set up not to answer traceroute. Their line shows `* * *` instead of times, but they still pass your packets on."
     },
     {
       "id": "first-hop",

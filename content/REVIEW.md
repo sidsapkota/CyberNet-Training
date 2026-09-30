@@ -6,7 +6,8 @@ This file is for anyone checking the course content for accuracy. For each lesso
 - every deliberate simplification
 
 **Inside Your Devices** is reviewed [at the end of this file](#content-review-inside-your-devices),
-including its [Safety](#safety) list.
+including its [Safety](#safety) list. [Teach before test](#teach-before-test-review-both-courses)
+lists every change made to both courses when that rule was checked.
 
 The course has 6 modules. [Later corrections](#later-corrections-of-earlier-simplifications), at
 the end, lists every place a later module corrects or deepens an earlier simplification.
@@ -578,8 +579,10 @@ or deepens it (**Later**).
 
 The second course (listed first in the catalog). It has 3 modules, 7 lessons and 3 quizzes, and
 leans on the hands-on card types: `teardown`, `hotspot`, `simulator`, `scenario` and `sort_bins`.
-A test checks that every lesson uses at least 2 of them, and that every simulator card starts
-unsolved and has a solution.
+Explore cards (`hotspot` in `explore` mode, ungraded) introduce the laptop's and phone's parts
+before any card tests them. Tests check that every lesson uses at least 2 hands-on types, that every
+simulator card starts unsolved and has a solution, and that every drawn part is explored before a
+card tests it.
 
 **Devices and names used.** Only generic devices appear: "a laptop", "a phone", "a tablet". There are no
 brands, models or operating-system names. App names are generic ("Music player", "Chat app"). The
@@ -588,6 +591,11 @@ one product-like name, **"CleanerPro"**, is made up for the fake pop-up scenario
 **Scenes are drawings, not photos.** Part positions in the `laptop` and `phone` scenes are
 simplified and roughly where the parts sit in many devices, but real layouts vary a lot. The
 laptop's RAM is drawn as a removable stick. Many thin laptops solder RAM to the board.
+Each kind of part carries a drawn clue so beginners can tell them apart, and the clues are teaching
+hints rather than real markings: the **lightning bolt** on batteries (real ones carry printed
+labels), the **stacked lines** on storage chips (real flash chips look plain; inside, they really
+are built from stacked layers), the CPU's **shiny metal lid** (a heat spreader; many phone chips
+don't have one), and **gold contacts** along RAM and the storage card (real ones do have these).
 
 **Simulator numbers are illustrative** (see [Simulator models](#simulator-models)). They show the
 right relationships, not measured figures.
@@ -602,8 +610,14 @@ right relationships, not measured figures.
 - Say what each part does.
 - Technicians unplug the battery first and reconnect it last.
 - This is a simulation. Real devices should only be opened by an adult or a repair shop.
+- See every part (explore cards) before being asked to find, label or remove it.
 
 **Key claims:**
+- Explore jobs, laptop: motherboard ("signals travel its thin lines, like roads"), CPU, fan ("blows
+  hot air out through the vents"), RAM, storage, battery ("the biggest part inside"), battery
+  connector ("technicians unplug it first"). Phone: logic board, camera, CPU, RAM, storage,
+  battery ("fills most of the phone"), battery connector, charging port ("on the outside edge, so
+  pocket fluff can get in"). Most phones have no fan.
 - The CPU follows instructions; RAM is fast working space; storage keeps data with the power off;
   the battery stores energy; the motherboard connects the parts through traces.
 - Photos are kept in storage, not RAM.
@@ -622,6 +636,7 @@ right relationships, not measured figures.
   processor.
 - The camera swap reconnects the battery before refitting the cover. That's true of real repairs,
   but real ones also test the device before closing it.
+- "Most phones have no fan": a few gaming phones do have one.
 
 ### 1.2 Memory vs Storage (`memory-vs-storage`)
 **Goals:**
@@ -835,6 +850,12 @@ a real device.
 7. `inside-your-devices-final/q-no-charge`: "Never put metal in a charging port."
 8. The 3.2 recap repeats: an adult can gently brush the port with something soft and dry; never
    metal or water.
+8a. `power-problems/charging-trouble` (explainer, before the scenario): try another cable and
+    socket first; "With the phone switched off, an adult can help brush it out gently with a soft,
+    dry brush. **Never use metal** (like a pin or paper clip) **or water**. If that doesn't work, a
+    repair shop can clean it safely."
+8b. `whats-in-the-box/explore-the-phone`: the charging port's job line says fluff can get in. It
+    describes, and gives no instruction.
 
 **Heat and batteries:**
 9. `meet-the-cpu/too-hot`: the fix is "Move it off the blanket" (clear the vents) and the fan. There
@@ -849,6 +870,12 @@ a real device.
     press it, tell an adult so it can go to a repair shop.
 13. The 3.2 recap: "A bulging device may have a swollen battery. Stop using it, don't press it, and
     tell an adult."
+13a. `power-problems/how-batteries-work` (explainer): keep devices out of hot cars and don't charge
+     them under a pillow; if one gets too hot, "stop, unplug it and let it cool on a table out of
+     the sun (never in the fridge or freezer)"; a swelling battery (bulging case, lifting screen):
+     "Stop using it, don't press it, and tell an adult."
+13b. `whats-in-the-box/explore-the-laptop`: "Technicians unplug it first, so nothing gets power"
+     (the battery connector), framed as how technicians work, like item 3.
 
 **Software safety (no physical action, listed for completeness):**
 14. `meet-the-os/fake-virus-popup`: don't click anything in the pop-up, don't call the number,
@@ -857,3 +884,72 @@ a real device.
     programs without opening them and tell an adult; never delete system files you don't recognise.
 16. Ending processes: the task manager cards teach that ending a system process crashes the device.
     Ending an app loses only its unsaved work.
+
+## Teach before test: review (both courses)
+
+The rule (CLAUDE.md → Content style guide): never grade something that hasn't been shown or
+explained earlier in the course, in an earlier card or the card's own prompt. Every lesson and quiz
+in both courses was read in order against it. These are all the changes. No card or lesson id
+changed, and every lesson still has 8 to 12 cards.
+
+### Inside Your Devices
+- **New card type mode: explore.** `hotspot` cards can now be `mode: "explore"`: tap each part to
+  see its name and job, not graded, +5 XP once.
+- **1.1 What's in the Box:**
+  - Added `explore-the-laptop` (before the first teardown) and `explore-the-phone` (before the phone
+    teardown). Before this, the first teardown and the labelling cards tested parts learners had
+    never been shown.
+  - Removed the `what-each-part-does` explainer. Its content (every part's job, and the motherboard
+    "roads" analogy) now lives in the explore cards, which keeps the lesson at 12 cards.
+  - The laptop and phone scenes were redrawn so parts are easy to tell apart (see "Scenes are
+    drawings" above).
+- **1.2 Memory vs Storage:** moved the `desk-and-cupboard` explainer before the first simulator,
+  which asked learners to free RAM before RAM vs storage was explained.
+- **1.3 Meet the CPU:** moved the `cores` explainer before the `add-cores` simulator.
+- **2.1 Meet the OS:**
+  - `the-operating-system` now covers updates (they fix bugs and security holes; save first, let
+    them finish). The `update-time` scenario and `why-update` question tested this before it was
+    taught.
+  - `behind-the-scenes` (retitled "The task manager") now comes **before** the task-manager
+    simulator. It introduces the task manager, adds "leave security apps running", and adds "a web
+    page can't see what's running, so a page that says it found viruses is lying" (for the
+    `fake-virus-popup` challenge).
+- **2.2 Files and Folders:** the extensions explainer now lists `.jpg`, `.mp3`, `.mp4`, `.docx`,
+  `.txt` and `.exe` before the matching and labelling cards test them.
+- **3.1 Slow and Full:**
+  - `fix-it-loop` now lists the common causes of slowness, including **startup apps** (for the
+    `slow-start` challenge).
+  - Added a `safe-to-delete` explainer before the storage simulator and the delete-or-keep sort,
+    which tested backups, duplicates, setup files and "never delete system files" untaught.
+  - `room-for-update`: "Offline maps" is now "Maps (can re-download)", because the card relied on
+    knowing that maps can be downloaded again.
+- **3.2 Power Problems:**
+  - `how-batteries-work` now covers hot cars and pillows, cooling down safely (never the fridge or
+    freezer) and **swollen batteries** (stop, don't press it, tell an adult). These were tested by
+    `helps-or-harms`, `swollen-battery` and `too-hot-to-handle` without being taught.
+  - Added a `charging-trouble` explainer before the `wont-charge` scenario: another cable and socket
+    first; with the phone off, an adult can help brush fluff out with a soft, dry brush; never metal
+    or water; a repair shop as the fallback. (These statements are in the [Safety](#safety) list.)
+- Quizzes: no changes needed. Everything they test is now taught in core cards first.
+
+### How the Internet Works
+1. **3.1 `why-data-travels-in-packets`:** moved `taking-turns` before the `why-packets` question,
+   which needed "packets take turns" and "only the lost piece is resent".
+2. **3.2 `routers-and-hops`:** `meet-traceroute` now explains `* * *` (a router that doesn't answer
+   traceroute but still passes packets on), which the `stars` question tested.
+3. **4.3 `dns-records-and-tools`:** `record-types` now says the **lowest** MX priority number is
+   tried first (for the `mx-priority` challenge).
+4. **5.3 `protocols-as-shared-rules`:** moved `email-protocols` before `protocol-jobs`, which tested
+   IMAP before it was introduced.
+5. **6.2 `https-and-the-padlock`:** `plain-vs-https` now mentions the padlock, which `https-terms`
+   tested before `padlock-meaning` explained it.
+6. **1.2 `bytes-file-sizes-and-hex`:** `size-ladder` now gives typical film and phone-storage sizes,
+   which `typical-sizes` tested.
+7. **6.1 `http-requests-and-responses`:** `get-and-post` now says each file is fetched with its own
+   GET request (for the `requests-per-page` challenge).
+8. **4.1 `names-and-numbers`:** the `country-tlds` challenge prompt now explains that two-letter TLDs
+   are country codes, often from the country's own name (Germany is *Deutschland*).
+
+Lessons with no changes: `bits-and-binary`, `what-is-an-ip-address`, `public-and-private-addresses`,
+`meet-ipv6`, `different-roads-same-destination`, `the-lookup-journey`, `ports`, `tcp-and-udp`,
+`what-happens-when-you-type-a-url`, and all six module quizzes.

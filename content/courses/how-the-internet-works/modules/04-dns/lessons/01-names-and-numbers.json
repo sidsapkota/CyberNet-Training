@@ -115,7 +115,7 @@
       "id": "country-tlds",
       "type": "match_pairs",
       "difficulty": "challenge",
-      "prompt": "Some TLDs belong to countries. Match each TLD to what it stands for.",
+      "prompt": "Some TLDs belong to countries. Two-letter TLDs are country codes, often from the country's own name (Germany is *Deutschland*). Match each TLD to what it stands for.",
       "pairs": [
         { "id": "uk", "left": "`.uk`", "right": "The United Kingdom" },
         { "id": "jp", "left": "`.jp`", "right": "Japan" },

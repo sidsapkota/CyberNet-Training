@@ -15,13 +15,21 @@ export const HotspotCardSchema = z
     /**
      * "tap": the learner taps exactly the `targets` ("Tap every part that…").
      * "label": the learner places each label on its part.
+     * "explore": not graded. The learner taps each of `parts` to see its name and job; Continue
+     * unlocks once every one has been tapped. Use it before a scene's parts are first tested.
      */
-    mode: z.enum(["tap", "label"]),
+    mode: z.enum(["tap", "label", "explore"]),
     targets: z.array(CardId).min(1).max(6).optional(),
     labels: z
       .array(z.object({ part: CardId, label: nonEmpty.max(24) }))
       .min(2)
       .max(6)
+      .optional(),
+    /** Explore mode: the parts to discover, each with a one-line job (plain text). */
+    parts: z
+      .array(z.object({ part: CardId, job: nonEmpty.max(100) }))
+      .min(2)
+      .max(8)
       .optional(),
   })
   .superRefine((card, ctx) => {
@@ -38,6 +46,22 @@ export const HotspotCardSchema = z
         ctx.addIssue({ code: "custom", message: `"${part}" can't be seen in view "${card.view ?? "default"}"`, path });
       }
     };
+    const others = (fields: ("targets" | "labels" | "parts")[]) => {
+      for (const f of fields) {
+        if (card[f]) ctx.addIssue({ code: "custom", message: `${card.mode} mode doesn't use \`${f}\``, path: [f] });
+      }
+    };
+    if (card.mode === "explore") {
+      if (!card.parts) ctx.addIssue({ code: "custom", message: "explore mode needs `parts`", path: ["parts"] });
+      others(["targets", "labels"]);
+      if (card.difficulty !== "core") ctx.addIssue({ code: "custom", message: "explore cards teach, so they must be core", path: ["difficulty"] });
+      card.parts?.forEach((p, i) => checkPart(p.part, ["parts", i, "part"]));
+      if (card.parts && new Set(card.parts.map((p) => p.part)).size !== card.parts.length) {
+        ctx.addIssue({ code: "custom", message: "each part can only be listed once", path: ["parts"] });
+      }
+      return;
+    }
+    others(["parts"]);
     if (card.mode === "tap") {
       if (!card.targets) ctx.addIssue({ code: "custom", message: "tap mode needs `targets`", path: ["targets"] });
       if (card.labels) ctx.addIssue({ code: "custom", message: "tap mode doesn't use `labels`", path: ["labels"] });
@@ -59,6 +83,11 @@ export const HotspotCardSchema = z
   });
 
 export type HotspotCard = z.infer<typeof HotspotCardSchema>;
+
+/** Explore mode's progress: the parts tapped so far. Never graded. */
+export interface HotspotExploreState {
+  seen: string[];
+}
 export interface HotspotAnswer {
   /** Tap mode: the parts selected. */
   selected: string[];

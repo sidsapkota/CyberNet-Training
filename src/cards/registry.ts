@@ -5,14 +5,14 @@ import { matchPairsDefinition } from "./match-pairs/definition";
 import { multipleChoiceDefinition } from "./multiple-choice/definition";
 import { numericInputDefinition } from "./numeric-input/definition";
 import { packetPathDefinition } from "./packet-path/definition";
-import { hotspotDefinition } from "./hotspot/definition";
+import { hotspotDefinition, hotspotExploreDefinition } from "./hotspot/definition";
 import { scenarioDefinition } from "./scenario/definition";
 import { simulatorDefinition } from "./simulator/definition";
 import { sortBinsDefinition } from "./sort-bins/definition";
 import { teardownDefinition } from "./teardown/definition";
 import { terminalDefinition } from "./terminal/definition";
-import type { Card, CardType } from "./schema";
-import type { InteractiveCardDefinition, StaticCardDefinition } from "./types";
+import { type Card, type CardType, isExploreCard } from "./schema";
+import type { GuidedCardDefinition, InteractiveCardDefinition, StaticCardDefinition } from "./types";
 
 /**
  * card type → definition. Registration step 2 of 2 when adding a card type
@@ -38,9 +38,16 @@ const definitions = {
 /** Type-erased views used by the player, which treats answers as opaque values. */
 export type AnyInteractiveDefinition = InteractiveCardDefinition<Card, unknown>;
 export type AnyStaticDefinition = StaticCardDefinition<Card>;
-export type AnyCardDefinition = AnyInteractiveDefinition | AnyStaticDefinition;
+export type AnyGuidedDefinition = GuidedCardDefinition<Card, unknown>;
+export type AnyCardDefinition = AnyInteractiveDefinition | AnyStaticDefinition | AnyGuidedDefinition;
+
+export function isGuidedDefinition(definition: AnyCardDefinition): definition is AnyGuidedDefinition {
+  return "guided" in definition;
+}
 
 export function getCardDefinition(card: Card): AnyCardDefinition {
+  // Hotspot's explore mode is ungraded, so it has its own (guided) definition.
+  if (isExploreCard(card)) return hotspotExploreDefinition as unknown as AnyCardDefinition;
   // Safe: `definitions` is keyed by card type, and each definition only ever
   // receives cards of its own type plus answers it created itself.
   return definitions[card.type] as unknown as AnyCardDefinition;

@@ -17,7 +17,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Files, folders and extensions",
-      "body": "A **file** is one named piece of saved data: a photo, a song, an essay or an app.\n\nFiles go in **folders**, and folders can hold other folders, like boxes inside boxes. The route through the boxes to a file is its **path**: `Documents > School > essay.docx`.\n\nThe end of a file's name, after the last dot, is its **extension**. It tells the OS what kind of file it is and which app should open it."
+      "body": "A **file** is one named piece of saved data: a photo, a song, an essay or an app.\n\nFiles go in **folders**, and folders can hold other folders, like boxes inside boxes. The route through the boxes to a file is its **path**: `Documents > School > essay.docx`.\n\nThe end of a file's name, after the last dot, is its **extension**. It tells the OS what kind of file it is and which app should open it: `.jpg` is a photo, `.mp3` a song, `.mp4` a video, `.docx` a document and `.txt` plain text. `.exe` is a **program**: opening it runs it."
     },
     {
       "id": "match-extensions",

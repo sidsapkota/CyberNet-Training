@@ -1,18 +1,18 @@
 import { getScene, hiddenInView, type ScenePart, visibleParts } from "../shared/scenes/manifests";
 import { seededShuffle } from "../shared/shuffle";
 import type { GradeResult } from "../types";
-import type { HotspotAnswer, HotspotCard } from "./schema";
+import type { HotspotAnswer, HotspotCard, HotspotExploreState } from "./schema";
 
 const safe = (answer: HotspotAnswer | null | undefined): HotspotAnswer => ({
   selected: Array.isArray(answer?.selected) ? answer.selected : [],
   placed: answer?.placed && typeof answer.placed === "object" ? answer.placed : {},
 });
 
-/** Parts the learner can tap: every visible part (tap mode) or the labelled parts (label mode). */
+/** Parts the learner can tap: every visible part (tap mode), or the labelled or listed parts. */
 export function tappableParts(card: HotspotCard): ScenePart[] {
   const hidden = new Set(hiddenInView(card.scene, card.view));
-  const labelled = new Set(card.labels?.map((l) => l.part));
-  return visibleParts(card.scene, hidden).filter((p) => card.mode === "tap" || labelled.has(p.id));
+  const listed = new Set(card.mode === "explore" ? card.parts?.map((p) => p.part) : card.labels?.map((l) => l.part));
+  return visibleParts(card.scene, hidden).filter((p) => card.mode === "tap" || listed.has(p.id));
 }
 
 /** Label chips in a stable shuffled order. */
@@ -53,6 +53,7 @@ export function isHotspotReady(answer: HotspotAnswer, card: HotspotCard): boolea
 }
 
 export function gradeHotspot(card: HotspotCard, answer: HotspotAnswer): GradeResult {
+  if (card.mode === "explore") return { correct: false }; // never graded; can't be in a quiz
   const a = safe(answer);
   if (card.mode === "tap") {
     const targets = new Set(card.targets ?? []);
@@ -60,6 +61,23 @@ export function gradeHotspot(card: HotspotCard, answer: HotspotAnswer): GradeRes
   }
   const labels = card.labels ?? [];
   return { correct: labels.every((l, i) => a.placed[l.part] === i) && Object.keys(a.placed).length === labels.length };
+}
+
+/* ── Explore mode (not graded) ─────────────────────────────────────────────────────────── */
+
+const seenOf = (state: HotspotExploreState | null | undefined): string[] =>
+  Array.isArray(state?.seen) ? state.seen.filter((p): p is string => typeof p === "string") : [];
+
+/** Records a tapped part (idempotent). */
+export function markSeen(state: HotspotExploreState, part: string): HotspotExploreState {
+  const seen = seenOf(state);
+  return seen.includes(part) ? { seen } : { seen: [...seen, part] };
+}
+
+/** Continue unlocks once every listed part has been tapped. */
+export function isExploreComplete(state: HotspotExploreState, card: HotspotCard): boolean {
+  const seen = new Set(seenOf(state));
+  return (card.parts ?? []).every((p) => seen.has(p.part));
 }
 
 const partName = (card: HotspotCard, id: string) => getScene(card.scene)?.parts.find((p) => p.id === id)?.name ?? id;

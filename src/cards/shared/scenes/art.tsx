@@ -18,6 +18,7 @@ const C = {
   ink: "var(--color-on-screen)",
   muted: "var(--color-on-screen-muted)",
   warn: "var(--color-screen-danger)",
+  contact: "var(--color-scene-contact)",
 };
 
 const mono = "var(--font-plex-mono), ui-monospace, monospace";
@@ -32,14 +33,93 @@ function Screw({ x, y }: { x: number; y: number }) {
   );
 }
 
+/*
+ * Each kind of part has its own recurring look, the same in every scene, so learners can tell
+ * them apart (and a phone's parts look like a laptop's):
+ * - CPU: a square package under a shiny metal lid, a pin-1 mark and contact dots round the edge
+ * - RAM: a small board carrying a row of identical chips, with gold contacts along one side
+ * - Storage: a chip marked with stacked layers (where saved things pile up)
+ * - Battery: fat cells (or one pouch) with a lightning bolt and a gold terminal
+ * - Fan: blades in a round housing, with exhaust slots
+ */
+
+/** A row of small identical chips (RAM). */
 function Chips({ x, y, count, w, h, gap }: { x: number; y: number; count: number; w: number; h: number; gap: number }) {
   return (
     <>
       {Array.from({ length: count }, (_, i) => (
-        <rect key={i} x={x + i * (w + gap)} y={y} width={w} height={h} rx={1} fill={C.shell} />
+        <g key={i}>
+          <rect x={x + i * (w + gap)} y={y} width={w} height={h} rx={1} fill={C.shell} />
+          <rect x={x + i * (w + gap) + 1.5} y={y + 1.5} width={2} height={2} rx={0.5} fill={C.muted} opacity={0.6} />
+        </g>
       ))}
     </>
   );
+}
+
+/** Gold contact fingers along an edge: vertical ticks between x0 and x1, with an optional notch. */
+function Fingers({ x0, x1, y, h, notch }: { x0: number; x1: number; y: number; h: number; notch?: number }) {
+  const ticks: number[] = [];
+  for (let x = x0; x <= x1; x += 3) if (notch === undefined || Math.abs(x - notch) > 2.5) ticks.push(x);
+  return <path d={ticks.map((x) => `M${x} ${y}V${y + h}`).join("")} stroke={C.contact} strokeWidth={1.5} />;
+}
+
+/** A processor: package, contact dots, a metal heat spreader with a sheen, and a pin-1 mark. */
+function CpuPackage({ x, y, size }: { x: number; y: number; size: number }) {
+  const inset = size * 0.2;
+  const dots: string[] = [];
+  for (let i = 1; i < 6; i++) {
+    const t = x + (size * i) / 6;
+    const u = y + (size * i) / 6;
+    dots.push(`M${t} ${y + 2}h0.01M${t} ${y + size - 2}h0.01M${x + 2} ${u}h0.01M${x + size - 2} ${u}h0.01`);
+  }
+  return (
+    <g>
+      <rect x={x} y={y} width={size} height={size} rx={3} fill={C.part} stroke={C.muted} strokeWidth={1} />
+      <path d={dots.join("")} stroke={C.contact} strokeWidth={2} strokeLinecap="round" />
+      <rect x={x + inset} y={y + inset} width={size - 2 * inset} height={size - 2 * inset} rx={2.5} fill={C.edge} />
+      <path
+        d={`M${x + inset + 3} ${y + size - inset - 3}L${x + size - inset - 3} ${y + inset + 3}`}
+        stroke={C.ink}
+        strokeWidth={2}
+        strokeLinecap="round"
+        opacity={0.35}
+      />
+      <path d={`M${x + 3} ${y + 3}h5l-5 5Z`} fill={C.contact} />
+    </g>
+  );
+}
+
+/** A storage (flash) chip: stacked layers, like saved things piled up. */
+function StorageChip({ x, y, w, h }: { x: number; y: number; w: number; h: number }) {
+  const rows = 3;
+  return (
+    <g>
+      <rect x={x} y={y} width={w} height={h} rx={1.5} fill={C.shell} />
+      {Array.from({ length: rows }, (_, i) => {
+        const ly = y + (h * (i + 1)) / (rows + 1);
+        return <path key={i} d={`M${x + 3 + i} ${ly}H${x + w - 3 - i}`} stroke={C.muted} strokeWidth={1.4} strokeLinecap="round" />;
+      })}
+    </g>
+  );
+}
+
+/** A lightning bolt (energy), centred on (cx, cy), `s` units tall. */
+function Bolt({ cx, cy, s }: { cx: number; cy: number; s: number }) {
+  const k = s / 28;
+  const points = (
+    [
+      [3, -14],
+      [-7, 2],
+      [0, 2],
+      [-3, 14],
+      [7, -2],
+      [0, -2],
+    ] as const
+  )
+    .map(([dx, dy]) => `${cx + dx * k},${cy + dy * k}`)
+    .join(" ");
+  return <polygon points={points} fill={C.muted} />;
 }
 
 /* ── Laptop (underside) ───────────────────────────────────────────────────────────────── */
@@ -48,49 +128,87 @@ const LAPTOP: Record<string, ReactNode> = {
   motherboard: (
     <g>
       <rect x={32} y={32} width={160} height={156} rx={6} fill={C.board} stroke={C.edge} strokeWidth={0.8} />
-      <path d="M40 150H70L82 138H110M40 166H96L108 154H150M100 44V36M150 176H180" stroke={C.line} strokeWidth={1.5} fill="none" />
+      <path d="M40 150H70L82 138H110M40 166H96L108 154H150M100 44V36M150 176H180M40 142H60" stroke={C.line} strokeWidth={1.5} fill="none" />
+      {/* Small components and mounting holes: the board everything plugs into. */}
+      {[
+        [60, 176],
+        [72, 176],
+        [128, 164],
+        [138, 164],
+        [170, 150],
+      ].map(([x, y]) => (
+        <rect key={`${x}-${y}`} x={x} y={y} width={6} height={4} rx={0.8} fill={C.shell} />
+      ))}
+      {[
+        [40, 180],
+        [184, 180],
+        [184, 40],
+      ].map(([x, y]) => (
+        <circle key={`${x}-${y}`} cx={x} cy={y} r={3.2} fill={C.bg} stroke={C.contact} strokeWidth={1.2} />
+      ))}
     </g>
   ),
   cpu: (
     <g>
-      <path d="M70 66H118" stroke={C.edge} strokeWidth={5} strokeLinecap="round" />
-      <rect x={52} y={48} width={36} height={36} rx={3} fill={C.part} stroke={C.muted} strokeWidth={1} />
-      <rect x={60} y={56} width={20} height={20} rx={2} fill={C.panel} stroke={C.edge} strokeWidth={0.8} />
+      {/* Copper heat pipe carrying heat to the fan. */}
+      <path d="M82 62H112" stroke={C.contact} strokeWidth={5} strokeLinecap="round" opacity={0.85} />
+      <CpuPackage x={52} y={48} size={36} />
     </g>
   ),
   fan: (
     <g>
-      <circle cx={140} cy={66} r={24} fill={C.part} stroke={C.edge} strokeWidth={1} />
-      {[0, 72, 144, 216, 288].map((a) => (
-        <path key={a} d="M140 66Q150 52 142 44" stroke={C.muted} strokeWidth={3} strokeLinecap="round" fill="none" transform={`rotate(${a} 140 66)`} />
+      <rect x={116} y={42} width={48} height={48} rx={10} fill={C.shell} stroke={C.edge} strokeWidth={1} />
+      <path d="M124 45H156" stroke={C.bg} strokeWidth={2.5} strokeDasharray="3 2.5" />
+      <circle cx={140} cy={67} r={20} fill={C.part} stroke={C.edge} strokeWidth={1} />
+      {[0, 51.4, 102.8, 154.3, 205.7, 257.1, 308.6].map((a) => (
+        <path
+          key={a}
+          d="M140 67C146 61 147 54 143 49L139 50C141 55 139 61 140 67Z"
+          fill={C.muted}
+          opacity={0.85}
+          transform={`rotate(${a} 140 67)`}
+        />
       ))}
-      <circle cx={140} cy={66} r={6} fill={C.shell} stroke={C.edge} />
+      <circle cx={140} cy={67} r={5.5} fill={C.shell} stroke={C.edge} />
     </g>
   ),
   ram: (
     <g>
-      <rect x={44} y={108} width={72} height={20} rx={2} fill={C.part} stroke={C.edge} strokeWidth={0.8} />
-      <Chips x={49} y={112} count={4} w={12} h={12} gap={4} />
+      <rect x={44} y={107} width={72} height={22} rx={2} fill={C.part} stroke={C.edge} strokeWidth={0.8} />
+      <Chips x={48} y={110} count={4} w={13} h={10} gap={4} />
+      <Fingers x0={47} x1={113} y={124} h={4} notch={78} />
+      {/* Side notches where the clips hold the stick. */}
+      <circle cx={44} cy={118} r={2.5} fill={C.bg} />
+      <circle cx={116} cy={118} r={2.5} fill={C.bg} />
     </g>
   ),
   storage: (
     <g>
-      <rect x={124} y={112} width={56} height={18} rx={2} fill={C.part} stroke={C.edge} strokeWidth={0.8} />
-      <Chips x={130} y={116} count={2} w={14} h={10} gap={6} />
-      <circle cx={174} cy={121} r={2} fill={C.shell} />
+      <rect x={122} y={111} width={60} height={20} rx={2} fill={C.part} stroke={C.edge} strokeWidth={0.8} />
+      {/* Contacts on the short end (RAM has them along the long side). */}
+      <path d="M123 114H127M123 117H127M123 120H127M123 125H127M123 128H127" stroke={C.contact} strokeWidth={1.4} />
+      <rect x={131} y={115} width={9} height={12} rx={1} fill={C.shell} />
+      <StorageChip x={144} y={114} w={26} h={14} />
+      <circle cx={178} cy={121} r={2.6} fill={C.bg} stroke={C.edge} strokeWidth={1} />
     </g>
   ),
   battery: (
     <g>
       <rect x={204} y={36} width={84} height={148} rx={6} fill={C.panel} stroke={C.edge} strokeWidth={1} />
-      <path d="M212 85H280M212 135H280" stroke={C.line} strokeWidth={1.5} />
-      <path d="M246 56V70M239 63H253" stroke={C.muted} strokeWidth={2} strokeLinecap="round" />
+      {[42, 90, 138].map((y) => (
+        <g key={y}>
+          <rect x={210} y={y} width={68} height={42} rx={10} fill={C.part} stroke={C.edge} strokeWidth={0.8} />
+          <rect x={278} y={y + 15} width={4} height={12} rx={1.5} fill={C.contact} />
+        </g>
+      ))}
+      <Bolt cx={244} cy={111} s={26} />
     </g>
   ),
   "battery-connector": (
     <g>
-      <rect x={186} y={100} width={22} height={14} rx={2} fill={C.muted} />
-      <path d="M190 104H204M190 110H204" stroke={C.shell} strokeWidth={1.2} />
+      <path d="M204 104H200M204 110H200" stroke={C.contact} strokeWidth={1.6} />
+      <rect x={186} y={100} width={16} height={14} rx={2} fill={C.muted} />
+      <path d="M189 104H199M189 110H199" stroke={C.shell} strokeWidth={1.2} />
     </g>
   ),
   panel: (
@@ -130,55 +248,68 @@ const PHONE: Record<string, ReactNode> = {
   "logic-board": (
     <g>
       <rect x={30} y={20} width={140} height={92} rx={8} fill={C.board} stroke={C.edge} strokeWidth={0.8} />
-      <path d="M80 100H110L118 92H150M36 96H70" stroke={C.line} strokeWidth={1.5} fill="none" />
+      <path d="M80 100H110L118 92H150M36 96H70M162 30V60" stroke={C.line} strokeWidth={1.5} fill="none" />
+      {[
+        [40, 72],
+        [48, 72],
+        [40, 80],
+        [66, 100],
+        [158, 100],
+      ].map(([x, y]) => (
+        <rect key={`${x}-${y}`} x={x} y={y} width={5} height={3.5} rx={0.8} fill={C.shell} />
+      ))}
     </g>
   ),
   camera: (
     <g>
-      <circle cx={56} cy={46} r={14} fill={C.part} stroke={C.edge} strokeWidth={1} />
-      <circle cx={56} cy={46} r={7} fill={C.bg} stroke={C.muted} strokeWidth={1.2} />
+      <rect x={40} y={30} width={32} height={32} rx={7} fill={C.part} stroke={C.edge} strokeWidth={1} />
+      <circle cx={56} cy={46} r={11} fill={C.shell} stroke={C.edge} strokeWidth={1.2} />
+      <circle cx={56} cy={46} r={6.5} fill={C.bg} stroke={C.muted} strokeWidth={1} />
+      <circle cx={53.5} cy={43.5} r={1.8} fill={C.ink} opacity={0.6} />
+      <path d="M72 56H80" stroke={C.contact} strokeWidth={3} strokeLinecap="round" opacity={0.8} />
     </g>
   ),
-  cpu: (
+  cpu: <CpuPackage x={88} y={32} size={30} />,
+  ram: (
     <g>
-      <rect x={88} y={32} width={30} height={30} rx={3} fill={C.part} stroke={C.muted} strokeWidth={1} />
-      <rect x={95} y={39} width={16} height={16} rx={2} fill={C.panel} stroke={C.edge} strokeWidth={0.8} />
+      <rect x={125} y={33} width={28} height={24} rx={2} fill={C.part} stroke={C.edge} strokeWidth={0.8} />
+      <Chips x={128} y={36} count={2} w={10} h={12} gap={2} />
+      <Fingers x0={128} x1={150} y={51} h={3.5} />
     </g>
   ),
-  ram: <rect x={126} y={34} width={26} height={22} rx={2} fill={C.part} stroke={C.edge} strokeWidth={0.8} />,
   storage: (
     <g>
-      <rect x={126} y={70} width={30} height={22} rx={2} fill={C.part} stroke={C.edge} strokeWidth={0.8} />
-      <rect x={132} y={76} width={18} height={10} rx={1} fill={C.shell} />
+      <rect x={125} y={69} width={32} height={24} rx={2} fill={C.part} stroke={C.edge} strokeWidth={0.8} />
+      <StorageChip x={129} y={73} w={24} h={16} />
     </g>
   ),
   battery: (
     <g>
       <rect x={36} y={128} width={128} height={140} rx={10} fill={C.panel} stroke={C.edge} strokeWidth={1} />
-      <path d="M100 176V194M91 185H109" stroke={C.muted} strokeWidth={2.4} strokeLinecap="round" />
+      <rect x={44} y={138} width={112} height={120} rx={8} fill={C.part} stroke={C.edge} strokeWidth={0.8} />
+      <rect x={92} y={129} width={16} height={5} rx={1.5} fill={C.contact} />
+      <Bolt cx={100} cy={198} s={40} />
       <rect x={88} y={262} width={24} height={10} rx={2} fill={C.edge} opacity={0.8} />
     </g>
   ),
   "battery-connector": (
     <g>
-      <path d="M100 122V128" stroke={C.muted} strokeWidth={4} />
+      <path d="M100 122V129" stroke={C.contact} strokeWidth={4} />
       <rect x={88} y={108} width={24} height={14} rx={2} fill={C.muted} />
       <path d="M92 112H108M92 118H108" stroke={C.shell} strokeWidth={1.2} />
     </g>
   ),
   speaker: (
     <g>
-      <rect x={34} y={286} width={30} height={12} rx={3} fill={C.part} />
-      {[40, 46, 52, 58].map((x) => (
-        <circle key={x} cx={x} cy={292} r={1.4} fill={C.shell} />
-      ))}
+      <rect x={34} y={284} width={30} height={16} rx={4} fill={C.part} stroke={C.edge} strokeWidth={0.8} />
+      {[40, 46, 52, 58].flatMap((x) => [289, 295].map((y) => <circle key={`${x}-${y}`} cx={x} cy={y} r={1.4} fill={C.shell} />))}
     </g>
   ),
   "charging-port": (
     <g>
       {/* On the bottom edge, so it's visible with the cover on. */}
       <rect x={80} y={305} width={40} height={8} rx={4} fill={C.bg} stroke={C.edge} strokeWidth={1.2} />
-      <path d="M88 309H112" stroke={C.muted} strokeWidth={1.5} strokeLinecap="round" />
+      <path d="M88 309H112" stroke={C.contact} strokeWidth={1.5} strokeLinecap="round" />
     </g>
   ),
   "back-cover": (

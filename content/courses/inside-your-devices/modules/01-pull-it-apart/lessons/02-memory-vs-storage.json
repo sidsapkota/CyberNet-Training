@@ -13,6 +13,13 @@
       "body": "A phone might say it has \"8 GB\" of one thing and \"256 GB\" of another. Both are measured in gigabytes (**GB**), but they're two very different parts: **RAM** and **storage**.\n\nMixing them up is one of the most common tech mistakes. By the end of this lesson, you won't."
     },
     {
+      "id": "desk-and-cupboard",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "The desk and the cupboard",
+      "body": "Think of **RAM** as your desk. It's where you spread out whatever you're working on *right now*. It's very fast to reach, but small, and it's **cleared when the power goes off**.\n\n**Storage** is the cupboard. It's much bigger and slower to reach, but things stay there until you delete them: apps, photos, songs, saved files.\n\nWhen you open an app, it's copied from storage onto the desk. When the desk is full, a laptop starts shuffling things back into the cupboard, which slows everything down. A phone usually closes apps you aren't looking at, so they have to reload later."
+    },
+    {
       "id": "fill-the-ram",
       "type": "simulator",
       "difficulty": "core",
@@ -47,13 +54,6 @@
         ]
       },
       "explanation": "Every open app needs room in **RAM**. With the game added, the apps needed more than the phone's 4 GB, so it lagged. Closing the browser and the video call made room for the game and the music."
-    },
-    {
-      "id": "desk-and-cupboard",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "The desk and the cupboard",
-      "body": "Think of **RAM** as your desk. It's where you spread out whatever you're working on *right now*. It's very fast to reach, but small, and it's **cleared when the power goes off**.\n\n**Storage** is the cupboard. It's much bigger and slower to reach, but things stay there until you delete them: apps, photos, songs, saved files.\n\nWhen you open an app, it's copied from storage onto the desk. When the desk is full, a laptop starts shuffling things back into the cupboard, which slows everything down. A phone usually closes apps you aren't looking at, so they have to reload later."
     },
     {
       "id": "sort-ram-storage",

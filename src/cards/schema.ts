@@ -39,6 +39,15 @@ export type CardType = Card["type"];
 /** Card types that can be graded (everything except read-only ones). */
 export type InteractiveCard = Exclude<Card, { type: "explainer" }>;
 
+/** A hotspot in explore mode: hands-on but never graded (see `GuidedCardDefinition`). */
+export function isExploreCard(card: Card): boolean {
+  return card.type === "hotspot" && card.mode === "explore";
+}
+
+/**
+ * Whether a card is graded. False for explainers and explore-mode hotspots. (Only the true branch
+ * narrows usefully: a false result can also be a hotspot in explore mode.)
+ */
 export function isInteractiveCard(card: Card): card is InteractiveCard {
-  return card.type !== "explainer";
+  return card.type !== "explainer" && !isExploreCard(card);
 }

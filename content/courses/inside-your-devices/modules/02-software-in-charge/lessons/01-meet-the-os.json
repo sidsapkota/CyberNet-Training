@@ -17,7 +17,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "The operating system",
-      "body": "That something is the **operating system**, or **OS**. It's the first program to start when you switch a device on, and it runs until you switch it off.\n\nThink of it as a referee:\n\n- It gives each app **turns on the CPU**, switching between them so fast it looks like they all run at once.\n- It **shares out RAM** and stops apps reading each other's data.\n- It talks to the hardware (screen, keyboard, Wi-Fi) so apps don't have to.\n- It looks after your **files** in storage."
+      "body": "That something is the **operating system**, or **OS**. It's the first program to start when you switch a device on, and it runs until you switch it off.\n\nThink of it as a referee:\n\n- It gives each app **turns on the CPU**, switching between them so fast it looks like they all run at once.\n- It **shares out RAM** and stops apps reading each other's data.\n- It talks to the hardware (screen, keyboard, Wi-Fi) so apps don't have to.\n- It looks after your **files** in storage.\n\nIt also installs **updates**, which fix bugs and close security holes. Save your work first, and let an update finish: switching off halfway can leave the OS broken."
     },
     {
       "id": "os-or-app",
@@ -40,10 +40,17 @@
       "explanation": "The **OS** manages the shared things every app needs: CPU time, RAM, the hardware and safety. **Apps** do one particular job for you, and ask the OS for what they need."
     },
     {
+      "id": "behind-the-scenes",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "The task manager",
+      "body": "Every running program is called a **process**. The OS's **task manager** lists them all, with how much CPU and RAM each one uses.\n\nMany processes have no window. These **background processes** check for updates, sync your files, or scan for viruses (leave security apps running). **System processes** are the OS itself: end one and the device crashes or restarts.\n\nIf an app freezes, ending its process is the safe fix. You'll lose anything unsaved in it, but nothing else. Only the OS and security apps can see what's running. A web page can't, so a page that says it \"found viruses\" is lying."
+    },
+    {
       "id": "end-the-frozen-app",
       "type": "simulator",
       "difficulty": "core",
-      "prompt": "Your laptop has frozen up. The OS's **task manager** lists everything running. End whatever is hogging the CPU, but **keep your music and your homework browser open**.",
+      "prompt": "Your laptop has frozen up. Open the **task manager** and end whatever is hogging the CPU, but **keep your music and your homework browser open**.",
       "model": "task-manager",
       "params": {
         "ramGb": 8,
@@ -76,13 +83,6 @@
         ]
       },
       "explanation": "The **drawing app** was stuck using 85% of the CPU. Ending it freed the CPU, and everything else carried on. Ending **System** would have crashed the whole laptop."
-    },
-    {
-      "id": "behind-the-scenes",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "Behind the scenes",
-      "body": "The task manager showed more than your apps. Every running program is called a **process**, and many have no window at all. These **background processes** check for updates, sync your files, or scan for viruses.\n\n**System processes** are the OS itself. End one and the device crashes or restarts, which is why the task manager warns you first.\n\nIf an app freezes, ending its process is the safe fix. You'll lose anything unsaved in it, but nothing else."
     },
     {
       "id": "update-time",
@@ -206,12 +206,7 @@
               "consequence": "Pop-ups like this are fakes. The \"cleaner\" is usually the harmful program itself.",
               "outcome": "fail"
             },
-            {
-              "id": "call",
-              "text": "Call the number",
-              "consequence": "It's a scam. The caller will ask for money or for control of your laptop.",
-              "outcome": "fail"
-            },
+            { "id": "call", "text": "Call the number", "consequence": "It's a scam. The caller will ask for money or for control of your laptop.", "outcome": "fail" },
             {
               "id": "close-tab",
               "text": "Don't click anything in it. Close the tab",

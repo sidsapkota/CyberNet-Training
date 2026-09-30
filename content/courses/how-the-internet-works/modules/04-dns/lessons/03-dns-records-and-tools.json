@@ -17,7 +17,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Four record types",
-      "body": "- An **A** record holds an **IPv4** address, like `198.51.100.10`. (A is for address.)\n- An **AAAA** record holds an **IPv6** address, like `2001:db8::10`. It's called *quad-A* because an IPv6 address is four times as long as an IPv4 one: 128 bits instead of 32.\n- A **CNAME** record says \"this name is an alias: go and look up this *other* name instead\". For example, `www.example.com` can point to `example.com`.\n- An **MX** record (mail exchange) names the server that receives **email** for the domain, with a priority number, like `10 mail.example.com`."
+      "body": "- An **A** record holds an **IPv4** address, like `198.51.100.10`. (A is for address.)\n- An **AAAA** record holds an **IPv6** address, like `2001:db8::10`. It's called *quad-A* because an IPv6 address is four times as long as an IPv4 one: 128 bits instead of 32.\n- A **CNAME** record says \"this name is an alias: go and look up this *other* name instead\". For example, `www.example.com` can point to `example.com`.\n- An **MX** record (mail exchange) names the server that receives **email** for the domain, with a priority number, like `10 mail.example.com`. If there are several, the **lowest** number is tried first."
     },
     {
       "id": "match-records",

@@ -88,7 +88,7 @@ function TapMode({ card, answer, onAnswerChange, status, parts, hidden, locked, 
               >
                 {(isSelected || result) && (
                   <span
-                    className={`absolute -top-2 -right-2 grid size-5 place-items-center rounded-node border-2 bg-screen ${
+                    className={`pointer-events-none absolute -top-2 -right-2 grid size-5 place-items-center rounded-node border-2 bg-screen ${
                       result === "wrong" ? "border-screen-danger text-screen-danger" : result ? "border-screen-success text-screen-success" : "border-screen-accent text-screen-accent"
                     }`}
                   >

@@ -17,7 +17,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "HTTPS: HTTP in a locked box",
-      "body": "Plain **HTTP** sends everything as readable text, a bit like writing on a postcard.\n\n**HTTPS** is the same HTTP, but carried inside another protocol called **TLS** (**Transport Layer Security**). TLS **encrypts** the data: it scrambles it with a secret key so that only your browser and the server can unscramble it. To anyone in between, it looks like random noise.\n\nHTTPS also lets your browser check that it's really talking to the site whose name you typed. It normally uses port **443**, while plain HTTP uses 80."
+      "body": "Plain **HTTP** sends everything as readable text, a bit like writing on a postcard.\n\n**HTTPS** is the same HTTP, but carried inside another protocol called **TLS** (**Transport Layer Security**). TLS **encrypts** the data: it scrambles it with a secret key so that only your browser and the server can unscramble it. To anyone in between, it looks like random noise.\n\nHTTPS also lets your browser check that it's really talking to the site whose name you typed. It normally uses port **443**, while plain HTTP uses 80.\n\nWhen a page uses HTTPS, your browser shows a **padlock** next to the address, meaning the connection is encrypted."
     },
     {
       "id": "who-can-read",

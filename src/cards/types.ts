@@ -37,6 +37,20 @@ export interface InteractiveCardDefinition<C extends { type: string }, A> {
   Component: ComponentType<CardComponentProps<C, A>>;
 }
 
+/**
+ * Contract for an ungraded, hands-on card (hotspot explore mode). The learner works through it and
+ * Continue unlocks once `isComplete`. It pays `XP.explore` once and never appears in quizzes.
+ * Everything except `Component` must be pure.
+ */
+export interface GuidedCardDefinition<C extends { type: string }, S> {
+  type: C["type"];
+  interactive: false;
+  guided: true;
+  initialState: (card: C) => S;
+  isComplete: (state: S, card: C) => boolean;
+  Component: ComponentType<CardComponentProps<C, S>>;
+}
+
 /** Contract for a read-only card type (e.g. explainer). */
 export interface StaticCardDefinition<C extends { type: string }> {
   type: C["type"];

@@ -7,6 +7,8 @@ export const XP = {
     core: { firstTry: 10, retry: 5 },
     challenge: { firstTry: 20, retry: 10 },
   },
+  /** Exploring a scene (hotspot explore mode): ungraded, a small reward for finishing it. */
+  explore: 5,
   lessonComplete: 20,
   quizPass: 50,
 } as const;
@@ -27,6 +29,11 @@ export function cardXpToAward(
   attempts: number,
 ): number {
   return alreadyCompleted ? 0 : cardXp(difficulty, attempts);
+}
+
+/** XP for finishing an explore card, or 0 if it was already done. */
+export function exploreXpToAward(alreadyCompleted: boolean): number {
+  return alreadyCompleted ? 0 : XP.explore;
 }
 
 export function lessonBonusToAward(snapshot: ProgressSnapshot, lessonId: string): number {

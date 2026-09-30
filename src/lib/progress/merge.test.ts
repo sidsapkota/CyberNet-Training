@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Lesson } from "@/lib/content/schema";
-import { binaryToggle, explainer, multipleChoice } from "@/test/fixtures";
+import { binaryToggle, explainer, hotspot, multipleChoice } from "@/test/fixtures";
 import { buildContentIndex, canCompleteLesson, cardXpFor, gradeQuizAttempt } from "./authority";
 import { mergeProgress, recomputeXp } from "./merge";
 import { cardKey, emptySnapshot, type ProgressSnapshot, type QuizAttempt } from "./types";
@@ -49,6 +49,14 @@ function snapshot(over: Partial<ProgressSnapshot> = {}): ProgressSnapshot {
 }
 
 describe("cardXpFor (server XP rules)", () => {
+  it("pays explore cards the small explore XP, whatever the client claims, and explainers nothing", () => {
+    const look = hotspot({ id: "look", mode: "explore", targets: undefined, parts: [{ part: "cpu", job: "a" }, { part: "ram", job: "b" }] });
+    const withExplore = buildContentIndex([{ ...lessons[0]!, cards: [look, ...lessons[0]!.cards] } as Lesson]);
+    expect(cardXpFor(withExplore, "l1", "look", 9999)).toBe(5);
+    expect(cardXpFor(withExplore, "l1", "look", 0)).toBe(5);
+    expect(cardXpFor(withExplore, "l1", "intro", 10)).toBe(0);
+  });
+
   it("awards first-try or retry XP from the card's difficulty, never the client's number", () => {
     expect(cardXpFor(index, "l1", "core-q", 10)).toBe(10);
     expect(cardXpFor(index, "l1", "core-q", 5)).toBe(5);

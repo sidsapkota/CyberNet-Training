@@ -43,6 +43,13 @@
       "explanation": "6,000 ÷ 1,500 = **4** packets. In real networks, part of each packet's 1,500 bytes is used by the added information like addresses, so each one carries a little less data, and the message would need one more packet."
     },
     {
+      "id": "taking-turns",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Taking turns",
+      "body": "Think of cars from lots of side streets merging onto one main road. Packets from different conversations do the same thing: they **take turns** on the same connection.\n\nYour game sends small packets, and they slip in between the film's packets, so both keep going at the same time. And if a packet goes missing along the way, only that one packet needs to be sent again, not the whole film."
+    },
+    {
       "id": "why-packets",
       "type": "multiple_choice",
       "difficulty": "core",
@@ -68,13 +75,6 @@
         { "id": "rebuild", "label": "The receiver uses the sequence numbers to rebuild the message" }
       ],
       "explanation": "The data is **split** first, then each piece gets its **addresses and sequence number**, which turns it into a packet ready to travel. The receiver can only rebuild the message once packets have arrived, using the sequence numbers to put them in order."
-    },
-    {
-      "id": "taking-turns",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "Taking turns",
-      "body": "Think of cars from lots of side streets merging onto one main road. Packets from different conversations do the same thing: they **take turns** on the same connection.\n\nYour game sends small packets, and they slip in between the film's packets, so both keep going at the same time. And if a packet goes missing along the way, only that one packet needs to be sent again, not the whole film."
     },
     {
       "id": "photo-packets",

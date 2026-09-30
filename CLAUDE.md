@@ -95,6 +95,10 @@ src/cards/<type>/
   - Interactive cards have `initialAnswer`, `isAnswerReady`, `grade`, `describeAnswer`,
     `describeCorrectAnswer` and `Component`. Everything except `Component` must be pure.
   - Static cards (explainer) only have `Component`.
+  - Guided cards (hotspot's explore mode) are ungraded but hands-on: `initialState`, `isComplete`
+    and `Component`. The player keeps their state like an answer and enables Continue once
+    `isComplete`. They pay `XP.explore` once and can't be in quizzes. `getCardDefinition` returns
+    the guided definition for explore-mode hotspots, and `isInteractiveCard` is false for them.
 - **Card components are controlled.** They receive `{ card, answer, onAnswerChange, status }` and never
   grade themselves. `status` is `answering`, `correct` or `incorrect`; anything other than `answering`
   means read-only.
@@ -123,7 +127,7 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
 | `match_pairs` | `pairs` (3–6 `{id, left, right}`, unique texts) | `{leftId: rightId}` | every pair matched |
 | `packet_path` | `nodes`, `links`, `source`, `destination`, `validPaths` (see below) | node ids from source | equals a valid path |
 | `terminal` | `commands`, `success`, `promptLabel?`, `intro?`, `caseSensitive?` (see below) | `{history, response}` | success condition met |
-| `hotspot` | `scene`, `view?`, `mode` (`tap` + `targets[]`, or `label` + `labels[] {part, label}`) | `{selected[], placed{part: labelIndex}}` | exactly the targets / every label on its part |
+| `hotspot` | `scene`, `view?`, `mode` (`tap` + `targets[]`, `label` + `labels[] {part, label}`, or `explore` + `parts[] {part, job}`) | `{selected[], placed{part: labelIndex}}` (explore: `{seen[]}`) | exactly the targets / every label on its part (explore: not graded) |
 | `teardown` | `scene`, `view?`, `actions[] {id, part, verb, after?, nudge}`, `maxNudges?` | `{done[], nudges}` | all actions, each after its `after`, nudges ≤ max |
 | `simulator` | `model`, `params`, `controls[]` (toggle/slider/button), `outputs[]` (meter/bar/timer/device/list), `goal.all[]` | `{controlId: value}` | every goal condition holds |
 | `scenario` | `start`, `steps[] {id, text, choices[] {id, text, consequence, next \| outcome}}` | choice ids in order | the last choice's outcome is `success` |
@@ -164,8 +168,17 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - Parts under a cover that's still on can't be seen, tapped or announced. Schemas check every part
     id, view and visibility at load.
   - Add a scene by adding its manifest and its drawing; `scenes.test.ts` checks every part is drawn.
+  - **Each kind of part has one look in every scene,** so learners can tell them apart and a
+    phone's parts match a laptop's: CPU = square package with a shiny metal lid, pin-1 mark and
+    contact dots; RAM = small board with a row of identical chips and gold contacts along a side;
+    storage = chip with stacked layers; battery = cells or a pouch with a lightning bolt and gold
+    terminal; fan = blades in a housing. Gold details use `--color-scene-contact`. No text on
+    parts: labels would give answers away.
 - **`hotspot`:** tap mode selects exactly `targets` (tap again to unselect). Label mode places label
   chips on numbered spots (spots don't name the part, or the answer would be given away).
+  **Explore mode** (not graded, core only) teaches a scene: each tap highlights a part and shows its
+  name and one-line `job`; hollow nodes turn into checked ones as parts are explored, and Continue
+  unlocks once every listed part has been tapped. Put one before a scene's parts are first tested.
 - **`teardown`:**
   - Verbs: `unscrew`, `lift`, `slide-out`, `unplug` (remove) and `insert`, `fasten`, `plug-in`
     (refit).
@@ -269,6 +282,7 @@ interactive, update `isInteractiveCard` / `InteractiveCard` in `schema.ts`.
   - challenge cards: 20 on the first try, 10 after retries
   - lesson complete: +20
   - quiz first pass: +50
+  - explore card (hotspot explore mode) finished: 5; explainers: 0
   - XP is paid once per card, ever
 - **`state.ts`** holds pure derived state, and nothing derived is ever stored:
   - unlocks: lessons in order within a module; the quiz after all of the module's lessons; the next
@@ -723,6 +737,12 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   cards and alternate explaining with doing.
 - **Explanations teach.** Say *why* the answer is right and address likely wrong answers. Wrong
   options should reflect real misconceptions.
+- **Teach before test.** Never grade something that hasn't been shown or explained earlier in the
+  course: in an earlier card, or in the card's own prompt. That includes a part's name or look
+  (explore a scene before a hotspot or teardown tests its parts), a term, a number, a command, and
+  what a safe action is. A card's own explanation doesn't count (it comes after answering), and core
+  cards and quizzes can't rely on a challenge card. `load.test.ts` checks the scene part of this
+  automatically; check the rest by reading the lesson in order.
 - **Challenge cards** (`difficulty: "challenge"`) are optional stretch questions. Core cards alone must
   fully teach the lesson, and nothing later may depend on a challenge card. Aim for about 2 per lesson.
 - **Quizzes** have about 5 core, interactive questions covering the module's lessons, and nothing
@@ -732,7 +752,8 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
 - **Lesson shape:** 8–12 cards, opening with a hook explainer and ending with a recap explainer,
   at most 3 multiple choice cards, exactly 2 challenge cards. Quizzes have 5–8 core, interactive
   questions. `load.test.ts` enforces all of this for every lesson and quiz. It also checks that
-  every simulator card starts unsolved and has a solution, and that every Inside Your Devices
+  every simulator card starts unsolved and has a solution, that every drawn part is explored before
+  a card tests it, and that every Inside Your Devices
   lesson uses at least 2 hands-on types (hotspot, teardown, simulator, scenario, sort_bins).
 - **Physical safety:** no brands, and never instructions for opening a real device. Any physical
   action (cleaning a port, a hot or swollen battery) stays gentle and says "ask an adult" or a

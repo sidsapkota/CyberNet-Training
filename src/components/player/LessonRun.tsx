@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { getCardDefinition } from "@/cards/registry";
+import { getCardDefinition, isGuidedDefinition } from "@/cards/registry";
 import { type Card, isInteractiveCard } from "@/cards/schema";
 import type { CardStatus } from "@/cards/types";
 import type { CourseOutline, RegularLesson } from "@/lib/content/schema";
@@ -10,7 +10,7 @@ import { useGlobalKeyDown } from "@/lib/keyboard";
 import { useProgress } from "@/lib/progress/ProgressProvider";
 import { getNextLesson, lessonFinishState } from "@/lib/progress/state";
 import { emptySnapshot, isCardCompleted } from "@/lib/progress/types";
-import { cardXpToAward, lessonBonusToAward, XP } from "@/lib/progress/xp";
+import { cardXpToAward, exploreXpToAward, lessonBonusToAward, XP } from "@/lib/progress/xp";
 import { type ProgressNode } from "@/components/network/NodeProgress";
 import { CardStage, useFeedbackAnimation } from "./CardStage";
 import { FeedbackFooter, type FeedbackTone, type FooterAction } from "./FeedbackFooter";
@@ -28,7 +28,8 @@ interface CardRun {
 function freshRun(card: Card): CardRun {
   const definition = getCardDefinition(card);
   return {
-    answer: definition.interactive ? definition.initialAnswer(card) : null,
+    // Guided cards (hotspot explore) keep their progress in `answer` too; it's never graded.
+    answer: definition.interactive ? definition.initialAnswer(card) : isGuidedDefinition(definition) ? definition.initialState(card) : null,
     status: "answering",
     attempts: 0,
     xpAwarded: 0,
@@ -87,10 +88,11 @@ export function LessonRun({
   }
 
   /**
-   * `justCompleted` is a card marked complete in this same event (a final explainer). Its state
-   * update hasn't been applied yet, so it's counted explicitly.
+   * `justCompleted` is a card marked complete in this same event (a final explainer or explore
+   * card), and `justEarned` its XP. Those state updates haven't been applied yet, so they're
+   * counted explicitly.
    */
-  async function finish(justCompleted?: string) {
+  async function finish(justCompleted?: string, justEarned = 0) {
     const { missingCore, challengesCompleted } = lessonFinishState(
       lesson.cards,
       (c) => c.id === justCompleted || isDone(c),
@@ -103,16 +105,21 @@ export function LessonRun({
     await Promise.all(pendingSaves.current.splice(0));
     const bonus = lessonBonusToAward(snapshot, lesson.id);
     await store.completeLesson(lesson.id, bonus);
-    setResult({ xpEarned: sessionXp + bonus, alreadyCompleted: bonus === 0, challengesCompleted });
+    setResult({ xpEarned: sessionXp + justEarned + bonus, alreadyCompleted: bonus === 0, challengesCompleted });
     window.scrollTo({ top: 0 });
   }
 
   function advance() {
     feedback.play("complete");
-    const readExplainer = !definition.interactive;
-    if (readExplainer) markComplete(card, 0);
+    // Explainers and explore cards are completed by Continue. Explore cards pay a small XP once.
+    const completedByContinue = !definition.interactive;
+    const xp = completedByContinue && isGuidedDefinition(definition) ? exploreXpToAward(isDone(card)) : 0;
+    if (completedByContinue) {
+      markComplete(card, xp);
+      if (xp > 0) setSessionXp((current) => current + xp);
+    }
     if (index + 1 < total) goTo(index + 1);
-    else void finish(readExplainer ? card.id : undefined);
+    else void finish(completedByContinue ? card.id : undefined, xp);
   }
 
   function check() {
@@ -142,7 +149,9 @@ export function LessonRun({
   }
 
   let primary: FooterAction;
-  if (!definition.interactive) {
+  if (isGuidedDefinition(definition)) {
+    primary = { label: "Continue", onClick: advance, disabled: !definition.isComplete(run.answer, card) };
+  } else if (!definition.interactive) {
     primary = { label: "Continue", onClick: advance };
   } else if (run.status === "answering") {
     primary = { label: "Check", onClick: check, disabled: !definition.isAnswerReady(run.answer, card) };
@@ -221,7 +230,7 @@ export function LessonRun({
       }
     >
       <CardStage cardKey={`${lesson.id}-${index}`} card={card} scope={scope} challengeXp={challengeXp}>
-        {definition.interactive ? (
+        {definition.interactive || isGuidedDefinition(definition) ? (
           <definition.Component
             card={card}
             answer={run.answer}

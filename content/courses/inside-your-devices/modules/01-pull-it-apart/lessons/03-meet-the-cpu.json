@@ -30,28 +30,36 @@
       "explanation": "2 GHz is 2 billion steps a second, so 10 billion steps take 10 ÷ 2 = **5 seconds**."
     },
     {
+      "id": "cores",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "More cooks in the kitchen",
+      "body": "Most CPUs today have several **cores**. Each core is a complete worker that can follow its own instructions, like having several cooks in one kitchen.\n\nSome jobs split nicely: four cooks can chop a big pile of vegetables four times as fast. Others can't: a cake takes just as long to bake however many cooks are watching it.\n\nSo more cores only help when the job can be **split into pieces that don't wait for each other**."
+    },
+    {
       "id": "add-cores",
       "type": "simulator",
       "difficulty": "core",
       "prompt": "Exporting this video takes too long. Add **cores** until it finishes in **3 seconds or less**.",
       "model": "cpu-cores",
       "params": {
-        "tasks": [{ "id": "export", "label": "Export a video", "work": 24, "splittable": true }]
+        "tasks": [
+          { "id": "export", "label": "Export a video", "work": 24, "splittable": true }
+        ]
       },
-      "controls": [{ "id": "cores", "kind": "slider", "label": "Cores", "min": 1, "max": 8, "step": 1 }],
+      "controls": [
+        { "id": "cores", "kind": "slider", "label": "Cores", "min": 1, "max": 8, "step": 1 }
+      ],
       "outputs": [
         { "id": "seconds", "kind": "timer", "label": "Time to finish" },
         { "id": "cores", "kind": "list", "label": "Work per core" }
       ],
-      "goal": { "all": [{ "target": "output", "id": "seconds", "op": "<=", "value": 3 }] },
+      "goal": {
+        "all": [
+          { "target": "output", "id": "seconds", "op": "<=", "value": 3 }
+        ]
+      },
       "explanation": "A video is made of separate frames, so the work splits evenly. One core takes 12 seconds, two take 6, and **four** take 3."
-    },
-    {
-      "id": "cores",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "More cooks in the kitchen",
-      "body": "Most CPUs today have several **cores**. Each core is a complete worker that can follow its own instructions, like having several cooks in one kitchen.\n\nSome jobs split nicely: four cooks can chop a big pile of vegetables four times as fast. Others can't: a cake takes just as long to bake however many cooks are watching it.\n\nSo more cores only help when the job can be **split into pieces that don't wait for each other**."
     },
     {
       "id": "split-or-not",
@@ -81,7 +89,7 @@
       "view": "open",
       "mode": "tap",
       "targets": ["cpu", "fan"],
-      "explanation": "The **fan** sits right beside the **CPU** and blows the heat out through vents in the case. If the vents are blocked, the heat stays in, and a CPU that gets too hot **slows itself down** to stay safe. This is called **throttling**. Phones have no fan: they spread the heat through the body, and throttle too."
+      "explanation": "The **fan** sits right beside the **CPU** and blows the heat out through vents in the case. If the vents are blocked, the heat stays in, and a CPU that gets too hot **slows itself down** to stay safe. This is called **throttling**. Most phones have no fan: they spread the heat through the body, and throttle too."
     },
     {
       "id": "too-hot",

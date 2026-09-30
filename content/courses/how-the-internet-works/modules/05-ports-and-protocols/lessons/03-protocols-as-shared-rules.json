@@ -40,6 +40,13 @@
       "explanation": "The **HTTP** request is the letter at the centre. **TCP** wraps it so it reaches the right program reliably, **IP** wraps that so it reaches the right computer, and **Wi-Fi or Ethernet** carries the whole bundle one step at a time."
     },
     {
+      "id": "email-protocols",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Email uses two protocols",
+      "body": "Email is a good example of protocols working together:\n\n- **Sending** uses **SMTP**. Your email app hands the message to your mail provider's server (usually on port **587**), and servers pass email between each other on port **25**.\n- **Reading** usually uses **IMAP**. Your app fetches messages that are kept on your provider's server (port **143**, or **993** when encrypted), so you see the same inbox on your phone and your laptop.\n\nAnd to find where to deliver email for a domain, the sending server looks up the domain's **MX record** with DNS."
+    },
+    {
       "id": "protocol-jobs",
       "type": "match_pairs",
       "difficulty": "core",
@@ -53,13 +60,6 @@
         { "id": "imap", "left": "IMAP", "right": "Lets your app read mail kept on a server" }
       ],
       "explanation": "**HTTP** fetches pages and **HTTPS** does the same with encryption. **DNS** looks up names. **SSH** (Secure Shell) is for remote control. **SMTP** (Simple Mail Transfer Protocol) sends email, and **IMAP** (Internet Message Access Protocol) lets you read it."
-    },
-    {
-      "id": "email-protocols",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "Email uses two protocols",
-      "body": "Email is a good example of protocols working together:\n\n- **Sending** uses **SMTP**. Your email app hands the message to your mail provider's server (usually on port **587**), and servers pass email between each other on port **25**.\n- **Reading** usually uses **IMAP**. Your app fetches messages that are kept on your provider's server (port **143**, or **993** when encrypted), so you see the same inbox on your phone and your laptop.\n\nAnd to find where to deliver email for a domain, the sending server looks up the domain's **MX record** with DNS."
     },
     {
       "id": "between-servers",

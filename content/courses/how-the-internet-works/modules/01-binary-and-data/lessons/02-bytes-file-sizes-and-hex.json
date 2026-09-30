@@ -27,7 +27,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "The size ladder",
-      "body": "Files are made of thousands or millions of bytes, so we use bigger units. Each step up the ladder is **1,000 times** bigger, just like *kilo* in kilometre means a thousand:\n\n- 1 **kilobyte** (KB) = 1,000 bytes\n- 1 **megabyte** (MB) = 1,000 KB\n- 1 **gigabyte** (GB) = 1,000 MB\n- 1 **terabyte** (TB) = 1,000 GB\n\nSo a 3 MB photo is about 3 million bytes, or 24 million bits."
+      "body": "Files are made of thousands or millions of bytes, so we use bigger units. Each step up the ladder is **1,000 times** bigger, just like *kilo* in kilometre means a thousand:\n\n- 1 **kilobyte** (KB) = 1,000 bytes\n- 1 **megabyte** (MB) = 1,000 KB\n- 1 **gigabyte** (GB) = 1,000 MB\n- 1 **terabyte** (TB) = 1,000 GB\n\nSo a 3 MB photo is about 3 million bytes, or 24 million bits. A two-hour HD film is a few GB, and a phone holds tens to hundreds of GB."
     },
     {
       "id": "order-sizes",

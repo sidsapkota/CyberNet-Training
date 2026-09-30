@@ -2,6 +2,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
+import { getScene } from "@/cards/shared/scenes/manifests";
 import { goalMet, initialSimulatorAnswer, sliderRange } from "@/cards/simulator/grade";
 import type { InputValue } from "@/cards/simulator/models/types";
 import { binaryToggle, explainer, multipleChoice } from "@/test/fixtures";
@@ -117,6 +118,36 @@ describe("real content in /content", () => {
       const full = loadContent().lessons.get(lesson.id);
       const used = new Set(full?.cards.map((c) => c.type).filter((t) => handsOn.has(t)));
       expect(used.size, lesson.id).toBeGreaterThanOrEqual(2);
+    }
+  });
+
+  it("teaches before testing: every drawn part is explored before a card tests it", () => {
+    // The file browser shows each file's name on screen, so it needs no introduction.
+    const selfLabelled = new Set(["file-browser"]);
+    const { courses, lessons } = loadContent();
+    for (const course of courses) {
+      const explored = new Map<string, Set<string>>();
+      for (const outline of course.modules.flatMap((m) => m.lessons)) {
+        for (const card of lessons.get(outline.id)?.cards ?? []) {
+          if (card.type !== "hotspot" && card.type !== "teardown") continue;
+          const seen = explored.get(card.scene) ?? new Set<string>();
+          explored.set(card.scene, seen);
+          if (card.type === "hotspot" && card.mode === "explore") {
+            for (const p of card.parts ?? []) seen.add(p.part);
+            continue;
+          }
+          if (selfLabelled.has(card.scene)) continue;
+          const scene = getScene(card.scene)!;
+          // Teardowns only need the insides introduced: screws and covers explain themselves.
+          const tested =
+            card.type === "hotspot"
+              ? [...(card.targets ?? []), ...(card.labels ?? []).map((l) => l.part)]
+              : card.actions.map((a) => a.part).filter((p) => scene.parts.find((s) => s.id === p && "coveredBy" in s));
+          for (const part of tested) {
+            expect(seen.has(part), `${outline.id}/${card.id} tests "${part}" (${card.scene}) before it's explored`).toBe(true);
+          }
+        }
+      }
     }
   });
 

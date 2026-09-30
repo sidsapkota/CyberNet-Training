@@ -17,7 +17,14 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Inside the battery",
-      "body": "Phones and laptops use **lithium-ion batteries**. They store a lot of energy in a small, light pack. The amount they hold is measured in **watt-hours (Wh)**: a phone battery holds about 15 Wh, and a laptop's a few times more.\n\nEverything the device does uses some energy, but the biggest drains are usually the **screen's brightness**, **location (GPS)** and **apps busy in the background**.\n\nBatteries also wear out slowly. After a few hundred full charges they hold noticeably less, and **heat** wears them out faster."
+      "body": "Phones and laptops use **lithium-ion batteries**. They store a lot of energy in a small, light pack. The amount they hold is measured in **watt-hours (Wh)**: a phone battery holds about 15 Wh, and a laptop's a few times more.\n\nEverything the device does uses some energy, but the biggest drains are usually the **screen's brightness**, **location (GPS)** and **apps busy in the background**.\n\nBatteries also wear out slowly. After a few hundred full charges they hold noticeably less, and **heat** wears them out faster, so keep devices out of hot cars and don't charge them under a pillow. If one gets too hot, stop, unplug it and let it cool on a table out of the sun (never in the fridge or freezer).\n\nAn old battery can also **swell**: the case bulges or the screen lifts. Stop using it, don't press it, and tell an adult."
+    },
+    {
+      "id": "charging-trouble",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "When it won't charge",
+      "body": "Cables and chargers wear out far more often than phones, so first try **another cable and another socket**.\n\nPocket fluff can also pack into the **charging port**. With the phone switched off, an adult can help brush it out gently with a soft, dry brush. **Never use metal** (like a pin or paper clip) **or water**. If that doesn't work, a repair shop can clean it safely."
     },
     {
       "id": "wont-charge",
@@ -163,12 +170,7 @@
               "consequence": "The phone will slow down to protect itself, and all that heat wears out the battery.",
               "outcome": "fail"
             },
-            {
-              "id": "rest",
-              "text": "Stop, unplug it and leave it on a table out of the sun",
-              "consequence": "It cools down safely in a few minutes.",
-              "next": "puffy"
-            }
+            { "id": "rest", "text": "Stop, unplug it and leave it on a table out of the sun", "consequence": "It cools down safely in a few minutes.", "next": "puffy" }
           ]
         },
         {

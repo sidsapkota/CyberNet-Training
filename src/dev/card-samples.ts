@@ -204,6 +204,23 @@ const raw: unknown[] = [
     explanation: "Taking apart and putting back are mirror images: the battery is unplugged first and plugged in last, just before the cover goes back on.",
   },
   {
+    id: "sample-hotspot-explore",
+    type: "hotspot",
+    difficulty: "core",
+    prompt: "Here's what's inside a laptop. **Tap each part** to meet it.",
+    scene: "laptop",
+    view: "open",
+    mode: "explore",
+    parts: [
+      { part: "cpu", job: "The brain: follows the instructions that make apps work." },
+      { part: "fan", job: "Blows hot air out, so the CPU doesn't overheat." },
+      { part: "ram", job: "Fast workspace for whatever you're using right now." },
+      { part: "storage", job: "Keeps your files and apps, even when the power is off." },
+      { part: "battery", job: "Stores the energy that runs everything." },
+    ],
+    explanation: "Almost every laptop has these same parts inside.",
+  },
+  {
     id: "sample-hotspot-tap",
     type: "hotspot",
     difficulty: "core",

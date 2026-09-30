@@ -37,7 +37,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "GET and POST",
-      "body": "The two methods you'll meet most are:\n\n- **GET**: \"please give me this\". It's used for loading pages, pictures and videos. Almost everything you do while browsing is a GET.\n- **POST**: \"please take this data\". It's used for sending something to the server, like filling in a form, logging in, posting a comment or uploading a photo. The data travels in the request's body.\n\nThere are a few other methods too, but GET and POST do most of the work on the web."
+      "body": "The two methods you'll meet most are:\n\n- **GET**: \"please give me this\". It's used for loading pages, pictures and videos. Almost everything you do while browsing is a GET.\n- **POST**: \"please take this data\". It's used for sending something to the server, like filling in a form, logging in, posting a comment or uploading a photo. The data travels in the request's body.\n\nThere are a few other methods too, but GET and POST do most of the work on the web. Each file (the page itself, and every picture on it) is fetched with its own GET request."
     },
     {
       "id": "sign-up-method",

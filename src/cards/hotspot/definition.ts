@@ -1,7 +1,8 @@
-import type { InteractiveCardDefinition } from "../types";
-import { describeHotspotAnswer, describeHotspotCorrect, gradeHotspot, isHotspotReady } from "./grade";
+import type { GuidedCardDefinition, InteractiveCardDefinition } from "../types";
+import { describeHotspotAnswer, describeHotspotCorrect, gradeHotspot, isExploreComplete, isHotspotReady } from "./grade";
 import { HotspotCardView } from "./HotspotCardView";
-import type { HotspotAnswer, HotspotCard } from "./schema";
+import { HotspotExploreView } from "./HotspotExploreView";
+import type { HotspotAnswer, HotspotCard, HotspotExploreState } from "./schema";
 
 export const hotspotDefinition: InteractiveCardDefinition<HotspotCard, HotspotAnswer> = {
   type: "hotspot",
@@ -12,4 +13,14 @@ export const hotspotDefinition: InteractiveCardDefinition<HotspotCard, HotspotAn
   describeAnswer: describeHotspotAnswer,
   describeCorrectAnswer: describeHotspotCorrect,
   Component: HotspotCardView,
+};
+
+/** Explore mode: ungraded. The registry returns this for hotspot cards with `mode: "explore"`. */
+export const hotspotExploreDefinition: GuidedCardDefinition<HotspotCard, HotspotExploreState> = {
+  type: "hotspot",
+  interactive: false,
+  guided: true,
+  initialState: () => ({ seen: [] }),
+  isComplete: isExploreComplete,
+  Component: HotspotExploreView,
 };

@@ -4,7 +4,9 @@ import {
   describeHotspotAnswer,
   describeHotspotCorrect,
   gradeHotspot,
+  isExploreComplete,
   isHotspotReady,
+  markSeen,
   placeLabel,
   removeLabel,
   tappableParts,
@@ -74,6 +76,36 @@ describe("hotspot label mode", () => {
   });
 });
 
+const explore = hotspot({
+  mode: "explore",
+  targets: undefined,
+  parts: [
+    { part: "cpu", job: "Follows the instructions." },
+    { part: "ram", job: "Holds what's in use right now." },
+  ],
+});
+
+describe("hotspot explore mode", () => {
+  it("unlocks once every listed part has been tapped, in any order and any number of times", () => {
+    let state = { seen: [] as string[] };
+    expect(isExploreComplete(state, explore)).toBe(false);
+    state = markSeen(markSeen(state, "ram"), "ram");
+    expect(state.seen).toEqual(["ram"]);
+    expect(isExploreComplete(state, explore)).toBe(false);
+    expect(isExploreComplete(markSeen(state, "cpu"), explore)).toBe(true);
+  });
+
+  it("offers only the listed parts, and survives junk state", () => {
+    expect(tappableParts(explore).map((p) => p.id).sort()).toEqual(["cpu", "ram"]);
+    expect(isExploreComplete(null as never, explore)).toBe(false);
+    expect(markSeen({ seen: [1, "cpu"] } as never, "ram").seen).toEqual(["cpu", "ram"]);
+  });
+
+  it("is never graded correct", () => {
+    expect(gradeHotspot(explore, empty).correct).toBe(false);
+  });
+});
+
 describe("HotspotCardSchema", () => {
   const messages = (c: unknown) => HotspotCardSchema.safeParse(c).error?.issues.map((i) => i.message) ?? [];
 
@@ -89,5 +121,17 @@ describe("HotspotCardSchema", () => {
     expect(
       messages({ ...label, labels: [{ part: "cpu", label: "A" }, { part: "cpu", label: "B" }] }),
     ).toContain("each part can only have one label");
+    expect(messages({ ...explore, parts: undefined })).toContain("explore mode needs `parts`");
+    expect(messages({ ...explore, targets: ["cpu"] })).toContain("explore mode doesn't use `targets`");
+    expect(messages({ ...tap, parts: explore.parts })).toContain("tap mode doesn't use `parts`");
+  });
+
+  it("keeps explore cards core, with visible, unique parts", () => {
+    expect(HotspotCardSchema.safeParse(explore).success).toBe(true);
+    expect(messages({ ...explore, difficulty: "challenge" })).toContain("explore cards teach, so they must be core");
+    expect(messages({ ...explore, parts: [{ part: "cpu", job: "a" }, { part: "cpu", job: "b" }] })).toContain(
+      "each part can only be listed once",
+    );
+    expect(messages({ ...explore, view: "closed" })).toContain(`"cpu" can't be seen in view "closed"`);
   });
 });
