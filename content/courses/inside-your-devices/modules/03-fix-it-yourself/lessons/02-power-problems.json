@@ -149,6 +149,26 @@
       "body": "Very old or damaged batteries can **swell** up. You might see the case bulge, the screen lift at one edge, or a laptop's trackpad (the touch pad) get pushed up.\n\nA swollen battery can catch fire if it's pressed or punctured. Stop using the device, don't press it, and tell an adult. A repair shop can replace the battery safely."
     },
     {
+      "id": "real-swollen-battery",
+      "type": "photo",
+      "difficulty": "core",
+      "title": "A real swollen battery",
+      "photo": {
+        "src": "/photos/swollen-phone-battery.jpg",
+        "alt": "A phone battery removed from its phone, puffed up and wrinkled instead of flat and smooth.",
+        "width": 2448,
+        "height": 3264
+      },
+      "caption": "A **swollen** phone battery, removed from a Samsung Galaxy A13. A healthy battery is flat and smooth; this one has puffed up and wrinkled. That's why a swollen phone should go to a repair shop, not be pressed.",
+      "credit": {
+        "author": "Saimmx",
+        "licence": "CC0",
+        "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:20250807_200837_Swollen_Samsung_battery,_back.jpg",
+        "device": "Samsung EB-BA136ABY (from a Galaxy A13)"
+      }
+    },
+    {
       "id": "swollen-battery",
       "type": "multiple_choice",
       "difficulty": "core",
@@ -234,8 +254,8 @@
         { "part": "camera", "label": "Camera" }
       ],
       "explanation": "Power comes in through the **charging port**, is stored in the **battery**, and reaches the board through the **battery connector**. The **CPU** and **camera** are two of the hungriest parts, along with the screen.",
-      "hint": "Follow the power: in from the outside, stored in the part with the lightning bolt, then joined to the board. The CPU has a shiny lid.",
-      "nudge": "Recall the clues: the battery's lightning bolt, the CPU's shiny square lid, the camera's lens, and the port open on the bottom edge."
+      "hint": "Follow the power: in from the outside, stored in the part with the lightning bolt, then joined to the board. The CPU is the small shiny chip.",
+      "nudge": "Recall the clues: the battery's lightning bolt, the CPU's small shiny chip, the camera's lens, and the port open on the bottom edge."
     },
     {
       "id": "recap",

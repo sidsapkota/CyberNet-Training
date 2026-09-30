@@ -20,6 +20,26 @@
       "body": "Think of **RAM** as your desk. It's where you spread out whatever you're working on *right now*. It's very fast to reach, but small, and it's **cleared when the power goes off**.\n\n**Storage** is the cupboard. It's much bigger and slower to reach, but things stay there until you delete them: apps, photos, songs, saved files.\n\nWhen you open an app, it's copied from storage onto the desk. When the desk is full, a laptop starts shuffling things back into the cupboard, which slows everything down. A phone usually closes apps you aren't looking at, so they have to reload later."
     },
     {
+      "id": "real-ram",
+      "type": "photo",
+      "difficulty": "core",
+      "title": "A real RAM stick",
+      "photo": {
+        "src": "/photos/laptop-ram-stick.jpg",
+        "alt": "A green laptop RAM stick with a label in the middle, black memory chips and a row of gold contacts along its bottom edge.",
+        "width": 3594,
+        "height": 1779
+      },
+      "caption": "A laptop RAM stick (8 GB). The gold contacts along the bottom plug into a slot. In phones and many thin laptops, the RAM chips are soldered straight onto the board instead.",
+      "credit": {
+        "author": "D-Kuru",
+        "licence": "CC BY-SA 4.0",
+        "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:DDR_4_RAM_SO-DIMM_8GB_by_Samsung-top_front_PNr%C2%B00838.jpg",
+        "device": "Samsung 8 GB DDR4 SO-DIMM"
+      }
+    },
+    {
       "id": "fill-the-ram",
       "type": "simulator",
       "difficulty": "core",

@@ -20,21 +20,54 @@
         { "part": "storage", "label": "Storage" },
         { "part": "fan", "label": "Fan" }
       ],
-      "explanation": "The square chip is the **CPU**, cooled by the **fan** beside it. The long stick is **RAM**, and the smaller card is **storage**."
+      "explanation": "The small shiny chip is the **CPU**, cooled by the heat pipe and the **fan**. The stick in its slot is **RAM**, and the long, narrow card is **storage**."
     },
     {
       "id": "q-open-phone",
       "type": "teardown",
       "difficulty": "core",
-      "prompt": "Open the phone and make it **safe to work on**.",
+      "prompt": "Open the phone and make it **safe to work on**: soften the glue, lift the back, remove the bracket, then deal with the battery.",
       "scene": "phone",
       "actions": [
-        { "id": "screw-1", "part": "screw-1", "verb": "unscrew", "nudge": "Unscrew this one first." },
-        { "id": "screw-2", "part": "screw-2", "verb": "unscrew", "nudge": "Unscrew this one first." },
-        { "id": "cover", "part": "back-cover", "verb": "lift", "after": ["screw-1", "screw-2"], "nudge": "Both screws have to come out first." },
-        { "id": "unplug", "part": "battery-connector", "verb": "unplug", "after": ["cover"], "nudge": "Take the back cover off first." }
+        { "id": "heat", "part": "back-cover", "verb": "heat", "nudge": "Soften the glue on the back cover first." },
+        {
+          "id": "cover",
+          "part": "back-cover",
+          "verb": "lift",
+          "after": ["heat"],
+          "nudge": "The glue is still hard. Soften it first."
+        },
+        {
+          "id": "screw-1",
+          "part": "screw-1",
+          "verb": "unscrew",
+          "after": ["cover"],
+          "nudge": "Take the back cover off first."
+        },
+        {
+          "id": "screw-2",
+          "part": "screw-2",
+          "verb": "unscrew",
+          "after": ["cover"],
+          "nudge": "Take the back cover off first."
+        },
+        {
+          "id": "bracket",
+          "part": "connector-cover",
+          "verb": "lift",
+          "after": ["screw-1", "screw-2"],
+          "nudge": "Both tiny screws have to come out first."
+        },
+        {
+          "id": "unplug",
+          "part": "battery-connector",
+          "verb": "unplug",
+          "after": ["bracket"],
+          "nudge": "Lift the bracket off the connector first."
+        }
       ],
-      "explanation": "Screws, then the cover, then **unplug the battery** before touching anything else."
+      "explanation": "Soften the glue, lift the back, take out the bracket's screws and the bracket, then **unplug the battery** before touching anything else.",
+      "safety": "**Heating or prying a phone can damage its battery and start a fire.** That's why repair shops use special tools and training. It's never something to try at home."
     },
     {
       "id": "q-make-room-in-ram",

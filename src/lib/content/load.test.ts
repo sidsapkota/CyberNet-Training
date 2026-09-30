@@ -53,8 +53,10 @@ describe("real content in /content", () => {
       if (lesson.kind !== "lesson") continue;
       const { cards } = lesson;
       const where = `lesson ${lesson.id}`;
-      expect(cards.length, where).toBeGreaterThanOrEqual(8);
-      expect(cards.length, where).toBeLessThanOrEqual(12);
+      // Photo cards are a quick look next to a diagram, so they don't count toward the length.
+      const steps = cards.filter((c) => c.type !== "photo").length;
+      expect(steps, where).toBeGreaterThanOrEqual(8);
+      expect(steps, where).toBeLessThanOrEqual(12);
       expect(cards[0]?.type, `${where} opens with a hook explainer`).toBe("explainer");
       expect(cards.at(-1)?.type, `${where} ends with a recap explainer`).toBe("explainer");
       expect(cards.filter((c) => c.type === "multiple_choice").length, where).toBeLessThanOrEqual(3);
@@ -68,10 +70,27 @@ describe("real content in /content", () => {
       expect(lesson.cards.length, lesson.id).toBeGreaterThanOrEqual(5);
       expect(lesson.cards.length, lesson.id).toBeLessThanOrEqual(8);
       for (const card of lesson.cards) {
-        expect(card.type, `${lesson.id}/${card.id}`).not.toBe("explainer");
+        expect(["explainer", "photo"], `${lesson.id}/${card.id}`).not.toContain(card.type);
         expect(card.difficulty, `${lesson.id}/${card.id}`).toBe("core");
       }
     }
+  });
+
+  it("every photo exists in public/photos, with credit and licence, at its real size", () => {
+    let photos = 0;
+    for (const lesson of loadContent().lessons.values()) {
+      for (const card of lesson.cards) {
+        if (card.type !== "photo") continue;
+        photos += 1;
+        const where = `${lesson.id}/${card.id}`;
+        const file = path.join(process.cwd(), "public", card.photo.src);
+        expect(fs.existsSync(file), `${where}: ${card.photo.src} exists`).toBe(true);
+        // Credit and licence are required by the schema; also check they aren't placeholders.
+        expect(card.credit.author.trim().length, where).toBeGreaterThan(1);
+        expect(card.credit.licenceUrl, where).toMatch(/creativecommons\.org|wikimedia\.org/);
+      }
+    }
+    expect(photos).toBeGreaterThan(0);
   });
 
   it("only uses documentation, private or special-purpose IPv4 addresses", () => {
@@ -192,11 +211,14 @@ describe("real content in /content", () => {
           }
           if (selfLabelled.has(card.scene)) continue;
           const scene = getScene(card.scene)!;
-          // Teardowns only need the insides introduced: screws and covers explain themselves.
+          // Teardowns only need the insides introduced: screws, covers and brackets explain themselves.
+          const selfExplaining = (id: string) => id.startsWith("screw-") || id.endsWith("-cover") || id === "panel";
           const tested =
             card.type === "hotspot"
               ? [...(card.targets ?? []), ...(card.labels ?? []).map((l) => l.part)]
-              : card.actions.map((a) => a.part).filter((p) => scene.parts.find((s) => s.id === p && "coveredBy" in s));
+              : card.actions
+                  .map((a) => a.part)
+                  .filter((p) => !selfExplaining(p) && scene.parts.find((s) => s.id === p && "coveredBy" in s));
           for (const part of tested) {
             expect(seen.has(part), `${outline.id}/${card.id} tests "${part}" (${card.scene}) before it's explored`).toBe(true);
           }

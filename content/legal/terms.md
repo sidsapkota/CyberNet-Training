@@ -48,7 +48,9 @@ Taking devices apart in CyberNet Training is a **simulation**. Don't open real p
 
 ## Our content
 
-We work hard to make every lesson accurate, but it's for learning, not professional advice. The lessons, pictures and characters belong to us; please don't copy them to make your own product. You're welcome to link to any lesson.
+We work hard to make every lesson accurate, but it's for learning, not professional advice. The lessons, drawings and characters belong to us; please don't copy them to make your own product. You're welcome to link to any lesson.
+
+A few lessons show real photos from Wikimedia Commons. Each one keeps its own open licence and is credited under the photo. Product and brand names that appear in photos or captions belong to their owners. We aren't connected with those companies, and they don't endorse CyberNet Training.
 
 ## Changes
 

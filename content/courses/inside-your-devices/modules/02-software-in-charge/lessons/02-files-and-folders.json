@@ -58,7 +58,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "The cloud",
-      "body": "Not every file lives on your device. When you save to **the cloud**, the file is stored on a company's **server**: a powerful computer in a data centre, reached over the internet.\n\nThe cloud isn't in the sky. It's someone else's computer, kept safe and [[backed up|backup]].\n\nCloud files are handy: you can open them on any device and they survive if your phone is lost. But you need the internet to reach them, unless you've kept a copy on the device."
+      "body": "Not every file lives on your device. When you save to **the cloud**, the file is stored on a company's **server**: a powerful computer in a data centre, reached over the internet.\n\nThe cloud isn't in the sky. It's someone else's computer, usually kept safe and [[backed up|backup]].\n\nCloud files are handy: you can open them on any device and they survive if your phone is lost. But you need the internet to reach them, unless you've kept a copy on the device."
     },
     {
       "id": "local-or-cloud",

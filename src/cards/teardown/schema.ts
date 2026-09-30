@@ -6,6 +6,11 @@ import { getScene, hiddenInView } from "../shared/scenes/manifests";
 /** Verbs that take a part off (or out), and verbs that put it back. */
 export const REMOVE_VERBS = ["unscrew", "lift", "slide-out", "unplug"] as const;
 export const REFIT_VERBS = ["insert", "fasten", "plug-in"] as const;
+/**
+ * Verbs that prepare a part without removing it: "heat" softens the glue that holds a phone's
+ * back on, so it can then be lifted. The part stays in place (and shows it's been warmed).
+ */
+export const PREP_VERBS = ["heat"] as const;
 
 export const TeardownCardSchema = z
   .object({
@@ -23,7 +28,7 @@ export const TeardownCardSchema = z
         z.object({
           id: CardId,
           part: CardId,
-          verb: z.enum([...REMOVE_VERBS, ...REFIT_VERBS]),
+          verb: z.enum([...REMOVE_VERBS, ...REFIT_VERBS, ...PREP_VERBS]),
           after: z.array(CardId).optional(),
           /** Shown when this is tried too early, e.g. "Take all four screws out first." */
           nudge: nonEmpty.max(100),
@@ -31,6 +36,11 @@ export const TeardownCardSchema = z
       )
       .min(1)
       .max(14, "allows at most 14 actions"),
+    /**
+     * An extra safety line added to the built-in "This is a simulation" note, right above the
+     * scene (e.g. why heating or prying a phone is dangerous). Markdown. Never a how-to.
+     */
+    safety: nonEmpty.max(240).optional(),
     /** Optional: more nudges than this makes the answer wrong (useful in quizzes). */
     maxNudges: z.number().int().min(0).optional(),
   })
