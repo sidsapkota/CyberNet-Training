@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { getCardDefinition } from "@/cards/registry";
 import { type Card, isInteractiveCard } from "@/cards/schema";
 import type { CardStatus } from "@/cards/types";
 import type { CourseOutline, RegularLesson } from "@/lib/content/schema";
 import { useGlobalKeyDown } from "@/lib/keyboard";
 import { useProgress } from "@/lib/progress/ProgressProvider";
-import { getNextLesson } from "@/lib/progress/state";
+import { getNextLesson, lessonFinishState } from "@/lib/progress/state";
 import { emptySnapshot, isCardCompleted } from "@/lib/progress/types";
 import { cardXpToAward, lessonBonusToAward, XP } from "@/lib/progress/xp";
 import { type ProgressNode } from "@/components/network/NodeProgress";
@@ -68,11 +68,14 @@ export function LessonRun({
   const definition = getCardDefinition(card);
   const total = lesson.cards.length;
 
-  const isDone = (c: Card) => completedThisVisit.has(c.id) || isCardCompleted(snapshot, lesson.id, c.id);
+  const isDone = (c: Pick<Card, "id">) => completedThisVisit.has(c.id) || isCardCompleted(snapshot, lesson.id, c.id);
+
+  /** Saves are tracked so finishing can wait for them (matters for async stores like Supabase). */
+  const pendingSaves = useRef<Promise<void>[]>([]);
 
   function markComplete(c: Card, xp: number) {
     setCompletedThisVisit((current) => new Set(current).add(c.id));
-    void store.completeCard(lesson.id, c.id, xp);
+    pendingSaves.current.push(store.completeCard(lesson.id, c.id, xp));
   }
 
   function goTo(nextIndex: number) {
@@ -81,28 +84,32 @@ export function LessonRun({
     window.scrollTo({ top: 0 });
   }
 
-  async function finish() {
-    const missingCore = lesson.cards.findIndex((c) => c.difficulty === "core" && !isDone(c));
+  /**
+   * `justCompleted` is a card marked complete in this same event (a final explainer). Its state
+   * update hasn't been applied yet, so it's counted explicitly.
+   */
+  async function finish(justCompleted?: string) {
+    const { missingCore, challengesCompleted } = lessonFinishState(
+      lesson.cards,
+      (c) => c.id === justCompleted || isDone(c),
+    );
     if (missingCore !== -1) {
       // Shouldn't happen (core cards can't be skipped), but never mark a lesson done early.
       goTo(missingCore);
       return;
     }
+    await Promise.all(pendingSaves.current.splice(0));
     const bonus = lessonBonusToAward(snapshot, lesson.id);
     await store.completeLesson(lesson.id, bonus);
-    setResult({
-      xpEarned: sessionXp + bonus,
-      alreadyCompleted: bonus === 0,
-      challengesCompleted: lesson.cards.filter((c) => c.difficulty === "challenge" && isDone(c))
-        .length,
-    });
+    setResult({ xpEarned: sessionXp + bonus, alreadyCompleted: bonus === 0, challengesCompleted });
     window.scrollTo({ top: 0 });
   }
 
   function advance() {
-    if (!definition.interactive) markComplete(card, 0);
+    const readExplainer = !definition.interactive;
+    if (readExplainer) markComplete(card, 0);
     if (index + 1 < total) goTo(index + 1);
-    else void finish();
+    else void finish(readExplainer ? card.id : undefined);
   }
 
   function check() {

@@ -4,6 +4,7 @@ import {
   computeCourseState,
   getBlockingLesson,
   getNextLesson,
+  lessonFinishState,
   resumeIndex,
 } from "./state";
 import { cardKey, emptySnapshot, type ProgressSnapshot } from "./types";
@@ -149,5 +150,41 @@ describe("resumeIndex", () => {
     const snapshot = completing("intro", "q1");
     snapshot.lessons.l = done;
     expect(resumeIndex(snapshot, "l", cards)).toBe(0);
+  });
+});
+
+describe("lessonFinishState", () => {
+  // Every new lesson ends with a recap explainer, which is marked complete by the same Continue
+  // press that finishes the lesson.
+  const cards = [
+    { id: "hook", difficulty: "core" as const },
+    { id: "q1", difficulty: "core" as const },
+    { id: "bonus", difficulty: "challenge" as const },
+    { id: "recap", difficulty: "core" as const },
+  ];
+  const doneSet = (...ids: string[]) => (c: { id: string }) => ids.includes(c.id);
+
+  it("finishes a lesson ending on an explainer when the recap is counted as just completed", () => {
+    const justCompleted = "recap";
+    const done = doneSet("hook", "q1");
+    expect(lessonFinishState(cards, (c) => c.id === justCompleted || done(c))).toEqual({
+      missingCore: -1,
+      challengesCompleted: 0,
+    });
+  });
+
+  it("points back at the recap if it isn't counted (the old double-Continue bug)", () => {
+    expect(lessonFinishState(cards, doneSet("hook", "q1")).missingCore).toBe(3);
+  });
+
+  it("reports the first unfinished core card and counts completed challenges", () => {
+    expect(lessonFinishState(cards, doneSet("hook", "bonus", "recap"))).toEqual({
+      missingCore: 1,
+      challengesCompleted: 1,
+    });
+  });
+
+  it("doesn't require skipped challenges", () => {
+    expect(lessonFinishState(cards, doneSet("hook", "q1", "recap")).missingCore).toBe(-1);
   });
 });

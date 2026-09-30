@@ -177,3 +177,18 @@ export function resumeIndex(
   const nextAfterCore = cards.findIndex((c, i) => i > lastCore && incomplete(c));
   return nextAfterCore !== -1 ? nextAfterCore : Math.max(0, cards.length - 1);
 }
+
+/**
+ * Checks a lesson run when the learner leaves its last card. `done` must also count cards completed
+ * in that same event (e.g. a final recap explainer), because the React state recording them hasn't
+ * been applied yet. `missingCore` is the first unfinished core card, or -1 if the lesson is finished.
+ */
+export function lessonFinishState(
+  cards: readonly Pick<Card, "id" | "difficulty">[],
+  done: (card: Pick<Card, "id">) => boolean,
+): { missingCore: number; challengesCompleted: number } {
+  return {
+    missingCore: cards.findIndex((c) => c.difficulty === "core" && !done(c)),
+    challengesCompleted: cards.filter((c) => c.difficulty === "challenge" && done(c)).length,
+  };
+}
