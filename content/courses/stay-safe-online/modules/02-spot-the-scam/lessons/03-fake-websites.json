@@ -1,0 +1,242 @@
+{
+  "id": "fake-websites",
+  "kind": "lesson",
+  "title": "Fake Websites",
+  "order": 3,
+  "icon": "globe",
+  "cards": [
+    {
+      "id": "perfect-copy",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "A perfect copy",
+      "body": "Copying how a website **looks** takes minutes: the logo, the colours, the sign-in box. What a fake site can't copy is the real **address**.\n\nIn this lesson you'll learn to read an address like a pro."
+    },
+    {
+      "id": "read-the-address",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Read the address",
+      "body": "The owner of a website is the name **just before the ending** (the ending is like `.example`, `.com` or `.com.au`). These names are called [[domain names|domain-name]]. Anything after a `/` is just a page on that site.\n\n- `yourbank.example` and `login.yourbank.example` both belong to Your Bank. `login.` in front is a [[subdomain]], and only the owner can make those.\n- `yourbank.example.login-check.example` belongs to **login-check.example**: the name just before the final ending. That's the **wrong owner**.\n- `yourbank-secure.example` or `yourbnak.example` are lookalikes: an extra word, or swapped letters."
+    },
+    {
+      "id": "padlock",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "What the padlock means",
+      "body": "The padlock next to an address means your connection is **encrypted** ([[HTTPS|https]]): nobody can read what you send on the way. It **doesn't** mean the site is honest. Scam sites can have a padlock too, so a padlock **only means encrypted**. (Some browsers now show a different icon there, or none at all. It still only means encrypted.)\n\nTwo more signs a sign-in page is fake:\n- **Rushing you:** \"Your account is locked! Sign in within 10 minutes.\"\n- **Asks for your PIN:** a bank never asks for your card PIN on a website."
+    },
+    {
+      "id": "bank-or-not",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Your Bank's site is `yourbank.example`. Which addresses really belong to it?",
+      "bins": [
+        {
+          "id": "real",
+          "label": "Really Your Bank"
+        },
+        {
+          "id": "fake",
+          "label": "Not Your Bank"
+        }
+      ],
+      "items": [
+        {
+          "id": "home",
+          "label": "yourbank.example/signin",
+          "bin": "real"
+        },
+        {
+          "id": "login-sub",
+          "label": "login.yourbank.example",
+          "bin": "real"
+        },
+        {
+          "id": "secure-sub",
+          "label": "secure.yourbank.example",
+          "bin": "real"
+        },
+        {
+          "id": "nested",
+          "label": "yourbank.example.login-check.example",
+          "bin": "fake"
+        },
+        {
+          "id": "extra-word",
+          "label": "yourbank-secure.example",
+          "bin": "fake"
+        },
+        {
+          "id": "swapped",
+          "label": "yourbnak.example",
+          "bin": "fake"
+        }
+      ],
+      "explanation": "Addresses ending in `yourbank.example` (with or without something like `login.` in front) are Your Bank's. `yourbank.example.login-check.example` belongs to login-check.example, and the other two are lookalikes.",
+      "hint": "For each one, find the ending and read the name just before it. Is that name exactly `yourbank`?",
+      "nudge": "Only the name just before the final ending counts. A different word, extra letters or swapped letters means a different owner."
+    },
+    {
+      "id": "spot-the-site",
+      "type": "hotspot",
+      "difficulty": "core",
+      "prompt": "You opened this page from a link in a text. Your Bank's real site is `yourbank.example`. Tap **every** warning sign.",
+      "scene": "fake-website",
+      "mode": "tap",
+      "targets": [
+        "site-address",
+        "site-banner",
+        "site-pin"
+      ],
+      "explanation": "Three warning signs: the address belongs to `login-check.example` (the **wrong owner**), the banner is **rushing you**, and it **asks for your card PIN**. The padlock and the logo look real, but they don't prove anything.",
+      "hint": "Read the address to find its owner. Then look for pressure, and for anything a bank would never ask for.",
+      "nudge": "Three things on this page match the warning signs you just learned. Look for each sign in turn."
+    },
+    {
+      "id": "safer-ways-in",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Safer ways in",
+      "body": "- Sign in through the **official app**, a **bookmark**, or by **typing the address** yourself.\n- **Don't sign in from a link** in an email or text.\n- Use a [[password manager]]: it only fills in your password on the **real** site, so if it stays quiet, check the address.\n\nTyped your details into a fake site? Change that password straight away, and tell a trusted adult. If it was a bank card, call the bank on the number on its official website or on the card."
+    },
+    {
+      "id": "manager-stays-quiet",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "You tap a link in an email to sign in to your game account.",
+      "start": "start",
+      "steps": [
+        {
+          "id": "start",
+          "text": "The page looks right, but your **password manager doesn't offer to fill in** your password. What might that mean?",
+          "choices": [
+            {
+              "id": "fake",
+              "text": "This might not be the real site",
+              "consequence": "Good thinking. A password manager only fills in on the real address.",
+              "next": "now-what"
+            },
+            {
+              "id": "broken",
+              "text": "The password manager is broken, so type it in",
+              "consequence": "The manager is working: it didn't recognise the address. Typing it in hands it over.",
+              "outcome": "fail"
+            }
+          ]
+        },
+        {
+          "id": "now-what",
+          "text": "What do you do now?",
+          "choices": [
+            {
+              "id": "close",
+              "text": "Close the page, and open the game's app the usual way",
+              "consequence": "Safe. If there was really something to sign in for, you'll see it in the app.",
+              "outcome": "success"
+            },
+            {
+              "id": "try-once",
+              "text": "Type it in just once, to check",
+              "consequence": "Once is enough for a fake site to keep your password.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "explanation": "A quiet password manager is a clue that the address isn't the real one. Close the page and **go there yourself**.",
+      "hint": "Where does a password manager fill in passwords? What's the safe way to reach an account?"
+    },
+    {
+      "id": "padlock-means",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "What does the padlock next to a web address tell you?",
+      "options": [
+        {
+          "id": "encrypted",
+          "text": "Your connection to the site is encrypted"
+        },
+        {
+          "id": "honest",
+          "text": "The site is honest and safe",
+          "nudge": "Scam sites can have a padlock too. Think about what the padlock actually protects."
+        },
+        {
+          "id": "checked",
+          "text": "Your bank has checked the site",
+          "nudge": "Nobody checks a site's honesty for the padlock. It's about the connection, not the owner."
+        }
+      ],
+      "correctOptionId": "encrypted",
+      "explanation": "The padlock means the connection is **encrypted**, so nobody can read it on the way. It says nothing about whether the site is honest.",
+      "hint": "Think about what HTTPS does to the data you send."
+    },
+    {
+      "id": "real-address",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "prompt": "Which address really belongs to Your Bank (`yourbank.example`)?",
+      "options": [
+        {
+          "id": "sub",
+          "text": "help.yourbank.example"
+        },
+        {
+          "id": "nested",
+          "text": "yourbank.example.help-centre.example",
+          "nudge": "Find the name just before the final ending: `help-centre`. So help-centre.example owns it."
+        },
+        {
+          "id": "dash",
+          "text": "yourbank-help.example",
+          "nudge": "`yourbank-help` is a different name from `yourbank`: a lookalike."
+        },
+        {
+          "id": "front",
+          "text": "help-yourbank.example",
+          "nudge": "`help-yourbank` isn't `yourbank`. Only the exact name before the ending counts."
+        }
+      ],
+      "correctOptionId": "sub",
+      "explanation": "`help.yourbank.example` ends in `yourbank.example`, so `help.` is just a subdomain of Your Bank. The others belong to someone else.",
+      "hint": "For each address, find the ending, then the name just before it."
+    },
+    {
+      "id": "label-the-site",
+      "type": "hotspot",
+      "difficulty": "challenge",
+      "prompt": "Label four things on this page.",
+      "scene": "fake-website",
+      "mode": "label",
+      "labels": [
+        {
+          "part": "site-address",
+          "label": "Wrong owner"
+        },
+        {
+          "part": "site-banner",
+          "label": "Rushing you"
+        },
+        {
+          "part": "site-pin",
+          "label": "Asks for your PIN"
+        },
+        {
+          "part": "site-padlock",
+          "label": "Only means encrypted"
+        }
+      ],
+      "explanation": "The address has the **wrong owner**, the banner is **rushing you**, the page **asks for your PIN**, and the padlock **only means encrypted**: it doesn't make the site real.",
+      "hint": "Match each label to one part of the page. One label is about something that looks reassuring but proves nothing.",
+      "nudge": "Each label is something you learned about fake sign-in pages. Take one at a time and find the part it describes."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- A website's owner is the name **just before the ending** of its address.\n- The **padlock only means encrypted**. Scam sites can have one.\n- Warning signs: the **wrong owner**, **rushing you**, and **asking for your PIN**.\n- Sign in through the **app, a bookmark or a typed address**, never from a link. A quiet password manager is a clue.\n\nThat's scams covered. Next module: keeping your private stuff private."
+    }
+  ]
+}

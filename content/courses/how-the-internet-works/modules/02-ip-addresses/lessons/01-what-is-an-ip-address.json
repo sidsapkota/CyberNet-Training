@@ -3,6 +3,7 @@
   "kind": "lesson",
   "title": "What Is an IP Address?",
   "order": 1,
+  "icon": "map-pin",
   "cards": [
     {
       "id": "finding-one-device",

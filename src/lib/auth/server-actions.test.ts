@@ -45,9 +45,11 @@ describe("Server Actions that write with the secret key", () => {
     for (const action of exportedActions(source)) {
       const where = `${path.basename(file)} → ${action.name}`;
 
-      it(`${where}: gets the user id from requireUserId() before touching data`, () => {
-        const verify = action.body.indexOf("await requireUserId()");
-        expect(verify, `${where} must call requireUserId()`).toBeGreaterThanOrEqual(0);
+      it(`${where}: gets the user id from requireUserId() (or requireUser()) before touching data`, () => {
+        // Both go through verifiedUser(): auth.getUser(), checked by the Supabase Auth server.
+        const found = ["await requireUserId()", "await requireUser()"].map((c) => action.body.indexOf(c)).filter((i) => i >= 0);
+        const verify = found.length ? Math.min(...found) : -1;
+        expect(verify, `${where} must call requireUserId() or requireUser()`).toBeGreaterThanOrEqual(0);
         for (const later of ["createSupabaseAdminClient(", "createSupabaseServerClient(", ".from("]) {
           const at = action.body.indexOf(later);
           if (at !== -1) expect(verify, `${where}: requireUserId() must come before ${later}`).toBeLessThan(at);
@@ -66,7 +68,7 @@ describe("Server Actions that write with the secret key", () => {
     }
   });
 
-  it("the secret-key client is server-only and imported only by Server Actions", () => {
+  it("the secret-key client is server-only and imported only by Server Actions and the vetted Pro server code", () => {
     const admin = fs.readFileSync(path.join(ROOT, "src/lib/supabase/admin.ts"), "utf8");
     expect(admin.trimStart().startsWith('import "server-only";')).toBe(true);
     expect(admin).toContain("process.env.SUPABASE_SECRET_KEY");
@@ -75,7 +77,32 @@ describe("Server Actions that write with the secret key", () => {
       /from "@\/lib\/supabase\/admin"/.test(fs.readFileSync(f, "utf8")),
     );
     expect(importers.length).toBeGreaterThan(0);
-    for (const file of importers) expect(path.relative(ROOT, file).replace(/\\/g, "/")).toMatch(/^src\/app\/actions\//);
+    // Besides Server Actions: the Pro entitlement helpers (server-only; callers pass a verified
+    // user id) and the Stripe webhook, which has no user session and is authenticated by Stripe's
+    // signature instead (checked before anything is read or written).
+    const vetted = ["src/lib/pro/server.ts", "src/app/api/stripe/webhook/route.ts"];
+    for (const file of importers) {
+      const rel = path.relative(ROOT, file).replace(/\\/g, "/");
+      if (!rel.startsWith("src/app/actions/")) expect(vetted, rel).toContain(rel);
+    }
+    const proServer = fs.readFileSync(path.join(ROOT, "src/lib/pro/server.ts"), "utf8");
+    expect(proServer.trimStart().startsWith('import "server-only";')).toBe(true);
+    const webhook = fs.readFileSync(path.join(ROOT, "src/app/api/stripe/webhook/route.ts"), "utf8");
+    const verified = webhook.indexOf("webhooks.constructEvent(");
+    expect(verified, "the webhook must verify Stripe's signature").toBeGreaterThan(0);
+    for (const later of ["createSupabaseAdminClient(", "syncSubscription(", ".from("]) {
+      const at = webhook.indexOf(later);
+      if (at !== -1) expect(verified, `the webhook must verify the signature before ${later}`).toBeLessThan(at);
+    }
+  });
+
+  it("the Pro server helpers are only used from server code, with the user from requireUser()", () => {
+    for (const file of sourceFiles(path.join(ROOT, "src"))) {
+      const source = fs.readFileSync(file, "utf8");
+      if (!/from "@\/lib\/pro\/server"/.test(source) || file.endsWith(".test.ts")) continue;
+      expect(source.trimStart().startsWith('"use client"'), file).toBe(false);
+      expect(source, `${file} must get the user from the verified session`).toMatch(/await requireUser(Id)?\(\)/);
+    }
   });
 
   it("no file reads the secret key except admin.ts, and no public variable holds it", () => {

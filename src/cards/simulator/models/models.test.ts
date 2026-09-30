@@ -2,9 +2,11 @@ import { describe, expect, it } from "vitest";
 import {
   batteryModel,
   cpuCoresModel,
+  describeDuration,
   lagFromMemory,
   memoryModel,
   MODELS,
+  passwordModel,
   scheduleCores,
   storageModel,
   taskManagerModel,
@@ -98,5 +100,41 @@ describe("battery", () => {
     const saver = batteryModel.run({ brightness: 40, gps: false }, params).hours as number;
     expect(saver).toBeGreaterThan(all);
     expect(saver).toBeGreaterThanOrEqual(8);
+  });
+});
+
+describe("password", () => {
+  const run = (inputs: Record<string, number | boolean>) => passwordModel.run(inputs, { guessesPerSecond: 1e9 });
+
+  it("counts every combination of a random password: pool ^ length ÷ guesses per second", () => {
+    // 26^8 ≈ 2.1e11 guesses at a billion a second ≈ 209 seconds.
+    const eight = run({ length: 8 });
+    expect(eight.pool).toBe(26);
+    expect((eight.strength as { detail?: string }[])[1]?.detail).toBe("3 minutes");
+    // 26^14 ≈ 6.5e19 ≈ 2,000 years; 26^13 ≈ 78 years.
+    expect(run({ length: 14 }).years).toBeGreaterThan(100);
+    expect(run({ length: 13 }).years).toBeLessThan(100);
+  });
+
+  it("shows length matters more than adding character types", () => {
+    const longLower = run({ length: 16 }).years as number;
+    const shortMixed = run({ length: 8, uppercase: true, digits: true, symbols: true }).years as number;
+    expect(run({ length: 8, uppercase: true, digits: true, symbols: true }).pool).toBe(95);
+    expect(longLower).toBeGreaterThan(shortMixed * 1000);
+    // 95^10 ≈ 6e19 ≈ 1,900 years: every type at length 10 also clears 100 years.
+    expect(run({ length: 10, uppercase: true, digits: true, symbols: true }).years).toBeGreaterThan(100);
+  });
+
+  it("describes durations in plain words", () => {
+    expect(describeDuration(0.2)).toBe("less than a second");
+    expect(describeDuration(90)).toBe("2 minutes");
+    expect(describeDuration(3 * 86400)).toBe("3 days");
+    expect(describeDuration(1900 * 365.25 * 86400)).toBe("about 1,900 years");
+    expect(describeDuration(5e6 * 365.25 * 86400)).toBe("about 5 million years");
+    expect(describeDuration(1e30)).toBe("more than a trillion years");
+  });
+
+  it("asks for a kind of character when none is picked", () => {
+    expect(run({ length: 12, lowercase: false }).years).toBe(0);
   });
 });

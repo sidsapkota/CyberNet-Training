@@ -3,6 +3,7 @@
   "kind": "lesson",
   "title": "Names and Numbers",
   "order": 1,
+  "icon": "book-user",
   "cards": [
     {
       "id": "who-translates",

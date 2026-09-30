@@ -1,0 +1,195 @@
+{
+  "id": "spot-the-scam-quiz",
+  "kind": "quiz",
+  "title": "Spot the Scam: Module Quiz",
+  "order": 99,
+  "passThreshold": 0.7,
+  "cards": [
+    {
+      "id": "q-email-signs",
+      "type": "hotspot",
+      "difficulty": "core",
+      "prompt": "Your Bank emails from **@yourbank.example**. Tap every warning sign.",
+      "scene": "email",
+      "mode": "tap",
+      "targets": [
+        "email-from",
+        "email-subject",
+        "email-greeting",
+        "email-secrets",
+        "email-link"
+      ],
+      "explanation": "The fake sender, the rush, \"Dear Customer\", the request for secrets and the hidden link are all warning signs."
+    },
+    {
+      "id": "q-phish-or-fine",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Phishing, or probably fine?",
+      "bins": [
+        {
+          "id": "phish",
+          "label": "Phishing"
+        },
+        {
+          "id": "fine",
+          "label": "Probably fine"
+        }
+      ],
+      "items": [
+        {
+          "id": "secret",
+          "label": "\"Send us your sign-in code\"",
+          "bin": "phish"
+        },
+        {
+          "id": "prize",
+          "label": "\"Claim your prize: pay a small fee\"",
+          "bin": "phish"
+        },
+        {
+          "id": "app",
+          "label": "Real address: \"Check it in the app\"",
+          "bin": "fine"
+        },
+        {
+          "id": "rush",
+          "label": "\"Account closes in 1 hour!\"",
+          "bin": "phish"
+        }
+      ],
+      "explanation": "Asking for codes, prize fees and deadlines are phishing signs. The real address sending you to the app is fine."
+    },
+    {
+      "id": "q-text-signs",
+      "type": "hotspot",
+      "difficulty": "core",
+      "prompt": "Tap the three warning signs in the new message.",
+      "scene": "text-message",
+      "mode": "tap",
+      "targets": [
+        "sms-fee",
+        "sms-deadline",
+        "sms-link"
+      ],
+      "explanation": "A small fee, a deadline and an unfamiliar link."
+    },
+    {
+      "id": "q-voice",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "A caller sounds just like your aunt: \"Send me gift cards now, and don't tell anyone.\"",
+      "start": "start",
+      "steps": [
+        {
+          "id": "start",
+          "text": "What do you do?",
+          "choices": [
+            {
+              "id": "call-back",
+              "text": "Hang up and call her saved number",
+              "consequence": "She's fine. It was a scam.",
+              "outcome": "success"
+            },
+            {
+              "id": "send",
+              "text": "Send the gift cards",
+              "consequence": "Voices can be copied; the money would be gone.",
+              "outcome": "fail"
+            },
+            {
+              "id": "secret",
+              "text": "Keep it secret",
+              "consequence": "Secrecy is a warning sign.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "explanation": "Hang up and call back on a number you already know. Gift cards and secrecy are warning signs."
+    },
+    {
+      "id": "q-padlock",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "A page has a padlock. What does that prove?",
+      "options": [
+        {
+          "id": "encrypted",
+          "text": "Only that the connection is encrypted"
+        },
+        {
+          "id": "real",
+          "text": "That it's the real site"
+        },
+        {
+          "id": "safe",
+          "text": "That it's safe to type your PIN"
+        }
+      ],
+      "correctOptionId": "encrypted",
+      "explanation": "The padlock only means encrypted. Scam sites can have one."
+    },
+    {
+      "id": "q-addresses",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Your Bank is `yourbank.example`. Real, or not?",
+      "bins": [
+        {
+          "id": "real",
+          "label": "Really Your Bank"
+        },
+        {
+          "id": "fake",
+          "label": "Not Your Bank"
+        }
+      ],
+      "items": [
+        {
+          "id": "sub",
+          "label": "cards.yourbank.example",
+          "bin": "real"
+        },
+        {
+          "id": "main",
+          "label": "yourbank.example/help",
+          "bin": "real"
+        },
+        {
+          "id": "nested",
+          "label": "yourbank.example.secure-login.example",
+          "bin": "fake"
+        },
+        {
+          "id": "look",
+          "label": "yourbank-login.example",
+          "bin": "fake"
+        }
+      ],
+      "explanation": "Only addresses ending in `yourbank.example` belong to Your Bank."
+    },
+    {
+      "id": "q-gift-cards",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "A message says you've won, and asks you to pay a fee in gift cards. What is it?",
+      "options": [
+        {
+          "id": "scam",
+          "text": "A scam"
+        },
+        {
+          "id": "real",
+          "text": "A real prize with a small fee"
+        },
+        {
+          "id": "shop",
+          "text": "A shop special offer"
+        }
+      ],
+      "correctOptionId": "scam",
+      "explanation": "Real prizes never cost money to claim, and gift cards are a favourite scam payment."
+    }
+  ]
+}

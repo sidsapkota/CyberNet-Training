@@ -1,0 +1,258 @@
+{
+  "id": "signs-of-a-hack",
+  "kind": "lesson",
+  "title": "Signs of a Hack",
+  "order": 1,
+  "icon": "shield-alert",
+  "cards": [
+    {
+      "id": "somethings-off",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Something's off",
+      "body": "Sometimes an account gets **taken over**: someone else gets in, usually with a stolen or guessed password.\n\nIt happens to adults and big companies too. What matters is noticing quickly and knowing what to do, and by the end of this lesson, you will."
+    },
+    {
+      "id": "the-signs",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Signs someone else got in",
+      "body": "- Your password **suddenly doesn't work**.\n- Emails about a **sign-in** or **password change** you didn't make.\n- **Posts or messages** you didn't send, or friends asking about weird links from you.\n- A **device you don't recognise** in the account's list of signed-in devices.\n- **Sign-in codes** you didn't ask for.\n- Your **recovery email or phone** has been changed. (That's the backup the account uses to reset your password.)"
+    },
+    {
+      "id": "hacked-or-normal",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "A sign of a hack, or normal?",
+      "bins": [
+        {
+          "id": "hacked",
+          "label": "Sign of a hack"
+        },
+        {
+          "id": "normal",
+          "label": "Normal"
+        }
+      ],
+      "items": [
+        {
+          "id": "new-sign-in",
+          "label": "Alert: a sign-in you didn't make",
+          "bin": "hacked"
+        },
+        {
+          "id": "messages",
+          "label": "Friends got links you didn't send",
+          "bin": "hacked"
+        },
+        {
+          "id": "password-fails",
+          "label": "Your password suddenly doesn't work",
+          "bin": "hacked"
+        },
+        {
+          "id": "unknown-device",
+          "label": "An unknown phone in your devices list",
+          "bin": "hacked"
+        },
+        {
+          "id": "own-change",
+          "label": "An email after you changed your password",
+          "bin": "normal"
+        },
+        {
+          "id": "own-code",
+          "label": "A code while you were signing in",
+          "bin": "normal"
+        }
+      ],
+      "explanation": "Sign-ins, messages, password changes and devices that **weren't you** are signs of a hack. An email or code that arrives right after **you** did something is the account doing its job.",
+      "hint": "For each one, ask: did I do this, or did someone else?",
+      "nudge": "Alerts and codes are normal when they match something you just did. They're warning signs when they don't."
+    },
+    {
+      "id": "step-by-step",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "What to do, step by step",
+      "body": "1. **Tell a trusted adult.** You're not in trouble, and two heads are better than one.\n2. **Change the password**, on a device you trust, in the real app or website. Make it new, strong and unique.\n3. **Check the recovery email and phone** straight away, and remove anything that isn't yours. Otherwise the attacker could use them to reset your new password.\n4. **Sign out of other devices**, from the account's security settings. That kicks out anyone else.\n5. **Turn on [[two-step sign-in]]**, so a password alone can't get in again.\n\nThen change that password anywhere else you used it, and warn friends if they got strange messages.\n\nCan't get in at all? Use the app's official **\"Forgot password\"** or account recovery. **Never pay** someone who offers to get it back for you: that's a [[scam]]."
+    },
+    {
+      "id": "order-the-steps",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "Put the first five steps in order.",
+      "items": [
+        {
+          "id": "tell",
+          "label": "Tell a trusted adult"
+        },
+        {
+          "id": "password",
+          "label": "Change the password"
+        },
+        {
+          "id": "recovery",
+          "label": "Check the recovery email and phone"
+        },
+        {
+          "id": "sign-out",
+          "label": "Sign out of other devices"
+        },
+        {
+          "id": "two-step",
+          "label": "Turn on two-step sign-in"
+        }
+      ],
+      "explanation": "**Tell a trusted adult**, **change the password**, **check the recovery email and phone** (so they can't reset it again), **sign out of other devices**, then **turn on two-step sign-in**.",
+      "hint": "Think about the reason for each step: getting help, a new lock, stopping them resetting it, kicking them out, then a second lock.",
+      "nudge": "Look back at the steps and the reason each one was given. Each step only works if the one before it is done."
+    },
+    {
+      "id": "weird-messages",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "Your friends say you've been sending them strange links. You haven't.",
+      "start": "start",
+      "steps": [
+        {
+          "id": "start",
+          "text": "You can still sign in. What do you do first?",
+          "choices": [
+            {
+              "id": "tell-change",
+              "text": "Tell a trusted adult, and change your password",
+              "consequence": "Good start. The attacker's password no longer works.",
+              "next": "then"
+            },
+            {
+              "id": "delete",
+              "text": "Delete the whole account",
+              "consequence": "You'd lose everything, and the attacker might already have your password for other sites.",
+              "outcome": "fail"
+            },
+            {
+              "id": "ignore",
+              "text": "Ignore it. Friends will work it out",
+              "consequence": "Every hour gives the attacker more time to trick your friends.",
+              "outcome": "fail"
+            }
+          ]
+        },
+        {
+          "id": "then",
+          "text": "Your password is changed. What next?",
+          "choices": [
+            {
+              "id": "lock-down",
+              "text": "Check recovery details, sign out other devices, turn on two-step",
+              "consequence": "Whoever was in is kicked out and can't get back in. Then you warn your friends not to click.",
+              "outcome": "success"
+            },
+            {
+              "id": "done",
+              "text": "That's enough, you're done",
+              "consequence": "The attacker may still be signed in on their device. Sign out other devices too.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "explanation": "Tell an adult and change the password first. Then **check the recovery details**, **sign out other devices**, turn on **two-step sign-in**, and warn your friends.",
+      "hint": "Follow the steps from the lesson in order. Is changing the password enough on its own if someone is still signed in?"
+    },
+    {
+      "id": "recovery-offer",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Your account was taken over. Someone messages: **\"I can get it back for you for $20.\"** What is this?",
+      "options": [
+        {
+          "id": "scam",
+          "text": "A scam: use the app's official account recovery"
+        },
+        {
+          "id": "help",
+          "text": "Helpful: pay them, it's quicker",
+          "nudge": "The lesson warned about people offering to recover accounts. Only the app's own recovery can do it."
+        },
+        {
+          "id": "hacker",
+          "text": "Probably the app's support team",
+          "nudge": "Real support teams don't message you asking for money. Think about who offers this for a fee."
+        }
+      ],
+      "correctOptionId": "scam",
+      "explanation": "Account \"recovery services\" in your messages are scams. Use the app's official **Forgot password** or account recovery, and never pay.",
+      "hint": "What did the lesson say about people who offer to get your account back?"
+    },
+    {
+      "id": "how-it-happens",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "How accounts get taken",
+      "body": "Most take-overs come from a few things you already know how to stop:\n\n- a password **reused** from a site that had a [[data breach]]\n- a password typed into a **fake website** from a [[phishing]] message\n- a password that's **easy to guess**, or **shared** with a friend\n\nA unique passphrase, two-step sign-in and a sharp eye for scams stop nearly all of them."
+    },
+    {
+      "id": "recovery-changed",
+      "type": "scenario",
+      "difficulty": "challenge",
+      "prompt": "You check your account's security settings.",
+      "start": "start",
+      "steps": [
+        {
+          "id": "start",
+          "text": "The **recovery email** is one you've never seen. What do you do?",
+          "choices": [
+            {
+              "id": "replace",
+              "text": "Remove it, add your own, and turn on two-step sign-in",
+              "consequence": "Now only you can reset the password.",
+              "outcome": "success"
+            },
+            {
+              "id": "leave",
+              "text": "Leave it. It's only a backup",
+              "consequence": "The recovery email can reset your password, so whoever owns it could get back in.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "explanation": "The **recovery email** can reset your password, so it must be yours. Remove anything you don't recognise, and add a second lock.",
+      "hint": "What is the recovery email used for?"
+    },
+    {
+      "id": "locked-out",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "prompt": "Your password was changed and you can't sign in at all. What's the best first move?",
+      "options": [
+        {
+          "id": "official",
+          "text": "Use the app's official \"Forgot password\" or recovery"
+        },
+        {
+          "id": "new-account",
+          "text": "Just make a new account",
+          "nudge": "You'd lose everything in the old one, and the attacker keeps it. Try to get it back first."
+        },
+        {
+          "id": "pay-helper",
+          "text": "Pay someone online to recover it",
+          "nudge": "People offering paid recovery are scammers. Only the app's own recovery can help."
+        }
+      ],
+      "correctOptionId": "official",
+      "explanation": "The app's official recovery is the way back in. Tell a trusted adult, and never pay a stranger.",
+      "hint": "The lesson said what to use if you can't get in at all."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- Signs: a password that stops working, **alerts you didn't cause**, messages you didn't send, unknown devices.\n- Steps: **tell an adult**, **change the password**, **check recovery details**, **sign out other devices**, **turn on two-step sign-in**.\n- Locked out? Use the **official recovery**. Never pay a \"recovery\" stranger.\n\nNext: who to tell, and where to get help in Australia."
+    }
+  ]
+}

@@ -3,6 +3,7 @@
   "kind": "lesson",
   "title": "TCP and UDP",
   "order": 2,
+  "icon": "handshake",
   "cards": [
     {
       "id": "two-kinds-of-post",

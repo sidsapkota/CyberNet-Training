@@ -3,6 +3,7 @@
   "kind": "lesson",
   "title": "Different Roads, Same Destination",
   "order": 3,
+  "icon": "split",
   "cards": [
     {
       "id": "no-promises",

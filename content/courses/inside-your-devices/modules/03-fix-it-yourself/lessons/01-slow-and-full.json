@@ -3,6 +3,7 @@
   "kind": "lesson",
   "title": "Slow and Full",
   "order": 1,
+  "icon": "gauge",
   "cards": [
     {
       "id": "not-broken",

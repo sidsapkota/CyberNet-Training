@@ -1,0 +1,248 @@
+{
+  "id": "your-digital-footprint",
+  "kind": "lesson",
+  "title": "Your Digital Footprint",
+  "order": 1,
+  "icon": "footprints",
+  "cards": [
+    {
+      "id": "wet-cement",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Footprints in wet cement",
+      "body": "Everything you post, like, comment on or get tagged in adds to your **digital footprint**: the trail you leave online.\n\nLike footprints in wet cement, it can set hard. Posts get screenshotted, shared and saved, even after you delete them. That's not a reason to stop posting: it's a reason to **choose what you share**."
+    },
+    {
+      "id": "keep-private",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "What to keep private",
+      "body": "Some details help strangers find you, or pretend to be you ([[identity theft]]). Keep these off public posts and profiles:\n\n- your **home address** and **phone number**\n- your **school**, including a uniform or badge in photos\n- your **full name with your birthday**\n- **where you are right now**: post holiday photos **after** you get home\n- **passwords, codes**, and photos of tickets or ID cards\n- answers to [[security questions|security-question]], like your first pet's name or the street you grew up on\n\nThat goes for **usernames** too: `SkyDiver_77` is safer than your real name, school or birth year.\n\nA good test: would you be OK with a stranger, a future teacher or a future boss seeing it?"
+    },
+    {
+      "id": "share-or-private",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Fine to share, or keep it private?",
+      "bins": [
+        {
+          "id": "share",
+          "label": "Fine to share"
+        },
+        {
+          "id": "private",
+          "label": "Keep it private"
+        }
+      ],
+      "items": [
+        {
+          "id": "band",
+          "label": "Your favourite band",
+          "bin": "share"
+        },
+        {
+          "id": "drawing",
+          "label": "A drawing you made",
+          "bin": "share"
+        },
+        {
+          "id": "pet-photo",
+          "label": "A photo of your pet (no name tag)",
+          "bin": "share"
+        },
+        {
+          "id": "uniform",
+          "label": "A selfie in your school uniform",
+          "bin": "private"
+        },
+        {
+          "id": "address",
+          "label": "Your home address",
+          "bin": "private"
+        },
+        {
+          "id": "now",
+          "label": "Holiday photos while you're still away",
+          "bin": "private"
+        },
+        {
+          "id": "phone",
+          "label": "Your phone number in your bio",
+          "bin": "private"
+        }
+      ],
+      "explanation": "Interests and things you make are fine to share. Your **school**, **address**, **phone number** and **where you are right now** help strangers find you, so keep them private.",
+      "hint": "For each one, ask: could a stranger use this to find me, or to pretend to be me?",
+      "nudge": "Details that show where you live, go to school or are right now are the ones to keep private."
+    },
+    {
+      "id": "band-name-quiz",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "A fun quiz is going around on social media.",
+      "start": "start",
+      "steps": [
+        {
+          "id": "start",
+          "text": "**\"Find your pop star name! It's your first pet's name plus the street you grew up on. Share yours below!\"** What do you do?",
+          "choices": [
+            {
+              "id": "share",
+              "text": "Share it. It's just a bit of fun",
+              "consequence": "Pet names and streets are common **security questions**, so sharing them helps someone reset your accounts.",
+              "outcome": "fail"
+            },
+            {
+              "id": "skip",
+              "text": "Scroll past without answering",
+              "consequence": "Nothing personal shared. Quizzes like this are sometimes made to collect exactly those answers.",
+              "outcome": "success"
+            }
+          ]
+        }
+      ],
+      "explanation": "\"Fun\" quizzes can collect the answers to **security questions** (your first pet, your street, your school). Enjoy them without posting the answers.",
+      "hint": "Think about where else you might have been asked for your first pet's name or your street."
+    },
+    {
+      "id": "privacy-settings",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Privacy settings",
+      "body": "Every app has **privacy settings**. A few worth checking:\n\n- **Private account:** only people you approve see your posts.\n- **Who can message you:** friends only, not everyone.\n- **Location sharing:** off, unless it's with family you trust.\n- **Tag review:** you approve photos before they show on your profile.\n\nApps sometimes change settings in updates, so check them again every now and then.\n\nIf someone online makes you uncomfortable, you can **block** and **report** them in the app, and tell a trusted adult. You won't be in trouble."
+    },
+    {
+      "id": "match-settings",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each setting to what it does.",
+      "pairs": [
+        {
+          "id": "private",
+          "left": "Private account",
+          "right": "Only approved followers see your posts"
+        },
+        {
+          "id": "messages",
+          "left": "Messages from friends only",
+          "right": "Strangers can't message you directly"
+        },
+        {
+          "id": "location",
+          "left": "Location sharing off",
+          "right": "Nobody can see where you are right now"
+        },
+        {
+          "id": "tags",
+          "left": "Tag review",
+          "right": "You approve photos you're tagged in"
+        }
+      ],
+      "explanation": "A **private account** limits who sees posts, **friends-only messages** keep strangers out of your inbox, **location off** hides where you are, and **tag review** lets you choose which photos of you appear.",
+      "hint": "Think about what each setting controls: your posts, your messages, your location or your photos.",
+      "nudge": "Two are about who can see things, one is about who can contact you, and one is about photos other people post."
+    },
+    {
+      "id": "why-wait",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Why is it smart to post holiday photos **after** you get home?",
+      "options": [
+        {
+          "id": "away",
+          "text": "It doesn't tell people you're away right now"
+        },
+        {
+          "id": "quality",
+          "text": "Photos look better when edited at home",
+          "nudge": "Photo quality isn't the reason. Think about what the post tells people about where you are."
+        },
+        {
+          "id": "likes",
+          "text": "Posts get more likes later",
+          "nudge": "Likes aren't the reason. Think about who might learn that your home is empty."
+        }
+      ],
+      "correctOptionId": "away",
+      "explanation": "Posting while you're away tells people **where you are, and that you're not home**. Share the photos once you're back.",
+      "hint": "The lesson said to keep \"where you are right now\" private."
+    },
+    {
+      "id": "friendly-stranger",
+      "type": "scenario",
+      "difficulty": "challenge",
+      "prompt": "Someone you don't know in real life has been messaging you in a game. They're really friendly.",
+      "start": "start",
+      "steps": [
+        {
+          "id": "start",
+          "text": "After a few days they ask: **\"What school do you go to? Send me a photo of you!\"** What do you do?",
+          "choices": [
+            {
+              "id": "send",
+              "text": "Send it. They've been really nice",
+              "consequence": "Being friendly online doesn't show who someone really is. A school and a photo help a stranger find you.",
+              "outcome": "fail"
+            },
+            {
+              "id": "safe",
+              "text": "Don't send anything, block and report them, and tell a trusted adult",
+              "consequence": "That's exactly right. You're not in trouble, and telling someone keeps you and others safe.",
+              "outcome": "success"
+            }
+          ]
+        }
+      ],
+      "explanation": "Keep your school, photos and location away from people you only know online, however friendly they seem. **Block, report and tell a trusted adult**: you won't be in trouble.",
+      "hint": "Look back at what to keep private. Who could help you if something online feels off?"
+    },
+    {
+      "id": "username-check",
+      "type": "sort_bins",
+      "difficulty": "challenge",
+      "prompt": "Is each username **safe**, or does it **give too much away**?",
+      "bins": [
+        {
+          "id": "safe",
+          "label": "Safe"
+        },
+        {
+          "id": "too-much",
+          "label": "Gives too much away"
+        }
+      ],
+      "items": [
+        {
+          "id": "sky",
+          "label": "SkyDiver_77",
+          "bin": "safe"
+        },
+        {
+          "id": "comet",
+          "label": "PurpleComet",
+          "bin": "safe"
+        },
+        {
+          "id": "full",
+          "label": "Mia_Jones_Brisbane2013",
+          "bin": "too-much"
+        },
+        {
+          "id": "school",
+          "label": "Liam_at_Hillside_High",
+          "bin": "too-much"
+        }
+      ],
+      "explanation": "A good username says nothing about who you are. `Mia_Jones_Brisbane2013` gives a full name, a city and a birth year, and `Liam_at_Hillside_High` gives a name and a school.",
+      "hint": "Look for a real name, a school, a place or a birth year inside each username.",
+      "nudge": "Fun made-up words are safe. A real name, school, town or birth year gives too much away."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- Your **digital footprint** is everything about you online, and it can last.\n- Keep your **address, phone number, school, location right now** and passwords private.\n- Quizzes can collect **security question** answers.\n- Check your **privacy settings**: private account, friends-only messages, location off, tag review.\n\nNext: what your apps can see, and staying safe on public Wi-Fi."
+    }
+  ]
+}

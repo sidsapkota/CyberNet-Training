@@ -3,6 +3,7 @@
   "kind": "lesson",
   "title": "Routers and Hops",
   "order": 2,
+  "icon": "router",
   "cards": [
     {
       "id": "who-decides",

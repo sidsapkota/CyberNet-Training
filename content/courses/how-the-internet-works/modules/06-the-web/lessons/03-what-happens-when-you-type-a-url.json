@@ -3,6 +3,7 @@
   "kind": "lesson",
   "title": "What Happens When You Type a URL",
   "order": 3,
+  "icon": "keyboard",
   "cards": [
     {
       "id": "press-enter",

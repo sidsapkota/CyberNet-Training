@@ -585,23 +585,67 @@ before any card tests them. Tests check that every lesson uses at least 2 hands-
 simulator card starts unsolved and has a solution, and that every drawn part is explored before a
 card tests it.
 
-**Devices and names used.** Only generic devices appear: "a laptop", "a phone", "a tablet". There are no
-brands, models or operating-system names. App names are generic ("Music player", "Chat app"). The
+**Devices and names used.** The scenes and lesson text use only generic devices: "a laptop", "a phone", "a tablet", with no
+brands, models or operating-system names. The exception is the credited [real photos](#real-photos), whose captions name the device shown
+plainly, without implying any link to its maker. App names are generic ("Music player", "Chat app"). The
 one product-like name, **"CleanerPro"**, is made up for the fake pop-up scenario.
 
-**Scenes are drawings, not photos.** Part positions in the `laptop` and `phone` scenes are
-simplified and roughly where the parts sit in many devices, but real layouts vary a lot. The
-laptop's RAM is drawn as a removable stick. Many thin laptops solder RAM to the board.
-Each kind of part carries a drawn clue so beginners can tell them apart, and the clues are teaching
-hints rather than real markings: the **lightning bolt** on batteries (real ones carry printed
-labels), the **stacked lines** on storage chips (real flash chips look plain; inside, they really
-are built from stacked layers), the CPU's **shiny metal lid** (a heat spreader; many phone chips
-don't have one), and **gold contacts** along RAM and the storage card (real ones do have these).
+**Scenes are simplified diagrams, not photos** (each shows a "Simplified diagram" label). Part
+positions follow real devices: a laptop's battery across the bottom, with a heat pipe carrying the
+CPU's heat to the fan; a phone's battery filling most of its body, with the processor, RAM and
+storage chips soldered to one small board. Real layouts still vary a lot.
+- The **laptop** is an example with a removable RAM stick and SSD; every card that shows it says
+  many thin laptops have them soldered.
+- The **phone's RAM and storage** are soldered chips and are never shown as removable. The text
+  says RAM is often stacked on the processor (drawn beside it here so both can be tapped).
+- **Phones are glued shut.** The phone teardowns soften the glue (`heat`), lift the back, remove
+  two small screws and a bracket, then unplug the battery. Real repairs use more steps (more
+  screws, new glue, testing); the explanations say so.
+- Each kind of part carries a drawn clue so beginners can tell them apart. The **lightning bolt**
+  on batteries (real ones carry printed labels) and the **stacked lines** on storage chips (real
+  flash chips look plain; inside, they really are built from stacked layers) are teaching marks.
+  The CPU is a **small shiny die on a square base**, which is how laptop and phone processors
+  really look (no metal lid; a laptop's is normally hidden under the heat pipe's plate). **Gold
+  contacts** along the RAM stick and SSD are real.
 
 **Simulator numbers are illustrative** (see [Simulator models](#simulator-models)). They show the
 right relationships, not measured figures.
 
 **[Safety](#safety)** lists every physical-action or safety statement, for review.
+
+## Accuracy corrections (devices-accuracy)
+
+What changed after the accuracy review of Inside Your Devices, and why.
+
+| Was | Now |
+|---|---|
+| The phone scene showed RAM and storage like the laptop's, as if they could be taken out | Soldered chips on the phone's board; the explore card says they can't be swapped, and that RAM is often stacked on the processor |
+| The laptop's RAM stick and SSD were shown as how every laptop works | "An example with removable RAM and an SSD; many thin laptops have them soldered" (explore card, photo caption, recap, RAM photo) |
+| The phone opened by unscrewing the back | Phones are glued: soften the glue, lift the back, two screws, the bracket, then unplug the battery. Every phone teardown adds the fire-risk line to its safety note |
+| The CPU was drawn with a shiny metal lid | A small shiny die on a square base (laptop and phone chips have no lid) |
+| The laptop had no heat pipe; cooling was "the fan" | A copper heat pipe from the CPU to the fan's fins; `find-the-cooling` taps the CPU, heat pipe and fan |
+| `too-hot` had a "Fan on" switch, as if laptop fans were switched on by hand | "Clean the dusty fan"; the explanation says laptop fans switch on by themselves and dust stops them cooling |
+| "The OS is the first program to start" (the firmware starts first) | "The main program that starts" (`meet-the-os/the-operating-system`) |
+| "Cloud files are kept safe and backed up" | "usually kept safe and backed up" (`files-and-folders/the-cloud`) |
+| Opening the laptop made four screws look like the whole job | The prompt says real laptops often have more screws and clips |
+| Scenes looked like photos of real layouts | Each carries a "Simplified diagram" label, backed by a real, credited photo |
+
+## Real photos
+
+Six real photos back up the simplified diagrams. All come from Wikimedia Commons under CC0 or
+CC BY / CC BY-SA, are saved **unmodified** in `public/photos/`, and are credited on the card
+(author, licence link, "via Wikimedia Commons", "Unmodified"). Captions describe the device
+plainly and never suggest a link to its maker; `/terms` says product names belong to their owners.
+Each caption and alt text was checked against the photo itself. The phone photo is a 2019 phone with a **glued** back, so it matches what the lesson teaches (an earlier choice, an iPhone 4 from 2010, had a screwed-on back and was replaced). Photos showing heating temperatures or tools as a how-to are never used.
+
+| File | Card | Device | Author | Licence | Source |
+|---|---|---|---|---|---|
+| `/photos/framework-laptop-13-inside.jpg` | `whats-in-the-box/real-laptop` | Framework Laptop 13 (2023, AMD Ryzen) | Ogidya | CC BY 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Framework_Laptop_13_-_2023_AMD_Ryzen_-_Internal_motherboard_and_component_view.jpg) |
+| `/photos/phone-glued-back-opened.jpg` | `whats-in-the-box/real-phone` | Huawei P Smart Z (2019), glued back | Raimond Spekking | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Huawei_Honor_P_Smart_Z_-_case_opened-8858.jpg) |
+| `/photos/laptop-heat-pipe.jpg` | `meet-the-cpu/real-heat-pipe` | A laptop (model not recorded) | Kristoferb | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Laptop_Heat_Pipe.JPG) |
+| `/photos/laptop-dusty-heatsink.jpg` | `meet-the-cpu/real-dust` | A laptop (model not recorded) | Audrius Meskauskas (Audriusa) | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Laptop_dust.jpg) |
+| `/photos/laptop-ram-stick.jpg` | `memory-vs-storage/real-ram` | Samsung 8 GB DDR4 SO-DIMM | D-Kuru | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:DDR_4_RAM_SO-DIMM_8GB_by_Samsung-top_front_PNr%C2%B00838.jpg) |
+| `/photos/swollen-phone-battery.jpg` | `power-problems/real-swollen-battery` | Samsung EB-BA136ABY (from a Galaxy A13) | Saimmx | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:20250807_200837_Swollen_Samsung_battery,_back.jpg) |
 
 ## Module 1: Pull It Apart
 
@@ -701,7 +745,7 @@ storage · 64 ÷ 4 = 16 videos · which job gains from more cores · throttling.
 - Spot a fake virus pop-up (challenge).
 
 **Key claims:**
-- The OS is the first program to start and runs until shutdown.
+- The OS is the main program that starts when the device switches on, and it runs until shutdown. (Firmware runs briefly first to start it; not taught.)
 - The OS switches between apps so quickly they seem to run at once (time-slicing).
 - Every running program is a process. Background processes (updaters, sync, antivirus) have no
   window.
@@ -834,22 +878,31 @@ a real device.
    parts and void the warranty; the lithium battery can catch fire if bent or punctured.
 2. **Every teardown card** shows the built-in note: "This is a simulation. Real phones and laptops
    should only be opened by an adult or a repair shop."
-3. "Unplug the battery first" is framed as **how technicians work safely** (`open-the-laptop`,
+3. **Phone teardowns (heat and pry):** `open-the-phone`, `swap-the-camera` and
+   `inside-your-devices-final/q-open-phone` soften the glue and lift the glued back, in the
+   simulation only. Each adds, inside its built-in safety note right above the scene: "**Heating
+   or prying a phone can damage its battery and start a fire.** That's why repair shops use special
+   tools and training. It's never something to try at home." The prompts describe what
+   *repairers* do; there are no temperatures, tools or methods. The `real-phone` photo shows the
+   battery's own printed warning (don't disassemble, puncture, crush, heat or burn).
+4. **Photos:** the dusty heatsink and swollen battery captions end with a repair shop, not a
+   fix to try.
+5. "Unplug the battery first" is framed as **how technicians work safely** (`open-the-laptop`,
    `open-the-phone`, `swap-the-camera`, `pull-it-apart-quiz/q-open-safely`,
    `inside-your-devices-final/q-open-phone`), and repeated in the 1.1 recap with "Real devices
    should only be opened by an adult or a repair shop."
-4. `open-the-phone` mentions that repair shops soften phone glue with gentle heat. It describes
+6. `open-the-phone` mentions that repair shops soften phone glue with gentle heat. It describes
    what shops do; it isn't an instruction.
-5. `inside-your-devices-final/q-no-charge`: "Open the tablet" is a wrong choice: "Opening a device
+7. `inside-your-devices-final/q-no-charge`: "Open the tablet" is a wrong choice: "Opening a device
    is for adults and repair shops, and it should never be the first step."
 
 **Charging ports:**
-6. `power-problems/wont-charge`: first try another cable and socket. The right fix for fluff is
+8. `power-problems/wont-charge`: first try another cable and socket. The right fix for fluff is
    "Phone off, ask an adult to help brush it out with a soft, dry brush", with a repair shop as the
    fallback. Wrong choices teach **never metal** (pin, paper clip: damage or short circuit) and
    **never water**.
-7. `inside-your-devices-final/q-no-charge`: "Never put metal in a charging port."
-8. The 3.2 recap repeats: an adult can gently brush the port with something soft and dry; never
+9. `inside-your-devices-final/q-no-charge`: "Never put metal in a charging port."
+10. The 3.2 recap repeats: an adult can gently brush the port with something soft and dry; never
    metal or water.
 8a. `power-problems/charging-trouble` (explainer, before the scenario): try another cable and
     socket first; "With the phone switched off, an adult can help brush it out gently with a soft,
@@ -859,17 +912,17 @@ a real device.
     describes, and gives no instruction.
 
 **Heat and batteries:**
-9. `meet-the-cpu/too-hot`: the fix is "Move it off the blanket" (clear the vents) and the fan. There
+11. `meet-the-cpu/too-hot`: the fix is "Move it off the blanket" (clear the vents) and the fan. There
    is no cleaning of vents or opening the case.
-10. `power-problems/helps-or-harms`: hot cars and charging under a pillow harm the battery.
-11. `power-problems/swollen-battery` (core): a bulging case → stop using it, unplug it, keep it away
+12. `power-problems/helps-or-harms`: hot cars and charging under a pillow harm the battery.
+13. `power-problems/swollen-battery` (core): a bulging case → stop using it, unplug it, keep it away
     from anything that can burn, and **tell an adult**; a repair shop can replace the battery.
     Wrong choices ("press the case flat", "keep using it") are explained as dangerous: a swollen
     lithium battery can catch fire if pressed, bent or punctured.
-12. `power-problems/too-hot-to-handle` (challenge): stop, unplug and let it cool on a table out of
+14. `power-problems/too-hot-to-handle` (challenge): stop, unplug and let it cool on a table out of
     the sun; **never the freezer** (condensation). If it later looks puffed up: stop using it, don't
     press it, tell an adult so it can go to a repair shop.
-13. The 3.2 recap: "A bulging device may have a swollen battery. Stop using it, don't press it, and
+15. The 3.2 recap: "A bulging device may have a swollen battery. Stop using it, don't press it, and
     tell an adult."
 13a. `power-problems/how-batteries-work` (explainer): keep devices out of hot cars and don't charge
      them under a pillow; if one gets too hot, "stop, unplug it and let it cool on a table out of
@@ -879,11 +932,11 @@ a real device.
      (the battery connector), framed as how technicians work, like item 3.
 
 **Software safety (no physical action, listed for completeness):**
-14. `meet-the-os/fake-virus-popup`: don't click anything in the pop-up, don't call the number,
+16. `meet-the-os/fake-virus-popup`: don't click anything in the pop-up, don't call the number,
     close the browser (with the task manager if needed), and tell an adult.
-15. `files-and-folders/suspicious-download` and `slow-and-full/delete-or-keep`: delete disguised
+17. `files-and-folders/suspicious-download` and `slow-and-full/delete-or-keep`: delete disguised
     programs without opening them and tell an adult; never delete system files you don't recognise.
-16. Ending processes: the task manager cards teach that ending a system process crashes the device.
+18. Ending processes: the task manager cards teach that ending a system process crashes the device.
     Ending an app loses only its unsaved work.
 
 ## Teach before test: review (both courses)
@@ -1106,3 +1159,223 @@ longer correct option; `why-unreachable` was rebalanced, and the rest are listed
 wording pass. Drag lists can sit partly below the Check bar with a how-to-play panel open; the page
 scrolls, and the panel goes after one "Got it".
 
+
+# Content review: Stay Safe Online
+
+The third course. It has 4 modules, 8 lessons and 4 quizzes (the last is the course final). Modules
+1 and 4 are free, and modules 2 and 3 are Pro (`"access"` in each `module.json`; the Pro branch reads
+it, and main ignores it). "When Things Go Wrong" is free because help, reporting and recovery must
+never be behind a paywall (a CLAUDE.md rule, checked by a test). It teaches **defence only**: how to recognise and respond to scams and account
+take-overs, never how to make or run one.
+
+**Fictional examples only.** "Your Bank" and "Parcels" are made-up names. Every web and email
+address in an example uses the reserved `.example` domain (RFC 2606), so none can point at a real
+organisation. A test fails if any other address appears, apart from the real help services below.
+No real people, brands or logos appear. The three new scenes (`email`, `text-message`,
+`fake-website`) are generic, and the scene test also checks their addresses.
+
+**Real help services (verified 30 September 2026):**
+- eSafety Commissioner (esafety.gov.au/report): investigates cyberbullying of under-18s, adult cyber
+  abuse, image-based abuse, and illegal or restricted content. For cyberbullying and adult cyber
+  abuse, report to the platform first. Image-based abuse can be reported to eSafety straight away.
+- Scamwatch (ACCC, National Anti-Scam Centre), scamwatch.gov.au: report a scam at /report-a-scam.
+  After a scam: act quickly, contact your bank, get free support from IDCARE, report to Scamwatch.
+- IDCARE (idcare.org, 1800 595 160): free identity and cyber support to make a recovery plan.
+- ReportCyber at cyber.gov.au: report cybercrime to police. ASD's 24/7 hotline (1300 CYBER1) isn't
+  mentioned, to keep the list short.
+- Kids Helpline, 1800 55 1800: free, private, 24/7, ages 5 to 25.
+- ACCCE, the Australian Centre to Counter Child Exploitation (accce.gov.au, AFP-led): under-18s
+  report sexual extortion ("sextortion") and other online child exploitation at
+  **accce.gov.au/report** (the "Report abuse" button). Its advice for young people
+  (accce.gov.au/sextortionhelp): stop the chat; don't pay, respond or send more; screenshot the
+  messages and the offender's profile; block and report to the platform; report to the ACCCE; get
+  support (Kids Helpline 1800 55 1800, Lifeline 13 11 14); eSafety can help remove images; "you
+  will not be in trouble with law enforcement". Immediate danger: 000. Anonymous reports: Crime
+  Stoppers 1800 333 000 (not mentioned in the course, to keep it short). Verified 30 September 2026.
+- cyber.gov.au passphrase advice: **four or more random words, at least 15 characters**. Some older
+  pages say 14; the current page says 15.
+- cyber.gov.au MFA advice: passkeys first (phishing-resistant), then an authenticator app. SMS and
+  email codes are the weakest second factors.
+
+Re-check all of these before each review: services and numbers change.
+
+**Tone:** calm and practical. Every "what went wrong" card says it's not the learner's fault and
+points to a trusted adult. The one sensitive topic is 4.2 `photo-threat`: a threat to share a
+private photo. It is a challenge card, gives no detail beyond "a private photo", and follows
+eSafety's and the ACCCE's advice: don't pay, stop replying, screenshot the messages and profile
+(never the image), block, tell a trusted adult, and report to the app, eSafety, and, for under-18s,
+the ACCCE. The card says plainly that it is **never the young person's fault** and that they won't be
+in trouble, and gives **Kids Helpline (1800 55 1800)** and **000** directly.
+
+## Module 1: Lock Your Accounts (free)
+
+### 1.1 Strong Passwords (`strong-passwords`)
+**Goals:**
+- Know how passwords get guessed.
+- Length matters most.
+- Passphrases.
+- One password per account.
+
+**Key claims:**
+- Stolen password lists are usually scrambled, so attackers guess with computers. They try common
+  passwords, words, names, birthdays and substitutions (`@` for `a`) first.
+- Each extra lowercase letter multiplies the combinations by 26: 26 × 26 = 676.
+- A passphrase is 4+ random words and at least 15 characters (cyber.gov.au). Lyrics, quotes and
+  personal details are guessable however long they are.
+- Passwords reused from a data breach get tried on other sites. Change it everywhere, starting
+  with email, which can reset other accounts.
+
+**Simplifications:**
+- The simulator (`password` model) counts every combination of a **random** password at an
+  illustrative **one billion guesses a second**. Real speeds range from a few guesses a second (a
+  website's sign-in page) to far more (fast hardware against weakly stored passwords). The model
+  only applies to random passwords; the lesson says real guessers try predictable ones first.
+- The simulator doesn't model passphrases (guessing whole words from a word list). At a billion
+  guesses a second, four random words from a typical list would fall faster than their character
+  count suggests. That would seem to contradict the official advice, which assumes passwords are
+  well protected when stored. So the lesson teaches passphrases as "length you can remember", in
+  an explainer.
+- At that speed: 14 lowercase letters ≈ 2,000 years; 13 ≈ 78 years; 10 characters from all 95
+  printable characters ≈ 1,900 years.
+
+### 1.2 Two-Step Sign-In (`two-step-sign-in`)
+**Goals:**
+- Know, have or are.
+- Rank second factors from strongest to weakest.
+- Never share a code.
+- Password managers.
+- Backup codes.
+
+**Key claims:**
+- Strongest to weakest: passkeys, then authenticator apps, then SMS codes (cyber.gov.au).
+- No real company asks for a sign-in code. An unexpected code means someone has your password.
+- A password manager fills in only on the real site.
+- Save your backup codes.
+
+**Simplifications:**
+- "Two-step", "two-factor" and "multi-factor" are treated as the same thing.
+- Security questions are described as weak (they can be guessed or found), not as a factor.
+
+## Module 2: Spot the Scam (Pro)
+
+### 2.1 Phishing Emails (`phishing-emails`)
+**Key claims:**
+- Warning signs: fake sender, rushing you, "Dear Customer", asks for secrets, hidden link, too good
+  to be true.
+- The address after the @ counts, not the display name. The owner is the name just before the
+  ending.
+- Hover, or press and hold, to preview a link.
+- Report it; don't reply.
+
+**Simplifications:** a generic greeting is a common sign, not proof. The lesson says scammers can
+also use your real name.
+
+### 2.2 Scam Texts and Calls (`scam-texts-and-calls`)
+**Key claims:**
+- Common scam texts: parcel fees, tolls and "Hi Mum".
+- Sender names can be spoofed, so scam texts can appear in a real thread.
+- Scam callers pretend to be banks, government, tech support or police. They ask for codes,
+  passwords, remote access or gift cards.
+- AI can clone a voice from a short clip. Hang up and call back on a number you know, and use a
+  family safe word.
+- Being asked to keep it secret is a red flag.
+
+### 2.3 Fake Websites (`fake-websites`)
+**Key claims:**
+- Read the name just before the ending (`.example`, `.com`, `.com.au`).
+- Subdomains like `login.yourbank.example` belong to the owner.
+- The padlock means an encrypted (HTTPS) connection, not an honest site.
+- Banks never ask for a card PIN on a website.
+- Sign in through the app, a bookmark or a typed address. A password manager that won't fill in is
+  a clue.
+
+**Simplifications:** "the name just before the ending" simplifies the real rules. Some endings,
+like `.com.au`, have two parts, and the examples only use `.example`.
+
+## Module 3: Guard Your Privacy (Pro)
+
+### 3.1 Your Digital Footprint (`your-digital-footprint`)
+**Key claims:**
+- Posts can be copied, and they last.
+- Keep private: your address, phone, school, where you are right now, passwords, and the answers
+  to security questions. That includes usernames.
+- "Fun" quizzes can harvest security-question answers.
+- Privacy settings: private account, message limits, location off, tag review.
+- Block, report, and tell a trusted adult.
+
+### 3.2 Apps and Public Wi-Fi (`apps-and-wi-fi`)
+**Key claims:**
+- Grant only the permissions an app needs; choose "Only while using the app"; change them in
+  Settings.
+- Many phones show an indicator when the camera or microphone is in use.
+- Download from official app stores.
+- On public Wi-Fi, HTTPS protects what you send to most sites. The bigger risk is a fake hotspot,
+  so check the network's name with staff and use mobile data for banking.
+
+**Simplifications:**
+- VPNs aren't covered.
+- Indicator dots exist on current iOS and Android versions; older devices may not show them.
+
+## Module 4: When Things Go Wrong (free: help, reporting and recovery are always free)
+
+### 4.1 Signs of a Hack (`signs-of-a-hack`)
+**Key claims:**
+- The signs of an account take-over.
+- The steps, in order: tell a trusted adult, change the password, check the recovery details, sign
+  out other devices, turn on two-step sign-in. Then change reused passwords and warn friends.
+- Use the official recovery. Paid "recovery" offers are scams.
+
+**Simplifications:** real apps word these settings differently. The order is a sensible default,
+not a rule every service states.
+
+### 4.2 Getting Help (`getting-help`)
+**Key claims:**
+- The help services verified above.
+- Save evidence before blocking: screenshots of messages, usernames, addresses and dates. Never
+  copy, save or share a private or nude image itself.
+- Paying a scammer usually leads to more demands.
+- Call 000 for danger right now.
+
+## Teach before test: self-check fixes (before the audit)
+- 1.1 `the-leak` rewarded changing the **email** password first, but "email can reset other
+  accounts" was only in the feedback. It's now taught in `one-password-each`.
+- 2.1 `real-sender` (challenge) needed "the owner is the name just before the ending", which was
+  only taught in 2.3. It's now also in `check-the-sender`.
+- 3.1 `band-name-quiz`, `friendly-stranger` and `username-check` relied on security questions,
+  block-and-report, and safe usernames. All three are now taught in `keep-private` and
+  `privacy-settings`.
+
+## Beginner audit: Stay Safe Online (30 September 2026)
+
+**Method:** as for the other courses. A fresh agent that hadn't seen the content played the whole
+course in order as a 12-year-old with no online-safety knowledge. It saw only the on-screen text
+(with glossary definitions and optional hints) and screenshots of the three scenes, and committed
+to each answer before reading the key.
+
+**Result:**
+- No blockers and no teach-before-test failures.
+- 87 graded cards (60 lesson cards including challenges, and 27 quiz cards): all right first try,
+  with no hints needed.
+- Tone was judged calm and empowering throughout, and the sensitive cards gentle and correct.
+- Help details and simulator numbers were checked and found accurate.
+- Nothing teaches attacking, and no real brands or addresses appear.
+
+| Where | Issue | Fix |
+|---|---|---|
+| 2.1 `spot-the-signs`, `name-the-signs`; 2.2 `spot-the-text`, `label-the-text`; 2.3 `spot-the-site`, `label-the-site` | Hints and nudges named the targets or placed labels | Rewritten to point at the warning-sign list ("take one sign at a time") without naming parts |
+| 1.2 `know-have-are`, 4.1 `order-the-steps`, 4.2 `where-to-go` | Nudges answered part of the card | Now point to the method ("in your head, pocket or part of you"; "the reason for each step"; "start with the one you're surest of") |
+| 4.1 `order-the-steps`, final `q-steps` | **Accuracy:** recovery details were checked last, but an attacker who controls the recovery email can reset the new password. The last three steps were rote in a one-try quiz | Recovery details are now step 3, straight after the password change, with the reason taught. The final orders only the first three steps, each with a taught reason |
+| 2.1 `check-the-sender` | A correct address was implied to prove an email is real | "A right address is a good sign, but not proof: addresses can be faked too" |
+| 2.3 `padlock` | Some browsers no longer show a padlock | Notes that some browsers show a different icon, or none |
+| 2.2 `hang-up-or-ok` | "A friend calls from their saved number" as OK contradicted caller-ID and voice spoofing | "You call a friend on their saved number" |
+| 1.2 `strongest-proof` | "Text codes are the weakest of the three" was wrong for its options; security questions weren't taught | New explainer `strongest-proofs` (passkey, app, SMS; security questions are weak; backup codes); explanation fixed; `security-question` glossary term |
+| 1.2 `what-two-step-is` | Too dense | Split: kinds of proof here, strongest options in `strongest-proofs` |
+| 2.3 `read-the-address` | `/signin` and `/help` not explained; referred to the other course | "Anything after a `/` is just a page on that site"; cross-course reference removed |
+| Glossary `domain-name` | Relied on "IP address", which this course doesn't teach | Now says what an IP address is in the same sentence |
+| 3.2 `wi-fi-ok` | "The café's real Wi-Fi" contradicted the reason for using mobile data | "A café's public Wi-Fi"; explanation says you can't always be sure a network is real |
+| 4.1 `hacked-or-normal`, final `q-hacked` | "Changed it" was unclear; "a code just after you signed in" was odd | "An email after you changed your password"; "A code while you were signing in" |
+| 1.1 `best-passphrase` | The right answer reused the explainer's example words | Fresh words |
+| 1.1 `how-guessing-works` | "Scrambled" unexplained | "Scrambled so they can't just be read" |
+| 1.1 `easy-or-hard` | "A random one from an app" came before password managers | "A long random one made by a password app" |
+| 2.2 `spot-the-text` | Fee and deadline are two targets inside one bubble | Kept: each line gets its own tap highlight, and the prompt names the new message |
+| M2 quiz, final | Quiz hotspots reuse the lesson scenes | Kept for now (noted): variants need new scene artwork |

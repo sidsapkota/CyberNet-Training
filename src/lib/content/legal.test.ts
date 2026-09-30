@@ -31,7 +31,7 @@ describe("privacy policy and terms", () => {
       "google",
       "resend",
       "feedback",
-      "hello@cybernettrainer.com",
+      "hello@cybernettraining.com",
       "13 or older",
       "account page",
       "privacy act 1988",
@@ -43,7 +43,7 @@ describe("privacy policy and terms", () => {
       expect(privacy, must).toContain(must);
     }
     const terms = stripDraftBanner(read("terms")).toLowerCase();
-    for (const must of ["13 or older", "free right now", "australia", "hello@cybernettrainer.com"]) {
+    for (const must of ["13 or older", "free right now", "australia", "hello@cybernettraining.com"]) {
       expect(terms, must).toContain(must);
     }
   });

@@ -1,6 +1,7 @@
 import type { BinaryToggleCard } from "@/cards/binary-toggle/schema";
 import type { DragToOrderCard } from "@/cards/drag-to-order/schema";
 import type { ExplainerCard } from "@/cards/explainer/schema";
+import type { PhotoCard } from "@/cards/photo/schema";
 import type { MatchPairsCard } from "@/cards/match-pairs/schema";
 import type { MultipleChoiceCard } from "@/cards/multiple-choice/schema";
 import type { NumericInputCard } from "@/cards/numeric-input/schema";
@@ -19,6 +20,22 @@ export const explainer = (over: Partial<ExplainerCard> = {}): ExplainerCard => (
   difficulty: "core",
   title: "Hello",
   body: "Some **markdown**.",
+  ...over,
+});
+
+export const photo = (over: Partial<PhotoCard> = {}): PhotoCard => ({
+  id: "photo",
+  type: "photo",
+  difficulty: "core",
+  title: "A real laptop",
+  photo: { src: "/photos/laptop.jpg", alt: "A laptop with its cover off.", width: 1200, height: 800 },
+  caption: "Inside a laptop.",
+  credit: {
+    author: "A. Photographer",
+    licence: "CC BY-SA 4.0",
+    licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Laptop.jpg",
+  },
   ...over,
 });
 
@@ -159,12 +176,12 @@ export const teardown = (over: Partial<TeardownCard> = {}): TeardownCard => ({
   prompt: "Open it",
   scene: "phone",
   actions: [
-    { id: "s1", part: "screw-1", verb: "unscrew", nudge: "Unscrew it." },
-    { id: "s2", part: "screw-2", verb: "unscrew", nudge: "Unscrew it." },
-    { id: "cover", part: "back-cover", verb: "lift", after: ["s1", "s2"], nudge: "Screws out first." },
-    { id: "unplug", part: "battery-connector", verb: "unplug", after: ["cover"], nudge: "Cover off first." },
+    { id: "cover", part: "back-cover", verb: "lift", nudge: "Lift it." },
+    { id: "s1", part: "screw-1", verb: "unscrew", after: ["cover"], nudge: "Cover off first." },
+    { id: "s2", part: "screw-2", verb: "unscrew", after: ["cover"], nudge: "Cover off first." },
+    { id: "unplug", part: "battery-connector", verb: "unplug", after: ["s1", "s2"], nudge: "Screws out first." },
   ],
-  explanation: "Screws, cover, then battery.",
+  explanation: "Cover, screws, then battery.",
   ...over,
 });
 

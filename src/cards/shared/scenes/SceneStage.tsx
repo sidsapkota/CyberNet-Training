@@ -59,6 +59,11 @@ export function SceneStage({
   const scene = getScene(sceneId)!;
   return (
     <div className="rounded-card bg-screen p-3 sm:p-4">
+      {scene.simplified && (
+        <p className="mb-2 w-fit rounded-sm border border-screen-line px-1.5 py-0.5 font-mono text-caption text-on-screen-muted">
+          Simplified diagram
+        </p>
+      )}
       <div
         className="relative mx-auto"
         style={{

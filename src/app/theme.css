@@ -32,6 +32,8 @@
   --color-scene-edge: #6f8fbd;
   /* Gold contacts, heat pipes and battery terminals: small details that hint at each part's job. */
   --color-scene-contact: #c9a85a;
+  /* Warm outline on a part whose glue has been softened (phone teardown "heat" step). */
+  --color-scene-heat: #ffb547;
 
   /* Mascot: fixed in both themes (like the screen panel) so the character never changes. */
   --color-mascot-body: #122b52;

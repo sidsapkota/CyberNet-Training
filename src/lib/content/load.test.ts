@@ -53,12 +53,26 @@ describe("real content in /content", () => {
       if (lesson.kind !== "lesson") continue;
       const { cards } = lesson;
       const where = `lesson ${lesson.id}`;
-      expect(cards.length, where).toBeGreaterThanOrEqual(8);
-      expect(cards.length, where).toBeLessThanOrEqual(12);
+      // Photo cards are a quick look next to a diagram, so they don't count toward the length.
+      const steps = cards.filter((c) => c.type !== "photo").length;
+      expect(steps, where).toBeGreaterThanOrEqual(8);
+      expect(steps, where).toBeLessThanOrEqual(12);
       expect(cards[0]?.type, `${where} opens with a hook explainer`).toBe("explainer");
       expect(cards.at(-1)?.type, `${where} ends with a recap explainer`).toBe("explainer");
       expect(cards.filter((c) => c.type === "multiple_choice").length, where).toBeLessThanOrEqual(3);
       expect(cards.filter((c) => c.difficulty === "challenge").length, where).toBe(2);
+    }
+  });
+
+  it("gives every lesson an icon, never the same one twice in a module (quizzes keep the hub)", () => {
+    const { courses } = loadContent();
+    for (const course of courses) {
+      for (const mod of course.modules) {
+        const icons = mod.lessons.filter((l) => l.kind === "lesson").map((l) => l.icon);
+        expect(icons.every(Boolean), mod.id).toBe(true);
+        expect(new Set(icons).size, `${mod.id} repeats an icon: ${icons.join(", ")}`).toBe(icons.length);
+        expect(mod.lessons.filter((l) => l.kind === "quiz").every((q) => q.icon === undefined), mod.id).toBe(true);
+      }
     }
   });
 
@@ -68,10 +82,27 @@ describe("real content in /content", () => {
       expect(lesson.cards.length, lesson.id).toBeGreaterThanOrEqual(5);
       expect(lesson.cards.length, lesson.id).toBeLessThanOrEqual(8);
       for (const card of lesson.cards) {
-        expect(card.type, `${lesson.id}/${card.id}`).not.toBe("explainer");
+        expect(["explainer", "photo"], `${lesson.id}/${card.id}`).not.toContain(card.type);
         expect(card.difficulty, `${lesson.id}/${card.id}`).toBe("core");
       }
     }
+  });
+
+  it("every photo exists in public/photos, with credit and licence, at its real size", () => {
+    let photos = 0;
+    for (const lesson of loadContent().lessons.values()) {
+      for (const card of lesson.cards) {
+        if (card.type !== "photo") continue;
+        photos += 1;
+        const where = `${lesson.id}/${card.id}`;
+        const file = path.join(process.cwd(), "public", card.photo.src);
+        expect(fs.existsSync(file), `${where}: ${card.photo.src} exists`).toBe(true);
+        // Credit and licence are required by the schema; also check they aren't placeholders.
+        expect(card.credit.author.trim().length, where).toBeGreaterThan(1);
+        expect(card.credit.licenceUrl, where).toMatch(/creativecommons\.org|wikimedia\.org/);
+      }
+    }
+    expect(photos).toBeGreaterThan(0);
   });
 
   it("only uses documentation, private or special-purpose IPv4 addresses", () => {
@@ -103,12 +134,53 @@ describe("real content in /content", () => {
 
   it("lists Inside Your Devices first, with its modules and lessons in order", () => {
     const { courses } = loadContent();
-    expect(courses.map((c) => c.id)).toEqual(["inside-your-devices", "how-the-internet-works"]);
+    expect(courses.map((c) => c.id)).toEqual(["inside-your-devices", "how-the-internet-works", "stay-safe-online"]);
     expect(courses[0]?.modules.map((m) => m.lessons.map((l) => l.id))).toEqual([
       ["whats-in-the-box", "memory-vs-storage", "meet-the-cpu", "pull-it-apart-quiz"],
       ["meet-the-os", "files-and-folders", "software-in-charge-quiz"],
       ["slow-and-full", "power-problems", "inside-your-devices-final"],
     ]);
+  });
+
+  it("keeps help, reporting and recovery free for everyone (never behind Pro)", () => {
+    // CLAUDE.md content rule. `access` is read raw: main's schema ignores it, the Pro branch uses it.
+    const alwaysFree = ["content/courses/stay-safe-online/modules/04-when-things-go-wrong/module.json"];
+    for (const file of alwaysFree) {
+      const mod = JSON.parse(fs.readFileSync(path.join(process.cwd(), file), "utf8")) as { access?: string };
+      expect(mod.access, file).toBe("free");
+    }
+    // And every lesson and quiz loaded from it is free, so /api/lessons/<id> serves it without
+    // sign-in or Pro.
+    const help = [...loadContent().lessons.values()].filter((l) => l.moduleId === "when-things-go-wrong");
+    expect(help.length).toBeGreaterThan(0);
+    for (const lesson of help) expect(lesson.access, lesson.id).toBe("free");
+  });
+
+  it("lists Stay Safe Online's modules and lessons in order", () => {
+    const course = loadContent().courses.find((c) => c.id === "stay-safe-online");
+    expect(course?.modules.map((m) => m.lessons.map((l) => l.id))).toEqual([
+      ["strong-passwords", "two-step-sign-in", "lock-your-accounts-quiz"],
+      ["phishing-emails", "scam-texts-and-calls", "fake-websites", "spot-the-scam-quiz"],
+      ["your-digital-footprint", "apps-and-wi-fi", "guard-your-privacy-quiz"],
+      ["signs-of-a-hack", "getting-help", "stay-safe-online-final"],
+    ]);
+  });
+
+  it("uses only fictional addresses in Stay Safe Online, apart from the verified official services", () => {
+    // Scam examples use the reserved .example domain; the real services are the ones in "Getting Help".
+    const official = new Set(["cyber.gov.au", "esafety.gov.au", "scamwatch.gov.au", "idcare.org", "accce.gov.au"]);
+    // Address endings named on their own when teaching how to read an address (".com.au").
+    const endings = new Set(["com.au"]);
+    const { courses, lessons } = loadContent();
+    const course = courses.find((c) => c.id === "stay-safe-online")!;
+    for (const outline of course.modules.flatMap((m) => m.lessons)) {
+      const text = JSON.stringify(lessons.get(outline.id));
+      for (const domain of text.match(/\b[a-z0-9-]+(\.[a-z0-9-]+)*\.[a-z]{2,}\b/gi) ?? []) {
+        if (/\.(jpg|png|mp3|mp4|docx|txt|exe)$/i.test(domain)) continue;
+        const d = domain.toLowerCase();
+        expect(d.endsWith(".example") || official.has(d) || endings.has(d), `${outline.id}: ${domain}`).toBe(true);
+      }
+    }
   });
 
   it("every Inside Your Devices lesson uses at least 2 of the hands-on card types", () => {
@@ -139,8 +211,9 @@ describe("real content in /content", () => {
   });
 
   it("teaches before testing: every drawn part is explored before a card tests it", () => {
-    // The file browser shows each file's name on screen, so it needs no introduction.
-    const selfLabelled = new Set(["file-browser"]);
+    // These scenes show their own text on screen (file names; the lines of an email, a text or a
+    // web page), so they need no introduction. Each clue they test is taught in an explainer first.
+    const selfLabelled = new Set(["file-browser", "email", "text-message", "fake-website"]);
     const { courses, lessons } = loadContent();
     for (const course of courses) {
       const explored = new Map<string, Set<string>>();
@@ -155,11 +228,14 @@ describe("real content in /content", () => {
           }
           if (selfLabelled.has(card.scene)) continue;
           const scene = getScene(card.scene)!;
-          // Teardowns only need the insides introduced: screws and covers explain themselves.
+          // Teardowns only need the insides introduced: screws, covers and brackets explain themselves.
+          const selfExplaining = (id: string) => id.startsWith("screw-") || id.endsWith("-cover") || id === "panel";
           const tested =
             card.type === "hotspot"
               ? [...(card.targets ?? []), ...(card.labels ?? []).map((l) => l.part)]
-              : card.actions.map((a) => a.part).filter((p) => scene.parts.find((s) => s.id === p && "coveredBy" in s));
+              : card.actions
+                  .map((a) => a.part)
+                  .filter((p) => !selfExplaining(p) && scene.parts.find((s) => s.id === p && "coveredBy" in s));
           for (const part of tested) {
             expect(seen.has(part), `${outline.id}/${card.id} tests "${part}" (${card.scene}) before it's explored`).toBe(true);
           }
@@ -222,6 +298,7 @@ describe("loadContent validation", () => {
     kind: "lesson",
     title: id,
     order,
+    icon: "binary",
     cards: [explainer()],
   });
   const quiz = (id: string, order: number) => ({

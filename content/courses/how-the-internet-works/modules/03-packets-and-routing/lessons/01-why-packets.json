@@ -3,6 +3,7 @@
   "kind": "lesson",
   "title": "Why Data Travels in Packets",
   "order": 1,
+  "icon": "package",
   "cards": [
     {
       "id": "sharing-the-wifi",

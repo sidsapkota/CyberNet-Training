@@ -77,7 +77,7 @@ export async function renderOgImage({
             <div style={{ display: "flex", marginTop: 24, width: 96, height: 6, borderRadius: 3, background: OG.line }} />
             <span style={{ marginTop: 24, fontSize: 30, lineHeight: 1.35, color: OG.muted, maxWidth: 680 }}>{subtitle}</span>
           </div>
-          <span style={{ fontSize: 24, color: OG.muted }}>cybernettrainer.com</span>
+          <span style={{ fontSize: 24, color: OG.muted }}>cybernettraining.com</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 340 }}>
           {/* eslint-disable-next-line @next/next/no-img-element -- rendered to PNG, not the DOM */}

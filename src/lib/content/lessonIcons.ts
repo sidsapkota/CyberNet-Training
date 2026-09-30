@@ -1,0 +1,75 @@
+/**
+ * The icons a lesson may use (its `icon` field), by lucide name. Each maps to a lucide-react icon
+ * in `src/components/ui/icons.tsx` (`LESSON_ICON_COMPONENTS`), drawn with the brand stroke, so the
+ * course path stays consistent. `lock` and `check` are deliberately missing: they're the node's
+ * state badges, so a lesson icon must never look like one. Add a name here and its component
+ * there (the compiler checks they match).
+ */
+export const LESSON_ICONS = [
+  // Data and networks
+  "binary",
+  "file-digit",
+  "hash",
+  "map-pin",
+  "house",
+  "globe",
+  "earth",
+  "expand",
+  "package",
+  "router",
+  "split",
+  "network",
+  "signal",
+  "cable",
+  "radar",
+  "book-user",
+  "search",
+  "square-terminal",
+  "door-open",
+  "handshake",
+  "scroll-text",
+  "arrow-right-left",
+  "keyboard",
+  "link",
+  "cloud",
+  "server",
+  "download",
+  "code",
+  "calculator",
+  // Devices
+  "box",
+  "memory-stick",
+  "cpu",
+  "hard-drive",
+  "monitor",
+  "laptop",
+  "smartphone",
+  "app-window",
+  "folder",
+  "folder-open",
+  "file-text",
+  "image",
+  "gauge",
+  "thermometer",
+  "battery-warning",
+  "battery-charging",
+  "plug",
+  "wifi",
+  "wrench",
+  "bug",
+  "layers",
+  // Safety and people
+  "shield-check",
+  "shield-alert",
+  "key-round",
+  "fingerprint",
+  "mail-warning",
+  "message-square-warning",
+  "phone",
+  "footprints",
+  "eye-off",
+  "users",
+  "life-buoy",
+] as const;
+
+export type LessonIconName = (typeof LESSON_ICONS)[number];

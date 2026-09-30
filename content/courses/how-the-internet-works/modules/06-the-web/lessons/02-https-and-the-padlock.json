@@ -3,6 +3,7 @@
   "kind": "lesson",
   "title": "HTTPS and the Padlock",
   "order": 2,
+  "icon": "shield-check",
   "cards": [
     {
       "id": "cafe-wifi",

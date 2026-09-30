@@ -3,6 +3,7 @@
   "kind": "lesson",
   "title": "Running Out: Meet IPv6",
   "order": 3,
+  "icon": "expand",
   "cards": [
     {
       "id": "what-happens-when-you-run-out",

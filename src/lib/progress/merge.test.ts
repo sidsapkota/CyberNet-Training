@@ -11,6 +11,7 @@ const lessons: Lesson[] = [
   {
     id: "l1",
     kind: "lesson",
+    icon: "binary",
     title: "L1",
     order: 1,
     courseId: "c",
@@ -37,6 +38,7 @@ const lessons: Lesson[] = [
     // Two challenge cards: replaying both (10 practice XP each) meets a 20 XP goal.
     id: "l2",
     kind: "lesson",
+    icon: "binary",
     title: "L2",
     order: 2,
     courseId: "c",

@@ -42,7 +42,7 @@
       "view": "open",
       "mode": "tap",
       "targets": ["ram"],
-      "explanation": "RAM is the long stick covered in small chips. The square chip is the CPU, and the smaller card is storage."
+      "explanation": "RAM is the stick with a row of chips, clipped into its slot. The small shiny chip is the CPU, and the long, narrow card is the SSD (storage)."
     },
     {
       "id": "q-part-jobs",

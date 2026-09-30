@@ -9,7 +9,7 @@ Audience: everyone from about **age 12 to adults**. See [Content style guide](#c
 Current state: guests learn with progress in `localStorage`; learners who sign in (Google or email
 magic link) get progress synced to Supabase. Both sit behind the same `ProgressStore` interface. No
 payments or premium gating yet. See [Accounts and sync](#accounts-and-sync).
-Production is **https://cybernettrainer.com** (`src/lib/site.ts`); see [Launch](#launch-domain-seo-analytics-legal-feedback)
+Production is **https://cybernettraining.com** (`src/lib/site.ts`); see [Launch](#launch-domain-seo-analytics-legal-feedback)
 and `docs/launch-checklist.md` for the dashboards (Vercel, Supabase, Google, Resend, ImprovMX).
 Code is on GitHub: `sidsapkota/CyberNet-Training`, branch `main`.
 
@@ -54,8 +54,12 @@ All of `build`, `lint`, `test` and `typecheck` must pass with zero errors and wa
 `kind: "quiz"` that reuses the normal card types.
 
 Courses, in catalog order: **Inside Your Devices** (`inside-your-devices`, hardware, the OS and
-troubleshooting, built on the hands-on card types) and **How the Internet Works**
-(`how-the-internet-works`).
+troubleshooting, built on the hands-on card types), **How the Internet Works**
+(`how-the-internet-works`) and **Stay Safe Online** (`stay-safe-online`: passwords and two-step
+sign-in, spotting scams, privacy, and what to do when things go wrong; modules 1 and 4 free,
+modules 2 and 3 Pro).
+Each `module.json` may carry `"access": "free" | "pro"`, which the Pro branch reads; until then
+it's ignored.
 
 ```
 content/courses/<course-dir>/course.json                   { id, title, description, order }
@@ -65,6 +69,12 @@ content/courses/<course-dir>/modules/<module-dir>/lessons/*.json
 
 - A lesson file holds `{ id, kind: "lesson" | "quiz", title, order, isFree, cards[] }`. Quizzes also
   take `passThreshold` (0 to 1, default 0.7).
+- **Lesson icons:** every regular lesson has an `icon` from the allow-list in
+  `src/lib/content/lessonIcons.ts` (lucide names, drawn by `LessonIcon` in
+  `src/components/ui/icons.tsx` with the brand stroke; `satisfies` keeps the two in sync). Pick one
+  that clearly matches the topic, and never the same icon twice in a module (`load.test.ts`). `lock`
+  and `check` aren't allowed: they're the node's state badges. Quizzes have no icon; they keep the
+  network hub.
 - **Parents come from the folder path.** Lesson JSON never repeats `courseId`/`moduleId`.
 - **`order` decides sequence.** Folder and file number prefixes (`01-`, `99-`) only make the tree
   readable.
@@ -126,6 +136,7 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
 | `type` | Extra fields | Answer (JSON) | Correct when |
 |---|---|---|---|
 | `explainer` | `title`, `body` (md), `image?` `{src, alt, width, height, caption?}`, `mascot?` (`"presenting"`, safety notes only) | none | read (Continue) |
+| `photo` | `title`, `photo` `{src: /photos/…, alt, width, height}`, `caption` (md), `credit` `{author, licence, licenceUrl, sourceUrl, device?}` | none | read (Continue) |
 | `multiple_choice` | `options` (2–5 `{id, text, nudge?}`), `correctOptionId` | option id | right option picked |
 | `drag_to_order` | `items` (3–7 `{id, label}`, **authored in the correct order**) | item ids | exact order |
 | `binary_toggle` | `target` (0–255) | 8 booleans | bits sum to target |
@@ -175,34 +186,56 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - `manifests.ts` is pure data: part ids, accessible names, hit boxes, draw order, `coveredBy` and
     named `views` (e.g. `open` = cover off), plus an optional `labelAt` point where a label marker
     must not cover the part (file names). `art.tsx` draws each part as its own group.
-  - Scenes: `laptop`, `phone`, `file-browser`. Generic devices only: no brands, logos or real
-    designs (a test checks for brand names).
+  - Scenes: `laptop`, `phone`, `file-browser`, and for Stay Safe Online `email`, `text-message`
+    and `fake-website`. Generic only: no brands, logos or real designs (a test checks for brand
+    names). The three scam scenes show one fictional example each; every address in them uses
+    the reserved `.example` domain (a test checks), and each part's name is exactly the text
+    shown, so screen readers get the same clues and nothing more.
+  - **Self-labelled scenes** (`file-browser`, `email`, `text-message`, `fake-website`) show their
+    own text, so they need no explore card first; each clue they test must be taught in an
+    explainer before the card (`selfLabelled` in `load.test.ts`).
+  - **Realistic but simplified:** part positions follow real devices (a laptop's battery across
+    the bottom and a heat pipe from the CPU to the fan; a phone's battery filling most of its body,
+    with the processor, RAM and storage chips soldered to one small board). Scenes that stand in for
+    real hardware set `simplified: true`, which shows a **"Simplified diagram"** chip on the scene.
+  - **Accuracy:** phone RAM and storage are never removable. The laptop is an *example* with a
+    removable RAM stick and SSD; any card that shows it says many thin laptops have them soldered.
+    Phones are glued shut: phone teardowns start with `heat` then `lift` on the back cover, and a
+    screwed bracket holds the battery connector.
   - Parts under a cover that's still on can't be seen, tapped or announced. Schemas check every part
     id, view and visibility at load.
   - Add a scene by adding its manifest and its drawing; `scenes.test.ts` checks every part is drawn.
   - **Each kind of part has one look in every scene,** so learners can tell them apart and a
-    phone's parts match a laptop's: CPU = square package with a shiny metal lid, pin-1 mark and
-    contact dots; RAM = small board with a row of identical chips and gold contacts along a side;
-    storage = chip with stacked layers; battery = cells or a pouch with a lightning bolt and gold
-    terminal; fan = blades in a housing. Gold details use `--color-scene-contact`. No text on
-    parts: labels would give answers away.
+    phone's parts match a laptop's: CPU = a small shiny die on a square base (no metal lid), with a
+    pin-1 mark and contact dots; RAM = a row of identical chips (a stick with gold contacts in the
+    laptop, one soldered chip of little squares in the phone); storage = chip with stacked layers
+    (on a long, narrow SSD card in the laptop); battery = cells or a pouch with a lightning bolt and
+    gold terminal; fan = blades in a housing; heat pipe = a copper tube to metal fins. The bolt and
+    stacked layers are teaching marks, not real markings. Gold details use `--color-scene-contact`.
+    No text on parts: labels would give answers away.
 - **`hotspot`:** tap mode selects exactly `targets` (tap again to unselect). Label mode places label
   chips on numbered spots (spots don't name the part, or the answer would be given away).
   **Explore mode** (not graded, core only) teaches a scene: each tap highlights a part and shows its
   name and one-line `job`; hollow nodes turn into checked ones as parts are explored, and Continue
   unlocks once every listed part has been tapped. Put one before a scene's parts are first tested.
 - **`teardown`:**
-  - Verbs: `unscrew`, `lift`, `slide-out`, `unplug` (remove) and `insert`, `fasten`, `plug-in`
-    (refit).
+  - Verbs: `unscrew`, `lift`, `slide-out`, `unplug` (remove), `insert`, `fasten`, `plug-in`
+    (refit), and `heat` (prep: "Soften the glue on", for a phone's glued back). A heated part stays
+    in place with a warm dashed outline (`--color-scene-heat`) until it's lifted.
   - Tapping a part does its next action if its `after` steps are done; otherwise it shows that
     action's `nudge` and counts it. Lift and slide actions can also be dragged.
-  - Every card shows a built-in **"This is a simulation"** safety note. Removed parts go to a
-    "Parts out" tray, which is used for refitting.
+  - Every card shows a built-in **"This is a simulation"** safety note. `safety?` (≤240, markdown)
+    adds a line to that note, right above the scene: every phone teardown that heats or pries uses
+    it to say this can damage the battery and start a fire, which is why repairers use special
+    tools and training. Never a how-to. Removed parts go to a "Parts out" tray, which is used for
+    refitting.
   - The schema rejects cycles, refits before removal, and acting on parts already off.
 - **`simulator`:**
   - `model` names a registered pure function in `src/cards/simulator/models/`: `memory`,
-    `cpu-cores`, `thermal`, `task-manager`, `storage` or `battery`. Each has its own params schema,
-    inputs and outputs, and a unit test.
+    `cpu-cores`, `thermal`, `task-manager`, `storage`, `battery` or `password` (time to try every
+    combination of a random password at an illustrative billion guesses a second; outputs `years`
+    and a `strength` list). Each has its own params schema, inputs and outputs, and a unit test.
+  - Slider units are trimmed by the schema; the view adds the space (none before `%` or `°`).
   - **Never eval.** Content only configures models, and goals are declarative conditions.
   - Control and output ids are model input/output names (camelCase allowed). The schema checks they
     exist with the right kind.
@@ -212,6 +245,24 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
 - **`scenario`:** a wrong ending shows its consequence (that's the teaching). After Check → Try
   again, the failed choice is crossed out and the learner picks again at that step. The schema
   requires every step to be reachable, no loops, and at least one success.
+- **`photo`** (static, like an explainer): a real photo that backs up a simplified scene. Rules:
+  - **Wikimedia Commons only,** under **CC0, public domain, CC BY or CC BY-SA** (no NC or ND). The
+    schema only accepts those licences and a `commons.wikimedia.org/wiki/File:` source.
+  - **Saved unmodified** in `public/photos/` (no crops, edits or re-encoding; `next/image` scales
+    them). `width`/`height` must be the file's real size, and `load.test.ts` checks the file
+    exists, is credited and is used.
+  - The card always shows the credit: author, a link to the licence deed, a link to the Commons
+    file page ("via Wikimedia Commons") and "Unmodified", as CC BY and CC BY-SA require. The schema
+    checks `licenceUrl` is the deed of the licence named; `PhotoCardView.test.ts` checks both links.
+    Record `device` (the model shown) when it's known.
+  - **Captions describe, never endorse:** name the device plainly ("A Framework Laptop 13 with its
+    cover off"), with no wording that implies a link to its maker. `/terms` says product names
+    belong to their owners.
+  - A photo must agree with what the lesson teaches (e.g. the phone photo shows a phone with a
+    glued back, not an older screwed one), and never shows a how-to (temperatures, tools).
+  - Check every caption and `alt` against the photo itself. List each photo, with its source,
+    author and licence, in `content/REVIEW.md`.
+  - **Not counted** in the 8–12 cards per lesson, and never in quizzes.
 - **`sort_bins`:** tap an item then a bin, or drag (dnd-kit). Snap sound; wrong items go back to the
   tray after Try again.
 - **Enter key:** single-answer text fields (`numeric_input`, the terminal's answer box) carry
@@ -469,7 +520,7 @@ src/dev/                 dev-only card samples + playground (served at /dev/card
 - **Variables:**
   - `NEXT_PUBLIC_SUPABASE_URL` is the project URL.
   - `NEXT_PUBLIC_SITE_URL` (optional) overrides the production origin (default
-    https://cybernettrainer.com).
+    https://cybernettraining.com).
   - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` is the publishable key (`sb_publishable_…`), called the
     "anon" key in older projects.
   - `SUPABASE_SECRET_KEY` is the **server-only** secret key (`sb_secret_…`). It bypasses RLS. It's
@@ -512,7 +563,7 @@ src/dev/                 dev-only card samples + playground (served at /dev/card
   and so needs the same browser) or `?token_hash=&type=` (`verifyOtp`). Redirects only go to
   same-site paths (`safeNextPath`). New users without a display name go to `/account?welcome=1`.
 - **Redirect URLs** (Supabase → Auth → URL Configuration): the Site URL is
-  `https://cybernettrainer.com`, and `https://cybernettrainer.com/auth/callback`,
+  `https://cybernettraining.com`, and `https://cybernettraining.com/auth/callback`,
   `http://localhost:3000/auth/callback` and `https://cyber-net-training.vercel.app/auth/callback`
   are allowed (see `docs/launch-checklist.md`, which also covers preview deployments). Any other
   origin (a phone on the LAN) must be added there, or sign-in falls back to the Site URL.
@@ -651,10 +702,13 @@ The logo is a shield containing a hub node joined to four nodes. **Nodes and con
 visual language of the whole app:** learning means connecting nodes.
 - **Course path:** lessons are large nodes (72px, the quiz hub 96px) zig-zagging down 45° circuit
   traces. States are shown by shape and icon, never repeated words:
-  - Done: filled cyan with a check.
+  - Every lesson node shows its **lesson icon** (the quiz hub shows the network mark):
+  - Done: filled cyan with the icon, plus a small check badge in the corner.
   - Current: a cyan ring, a pulse and a "Start"/"Continue" bubble.
-  - Available: a cyan outline with the number.
-  - Locked: dim, with a lock glyph.
+  - Available: a cyan outline with the icon.
+  - Locked: dim, with the icon faded and a small lock badge in the corner.
+  - Screen-reader labels stay "Lesson 3, Routers and Hops, locked". The popover and the
+    lesson-complete screen show the icon beside the title.
   Nodes sit on a solid "lip" (`shadow-node`, `shadow-node-lit`). Connections light up once the node
   before is done.
 - **Lesson progress:** `NodeProgress` shows one node per card on a trace. Challenge cards are
@@ -859,7 +913,7 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
 
 ### Domain and SEO
 - **`src/lib/site.ts`**: `siteUrl()` (production origin, `NEXT_PUBLIC_SITE_URL` or
-  https://cybernettrainer.com), `SITE_NAME`, `CONTACT_EMAIL` (hello@cybernettrainer.com).
+  https://cybernettraining.com), `SITE_NAME`, `CONTACT_EMAIL` (hello@cybernettraining.com).
   `metadataBase`, canonical URLs, Open Graph URLs and the sitemap all use it, so previews still point
   search engines at production.
 - **Indexing:** only `VERCEL_ENV=production` is indexable. Previews and local dev get a robots file
@@ -886,8 +940,8 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
 - **Where visitors came from:** the first `utm_source` or `/from/<platform>` path seen in a tab is
   kept in sessionStorage (never a cookie) and attached to that tab's events as `source`.
 - **Tagging video links** (works on every plan, because it's a page path):
-  - `https://cybernettrainer.com/from/tiktok` → the home page
-  - `https://cybernettrainer.com/from/youtube/whats-in-the-box` → that lesson
+  - `https://cybernettraining.com/from/tiktok` → the home page
+  - `https://cybernettraining.com/from/youtube/whats-in-the-box` → that lesson
   - Use one lower-case word per platform (`tiktok`, `youtube`, `instagram`) or per video
     (`tiktok-ram`, up to 30 letters, digits, `-` and `_`). `?utm_source=tiktok` on any URL also
     works for events and for UTM reports on Web Analytics Plus.
@@ -931,7 +985,8 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   (explore a scene before a hotspot or teardown tests its parts), a term, a number, a command, and
   what a safe action is. A card's own explanation doesn't count (it comes after answering), and core
   cards and quizzes can't rely on a challenge card. `load.test.ts` checks the scene part of this
-  automatically; check the rest by reading the lesson in order.
+  automatically (screws, `*-cover` parts and the laptop `panel` explain themselves, so teardowns
+  can use them unexplored); check the rest by reading the lesson in order.
 - **Glossary (tap to define):** `content/glossary.json` is shared by every course: `{ id, term,
   definition }`, one or two plain sentences (≤220). In markdown text (explainer body, prompt, hint,
   nudge, explanation, scenario step text and consequences) mark a term as `[[router]]` or
@@ -957,15 +1012,28 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   that wasn't taught.
 - **Technical accuracy is non-negotiable.** Double-check numbers, and prefer precise-but-simple over
   simplified-but-wrong.
-- **Lesson shape:** 8–12 cards, opening with a hook explainer and ending with a recap explainer,
+- **Lesson shape:** 8–12 cards (photo cards don't count), opening with a hook explainer and ending with a recap explainer,
   at most 3 multiple choice cards, exactly 2 challenge cards. Quizzes have 5–8 core, interactive
   questions. `load.test.ts` enforces all of this for every lesson and quiz. It also checks that
   every simulator card starts unsolved and has a solution, that every drawn part is explored before
   a card tests it, and that every Inside Your Devices
   lesson uses at least 2 hands-on types (hotspot, teardown, simulator, scenario, sort_bins).
-- **Physical safety:** no brands, and never instructions for opening a real device. Any physical
+- **Physical safety:** no brands (in scenes and text; real photos may show a maker's name), and
+  never instructions for opening a real device. Any physical
   action (cleaning a port, a hot or swollen battery) stays gentle and says "ask an adult" or a
   repair shop. List each one under **Safety** in `content/REVIEW.md`.
+- **Online safety content (Stay Safe Online):** teach **defence only**, never how to make a scam
+  or attack anyone. Every scam example is fictional ("Your Bank", "Parcels") and uses only
+  reserved `.example` addresses; `load.test.ts` fails on any other address except the verified
+  help services (`esafety.gov.au`, `scamwatch.gov.au`, `idcare.org`, `cyber.gov.au`,
+  `accce.gov.au`). Verify every
+  help service, number and piece of password/MFA advice against its official source before citing
+  it, and record the date in `content/REVIEW.md`. Calm and empowering, never scary: it's never the
+  learner's fault, and a trusted adult is always an option.
+- **Help is always free:** any lesson about getting help, reporting harm or recovering from an
+  incident (a hack, a scam, abuse) is always in a free module, never behind Pro. Safety and help
+  information must never be behind a paywall. `load.test.ts` checks the modules this covers
+  (currently Stay Safe Online's "When Things Go Wrong"); add new ones to its `alwaysFree` list.
 - **Safe examples only:** IPv4 documentation ranges (`192.0.2.0/24`, `198.51.100.0/24`,
   `203.0.113.0/24`) stand in for public addresses, alongside the private ranges, `2001:db8::/32`
   and `example.com`/`example.org`. Never use a real person's or company's address. `load.test.ts`

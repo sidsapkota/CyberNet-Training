@@ -1,0 +1,248 @@
+{
+  "id": "apps-and-wi-fi",
+  "kind": "lesson",
+  "title": "Apps and Public Wi-Fi",
+  "order": 2,
+  "icon": "wifi",
+  "cards": [
+    {
+      "id": "torch-app",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Why does a torch app want your contacts?",
+      "body": "When you install an app, it may ask to use parts of your phone: the **camera**, **microphone**, **location**, **contacts** or **photos**. Each one is an [[app permission]].\n\nA torch app needs the light. It doesn't need your contacts. Knowing what to allow is a quick way to protect your privacy."
+    },
+    {
+      "id": "allow-or-not",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Only what it needs",
+      "body": "- Allow what the app needs for **its job**: a map needs location; a video call needs the camera and microphone.\n- Pick **\"Only while using the app\"** when it's offered, instead of \"Always\".\n- You can change your mind any time in **Settings**.\n- Many phones show a small **dot or icon** when the camera or microphone is on. If it appears and you're not using them, check which app it is.\n\nDownload apps only from the **official app store** on your device, and check who made them."
+    },
+    {
+      "id": "needs-it",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Does the app **need** that permission for its job?",
+      "bins": [
+        {
+          "id": "needs",
+          "label": "Needs it"
+        },
+        {
+          "id": "doesnt",
+          "label": "Doesn't need it"
+        }
+      ],
+      "items": [
+        {
+          "id": "maps-location",
+          "label": "Maps app → location",
+          "bin": "needs"
+        },
+        {
+          "id": "call-mic",
+          "label": "Video call app → microphone",
+          "bin": "needs"
+        },
+        {
+          "id": "editor-photos",
+          "label": "Photo editor → photos",
+          "bin": "needs"
+        },
+        {
+          "id": "torch-contacts",
+          "label": "Torch app → contacts",
+          "bin": "doesnt"
+        },
+        {
+          "id": "calc-location",
+          "label": "Calculator → location",
+          "bin": "doesnt"
+        },
+        {
+          "id": "puzzle-mic",
+          "label": "Puzzle game → microphone",
+          "bin": "doesnt"
+        }
+      ],
+      "explanation": "Allow what fits the app's job: location for maps, the microphone for calls, photos for a photo editor. A torch, a calculator or a puzzle game doesn't need your contacts, location or microphone.",
+      "hint": "For each one, ask: could the app do its main job without it?",
+      "nudge": "Think about what each app is for. A permission that has nothing to do with that job isn't needed."
+    },
+    {
+      "id": "new-game-asks",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "You install a new drawing game.",
+      "start": "start",
+      "steps": [
+        {
+          "id": "start",
+          "text": "It asks: **\"Allow access to your contacts?\"** then **\"Allow location: Always?\"** What do you do?",
+          "choices": [
+            {
+              "id": "allow-all",
+              "text": "Allow both, so the game works",
+              "consequence": "A drawing game doesn't need your contacts or where you are, all the time.",
+              "outcome": "fail"
+            },
+            {
+              "id": "deny",
+              "text": "Say no to both, and see if the game still works",
+              "consequence": "It does. You can always change it later in Settings if a feature really needs it.",
+              "outcome": "success"
+            }
+          ]
+        }
+      ],
+      "explanation": "Say no to permissions an app doesn't need. If an app **won't work at all** without permissions that have nothing to do with its job, choose a different app.",
+      "hint": "Would a drawing game need your contacts, or your location all the time?"
+    },
+    {
+      "id": "public-wi-fi",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Public Wi-Fi",
+      "body": "**Public Wi-Fi** at a café, library or airport is shared with strangers. Most websites use [[HTTPS|https]], so what you send to them is **encrypted** even on shared Wi-Fi.\n\nThe bigger risk is a **fake hotspot**: anyone can set up a network with a café's name. So:\n\n- **Check the network's name** with staff before joining.\n- For banking or anything important, use **mobile data** instead.\n- Turn off **auto-join** for public networks."
+    },
+    {
+      "id": "riskiest-wi-fi",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "You're at a café. Which is the **riskiest** thing to do?",
+      "options": [
+        {
+          "id": "unknown-network",
+          "text": "Join \"Free Cafe WiFi 2\" when staff don't know it"
+        },
+        {
+          "id": "news",
+          "text": "Read the news on the café's own network",
+          "nudge": "Reading the news on the café's real network is low-risk. Look for the choice that could hand your details to a stranger."
+        },
+        {
+          "id": "mobile",
+          "text": "Check your bank on mobile data",
+          "nudge": "Mobile data is the safer choice for banking. Look for the choice with a network nobody can vouch for."
+        }
+      ],
+      "correctOptionId": "unknown-network",
+      "explanation": "A network the staff don't know about might be a **fake hotspot** set up by a stranger. The café's real network is fine for everyday browsing, and mobile data is best for banking.",
+      "hint": "The lesson said the biggest risk isn't the café's Wi-Fi itself. What is it?"
+    },
+    {
+      "id": "wi-fi-ok",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "On a café's public Wi-Fi: fine, or better on mobile data?",
+      "bins": [
+        {
+          "id": "fine",
+          "label": "Fine on public Wi-Fi"
+        },
+        {
+          "id": "mobile",
+          "label": "Better on mobile data"
+        }
+      ],
+      "items": [
+        {
+          "id": "video",
+          "label": "Watching a video",
+          "bin": "fine"
+        },
+        {
+          "id": "news",
+          "label": "Reading the news",
+          "bin": "fine"
+        },
+        {
+          "id": "recipe",
+          "label": "Looking up a recipe",
+          "bin": "fine"
+        },
+        {
+          "id": "bank",
+          "label": "Checking your bank account",
+          "bin": "mobile"
+        },
+        {
+          "id": "new-password",
+          "label": "Changing an important password",
+          "bin": "mobile"
+        }
+      ],
+      "explanation": "Everyday browsing is fine on public Wi-Fi. For banking or important accounts, **mobile data** is safer, because you can't always be sure a network is the real one.",
+      "hint": "Which activities involve your money or your most important accounts?",
+      "nudge": "Save banking and important account changes for mobile data. Videos, news and recipes are fine."
+    },
+    {
+      "id": "only-while-using",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "prompt": "What does **\"Only while using the app\"** mean for a location permission?",
+      "options": [
+        {
+          "id": "in-use",
+          "text": "The app can see your location only while you're using it"
+        },
+        {
+          "id": "once",
+          "text": "The app sees your location just once, ever",
+          "nudge": "That's a different option some phones offer. This one is about when the app is open."
+        },
+        {
+          "id": "always",
+          "text": "The app sees your location all the time",
+          "nudge": "That's what \"Always\" means. This choice is more limited."
+        }
+      ],
+      "correctOptionId": "in-use",
+      "explanation": "\"Only while using the app\" means the app gets your location while it's open and in use, not in the background. It's a good middle choice.",
+      "hint": "Read the words closely: while using the app."
+    },
+    {
+      "id": "mic-dot",
+      "type": "scenario",
+      "difficulty": "challenge",
+      "prompt": "You're reading on your phone, and a **microphone dot** appears at the top of the screen.",
+      "start": "start",
+      "steps": [
+        {
+          "id": "start",
+          "text": "You're not on a call or recording anything. What do you do?",
+          "choices": [
+            {
+              "id": "check",
+              "text": "Check which app is using the microphone, and switch its permission off",
+              "consequence": "Your phone shows which app it is. You turn its microphone permission off in Settings.",
+              "outcome": "success"
+            },
+            {
+              "id": "ignore",
+              "text": "Ignore it. It's probably nothing",
+              "consequence": "The dot means an app is listening right now. It's worth a quick check.",
+              "outcome": "fail"
+            },
+            {
+              "id": "tape",
+              "text": "Put tape over the screen dot",
+              "consequence": "The dot is only a signal. Covering it doesn't stop the app listening.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "explanation": "The dot shows an app is using the **microphone**. Find out which app, and switch that permission off if it doesn't need it.",
+      "hint": "The lesson said what the dot means, and where you can change permissions."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- Give apps only the **permissions they need** for their job. Choose **\"Only while using the app\"**.\n- A **microphone or camera dot** you didn't expect? Check which app it is.\n- On **public Wi-Fi**, check the network's name. Use **mobile data** for banking.\n\nNext module: what to do when something goes wrong."
+    }
+  ]
+}

@@ -3,6 +3,7 @@
   "kind": "lesson",
   "title": "Bytes, File Sizes and Hex",
   "order": 2,
+  "icon": "file-digit",
   "cards": [
     {
       "id": "three-mb-of-what",

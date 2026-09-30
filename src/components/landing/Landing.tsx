@@ -5,6 +5,8 @@ import { ChevronDownIcon, HandsOnIcon, HintIcon, LessonTimeIcon, SafeIcon } from
 import type { CourseOutline } from "@/lib/content/schema";
 import { LandingCta } from "./LandingCta";
 
+const COUNT_WORDS: Record<number, string> = { 2: "Two", 3: "Three", 4: "Four", 5: "Five" };
+
 const FAQ: { q: string; a: string }[] = [
   { q: "Is it free?", a: "Yes, lessons are free right now, and you can play without an account." },
   {
@@ -52,7 +54,7 @@ export function Landing({
         <Mascot expression="happy" size={140} idle label="The CyberNet mascot, waving hello" />
         <h1 className="mt-4 text-headline font-semibold text-balance sm:text-display">How tech really works</h1>
         <p className="mt-3 max-w-md text-lead text-balance text-ink-muted">
-          Short, hands-on lessons on devices and the internet.
+          Short, hands-on lessons on devices, the internet and staying safe online.
         </p>
         <div className="mt-8 flex w-full max-w-sm flex-col items-center gap-2 sm:max-w-none">
           <LandingCta lessonId={firstLessonId} />
@@ -63,9 +65,9 @@ export function Landing({
       {/* Courses */}
       <section aria-labelledby="courses-heading" className="py-10">
         <h2 id="courses-heading" className="text-title font-semibold">
-          Two courses
+          {COUNT_WORDS[courses.length] ?? courses.length} courses
         </h2>
-        <ul className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+        <ul className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {courses.map((course) => (
             <li key={course.id}>
               <CourseCard course={course} />

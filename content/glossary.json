@@ -3,6 +3,16 @@
     { "id": "antivirus", "term": "antivirus", "definition": "A security app that looks for harmful programs, like viruses, and stops them." },
     { "id": "app", "term": "app", "definition": "A program you use for one job, like a game, a browser or a music player." },
     {
+      "id": "app-permission",
+      "term": "app permission",
+      "definition": "Your OK for an app to use something on your device, like the camera, microphone, location or contacts. You can change it later in Settings."
+    },
+    {
+      "id": "authenticator-app",
+      "term": "authenticator app",
+      "definition": "An app that shows a fresh sign-in code every 30 seconds or so. You type the code after your password, as a second proof it is really you."
+    },
+    {
       "id": "authoritative-server",
       "term": "authoritative server",
       "definition": "The DNS server that's in charge of a domain name and holds its records, so it has the real answer."
@@ -12,11 +22,7 @@
       "term": "background process",
       "definition": "A program running without a window, doing a job for you, like checking for updates or syncing files."
     },
-    {
-      "id": "backup",
-      "term": "backed up",
-      "definition": "Copied somewhere else (like the cloud or another drive), so it isn't lost if the original is deleted or broken."
-    },
+    { "id": "backup", "term": "backed up", "definition": "Copied somewhere else (like the cloud or another drive), so it isn't lost if the original is deleted or broken." },
     { "id": "binary", "term": "binary", "definition": "Counting with only two digits, 0 and 1. Computers store everything this way." },
     { "id": "bit", "term": "bit", "definition": "The smallest piece of data: a single 0 or 1, like a switch that's off or on." },
     { "id": "browser", "term": "browser", "definition": "The app you use to visit websites." },
@@ -41,19 +47,30 @@
     { "id": "core", "term": "core", "definition": "One complete worker inside a CPU. A CPU with 4 cores can work on 4 things at once." },
     { "id": "cpu", "term": "CPU", "definition": "Central processing unit: the chip that follows a program's instructions. The device's brain." },
     {
+      "id": "cyberbullying",
+      "term": "cyberbullying",
+      "definition": "Using the internet or phones to be mean to someone so they feel bad or upset: hurtful messages, posts, threats or leaving them out on purpose."
+    },
+    { "id": "data-breach", "term": "data breach", "definition": "When information a company keeps, such as email addresses and passwords, is stolen or leaked." },
+    {
       "id": "default-gateway",
       "term": "default gateway",
       "definition": "The router a device sends data to when it's going outside its own network. At home, it's your home router."
     },
+    {
+      "id": "digital-footprint",
+      "term": "digital footprint",
+      "definition": "Everything about you that ends up online: what you post, what others post about you, and what apps and websites record."
+    },
     { "id": "dns", "term": "DNS", "definition": "Domain Name System: the internet's phone book. It turns names like example.com into IP addresses." },
-    { "id": "domain-name", "term": "domain name", "definition": "A website's name, like example.com. Easier for people to remember than an IP address." },
+    {
+      "id": "domain-name",
+      "term": "domain name",
+      "definition": "A website's name, like example.com. People use it instead of the number computers use to find the site (its IP address)."
+    },
     { "id": "encryption", "term": "encryption", "definition": "Scrambling data with a secret key so that only the right people or devices can unscramble and read it." },
     { "id": "export", "term": "export", "definition": "To save a finished piece of work, like a video, as a file that other apps and people can use." },
-    {
-      "id": "extension",
-      "term": "file extension",
-      "definition": "The end of a file's name after the last dot, like .jpg. It tells the computer what kind of file it is."
-    },
+    { "id": "extension", "term": "file extension", "definition": "The end of a file's name after the last dot, like .jpg. It tells the computer what kind of file it is." },
     { "id": "file", "term": "file", "definition": "One named piece of saved data, like a photo, a song or an essay." },
     { "id": "folder", "term": "folder", "definition": "A container for files, and for other folders, like a box inside a box." },
     { "id": "ghz", "term": "GHz", "definition": "Gigahertz: a billion ticks per second. A CPU's clock speed is measured in GHz." },
@@ -67,6 +84,7 @@
     { "id": "html", "term": "HTML", "definition": "The code that describes a web page: its headings, text, links and pictures." },
     { "id": "http", "term": "HTTP", "definition": "HyperText Transfer Protocol: the rules browsers and web servers use to ask for and send web pages." },
     { "id": "https", "term": "HTTPS", "definition": "HTTP sent inside an encrypted connection, so people in between can't read or change it." },
+    { "id": "identity-theft", "term": "identity theft", "definition": "When someone uses your personal details, like your name, birthday or address, to pretend to be you." },
     { "id": "imap", "term": "IMAP", "definition": "The protocol email apps usually use to read mail that's kept on your mail provider's server." },
     { "id": "ip-address", "term": "IP address", "definition": "The number that works as a device's address on a network, so data can find it." },
     { "id": "ipv4", "term": "IPv4", "definition": "The original kind of IP address: 32 bits, written as four numbers from 0 to 255, like 192.168.1.20." },
@@ -77,6 +95,11 @@
       "id": "lithium-ion",
       "term": "lithium-ion battery",
       "definition": "The kind of rechargeable battery in phones and laptops. It holds a lot of energy for its size, so it must be treated with care."
+    },
+    {
+      "id": "lookalike-domain",
+      "term": "lookalike domain",
+      "definition": "A web address made to look like a real one: a letter swapped, an extra word added, or a different ending."
     },
     {
       "id": "low-power-mode",
@@ -102,11 +125,31 @@
     },
     { "id": "packet", "term": "packet", "definition": "A small piece of data sent across a network, with addresses added so it can find its way." },
     {
+      "id": "passkey",
+      "term": "passkey",
+      "definition": "A way to sign in without typing a password: your device proves it is you with your fingerprint, face or PIN. A fake website can't steal it."
+    },
+    {
+      "id": "passphrase",
+      "term": "passphrase",
+      "definition": "A password made of four or more random words. It is long, so it is hard to guess, but easy for you to remember."
+    },
+    {
+      "id": "password-manager",
+      "term": "password manager",
+      "definition": "An app that creates, saves and fills in a different strong password for each account. You only remember one main password."
+    },
+    {
       "id": "path",
       "term": "path",
       "definition": "The route through folders to a file, like Documents > School > essay.docx. Also the part of a web address after the name."
     },
     { "id": "payload", "term": "payload", "definition": "The actual data a packet carries, apart from the addresses and other added information." },
+    {
+      "id": "phishing",
+      "term": "phishing",
+      "definition": "A scam message, like an email, text or call, that pretends to be someone you trust to trick you into sharing details or clicking a link."
+    },
     { "id": "port", "term": "port", "definition": "A number that picks which program on a computer a packet is for, like an apartment number in a building." },
     {
       "id": "private-address",
@@ -116,6 +159,7 @@
     { "id": "process", "term": "process", "definition": "A program that's running right now. The task manager lists them all." },
     { "id": "protocol", "term": "protocol", "definition": "A set of rules that devices agree to follow so they can understand each other." },
     { "id": "public-address", "term": "public address", "definition": "An IP address that's unique across the whole internet, so anyone on the internet can reach it." },
+    { "id": "public-wi-fi", "term": "public Wi-Fi", "definition": "Wi-Fi that anyone nearby can join, like at a café, library or airport." },
     { "id": "ram", "term": "RAM", "definition": "Random-access memory: the fast workspace for what's in use right now. It's cleared when the power goes off." },
     { "id": "resolver", "term": "resolver", "definition": "The DNS server that looks up a name for your device, asking other DNS servers if it doesn't already know." },
     { "id": "root-server", "term": "root server", "definition": "The DNS servers at the top of the system. They know who handles each ending, like .com or .org." },
@@ -125,7 +169,13 @@
       "definition": "A device that passes data between networks, choosing the next step each time. Your home router links your home to the internet."
     },
     { "id": "routing-table", "term": "routing table", "definition": "A router's list of where to send packets next, depending on their destination address." },
+    { "id": "scam", "term": "scam", "definition": "A trick to get your money, personal details or passwords." },
     { "id": "security-hole", "term": "security hole", "definition": "A weak spot in software that an attacker could use to get in. Updates fix them." },
+    {
+      "id": "security-question",
+      "term": "security question",
+      "definition": "An old way to check it's you, like \"What was your first pet's name?\". Weak, because the answers can often be guessed or found online."
+    },
     { "id": "sequence-number", "term": "sequence number", "definition": "A number that marks where a piece of data belongs, so the pieces can be put back in order." },
     { "id": "server", "term": "server", "definition": "A computer that provides something, like a website, email or files, to other devices over a network." },
     {
@@ -146,11 +196,7 @@
     },
     { "id": "switch", "term": "switch", "definition": "A device that joins devices inside one network and passes data between them." },
     { "id": "sync", "term": "sync", "definition": "To keep two copies matched up, so a change on one (like your phone) also appears on the other (like the cloud)." },
-    {
-      "id": "system-process",
-      "term": "system process",
-      "definition": "A process that's part of the operating system itself. Ending one can crash or restart the device."
-    },
+    { "id": "system-process", "term": "system process", "definition": "A process that's part of the operating system itself. Ending one can crash or restart the device." },
     { "id": "task-manager", "term": "task manager", "definition": "A tool in the operating system that lists every running process and lets you end one." },
     { "id": "tcp", "term": "TCP", "definition": "A protocol that makes sure data arrives complete and in order, resending anything that gets lost." },
     { "id": "terminal", "term": "terminal", "definition": "A window where you control a computer by typing commands instead of tapping or clicking." },
@@ -158,6 +204,11 @@
     { "id": "tld", "term": "top-level domain (TLD)", "definition": "The last part of a domain name, like com in example.com, or uk in example.co.uk." },
     { "id": "tls", "term": "TLS", "definition": "Transport Layer Security: the protocol that encrypts HTTPS connections and checks the server's certificate." },
     { "id": "traceroute", "term": "traceroute", "definition": "A tool that lists the routers (hops) your packets pass through on the way to a destination." },
+    {
+      "id": "two-step-sign-in",
+      "term": "two-step sign-in",
+      "definition": "Signing in with your password plus a second proof, like a code from an app or your fingerprint. Also called two-factor or multi-factor authentication (MFA)."
+    },
     { "id": "udp", "term": "UDP", "definition": "A quick protocol that sends data without checking it arrived. Good for live video and games, where speed matters most." },
     { "id": "update", "term": "update", "definition": "A new version of software that fixes bugs and security holes, and sometimes adds features." },
     { "id": "url", "term": "URL", "definition": "A full web address, like https://www.example.com/news, saying which protocol, which site and which page." },

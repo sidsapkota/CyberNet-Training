@@ -251,6 +251,7 @@ export function LessonRun({
           freezeEarned={(daily?.streak.freezes ?? 0) > start.freezes}
           pathHref={`/course/${course.id}?completed=${lesson.id}`}
           title={lesson.title}
+          icon={lesson.icon}
           xpEarned={result.xpEarned}
           alreadyCompleted={result.alreadyCompleted}
           challengesCompleted={result.challengesCompleted}

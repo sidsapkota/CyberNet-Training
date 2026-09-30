@@ -3,6 +3,7 @@
   "kind": "lesson",
   "title": "The Lookup Journey",
   "order": 2,
+  "icon": "search",
   "cards": [
     {
       "id": "milliseconds",

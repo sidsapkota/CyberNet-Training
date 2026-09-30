@@ -3,6 +3,7 @@
   "kind": "lesson",
   "title": "DNS Records and Tools",
   "order": 3,
+  "icon": "square-terminal",
   "cards": [
     {
       "id": "many-answers",
