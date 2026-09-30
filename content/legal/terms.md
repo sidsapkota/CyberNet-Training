@@ -17,7 +17,7 @@ Points to check:
    consistent if users arrive from those places.
 5. If premium or payments are added later, these terms will need a full rewrite (payments,
    refunds, auto-renewal, cancellation).
-6. Contact: confirm hello@cybernettrainer.com forwards to a monitored inbox.
+6. Contact: confirm hello@cybernettraining.com forwards to a monitored inbox.
 -->
 
 # Terms of use
@@ -66,4 +66,4 @@ These terms are governed by the laws of Australia.
 
 ## Contact
 
-Email [hello@cybernettrainer.com](mailto:hello@cybernettrainer.com). See also our [Privacy policy](/privacy).
+Email [hello@cybernettraining.com](mailto:hello@cybernettraining.com). See also our [Privacy policy](/privacy).

@@ -5,7 +5,7 @@ import { cleanSource } from "@/lib/analytics";
 import { getCourses, getLesson } from "@/lib/content/server";
 
 /**
- * Tagged lesson links for videos: cybernettrainer.com/from/tiktok/<lesson-id> plays that lesson
+ * Tagged lesson links for videos: cybernettraining.com/from/tiktok/<lesson-id> plays that lesson
  * straight away (it's the same player as /lesson/<id>), and the page view records the platform.
  */
 export async function generateMetadata({ params }: PageProps<"/from/[platform]/[lesson]">): Promise<Metadata> {

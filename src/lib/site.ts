@@ -1,14 +1,14 @@
 /**
  * Site-wide facts: the production address, name and contact. The production domain is
- * cybernettrainer.com; `NEXT_PUBLIC_SITE_URL` can override it (e.g. for a staging domain).
+ * cybernettraining.com; `NEXT_PUBLIC_SITE_URL` can override it (e.g. for a staging domain).
  * Canonical URLs, Open Graph URLs and the sitemap all use `siteUrl()`, so preview deployments
  * still point search engines at production.
  */
 
 export const SITE_NAME = "CyberNet Training";
 export const SITE_TAGLINE = "Short, hands-on lessons on how devices and the internet really work, and how to stay safe online.";
-export const CONTACT_EMAIL = "hello@cybernettrainer.com";
-export const DEFAULT_SITE_URL = "https://cybernettrainer.com";
+export const CONTACT_EMAIL = "hello@cybernettraining.com";
+export const DEFAULT_SITE_URL = "https://cybernettraining.com";
 
 /** The production origin. Only an absolute https URL is accepted; anything else falls back. */
 export function siteUrl(env: string | undefined = process.env.NEXT_PUBLIC_SITE_URL): URL {

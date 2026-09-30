@@ -4,7 +4,7 @@ import { HomePage } from "@/components/landing/HomePage";
 import { cleanSource } from "@/lib/analytics";
 
 /**
- * Tagged links for videos: cybernettrainer.com/from/tiktok shows the home page, and Vercel's page
+ * Tagged links for videos: cybernettraining.com/from/tiktok shows the home page, and Vercel's page
  * views then say which platform sent people (free on every plan). The source is remembered for
  * this tab's custom events too. Never indexed: the canonical page is `/`.
  */

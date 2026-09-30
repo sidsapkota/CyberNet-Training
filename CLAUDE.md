@@ -9,7 +9,7 @@ Audience: everyone from about **age 12 to adults**. See [Content style guide](#c
 Current state: guests learn with progress in `localStorage`; learners who sign in (Google or email
 magic link) get progress synced to Supabase. Both sit behind the same `ProgressStore` interface. No
 payments or premium gating yet. See [Accounts and sync](#accounts-and-sync).
-Production is **https://cybernettrainer.com** (`src/lib/site.ts`); see [Launch](#launch-domain-seo-analytics-legal-feedback)
+Production is **https://cybernettraining.com** (`src/lib/site.ts`); see [Launch](#launch-domain-seo-analytics-legal-feedback)
 and `docs/launch-checklist.md` for the dashboards (Vercel, Supabase, Google, Resend, ImprovMX).
 Code is on GitHub: `sidsapkota/CyberNet-Training`, branch `main`.
 
@@ -520,7 +520,7 @@ src/dev/                 dev-only card samples + playground (served at /dev/card
 - **Variables:**
   - `NEXT_PUBLIC_SUPABASE_URL` is the project URL.
   - `NEXT_PUBLIC_SITE_URL` (optional) overrides the production origin (default
-    https://cybernettrainer.com).
+    https://cybernettraining.com).
   - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` is the publishable key (`sb_publishable_…`), called the
     "anon" key in older projects.
   - `SUPABASE_SECRET_KEY` is the **server-only** secret key (`sb_secret_…`). It bypasses RLS. It's
@@ -563,7 +563,7 @@ src/dev/                 dev-only card samples + playground (served at /dev/card
   and so needs the same browser) or `?token_hash=&type=` (`verifyOtp`). Redirects only go to
   same-site paths (`safeNextPath`). New users without a display name go to `/account?welcome=1`.
 - **Redirect URLs** (Supabase → Auth → URL Configuration): the Site URL is
-  `https://cybernettrainer.com`, and `https://cybernettrainer.com/auth/callback`,
+  `https://cybernettraining.com`, and `https://cybernettraining.com/auth/callback`,
   `http://localhost:3000/auth/callback` and `https://cyber-net-training.vercel.app/auth/callback`
   are allowed (see `docs/launch-checklist.md`, which also covers preview deployments). Any other
   origin (a phone on the LAN) must be added there, or sign-in falls back to the Site URL.
@@ -913,7 +913,7 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
 
 ### Domain and SEO
 - **`src/lib/site.ts`**: `siteUrl()` (production origin, `NEXT_PUBLIC_SITE_URL` or
-  https://cybernettrainer.com), `SITE_NAME`, `CONTACT_EMAIL` (hello@cybernettrainer.com).
+  https://cybernettraining.com), `SITE_NAME`, `CONTACT_EMAIL` (hello@cybernettraining.com).
   `metadataBase`, canonical URLs, Open Graph URLs and the sitemap all use it, so previews still point
   search engines at production.
 - **Indexing:** only `VERCEL_ENV=production` is indexable. Previews and local dev get a robots file
@@ -940,8 +940,8 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
 - **Where visitors came from:** the first `utm_source` or `/from/<platform>` path seen in a tab is
   kept in sessionStorage (never a cookie) and attached to that tab's events as `source`.
 - **Tagging video links** (works on every plan, because it's a page path):
-  - `https://cybernettrainer.com/from/tiktok` → the home page
-  - `https://cybernettrainer.com/from/youtube/whats-in-the-box` → that lesson
+  - `https://cybernettraining.com/from/tiktok` → the home page
+  - `https://cybernettraining.com/from/youtube/whats-in-the-box` → that lesson
   - Use one lower-case word per platform (`tiktok`, `youtube`, `instagram`) or per video
     (`tiktok-ram`, up to 30 letters, digits, `-` and `_`). `?utm_source=tiktok` on any URL also
     works for events and for UTM reports on Web Analytics Plus.

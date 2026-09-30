@@ -23,7 +23,7 @@ Points to check:
    and the rights to access, correct, delete and object.
 4. Retention periods: confirm how long feedback and analytics are kept, and how long provider
    backups keep deleted data.
-5. Contact: confirm hello@cybernettrainer.com forwards to a monitored inbox.
+5. Contact: confirm hello@cybernettraining.com forwards to a monitored inbox.
 6. Keep this in step with the Google OAuth consent screen and any app store listing.
 -->
 
@@ -114,6 +114,6 @@ If we change this policy, we'll update it here and change the date at the top.
 
 ## Contact
 
-Email [hello@cybernettrainer.com](mailto:hello@cybernettrainer.com).
+Email [hello@cybernettraining.com](mailto:hello@cybernettraining.com).
 
 This policy is written under Australian law, including the Privacy Act 1988 (Cth).
