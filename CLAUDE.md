@@ -6,8 +6,10 @@ lessons made of interactive **cards** and get instant, satisfying feedback.
 
 Audience: everyone from about **age 12 to adults**. See [Content style guide](#content-style-guide).
 
-Current state: v1, local only. There is **no auth, database or payments yet**. Progress lives in
-`localStorage` behind the `ProgressStore` interface, so a Supabase implementation can replace it later.
+Current state: v1. There is **no auth, database or payments yet**. Progress lives in `localStorage`
+behind the `ProgressStore` interface, so a Supabase implementation can replace it later. Supabase
+clients and config are prepared but unused (see [Environment and Supabase](#environment-and-supabase)).
+Code is on GitHub: `sidsapkota/CyberNet-Training`, branch `main`.
 
 ## Commands
 
@@ -19,6 +21,7 @@ npm test                  # vitest run
 npm run typecheck         # next typegen && tsc --noEmit
 npm run validate-content  # validate every JSON file under /content
 npm run brand:assets      # regenerate logo SVGs + favicon from src/components/brand/geometry.ts
+npm run check:supabase    # verify the Supabase URL + publishable key in .env.local (health check)
 ```
 
 All of `build`, `lint`, `test` and `typecheck` must pass with zero errors and warnings.
@@ -33,6 +36,7 @@ All of `build`, `lint`, `test` and `typecheck` must pass with zero errors and wa
 - `react-markdown` for card text (raw HTML is skipped)
 - `lucide-react` icons, always via the wrappers in `src/components/ui/icons.tsx`
 - IBM Plex Sans + IBM Plex Mono via `next/font/google` (self-hosted at build time)
+- `@supabase/supabase-js` + `@supabase/ssr` (clients prepared, not used yet); Supabase CLI via `npx supabase`
 - Vitest for unit tests
 - Version pins: TypeScript stays on **6.0.x** (typescript-eslint doesn't support 7 yet) and ESLint on
   **9.x** (eslint-plugin-react doesn't support 10 yet).
@@ -179,6 +183,8 @@ src/components/ui/       Button, Markdown, icons (lucide wrappers), CountUp, The
 src/lib/content/         schemas, fs loader (load.ts), server accessors (server.ts)
 src/lib/progress/        ProgressStore, localStorage impl, provider, xp, derived state
 src/lib/keyboard.ts      global keyboard shortcut helpers
+src/lib/supabase/        env validation, typed browser/server clients, generated DB types
+supabase/                Supabase CLI project (config.toml; migrations go in supabase/migrations/)
 src/lib/network/         pure layout maths for the motif (quiz ring/grid, map lanes)
 src/test/fixtures.ts     test data builders
 ```
@@ -199,6 +205,36 @@ src/test/fixtures.ts     test data builders
   focus rings, keyboard paths for everything including drag (Space, arrows, Space). **Right/wrong
   is never colour alone:** always a check or cross icon *and* text (`CardStatusNote`, footer
   heading, review badges, quiz network glyphs).
+
+## Environment and Supabase
+
+- **Env files:**
+  - `.env.example` is committed and is the template: variable names and comments only, **never
+    real values**.
+  - Real values go in `.env.local`, which is git-ignored by `.env*` in `.gitignore`. Check with
+    `git check-ignore .env.local`.
+  - Restart `npm run dev` after editing env files.
+- **Variables:**
+  - `NEXT_PUBLIC_SUPABASE_URL` is the project URL.
+  - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` is the publishable key (`sb_publishable_…`), called the
+    "anon" key in older projects.
+  - **Never put a secret or service_role key in a `NEXT_PUBLIC_` variable.** Those values are
+    bundled into browser JavaScript. `parseSupabaseEnv` rejects secret keys. Future server-only
+    secrets get unprefixed names and must only be read in server code.
+- **Clients** (`src/lib/supabase/`):
+  - `getSupabaseBrowserClient()` (`client.ts`) is for Client Components.
+  - `createSupabaseServerClient()` (`server.ts`, `server-only`, cookie-based via `@supabase/ssr`)
+    is for Server Components, Server Actions and Route Handlers; create one per request.
+  - Both read env through `getSupabaseEnv()` and throw `SupabaseEnvError` with setup
+    instructions if values are missing.
+  - **Nothing calls them yet,** so the app builds and runs with empty env values. Keep it that way
+    for anything that isn't Supabase-specific.
+- **Types:** `database.types.ts` is a placeholder. After tables exist, regenerate it with
+  `npx supabase gen types typescript --linked > src/lib/supabase/database.types.ts`.
+- **CLI:** use `npx supabase …`. Migrations go in `supabase/migrations/` and are created with
+  `npx supabase migration new <name>`. No tables exist yet.
+- **Progress:** when adding Supabase-backed progress, implement the existing `ProgressStore`
+  interface rather than changing components.
 
 ## Brand
 
