@@ -1,0 +1,125 @@
+{
+  "id": "what-is-an-ip-address",
+  "kind": "lesson",
+  "title": "What Is an IP Address?",
+  "order": 1,
+  "isFree": true,
+  "cards": [
+    {
+      "id": "finding-one-device",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "One device out of billions",
+      "body": "You send a message to a friend. There are billions of devices on the internet. How does your message find **their** phone?\n\nThink about posting a letter. It only arrives because the envelope has an address that points to exactly one home. The internet works the same way: every device on a network gets a number that works as its address, called an **IP address**.\n\nIP stands for **Internet Protocol**. A **protocol** is a set of rules that devices agree to follow so they can understand each other. The Internet Protocol is the set of rules for addressing data and getting it to the right place."
+    },
+    {
+      "id": "ip-purpose",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "What is an IP address for?",
+      "options": [
+        { "id": "delivery", "text": "Telling the network which device data should be delivered to" },
+        { "id": "website-name", "text": "Naming a website, like example.com" },
+        { "id": "password", "text": "Proving who you are, like a password" },
+        { "id": "speed", "text": "Setting how fast your internet connection is" }
+      ],
+      "correctOptionId": "delivery",
+      "explanation": "An IP address is like the address on an envelope: it says **where data should go**. A name like `example.com` is easier for people to remember, but it isn't an IP address. Computers look up the IP address that belongs to a name, which you'll learn about in a later module. An address doesn't prove who you are, and it doesn't set your speed."
+    },
+    {
+      "id": "four-octets",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Four octets, 32 bits",
+      "body": "The most common kind of IP address is **IPv4**, which is version 4 of the Internet Protocol. You met one in the last module: four numbers separated by dots. Here's another: `192.0.2.44`.\n\nEach of those numbers is an **octet**: exactly 8 bits, so it can only be 0 to 255. Four octets of 8 bits make **32 bits** altogether. Underneath, `192.0.2.44` is really this:\n\n`11000000.00000000.00000010.00101100`\n\nThe dots and decimal numbers are just there to make it easier for people to read."
+    },
+    {
+      "id": "make-192",
+      "type": "binary_toggle",
+      "difficulty": "core",
+      "prompt": "The first octet of `192.0.2.44` is **192**. Build it in binary.",
+      "target": 192,
+      "explanation": "**128** fits in 192, leaving 64. Then **64** fits, leaving 0. So 192 = 128 + 64, which is `11000000`."
+    },
+    {
+      "id": "octets-in-binary",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each octet to its binary pattern.",
+      "pairs": [
+        { "id": "o255", "left": "`255`", "right": "`11111111`" },
+        { "id": "o128", "left": "`128`", "right": "`10000000`" },
+        { "id": "o10", "left": "`10`", "right": "`00001010`" },
+        { "id": "o1", "left": "`1`", "right": "`00000001`" },
+        { "id": "o0", "left": "`0`", "right": "`00000000`" }
+      ],
+      "explanation": "- `255` has every bit on: 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1.\n- `128` has only the biggest bit on.\n- `10` is 8 + 2, so the 8 and 2 bits are on.\n- `1` has only the smallest bit on.\n- `0` has every bit off."
+    },
+    {
+      "id": "ipv4-bits",
+      "type": "numeric_input",
+      "difficulty": "core",
+      "prompt": "How many bits are in a whole IPv4 address?",
+      "base": "decimal",
+      "answer": 32,
+      "unit": "bits",
+      "explanation": "An IPv4 address has 4 octets, and each octet is 8 bits, so it's 4 × 8 = **32 bits**. If you typed 8, that's just one octet. If you typed 4, that's the number of octets."
+    },
+    {
+      "id": "octet-172",
+      "type": "numeric_input",
+      "difficulty": "challenge",
+      "prompt": "Write the octet **172** in binary.",
+      "base": "binary",
+      "answer": 172,
+      "hint": "Start with the biggest position that fits: 128, 64, 32, 16, 8, 4, 2, 1.",
+      "explanation": "**128** fits in 172, leaving 44. 64 is too big. **32** fits, leaving 12. 16 is too big. **8** fits, leaving 4. **4** fits, leaving 0. So 172 = 128 + 32 + 8 + 4, which is `10101100`."
+    },
+    {
+      "id": "read-ipconfig",
+      "type": "terminal",
+      "difficulty": "core",
+      "prompt": "You can see your own computer's IP address. On Windows, type `ipconfig` and press Enter, then find this computer's **IPv4 address** in the output.",
+      "promptLabel": "C:\\Users\\learner>",
+      "intro": "Microsoft Windows [simulated Command Prompt]\nType help to see the commands you can use here.",
+      "commands": [
+        {
+          "command": "ipconfig",
+          "description": "Show this computer's network settings",
+          "output": "\nWindows IP Configuration\n\n\nWireless LAN adapter Wi-Fi:\n\n   Connection-specific DNS Suffix  . :\n   IPv4 Address. . . . . . . . . . . : 192.168.1.42\n   Subnet Mask . . . . . . . . . . . : 255.255.255.0\n   Default Gateway . . . . . . . . . : 192.168.1.1\n"
+        }
+      ],
+      "success": {
+        "type": "answer",
+        "question": "What is this computer's IPv4 address?",
+        "accepted": ["192.168.1.42"]
+      },
+      "explanation": "The line labelled **IPv4 Address** shows `192.168.1.42`. The other two lines look like addresses too, but they mean something else:\n\n- **Default Gateway** (`192.168.1.1`) is your home router, the device your computer sends data through to reach the internet.\n- **Subnet Mask** (`255.255.255.0`) describes how big your home network is. It isn't an address for any device."
+    },
+    {
+      "id": "running-out",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "How many addresses are there?",
+      "body": "Each extra bit doubles the number of patterns. With 32 bits, that's 2 multiplied by itself 32 times: a bit over **4 billion** IPv4 addresses.\n\nThat sounds like plenty, but there are about 8 billion people. Many of them have a phone, a laptop, a games console and a smart TV, and there are millions of servers too. Some big blocks of addresses are also set aside for special uses, so not all of them can be handed out.\n\nThere just aren't enough to give every device its own. The internet solved this in two ways: letting devices **share** an address (next lesson), and creating a much **bigger** kind of address (the lesson after)."
+    },
+    {
+      "id": "exact-ipv4-count",
+      "type": "numeric_input",
+      "difficulty": "challenge",
+      "prompt": "Exactly how many different IPv4 addresses are possible? You can use a calculator.",
+      "base": "decimal",
+      "answer": 4294967296,
+      "unit": "addresses",
+      "hint": "Each octet has 256 possible values, and there are four octets: 256 × 256 × 256 × 256.",
+      "explanation": "Each octet has 256 values, so there are 256 × 256 × 256 × 256 = 2³² = **4,294,967,296** addresses. That's about 4.3 billion. (4,294,967,295 is the largest address written as one number, because counting starts at 0, just like 255 in a byte.)"
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- An **IP address** tells the network which device data should be delivered to. IP stands for Internet Protocol.\n- A **protocol** is a set of rules devices agree to follow.\n- An **IPv4** address is 32 bits, written as four octets from 0 to 255, like `192.0.2.44`.\n- On Windows, `ipconfig` shows your IPv4 address and your **default gateway** (your router).\n- IPv4 has only about **4.3 billion** addresses, which isn't enough for every device.\n\nNext: how a whole home shares a single address."
+    }
+  ]
+}

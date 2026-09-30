@@ -1,0 +1,114 @@
+{
+  "id": "packets-and-routing-quiz",
+  "kind": "quiz",
+  "title": "Packets and Routing: Module Quiz",
+  "order": 99,
+  "isFree": true,
+  "passThreshold": 0.7,
+  "cards": [
+    {
+      "id": "packet-info",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each piece of packet information to what it tells the network.",
+      "pairs": [
+        { "id": "destination", "left": "Destination address", "right": "Where the packet is going" },
+        { "id": "source", "left": "Source address", "right": "Where a reply should be sent" },
+        { "id": "sequence", "left": "Sequence number", "right": "Where this piece fits in the message" },
+        { "id": "payload", "left": "Payload", "right": "The data itself" }
+      ],
+      "explanation": "The **destination address** says where the packet is going. The **source address** says who sent it, which is also where any reply goes back to. The **sequence number** says where the piece fits, and the **payload** is the data being carried."
+    },
+    {
+      "id": "packets-for-9000",
+      "type": "numeric_input",
+      "difficulty": "core",
+      "prompt": "A file is **9,000 bytes**. If each packet carries exactly **1,500 bytes of data**, how many packets are needed?",
+      "base": "decimal",
+      "answer": 6,
+      "unit": "packets",
+      "explanation": "9,000 ÷ 1,500 = **6** packets. (Real packets use part of their space for addresses and other added information, so in practice you'd need one more.)"
+    },
+    {
+      "id": "avoid-the-outage",
+      "type": "packet_path",
+      "difficulty": "core",
+      "prompt": "**Router B is down.** Get the packet from the **laptop** to the **web server**.",
+      "nodes": [
+        { "id": "laptop", "kind": "device", "label": "Laptop", "address": "192.168.1.20", "col": 0, "row": 1 },
+        { "id": "home", "kind": "router", "label": "Home router", "address": "192.168.1.1", "col": 1, "row": 1 },
+        { "id": "ra", "kind": "router", "label": "Router A", "address": "203.0.113.1", "col": 2, "row": 0 },
+        { "id": "rb", "kind": "router", "label": "Router B (down)", "address": "203.0.113.2", "col": 2, "row": 2 },
+        { "id": "server", "kind": "server", "label": "Web server", "address": "198.51.100.10", "col": 3, "row": 1 }
+      ],
+      "links": [
+        { "from": "laptop", "to": "home" },
+        { "from": "home", "to": "ra" },
+        { "from": "home", "to": "rb" },
+        { "from": "ra", "to": "server" },
+        { "from": "rb", "to": "server" }
+      ],
+      "source": "laptop",
+      "destination": "server",
+      "validPaths": [["laptop", "home", "ra", "server"]],
+      "explanation": "With Router B down, the only working route is **laptop → home router → Router A → web server**. Real routers do this automatically: they update their routing tables and send packets around the problem."
+    },
+    {
+      "id": "what-is-a-hop",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "What is a **hop**?",
+      "options": [
+        { "id": "step", "text": "One step of a packet's journey, from one router to the next" },
+        { "id": "lost", "text": "A packet that got lost" },
+        { "id": "whole-route", "text": "The whole route from sender to receiver" },
+        { "id": "address", "text": "A kind of IP address" }
+      ],
+      "correctOptionId": "step",
+      "explanation": "A **hop** is one step from one router to the next. A journey across the internet is made of many hops, and traceroute lists them one per line."
+    },
+    {
+      "id": "resend-which",
+      "type": "numeric_input",
+      "difficulty": "core",
+      "prompt": "A message was sent as packets 1 to 5. Packets **1, 2, 4 and 5** arrived. Which packet number needs to be sent again?",
+      "base": "decimal",
+      "answer": 3,
+      "explanation": "The sequence numbers jump from 2 to 4, so **packet 3** is missing. TCP gets just that packet sent again, and the others are kept."
+    },
+    {
+      "id": "traceroute-first-hop",
+      "type": "terminal",
+      "difficulty": "core",
+      "prompt": "Run `traceroute example.org`, then find the address of the **first hop**.",
+      "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
+      "commands": [
+        {
+          "command": "traceroute example.org",
+          "aliases": ["traceroute www.example.org"],
+          "description": "List each router between you and example.org",
+          "output": "traceroute to example.org (203.0.113.80), 30 hops max, 60 byte packets\n 1  10.0.0.1 (10.0.0.1)  2.114 ms  2.051 ms  2.020 ms\n 2  198.51.100.1 (198.51.100.1)  8.772 ms  8.730 ms  8.701 ms\n 3  * * *\n 4  203.0.113.1 (203.0.113.1)  16.448 ms  16.402 ms  16.371 ms\n 5  example.org (203.0.113.80)  17.036 ms  16.990 ms  16.958 ms"
+        }
+      ],
+      "success": {
+        "type": "answer",
+        "question": "What is the address of the first hop?",
+        "accepted": ["10.0.0.1"]
+      },
+      "explanation": "Hop 1 is `10.0.0.1`, a private address. It's this network's own router, the first stop on the way out. (Hop 3 shows `* * *` because that router didn't reply to traceroute, but hops 4 and 5 prove packets got through it.)"
+    },
+    {
+      "id": "reorder-packets",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "These packets arrived out of order. Put them back in the order they were sent.",
+      "items": [
+        { "id": "p1", "label": "#1 THE" },
+        { "id": "p2", "label": "#2 PHOTO" },
+        { "id": "p3", "label": "#3 ARRIVED" },
+        { "id": "p4", "label": "#4 SAFELY" }
+      ],
+      "explanation": "Sorting by sequence number gives **#1, #2, #3, #4**: *THE PHOTO ARRIVED SAFELY*. The order packets arrive in doesn't matter, because the sequence numbers say where each one belongs."
+    }
+  ]
+}

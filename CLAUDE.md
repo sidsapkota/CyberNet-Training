@@ -410,3 +410,12 @@ text pairing meets WCAG AA (≥ 4.5:1), and UI outlines meet 3:1.
   that wasn't taught.
 - **Technical accuracy is non-negotiable.** Double-check numbers, and prefer precise-but-simple over
   simplified-but-wrong.
+- **Lesson shape:** 8–12 cards, opening with a hook explainer and ending with a recap explainer,
+  at most 3 multiple choice cards, exactly 2 challenge cards. Quizzes have 5–8 core, interactive
+  questions. `load.test.ts` enforces all of this for every lesson and quiz.
+- **Safe examples only:** IPv4 documentation ranges (`192.0.2.0/24`, `198.51.100.0/24`,
+  `203.0.113.0/24`) stand in for public addresses, alongside the private ranges, `2001:db8::/32`
+  and `example.com`/`example.org`. Never use a real person's or company's address. `load.test.ts`
+  rejects any other IPv4 address (deliberately invalid ones, like `192.168.1.256`, are allowed).
+- **`content/REVIEW.md`** lists each lesson's goals, key factual claims and every deliberate
+  simplification. Update it whenever you add or change a lesson.

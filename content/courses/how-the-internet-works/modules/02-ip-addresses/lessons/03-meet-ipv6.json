@@ -1,0 +1,141 @@
+{
+  "id": "meet-ipv6",
+  "kind": "lesson",
+  "title": "Running Out: Meet IPv6",
+  "order": 3,
+  "isFree": true,
+  "cards": [
+    {
+      "id": "what-happens-when-you-run-out",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "What happens when you run out?",
+      "body": "IPv4 has about 4.3 billion addresses, and there are more connected devices than that. The organisations that hand out addresses gave away their last big blocks of IPv4 addresses in the 2010s.\n\nSharing addresses with NAT helps a lot, but it's a workaround. The real fix is a new version of the Internet Protocol with far longer addresses: **IPv6**, which is version 6."
+    },
+    {
+      "id": "why-ipv6",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Why was IPv6 created?",
+      "options": [
+        { "id": "running-out", "text": "IPv4 didn't have enough addresses for every device" },
+        { "id": "too-slow", "text": "IPv4 was too slow for video" },
+        { "id": "replace-names", "text": "To replace website names like example.com" },
+        { "id": "easier", "text": "To make addresses shorter and easier to remember" }
+      ],
+      "correctOptionId": "running-out",
+      "explanation": "IPv6 exists because IPv4's 32-bit addresses **ran out**. It doesn't replace names like `example.com`, and it isn't about speed. And as you're about to see, IPv6 addresses are much *longer* than IPv4 ones, not easier to remember."
+    },
+    {
+      "id": "ipv6-format",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "128 bits, written in hex",
+      "body": "An IPv6 address is **128 bits** long, four times the length of an IPv4 address. That gives about 340 trillion trillion trillion addresses, enough to never run out.\n\nWriting 128 bits in binary would be far too long, so IPv6 uses **hex**, from the last module. Remember: each hex digit stands for 4 bits. An IPv6 address is written as **8 groups** of **4 hex digits**, separated by colons:\n\n`2001:0db8:0000:0000:0000:0000:0000:0001`\n\nAddresses starting `2001:db8` are reserved for examples, like `192.0.2.x` in IPv4."
+    },
+    {
+      "id": "bits-per-group",
+      "type": "numeric_input",
+      "difficulty": "core",
+      "prompt": "Each group in an IPv6 address has 4 hex digits. How many **bits** is one group?",
+      "base": "decimal",
+      "answer": 16,
+      "unit": "bits",
+      "hint": "Each hex digit stands for 4 bits.",
+      "explanation": "Each hex digit is 4 bits, so 4 digits make 4 × 4 = **16 bits**. And 8 groups of 16 bits make 8 × 16 = 128 bits, the whole address."
+    },
+    {
+      "id": "shortening",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Two rules for shortening",
+      "body": "IPv6 addresses often contain lots of zeros, so there are two rules for writing them shorter.\n\n**Rule 1:** drop the zeros at the *start* of any group. `0db8` becomes `db8`, `0000` becomes `0`, and `0001` becomes `1`. Zeros at the end of a group stay, so `ff00` stays `ff00`.\n\n**Rule 2:** replace one run of groups that are all zero with a double colon, `::`. You can only do this **once** in an address.\n\n`2001:0db8:0000:0000:0000:0000:0000:0001`\n\nbecomes `2001:db8:0:0:0:0:0:1` after rule 1, and `2001:db8::1` after rule 2."
+    },
+    {
+      "id": "short-form",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "What is the shortest correct way to write `2001:0db8:0000:0000:0000:ff00:0042:8329`?",
+      "options": [
+        { "id": "correct", "text": "2001:db8::ff00:42:8329" },
+        { "id": "trailing", "text": "2001:db8::ff:42:8329" },
+        { "id": "no-double-colon", "text": "2001:db8:ff00:42:8329" },
+        { "id": "inner-zeros", "text": "21:db8::ff00:42:8329" }
+      ],
+      "correctOptionId": "correct",
+      "explanation": "Drop leading zeros (`0db8` → `db8`, `0042` → `42`), then replace the three zero groups with `::` to get `2001:db8::ff00:42:8329`.\n\n- `ff00` can't become `ff`: only zeros at the **start** of a group can go.\n- Without `::`, there are only 5 groups and nothing shows where the missing zeros were.\n- `2001` can't become `21`: those zeros are in the middle, not at the start."
+    },
+    {
+      "id": "spot-the-type",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each value to what it is.",
+      "pairs": [
+        { "id": "ipv4", "left": "`192.0.2.1`", "right": "An IPv4 address" },
+        { "id": "ipv6", "left": "`2001:db8::1`", "right": "An IPv6 address" },
+        { "id": "name", "left": "`example.com`", "right": "A website name" },
+        { "id": "binary", "left": "`11000000`", "right": "8 bits in binary" },
+        { "id": "hex", "left": "`C8`", "right": "A number in hex" }
+      ],
+      "explanation": "IPv4 uses four decimal numbers with **dots**. IPv6 uses hex groups with **colons**. `example.com` is a name for people, not an address. `11000000` is 192 in binary, and `C8` is 200 in hex."
+    },
+    {
+      "id": "double-colon-once",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "prompt": "Why can `::` only appear **once** in an IPv6 address?",
+      "options": [
+        { "id": "ambiguous", "text": "With two, you couldn't tell how many zero groups each one stands for" },
+        { "id": "end-only", "text": "Because :: is only allowed at the very end of an address" },
+        { "id": "too-short", "text": "Because the address would become shorter than 128 bits" },
+        { "id": "tradition", "text": "There's no real reason, it's just tradition" }
+      ],
+      "correctOptionId": "ambiguous",
+      "explanation": "Take `2001:db8::1::1`. It has 4 groups written out, so 4 zero groups are missing, but how are they split? It could mean `2001:db8:0:1:0:0:0:1` or `2001:db8:0:0:0:1:0:1`, and more. With only one `::`, there's only one place the missing groups can go. `::` can appear at the start, middle or end, and the address is always 128 bits underneath."
+    },
+    {
+      "id": "how-many-times-more",
+      "type": "numeric_input",
+      "difficulty": "challenge",
+      "prompt": "IPv6 has 2¹²⁸ addresses and IPv4 has 2³². IPv6 has **2 to the power of what** times as many?",
+      "base": "decimal",
+      "answer": 96,
+      "hint": "2¹²⁸ is 2 multiplied by itself 128 times. How many of those 2s are left if you cancel out 32 of them?",
+      "explanation": "Dividing 2¹²⁸ by 2³² cancels out 32 of the 128 twos, leaving 128 − 32 = **96**. So IPv6 has 2⁹⁶ times as many addresses as IPv4: roughly 79 thousand trillion trillion times as many."
+    },
+    {
+      "id": "read-ip-addr",
+      "type": "terminal",
+      "difficulty": "core",
+      "prompt": "Most devices today have **both** an IPv4 and an IPv6 address. On this Linux laptop, run `ip -brief addr` and find the IPv6 address that starts with `2001:db8`.",
+      "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
+      "commands": [
+        {
+          "command": "ip -brief addr",
+          "aliases": ["ip -br addr", "ip -br a", "ip -brief address", "ip -br address", "ip -brief a"],
+          "description": "Show this computer's addresses, one line per connection",
+          "output": "lo               UNKNOWN        127.0.0.1/8 ::1/128\nwlan0            UP             192.168.1.42/24 2001:db8:1:2::42/64 fe80::1/64"
+        },
+        {
+          "command": "ip addr",
+          "aliases": ["ip a", "ip address"],
+          "description": "Show this computer's addresses in full detail",
+          "output": "1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000\n    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00\n    inet 127.0.0.1/8 scope host lo\n       valid_lft forever preferred_lft forever\n    inet6 ::1/128 scope host\n       valid_lft forever preferred_lft forever\n2: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000\n    link/ether 00:00:5e:00:53:01 brd ff:ff:ff:ff:ff:ff\n    inet 192.168.1.42/24 brd 192.168.1.255 scope global dynamic wlan0\n       valid_lft 86143sec preferred_lft 86143sec\n    inet6 2001:db8:1:2::42/64 scope global dynamic mngtmpaddr\n       valid_lft 86251sec preferred_lft 14251sec\n    inet6 fe80::1/64 scope link\n       valid_lft forever preferred_lft forever"
+        }
+      ],
+      "success": {
+        "type": "answer",
+        "question": "What is the laptop's 2001:db8 IPv6 address? (Leave off the /64 at the end.)",
+        "accepted": ["2001:db8:1:2::42", "2001:db8:1:2::42/64", "2001:db8:1:2:0:0:0:42"]
+      },
+      "explanation": "The `wlan0` line (the Wi-Fi connection) lists `2001:db8:1:2::42`. The `/64` after it describes the size of the network, which isn't part of the address itself.\n\nThe same line also shows the IPv4 address `192.168.1.42`, so this laptop uses both versions at once. `::1` and `127.0.0.1` are special addresses a computer uses to talk to itself, and `fe80::1` only works on the local network."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- IPv4 ran out of addresses, so **IPv6** was created.\n- An IPv6 address is **128 bits**, written as 8 groups of 4 hex digits separated by colons.\n- To shorten one: drop zeros at the **start** of each group, and replace **one** run of all-zero groups with `::`.\n- Most devices use IPv4 and IPv6 side by side.\n\nThat's the end of the lessons in this module. Take the quiz to unlock the next one: how data actually travels across the internet."
+    }
+  ]
+}

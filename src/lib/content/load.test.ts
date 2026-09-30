@@ -13,24 +13,73 @@ describe("real content in /content", () => {
     expect(lessons.has("binary-and-data-quiz")).toBe(true);
   });
 
-  it("places the sample lesson and quiz in Module 1 of How the Internet Works", () => {
+  it("orders How the Internet Works modules and lessons, each module ending in its quiz", () => {
     const { courses } = loadContent();
     const course = courses.find((c) => c.id === "how-the-internet-works");
-    const firstModule = course?.modules[0];
-    expect(firstModule?.title).toBe("Binary and Data");
-    expect(firstModule?.lessons.map((l) => l.id)).toEqual(["bits-and-binary", "binary-and-data-quiz"]);
+    expect(course?.modules.map((m) => m.id)).toEqual(["binary-and-data", "ip-addresses", "packets-and-routing"]);
+    expect(course?.modules.map((m) => m.lessons.map((l) => l.id))).toEqual([
+      ["bits-and-binary", "bytes-file-sizes-and-hex", "binary-and-data-quiz"],
+      ["what-is-an-ip-address", "public-and-private-addresses", "meet-ipv6", "ip-addresses-quiz"],
+      [
+        "why-data-travels-in-packets",
+        "routers-and-hops",
+        "different-roads-same-destination",
+        "packets-and-routing-quiz",
+      ],
+    ]);
   });
 
-  it("sample lesson uses all four card types and exactly two challenge cards", () => {
-    const lesson = loadContent().lessons.get("bits-and-binary");
-    expect(new Set(lesson?.cards.map((c) => c.type))).toEqual(
-      new Set(["explainer", "multiple_choice", "drag_to_order", "binary_toggle"]),
-    );
-    expect(lesson?.cards.filter((c) => c.difficulty === "challenge")).toHaveLength(2);
+  it("every lesson follows the lesson rules: 8-12 cards, hook and recap, ≤3 multiple choice, 2 challenges", () => {
+    for (const lesson of loadContent().lessons.values()) {
+      if (lesson.kind !== "lesson") continue;
+      const { cards } = lesson;
+      const where = `lesson ${lesson.id}`;
+      expect(cards.length, where).toBeGreaterThanOrEqual(8);
+      expect(cards.length, where).toBeLessThanOrEqual(12);
+      expect(cards[0]?.type, `${where} opens with a hook explainer`).toBe("explainer");
+      expect(cards.at(-1)?.type, `${where} ends with a recap explainer`).toBe("explainer");
+      expect(cards.filter((c) => c.type === "multiple_choice").length, where).toBeLessThanOrEqual(3);
+      expect(cards.filter((c) => c.difficulty === "challenge").length, where).toBe(2);
+    }
   });
 
-  it("sample quiz has five questions", () => {
-    expect(loadContent().lessons.get("binary-and-data-quiz")?.cards).toHaveLength(5);
+  it("quizzes have 5-8 core, interactive questions", () => {
+    for (const lesson of loadContent().lessons.values()) {
+      if (lesson.kind !== "quiz") continue;
+      expect(lesson.cards.length, lesson.id).toBeGreaterThanOrEqual(5);
+      expect(lesson.cards.length, lesson.id).toBeLessThanOrEqual(8);
+      for (const card of lesson.cards) {
+        expect(card.type, `${lesson.id}/${card.id}`).not.toBe("explainer");
+        expect(card.difficulty, `${lesson.id}/${card.id}`).toBe("core");
+      }
+    }
+  });
+
+  it("only uses documentation, private or special-purpose IPv4 addresses", () => {
+    // Deliberately invalid examples (an octet above 255) are allowed: they can't be anyone's address.
+    const allowed = (ip: string) => {
+      const [a, b, c, d] = ip.split(".").map(Number) as [number, number, number, number];
+      if ([a, b, c, d].some((n) => n > 255)) return true;
+      return (
+        a === 10 ||
+        a === 127 ||
+        (a === 172 && b >= 16 && b <= 31) ||
+        (a === 192 && b === 168) ||
+        (a === 192 && b === 0 && c === 2) ||
+        (a === 198 && b === 51 && c === 100) ||
+        (a === 203 && b === 0 && c === 113) ||
+        ip === "255.255.255.0"
+      );
+    };
+    const text = JSON.stringify([...loadContent().lessons.values()]);
+    const unsafe = [...text.matchAll(/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/g)]
+      .map((m) => m[0])
+      .filter((ip) => !allowed(ip));
+    expect(unsafe).toEqual([]);
+  });
+
+  it("Module 1 quiz covers both lessons with seven questions", () => {
+    expect(loadContent().lessons.get("binary-and-data-quiz")?.cards).toHaveLength(7);
   });
 });
 

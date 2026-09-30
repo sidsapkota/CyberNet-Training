@@ -1,0 +1,126 @@
+{
+  "id": "bytes-file-sizes-and-hex",
+  "kind": "lesson",
+  "title": "Bytes, File Sizes and Hex",
+  "order": 2,
+  "isFree": true,
+  "cards": [
+    {
+      "id": "three-mb-of-what",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "3 MB of what?",
+      "body": "Your phone says a photo is **3 MB**. But 3 MB of *what*?\n\nYou already know that 8 bits make a **byte**. Bytes are the unit computers use to measure how much space something takes up, a bit like litres for water.\n\nOne byte is enough to store one letter of plain English text. The letter **A** is stored as the number 65, which is `01000001`. So the word `Hi` takes 2 bytes, and a short text message takes about a hundred."
+    },
+    {
+      "id": "bits-in-five-bytes",
+      "type": "numeric_input",
+      "difficulty": "core",
+      "prompt": "How many **bits** are in **5 bytes**?",
+      "base": "decimal",
+      "answer": 40,
+      "unit": "bits",
+      "explanation": "Every byte is 8 bits, so 5 bytes is 5 × 8 = **40 bits**. If you typed 5, that's the number of bytes, not bits. Bits are the tiny 0s and 1s, and bytes are groups of eight of them."
+    },
+    {
+      "id": "size-ladder",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "The size ladder",
+      "body": "Files are made of thousands or millions of bytes, so we use bigger units. Each step up the ladder is **1,000 times** bigger, just like *kilo* in kilometre means a thousand:\n\n- 1 **kilobyte** (KB) = 1,000 bytes\n- 1 **megabyte** (MB) = 1,000 KB\n- 1 **gigabyte** (GB) = 1,000 MB\n- 1 **terabyte** (TB) = 1,000 GB\n\nSo a 3 MB photo is about 3 million bytes, or 24 million bits."
+    },
+    {
+      "id": "order-sizes",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "Drag these sizes into order, from **smallest** at the top to **largest** at the bottom.",
+      "items": [
+        { "id": "bytes-800", "label": "800 bytes" },
+        { "id": "kb-900", "label": "900 KB" },
+        { "id": "mb-2", "label": "2 MB" },
+        { "id": "gb-1-5", "label": "1.5 GB" },
+        { "id": "tb-1", "label": "1 TB" }
+      ],
+      "explanation": "Compare the units first, then the numbers. **900 KB** is less than 1 MB (that would be 1,000 KB), so it's smaller than **2 MB**, even though 900 is a bigger number than 2. Then **1.5 GB** is 1,500 MB, and **1 TB** is 1,000 GB."
+    },
+    {
+      "id": "photo-in-kb",
+      "type": "numeric_input",
+      "difficulty": "core",
+      "prompt": "A photo is **3 MB**. How many **KB** is that?",
+      "base": "decimal",
+      "answer": [3000, 3072],
+      "unit": "KB",
+      "hint": "Each step up the ladder is 1,000 times bigger.",
+      "explanation": "1 MB is 1,000 KB, so 3 MB is 3 × 1,000 = **3,000 KB**. (If you know about counting in 1,024s and typed 3,072, that's accepted too. You'll see why both exist in a moment.)"
+    },
+    {
+      "id": "typical-sizes",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each thing to its typical size.",
+      "pairs": [
+        { "id": "letter", "left": "One letter of plain text", "right": "About 1 byte" },
+        { "id": "photo", "left": "A photo from a phone", "right": "A few MB" },
+        { "id": "film", "left": "A two-hour film in HD", "right": "A few GB" },
+        { "id": "phone", "left": "A phone's whole storage", "right": "Tens to hundreds of GB" }
+      ],
+      "explanation": "A letter of plain text is about **1 byte**. A phone photo is usually a few **MB**. An HD film is a few **GB**. And a phone can hold tens to hundreds of **GB**, which is thousands of photos."
+    },
+    {
+      "id": "thousand-or-1024",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "1,000 or 1,024?",
+      "body": "Computers love powers of 2. The power of 2 closest to 1,000 is 2¹⁰ = **1,024**, so for years people used *kilobyte* to mean 1,024 bytes as well as 1,000.\n\nTo clear up the mix-up, the 1,024 units got their own names: a **kibibyte** (KiB) is 1,024 bytes, a **mebibyte** (MiB) is 1,024 KiB, and a **gibibyte** (GiB) is 1,024 MiB.\n\nDrive makers count in 1,000s. Windows counts in 1,024s but still writes \"GB\". So a \"1 TB\" drive, which holds 1,000,000,000,000 bytes, shows up as about **931 GB**. Nothing is missing: it's the same bytes, counted in bigger steps."
+    },
+    {
+      "id": "shrinking-drive",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "prompt": "You plug in a new **500 GB** drive, and Windows says it holds about **465 GB**. What's going on?",
+      "options": [
+        { "id": "counting", "text": "Windows counts in 1,024s, so the same bytes give a smaller number" },
+        { "id": "hidden-files", "text": "35 GB is taken up by hidden system files" },
+        { "id": "faulty", "text": "The drive is faulty and has lost some space" },
+        { "id": "rounded", "text": "The maker rounded 465 up to 500 to sound bigger" }
+      ],
+      "correctOptionId": "counting",
+      "explanation": "The drive really holds 500,000,000,000 bytes. Windows divides by 1,024 three times instead of 1,000, and 500,000,000,000 ÷ 1,024 ÷ 1,024 ÷ 1,024 ≈ **465**. A new drive does keep a little space for organising files, but that's tiny compared with 35 GB. The drive isn't faulty, and nothing was rounded."
+    },
+    {
+      "id": "meet-hex",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Hexadecimal: a shorthand for binary",
+      "body": "Binary is long and easy to misread: `11001000`. So people often write bytes in **hexadecimal**, or **hex**. Hex is base 16: it uses the digits 0 to 9, then **A** to **F** for 10 to 15.\n\nHere's the trick: 4 bits make exactly 16 patterns, so **one hex digit stands for exactly 4 bits**. A byte is 8 bits, so any byte fits in two hex digits. `11111111` splits into `1111` `1111`, which is F and F: `FF`, or 255.\n\nIn a two-digit hex number, the left digit counts **16s** and the right digit counts **1s**. So `1F` is 1 × 16 + 15 = 31. Hex is often written with `0x` in front, like `0xFF`. You'll see it in colour codes and in the newest internet addresses."
+    },
+    {
+      "id": "hex-2a",
+      "type": "numeric_input",
+      "difficulty": "core",
+      "prompt": "What is hex `2A` in ordinary decimal numbers?",
+      "base": "decimal",
+      "answer": 42,
+      "hint": "The left digit counts 16s and the right digit counts 1s. A means 10.",
+      "explanation": "2 × 16 = 32, and A is 10, so `2A` = 32 + 10 = **42**.\n\nRemember making 42 in the last lesson? It was `00101010`. Split that into `0010` and `1010` and you get 2 and 10, which is exactly `2A`."
+    },
+    {
+      "id": "200-in-hex",
+      "type": "numeric_input",
+      "difficulty": "challenge",
+      "prompt": "Write **200** in hex.",
+      "base": "hex",
+      "answer": 200,
+      "hint": "How many 16s fit in 200, and what's left over?",
+      "explanation": "12 sixteens make 192, leaving 8. 12 is **C** in hex, so 200 is `C8`.\n\nOr use binary: 200 is `11001000`. Split it into `1100` (12, which is C) and `1000` (8) to get `C8`."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- A **byte** is 8 bits, and it's the unit for measuring data. One letter of plain text is about 1 byte.\n- **KB, MB, GB, TB**: each is 1,000 times the one before.\n- Some software counts in **1,024s** instead (KiB, MiB, GiB), which is why drives look smaller than the box says.\n- **Hex** uses 0 to 9 and A to F. One hex digit is 4 bits, so a byte is two hex digits, from `00` to `FF`.\n\nNext up: the addresses that let data find its way across the internet."
+    }
+  ]
+}

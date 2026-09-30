@@ -68,6 +68,30 @@
       ],
       "correctOptionId": "eight-bits",
       "explanation": "Each part of an IPv4 address is an **octet**: exactly 8 bits. 8 bits make 256 patterns, which cover the numbers **0 to 255**, so 300 simply doesn't fit."
+    },
+    {
+      "id": "two-mb-in-kb",
+      "type": "numeric_input",
+      "difficulty": "core",
+      "prompt": "A song file is **2 MB**. How many **KB** is that?",
+      "base": "decimal",
+      "answer": [2000, 2048],
+      "unit": "KB",
+      "explanation": "1 MB is 1,000 KB, so 2 MB is **2,000 KB**. Software that counts in 1,024s would call it 2,048, so that's accepted too."
+    },
+    {
+      "id": "hex-digit-bits",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "One **hex** digit stands for how many bits?",
+      "options": [
+        { "id": "two", "text": "2" },
+        { "id": "four", "text": "4" },
+        { "id": "eight", "text": "8" },
+        { "id": "sixteen", "text": "16" }
+      ],
+      "correctOptionId": "four",
+      "explanation": "Hex has 16 digits (0 to 9 and A to F), and 4 bits make exactly 16 patterns, so one hex digit is **4 bits**. That's why a byte (8 bits) is written as two hex digits, like `FF`. 16 is the number of hex digits, not the number of bits."
     }
   ]
 }

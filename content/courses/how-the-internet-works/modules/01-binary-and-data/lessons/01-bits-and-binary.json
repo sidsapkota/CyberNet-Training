@@ -19,20 +19,6 @@
       }
     },
     {
-      "id": "one-bit-values",
-      "type": "multiple_choice",
-      "difficulty": "core",
-      "prompt": "How many different values can a single bit hold?",
-      "options": [
-        { "id": "one", "text": "1" },
-        { "id": "two", "text": "2" },
-        { "id": "ten", "text": "10" },
-        { "id": "two-five-six", "text": "256" }
-      ],
-      "correctOptionId": "two",
-      "explanation": "A bit is either **0** or **1**, so it has exactly **2** possible values. On its own that's only enough for yes/no, but computers get their power by using lots of bits together."
-    },
-    {
       "id": "place-values",
       "type": "explainer",
       "difficulty": "core",
@@ -85,17 +71,13 @@
     },
     {
       "id": "largest-byte",
-      "type": "multiple_choice",
+      "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "What is the **largest** number you can make with 8 bits?",
-      "options": [
-        { "id": "eight", "text": "8" },
-        { "id": "one-two-eight", "text": "128" },
-        { "id": "two-five-five", "text": "255" },
-        { "id": "two-five-six", "text": "256" }
-      ],
-      "correctOptionId": "two-five-five",
-      "explanation": "With every bit on: 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1 = **255**.\n\nThere are 256 patterns, but one of them is 0. Counting 0, 1, 2 … all the way up uses 256 numbers and ends at 255."
+      "prompt": "What is the **largest** number you can make with 8 bits? Type it as an ordinary number.",
+      "base": "decimal",
+      "answer": 255,
+      "hint": "Switch every bit on and add up the positions: 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1.",
+      "explanation": "With every bit on: 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1 = **255**.\n\nIf you typed 256, you counted the patterns. There are 256 of them, but one is 0. Counting 0, 1, 2 … all the way up uses 256 numbers and ends at 255."
     },
     {
       "id": "ipv4-octets",
@@ -119,10 +101,10 @@
         { "id": "has-256", "text": "192.168.1.256" },
         { "id": "valid", "text": "10.0.0.255" },
         { "id": "has-300", "text": "172.16.300.1" },
-        { "id": "three-parts", "text": "8.8.8" }
+        { "id": "three-parts", "text": "192.0.2" }
       ],
       "correctOptionId": "valid",
-      "explanation": "`10.0.0.255` has four parts and each one is between 0 and 255. **256** and **300** are too big to fit in 8 bits, and `8.8.8` only has three parts instead of four."
+      "explanation": "`10.0.0.255` has four parts and each one is between 0 and 255. **256** and **300** are too big to fit in 8 bits, and `192.0.2` only has three parts instead of four."
     },
     {
       "id": "ten-bit-octet",
@@ -137,6 +119,13 @@
       ],
       "correctOptionId": "ten-twenty-three",
       "explanation": "Each extra bit doubles the patterns. 8 bits give 256, 9 bits give 512 and 10 bits give **1,024**. Counting from 0, the largest is **1,023**. It's the same *one less than the number of patterns* rule that gives 255 for 8 bits."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- A **bit** is a single on/off switch, written as **0** or **1**.\n- In **binary**, each position is worth double the one to its right: 128, 64, 32, 16, 8, 4, 2, 1. Add up the positions that are on.\n- To build a number, start with the biggest position that fits and work down.\n- 8 bits make a **byte**, with 256 patterns: the numbers **0 to 255**.\n- Each part of an IPv4 address is an **octet** of 8 bits, which is why it can never go above 255.\n\nNext up: how bytes add up to file sizes, and a handy shorthand for binary."
     }
   ]
 }
