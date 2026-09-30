@@ -191,9 +191,10 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   settings (e.g. the numeric base).
 
 ### Dev playground (`/dev/cards`)
-- **Dev only:** `src/app/dev/cards/page.dev.tsx` is only a route under `next dev`, because
-  `next.config.ts` adds the `dev.tsx` page extension in the development phase only. Production
-  builds never compile it.
+- **Dev only:** `src/app/dev/cards/page.dev.tsx` is only a route under `next dev` and on Vercel
+  **preview** deployments (`VERCEL_ENV=preview`, behind Vercel's login, so cards can be tried on a
+  phone). `next.config.ts` adds the `dev.tsx` page extension only then. Production builds never
+  compile it.
 - **Also:** `/dev/mascot` shows every mascot expression at 48, 96 and 200px on both canvases, with
   the idle animation and an expression switcher (to see the bounce).
 - **What it does:** plays `src/dev/card-samples.ts` (one or more samples per type) through the real

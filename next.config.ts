@@ -2,12 +2,13 @@ import type { NextConfig } from "next";
 import { PHASE_DEVELOPMENT_SERVER } from "next/constants";
 
 export default function nextConfig(phase: string): NextConfig {
+  // `*.dev.tsx` routes (/dev/cards, /dev/mascot) exist under `next dev` and on Vercel *preview*
+  // deployments (VERCEL_ENV=preview, behind Vercel's login), so new cards can be tried on a phone.
+  // Production builds (VERCEL_ENV=production, or any local `next build`) never compile them.
+  const devRoutes = phase === PHASE_DEVELOPMENT_SERVER || process.env.VERCEL_ENV === "preview";
   return {
     reactStrictMode: true,
-    // `*.dev.tsx` routes (e.g. /dev/cards) only exist under `next dev`; production builds
-    // never compile them.
-    pageExtensions:
-      phase === PHASE_DEVELOPMENT_SERVER ? ["dev.tsx", "tsx", "ts", "jsx", "js"] : ["tsx", "ts", "jsx", "js"],
+    pageExtensions: devRoutes ? ["dev.tsx", "tsx", "ts", "jsx", "js"] : ["tsx", "ts", "jsx", "js"],
     // Let phones and other devices on the local network use `npm run dev`. Next blocks dev
     // resources (scripts, hot reload) for any host except localhost unless it's listed here.
     // Dev-server only; production ignores it. Covers the private IPv4 ranges and .local names.
