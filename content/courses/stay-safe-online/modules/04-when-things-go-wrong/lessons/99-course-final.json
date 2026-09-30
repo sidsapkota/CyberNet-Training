@@ -1,0 +1,232 @@
+{
+  "id": "stay-safe-online-final",
+  "kind": "quiz",
+  "title": "Stay Safe Online: Course Final",
+  "order": 99,
+  "isFree": false,
+  "passThreshold": 0.7,
+  "cards": [
+    {
+      "id": "q-hacked",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "A sign of a hack, or normal?",
+      "bins": [
+        {
+          "id": "hacked",
+          "label": "Sign of a hack"
+        },
+        {
+          "id": "normal",
+          "label": "Normal"
+        }
+      ],
+      "items": [
+        {
+          "id": "alert",
+          "label": "A sign-in alert that wasn't you",
+          "bin": "hacked"
+        },
+        {
+          "id": "device",
+          "label": "An unknown device signed in",
+          "bin": "hacked"
+        },
+        {
+          "id": "own",
+          "label": "A code just after you signed in",
+          "bin": "normal"
+        },
+        {
+          "id": "change",
+          "label": "An email right after you changed it",
+          "bin": "normal"
+        }
+      ],
+      "explanation": "Alerts and devices that weren't you are signs of a hack. Codes and emails that match what you just did are normal."
+    },
+    {
+      "id": "q-steps",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "Put the first steps after a hack in order.",
+      "items": [
+        {
+          "id": "tell",
+          "label": "Tell a trusted adult"
+        },
+        {
+          "id": "password",
+          "label": "Change the password"
+        },
+        {
+          "id": "sign-out",
+          "label": "Sign out of other devices"
+        },
+        {
+          "id": "two-step",
+          "label": "Turn on two-step sign-in"
+        },
+        {
+          "id": "recovery",
+          "label": "Check the recovery email and phone"
+        }
+      ],
+      "explanation": "Tell an adult, change the password, sign out other devices, turn on two-step sign-in, check the recovery details."
+    },
+    {
+      "id": "q-where",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each problem to where to go.",
+      "pairs": [
+        {
+          "id": "card",
+          "left": "Money taken from your card",
+          "right": "Your bank, straight away"
+        },
+        {
+          "id": "scam",
+          "left": "A scam to warn others about",
+          "right": "Scamwatch"
+        },
+        {
+          "id": "danger",
+          "left": "Someone in danger right now",
+          "right": "Call 000"
+        },
+        {
+          "id": "details",
+          "left": "Personal details stolen",
+          "right": "IDCARE"
+        }
+      ],
+      "explanation": "Bank first for money, Scamwatch for scams, 000 for danger, IDCARE for stolen details."
+    },
+    {
+      "id": "q-fake-site",
+      "type": "hotspot",
+      "difficulty": "core",
+      "prompt": "Your Bank's real site is `yourbank.example`. Tap every warning sign.",
+      "scene": "fake-website",
+      "mode": "tap",
+      "targets": [
+        "site-address",
+        "site-banner",
+        "site-pin"
+      ],
+      "explanation": "The wrong owner in the address, the rush, and the request for your PIN."
+    },
+    {
+      "id": "q-passphrase",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Which is the strongest password you could remember?",
+      "options": [
+        {
+          "id": "words",
+          "text": "orbit willow pepper canoe"
+        },
+        {
+          "id": "swap",
+          "text": "P@ssw0rd1"
+        },
+        {
+          "id": "pet",
+          "text": "Buddy2015"
+        }
+      ],
+      "correctOptionId": "words",
+      "explanation": "Four random words are long and unpredictable. Swaps and pet names are guessed first."
+    },
+    {
+      "id": "q-permissions",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Does the app need it?",
+      "bins": [
+        {
+          "id": "needs",
+          "label": "Needs it"
+        },
+        {
+          "id": "doesnt",
+          "label": "Doesn't need it"
+        }
+      ],
+      "items": [
+        {
+          "id": "maps",
+          "label": "Maps → location",
+          "bin": "needs"
+        },
+        {
+          "id": "call",
+          "label": "Video call → camera",
+          "bin": "needs"
+        },
+        {
+          "id": "torch",
+          "label": "Torch → contacts",
+          "bin": "doesnt"
+        },
+        {
+          "id": "game",
+          "label": "Puzzle game → microphone",
+          "bin": "doesnt"
+        }
+      ],
+      "explanation": "Allow only what fits the app's job."
+    },
+    {
+      "id": "q-code",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "A message from a friend's account: \"I sent my code to you by mistake, send it back!\"",
+      "start": "start",
+      "steps": [
+        {
+          "id": "start",
+          "text": "What do you do?",
+          "choices": [
+            {
+              "id": "dont",
+              "text": "Don't send it, and warn your friend another way",
+              "consequence": "Right: it was for your account.",
+              "outcome": "success"
+            },
+            {
+              "id": "send",
+              "text": "Send the code",
+              "consequence": "That code opens your account.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "explanation": "Never send a sign-in code to anyone. Their account may have been taken over."
+    },
+    {
+      "id": "q-trusted",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Something online is upsetting you. What's always a good first step?",
+      "options": [
+        {
+          "id": "tell",
+          "text": "Tell a trusted adult"
+        },
+        {
+          "id": "hide",
+          "text": "Keep it to yourself"
+        },
+        {
+          "id": "reply",
+          "text": "Reply to get even"
+        }
+      ],
+      "correctOptionId": "tell",
+      "explanation": "Telling a trusted adult is always a good first step. It's never your fault."
+    }
+  ]
+}

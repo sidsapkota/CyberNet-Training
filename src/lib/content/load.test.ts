@@ -103,12 +103,39 @@ describe("real content in /content", () => {
 
   it("lists Inside Your Devices first, with its modules and lessons in order", () => {
     const { courses } = loadContent();
-    expect(courses.map((c) => c.id)).toEqual(["inside-your-devices", "how-the-internet-works"]);
+    expect(courses.map((c) => c.id)).toEqual(["inside-your-devices", "how-the-internet-works", "stay-safe-online"]);
     expect(courses[0]?.modules.map((m) => m.lessons.map((l) => l.id))).toEqual([
       ["whats-in-the-box", "memory-vs-storage", "meet-the-cpu", "pull-it-apart-quiz"],
       ["meet-the-os", "files-and-folders", "software-in-charge-quiz"],
       ["slow-and-full", "power-problems", "inside-your-devices-final"],
     ]);
+  });
+
+  it("lists Stay Safe Online's modules and lessons in order, with only its first module free", () => {
+    const course = loadContent().courses.find((c) => c.id === "stay-safe-online");
+    expect(course?.modules.map((m) => m.lessons.map((l) => l.id))).toEqual([
+      ["strong-passwords", "two-step-sign-in", "lock-your-accounts-quiz"],
+      ["phishing-emails", "scam-texts-and-calls", "fake-websites", "spot-the-scam-quiz"],
+      ["your-digital-footprint", "apps-and-wi-fi", "guard-your-privacy-quiz"],
+      ["signs-of-a-hack", "getting-help", "stay-safe-online-final"],
+    ]);
+  });
+
+  it("uses only fictional addresses in Stay Safe Online, apart from the verified official services", () => {
+    // Scam examples use the reserved .example domain; the real services are the ones in "Getting Help".
+    const official = new Set(["cyber.gov.au", "esafety.gov.au", "scamwatch.gov.au", "idcare.org"]);
+    // Address endings named on their own when teaching how to read an address (".com.au").
+    const endings = new Set(["com.au"]);
+    const { courses, lessons } = loadContent();
+    const course = courses.find((c) => c.id === "stay-safe-online")!;
+    for (const outline of course.modules.flatMap((m) => m.lessons)) {
+      const text = JSON.stringify(lessons.get(outline.id));
+      for (const domain of text.match(/\b[a-z0-9-]+(\.[a-z0-9-]+)*\.[a-z]{2,}\b/gi) ?? []) {
+        if (/\.(jpg|png|mp3|mp4|docx|txt|exe)$/i.test(domain)) continue;
+        const d = domain.toLowerCase();
+        expect(d.endsWith(".example") || official.has(d) || endings.has(d), `${outline.id}: ${domain}`).toBe(true);
+      }
+    }
   });
 
   it("every Inside Your Devices lesson uses at least 2 of the hands-on card types", () => {
@@ -139,8 +166,9 @@ describe("real content in /content", () => {
   });
 
   it("teaches before testing: every drawn part is explored before a card tests it", () => {
-    // The file browser shows each file's name on screen, so it needs no introduction.
-    const selfLabelled = new Set(["file-browser"]);
+    // These scenes show their own text on screen (file names; the lines of an email, a text or a
+    // web page), so they need no introduction. Each clue they test is taught in an explainer first.
+    const selfLabelled = new Set(["file-browser", "email", "text-message", "fake-website"]);
     const { courses, lessons } = loadContent();
     for (const course of courses) {
       const explored = new Map<string, Set<string>>();

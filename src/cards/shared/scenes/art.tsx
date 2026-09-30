@@ -412,12 +412,190 @@ function FileBrowserBase() {
   );
 }
 
+/* ── Scam-spotting scenes (all fictional; every address is a reserved .example domain) ───── */
+
+function Line({ x, y, size = 9, weight = 400, font = sans, fill = C.ink, children }: {
+  x: number;
+  y: number;
+  size?: number;
+  weight?: number;
+  font?: string;
+  fill?: string;
+  children: ReactNode;
+}) {
+  return (
+    <text x={x} y={y} fontSize={size} fontWeight={weight} fill={fill} fontFamily={font}>
+      {children}
+    </text>
+  );
+}
+
+function WindowFrame({ width, height, title }: { width: number; height: number; title: string }) {
+  return (
+    <>
+      <rect x={4} y={4} width={width - 8} height={height - 8} rx={8} fill={C.panel} stroke={C.edge} strokeWidth={1.5} />
+      <path d={`M4 26V12A8 8 0 0 1 12 4H${width - 12}A8 8 0 0 1 ${width - 4} 12V26Z`} fill={C.shell} />
+      {[16, 26, 36].map((x) => (
+        <circle key={x} cx={x} cy={15} r={3} fill={C.edge} />
+      ))}
+      <Line x={52} y={19} size={9} fill={C.muted}>
+        {title}
+      </Line>
+    </>
+  );
+}
+
+const EMAIL: Record<string, ReactNode> = {
+  "email-from": (
+    <g>
+      <Line x={14} y={49} size={8.5} fill={C.muted}>From:</Line>
+      <Line x={40} y={49} size={8.5} weight={600}>Your Bank</Line>
+      <Line x={84} y={49} size={8} font={mono} fill={C.muted}>&lt;security@yourbank-help.example&gt;</Line>
+    </g>
+  ),
+  "email-date": <Line x={14} y={67} size={8} fill={C.muted}>Received today at 3:12 am</Line>,
+  "email-subject": (
+    <Line x={14} y={90} size={10} weight={600}>
+      URGENT: Your account will be closed in 24 hours
+    </Line>
+  ),
+  "email-greeting": <Line x={14} y={113} size={9}>Dear Customer,</Line>,
+  "email-secrets": (
+    <g>
+      <Line x={14} y={131} size={9}>We noticed unusual activity on your account. To keep it</Line>
+      <Line x={14} y={144} size={9}>open, reply with your password and your card number.</Line>
+    </g>
+  ),
+  "email-link": (
+    <g>
+      <rect x={14} y={158} width={112} height={22} rx={4} fill={C.edge} />
+      <Line x={27} y={173} size={9} weight={600} fill={C.bg}>Verify my account</Line>
+      <Line x={14} y={194} size={7.5} fill={C.muted}>Link goes to:</Line>
+      <Line x={60} y={194} size={7.5} font={mono} fill={C.muted}>http://yourbank-verify.example/login</Line>
+    </g>
+  ),
+  "email-signoff": <Line x={14} y={221} size={9}>Thanks, the Security Team</Line>,
+};
+
+function EmailBase() {
+  return (
+    <>
+      <WindowFrame width={320} height={236} title="Mail · Inbox" />
+      <path d="M10 99H310" stroke={C.edge} strokeWidth={0.75} opacity={0.6} />
+    </>
+  );
+}
+
+function Bubble({ y, h, dim = false }: { y: number; h: number; dim?: boolean }) {
+  return <rect x={26} y={y} width={148} height={h} rx={10} fill={dim ? C.shell : C.part} stroke={C.edge} strokeWidth={0.75} />;
+}
+
+const TEXTS: Record<string, ReactNode> = {
+  "sms-sender": (
+<Line x={78} y={48} size={10} weight={600}>Parcels</Line>
+  ),
+  "sms-earlier": (
+    <g>
+      <Line x={82} y={72} size={7} fill={C.muted}>Monday</Line>
+      <Bubble y={78} h={46} dim />
+      <Line x={34} y={94} size={8.5}>Your parcel is on its way.</Line>
+      <Line x={34} y={106} size={8.5}>Track it in the Parcels</Line>
+      <Line x={34} y={118} size={8.5}>app.</Line>
+    </g>
+  ),
+  "sms-time": <Line x={70} y={148} size={7} fill={C.muted}>Today, 7:41 pm</Line>,
+  "sms-fee": (
+    <g>
+      <Bubble y={156} h={70} />
+      <Line x={34} y={172} size={8.5}>We tried to deliver your</Line>
+      <Line x={34} y={184} size={8.5}>parcel. Pay a $1.95 fee</Line>
+    </g>
+  ),
+  "sms-deadline": <Line x={34} y={196} size={8.5}>within 2 hours, or it goes back:</Line>,
+  "sms-link": (
+    <Line x={34} y={214} size={7.5} font={mono} fill={C.ink}>
+      parcels-redelivery.example/pay
+    </Line>
+  ),
+};
+
+function TextMessageBase() {
+  return (
+    <>
+      <rect x={20} y={8} width={160} height={304} rx={26} fill={C.shell} stroke={C.edge} strokeWidth={2} />
+      <rect x={26} y={14} width={148} height={292} rx={22} fill={C.bg} />
+      <path d="M26 60H174" stroke={C.edge} strokeWidth={0.75} opacity={0.6} />
+      <Line x={40} y={30} size={7} fill={C.muted}>‹ Messages</Line>
+      {/* The message box at the bottom (not tappable) */}
+      <rect x={34} y={274} width={132} height={20} rx={10} fill="none" stroke={C.edge} strokeWidth={0.75} />
+      <Line x={44} y={287} size={7.5} fill={C.muted}>Text message</Line>
+    </>
+  );
+}
+
+function Field({ y, label }: { y: number; label: string }) {
+  return (
+    <g>
+      <Line x={64} y={y + 10} size={7.5} fill={C.muted}>{label}</Line>
+      <rect x={64} y={y + 13} width={192} height={9} rx={2} fill={C.bg} stroke={C.edge} strokeWidth={0.75} />
+    </g>
+  );
+}
+
+const SITE: Record<string, ReactNode> = {
+  "site-padlock": (
+    <g fill="none" stroke={C.ink} strokeWidth={1.3}>
+      <rect x={17} y={40} width={12} height={9} rx={1.5} fill={C.ink} stroke="none" />
+      <path d="M19.5 40V37A3.5 3.5 0 0 1 26.5 37V40" />
+    </g>
+  ),
+  "site-address": (
+    <g>
+      <rect x={36} y={31} width={272} height={20} rx={10} fill={C.bg} stroke={C.edge} strokeWidth={0.75} />
+      <Line x={46} y={44} size={7.5} font={mono}>https://yourbank.example.login-check.example/signin</Line>
+    </g>
+  ),
+  "site-logo": (
+    <g>
+      <rect x={16} y={66} width={18} height={18} rx={4} fill={C.edge} />
+      <path d="M20 80L25 70L30 80Z" fill={C.bg} />
+      <Line x={40} y={80} size={11} weight={600}>Your Bank</Line>
+    </g>
+  ),
+  "site-banner": (
+    <g>
+      <rect x={14} y={96} width={292} height={20} rx={4} fill="none" stroke={C.warn} strokeWidth={1.2} />
+      <Line x={20} y={109} size={8} weight={600} fill={C.warn}>Your account is locked! Sign in within 10 minutes to unlock it.</Line>
+    </g>
+  ),
+  "site-username": <Field y={124} label="Username" />,
+  "site-password": <Field y={152} label="Password" />,
+  "site-pin": <Field y={180} label="Card PIN" />,
+  "site-footer": <Line x={16} y={223} size={7.5} fill={C.muted}>Your Bank · Privacy · Help</Line>,
+};
+
+function FakeWebsiteBase() {
+  return (
+    <>
+      <rect x={4} y={4} width={312} height={228} rx={8} fill={C.panel} stroke={C.edge} strokeWidth={1.5} />
+      <path d="M4 26V12A8 8 0 0 1 12 4H304A8 8 0 0 1 316 12V26Z" fill={C.shell} />
+      {[16, 26, 36].map((x) => (
+        <circle key={x} cx={x} cy={15} r={3} fill={C.edge} />
+      ))}
+      <path d="M4 56H316" stroke={C.edge} strokeWidth={0.75} opacity={0.6} />
+    </>
+  );
+}
+
 /* ── Registry ─────────────────────────────────────────────────────────────────────────── */
 
 const ART: Record<SceneId, { Base: () => ReactNode; parts: Record<string, ReactNode> }> = {
   laptop: { Base: LaptopBase, parts: LAPTOP },
   phone: { Base: PhoneBase, parts: PHONE },
   "file-browser": { Base: FileBrowserBase, parts: FILES },
+  email: { Base: EmailBase, parts: EMAIL },
+  "text-message": { Base: TextMessageBase, parts: TEXTS },
+  "fake-website": { Base: FakeWebsiteBase, parts: SITE },
 };
 
 export function sceneHasArt(id: string, partIds: readonly string[]): boolean {

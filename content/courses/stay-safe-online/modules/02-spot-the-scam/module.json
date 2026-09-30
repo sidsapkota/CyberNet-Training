@@ -1,0 +1,7 @@
+{
+  "id": "spot-the-scam",
+  "title": "Spot the Scam",
+  "description": "Phishing emails, scam texts and calls, and fake websites.",
+  "order": 2,
+  "access": "pro"
+}

@@ -1106,3 +1106,177 @@ longer correct option; `why-unreachable` was rebalanced, and the rest are listed
 wording pass. Drag lists can sit partly below the Check bar with a how-to-play panel open; the page
 scrolls, and the panel goes after one "Got it".
 
+
+# Content review: Stay Safe Online
+
+The third course. It has 4 modules, 8 lessons and 4 quizzes (the last is the course final). Module 1
+is free and modules 2 to 4 are Pro (`"access"` in each `module.json`; the Pro branch reads it, and
+main ignores it). It teaches **defence only**: how to recognise and respond to scams and account
+take-overs, never how to make or run one.
+
+**Fictional examples only.** "Your Bank" and "Parcels" are made-up names. Every web and email
+address in an example uses the reserved `.example` domain (RFC 2606), so none can point at a real
+organisation. A test fails if any other address appears, apart from the real help services below.
+No real people, brands or logos appear. The three new scenes (`email`, `text-message`,
+`fake-website`) are generic, and the scene test also checks their addresses.
+
+**Real help services (verified 30 September 2026):**
+- eSafety Commissioner (esafety.gov.au/report): investigates cyberbullying of under-18s, adult cyber
+  abuse, image-based abuse, and illegal or restricted content. For cyberbullying and adult cyber
+  abuse, report to the platform first. Image-based abuse can be reported to eSafety straight away.
+- Scamwatch (ACCC, National Anti-Scam Centre), scamwatch.gov.au: report a scam at /report-a-scam.
+  After a scam: act quickly, contact your bank, get free support from IDCARE, report to Scamwatch.
+- IDCARE (idcare.org, 1800 595 160): free identity and cyber support to make a recovery plan.
+- ReportCyber at cyber.gov.au: report cybercrime to police. ASD's 24/7 hotline (1300 CYBER1) isn't
+  mentioned, to keep the list short.
+- Kids Helpline, 1800 55 1800: free, private, 24/7, ages 5 to 25.
+- cyber.gov.au passphrase advice: **four or more random words, at least 15 characters**. Some older
+  pages say 14; the current page says 15.
+- cyber.gov.au MFA advice: passkeys first (phishing-resistant), then an authenticator app. SMS and
+  email codes are the weakest second factors.
+
+Re-check all of these before each review: services and numbers change.
+
+**Tone:** calm and practical. Every "what went wrong" card says it's not the learner's fault and
+points to a trusted adult. The one sensitive topic is 4.2 `photo-threat`: a threat to share a
+private photo. It is a challenge card, gives no detail beyond "a private photo", and follows
+eSafety's advice: don't pay, stop replying, keep the username (not the image), tell a trusted
+adult, and report to the app and to eSafety. **Please review that card in particular.**
+
+## Module 1: Lock Your Accounts (free)
+
+### 1.1 Strong Passwords (`strong-passwords`)
+**Goals:**
+- Know how passwords get guessed.
+- Length matters most.
+- Passphrases.
+- One password per account.
+
+**Key claims:**
+- Stolen password lists are usually scrambled, so attackers guess with computers. They try common
+  passwords, words, names, birthdays and substitutions (`@` for `a`) first.
+- Each extra lowercase letter multiplies the combinations by 26: 26 × 26 = 676.
+- A passphrase is 4+ random words and at least 15 characters (cyber.gov.au). Lyrics, quotes and
+  personal details are guessable however long they are.
+- Passwords reused from a data breach get tried on other sites. Change it everywhere, starting
+  with email, which can reset other accounts.
+
+**Simplifications:**
+- The simulator (`password` model) counts every combination of a **random** password at an
+  illustrative **one billion guesses a second**. Real speeds range from a few guesses a second (a
+  website's sign-in page) to far more (fast hardware against weakly stored passwords). The model
+  only applies to random passwords; the lesson says real guessers try predictable ones first.
+- The simulator doesn't model passphrases (guessing whole words from a word list). At a billion
+  guesses a second, four random words from a typical list would fall faster than their character
+  count suggests. That would seem to contradict the official advice, which assumes passwords are
+  well protected when stored. So the lesson teaches passphrases as "length you can remember", in
+  an explainer.
+- At that speed: 14 lowercase letters ≈ 2,000 years; 13 ≈ 78 years; 10 characters from all 95
+  printable characters ≈ 1,900 years.
+
+### 1.2 Two-Step Sign-In (`two-step-sign-in`)
+**Goals:**
+- Know, have or are.
+- Rank second factors from strongest to weakest.
+- Never share a code.
+- Password managers.
+- Backup codes.
+
+**Key claims:**
+- Strongest to weakest: passkeys, then authenticator apps, then SMS codes (cyber.gov.au).
+- No real company asks for a sign-in code. An unexpected code means someone has your password.
+- A password manager fills in only on the real site.
+- Save your backup codes.
+
+**Simplifications:**
+- "Two-step", "two-factor" and "multi-factor" are treated as the same thing.
+- Security questions are described as weak (they can be guessed or found), not as a factor.
+
+## Module 2: Spot the Scam (Pro)
+
+### 2.1 Phishing Emails (`phishing-emails`)
+**Key claims:**
+- Warning signs: fake sender, rushing you, "Dear Customer", asks for secrets, hidden link, too good
+  to be true.
+- The address after the @ counts, not the display name. The owner is the name just before the
+  ending.
+- Hover, or press and hold, to preview a link.
+- Report it; don't reply.
+
+**Simplifications:** a generic greeting is a common sign, not proof. The lesson says scammers can
+also use your real name.
+
+### 2.2 Scam Texts and Calls (`scam-texts-and-calls`)
+**Key claims:**
+- Common scam texts: parcel fees, tolls and "Hi Mum".
+- Sender names can be spoofed, so scam texts can appear in a real thread.
+- Scam callers pretend to be banks, government, tech support or police. They ask for codes,
+  passwords, remote access or gift cards.
+- AI can clone a voice from a short clip. Hang up and call back on a number you know, and use a
+  family safe word.
+- Being asked to keep it secret is a red flag.
+
+### 2.3 Fake Websites (`fake-websites`)
+**Key claims:**
+- Read the name just before the ending (`.example`, `.com`, `.com.au`).
+- Subdomains like `login.yourbank.example` belong to the owner.
+- The padlock means an encrypted (HTTPS) connection, not an honest site.
+- Banks never ask for a card PIN on a website.
+- Sign in through the app, a bookmark or a typed address. A password manager that won't fill in is
+  a clue.
+
+**Simplifications:** "the name just before the ending" simplifies the real rules. Some endings,
+like `.com.au`, have two parts, and the examples only use `.example`.
+
+## Module 3: Guard Your Privacy (Pro)
+
+### 3.1 Your Digital Footprint (`your-digital-footprint`)
+**Key claims:**
+- Posts can be copied, and they last.
+- Keep private: your address, phone, school, where you are right now, passwords, and the answers
+  to security questions. That includes usernames.
+- "Fun" quizzes can harvest security-question answers.
+- Privacy settings: private account, message limits, location off, tag review.
+- Block, report, and tell a trusted adult.
+
+### 3.2 Apps and Public Wi-Fi (`apps-and-wi-fi`)
+**Key claims:**
+- Grant only the permissions an app needs; choose "Only while using the app"; change them in
+  Settings.
+- Many phones show an indicator when the camera or microphone is in use.
+- Download from official app stores.
+- On public Wi-Fi, HTTPS protects what you send to most sites. The bigger risk is a fake hotspot,
+  so check the network's name with staff and use mobile data for banking.
+
+**Simplifications:**
+- VPNs aren't covered.
+- Indicator dots exist on current iOS and Android versions; older devices may not show them.
+
+## Module 4: When Things Go Wrong (Pro)
+
+### 4.1 Signs of a Hack (`signs-of-a-hack`)
+**Key claims:**
+- The signs of an account take-over.
+- The steps, in order: tell a trusted adult, change the password, sign out other devices, turn on
+  two-step sign-in, check the recovery details. Then change reused passwords and warn friends.
+- Use the official recovery. Paid "recovery" offers are scams.
+
+**Simplifications:** real apps word these settings differently. The order is a sensible default,
+not a rule every service states.
+
+### 4.2 Getting Help (`getting-help`)
+**Key claims:**
+- The help services verified above.
+- Save evidence before blocking: screenshots of messages, usernames, addresses and dates. Never
+  copy, save or share a private or nude image itself.
+- Paying a scammer usually leads to more demands.
+- Call 000 for danger right now.
+
+## Teach before test: self-check fixes (before the audit)
+- 1.1 `the-leak` rewarded changing the **email** password first, but "email can reset other
+  accounts" was only in the feedback. It's now taught in `one-password-each`.
+- 2.1 `real-sender` (challenge) needed "the owner is the name just before the ending", which was
+  only taught in 2.3. It's now also in `check-the-sender`.
+- 3.1 `band-name-quiz`, `friendly-stranger` and `username-check` relied on security questions,
+  block-and-report, and safe usernames. All three are now taught in `keep-private` and
+  `privacy-settings`.

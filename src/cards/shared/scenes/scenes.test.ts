@@ -34,6 +34,14 @@ describe("scenes", () => {
     expect(open).toContain("battery");
   });
 
+  it("uses only fictional web and email addresses (the reserved .example domain)", () => {
+    const text = JSON.stringify(SCENES);
+    const domains = text.match(/\b[a-z0-9-]+(\.[a-z0-9-]+)*\.[a-z]{2,}\b/gi) ?? [];
+    for (const d of domains.filter((d) => !/\.(jpg|png|mp3|mp4|docx|txt|exe)$/i.test(d))) {
+      expect(d, d).toMatch(/\.example$/);
+    }
+  });
+
   it("uses only generic devices (no brand names in part names or descriptions)", () => {
     const text = JSON.stringify(SCENES).toLowerCase();
     for (const brand of ["apple", "iphone", "macbook", "samsung", "galaxy", "pixel", "dell", "lenovo", "microsoft", "surface"]) {

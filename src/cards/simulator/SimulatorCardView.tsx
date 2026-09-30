@@ -185,7 +185,8 @@ function ControlView({
           </label>
           <span className="font-mono text-small text-ink tabular-nums">
             {String(value)}
-            {control.unit ?? ""}
+            {/* The schema trims units, so the space goes here (none before % or °: "50%", "30°C"). */}
+            {control.unit ? (/^[%°]/.test(control.unit) ? control.unit : ` ${control.unit}`) : ""}
           </span>
         </div>
         <input

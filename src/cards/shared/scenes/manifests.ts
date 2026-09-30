@@ -117,6 +117,65 @@ export const SCENES = {
     ],
     views: { default: [] },
   },
+  /*
+   * Scam-spotting scenes (Stay Safe Online). Every example is fictional: "Your Bank" and "Parcels"
+   * are made-up names, and every address uses the reserved `.example` domain, so none of it can
+   * point at a real organisation or a real website. Parts are the lines a learner can tap; their
+   * names are exactly the text shown, so screen readers get the same clues and no extra hints.
+   */
+  email: {
+    id: "email",
+    description: "An email open in a mail app: sender, subject, message and a button.",
+    width: 320,
+    height: 236,
+    parts: [
+      { id: "email-from", name: "From: Your Bank <security@yourbank-help.example>", box: { x: 10, y: 36, w: 300, h: 18 }, labelAt: { x: 296, y: 45 } },
+      { id: "email-date", name: "Received today at 3:12 am", box: { x: 10, y: 56, w: 300, h: 16 }, labelAt: { x: 296, y: 64 } },
+      { id: "email-subject", name: "Subject: URGENT: Your account will be closed in 24 hours", box: { x: 10, y: 76, w: 300, h: 20 }, labelAt: { x: 296, y: 86 } },
+      { id: "email-greeting", name: "Dear Customer,", box: { x: 10, y: 102, w: 300, h: 16 }, labelAt: { x: 296, y: 110 } },
+      {
+        id: "email-secrets",
+        name: "We noticed unusual activity on your account. To keep it open, reply with your password and your card number.",
+        box: { x: 10, y: 120, w: 300, h: 30 },
+        labelAt: { x: 296, y: 135 },
+      },
+      { id: "email-link", name: "Button: Verify my account. The link goes to yourbank-verify.example", box: { x: 10, y: 156, w: 300, h: 44 }, labelAt: { x: 296, y: 178 } },
+      { id: "email-signoff", name: "Thanks, the Security Team", box: { x: 10, y: 206, w: 300, h: 22 }, labelAt: { x: 296, y: 217 } },
+    ],
+    views: { default: [] },
+  },
+  "text-message": {
+    id: "text-message",
+    description: "A text message thread from a sender named Parcels, with an older message and a new one.",
+    width: 200,
+    height: 320,
+    parts: [
+      { id: "sms-sender", name: "Sender name: Parcels", box: { x: 34, y: 30, w: 132, h: 26 }, labelAt: { x: 154, y: 43 } },
+      { id: "sms-earlier", name: "Monday: Your parcel is on its way. Track it in the Parcels app.", box: { x: 28, y: 76, w: 144, h: 50 }, labelAt: { x: 162, y: 100 } },
+      { id: "sms-time", name: "Today, 7:41 pm", box: { x: 60, y: 136, w: 80, h: 16 }, labelAt: { x: 132, y: 144 } },
+      { id: "sms-fee", name: "We tried to deliver your parcel. Pay a $1.95 fee", box: { x: 28, y: 160, w: 144, h: 28 }, labelAt: { x: 162, y: 175 } },
+      { id: "sms-deadline", name: "within 2 hours, or it goes back:", box: { x: 28, y: 188, w: 144, h: 14 }, labelAt: { x: 162, y: 195 } },
+      { id: "sms-link", name: "Link: parcels-redelivery.example/pay", box: { x: 28, y: 204, w: 144, h: 18 }, labelAt: { x: 162, y: 212 } },
+    ],
+    views: { default: [] },
+  },
+  "fake-website": {
+    id: "fake-website",
+    description: "A web browser showing a sign-in page for a bank called Your Bank.",
+    width: 320,
+    height: 236,
+    parts: [
+      { id: "site-padlock", name: "Padlock icon", box: { x: 12, y: 30, w: 22, h: 22 } },
+      { id: "site-address", name: "Address: https://yourbank.example.login-check.example/signin", box: { x: 36, y: 30, w: 274, h: 22 }, labelAt: { x: 298, y: 41 } },
+      { id: "site-logo", name: "Your Bank", box: { x: 12, y: 62, w: 130, h: 26 }, labelAt: { x: 132, y: 75 } },
+      { id: "site-banner", name: "Your account is locked! Sign in within 10 minutes to unlock it.", box: { x: 12, y: 94, w: 296, h: 24 }, labelAt: { x: 296, y: 106 } },
+      { id: "site-username", name: "Box: Username", box: { x: 60, y: 124, w: 200, h: 24 }, labelAt: { x: 252, y: 136 } },
+      { id: "site-password", name: "Box: Password", box: { x: 60, y: 152, w: 200, h: 24 }, labelAt: { x: 252, y: 164 } },
+      { id: "site-pin", name: "Box: Card PIN", box: { x: 60, y: 180, w: 200, h: 24 }, labelAt: { x: 252, y: 192 } },
+      { id: "site-footer", name: "Your Bank · Privacy · Help", box: { x: 12, y: 210, w: 296, h: 20 }, labelAt: { x: 296, y: 220 } },
+    ],
+    views: { default: [] },
+  },
 } as const satisfies Record<string, SceneManifest>;
 
 export type SceneId = keyof typeof SCENES;

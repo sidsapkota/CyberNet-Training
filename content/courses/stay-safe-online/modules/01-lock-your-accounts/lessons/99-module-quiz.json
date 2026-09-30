@@ -1,0 +1,189 @@
+{
+  "id": "lock-your-accounts-quiz",
+  "kind": "quiz",
+  "title": "Lock Your Accounts: Module Quiz",
+  "order": 99,
+  "isFree": true,
+  "passThreshold": 0.7,
+  "cards": [
+    {
+      "id": "q-easy-or-hard",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Easy to guess, or hard to guess?",
+      "bins": [
+        {
+          "id": "easy",
+          "label": "Easy to guess"
+        },
+        {
+          "id": "hard",
+          "label": "Hard to guess"
+        }
+      ],
+      "items": [
+        {
+          "id": "name-year",
+          "label": "Your name and birth year",
+          "bin": "easy"
+        },
+        {
+          "id": "abc",
+          "label": "abc12345",
+          "bin": "easy"
+        },
+        {
+          "id": "symbols",
+          "label": "S@f3ty!",
+          "bin": "easy"
+        },
+        {
+          "id": "words",
+          "label": "pepper orbit willow canoe",
+          "bin": "hard"
+        }
+      ],
+      "explanation": "Names, birthdays, common patterns and short symbol swaps are guessed first. Four random words are long and unpredictable."
+    },
+    {
+      "id": "q-long-enough",
+      "type": "simulator",
+      "difficulty": "core",
+      "prompt": "Lowercase letters only. Make the password long enough to take **at least 100 years** to guess.",
+      "model": "password",
+      "params": {},
+      "controls": [
+        {
+          "id": "length",
+          "kind": "slider",
+          "label": "Length",
+          "min": 4,
+          "max": 20,
+          "step": 1,
+          "unit": " letters"
+        }
+      ],
+      "outputs": [
+        {
+          "id": "strength",
+          "kind": "list",
+          "label": "A computer guessing it"
+        }
+      ],
+      "goal": {
+        "all": [
+          {
+            "target": "output",
+            "id": "years",
+            "op": ">=",
+            "value": 100
+          }
+        ]
+      },
+      "explanation": "Around **14 lowercase letters** gets past 100 years. Every letter multiplies the time by 26."
+    },
+    {
+      "id": "q-passphrase",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Which is the best passphrase?",
+      "options": [
+        {
+          "id": "random",
+          "text": "cactus orbit lantern velvet"
+        },
+        {
+          "id": "quote",
+          "text": "To be or not to be"
+        },
+        {
+          "id": "short",
+          "text": "Tr0ub!e"
+        }
+      ],
+      "correctOptionId": "random",
+      "explanation": "Four **random** words: long and unpredictable. A famous quote is in guessing lists, and a short swap is quick to guess."
+    },
+    {
+      "id": "q-reused",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "A website you use announces a data breach. You used that password for your email too.",
+      "start": "start",
+      "steps": [
+        {
+          "id": "start",
+          "text": "What do you do first?",
+          "choices": [
+            {
+              "id": "email",
+              "text": "Change your email password to a new, unique one",
+              "consequence": "Your email can reset everything else, so it comes first.",
+              "outcome": "success"
+            },
+            {
+              "id": "wait",
+              "text": "Wait and see if anything happens",
+              "consequence": "Attackers try stolen passwords on other sites quickly.",
+              "outcome": "fail"
+            },
+            {
+              "id": "same",
+              "text": "Change both to the same new password",
+              "consequence": "Then one leak opens both again.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "explanation": "Change the reused password everywhere, starting with **email**, and give every account its own password."
+    },
+    {
+      "id": "q-code-request",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Someone messages: \"I'm from the game's support team. Tell me the code we just texted you.\" What is it?",
+      "options": [
+        {
+          "id": "scam",
+          "text": "A scam: nobody real asks for your sign-in code"
+        },
+        {
+          "id": "support",
+          "text": "Real support, checking it's you"
+        },
+        {
+          "id": "fine",
+          "text": "Fine, as long as they know your username"
+        }
+      ],
+      "correctOptionId": "scam",
+      "explanation": "No real company ever asks for a sign-in code. Anyone who does is trying to get into your account."
+    },
+    {
+      "id": "q-rank",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "Strongest to weakest:",
+      "items": [
+        {
+          "id": "passkey",
+          "label": "Passkey"
+        },
+        {
+          "id": "app",
+          "label": "Password + authenticator app code"
+        },
+        {
+          "id": "sms",
+          "label": "Password + text message code"
+        },
+        {
+          "id": "password",
+          "label": "Password on its own"
+        }
+      ],
+      "explanation": "Passkey, then an authenticator app, then a text code, then a password alone."
+    }
+  ]
+}
