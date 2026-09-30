@@ -13,7 +13,16 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps<"/lesson/[id]">): Promise<Metadata> {
   const { id } = await params;
   const lesson = getLesson(id);
-  return { title: lesson?.title ?? "Lesson not found" };
+  const course = getCourses().find((c) => c.id === lesson?.courseId);
+  if (!lesson || !course) return { title: "Lesson not found" };
+  const description = `A free, hands-on lesson from ${course.title}. No sign-up needed.`;
+  // The preview image is the course's (see ./opengraph-image.tsx), so a video's link shows the course.
+  return {
+    title: `${lesson.title} (${course.title})`,
+    description,
+    alternates: { canonical: `/lesson/${lesson.id}` },
+    openGraph: { title: lesson.title, description, url: `/lesson/${lesson.id}` },
+  };
 }
 
 export default async function LessonPage({ params }: PageProps<"/lesson/[id]">) {

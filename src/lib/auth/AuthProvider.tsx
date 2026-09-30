@@ -15,13 +15,20 @@ import type { Database } from "@/lib/supabase/database.types";
 export type AuthState =
   | { status: "loading" }
   | { status: "guest" }
-  | { status: "signed-in"; userId: string; email: string | null; displayName: string | null };
+  | {
+      status: "signed-in";
+      userId: string;
+      email: string | null;
+      displayName: string | null;
+      /** Confirmed 13 or older (accounts are 13+). Unconfirmed accounts see a one-time prompt. */
+      ageConfirmed: boolean;
+    };
 
 interface AuthContextValue {
   auth: AuthState;
   /** False when Supabase isn't configured: the app runs guest-only. */
   available: boolean;
-  /** Re-reads the display name (after editing it on /account). */
+  /** Re-reads the profile (display name and age confirmation) after changing it. */
   refreshProfile: () => Promise<void>;
   signOut: () => Promise<void>;
 }
@@ -38,9 +45,12 @@ function supabaseConfigured(): boolean {
   }
 }
 
-async function loadDisplayName(client: SupabaseClient<Database>, userId: string): Promise<string | null> {
-  const { data } = await client.from("profiles").select("display_name").eq("id", userId).maybeSingle();
-  return data?.display_name ?? null;
+async function loadProfile(
+  client: SupabaseClient<Database>,
+  userId: string,
+): Promise<{ displayName: string | null; ageConfirmed: boolean }> {
+  const { data } = await client.from("profiles").select("display_name, age_confirmed").eq("id", userId).maybeSingle();
+  return { displayName: data?.display_name ?? null, ageConfirmed: data?.age_confirmed ?? false };
 }
 
 /**
@@ -68,11 +78,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       // Defer Supabase calls out of the callback (supabase-js recommends not awaiting inside it).
       setTimeout(() => {
-        void loadDisplayName(client, user.id).then((displayName) =>
+        void loadProfile(client, user.id).then(({ displayName, ageConfirmed }) =>
           setAuth((current) =>
-            current.status === "signed-in" && current.userId === user.id && current.displayName === displayName
+            current.status === "signed-in" &&
+            current.userId === user.id &&
+            current.displayName === displayName &&
+            current.ageConfirmed === ageConfirmed
               ? current
-              : { status: "signed-in", userId: user.id, email: user.email ?? null, displayName },
+              : { status: "signed-in", userId: user.id, email: user.email ?? null, displayName, ageConfirmed },
           ),
         );
       }, 0);
@@ -105,8 +118,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const refreshProfile = useCallback(async () => {
     if (auth.status !== "signed-in") return;
-    const displayName = await loadDisplayName(getSupabaseBrowserClient(), auth.userId);
-    setAuth({ ...auth, displayName });
+    const profile = await loadProfile(getSupabaseBrowserClient(), auth.userId);
+    setAuth({ ...auth, ...profile });
   }, [auth]);
 
   const signOut = useCallback(async () => {

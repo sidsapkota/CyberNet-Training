@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
+import { useId, useState } from "react";
 import { Mascot } from "@/components/mascot/Mascot";
 import { Button } from "@/components/ui/Button";
 import { MailIcon } from "@/components/ui/icons";
+import { markAgePending } from "@/lib/auth/age";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
@@ -21,6 +23,8 @@ const callbackUrl = () => `${window.location.origin}/auth/callback`;
 export function LoginForm({ linkError }: { linkError: boolean }) {
   const { available } = useAuth();
   const [email, setEmail] = useState("");
+  const [over13, setOver13] = useState(false);
+  const ageId = useId();
   const [status, setStatus] = useState<Status>(
     linkError ? { kind: "error", message: "That sign-in link didn't work or has expired. Request a new one." } : { kind: "idle" },
   );
@@ -28,7 +32,8 @@ export function LoginForm({ linkError }: { linkError: boolean }) {
   async function sendLink(event: React.FormEvent) {
     event.preventDefault();
     const address = email.trim();
-    if (!address) return;
+    if (!address || !over13) return;
+    markAgePending();
     setStatus({ kind: "sending" });
     const { error } = await getSupabaseBrowserClient().auth.signInWithOtp({
       email: address,
@@ -38,6 +43,8 @@ export function LoginForm({ linkError }: { linkError: boolean }) {
   }
 
   async function google() {
+    if (!over13) return;
+    markAgePending();
     const { error } = await getSupabaseBrowserClient().auth.signInWithOAuth({
       provider: "google",
       options: { redirectTo: callbackUrl() },
@@ -72,7 +79,21 @@ export function LoginForm({ linkError }: { linkError: boolean }) {
         </div>
       ) : (
         <div className="mt-8 w-full">
-          <Button variant="secondary" onClick={() => void google()} className="w-full">
+          {/* Accounts are 13+. Only "confirmed" is stored, never a date of birth. */}
+          <label
+            htmlFor={ageId}
+            className="mb-5 flex min-h-12 cursor-pointer items-center gap-3 rounded-control border border-line bg-surface px-4 text-left text-body"
+          >
+            <input
+              id={ageId}
+              type="checkbox"
+              checked={over13}
+              onChange={(e) => setOver13(e.target.checked)}
+              className="size-5 shrink-0 accent-accent-ink"
+            />
+            I&apos;m 13 or older
+          </label>
+          <Button variant="secondary" onClick={() => void google()} disabled={!over13} className="w-full">
             Continue with Google
           </Button>
           <div className="my-5 flex items-center gap-3 text-caption text-ink-faint" aria-hidden="true">
@@ -94,7 +115,7 @@ export function LoginForm({ linkError }: { linkError: boolean }) {
               className="min-h-12 rounded-control border border-line-strong bg-surface px-4 text-body text-ink outline-none focus-visible:border-accent-ink focus-visible:ring-2 focus-visible:ring-accent-ink/30"
               placeholder="you@example.com"
             />
-            <Button type="submit" disabled={status.kind === "sending"}>
+            <Button type="submit" disabled={status.kind === "sending" || !over13}>
               <MailIcon className="size-5" /> {status.kind === "sending" ? "Sending…" : "Email me a sign-in link"}
             </Button>
           </form>
@@ -105,7 +126,22 @@ export function LoginForm({ linkError }: { linkError: boolean }) {
           )}
         </div>
       )}
-      <p className="mt-8 text-caption text-ink-faint">We only keep your email and the name you choose.</p>
+      {available && status.kind !== "sent" && !over13 && (
+        <p className="mt-4 text-small text-ink-muted">
+          Accounts are for ages 13 and up. Anyone can keep playing as a guest.
+        </p>
+      )}
+      <p className="mt-8 text-caption text-ink-faint">
+        We only keep your email and the name you choose. By signing in you agree to the{" "}
+        <Link href="/terms" className="font-semibold text-accent-ink underline-offset-2 hover:underline">
+          Terms
+        </Link>{" "}
+        and{" "}
+        <Link href="/privacy" className="font-semibold text-accent-ink underline-offset-2 hover:underline">
+          Privacy policy
+        </Link>
+        .
+      </p>
     </div>
   );
 }

@@ -26,23 +26,32 @@ function keyTimes(route: readonly Point[]): number[] {
   return [0, ...lengths.map((l) => (run += l) / total)];
 }
 
+/**
+ * Always the same element, so the server HTML never depends on the reduced-motion setting (covers
+ * are server-rendered on the landing page). Under reduced motion it jumps to a still frame instead.
+ */
 function Packet({ route, duration }: { route: readonly Point[]; duration: number }) {
   const reduceMotion = useReducedMotion();
   const middle = route[Math.floor(route.length / 2)] as Point;
-  if (reduceMotion) {
-    return <circle cx={middle[0]} cy={middle[1]} r={4.5} fill="var(--color-screen-accent)" />;
-  }
   return (
     <motion.circle
       r={4.5}
       fill="var(--color-screen-accent)"
-      initial={{ cx: route[0]?.[0], cy: route[0]?.[1], opacity: 0 }}
-      animate={{
-        cx: route.map((p) => p[0]),
-        cy: route.map((p) => p[1]),
-        opacity: route.map((_, i) => (i === 0 || i === route.length - 1 ? 0 : 1)),
-      }}
-      transition={{ duration, ease: "linear", times: keyTimes(route), repeat: Infinity, repeatDelay: 1.2 }}
+      initial={{ cx: middle[0], cy: middle[1], opacity: 1 }}
+      animate={
+        reduceMotion
+          ? { cx: middle[0], cy: middle[1], opacity: 1 }
+          : {
+              cx: route.map((p) => p[0]),
+              cy: route.map((p) => p[1]),
+              opacity: route.map((_, i) => (i === 0 || i === route.length - 1 ? 0 : 1)),
+            }
+      }
+      transition={
+        reduceMotion
+          ? { duration: 0 }
+          : { duration, ease: "linear", times: keyTimes(route), repeat: Infinity, repeatDelay: 1.2 }
+      }
     />
   );
 }
@@ -171,12 +180,16 @@ function RamStick() {
       ))}
     </g>
   );
-  if (reduceMotion) return stick;
-  // Slides out along its 45° guide and back, slowly: the one moving part.
+  // Slides out along its 45° guide and back, slowly: the one moving part. Same element either
+  // way (no server/client mismatch); under reduced motion it stays put.
   return (
     <motion.g
-      animate={{ x: [0, 16, 16, 0], y: [0, -16, -16, 0] }}
-      transition={{ duration: 5, times: [0, 0.35, 0.65, 1], ease: "easeInOut", repeat: Infinity, repeatDelay: 1.5 }}
+      animate={reduceMotion ? { x: 0, y: 0 } : { x: [0, 16, 16, 0], y: [0, -16, -16, 0] }}
+      transition={
+        reduceMotion
+          ? { duration: 0 }
+          : { duration: 5, times: [0, 0.35, 0.65, 1], ease: "easeInOut", repeat: Infinity, repeatDelay: 1.5 }
+      }
     >
       {stick}
     </motion.g>

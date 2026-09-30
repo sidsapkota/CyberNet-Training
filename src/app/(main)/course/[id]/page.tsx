@@ -12,7 +12,14 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<"/course/[id]">): Promise<Metadata> {
   const { id } = await params;
-  return { title: getCourses().find((c) => c.id === id)?.title ?? "Course not found" };
+  const course = getCourses().find((c) => c.id === id);
+  if (!course) return { title: "Course not found" };
+  return {
+    title: course.title,
+    description: course.description,
+    alternates: { canonical: `/course/${course.id}` },
+    openGraph: { title: course.title, description: course.description, url: `/course/${course.id}` },
+  };
 }
 
 export default async function CoursePage({ params }: PageProps<"/course/[id]">) {

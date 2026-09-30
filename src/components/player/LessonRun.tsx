@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getCardDefinition, isGuidedDefinition } from "@/cards/registry";
 import { nudgeFor } from "@/cards/nudge";
 import { type Card, isInteractiveCard } from "@/cards/schema";
@@ -9,6 +9,7 @@ import type { CourseOutline, RegularLesson } from "@/lib/content/schema";
 import { useFeedback } from "@/lib/feedback";
 import { useGlobalKeyDown } from "@/lib/keyboard";
 import { useProgress } from "@/lib/progress/ProgressProvider";
+import { trackEvent } from "@/lib/analytics";
 import { hintXpNote, visibleHint } from "@/lib/hints";
 import { getNextLesson, lessonFinishState } from "@/lib/progress/state";
 import { emptySnapshot, isCardCompleted } from "@/lib/progress/types";
@@ -79,6 +80,7 @@ export function LessonRun({
   const definition = getCardDefinition(card);
   const total = lesson.cards.length;
   const coach = useCoach(card);
+  useEffect(() => trackEvent("lesson_start", lesson.id), [lesson.id]);
   const showCoach = result === null && run.status === "answering" ? coach.coachKey : null;
 
   const isDone = (c: Pick<Card, "id">) => completedThisVisit.has(c.id) || isCardCompleted(snapshot, lesson.id, c.id);
@@ -115,6 +117,7 @@ export function LessonRun({
     await Promise.all(pendingSaves.current.splice(0));
     const bonus = lessonBonusToAward(snapshot, lesson.id);
     await store.completeLesson(lesson.id, bonus);
+    trackEvent("lesson_complete", lesson.id);
     setResult({ xpEarned: sessionXp + justEarned + bonus, alreadyCompleted: bonus === 0, challengesCompleted });
     window.scrollTo({ top: 0 });
   }
@@ -208,6 +211,7 @@ export function LessonRun({
           challengesCompleted={result.challengesCompleted}
           challengesTotal={lesson.cards.filter((c) => c.difficulty === "challenge").length}
           next={next}
+          lessonId={lesson.id}
         />
       </PlayerShell>
     );

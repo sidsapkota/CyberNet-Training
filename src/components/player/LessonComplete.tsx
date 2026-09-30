@@ -1,12 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "motion/react";
 import { useEffect } from "react";
 import { SaveProgressPrompt } from "@/components/account/SaveProgressPrompt";
 import { Mascot } from "@/components/mascot/Mascot";
 import { ButtonLink } from "@/components/ui/Button";
 import { CountUp } from "@/components/ui/CountUp";
-import { ArrowRightIcon, ChallengeIcon, XpIcon } from "@/components/ui/icons";
+import { ArrowRightIcon, ChallengeIcon, XpIcon, FeedbackIcon } from "@/components/ui/icons";
 import type { LessonOutline } from "@/lib/content/schema";
 import { useFeedback } from "@/lib/feedback";
 
@@ -22,7 +23,10 @@ export function LessonComplete({
   challengesTotal,
   next,
   pathHref,
+  lessonId,
 }: {
+  /** For the "Send feedback" link, which fills in this lesson. */
+  lessonId: string;
   /** The course path, with `?completed=` so the new node fills in there. */
   pathHref: string;
   title: string;
@@ -98,6 +102,12 @@ export function LessonComplete({
             <ButtonLink href={pathHref}>Back to path</ButtonLink>
           )}
         </div>
+        <Link
+          href={`/feedback?lesson=${lessonId}`}
+          className="mt-6 inline-flex min-h-11 items-center gap-1.5 text-small text-ink-muted underline-offset-2 hover:text-ink hover:underline"
+        >
+          <FeedbackIcon className="size-4" /> Send feedback about this lesson
+        </Link>
       </motion.div>
     </div>
   );

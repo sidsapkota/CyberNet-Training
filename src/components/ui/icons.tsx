@@ -34,6 +34,11 @@ import {
   Waypoints,
   X,
   Zap,
+  Clock,
+  Hand,
+  MessageSquareText,
+  ShieldCheck,
+  Star,
 } from "lucide-react";
 
 /**
@@ -100,3 +105,10 @@ export const DeleteIcon = brandIcon(Trash2, "DeleteIcon");
 // Sound
 export const SoundOnIcon = brandIcon(Volume2, "SoundOnIcon");
 export const SoundOffIcon = brandIcon(VolumeX, "SoundOffIcon");
+
+// Landing, feedback and legal pages
+export const LessonTimeIcon = brandIcon(Clock, "LessonTimeIcon");
+export const HandsOnIcon = brandIcon(Hand, "HandsOnIcon");
+export const FeedbackIcon = brandIcon(MessageSquareText, "FeedbackIcon");
+export const SafeIcon = brandIcon(ShieldCheck, "SafeIcon");
+export const RatingIcon = brandIcon(Star, "RatingIcon");

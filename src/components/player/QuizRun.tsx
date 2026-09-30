@@ -8,6 +8,7 @@ import { NetworkMark } from "@/components/network/NetworkMark";
 import type { ProgressNode } from "@/components/network/NodeProgress";
 import { Button } from "@/components/ui/Button";
 import type { CourseOutline, Quiz } from "@/lib/content/schema";
+import { trackEvent } from "@/lib/analytics";
 import { useGlobalKeyDown } from "@/lib/keyboard";
 import { CoachPanel } from "./coach/CoachPanel";
 import { useCoach } from "./coach/useCoach";
@@ -93,6 +94,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
       answers,
     };
     await store.recordQuizAttempt(quiz.id, result);
+    if (result.passed) trackEvent("quiz_pass", quiz.id);
     setAttempt(result);
     setPhase("results");
     window.scrollTo({ top: 0 });

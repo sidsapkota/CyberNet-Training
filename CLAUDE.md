@@ -9,6 +9,8 @@ Audience: everyone from about **age 12 to adults**. See [Content style guide](#c
 Current state: guests learn with progress in `localStorage`; learners who sign in (Google or email
 magic link) get progress synced to Supabase. Both sit behind the same `ProgressStore` interface. No
 payments or premium gating yet. See [Accounts and sync](#accounts-and-sync).
+Production is **https://cybernettrainer.com** (`src/lib/site.ts`); see [Launch](#launch-domain-seo-analytics-legal-feedback)
+and `docs/launch-checklist.md` for the dashboards (Vercel, Supabase, Google, Resend, ImprovMX).
 Code is on GitHub: `sidsapkota/CyberNet-Training`, branch `main`.
 
 ## Commands
@@ -321,9 +323,19 @@ interactive, update `isInteractiveCard` / `InteractiveCard` in `schema.ts`.
 Pages with the site header live in the `src/app/(main)/` route group: a top bar (logo, Dashboard,
 Courses, XP, theme) and, on phones, a bottom tab bar (`src/components/nav/SiteNav.tsx`). Lessons
 keep their focused player shell.
-- `/`: **dashboard** (`src/components/dashboard/Dashboard.tsx`). A big "Continue" hero for the
+- `/`: the **landing page** for first-time visitors (`src/components/landing/Landing.tsx`: hero
+  with the waving mascot and "Try a lesson free", the two courses, how it works, parents and
+  teachers, FAQ), or the **dashboard** for returning learners. The page is static; an inline script
+  (`src/lib/home.ts`) sets `data-returning` on `<html>` before first paint when there's guest
+  progress or a Supabase auth cookie, and CSS shows one or the other (`HomeSwitch`). The
+  dashboard (`src/components/dashboard/Dashboard.tsx`) has a big "Continue" hero for the
   current lesson, real stats (XP, lessons, modules), 14 days of activity, a progress ring per
-  course, and "Your courses". Learners with no progress see a one-button welcome instead.
+  course, and "Your courses"; its one-button welcome now only shows after a progress reset.
+- `/from/<platform>` (and `/from/<platform>/<lesson-id>`): tagged links for videos. Same home
+  page (or that lesson), never indexed (canonical is `/` or `/lesson/<id>`); page views then show
+  which platform sent people. See [Analytics](#analytics).
+- `/privacy`, `/terms`: rendered from `content/legal/*.md` (see [Legal pages](#legal-pages)).
+- `/feedback`: the feedback form (`?lesson=<id>` fills in the lesson).
 - `/courses`: **catalog**, a grid of `CourseCard`s (cover, title, one-line description, progress).
   With a single course, a dim "More courses on the way" tile fills the grid.
 - `/course/[id]`: **course path** (`src/components/course/CoursePath.tsx`):
@@ -336,8 +348,10 @@ keep their focused player shell.
   - Lesson and quiz end screens link back with `?completed=<id>`. The path draws
     `snapshotBefore` for a moment, then the real state, so the node fills and the trace lights.
     The query is then removed.
-- `/lesson/[id]`: statically generated for every lesson and quiz (`dynamicParams = false`). In Path
-  mode a locked item offers "Switch to Explore". ✕ returns to the course path.
+- `/lesson/[id]`: statically generated for every lesson and quiz (`dynamicParams = false`). ✕
+  returns to the course path. **Deep links always work for newcomers** (`deepLinkGate` in
+  `state.ts`): a learner with no progress plays any lesson straight away. Learners with progress,
+  in Path mode, see the gate: "Play it anyway", "Switch to Explore", or go to the next lesson.
 - **Client-only rendering:** progress-dependent pages render the `NetworkMark` loading state until
   progress loads, then draw. This also keeps reduced-motion entrances from mismatching the
   server HTML.
@@ -371,7 +385,13 @@ src/lib/keyboard.ts      global keyboard shortcut helpers
 src/lib/glossary.ts      glossary schema, lookup and the [[term]] mark syntax (content/glossary.json)
 src/lib/coach.ts         how-to-play panel keys and "seen" rules; hints.ts: hint display and XP note rules
 src/lib/supabase/        env validation, typed browser/server/admin clients, generated DB types
-src/lib/auth/            AuthProvider, verified user id, display-name rules, safe redirects
+src/lib/auth/            AuthProvider, verified user id, display-name rules, safe redirects, age.ts (13+ check)
+src/lib/site.ts          production URL, name, contact; analytics.ts (events, sources, URL redaction)
+src/lib/og.tsx           Open Graph / Twitter image renderer (fonts vendored in assets/og-fonts)
+src/components/landing/  landing page, home switch (landing vs dashboard), CTA
+src/components/feedback/ feedback form; legal/ legal page layout; nav/SiteFooter.tsx footer
+content/legal/           privacy.md and terms.md (drafts; reviewer banner in an HTML comment)
+docs/                    launch-checklist.md, email/ (Supabase auth email templates)
 src/app/actions/         Server Actions: progress writes (server-side XP), merge, account
 src/components/account/  login form, account panel, guest save-progress prompt
 supabase/                Supabase CLI project (config.toml; migrations go in supabase/migrations/)
@@ -409,6 +429,8 @@ src/dev/                 dev-only card samples + playground (served at /dev/card
   - Restart `npm run dev` after editing env files.
 - **Variables:**
   - `NEXT_PUBLIC_SUPABASE_URL` is the project URL.
+  - `NEXT_PUBLIC_SITE_URL` (optional) overrides the production origin (default
+    https://cybernettrainer.com).
   - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` is the publishable key (`sb_publishable_…`), called the
     "anon" key in older projects.
   - `SUPABASE_SECRET_KEY` is the **server-only** secret key (`sb_secret_…`). It bypasses RLS. It's
@@ -436,7 +458,11 @@ src/dev/                 dev-only card samples + playground (served at /dev/card
 ## Accounts and sync
 
 ### Auth (`@supabase/ssr`, App Router)
-- **Sign-in:** Google, or an email magic link (`/login`). The only personal data we collect is the
+- **Sign-in:** Google, or an email magic link (`/login`). **Accounts are 13+:** `/login` requires an
+  "I'm 13 or older" checkbox before either button (it leaves a local pending flag, and
+  `AgeGate` saves `age_confirmed` via `confirmAgeAction` right after sign-in). Signed-in accounts
+  without a confirmation (made before the check) see a one-time full-screen prompt; "I'm under
+  13" signs them out. Guests of any age can play. The only personal data we collect is the
   email and a display name. Learners may be 12, so there are no avatars, birthdays or real names:
   - `/account` suggests a nickname.
   - A trigger strips `avatar_url`, `picture`, `full_name` and `name` from auth user metadata.
@@ -446,9 +472,11 @@ src/dev/                 dev-only card samples + playground (served at /dev/card
 - **`/auth/callback`** exchanges `?code=` (Google, and the default magic-link email, which uses PKCE
   and so needs the same browser) or `?token_hash=&type=` (`verifyOtp`). Redirects only go to
   same-site paths (`safeNextPath`). New users without a display name go to `/account?welcome=1`.
-- **Redirect URLs** (Supabase → Auth → URL Configuration): `http://localhost:3000/auth/callback`
-  and `https://cyber-net-training.vercel.app/auth/callback` are allowed. Any other origin (a phone
-  on the LAN, a preview deployment) must be added there, or sign-in falls back to the Site URL.
+- **Redirect URLs** (Supabase → Auth → URL Configuration): the Site URL is
+  `https://cybernettrainer.com`, and `https://cybernettrainer.com/auth/callback`,
+  `http://localhost:3000/auth/callback` and `https://cyber-net-training.vercel.app/auth/callback`
+  are allowed (see `docs/launch-checklist.md`, which also covers preview deployments). Any other
+  origin (a phone on the LAN) must be added there, or sign-in falls back to the Site URL.
 - **Google sign-in** is in Testing mode (only allow-listed test accounts can use it).
   **Before publishing the Google app out of Testing mode, the "Continue with Google" button must use
   Google's official "G" logo** per Google's sign-in branding guidelines. For now it's text-only
@@ -512,13 +540,16 @@ Migrations, all applied to the linked project:
   `TRUNCATE`, `REFERENCES` and `TRIGGER` from `authenticated`. TRUNCATE ignores RLS.
 - `20260930140000_profiles_sound_enabled.sql`: `profiles.sound_enabled` (default true).
 - `20260930150000_profiles_coach_seen.sql`: `profiles.coach_seen` (text[], default empty, at most 32).
+- `20260930160000_age_confirmed_and_feedback.sql`: `profiles.age_confirmed`, and the `feedback`
+  table with its rate-limit trigger.
 
 | Table | Holds |
 |---|---|
-| `profiles` | `id` (= auth user), `display_name` (1 to 40 chars, nullable until chosen), `is_premium` (default false), `learning_mode` (`path` or `explore`), `sound_enabled` (default true), `coach_seen` (how-to-play panels dismissed) |
+| `profiles` | `id` (= auth user), `display_name` (1 to 40 chars, nullable until chosen), `is_premium` (default false), `learning_mode` (`path` or `explore`), `sound_enabled` (default true), `coach_seen` (how-to-play panels dismissed), `age_confirmed` (13+ confirmed; never a date of birth) |
 | `card_completions` | `(user_id, lesson_id, card_id)` primary key, `completed_at`, `xp` (0 to 20) |
 | `lesson_completions` | `(user_id, lesson_id)` primary key, `completed_at`, `xp` (0 to 20) |
 | `quiz_attempts` | `id`, `user_id`, `quiz_id`, `attempted_at` (unique per user and quiz), `score` 0 to 1, `passed`, `xp` (0 to 50), `answers` jsonb |
+| `feedback` | `id`, `created_at`, `message` (1 to 1,000 chars), `lesson_id?` (kebab-case), `rating?` (1 to 5), `session_id` (random per tab). **Not linked to users.** |
 
 - **Not stored:** best score and first pass are derived from attempts, and total XP is summed from
   rows.
@@ -531,12 +562,18 @@ Migrations, all applied to the linked project:
   `= id` for profiles).
 - **Writes:**
   - Users may **update only `profiles.display_name`**, on their own row. There's a column-level
-    grant and an update policy; `is_premium`, `learning_mode`, `sound_enabled` and `coach_seen` aren't writable.
+    grant and an update policy; `is_premium`, `learning_mode`, `sound_enabled`, `coach_seen` and
+    `age_confirmed` aren't writable (`confirmAgeAction` sets the last one with the secret key).
+  - **`feedback` is insert-only:** `anon` and `authenticated` may insert only `message`,
+    `lesson_id`, `rating` and `session_id` (column grant + an insert policy). Nobody can select,
+    update or delete except the service role (read it in the Supabase dashboard). A `security
+    definer` trigger limits each session to 5 per hour and everyone to 30 per minute. The
+    session id comes from the browser, so the global cap is the real backstop.
   - Progress tables have **no write policies or privileges** for `anon` or `authenticated`. All
     progress writes go through Server Actions with the secret key, so users can never set their
     own XP.
-- **`anon`** has no privileges at all, and `authenticated` has only `SELECT` plus `UPDATE
-  (display_name)` on profiles. The second migration removed Supabase's default `TRUNCATE`,
+- **`anon`** has no privileges except inserting feedback, and `authenticated` has only `SELECT`
+  on its own rows, `UPDATE (display_name)` on profiles, and inserting feedback. The second migration removed Supabase's default `TRUNCATE`,
   `REFERENCES` and `TRIGGER`. New tables get those defaults again, so revoke them in the same
   migration.
 - **`npm run check:rls`** proves all of this against the linked project. It uses two throwaway
@@ -698,12 +735,12 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
 - **Accessibility:** decorative by default (`aria-hidden`). Pass `label` (or `label` alone for the
   default description) when it carries meaning.
 - **Where it appears** (restrained, to delight, not distract):
-  - the dashboard's first-visit welcome (`happy`, waving)
+  - the landing page hero and the dashboard's welcome (`happy`, waving)
   - lesson complete (`celebrating`)
   - module quiz pass (`celebrating`, with the confetti)
   - quiz fail (`thinking`, with encouraging copy)
   - wrong answers in lessons (a small `confused` beside the feedback)
-  - the locked lesson screen, the 404 page and empty states (`presenting`, pointing at the next
+  - the age check, the locked lesson screen, the 404 page and empty states (`presenting`, pointing at the next
     step)
   - **the one exception inside cards:** a **safety-note explainer** (`mascot: "presenting"`), which
     shows the mascot beside the body in an amber panel. Use it only for real-world safety (e.g.
@@ -752,6 +789,68 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   not all at once.
 - **One primary action per view:** the dashboard's Continue, the popover's Start, the welcome's
   Start learning.
+
+## Launch: domain, SEO, analytics, legal, feedback
+
+### Domain and SEO
+- **`src/lib/site.ts`**: `siteUrl()` (production origin, `NEXT_PUBLIC_SITE_URL` or
+  https://cybernettrainer.com), `SITE_NAME`, `CONTACT_EMAIL` (hello@cybernettrainer.com).
+  `metadataBase`, canonical URLs, Open Graph URLs and the sitemap all use it, so previews still point
+  search engines at production.
+- **Indexing:** only `VERCEL_ENV=production` is indexable. Previews and local dev get a robots file
+  that disallows everything, plus `noindex` metadata.
+- **`sitemap.xml`** lists `/`, `/courses`, course paths, every lesson, `/privacy` and `/terms`.
+  **`robots.txt`** disallows `/dev/`, `/account`, `/auth/`, `/feedback` and `/from/`.
+- **Every page has a title and description.** Lesson titles read "Lesson (Course)".
+- **Link previews** (`src/lib/og.tsx`, rendered at build): the home image (`app/opengraph-image.tsx`)
+  and one per course (`app/(main)/course/[id]/opengraph-image.tsx`); lesson pages render their
+  course's image. Twitter images re-export them. Navy, logo, mascot and title; cyan only in the
+  logo and mascot. Fonts are IBM Plex Sans (OFL) in `assets/og-fonts/`, read by literal paths
+  (variable paths make the bundler trace the whole project).
+- **Sign-in emails:** `docs/email/*.html`, pasted into Supabase (steps in the launch checklist).
+  Their logo is `/brand/email-logo.png`, generated at build by `app/brand/email-logo.png/route.tsx`.
+
+### Analytics
+- **Vercel Web Analytics** (`src/components/SiteAnalytics.tsx`): no cookies, no personal data.
+  `beforeSend` runs `redactUrl`: query strings are dropped except `utm_*`, and `/dev` isn't
+  tracked, so a sign-in token or email can never be sent.
+- **Custom events** (`trackEvent` in `src/lib/analytics.ts`): `landing_cta`, `lesson_start`,
+  `lesson_complete`, `quiz_pass`, `signup_complete`, each with at most two properties: `lesson`
+  and `source`. **Only Pro collects custom events** (2 properties; Web Analytics Plus allows 8 and
+  shows UTM parameters). On Hobby, page views still work, and the event calls are harmless.
+- **Where visitors came from:** the first `utm_source` or `/from/<platform>` path seen in a tab is
+  kept in sessionStorage (never a cookie) and attached to that tab's events as `source`.
+- **Tagging video links** (works on every plan, because it's a page path):
+  - `https://cybernettrainer.com/from/tiktok` → the home page
+  - `https://cybernettrainer.com/from/youtube/whats-in-the-box` → that lesson
+  - Use one lower-case word per platform (`tiktok`, `youtube`, `instagram`) or per video
+    (`tiktok-ram`, up to 30 letters, digits, `-` and `_`). `?utm_source=tiktok` on any URL also
+    works for events and for UTM reports on Web Analytics Plus.
+- **Reading it** (Vercel → project → **Analytics**):
+  - **Pages** panel: `/from/tiktok`, `/from/youtube/...` and so on show visits per platform or
+    video.
+  - **Referrers** panel: which sites links were opened from.
+  - **Events** panel (Pro only): pick an event, then filter by `source` or `lesson`, e.g.
+    `lesson_complete` with `source = tiktok`.
+
+### Legal pages
+- `content/legal/privacy.md` and `terms.md`, rendered at `/privacy` and `/terms`
+  (`src/lib/content/legal.ts`). **They're drafts:** each file starts with a reviewer banner in an
+  HTML comment (not shown on the page: the renderer skips HTML and the loader strips it) listing
+  what an adult, and ideally a lawyer, must check: COPPA, the Australian Privacy Act and APPs, the
+  OAIC Children's Online Privacy Code, and GDPR if EU users arrive.
+- A test checks that the banner never reaches the page, and that the policy still covers what we
+  collect, the services, account deletion, the contact email and Australian law. **Update the
+  policy whenever we start collecting something new.**
+- Linked from the footer, `/login` and the age check.
+
+### Feedback
+- `/feedback` (from the footer, and "Send feedback about this lesson" on the lesson-complete
+  screen): a message (1,000 characters max, with "Please don't include personal details"), an
+  optional lesson and an optional 1–5 rating (native radio inputs). It inserts straight into the
+  `feedback` table with the publishable key; RLS makes it insert-only, and the database
+  rate-limits it (see Row Level Security rules). Without Supabase env vars it shows the contact
+  email instead.
 
 ## Content style guide
 

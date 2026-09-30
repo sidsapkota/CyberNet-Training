@@ -36,3 +36,14 @@ export async function deleteAccountAction(): Promise<void> {
   await supabase.auth.signOut();
   redirect("/?account=deleted");
 }
+
+/**
+ * Records that the signed-in learner confirmed they're 13 or older (accounts are 13+). Only the
+ * fact is stored, never a date of birth. Learners can't write this column themselves.
+ */
+export async function confirmAgeAction(): Promise<void> {
+  const userId = await requireUserId();
+  const { error } = await createSupabaseAdminClient().from("profiles").update({ age_confirmed: true }).eq("id", userId);
+  if (error) throw new Error(`Couldn't save the age confirmation: ${error.message}`);
+}
+

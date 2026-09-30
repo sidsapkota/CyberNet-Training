@@ -1,10 +1,5 @@
-import { Dashboard } from "@/components/dashboard/Dashboard";
-import { getCourses } from "@/lib/content/server";
+import { HomePage } from "@/components/landing/HomePage";
 
-export default function DashboardPage() {
-  return (
-    <main className="mx-auto max-w-wide px-gutter py-6 sm:py-10">
-      <Dashboard courses={getCourses()} />
-    </main>
-  );
+export default function Home() {
+  return <HomePage />;
 }

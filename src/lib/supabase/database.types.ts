@@ -63,6 +63,33 @@ export type Database = {
         }
         Relationships: []
       }
+      feedback: {
+        Row: {
+          created_at: string
+          id: string
+          lesson_id: string | null
+          message: string
+          rating: number | null
+          session_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          lesson_id?: string | null
+          message: string
+          rating?: number | null
+          session_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          lesson_id?: string | null
+          message?: string
+          rating?: number | null
+          session_id?: string
+        }
+        Relationships: []
+      }
       lesson_completions: {
         Row: {
           completed_at: string
@@ -86,6 +113,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          age_confirmed: boolean
           coach_seen: string[]
           created_at: string
           display_name: string | null
@@ -95,6 +123,7 @@ export type Database = {
           sound_enabled: boolean
         }
         Insert: {
+          age_confirmed?: boolean
           coach_seen?: string[]
           created_at?: string
           display_name?: string | null
@@ -104,6 +133,7 @@ export type Database = {
           sound_enabled?: boolean
         }
         Update: {
+          age_confirmed?: boolean
           coach_seen?: string[]
           created_at?: string
           display_name?: string | null

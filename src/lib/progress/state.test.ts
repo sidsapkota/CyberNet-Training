@@ -3,6 +3,7 @@ import { twoModuleCourse } from "@/test/fixtures";
 import {
   computeCourseState,
   courseProgress,
+  deepLinkGate,
   getBlockingLesson,
   getCurrentLesson,
   getNextLesson,
@@ -278,3 +279,22 @@ describe("lessonFinishState", () => {
     expect(lessonFinishState(cards, doneSet("hook", "q1", "recap")).missingCore).toBe(-1);
   });
 });
+
+describe("deepLinkGate (lesson links from videos)", () => {
+  it("lets a newcomer with no progress play any lesson straight away", () => {
+    expect(deepLinkGate(emptySnapshot(), twoModuleCourse(), "quiz2")).toBeNull();
+  });
+
+  it("keeps the Path gate for learners with progress, unless they choose to play anyway", () => {
+    const started = withLessons("l1");
+    expect(deepLinkGate(started, twoModuleCourse(), "quiz2")?.id).toBeTruthy();
+    expect(deepLinkGate(started, twoModuleCourse(), "quiz2", true)).toBeNull();
+  });
+
+  it("never blocks in Explore mode", () => {
+    const explorer = withLessons("l1");
+    explorer.preferences = { ...explorer.preferences, mode: "explore" };
+    expect(deepLinkGate(explorer, twoModuleCourse(), "quiz2")).toBeNull();
+  });
+});
+

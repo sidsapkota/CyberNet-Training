@@ -48,3 +48,12 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Home: the landing page for newcomers, the dashboard for returning learners. The inline script
+   in src/lib/home.ts sets data-returning before first paint, so neither ever flashes. */
+html[data-returning] [data-home="landing"] {
+  display: none;
+}
+html:not([data-returning]) [data-home="dashboard"] {
+  display: none;
+}

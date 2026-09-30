@@ -112,6 +112,9 @@ async function main() {
     record("New profiles have seen no coach panels", Array.isArray(coachDefaults.data?.coach_seen) && coachDefaults.data.coach_seen.length === 0);
     const tooMany = await admin.from("profiles").update({ coach_seen: Array.from({ length: 33 }, (_, i) => `k${i}`) }).eq("id", a.id).select();
     record("coach_seen is capped at 32 entries (even for the server)", Boolean(tooMany.error));
+    record("A can't set age_confirmed directly", blocked(await a.client.from("profiles").update({ age_confirmed: true }).eq("id", a.id).select()));
+    const ageDefault = await admin.from("profiles").select("age_confirmed").eq("id", a.id).single();
+    record("New profiles start with age not confirmed", ageDefault.data?.age_confirmed === false);
     const rename = await a.client.from("profiles").update({ display_name: "Ace" }).eq("id", a.id).select("display_name");
     record("A can change their own display name (control)", !rename.error && rename.data?.[0]?.display_name === "Ace");
 
@@ -129,6 +132,31 @@ async function main() {
       if (!r.error && (r.data ?? []).length > 0) anonClean = false;
     }
     record("Signed-out visitors can't read any rows", anonClean);
+
+    // Feedback: anyone can send it, nobody but the service role can read it back.
+    const session = crypto.randomUUID();
+    const sent = await anon.from("feedback").insert({ message: "check:rls test", session_id: session, rating: 4, lesson_id: "whats-in-the-box" });
+    record("A signed-out visitor can send feedback", !sent.error);
+    const sentSignedIn = await a.client.from("feedback").insert({ message: "check:rls test (signed in)", session_id: session });
+    record("A signed-in learner can send feedback", !sentSignedIn.error);
+    const anonRead = await anon.from("feedback").select("*");
+    const userRead = await a.client.from("feedback").select("*");
+    record("Nobody but the service role can read feedback", (Boolean(anonRead.error) || (anonRead.data ?? []).length === 0) && (Boolean(userRead.error) || (userRead.data ?? []).length === 0));
+    record("Feedback can't be changed or deleted", blocked(await anon.from("feedback").update({ message: "x" }).eq("session_id", session).select()) && blocked(await a.client.from("feedback").delete().eq("session_id", session).select()));
+    const forged = await anon.from("feedback").insert({ message: "x", session_id: session, created_at: "2000-01-01T00:00:00Z" } as never);
+    record("Feedback can't set its own id or time", Boolean(forged.error));
+    const tooLong = await anon.from("feedback").insert({ message: "x".repeat(1001), session_id: crypto.randomUUID() });
+    const badRating = await anon.from("feedback").insert({ message: "ok", rating: 6, session_id: crypto.randomUUID() });
+    const badLesson = await anon.from("feedback").insert({ message: "ok", lesson_id: "Not A Lesson!", session_id: crypto.randomUUID() });
+    record("Feedback rejects long messages, bad ratings and bad lesson ids", Boolean(tooLong.error && badRating.error && badLesson.error));
+    let limited = false;
+    for (let i = 0; i < 6 && !limited; i++) {
+      const r = await anon.from("feedback").insert({ message: `rate ${i}`, session_id: session });
+      limited = Boolean(r.error);
+    }
+    record("Feedback is rate-limited per session (5 an hour)", limited);
+    await admin.from("feedback").delete().like("message", "%check:rls test%");
+    await admin.from("feedback").delete().eq("session_id", session);
   } finally {
     // Delete both users; ON DELETE CASCADE must remove every row.
     for (const user of [a, b]) await admin.auth.admin.deleteUser(user.id);

@@ -5,6 +5,7 @@ import { useState, useTransition } from "react";
 import { deleteAccountAction, updateDisplayNameAction } from "@/app/actions/account";
 import { Button } from "@/components/ui/Button";
 import { DeleteIcon, SignOutIcon } from "@/components/ui/icons";
+import { trackEvent } from "@/lib/analytics";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { initialOf } from "@/lib/auth/profile";
 
@@ -36,7 +37,10 @@ export function AccountPanel({
         setName(result.displayName);
         setMessage({ tone: "ok", text: "Saved." });
         await refreshProfile();
-        if (welcome) router.push("/");
+        if (welcome) {
+          trackEvent("signup_complete"); // a new account has just finished setting up
+          router.push("/");
+        }
       } else {
         setMessage({ tone: "error", text: result.error });
       }

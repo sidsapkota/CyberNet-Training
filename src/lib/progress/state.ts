@@ -246,3 +246,20 @@ export function snapshotBefore(snapshot: ProgressSnapshot, lessonId: string): Pr
   if (quiz) quizzes[lessonId] = { ...quiz, passedAt: null };
   return { ...snapshot, lessons, quizzes };
 }
+
+/**
+ * The lesson a link can't open yet, or null to play it. Deep links from videos must always work
+ * for a newcomer: a learner with no progress at all plays any lesson straight away (it counts on
+ * their path as usual). Learners with progress keep the Path gate, which offers "Play it anyway"
+ * (`playAnyway`) as well as switching to Explore.
+ */
+export function deepLinkGate(
+  snapshot: ProgressSnapshot,
+  course: CourseOutline,
+  lessonId: string,
+  playAnyway = false,
+): LessonOutline | null {
+  if (playAnyway || !hasAnyProgress(snapshot)) return null;
+  return getBlockingLesson(snapshot, course, lessonId);
+}
+
