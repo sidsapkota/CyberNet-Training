@@ -1,8 +1,11 @@
 /**
  * Stripe settings, checked before use. Pure: `src/lib/pro/stripe.ts` (server-only) is the only file
- * that reads the real environment. Stripe is in TEST MODE ONLY: live keys are refused.
+ * that reads the real environment.
  *
- * - STRIPE_SECRET_KEY       server only; sk_test_… (or a restricted rk_test_… key)
+ * Live keys are refused everywhere except the production deployment (VERCEL_ENV=production): local
+ * dev, tests and every preview can only ever use test mode, so no preview can take real money.
+ *
+ * - STRIPE_SECRET_KEY       server only; sk_test_… (or a restricted rk_test_… key); live keys only in production
  * - STRIPE_WEBHOOK_SECRET   server only; whsec_… (from the webhook endpoint, or `stripe listen`)
  * - STRIPE_PRICE_MONTHLY    price_… (the monthly AUD price; amounts live in Stripe, never in code)
  * - STRIPE_PRICE_ANNUAL     price_…
@@ -36,12 +39,16 @@ export function stripeNotConfigured(raw: RawStripeEnv): boolean {
   return !raw.secretKey && !raw.webhookSecret && !raw.priceMonthly && !raw.priceAnnual;
 }
 
-export function parseStripeEnv(raw: RawStripeEnv): StripeEnv {
+export function parseStripeEnv(raw: RawStripeEnv, { production = false }: { production?: boolean } = {}): StripeEnv {
   const secretKey = raw.secretKey?.trim() ?? "";
-  if (/^(sk|rk)_live_/.test(secretKey)) {
-    throw new StripeEnvError("STRIPE_SECRET_KEY is a LIVE key. CyberNet Pro runs in Stripe test mode only: use a sk_test_ key.");
+  if (/^(sk|rk)_live_/.test(secretKey) && !production) {
+    throw new StripeEnvError(
+      "STRIPE_SECRET_KEY is a LIVE key outside production. Local dev and previews run in Stripe test mode only: use a sk_test_ key.",
+    );
   }
-  if (!/^(sk|rk)_test_[A-Za-z0-9]+$/.test(secretKey)) throw new StripeEnvError("STRIPE_SECRET_KEY is missing or isn't a Stripe test key (sk_test_…).");
+  if (!/^(sk|rk)_(test|live)_[A-Za-z0-9]+$/.test(secretKey)) {
+    throw new StripeEnvError("STRIPE_SECRET_KEY is missing or isn't a Stripe test key (sk_test_…).");
+  }
   const webhookSecret = raw.webhookSecret?.trim() ?? "";
   if (!/^whsec_[A-Za-z0-9]+$/.test(webhookSecret)) throw new StripeEnvError("STRIPE_WEBHOOK_SECRET is missing or isn't a webhook signing secret (whsec_…).");
   const monthly = raw.priceMonthly?.trim() ?? "";

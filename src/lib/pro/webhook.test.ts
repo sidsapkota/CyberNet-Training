@@ -164,9 +164,13 @@ describe("parseStripeEnv", () => {
     expect(parseStripeEnv({ ...good, secretKey: "rk_test_abc" }).secretKey).toBe("rk_test_abc");
   });
 
-  it("refuses live keys: test mode only", () => {
-    expect(() => parseStripeEnv({ ...good, secretKey: "sk_live_abc" })).toThrow(/LIVE key/);
+  it("refuses live keys outside production (local dev, tests and previews are test mode only)", () => {
+    expect(() => parseStripeEnv({ ...good, secretKey: "sk_live_abc" })).toThrow(/LIVE key outside production/);
     expect(() => parseStripeEnv({ ...good, secretKey: "rk_live_abc" })).toThrow(StripeEnvError);
+    expect(() => parseStripeEnv({ ...good, secretKey: "sk_live_abc" }, { production: false })).toThrow(StripeEnvError);
+    expect(parseStripeEnv({ ...good, secretKey: "sk_live_abc" }, { production: true }).secretKey).toBe("sk_live_abc");
+    expect(parseStripeEnv(good, { production: true }).secretKey).toBe("sk_test_abc");
+    expect(() => parseStripeEnv({ ...good, secretKey: "pk_live_abc" }, { production: true })).toThrow(StripeEnvError);
   });
 
   it("rejects missing or malformed values", () => {

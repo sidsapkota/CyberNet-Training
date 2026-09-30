@@ -57,7 +57,15 @@ export function Dashboard({ courses }: { courses: CourseOutline[] }) {
   }
 
   const first = courses[0];
-  if (!hasAnyProgress(snapshot) || !first) return <Welcome course={first} />;
+  // The early-user thank-you shows either way: an early account may not have started a lesson yet.
+  if (!hasAnyProgress(snapshot) || !first) {
+    return (
+      <>
+        <EarlyUserThanks />
+        <Welcome course={first} />
+      </>
+    );
+  }
 
   const states = courses.map((course) => computeCourseState(snapshot, course, undefined, hasPro));
   const focus =

@@ -39,11 +39,24 @@ describe("privacy policy and terms", () => {
       "don't include personal details",
       "time zone",
       "only** to work out your daily goal and your streak",
+      "stripe",
+      "never see or store your card details",
     ]) {
       expect(privacy, must).toContain(must);
     }
     const terms = stripDraftBanner(read("terms")).toLowerCase();
-    for (const must of ["13 or older", "free right now", "australia", "hello@cybernettraining.com"]) {
+    for (const must of [
+      "13 or older",
+      "australia",
+      "hello@cybernettraining.com",
+      "7-day free trial",
+      "renews automatically",
+      "manage subscription",
+      "refunds",
+      "australian consumer law",
+      "handled by stripe",
+      "getting help after something goes wrong online",
+    ]) {
       expect(terms, must).toContain(must);
     }
   });

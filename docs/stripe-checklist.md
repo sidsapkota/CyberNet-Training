@@ -22,6 +22,8 @@ The settings the app reads (all server-only, never `NEXT_PUBLIC_`):
    **Australia**, currency **AUD**.
 2. Make sure you're in a **sandbox / Test mode** (the toggle or sandbox picker at the top). The
    dashboard shows "Test mode" or the sandbox name. Stay there for every step below.
+   **Products, prices and portal settings belong to one mode:** ones made in live mode don't exist
+   in the sandbox (Stripe answers "No such price… a similar object exists in live mode").
 
 ## 2. Product and prices
 1. **Product catalogue → Add product**: name **CyberNet Pro**, description "Every module of every
@@ -51,8 +53,9 @@ The settings the app reads (all server-only, never `NEXT_PUBLIC_`):
    the browser; pick the same sandbox).
 2. In one terminal, run:
    ```
-   stripe listen --forward-to localhost:3000/api/stripe/webhook
+   stripe listen --forward-to localhost:3000/api/stripe/webhook --events checkout.session.completed,customer.subscription.created,customer.subscription.updated,customer.subscription.deleted,customer.subscription.paused,customer.subscription.resumed,customer.subscription.trial_will_end,invoice.paid,invoice.payment_failed
    ```
+   (Newer CLI versions require `--events`.) `stripe listen --print-secret` prints only the secret.
    It prints a signing secret, `whsec_…`. It stays the same for this computer.
 3. ➜ **Now add to `.env.local`**: `STRIPE_WEBHOOK_SECRET=whsec_…` (the one `stripe listen`
    printed), then restart `npm run dev`.
@@ -65,6 +68,16 @@ The settings the app reads (all server-only, never `NEXT_PUBLIC_`):
 2. Business information: privacy policy `https://cybernettraining.com/privacy`, terms
    `https://cybernettraining.com/terms`.
 3. Save.
+
+## 5b. Failed payments: about a week (test mode, and again in live mode later)
+**Settings → Billing → Revenue recovery → Retries** (called "Subscriptions and emails → Manage
+failed payments" in some dashboards):
+1. Retry schedule: retry for **1 week** (Smart Retries, or a custom schedule ending by day 7).
+2. If all retries fail: **cancel the subscription**.
+3. Optional: turn on Stripe's emails for failed payments and expiring cards.
+The app keeps Pro while the subscription is `past_due` and ends it when Stripe cancels, so this
+setting is what makes it "about a week". Stripe's default is about two weeks (the end-to-end test
+saw the cancel on day 15 before this was changed).
 
 ## 6. Webhook endpoint for the `pro` preview
 Preview deployments are behind Vercel's login, which would also block Stripe. Vercel's

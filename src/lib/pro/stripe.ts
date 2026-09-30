@@ -5,7 +5,7 @@ import type { StripePrice } from "./pricing";
 
 /**
  * The Stripe client and settings. Server only, and the only file that reads the Stripe env vars
- * (a test enforces both). Test mode only: `parseStripeEnv` refuses live keys.
+ * (a test enforces both). `parseStripeEnv` refuses live keys anywhere but production.
  */
 
 /** Stripe's settings, or null when Pro isn't set up on this copy (the app then runs without it). */
@@ -16,7 +16,7 @@ export function getStripeEnv(): StripeEnv | null {
     priceMonthly: process.env.STRIPE_PRICE_MONTHLY,
     priceAnnual: process.env.STRIPE_PRICE_ANNUAL,
   };
-  return stripeNotConfigured(raw) ? null : parseStripeEnv(raw);
+  return stripeNotConfigured(raw) ? null : parseStripeEnv(raw, { production: process.env.VERCEL_ENV === "production" });
 }
 
 let client: Stripe | null = null;

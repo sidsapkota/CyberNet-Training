@@ -165,6 +165,56 @@ async function main() {
     const rename = await a.client.from("profiles").update({ display_name: "Ace" }).eq("id", a.id).select("display_name");
     record("A can change their own display name (control)", !rename.error && rename.data?.[0]?.display_name === "Ace");
 
+    // CyberNet Pro: learners read their own subscription and grant, and nothing else; only the
+    // server (webhook and Server Actions) writes any of it.
+    const later = new Date(Date.now() + 30 * 86_400_000).toISOString();
+    const sub = (userId: string, id: string) => ({
+      id, user_id: userId, customer_id: `cus_rls${id.slice(4)}`, status: "active", price_id: "price_rlscheck",
+      billing_interval: "month", current_period_end: later, started_at: now,
+    });
+    const tag = Date.now().toString(36);
+    const seedPro = [
+      await admin.from("stripe_customers").insert({ user_id: b.id, customer_id: `cus_rlsb${tag}` }),
+      await admin.from("subscriptions").insert(sub(b.id, `sub_rlsb${tag}`)),
+      await admin.from("subscriptions").insert(sub(a.id, `sub_rlsa${tag}`)),
+      await admin.from("pro_grants").insert({ user_id: b.id, reason: "early_user", starts_at: now, expires_at: later }),
+      await admin.from("stripe_events").insert({ id: `evt_rls${tag}`, type: "check.rls" }),
+    ];
+    record("The server can write Pro rows (control)", seedPro.every((r) => !r.error), seedPro.find((r) => r.error)?.error?.message);
+    for (const table of ["subscriptions", "pro_grants"] as const) {
+      const theirs = await a.client.from(table).select("user_id").eq("user_id", b.id);
+      record(`A can't read B's ${table}`, !theirs.error && (theirs.data ?? []).length === 0);
+    }
+    const ownSub = await a.client.from("subscriptions").select("id").eq("user_id", a.id);
+    record("A can read their own subscription (control)", (ownSub.data ?? []).length === 1);
+    let serverOnlyHidden = true;
+    for (const table of ["stripe_customers", "stripe_events"] as const) {
+      const r = await a.client.from(table).select("*");
+      if (!r.error && (r.data ?? []).length > 0) serverOnlyHidden = false;
+    }
+    record("Learners can't read Stripe customers or webhook events", serverOnlyHidden);
+    record(
+      "A can't give themselves Pro (subscription or grant)",
+      blocked(await a.client.from("subscriptions").insert(sub(a.id, `sub_rlsx${tag}`)).select()) &&
+        blocked(await a.client.from("subscriptions").update({ status: "active", current_period_end: "2099-01-01T00:00:00Z" }).eq("user_id", a.id).select()) &&
+        blocked(await a.client.from("pro_grants").insert({ user_id: a.id, reason: "early_user", starts_at: now, expires_at: "2099-01-01T00:00:00Z" }).select()),
+    );
+    record(
+      "A can't change or delete B's Pro",
+      blocked(await a.client.from("subscriptions").update({ status: "canceled" }).eq("user_id", b.id).select()) &&
+        blocked(await a.client.from("subscriptions").delete().eq("user_id", b.id).select()) &&
+        blocked(await a.client.from("pro_grants").delete().eq("user_id", b.id).select()),
+    );
+    record(
+      "A can't mark webhook events as handled or link a Stripe customer",
+      blocked(await a.client.from("stripe_events").insert({ id: `evt_rlsx${tag}`, type: "x" }).select()) &&
+        blocked(await a.client.from("stripe_customers").insert({ user_id: a.id, customer_id: `cus_rlsx${tag}` }).select()),
+    );
+    const badStatus = await admin.from("subscriptions").insert({ ...sub(a.id, `sub_rlsy${tag}`), status: "free_forever" });
+    const badGrant = await admin.from("pro_grants").insert({ user_id: a.id, reason: "early_user", starts_at: later, expires_at: now });
+    record("Subscriptions only take Stripe's statuses, and grants must end after they start", Boolean(badStatus.error && badGrant.error));
+    await admin.from("stripe_events").delete().eq("id", `evt_rls${tag}`);
+
     // B's data is untouched.
     const bCard = await admin.from("card_completions").select("xp").eq("user_id", b.id).single();
     const bName = await admin.from("profiles").select("display_name, is_premium").eq("id", b.id).single();
@@ -174,7 +224,10 @@ async function main() {
     // Signed-out visitors see nothing.
     const anon = createClient<Database>(env.url, env.publishableKey, noSession);
     let anonClean = true;
-    for (const table of ["profiles", "card_completions", "lesson_completions", "quiz_attempts", "xp_events", "goal_days"] as const) {
+    for (const table of [
+      "profiles", "card_completions", "lesson_completions", "quiz_attempts", "xp_events", "goal_days",
+      "subscriptions", "pro_grants", "stripe_customers", "stripe_events",
+    ] as const) {
       const r = await anon.from(table).select("*");
       if (!r.error && (r.data ?? []).length > 0) anonClean = false;
     }
@@ -208,7 +261,10 @@ async function main() {
     // Delete both users; ON DELETE CASCADE must remove every row.
     for (const user of [a, b]) await admin.auth.admin.deleteUser(user.id);
     let leftovers = 0;
-    for (const table of ["card_completions", "lesson_completions", "quiz_attempts", "xp_events", "goal_days"] as const) {
+    for (const table of [
+      "card_completions", "lesson_completions", "quiz_attempts", "xp_events", "goal_days",
+      "subscriptions", "pro_grants", "stripe_customers",
+    ] as const) {
       const r = await admin.from(table).select("user_id").in("user_id", [a.id, b.id]);
       leftovers += (r.data ?? []).length;
     }

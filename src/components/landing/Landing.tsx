@@ -8,7 +8,10 @@ import { LandingCta } from "./LandingCta";
 const COUNT_WORDS: Record<number, string> = { 2: "Two", 3: "Three", 4: "Four", 5: "Five" };
 
 const FAQ: { q: string; a: string }[] = [
-  { q: "Is it free?", a: "Yes, lessons are free right now, and you can play without an account." },
+  {
+    q: "Is it free?",
+    a: "The first module of every course is free, and you can play it without an account. The rest is CyberNet Pro, which starts with a 7-day free trial. Help after something goes wrong online is always free.",
+  },
   {
     q: "Do I need an account?",
     a: "No. Your progress is saved on this device. Sign in (age 13 or older) to keep it on every device.",

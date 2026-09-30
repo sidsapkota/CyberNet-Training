@@ -8,6 +8,7 @@
 import { redirect } from "next/navigation";
 import { requireUserId } from "@/lib/auth/server";
 import { DisplayNameSchema } from "@/lib/auth/profile";
+import { deleteStripeCustomer } from "@/lib/pro/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
@@ -30,6 +31,9 @@ export async function updateDisplayNameAction(name: string): Promise<DisplayName
  */
 export async function deleteAccountAction(): Promise<void> {
   const userId = await requireUserId();
+  // Deleting the Stripe customer cancels any subscription at once, so nobody is billed for a
+  // deleted account. Done first: if it fails, the account stays and the learner can try again.
+  await deleteStripeCustomer(userId);
   const { error } = await createSupabaseAdminClient().auth.admin.deleteUser(userId);
   if (error) throw new Error(`Couldn't delete the account: ${error.message}`);
   const supabase = await createSupabaseServerClient();

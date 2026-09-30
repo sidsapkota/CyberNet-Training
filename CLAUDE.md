@@ -7,8 +7,9 @@ lessons made of interactive **cards** and get instant, satisfying feedback.
 Audience: everyone from about **age 12 to adults**. See [Content style guide](#content-style-guide).
 
 Current state: guests learn with progress in `localStorage`; learners who sign in (Google or email
-magic link) get progress synced to Supabase. Both sit behind the same `ProgressStore` interface. No
-payments or premium gating yet. See [Accounts and sync](#accounts-and-sync).
+magic link) get progress synced to Supabase. Both sit behind the same `ProgressStore` interface. See [Accounts and sync](#accounts-and-sync).
+**CyberNet Pro** (Stripe subscriptions, TEST MODE until you decide to go live) lives on the `pro`
+branch only and must not reach `main` until Stripe is live. See [CyberNet Pro](#cybernet-pro).
 Production is **https://cybernettraining.com** (`src/lib/site.ts`); see [Launch](#launch-domain-seo-analytics-legal-feedback)
 and `docs/launch-checklist.md` for the dashboards (Vercel, Supabase, Google, Resend, ImprovMX).
 Code is on GitHub: `sidsapkota/CyberNet-Training`, branch `main`.
@@ -58,8 +59,8 @@ troubleshooting, built on the hands-on card types), **How the Internet Works**
 (`how-the-internet-works`) and **Stay Safe Online** (`stay-safe-online`: passwords and two-step
 sign-in, spotting scams, privacy, and what to do when things go wrong; modules 1 and 4 free,
 modules 2 and 3 Pro).
-Each `module.json` may carry `"access": "free" | "pro"`, which the Pro branch reads; until then
-it's ignored.
+Each `module.json` has `"access": "free" | "pro"`. Every course's first module must be free (the
+loader checks), and help, reporting and recovery modules are always free.
 
 ```
 content/courses/<course-dir>/course.json                   { id, title, description, order }
@@ -67,7 +68,8 @@ content/courses/<course-dir>/modules/<module-dir>/module.json   { id, title, des
 content/courses/<course-dir>/modules/<module-dir>/lessons/*.json
 ```
 
-- A lesson file holds `{ id, kind: "lesson" | "quiz", title, order, isFree, cards[] }`. Quizzes also
+- A lesson file holds `{ id, kind: "lesson" | "quiz", title, order, cards[] }` (plus `icon` for
+  lessons). Access comes from its module. Quizzes also
   take `passThreshold` (0 to 1, default 0.7).
 - **Lesson icons:** every regular lesson has an `icon` from the allow-list in
   `src/lib/content/lessonIcons.ts` (lucide names, drawn by `LessonIcon` in
@@ -694,6 +696,49 @@ Migrations, all applied to the linked project:
   the triggers and the delete cascade, then cleans up. Run it after any schema or policy change.
 - **Testing sign-in without email:** Supabase's built-in email sender has a low hourly limit. For
   automated tests, use `auth.admin.generateLink()` and open `/auth/callback?token_hash=…&type=magiclink`.
+
+## CyberNet Pro
+
+**On the `pro` branch only. Stripe TEST MODE. Never merge to `main` until Stripe is live.**
+Setup steps: `docs/stripe-checklist.md`.
+
+- **What's Pro:** modules with `"access": "pro"`. The first module of each course and every help
+  module (e.g. Stay Safe Online's "When Things Go Wrong") are free; tests enforce both.
+- **Pro content never reaches the browser without entitlement:** lessons load from
+  `/api/lessons/[id]` (`private, no-store`): free lessons for anyone; Pro lessons only after
+  `requireUser()` and `getEntitlement()` (401 guest, 403 no Pro). Progress Server Actions check
+  entitlement again before writing XP for a Pro lesson (`ProRequiredError`). The guest merge keeps
+  Pro progress made before launch, and drops Pro progress from after launch unless the account has
+  Pro (`withoutUnentitledPro`), since guests can't open Pro lessons then.
+- **Entitlement** (`src/lib/pro/entitlement.ts`, pure, tested): a subscription that's `trialing`,
+  `active` or `past_due` whose period hasn't ended (plus `RENEWAL_GRACE_MS`, 2 days), or an
+  unexpired early-user grant. `past_due` keeps Pro while Stripe retries a failed renewal; when
+  Stripe gives up it cancels, and Pro ends. How long that takes is Stripe's retry setting (Billing →
+  Revenue recovery), about a week.
+- **Only Stripe grants Pro:** Checkout (`startCheckoutAction`, 7-day trial for a first subscription,
+  13+ confirmed) and the Customer Portal (`openPortalAction`) are hosted by Stripe; card details
+  never reach us. The webhook (`/api/stripe/webhook`) verifies Stripe's signature first, records
+  each event once (`stripe_events`), and always re-fetches the subscription from Stripe before
+  saving it, so duplicates and out-of-order events are safe. `/pro/welcome` syncs the session too,
+  after checking it belongs to the signed-in learner.
+- **Early-user grant:** accounts created before `PRO_LAUNCH_AT` get 30 days of Pro once, on their
+  first visit after launch (`pro_grants`), with a one-time thank-you on the dashboard.
+- **Keys** (`src/lib/pro/env.ts`, `stripe.ts`): `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`,
+  `STRIPE_PRICE_MONTHLY`, `STRIPE_PRICE_ANNUAL`, optional `PRO_LAUNCH_AT`; server-only. **Live keys
+  are refused everywhere except the production deployment** (`VERCEL_ENV=production`). Amounts
+  live in Stripe, never in code (`/pro` reads them and works out the annual saving).
+- **UI:** Pro nodes on the course path show the Pro badge in place of the lock and open the upgrade
+  sheet; `/pro` (plans, FAQ); `/pro/welcome`; the Pro panel on `/account` (plan in one line from
+  `proLine()`, "Manage subscription" → the portal). Deleting an account deletes the Stripe customer
+  first, which cancels any subscription.
+- **Tables** (`20260930180000_pro_subscriptions.sql`): `stripe_customers`, `subscriptions`,
+  `stripe_events`, `pro_grants`. Learners read only their own subscription and grant; nobody but
+  the service role writes any of them (`check:rls` proves it). Besides Server Actions, only
+  `src/lib/pro/server.ts` (server-only) and the signature-checked webhook may use the secret-key
+  client (`server-actions.test.ts`).
+- **End-to-end:** with `stripe listen` forwarding to the dev server, a scratch Playwright script
+  runs real Checkout and portal pages with test cards and test clocks (monthly with trial, annual
+  without, portal cancel, a failed renewal, the grant expiring); see the checklist's step 10.
 
 ## Brand
 

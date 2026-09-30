@@ -56,6 +56,7 @@ Accounts are for people **aged 13 or older**. When you sign in we keep:
 - **When your learning happens, and your time zone**: the time of each moment you earn XP, and your device's time zone (for example "Australia/Sydney": it shows roughly which part of the world you're in, never your address or exact location). We use these **only** to work out your daily goal and your streak, so a day counts on your own calendar.
 - **Your settings**: Path or Explore mode, sound on or off, your daily goal, and which "how to play" tips you've seen.
 - **That you confirmed you're 13 or older.** We only store "confirmed", never your date of birth.
+- **If you subscribe to CyberNet Pro:** your Stripe customer number and your subscription's plan, status and dates (for example when it renews). **We never see or store your card details**: Stripe handles them.
 
 If you sign in with Google, Google sends us your email address, and also your name and profile picture. We don't use or show your name or picture, and we remove them from your profile. Our sign-in provider (Supabase) keeps the details Google sent in its sign-in records until you delete your account.
 
@@ -83,6 +84,7 @@ We share information only with the services that run the website:
 - **Vercel**: hosts the website and runs our cookieless analytics.
 - **Google**: only if you choose "Continue with Google" to sign in.
 - **Resend**: sends sign-in emails.
+- **Stripe**: only if you subscribe to CyberNet Pro. Stripe runs the checkout and handles your card; it also has your email (for receipts). See [Stripe's privacy policy](https://stripe.com/privacy).
 
 These companies may store data on servers outside Australia. They're only allowed to use it to provide their service to us.
 

@@ -5,6 +5,7 @@ import { useState, useTransition } from "react";
 import { deleteAccountAction, updateDisplayNameAction } from "@/app/actions/account";
 import { Button } from "@/components/ui/Button";
 import { DailyGoalSetting } from "./DailyGoalSetting";
+import { ManageProPanel } from "@/components/pro/ManageProPanel";
 import { DeleteIcon, SignOutIcon } from "@/components/ui/icons";
 import { trackEvent } from "@/lib/analytics";
 import { useAuth } from "@/lib/auth/AuthProvider";
@@ -101,6 +102,8 @@ export function AccountPanel({
         )}
       </form>
 
+      <ManageProPanel className={panel} />
+
       <DailyGoalSetting className={panel} />
 
       <div className={panel}>
@@ -123,7 +126,7 @@ export function AccountPanel({
       <div className={`${panel} border-danger`}>
         <h2 className="font-semibold">Delete account</h2>
         <p className="mt-1 text-small text-ink-muted">
-          Deletes your account, your progress and your XP. This can&apos;t be undone.
+          Deletes your account, your progress and your XP, and cancels any Pro subscription straight away. This can&apos;t be undone.
         </p>
         {confirmDelete ? (
           <div className="mt-4 flex flex-col gap-2 sm:flex-row">
