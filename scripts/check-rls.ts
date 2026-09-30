@@ -4,7 +4,7 @@
  *
  * - Creates two throwaway users (…@example.com, confirmed, no emails are sent) and signs each in
  *   with an admin-generated magic-link token.
- * - As user A, tries to read and modify user B's rows, and to write XP / is_premium directly.
+ * - As user A, tries to read and modify user B's rows, and to write XP or Pro directly.
  * - Deletes both users at the end and checks the cascade removed all their rows.
  *
  * Needs SUPABASE_SECRET_KEY in .env.local. Never prints keys or tokens.
@@ -63,8 +63,8 @@ async function main() {
     await admin.from("profiles").update({ display_name: "Bee" }).eq("id", b.id);
 
     // Triggers
-    const profileA = await admin.from("profiles").select("id, is_premium").eq("id", a.id).maybeSingle();
-    record("New users get a profile row (trigger)", profileA.data?.id === a.id && profileA.data.is_premium === false);
+    const profileA = await admin.from("profiles").select("id").eq("id", a.id).maybeSingle();
+    record("New users get a profile row (trigger)", profileA.data?.id === a.id);
     const meta = (await admin.auth.admin.getUserById(a.id)).data.user?.user_metadata ?? {};
     record("Avatar and real-name metadata are stripped (trigger)", !("avatar_url" in meta) && !("full_name" in meta) && meta.note === "kept");
 
@@ -102,7 +102,6 @@ async function main() {
           .select(),
       ),
     );
-    record("A can't make themselves premium", blocked(await a.client.from("profiles").update({ is_premium: true }).eq("id", a.id).select()));
     record("A can't change learning_mode directly", blocked(await a.client.from("profiles").update({ learning_mode: "explore" }).eq("id", a.id).select()));
     record("A can't change sound_enabled directly", blocked(await a.client.from("profiles").update({ sound_enabled: false }).eq("id", a.id).select()));
     const profileDefaults = await admin.from("profiles").select("sound_enabled").eq("id", a.id).single();
@@ -217,7 +216,7 @@ async function main() {
 
     // B's data is untouched.
     const bCard = await admin.from("card_completions").select("xp").eq("user_id", b.id).single();
-    const bName = await admin.from("profiles").select("display_name, is_premium").eq("id", b.id).single();
+    const bName = await admin.from("profiles").select("display_name").eq("id", b.id).single();
     const bQuiz = await admin.from("quiz_attempts").select("id").eq("user_id", b.id);
     record("B's data is unchanged afterwards", bCard.data?.xp === 10 && bName.data?.display_name === "Bee" && (bQuiz.data ?? []).length === 1);
 

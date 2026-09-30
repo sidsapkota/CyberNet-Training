@@ -8,8 +8,8 @@ Audience: everyone from about **age 12 to adults**. See [Content style guide](#c
 
 Current state: guests learn with progress in `localStorage`; learners who sign in (Google or email
 magic link) get progress synced to Supabase. Both sit behind the same `ProgressStore` interface. See [Accounts and sync](#accounts-and-sync).
-**CyberNet Pro** (Stripe subscriptions, TEST MODE until you decide to go live) lives on the `pro`
-branch only and must not reach `main` until Stripe is live. See [CyberNet Pro](#cybernet-pro).
+**CyberNet Pro** (Stripe subscriptions) is live: live keys in Vercel Production only; local dev and
+previews use the Stripe sandbox. See [CyberNet Pro](#cybernet-pro).
 Production is **https://cybernettraining.com** (`src/lib/site.ts`); see [Launch](#launch-domain-seo-analytics-legal-feedback)
 and `docs/launch-checklist.md` for the dashboards (Vercel, Supabase, Google, Resend, ImprovMX).
 Code is on GitHub: `sidsapkota/CyberNet-Training`, branch `main`.
@@ -652,10 +652,13 @@ Migrations, all applied to the linked project:
   table with its rate-limit trigger.
 - `20260930170000_streaks_and_daily_goals.sql`: `profiles.daily_goal`, `daily_goal_chosen` and
   `time_zone`, and the `xp_events` and `goal_days` tables.
+- `20260930180000_pro_subscriptions.sql`: the four Pro tables (see [CyberNet Pro](#cybernet-pro)).
+- `20261001000000_drop_is_premium.sql`: drops the unused `profiles.is_premium` (Pro comes from
+  subscriptions and grants).
 
 | Table | Holds |
 |---|---|
-| `profiles` | `id` (= auth user), `display_name` (1 to 40 chars, nullable until chosen), `is_premium` (default false), `learning_mode` (`path` or `explore`), `sound_enabled` (default true), `coach_seen` (how-to-play panels dismissed), `age_confirmed` (13+ confirmed; never a date of birth), `daily_goal` (20, 50 or 100; default 50), `daily_goal_chosen`, `time_zone` (IANA name, for dating days) |
+| `profiles` | `id` (= auth user), `display_name` (1 to 40 chars, nullable until chosen), `learning_mode` (`path` or `explore`), `sound_enabled` (default true), `coach_seen` (how-to-play panels dismissed), `age_confirmed` (13+ confirmed; never a date of birth), `daily_goal` (20, 50 or 100; default 50), `daily_goal_chosen`, `time_zone` (IANA name, for dating days) |
 | `card_completions` | `(user_id, lesson_id, card_id)` primary key, `completed_at`, `xp` (0 to 20) |
 | `lesson_completions` | `(user_id, lesson_id)` primary key, `completed_at`, `xp` (0 to 20) |
 | `quiz_attempts` | `id`, `user_id`, `quiz_id`, `attempted_at` (unique per user and quiz), `score` 0 to 1, `passed`, `xp` (0 to 50), `answers` jsonb |
@@ -674,7 +677,7 @@ Migrations, all applied to the linked project:
   `= id` for profiles).
 - **Writes:**
   - Users may **update only `profiles.display_name`**, on their own row. There's a column-level
-    grant and an update policy; `is_premium`, `learning_mode`, `sound_enabled`, `coach_seen`,
+    grant and an update policy; `learning_mode`, `sound_enabled`, `coach_seen`,
     `age_confirmed`, `daily_goal`, `daily_goal_chosen` and `time_zone` aren't writable (Server
     Actions set them with the secret key).
   - **`xp_events` and `goal_days` are read-only for learners** (select own rows only, no write
@@ -699,8 +702,9 @@ Migrations, all applied to the linked project:
 
 ## CyberNet Pro
 
-**On the `pro` branch only. Stripe TEST MODE. Never merge to `main` until Stripe is live.**
-Setup steps: `docs/stripe-checklist.md`.
+**Live in production** (live Stripe keys, prices and webhook secret in Vercel **Production** only).
+Local dev and previews use the Stripe **sandbox** (test keys; live keys are refused there).
+Sandbox setup: `docs/stripe-checklist.md`. `PRO_LAUNCH_AT` in Production marks the launch.
 
 - **What's Pro:** modules with `"access": "pro"`. The first module of each course and every help
   module (e.g. Stay Safe Online's "When Things Go Wrong") are free; tests enforce both.
