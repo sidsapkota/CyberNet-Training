@@ -718,7 +718,7 @@ Sandbox setup: `docs/stripe-checklist.md`. `PRO_LAUNCH_AT` in Production marks t
   `active` or `past_due` whose period hasn't ended (plus `RENEWAL_GRACE_MS`, 2 days), or an
   unexpired early-user grant. `past_due` keeps Pro while Stripe retries a failed renewal; when
   Stripe gives up it cancels, and Pro ends. How long that takes is Stripe's retry setting (Billing →
-  Revenue recovery), about a week.
+  Revenue recovery): up to about two weeks, then cancel.
 - **Only Stripe grants Pro:** Checkout (`startCheckoutAction`, 7-day trial for a first subscription,
   13+ confirmed) and the Customer Portal (`openPortalAction`) are hosted by Stripe; card details
   never reach us. The webhook (`/api/stripe/webhook`) verifies Stripe's signature first, records

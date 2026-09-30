@@ -5,7 +5,7 @@
  *
  * Pro means either:
  * - a subscription that's `trialing`, `active` or `past_due` (Stripe is still retrying a failed
- *   payment; about a week, then it cancels) whose paid period hasn't ended, allowing a short grace
+ *   payment; up to about two weeks, then it cancels) whose paid period hasn't ended, allowing a short grace
  *   for the renewal webhook to arrive; or
  * - an early-user grant that hasn't expired.
  */

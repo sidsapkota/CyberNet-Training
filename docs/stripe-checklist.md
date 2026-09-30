@@ -69,15 +69,15 @@ The settings the app reads (all server-only, never `NEXT_PUBLIC_`):
    `https://cybernettraining.com/terms`.
 3. Save.
 
-## 5b. Failed payments: about a week (test mode, and again in live mode later)
+## 5b. Failed payments: up to about two weeks
 **Settings → Billing → Revenue recovery → Retries** (called "Subscriptions and emails → Manage
 failed payments" in some dashboards):
-1. Retry schedule: retry for **1 week** (Smart Retries, or a custom schedule ending by day 7).
+1. Retry schedule: keep Stripe's default (Smart Retries, up to about two weeks).
 2. If all retries fail: **cancel the subscription**.
 3. Optional: turn on Stripe's emails for failed payments and expiring cards.
 The app keeps Pro while the subscription is `past_due` and ends it when Stripe cancels, so this
-setting is what makes it "about a week". Stripe's default is about two weeks (the end-to-end test
-saw the cancel on day 15 before this was changed).
+setting decides how long. We keep Stripe's default of about two weeks (the end-to-end test saw
+the cancel on day 15); the terms say "up to about two weeks".
 
 ## 6. Webhook endpoint for the `pro` preview
 Preview deployments are behind Vercel's login, which would also block Stripe. Vercel's
@@ -124,7 +124,7 @@ Any future expiry date, any CVC, any postcode.
    first subscription), and Pro lessons open. Stripe → Webhooks shows the events delivered (200).
 3. Customer portal: switch to annual, then cancel; Pro stays until the period ends.
 4. Test clocks (Billing → Test clocks) or `stripe trigger invoice.payment_failed`: a failed
-   renewal keeps access for about a week while Stripe retries, then ends it.
+   renewal keeps access while Stripe retries (up to about two weeks), then ends it.
 5. A guest and a signed-in learner without Pro can't open a Pro lesson (`/api/lessons/<id>`
    answers 401/403), and "When Things Go Wrong" and every first module stay free.
 
