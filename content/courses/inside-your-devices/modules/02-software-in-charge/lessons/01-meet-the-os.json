@@ -1,0 +1,252 @@
+{
+  "id": "meet-the-os",
+  "kind": "lesson",
+  "title": "Meet the OS",
+  "order": 1,
+  "isFree": true,
+  "cards": [
+    {
+      "id": "who-is-in-charge",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Who's in charge?",
+      "body": "Right now your music app, your browser and your messages all want the CPU, a slice of RAM and a spot on the screen, **all at the same time**.\n\nIf they just grabbed what they wanted, they'd crash into each other. Something has to be in charge."
+    },
+    {
+      "id": "the-operating-system",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "The operating system",
+      "body": "That something is the **operating system**, or **OS**. It's the first program to start when you switch a device on, and it runs until you switch it off.\n\nThink of it as a referee:\n\n- It gives each app **turns on the CPU**, switching between them so fast it looks like they all run at once.\n- It **shares out RAM** and stops apps reading each other's data.\n- It talks to the hardware (screen, keyboard, Wi-Fi) so apps don't have to.\n- It looks after your **files** in storage."
+    },
+    {
+      "id": "os-or-app",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Whose job is it: the **operating system's**, or an **app's**?",
+      "bins": [
+        { "id": "os", "label": "Operating system" },
+        { "id": "app", "label": "An app" }
+      ],
+      "items": [
+        { "id": "cpu-turns", "label": "Decide which app uses the CPU next", "bin": "os" },
+        { "id": "share-ram", "label": "Share out RAM between open apps", "bin": "os" },
+        { "id": "hardware", "label": "Talk to the keyboard, screen and Wi-Fi", "bin": "os" },
+        { "id": "keep-apart", "label": "Stop apps reading each other's data", "bin": "os" },
+        { "id": "filter", "label": "Add a funny filter to a selfie", "bin": "app" },
+        { "id": "spelling", "label": "Check the spelling in your essay", "bin": "app" },
+        { "id": "score", "label": "Keep score in a game", "bin": "app" }
+      ],
+      "explanation": "The **OS** manages the shared things every app needs: CPU time, RAM, the hardware and safety. **Apps** do one particular job for you, and ask the OS for what they need."
+    },
+    {
+      "id": "end-the-frozen-app",
+      "type": "simulator",
+      "difficulty": "core",
+      "prompt": "Your laptop has frozen up. The OS's **task manager** lists everything running. End whatever is hogging the CPU, but **keep your music and your homework browser open**.",
+      "model": "task-manager",
+      "params": {
+        "ramGb": 8,
+        "processes": [
+          { "id": "music", "label": "Music player", "kind": "app", "cpu": 4, "ramGb": 0.4 },
+          { "id": "browser", "label": "Web browser", "kind": "app", "cpu": 10, "ramGb": 1.5 },
+          { "id": "drawing", "label": "Drawing app", "kind": "app", "cpu": 85, "ramGb": 1.2 },
+          { "id": "updater", "label": "Updater", "kind": "background", "cpu": 3, "ramGb": 0.2 },
+          { "id": "system", "label": "System", "kind": "system", "cpu": 6, "ramGb": 1.5 }
+        ]
+      },
+      "controls": [
+        { "id": "end-music", "kind": "button", "label": "End Music player", "doneLabel": "Music player ended" },
+        { "id": "end-browser", "kind": "button", "label": "End Web browser", "doneLabel": "Web browser ended" },
+        { "id": "end-drawing", "kind": "button", "label": "End Drawing app", "doneLabel": "Drawing app ended" },
+        { "id": "end-updater", "kind": "button", "label": "End Updater", "doneLabel": "Updater ended" },
+        { "id": "end-system", "kind": "button", "label": "End System", "doneLabel": "System ended" }
+      ],
+      "outputs": [
+        { "id": "smooth", "kind": "device", "label": "Laptop", "frame": "laptop" },
+        { "id": "cpu", "kind": "bar", "label": "CPU in use" },
+        { "id": "processes", "kind": "list", "label": "Running" }
+      ],
+      "goal": {
+        "all": [
+          { "target": "output", "id": "smooth", "op": ">=", "value": 0.9 },
+          { "target": "output", "id": "crashed", "op": "==", "value": 0 },
+          { "target": "control", "id": "end-music", "op": "==", "value": false },
+          { "target": "control", "id": "end-browser", "op": "==", "value": false }
+        ]
+      },
+      "explanation": "The **drawing app** was stuck using 85% of the CPU. Ending it freed the CPU, and everything else carried on. Ending **System** would have crashed the whole laptop."
+    },
+    {
+      "id": "behind-the-scenes",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Behind the scenes",
+      "body": "The task manager showed more than your apps. Every running program is called a **process**, and many have no window at all. These **background processes** check for updates, sync your files, or scan for viruses.\n\n**System processes** are the OS itself. End one and the device crashes or restarts, which is why the task manager warns you first.\n\nIf an app freezes, ending its process is the safe fix. You'll lose anything unsaved in it, but nothing else."
+    },
+    {
+      "id": "update-time",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "You're halfway through an essay on your laptop.",
+      "start": "prompt",
+      "steps": [
+        {
+          "id": "prompt",
+          "text": "A message pops up: **\"Updates are ready. Restart now?\"**",
+          "choices": [
+            {
+              "id": "restart-now",
+              "text": "Restart straight away",
+              "consequence": "The unsaved essay was only in RAM. Restarting cleared it, and your work is gone.",
+              "outcome": "fail"
+            },
+            {
+              "id": "save-first",
+              "text": "Save the essay first, then restart",
+              "consequence": "Smart. The essay is safe in storage, and the update can start.",
+              "next": "installing"
+            },
+            {
+              "id": "never",
+              "text": "Turn updates off for good",
+              "consequence": "Updates fix security holes that attackers use. Without them, your laptop gets less safe over time.",
+              "outcome": "fail"
+            }
+          ]
+        },
+        {
+          "id": "installing",
+          "text": "The screen says **\"Working on updates. Don't turn off your device.\"** It's been ten minutes.",
+          "choices": [
+            {
+              "id": "hold-power",
+              "text": "Hold the power button to stop it",
+              "consequence": "Cutting an update off halfway can leave the OS broken and unable to start.",
+              "outcome": "fail"
+            },
+            {
+              "id": "plug-in-wait",
+              "text": "Plug in the charger and let it finish",
+              "consequence": "Big updates can take a while. Keeping it powered lets it finish safely.",
+              "outcome": "success"
+            }
+          ]
+        }
+      ],
+      "explanation": "**Save your work**, then let updates install. Keep the device plugged in, and never switch it off halfway through. Updates fix bugs and close security holes."
+    },
+    {
+      "id": "why-update",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "What's the most important reason to install OS updates?",
+      "options": [
+        { "id": "security", "text": "They fix bugs and security holes" },
+        { "id": "ram", "text": "They add more RAM to your device" },
+        { "id": "faster", "text": "They always make the device faster" },
+        { "id": "storage", "text": "They free up lots of storage" }
+      ],
+      "correctOptionId": "security",
+      "explanation": "Updates patch **security holes** and fix bugs. They can't add hardware like RAM, and they often use a bit *more* storage, not less. Some make things faster, but not always."
+    },
+    {
+      "id": "memory-leak",
+      "type": "simulator",
+      "difficulty": "challenge",
+      "prompt": "This laptop gets slower the longer it's on. Some apps have a **memory leak**: they keep grabbing RAM and never give it back. Move time forward to **at least 40 minutes**, find the leaky app and end it. Keep the **music** playing.",
+      "model": "task-manager",
+      "params": {
+        "ramGb": 8,
+        "processes": [
+          { "id": "music", "label": "Music player", "kind": "app", "cpu": 3, "ramGb": 0.4 },
+          { "id": "browser", "label": "Web browser", "kind": "app", "cpu": 8, "ramGb": 1.5 },
+          { "id": "chat", "label": "Chat app", "kind": "app", "cpu": 5, "ramGb": 0.5, "leakGbPerMin": 0.15 },
+          { "id": "sync", "label": "File sync", "kind": "background", "cpu": 2, "ramGb": 0.2 },
+          { "id": "system", "label": "System", "kind": "system", "cpu": 6, "ramGb": 1.5 }
+        ]
+      },
+      "controls": [
+        { "id": "minutes", "kind": "slider", "label": "Time", "min": 0, "max": 60, "step": 10, "unit": " min" },
+        { "id": "end-music", "kind": "button", "label": "End Music player", "doneLabel": "Music player ended" },
+        { "id": "end-browser", "kind": "button", "label": "End Web browser", "doneLabel": "Web browser ended" },
+        { "id": "end-chat", "kind": "button", "label": "End Chat app", "doneLabel": "Chat app ended" },
+        { "id": "end-sync", "kind": "button", "label": "End File sync", "doneLabel": "File sync ended" },
+        { "id": "end-system", "kind": "button", "label": "End System", "doneLabel": "System ended" }
+      ],
+      "outputs": [
+        { "id": "smooth", "kind": "device", "label": "Laptop", "frame": "laptop" },
+        { "id": "ramUsed", "kind": "meter", "label": "RAM in use", "unit": "GB" },
+        { "id": "processes", "kind": "list", "label": "Running" }
+      ],
+      "goal": {
+        "all": [
+          { "target": "control", "id": "minutes", "op": ">=", "value": 40 },
+          { "target": "output", "id": "smooth", "op": ">=", "value": 0.9 },
+          { "target": "output", "id": "crashed", "op": "==", "value": 0 },
+          { "target": "control", "id": "end-music", "op": "==", "value": false }
+        ]
+      },
+      "explanation": "The **chat app** grew by 0.15 GB every minute. After 40 minutes it was using 6.5 GB and filled RAM on its own. Ending it gives the memory back. Restarting the app (or the laptop) is the everyday fix for a leak until the app's makers fix it."
+    },
+    {
+      "id": "fake-virus-popup",
+      "type": "scenario",
+      "difficulty": "challenge",
+      "prompt": "You're browsing, and the screen suddenly flashes red.",
+      "start": "popup",
+      "steps": [
+        {
+          "id": "popup",
+          "text": "**\"WARNING! Your laptop has 5 viruses! Download CleanerPro now or call this number!\"**",
+          "choices": [
+            {
+              "id": "download",
+              "text": "Download CleanerPro",
+              "consequence": "Pop-ups like this are fakes. The \"cleaner\" is usually the harmful program itself.",
+              "outcome": "fail"
+            },
+            {
+              "id": "call",
+              "text": "Call the number",
+              "consequence": "It's a scam. The caller will ask for money or for control of your laptop.",
+              "outcome": "fail"
+            },
+            {
+              "id": "close-tab",
+              "text": "Don't click anything in it. Close the tab",
+              "consequence": "Good instinct. A web page can't scan your laptop, so this warning is fake.",
+              "next": "wont-close"
+            }
+          ]
+        },
+        {
+          "id": "wont-close",
+          "text": "The page keeps popping back up and the tab won't close.",
+          "choices": [
+            {
+              "id": "task-manager",
+              "text": "End the browser in the task manager and tell an adult",
+              "consequence": "The page is gone, and an adult can help you check everything is fine.",
+              "outcome": "success"
+            },
+            {
+              "id": "click-cancel",
+              "text": "Click the pop-up's \"Cancel\" button",
+              "consequence": "Buttons on a fake pop-up can do anything, including start a download.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "explanation": "A web page can't see what's on your laptop, so a pop-up claiming to have found viruses is **fake**. Don't click anything inside it. Close the browser (using the task manager if you need to) and tell an adult."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- The **operating system** is the referee. It shares out the CPU and RAM, talks to the hardware and looks after files.\n- The **task manager** shows every **process**, including background and system ones.\n- End a frozen app's process to fix it, but never a system process.\n- **Save your work**, then let updates finish.\n\nNext: where your files actually live."
+    }
+  ]
+}

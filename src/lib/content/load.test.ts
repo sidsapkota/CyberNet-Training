@@ -2,6 +2,8 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
+import { goalMet, initialSimulatorAnswer, sliderRange } from "@/cards/simulator/grade";
+import type { InputValue } from "@/cards/simulator/models/types";
 import { binaryToggle, explainer, multipleChoice } from "@/test/fixtures";
 import { ContentValidationError, loadContent } from "./load";
 
@@ -95,6 +97,54 @@ describe("real content in /content", () => {
 
   it("Module 1 quiz covers both lessons with seven questions", () => {
     expect(loadContent().lessons.get("binary-and-data-quiz")?.cards).toHaveLength(7);
+  });
+
+  it("lists Inside Your Devices first, with its modules and lessons in order", () => {
+    const { courses } = loadContent();
+    expect(courses.map((c) => c.id)).toEqual(["inside-your-devices", "how-the-internet-works"]);
+    expect(courses[0]?.modules.map((m) => m.lessons.map((l) => l.id))).toEqual([
+      ["whats-in-the-box", "memory-vs-storage", "meet-the-cpu", "pull-it-apart-quiz"],
+      ["meet-the-os", "files-and-folders", "software-in-charge-quiz"],
+      ["slow-and-full", "power-problems", "inside-your-devices-final"],
+    ]);
+  });
+
+  it("every Inside Your Devices lesson uses at least 2 of the hands-on card types", () => {
+    const handsOn = new Set(["hotspot", "teardown", "simulator", "scenario", "sort_bins"]);
+    const course = loadContent().courses.find((c) => c.id === "inside-your-devices");
+    for (const lesson of course?.modules.flatMap((m) => m.lessons) ?? []) {
+      if (lesson.kind !== "lesson") continue;
+      const full = loadContent().lessons.get(lesson.id);
+      const used = new Set(full?.cards.map((c) => c.type).filter((t) => handsOn.has(t)));
+      expect(used.size, lesson.id).toBeGreaterThanOrEqual(2);
+    }
+  });
+
+  it("every simulator card starts unsolved and can be solved", () => {
+    for (const lesson of loadContent().lessons.values()) {
+      for (const card of lesson.cards) {
+        if (card.type !== "simulator") continue;
+        const where = `${lesson.id}/${card.id}`;
+        expect(goalMet(card, initialSimulatorAnswer(card)), `${where} is solved before any change`).toBe(false);
+        // Try every combination of control values (sliders at each step).
+        const choices = card.controls.map((control): InputValue[] => {
+          if (control.kind !== "slider") return [false, true];
+          const { min, max, step } = sliderRange(card, control);
+          return Array.from({ length: Math.floor((max - min) / step) + 1 }, (_, i) => min + i * step);
+        });
+        let solvable = false;
+        const search = (i: number, answer: Record<string, InputValue>): void => {
+          if (solvable) return;
+          if (i === card.controls.length) {
+            solvable = goalMet(card, answer);
+            return;
+          }
+          for (const value of choices[i]!) search(i + 1, { ...answer, [card.controls[i]!.id]: value });
+        };
+        search(0, {});
+        expect(solvable, `${where} can't be solved`).toBe(true);
+      }
+    }
   });
 });
 

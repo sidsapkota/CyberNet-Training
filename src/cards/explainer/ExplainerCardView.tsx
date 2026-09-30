@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Mascot } from "@/components/mascot/Mascot";
 import { Markdown } from "@/components/ui/Markdown";
 import type { ExplainerCard } from "./schema";
 
@@ -26,7 +27,15 @@ export function ExplainerCardView({ card }: { card: ExplainerCard }) {
           )}
         </figure>
       )}
-      <Markdown className="mt-6 text-body text-ink-muted sm:text-lead">{card.body}</Markdown>
+      {card.mascot ? (
+        // Safety notes: the mascot presents the note, in a warning-toned panel.
+        <div className="mt-6 flex items-start gap-3 rounded-card border-2 border-warning bg-warning-soft p-4">
+          <Mascot expression={card.mascot} size={96} idle className="-ml-1 shrink-0" />
+          <Markdown className="min-w-0 text-body text-ink">{card.body}</Markdown>
+        </div>
+      ) : (
+        <Markdown className="mt-6 text-body text-ink-muted sm:text-lead">{card.body}</Markdown>
+      )}
     </article>
   );
 }

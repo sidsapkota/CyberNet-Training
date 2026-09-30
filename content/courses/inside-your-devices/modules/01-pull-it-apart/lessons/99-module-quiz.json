@@ -1,0 +1,108 @@
+{
+  "id": "pull-it-apart-quiz",
+  "kind": "quiz",
+  "title": "Pull It Apart: Module Quiz",
+  "order": 99,
+  "isFree": true,
+  "passThreshold": 0.7,
+  "cards": [
+    {
+      "id": "q-open-safely",
+      "type": "teardown",
+      "difficulty": "core",
+      "prompt": "Open this laptop the way a technician would, and make it **safe to work on**.",
+      "scene": "laptop",
+      "actions": [
+        { "id": "screw-1", "part": "screw-1", "verb": "unscrew", "nudge": "Unscrew this one first." },
+        { "id": "screw-2", "part": "screw-2", "verb": "unscrew", "nudge": "Unscrew this one first." },
+        { "id": "screw-3", "part": "screw-3", "verb": "unscrew", "nudge": "Unscrew this one first." },
+        { "id": "screw-4", "part": "screw-4", "verb": "unscrew", "nudge": "Unscrew this one first." },
+        {
+          "id": "panel",
+          "part": "panel",
+          "verb": "lift",
+          "after": ["screw-1", "screw-2", "screw-3", "screw-4"],
+          "nudge": "All four screws have to come out first."
+        },
+        { "id": "unplug", "part": "battery-connector", "verb": "unplug", "after": ["panel"], "nudge": "Lift the panel off first." }
+      ],
+      "explanation": "Screws, then the panel, then **unplug the battery** before touching any other part."
+    },
+    {
+      "id": "q-tap-ram",
+      "type": "hotspot",
+      "difficulty": "core",
+      "prompt": "Tap the laptop's **RAM**.",
+      "scene": "laptop",
+      "view": "open",
+      "mode": "tap",
+      "targets": ["ram"],
+      "explanation": "RAM is the long stick covered in small chips. The square chip is the CPU, and the smaller card is storage."
+    },
+    {
+      "id": "q-part-jobs",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each part to what it does.",
+      "pairs": [
+        { "id": "cpu", "left": "CPU", "right": "Follows instructions" },
+        { "id": "ram", "left": "RAM", "right": "Holds what's in use now" },
+        { "id": "storage", "left": "Storage", "right": "Keeps files when off" },
+        { "id": "fan", "left": "Fan", "right": "Blows heat out" }
+      ],
+      "explanation": "The **CPU** does the work, **RAM** is the workspace, **storage** keeps things for later, and the **fan** keeps the CPU cool."
+    },
+    {
+      "id": "q-sort-ram-storage",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Sort each one: **RAM** or **storage**?",
+      "bins": [
+        { "id": "ram", "label": "RAM" },
+        { "id": "storage", "label": "Storage" }
+      ],
+      "items": [
+        { "id": "video-playing", "label": "The video you're watching right now", "bin": "ram" },
+        { "id": "saved-homework", "label": "Homework you saved yesterday", "bin": "storage" },
+        { "id": "open-tabs", "label": "Your open browser tabs", "bin": "ram" },
+        { "id": "installed-game", "label": "A game you installed last month", "bin": "storage" }
+      ],
+      "explanation": "Things in use right now are in **RAM**. Saved and installed things stay in **storage**, even when the device is off."
+    },
+    {
+      "id": "q-how-many-videos",
+      "type": "numeric_input",
+      "difficulty": "core",
+      "prompt": "A phone has **64 GB** of free storage. Each video you film takes up **4 GB**. How many videos fit?",
+      "answer": 16,
+      "unit": "videos",
+      "explanation": "64 ÷ 4 = **16** videos."
+    },
+    {
+      "id": "q-cores-help",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Which job gets **faster** with more CPU cores?",
+      "options": [
+        { "id": "photos", "text": "Resizing 1,000 separate photos" },
+        { "id": "treasure", "text": "Solving a puzzle where every step needs the one before" },
+        { "id": "storage", "text": "Fitting more files into storage" }
+      ],
+      "correctOptionId": "photos",
+      "explanation": "Separate photos can be shared between cores. A chain of steps has to go in order, and cores don't change how much storage you have."
+    },
+    {
+      "id": "q-throttling",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "A laptop gets very hot while gaming and suddenly runs slower. What's happening?",
+      "options": [
+        { "id": "throttle", "text": "The CPU is slowing itself down to stay safe" },
+        { "id": "storage-full", "text": "The storage has filled up with heat" },
+        { "id": "ram-melting", "text": "The RAM is being deleted" }
+      ],
+      "correctOptionId": "throttle",
+      "explanation": "Too much heat makes the CPU **throttle**: it lowers its clock speed to protect itself. Clear vents and a working fan help it stay at full speed."
+    }
+  ]
+}

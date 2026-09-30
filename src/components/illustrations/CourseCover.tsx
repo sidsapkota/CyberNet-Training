@@ -154,8 +154,80 @@ function InternetCover() {
 
 /* ── Registry ─────────────────────────────────────────────────────────────────────────── */
 
+/* ── Inside Your Devices: an exploded view, layers pulled apart along 45° guides ─────────── */
+
+/** One layer of the exploded device, drawn as a rounded slab. */
+function Slab({ x, y, w, h, fill }: { x: number; y: number; w: number; h: number; fill: string }) {
+  return <rect x={x} y={y} width={w} height={h} rx={8} fill={fill} stroke="var(--color-scene-edge)" strokeWidth={1.5} />;
+}
+
+function RamStick() {
+  const reduceMotion = useReducedMotion();
+  const stick = (
+    <g>
+      <rect x={150} y={78} width={58} height={14} rx={2} fill="var(--color-scene-part)" stroke="var(--color-screen-accent)" strokeWidth={1.5} />
+      {[0, 1, 2, 3].map((i) => (
+        <rect key={i} x={155 + i * 13} y={81} width={9} height={8} rx={1} fill="var(--color-scene-shell)" />
+      ))}
+    </g>
+  );
+  if (reduceMotion) return stick;
+  // Slides out along its 45° guide and back, slowly: the one moving part.
+  return (
+    <motion.g
+      animate={{ x: [0, 16, 16, 0], y: [0, -16, -16, 0] }}
+      transition={{ duration: 5, times: [0, 0.35, 0.65, 1], ease: "easeInOut", repeat: Infinity, repeatDelay: 1.5 }}
+    >
+      {stick}
+    </motion.g>
+  );
+}
+
+function DevicesCover() {
+  const guide = "var(--color-screen-accent)";
+  return (
+    <>
+      <DotGrid />
+      {/* 45° guide lines joining the layers' corners */}
+      <g stroke={guide} strokeWidth={1} strokeDasharray="3 4" opacity={0.55}>
+        <path d="M76 150L136 90M226 150L286 90M76 100L136 40" />
+      </g>
+      {/* Back to front: bottom panel, motherboard with battery, then the parts */}
+      <Slab x={76} y={100} w={150} h={50} fill="var(--color-scene-panel)" />
+      <g>
+        {[96, 110, 124, 138].map((x) => (
+          <rect key={x} x={x + 40} y={112} width={6} height={26} rx={3} fill="var(--color-scene-shell)" />
+        ))}
+      </g>
+      <Slab x={106} y={70} w={150} h={50} fill="var(--color-scene-board)" />
+      <rect x={200} y={76} width={48} height={38} rx={4} fill="var(--color-scene-panel)" stroke="var(--color-scene-edge)" strokeWidth={1} />
+      <path d="M224 88V100M218 94H230" stroke="var(--color-on-screen-muted)" strokeWidth={2} strokeLinecap="round" />
+      <path d="M114 108H150L160 98" stroke="var(--color-screen-line)" strokeWidth={1.5} fill="none" />
+      <Slab x={136} y={40} w={150} h={50} fill="transparent" />
+      {/* CPU chip lifted above its socket */}
+      <rect x={118} y={78} width={24} height={24} rx={3} fill="var(--color-scene-part)" stroke="var(--color-on-screen-muted)" />
+      <rect x={124} y={84} width={12} height={12} rx={2} fill="var(--color-scene-panel)" />
+      {/* Storage chip */}
+      <rect x={170} y={52} width={34} height={14} rx={2} fill="var(--color-scene-part)" stroke="var(--color-scene-edge)" />
+      <RamStick />
+      {/* Screws floating free */}
+      {[
+        [56, 132],
+        [246, 64],
+        [300, 28],
+      ].map(([x, y]) => (
+        <g key={`${x}-${y}`}>
+          <circle cx={x} cy={y} r={5} fill="var(--color-scene-edge)" />
+          <path d={`M${x! - 2.5} ${y}H${x! + 2.5}M${x} ${y! - 2.5}V${y! + 2.5}`} stroke="var(--color-scene-shell)" strokeWidth={1.4} strokeLinecap="round" />
+        </g>
+      ))}
+    </>
+  );
+}
+
 const COVERS: Record<string, ComponentType> = {
   "how-the-internet-works": InternetCover,
+  "inside-your-devices": DevicesCover,
 };
 
 /** Cover for a course. Courses without a custom cover get the logo network on the grid. */

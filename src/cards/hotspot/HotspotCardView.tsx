@@ -8,7 +8,7 @@ import { PRESS_SPRING } from "@/lib/motion";
 import { CardPrompt } from "../CardPrompt";
 import { CardStatusNote } from "../CardStatusNote";
 import { hiddenInView, type ScenePart } from "../shared/scenes/manifests";
-import { overlayOrder, partTargetStyle, SceneStage } from "../shared/scenes/SceneStage";
+import { overlayOrder, partTargetStyle, pointTargetStyle, SceneStage } from "../shared/scenes/SceneStage";
 import type { CardComponentProps } from "../types";
 import { labelOrder, placeLabel, removeLabel, tappableParts, toggleTap } from "./grade";
 import type { HotspotAnswer, HotspotCard } from "./schema";
@@ -130,7 +130,9 @@ function LabelMode({ card, answer, onAnswerChange, parts, hidden, locked, onPlac
             const label = labelIndex === undefined ? null : labels[labelIndex];
             const correct = label ? labels[labelIndex!]?.part === part.id : false;
             const result = locked && label ? (correct ? "correct" : "wrong") : null;
-            const style = { ...partTargetStyle(card.scene, part.box), width: "auto", height: "auto", minWidth: 44, minHeight: 44 };
+            const style = part.labelAt
+              ? pointTargetStyle(card.scene, part.labelAt)
+              : { ...partTargetStyle(card.scene, part.box), width: "auto", height: "auto", minWidth: 44, minHeight: 44 };
             return (
               <button
                 key={part.id}

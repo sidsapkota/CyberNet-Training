@@ -67,7 +67,7 @@ export function Dashboard({ courses }: { courses: CourseOutline[] }) {
   return (
     <>
       <h1 className="sr-only">Dashboard</h1>
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <Rise index={0} className="lg:col-span-2">
           <ContinueHero state={focus} />
         </Rise>

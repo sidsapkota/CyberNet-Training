@@ -5,6 +5,9 @@ This file is for anyone checking the course content for accuracy. For each lesso
 - the key factual claims to verify
 - every deliberate simplification
 
+**Inside Your Devices** is reviewed [at the end of this file](#content-review-inside-your-devices),
+including its [Safety](#safety) list.
+
 The course has 6 modules. [Later corrections](#later-corrections-of-earlier-simplifications), at
 the end, lists every place a later module corrects or deepens an earlier simplification.
 
@@ -567,3 +570,290 @@ or deepens it (**Later**).
 11. **Lookalike domains and the padlock.**
     - *Early (4.3):* lookalike domains are introduced.
     - *Later (6.2):* a lookalike site can still show a padlock.
+
+---
+---
+
+# Content review: Inside Your Devices
+
+The second course (listed first in the catalog). It has 3 modules, 7 lessons and 3 quizzes, and
+leans on the hands-on card types: `teardown`, `hotspot`, `simulator`, `scenario` and `sort_bins`.
+A test checks that every lesson uses at least 2 of them, and that every simulator card starts
+unsolved and has a solution.
+
+**Devices and names used.** Only generic devices appear: "a laptop", "a phone", "a tablet". There are no
+brands, models or operating-system names. App names are generic ("Music player", "Chat app"). The
+one product-like name, **"CleanerPro"**, is made up for the fake pop-up scenario.
+
+**Scenes are drawings, not photos.** Part positions in the `laptop` and `phone` scenes are
+simplified and roughly where the parts sit in many devices, but real layouts vary a lot. The
+laptop's RAM is drawn as a removable stick. Many thin laptops solder RAM to the board.
+
+**Simulator numbers are illustrative** (see [Simulator models](#simulator-models)). They show the
+right relationships, not measured figures.
+
+**[Safety](#safety)** lists every physical-action or safety statement, for review.
+
+## Module 1: Pull It Apart
+
+### 1.1 What's in the Box (`whats-in-the-box`)
+**Goals:**
+- Phones and laptops contain the same core parts: CPU, RAM, storage, battery and motherboard.
+- Say what each part does.
+- Technicians unplug the battery first and reconnect it last.
+- This is a simulation. Real devices should only be opened by an adult or a repair shop.
+
+**Key claims:**
+- The CPU follows instructions; RAM is fast working space; storage keeps data with the power off;
+  the battery stores energy; the motherboard connects the parts through traces.
+- Photos are kept in storage, not RAM.
+- Technicians disconnect the battery before touching other parts, so nothing gets power while
+  they work.
+- Phones are often sealed with adhesive that repair shops soften with gentle heat.
+- In phones, the CPU, RAM and storage sit on one small board, and the battery takes up most of the
+  space.
+
+**Simplifications:**
+- Teardown order is simplified: a few screws and one panel. Real devices have clips, ribbon
+  cables, shields and many more screws.
+- "The CPU is the brain" is an analogy. In phones, the CPU is part of a larger chip (a
+  system-on-a-chip) that also contains the graphics processor and more.
+- The phone's RAM and storage are drawn as separate chips. In many phones, RAM is stacked on the
+  processor.
+- The camera swap reconnects the battery before refitting the cover. That's true of real repairs,
+  but real ones also test the device before closing it.
+
+### 1.2 Memory vs Storage (`memory-vs-storage`)
+**Goals:**
+- Tell RAM (the "desk") from storage (the "cupboard").
+- Know the symptoms: full RAM means lag or reloading apps; full storage means you can't save or
+  download.
+- Choose the right fix for each.
+
+**Key claims:**
+- Both are measured in GB. RAM is much smaller and faster, and is cleared when the power goes off.
+- Opening an app copies it from storage into RAM.
+- When RAM fills, laptops move data to storage (swap), which slows them down, and phones usually
+  close background apps, which then reload.
+- Restarting clears RAM; files in storage are untouched. Restarting doesn't change how much RAM
+  there is.
+- Unsaved work is only in RAM, so it's lost if the power cuts out.
+- 256 GB ÷ 8 GB = 32 films; 7 GB needed → 8 GB is the smallest option (in steps of 2 GB).
+- "RAM booster" apps take up RAM themselves, and are often junk or worse.
+
+**Simplifications:**
+- The desk and cupboard analogy hides caches, virtual memory details and compressed memory.
+- "Closing apps and restarting only clear RAM" ignores temporary files that a restart can remove.
+- Phones don't swap at all in this lesson. Some do use compressed memory or a small swap area.
+- Film and app sizes are round, illustrative numbers.
+
+### 1.3 Meet the CPU (`meet-the-cpu`)
+**Goals:**
+- The CPU follows billions of simple instructions per second.
+- GHz means billions of clock ticks per second.
+- Cores are separate workers that only help with jobs that split.
+- Heat causes throttling. Fans and clear vents prevent it.
+
+**Key claims:**
+- 1 GHz = 10⁹ ticks per second. At 2 GHz, 10 billion steps take 5 seconds (at one step per tick).
+- A splittable 24-billion-step job at 2 GHz: 1 core 12 s, 2 cores 6 s, 4 cores 3 s.
+- A job that can't be split runs on one core, so 4 or 8 cores at the same clock finish it in the
+  same time.
+- A CPU that gets too hot lowers its clock speed to protect itself (**throttling**). Phones have
+  no fan and throttle too.
+- Blocked vents (like a laptop on a blanket) trap heat.
+
+**Simplifications:**
+- **One step per tick** is stated as a simplification in the card itself. Real CPUs can do several
+  instructions per tick, or need several ticks for one.
+- Perfect splitting across cores ignores coordination overhead (Amdahl's law is not mentioned).
+- All cores are identical. Many phone CPUs mix fast and efficient cores.
+- Sort items ("check 1,000 files for viruses" splits; "a savings total month after month" doesn't)
+  are idealised.
+
+### Module 1 quiz (`pull-it-apart-quiz`)
+7 questions: open a laptop safely (teardown) · tap the RAM · match parts to jobs · sort RAM vs
+storage · 64 ÷ 4 = 16 videos · which job gains from more cores · throttling.
+
+## Module 2: Software in Charge
+
+### 2.1 Meet the OS (`meet-the-os`)
+**Goals:**
+- The operating system manages CPU time, RAM, hardware, files and separation between apps.
+- Use a task manager to find and end a frozen app, and never end system processes.
+- Save your work before updating, and don't interrupt an update.
+- Spot a fake virus pop-up (challenge).
+
+**Key claims:**
+- The OS is the first program to start and runs until shutdown.
+- The OS switches between apps so quickly they seem to run at once (time-slicing).
+- Every running program is a process. Background processes (updaters, sync, antivirus) have no
+  window.
+- Ending a system process crashes or restarts the device. Most task managers warn you first.
+- Ending a frozen app loses only its unsaved work.
+- Updates fix bugs and security holes. They can't add hardware, and they often use more storage,
+  not less.
+- Switching off during an update can leave the OS unable to start.
+- A web page can't scan your device, so "your device has N viruses" pop-ups are fake. Scam numbers
+  ask for money or remote access.
+- A memory leak is an app that keeps taking RAM and never gives it back. Restarting the app is the
+  everyday fix.
+
+**Simplifications:**
+- "The OS talks to the hardware" hides drivers and the kernel/user-space split.
+- "Stops apps reading each other's data" is memory protection and sandboxing, simplified.
+- Ending a "System" process always crashes it here. Real OSes protect or restart many of them.
+- The leak grows at a steady 0.15 GB per minute. Real leaks vary.
+
+### 2.2 Files and Folders (`files-and-folders`)
+**Goals:**
+- Files, folders and paths.
+- The extension after the **last** dot gives the file type. `.exe` is a program.
+- Tell local files from cloud files.
+- Handle a disguised program safely.
+
+**Key claims:**
+- `.jpg` photo, `.mp3` song, `.mp4` video, `.docx` document, `.txt` plain text, `.exe` program.
+- `photo.jpg.exe` is a program. Some computers hide the last extension, so it may show as
+  `photo.jpg`.
+- The cloud is a company's servers in data centres, reached over the internet. Cloud files need
+  the internet unless a copy is kept on the device.
+- 1,000 MB ÷ 4 MB = 250 photos per GB; about 16,000 in 64 GB.
+
+**Simplifications:**
+- `.exe` is the Windows program extension. Other systems use other forms, but the course
+  deliberately names no operating systems.
+- 1 GB = 1,000 MB (decimal units, matching the internet course's 1.2 lesson).
+- "A photo is about 4 MB" is typical, not fixed.
+- The path is written `Documents > School > essay.docx` rather than with slashes, which differ
+  between systems.
+- Files synced between a device and the cloud are both at once. The sort items avoid that case.
+
+### Module 2 quiz (`software-in-charge-quiz`)
+7 questions: sort OS vs app jobs · how apps share the CPU · end a frozen game (task-manager
+simulator) · save before updating · match extensions · tap the disguised program · where cloud
+files live.
+
+## Module 3: Fix It Yourself
+
+### 3.1 Slow and Full (`slow-and-full`)
+**Goals:**
+- The fix-it loop: describe, guess, try, check.
+- Diagnose slowness with the task manager (full RAM, startup apps).
+- Free storage safely: delete what's backed up, duplicated or unused; keep only copies and system
+  files.
+
+**Key claims:**
+- Every browser tab uses RAM.
+- "Speed booster" apps rarely help.
+- Startup apps compete for the CPU and RAM while the device starts. Disabling unneeded ones speeds
+  up startup, and they still work when opened.
+- Keep security software running at startup.
+- Deleting unrecognised system files can stop a device working.
+- Storage simulator sums: 64 GB phone, 63.5 GB used; game + downloads frees 15 GB, videos free
+  20 GB. The update challenge needs music + videos + maps (11 GB) to reach 12.3 GB free.
+
+**Simplifications:**
+- Full storage also slows devices (little room for temporary files). This lesson ties slowness to
+  RAM and startup apps only.
+- "Offline maps can be downloaded again" and "music is in the cloud" assume the learner has
+  those accounts.
+
+### 3.2 Power Problems (`power-problems`)
+**Goals:**
+- What drains a battery, and how to stretch it.
+- Why heat harms batteries.
+- Troubleshoot a phone that won't charge, safely.
+- Recognise a swollen battery and respond safely.
+
+**Key claims:**
+- Phones and laptops use lithium-ion batteries, rated in watt-hours. A phone holds about 15 Wh,
+  and a laptop a few times more.
+- The biggest drains are usually the screen's brightness, location (GPS) and background apps.
+- Batteries hold noticeably less after a few hundred full charges; heat speeds this up.
+- Cables and chargers fail more often than phones.
+- Fluff commonly collects in charging ports.
+- A bulging case or lifting screen often means a swollen battery, which can catch fire if pressed,
+  bent or punctured.
+- Sudden cold can cause condensation inside a device.
+- The CPU and the camera are among the most power-hungry parts, along with the screen.
+
+**Simplifications:**
+- The drains are simplified. Weak mobile signal is also a major drain and isn't mentioned.
+- "About 15 Wh" is typical of recent phones (roughly 12–20 Wh).
+- "Heat wears batteries out faster" leaves out the chemistry.
+- Low power mode is modelled as stopping background apps and cutting everything else by 15%.
+
+### Course final (`inside-your-devices-final`)
+8 questions: label the laptop · open a phone safely · make room in RAM for Maps · sort symptoms
+by cause (RAM, storage, heat) · won't charge: what first · stretch the battery to 10 hours ·
+fix-it loop order · `game-skins.png.exe`.
+
+Every quiz uses a pass mark of 70%, and covers only what core cards teach. Throttling is taught in
+the core `find-the-cooling` card as well as the challenge simulator.
+
+## Simulator models
+
+Pure functions in `src/cards/simulator/models/index.ts`, unit-tested. The numbers are chosen to
+show relationships clearly.
+
+| Model | Behaviour | Illustrative numbers |
+|---|---|---|
+| `memory` | System + open apps fill RAM. Over capacity, lag = 0.35 + overflow ÷ RAM | App sizes 0.3–3 GB, system 1.5–2 GB |
+| `cpu-cores` | Split tasks share cores evenly; others run whole on one core. Time = busiest core ÷ GHz | One step per tick |
+| `thermal` | Temp = 25 °C + load × 90 × cooling (fan ×0.55, blocked vents ×1.5). Over 90 °C the clock drops, down to 40% at the lowest | Base 3 GHz |
+| `task-manager` | CPU % adds up; lag above 85% CPU or when RAM is over capacity. Ending a system process crashes the device | Leak 0.15 GB/min |
+| `storage` | Free = capacity − system − kept files | Round sizes |
+| `battery` | Watts = 0.3 base + music 0.2 + brightness × 1.2 + GPS 0.5 + background apps 0.6 (off in low power), low power × 0.85. Hours = Wh ÷ watts | 15 Wh; about 5.4 h at worst |
+
+## Safety
+
+Every statement that suggests or discusses a physical action on a real device. Each keeps to gentle
+actions, names an adult or repair shop where it matters, and never gives instructions for opening
+a real device.
+
+**Opening devices (simulation only):**
+1. `whats-in-the-box/safety-first` (mascot safety note, shown before the first teardown): it's a
+   simulation; don't open a real phone or laptop without an adult or a repair shop; it can break
+   parts and void the warranty; the lithium battery can catch fire if bent or punctured.
+2. **Every teardown card** shows the built-in note: "This is a simulation. Real phones and laptops
+   should only be opened by an adult or a repair shop."
+3. "Unplug the battery first" is framed as **how technicians work safely** (`open-the-laptop`,
+   `open-the-phone`, `swap-the-camera`, `pull-it-apart-quiz/q-open-safely`,
+   `inside-your-devices-final/q-open-phone`), and repeated in the 1.1 recap with "Real devices
+   should only be opened by an adult or a repair shop."
+4. `open-the-phone` mentions that repair shops soften phone glue with gentle heat. It describes
+   what shops do; it isn't an instruction.
+5. `inside-your-devices-final/q-no-charge`: "Open the tablet" is a wrong choice: "Opening a device
+   is for adults and repair shops, and it should never be the first step."
+
+**Charging ports:**
+6. `power-problems/wont-charge`: first try another cable and socket. The right fix for fluff is
+   "Phone off, ask an adult to help brush it out with a soft, dry brush", with a repair shop as the
+   fallback. Wrong choices teach **never metal** (pin, paper clip: damage or short circuit) and
+   **never water**.
+7. `inside-your-devices-final/q-no-charge`: "Never put metal in a charging port."
+8. The 3.2 recap repeats: an adult can gently brush the port with something soft and dry; never
+   metal or water.
+
+**Heat and batteries:**
+9. `meet-the-cpu/too-hot`: the fix is "Move it off the blanket" (clear the vents) and the fan. There
+   is no cleaning of vents or opening the case.
+10. `power-problems/helps-or-harms`: hot cars and charging under a pillow harm the battery.
+11. `power-problems/swollen-battery` (core): a bulging case → stop using it, unplug it, keep it away
+    from anything that can burn, and **tell an adult**; a repair shop can replace the battery.
+    Wrong choices ("press the case flat", "keep using it") are explained as dangerous: a swollen
+    lithium battery can catch fire if pressed, bent or punctured.
+12. `power-problems/too-hot-to-handle` (challenge): stop, unplug and let it cool on a table out of
+    the sun; **never the freezer** (condensation). If it later looks puffed up: stop using it, don't
+    press it, tell an adult so it can go to a repair shop.
+13. The 3.2 recap: "A bulging device may have a swollen battery. Stop using it, don't press it, and
+    tell an adult."
+
+**Software safety (no physical action, listed for completeness):**
+14. `meet-the-os/fake-virus-popup`: don't click anything in the pop-up, don't call the number,
+    close the browser (with the task manager if needed), and tell an adult.
+15. `files-and-folders/suspicious-download` and `slow-and-full/delete-or-keep`: delete disguised
+    programs without opening them and tell an adult; never delete system files you don't recognise.
+16. Ending processes: the task manager cards teach that ending a system process crashes the device.
+    Ending an app loses only its unsaved work.

@@ -38,7 +38,7 @@ export function CourseCatalog({ courses }: { courses: CourseOutline[] }) {
   }
 
   return (
-    <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <ul className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {courses.map((course, i) => (
         <motion.li
           key={course.id}

@@ -24,6 +24,8 @@ export interface ScenePart {
   exit?: { x: number; y: number };
   /** The part covering this one; it can't be seen or tapped until that part is off. */
   coveredBy?: string;
+  /** Where a label-mode marker sits, in viewBox units, when the centre would hide something (a file name). */
+  labelAt?: { x: number; y: number };
 }
 
 export interface SceneManifest {
@@ -104,11 +106,11 @@ export const SCENES = {
       { id: "folder-photos", name: "Photos folder", box: { x: 12, y: 60, w: 76, h: 22 } },
       { id: "folder-music", name: "Music folder", box: { x: 12, y: 84, w: 76, h: 22 } },
       { id: "folder-downloads", name: "Downloads folder", box: { x: 12, y: 108, w: 76, h: 22 } },
-      { id: "file-holiday", name: "holiday.jpg", box: { x: 96, y: 36, w: 212, h: 26 } },
-      { id: "file-song", name: "song.mp3", box: { x: 96, y: 64, w: 212, h: 26 } },
-      { id: "file-essay", name: "essay.docx", box: { x: 96, y: 92, w: 212, h: 26 } },
-      { id: "file-fake-photo", name: "photo.jpg.exe", box: { x: 96, y: 120, w: 212, h: 26 } },
-      { id: "file-notes", name: "notes.txt", box: { x: 96, y: 148, w: 212, h: 26 } },
+      { id: "file-holiday", name: "holiday.jpg", box: { x: 96, y: 36, w: 212, h: 26 }, labelAt: { x: 282, y: 49 } },
+      { id: "file-song", name: "song.mp3", box: { x: 96, y: 64, w: 212, h: 26 }, labelAt: { x: 282, y: 77 } },
+      { id: "file-essay", name: "essay.docx", box: { x: 96, y: 92, w: 212, h: 26 }, labelAt: { x: 282, y: 105 } },
+      { id: "file-fake-photo", name: "photo.jpg.exe", box: { x: 96, y: 120, w: 212, h: 26 }, labelAt: { x: 282, y: 133 } },
+      { id: "file-notes", name: "notes.txt", box: { x: 96, y: 148, w: 212, h: 26 }, labelAt: { x: 282, y: 161 } },
     ],
     views: { default: [] },
   },

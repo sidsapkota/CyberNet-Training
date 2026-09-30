@@ -51,6 +51,10 @@ All of `build`, `lint`, `test` and `typecheck` must pass with zero errors and wa
 **Course > Module > Lesson > Cards.** Each module ends with exactly one **quiz**, which is a lesson with
 `kind: "quiz"` that reuses the normal card types.
 
+Courses, in catalog order: **Inside Your Devices** (`inside-your-devices`, hardware, the OS and
+troubleshooting, built on the hands-on card types) and **How the Internet Works**
+(`how-the-internet-works`).
+
 ```
 content/courses/<course-dir>/course.json                   { id, title, description, order }
 content/courses/<course-dir>/modules/<module-dir>/module.json   { id, title, description, order }
@@ -111,7 +115,7 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
 
 | `type` | Extra fields | Answer (JSON) | Correct when |
 |---|---|---|---|
-| `explainer` | `title`, `body` (md), `image?` `{src, alt, width, height, caption?}` | none | read (Continue) |
+| `explainer` | `title`, `body` (md), `image?` `{src, alt, width, height, caption?}`, `mascot?` (`"presenting"`, safety notes only) | none | read (Continue) |
 | `multiple_choice` | `options` (2–5 `{id, text}`), `correctOptionId` | option id | right option picked |
 | `drag_to_order` | `items` (3–7 `{id, label}`, **authored in the correct order**) | item ids | exact order |
 | `binary_toggle` | `target` (0–255) | 8 booleans | bits sum to target |
@@ -153,7 +157,8 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - Outputs must look realistic for the chosen OS and use only documentation addresses.
 - **Scenes** (`src/cards/shared/scenes/`) power `hotspot` and `teardown`:
   - `manifests.ts` is pure data: part ids, accessible names, hit boxes, draw order, `coveredBy` and
-    named `views` (e.g. `open` = cover off). `art.tsx` draws each part as its own group.
+    named `views` (e.g. `open` = cover off), plus an optional `labelAt` point where a label marker
+    must not cover the part (file names). `art.tsx` draws each part as its own group.
   - Scenes: `laptop`, `phone`, `file-browser`. Generic devices only: no brands, logos or real
     designs (a test checks for brand names).
   - Parts under a cover that's still on can't be seen, tapped or announced. Schemas check every part
@@ -602,8 +607,8 @@ text pairing meets WCAG AA (≥ 4.5:1), and UI outlines meet 3:1.
   when the value changes.
 - **Module complete:** one short confetti burst in brand colours on the quiz pass screen
   (`celebrate()`).
-- **The only loops** are the current-node pulse (2.4s), the loading sequence, and the slow packet
-  on course covers.
+- **The only loops** are the current-node pulse (2.4s), the loading sequence, and the slow moving
+  part on course covers (the packet, the sliding RAM stick).
 - **`prefers-reduced-motion`:** every animation must render its final state instantly. Use
   `useReducedMotion()` for motion components; CSS keyframes are neutralised in `globals.css`.
 
@@ -661,8 +666,11 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   - wrong answers in lessons (a small `confused` beside the feedback)
   - the locked lesson screen, the 404 page and empty states (`presenting`, pointing at the next
     step)
+  - **the one exception inside cards:** a **safety-note explainer** (`mascot: "presenting"`), which
+    shows the mascot beside the body in an amber panel. Use it only for real-world safety (e.g.
+    "don't open real devices"), at most once per lesson.
 - **Where it must not appear:**
-  - inside cards or card content, or in the lesson header
+  - inside cards or card content (apart from safety-note explainers), or in the lesson header
   - on correct answers (so it never gets repetitive)
   - on the course path or in navigation
   - more than once per screen
@@ -723,7 +731,12 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   simplified-but-wrong.
 - **Lesson shape:** 8–12 cards, opening with a hook explainer and ending with a recap explainer,
   at most 3 multiple choice cards, exactly 2 challenge cards. Quizzes have 5–8 core, interactive
-  questions. `load.test.ts` enforces all of this for every lesson and quiz.
+  questions. `load.test.ts` enforces all of this for every lesson and quiz. It also checks that
+  every simulator card starts unsolved and has a solution, and that every Inside Your Devices
+  lesson uses at least 2 hands-on types (hotspot, teardown, simulator, scenario, sort_bins).
+- **Physical safety:** no brands, and never instructions for opening a real device. Any physical
+  action (cleaning a port, a hot or swollen battery) stays gentle and says "ask an adult" or a
+  repair shop. List each one under **Safety** in `content/REVIEW.md`.
 - **Safe examples only:** IPv4 documentation ranges (`192.0.2.0/24`, `198.51.100.0/24`,
   `203.0.113.0/24`) stand in for public addresses, alongside the private ranges, `2001:db8::/32`
   and `example.com`/`example.org`. Never use a real person's or company's address. `load.test.ts`

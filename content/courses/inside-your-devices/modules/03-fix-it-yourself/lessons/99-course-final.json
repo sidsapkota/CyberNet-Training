@@ -1,0 +1,184 @@
+{
+  "id": "inside-your-devices-final",
+  "kind": "quiz",
+  "title": "Inside Your Devices: Course Final",
+  "order": 99,
+  "isFree": true,
+  "passThreshold": 0.7,
+  "cards": [
+    {
+      "id": "q-label-laptop",
+      "type": "hotspot",
+      "difficulty": "core",
+      "prompt": "Label the inside of this laptop.",
+      "scene": "laptop",
+      "view": "open",
+      "mode": "label",
+      "labels": [
+        { "part": "cpu", "label": "CPU" },
+        { "part": "ram", "label": "RAM" },
+        { "part": "storage", "label": "Storage" },
+        { "part": "fan", "label": "Fan" }
+      ],
+      "explanation": "The square chip is the **CPU**, cooled by the **fan** beside it. The long stick is **RAM**, and the smaller card is **storage**."
+    },
+    {
+      "id": "q-open-phone",
+      "type": "teardown",
+      "difficulty": "core",
+      "prompt": "Open the phone and make it **safe to work on**.",
+      "scene": "phone",
+      "actions": [
+        { "id": "screw-1", "part": "screw-1", "verb": "unscrew", "nudge": "Unscrew this one first." },
+        { "id": "screw-2", "part": "screw-2", "verb": "unscrew", "nudge": "Unscrew this one first." },
+        { "id": "cover", "part": "back-cover", "verb": "lift", "after": ["screw-1", "screw-2"], "nudge": "Both screws have to come out first." },
+        { "id": "unplug", "part": "battery-connector", "verb": "unplug", "after": ["cover"], "nudge": "Take the back cover off first." }
+      ],
+      "explanation": "Screws, then the cover, then **unplug the battery** before touching anything else."
+    },
+    {
+      "id": "q-make-room-in-ram",
+      "type": "simulator",
+      "difficulty": "core",
+      "prompt": "You need **Maps** for directions, with your **music** still playing. Get the phone running smoothly.",
+      "model": "memory",
+      "params": {
+        "ramGb": 6,
+        "systemGb": 2,
+        "apps": [
+          { "id": "maps", "label": "Maps", "gb": 1 },
+          { "id": "music", "label": "Music", "gb": 0.4 },
+          { "id": "game", "label": "Racing game", "gb": 2.5 },
+          { "id": "video-call", "label": "Video call", "gb": 1.5 },
+          { "id": "browser", "label": "Web browser", "gb": 1 }
+        ]
+      },
+      "controls": [
+        { "id": "maps", "kind": "toggle", "label": "Maps" },
+        { "id": "music", "kind": "toggle", "label": "Music", "initial": true },
+        { "id": "game", "kind": "toggle", "label": "Racing game", "initial": true },
+        { "id": "video-call", "kind": "toggle", "label": "Video call", "initial": true },
+        { "id": "browser", "kind": "toggle", "label": "Web browser", "initial": true }
+      ],
+      "outputs": [
+        { "id": "smooth", "kind": "device", "label": "Phone", "frame": "phone" },
+        { "id": "usedPct", "kind": "bar", "label": "RAM used" },
+        { "id": "apps", "kind": "list", "label": "What's in RAM" }
+      ],
+      "goal": {
+        "all": [
+          { "target": "control", "id": "maps", "op": "==", "value": true },
+          { "target": "control", "id": "music", "op": "==", "value": true },
+          { "target": "output", "id": "smooth", "op": ">=", "value": 0.9 }
+        ]
+      },
+      "explanation": "Maps didn't fit in RAM alongside everything else. Closing the game (or the video call and the browser) makes room."
+    },
+    {
+      "id": "q-whats-struggling",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "What's most likely causing each problem?",
+      "bins": [
+        { "id": "ram", "label": "RAM is full" },
+        { "id": "storage", "label": "Storage is full" },
+        { "id": "heat", "label": "CPU is too hot" }
+      ],
+      "items": [
+        { "id": "reloading", "label": "Apps keep reloading when you switch back", "bin": "ram" },
+        { "id": "tabs", "label": "Everything lags with 40 tabs open", "bin": "ram" },
+        { "id": "cant-save", "label": "\"Can't save photo: not enough space\"", "bin": "storage" },
+        { "id": "download-fails", "label": "A big download stops, saying it's full", "bin": "storage" },
+        { "id": "fan-roaring", "label": "Fan roaring, then the laptop slows down", "bin": "heat" },
+        { "id": "on-bed", "label": "Laptop slows down only when on your bed", "bin": "heat" }
+      ],
+      "explanation": "Reloading and lag with lots open point to **RAM**. Messages about space when saving or downloading mean **storage**. A roaring fan or blocked vents (like a bed) mean the CPU is **throttling** to cool down."
+    },
+    {
+      "id": "q-no-charge",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "Your tablet won't charge.",
+      "start": "first",
+      "steps": [
+        {
+          "id": "first",
+          "text": "What do you try **first**?",
+          "choices": [
+            {
+              "id": "other-cable",
+              "text": "A different cable and plug socket",
+              "consequence": "The simplest fix first. Cables wear out far more often than tablets.",
+              "outcome": "success"
+            },
+            {
+              "id": "metal",
+              "text": "Scrape the port with a metal pin",
+              "consequence": "Never put metal in a charging port. It can damage it or short it out.",
+              "outcome": "fail"
+            },
+            {
+              "id": "open-it",
+              "text": "Open the tablet to check the battery",
+              "consequence": "Opening a device is for adults and repair shops, and it should never be the first step.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "explanation": "Start with the **simplest, safest** fix: another cable and socket. Never put metal in the port, and leave opening devices to adults and repair shops."
+    },
+    {
+      "id": "q-stretch-battery",
+      "type": "simulator",
+      "difficulty": "core",
+      "prompt": "Make the battery last **at least 10 hours**, with **music** still playing.",
+      "model": "battery",
+      "params": { "wattHours": 15 },
+      "controls": [
+        { "id": "brightness", "kind": "slider", "label": "Screen brightness", "min": 0, "max": 100, "step": 10, "unit": "%" },
+        { "id": "music", "kind": "toggle", "label": "Music", "initial": true },
+        { "id": "gps", "kind": "toggle", "label": "Location (GPS)", "initial": true },
+        { "id": "backgroundApps", "kind": "toggle", "label": "Background apps", "initial": true },
+        { "id": "lowPower", "kind": "toggle", "label": "Low power mode" }
+      ],
+      "outputs": [
+        { "id": "hours", "kind": "meter", "label": "Battery lasts", "unit": "hours" },
+        { "id": "watts", "kind": "meter", "label": "Power used", "unit": "W" }
+      ],
+      "goal": {
+        "all": [
+          { "target": "output", "id": "hours", "op": ">=", "value": 10 },
+          { "target": "control", "id": "music", "op": "==", "value": true }
+        ]
+      },
+      "explanation": "Lower brightness, location off and background apps off (or low power mode) cut the power used, so the battery lasts longer."
+    },
+    {
+      "id": "q-fix-it-loop",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "Put the fix-it loop in order.",
+      "items": [
+        { "id": "describe", "label": "Describe exactly what's wrong" },
+        { "id": "guess", "label": "Guess the most likely cause" },
+        { "id": "try", "label": "Try the simplest, safest fix" },
+        { "id": "check", "label": "Check whether it worked" }
+      ],
+      "explanation": "**Describe, guess, try, check**, then loop back if it didn't work."
+    },
+    {
+      "id": "q-disguised-file",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "A download is called `game-skins.png.exe`. What is it?",
+      "options": [
+        { "id": "program", "text": "A program, because it ends in .exe" },
+        { "id": "picture", "text": "A picture, because it says .png" },
+        { "id": "folder", "text": "A folder full of pictures" }
+      ],
+      "correctOptionId": "program",
+      "explanation": "Only the **last** extension counts. `.exe` means it's a program that runs when opened, dressed up to look like a picture."
+    }
+  ]
+}

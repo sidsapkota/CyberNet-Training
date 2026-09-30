@@ -21,6 +21,19 @@ export function partTargetStyle(sceneId: SceneId, box: Box): CSSProperties {
   };
 }
 
+/** Centres an overlay (at least 44px) on a point of the scene, in viewBox units. */
+export function pointTargetStyle(sceneId: SceneId, point: { x: number; y: number }): CSSProperties {
+  const scene = getScene(sceneId)!;
+  return {
+    position: "absolute",
+    left: `${(point.x / scene.width) * 100}%`,
+    top: `${(point.y / scene.height) * 100}%`,
+    minWidth: 44,
+    minHeight: 44,
+    transform: "translate(-50%, -50%)",
+  };
+}
+
 /** Parts sorted for overlays: big ones first (underneath), then top-to-bottom for tab order. */
 export function overlayOrder<T extends { box: Box }>(parts: readonly T[]): T[] {
   return [...parts].sort((a, b) => b.box.w * b.box.h - a.box.w * a.box.h);

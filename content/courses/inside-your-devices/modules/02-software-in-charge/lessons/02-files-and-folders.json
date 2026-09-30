@@ -1,0 +1,160 @@
+{
+  "id": "files-and-folders",
+  "kind": "lesson",
+  "title": "Files and Folders",
+  "order": 2,
+  "isFree": true,
+  "cards": [
+    {
+      "id": "where-did-it-go",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Where did it go?",
+      "body": "You press **Save** and your essay disappears from the screen. But where did it actually go?\n\nIt became a **file** in storage, filed away by the operating system so you (and your apps) can find it again."
+    },
+    {
+      "id": "files-folders-extensions",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Files, folders and extensions",
+      "body": "A **file** is one named piece of saved data: a photo, a song, an essay or an app.\n\nFiles go in **folders**, and folders can hold other folders, like boxes inside boxes. The route through the boxes to a file is its **path**: `Documents > School > essay.docx`.\n\nThe end of a file's name, after the last dot, is its **extension**. It tells the OS what kind of file it is and which app should open it."
+    },
+    {
+      "id": "match-extensions",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each extension to the kind of file it marks.",
+      "pairs": [
+        { "id": "jpg", "left": "`.jpg`", "right": "A photo" },
+        { "id": "mp3", "left": "`.mp3`", "right": "A song" },
+        { "id": "mp4", "left": "`.mp4`", "right": "A video" },
+        { "id": "docx", "left": "`.docx`", "right": "A written document" },
+        { "id": "exe", "left": "`.exe`", "right": "A program that runs when opened" }
+      ],
+      "explanation": "`.jpg` is a photo, `.mp3` a song, `.mp4` a video and `.docx` a document. `.exe` is different: it's a **program**. Opening it *runs* it, so only open ones you trust."
+    },
+    {
+      "id": "label-the-files",
+      "type": "hotspot",
+      "difficulty": "core",
+      "prompt": "Label what each file really is. Read to the **last** dot.",
+      "scene": "file-browser",
+      "mode": "label",
+      "labels": [
+        { "part": "file-holiday", "label": "Photo" },
+        { "part": "file-song", "label": "Song" },
+        { "part": "file-essay", "label": "Document" },
+        { "part": "file-fake-photo", "label": "Program" },
+        { "part": "file-notes", "label": "Plain text" }
+      ],
+      "explanation": "`photo.jpg.exe` ends in **.exe**, so it's a program, whatever the `.jpg` in the middle says. `notes.txt` is plain text with no formatting."
+    },
+    {
+      "id": "the-cloud",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "The cloud",
+      "body": "Not every file lives on your device. When you save to **the cloud**, the file is stored on a company's **server**: a powerful computer in a data centre, reached over the internet.\n\nThe cloud isn't in the sky. It's someone else's computer, kept safe and backed up.\n\nCloud files are handy: you can open them on any device and they survive if your phone is lost. But you need the internet to reach them, unless you've kept a copy on the device."
+    },
+    {
+      "id": "local-or-cloud",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Where is each file stored: **on your device** or **in the cloud**?",
+      "bins": [
+        { "id": "device", "label": "On your device" },
+        { "id": "cloud", "label": "In the cloud" }
+      ],
+      "items": [
+        { "id": "offline-song", "label": "A song downloaded to play offline", "bin": "device" },
+        { "id": "laptop-drawing", "label": "A drawing saved to the laptop's storage", "bin": "device" },
+        { "id": "shared-doc", "label": "A shared doc you edit in a web browser", "bin": "cloud" },
+        { "id": "web-email", "label": "Emails in a web mail inbox", "bin": "cloud" },
+        { "id": "online-save", "label": "A game save kept in your online account", "bin": "cloud" }
+      ],
+      "explanation": "Files you **downloaded** or **saved to the device** are in its storage. Files you reach through a **website or online account** live on the company's servers, in the cloud."
+    },
+    {
+      "id": "suspicious-download",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "A website promised free holiday wallpapers. You clicked download.",
+      "start": "look",
+      "steps": [
+        {
+          "id": "look",
+          "text": "Your Downloads folder now has a new file: `photo.jpg.exe`. What is it?",
+          "choices": [
+            {
+              "id": "is-photo",
+              "text": "A photo: it says .jpg",
+              "consequence": "Only the **last** extension counts. The `.jpg` in the middle is a disguise.",
+              "outcome": "fail"
+            },
+            {
+              "id": "is-program",
+              "text": "A program pretending to be a photo",
+              "consequence": "Right. It ends in **.exe**, so opening it would run it.",
+              "next": "what-now"
+            }
+          ]
+        },
+        {
+          "id": "what-now",
+          "text": "What do you do with it?",
+          "choices": [
+            {
+              "id": "open-check",
+              "text": "Open it once, just to check",
+              "consequence": "Opening a program runs it, and it only takes one run for it to do harm.",
+              "outcome": "fail"
+            },
+            {
+              "id": "send-friend",
+              "text": "Send it to a friend to try",
+              "consequence": "Now your friend's device is at risk too. Never pass on a file you don't trust.",
+              "outcome": "fail"
+            },
+            {
+              "id": "delete-tell",
+              "text": "Delete it without opening it, and tell an adult",
+              "consequence": "The file is gone, and an adult can check nothing else came with it.",
+              "outcome": "success"
+            }
+          ]
+        }
+      ],
+      "explanation": "Read to the **last** dot. `photo.jpg.exe` is a program in disguise. Some computers hide the last extension, so it might even show as `photo.jpg`. Delete files like this without opening them, and tell an adult."
+    },
+    {
+      "id": "order-the-path",
+      "type": "drag_to_order",
+      "difficulty": "challenge",
+      "prompt": "Your science essay is saved here. Put its path in order, from the **outermost folder** to the file.",
+      "items": [
+        { "id": "documents", "label": "`Documents`" },
+        { "id": "school", "label": "`School`" },
+        { "id": "science", "label": "`Science`" },
+        { "id": "essay", "label": "`volcanoes.docx`" }
+      ],
+      "explanation": "A path goes from the biggest box inwards: `Documents > School > Science > volcanoes.docx`. The file itself always comes last."
+    },
+    {
+      "id": "photos-per-gb",
+      "type": "numeric_input",
+      "difficulty": "challenge",
+      "prompt": "Each photo you take is about **4 MB**. There are **1,000 MB** in 1 GB. How many photos fit in **1 GB**?",
+      "answer": 250,
+      "unit": "photos",
+      "hint": "Divide 1,000 MB by the size of one photo.",
+      "explanation": "1,000 ÷ 4 = **250** photos in every gigabyte. So a phone with 64 GB free could hold about 16,000 of them."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- A **file** is saved data with a name. **Folders** hold files and other folders, and the route to a file is its **path**.\n- The **extension** after the last dot says what kind of file it is. `.exe` means a program.\n- **Cloud** files live on a company's servers, reached over the internet.\n- A name like `photo.jpg.exe` is a program in disguise: delete it and tell an adult.\n\nThat's the software side. Next module: fixing things yourself."
+    }
+  ]
+}
