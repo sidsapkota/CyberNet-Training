@@ -141,13 +141,13 @@
         },
         {
           "id": "win-free",
-          "text": "\"Win free stuff today\", labelled spam",
+          "text": "\"Win free stuff today, click here\", labelled spam",
           "nudge": "That gives \"free\" even more spam votes. Which side needs more votes?"
         },
         {
-          "id": "delete-spam",
-          "text": "Delete all the spam examples",
-          "nudge": "Then the model couldn't recognise spam at all, and the first test would fail."
+          "id": "pizza-night",
+          "text": "\"Pizza night at my place tonight\", labelled not spam",
+          "nudge": "Count it: which of its words are in \"Free pizza at footy training\"? Only one, so it's a tie, not a win."
         }
       ],
       "correctOptionId": "free-footy",
@@ -440,13 +440,13 @@
       "prompt": "A spam filter learned only from **English** messages. It lets lots of **Spanish** spam through. Which **one** addition helps most?",
       "options": [
         {
-          "id": "spanish",
-          "text": "200 Spanish messages, spam and normal, labelled"
-        },
-        {
           "id": "english",
           "text": "10,000 more English spam messages",
           "nudge": "That's a lot more data, but does any of it show the model Spanish spam?"
+        },
+        {
+          "id": "spanish",
+          "text": "200 Spanish messages, spam and normal, labelled"
         },
         {
           "id": "spanish-spam-only",

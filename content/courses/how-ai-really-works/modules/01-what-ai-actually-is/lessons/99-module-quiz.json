@@ -166,16 +166,16 @@
       "prompt": "A model learned to spot dogs from photos taken **only in daylight**. What will it most likely get wrong?",
       "options": [
         {
-          "id": "night",
-          "text": "Dogs in photos taken at night"
-        },
-        {
           "id": "day",
           "text": "Dogs in sunny photos"
         },
         {
           "id": "own",
           "text": "The photos it was trained on"
+        },
+        {
+          "id": "night",
+          "text": "Dogs in photos taken at night"
         },
         {
           "id": "nothing",

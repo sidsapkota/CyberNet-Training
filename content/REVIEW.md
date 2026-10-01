@@ -1694,6 +1694,26 @@ First audit: 24 of 24 right first try, so too easy; facts all checked correct. C
 | 4.2 `claim-and-check` | A news site is also a trusted source | Date row: "a textbook or museum site" |
 | 4.2 `honesty` | "Most schools" unverified | "Many schools" |
 
+**Second and third audits** (the third read every card with the answers stripped out first):
+24 of 24, then 31 of 31. The second found the real tell: **the right multiple-choice answer was
+the longest option, and (since options aren't shuffled) usually the first**, across the whole
+course. Fixes, course-wide:
+- Every multiple-choice card in How AI Really Works now has its right answer at a position spread
+  by card id (first/second/third/fourth: 7/7/8/6 of 28), and `load.test.ts` fails if more than 40%
+  of the course's multiple-choice answers come first.
+- Wrong options made as long, specific and tempting as the right one on the worst cards: 2.1
+  `which-example-fixes-it` ("Pizza night at my place tonight" makes a tie), 2.2 `too-good`, 3.1
+  `how-it-knows`, 3.3 `best-check` ("ask a different chatbot"), 3 quiz `q-why-hallucinate`, and in
+  module 4 `whats-missing` ("ask it to check its facts first"), `boring-list` ("You are a shark
+  expert…"), `latest-phone`, `why-dated`, `q-missing`, `q-latest`.
+- Smaller fixes: `boring-list` explanation no longer says "the first"; voice assistants, image
+  generators and translation apps are introduced before `kind-of-tool`; `learn-or-do` nudge
+  general; quiz `q-link` says what you told the chatbot.
+
+Note: the auditor is itself a strong AI model told to play a 12-year-old, so its first-try score
+overstates a real beginner's. Its near-misses (`hours-in-a-year` mental maths, `kind-of-tool`,
+`school-or-ask`, `boring-list`) are the likely real slips.
+
 ## Beginner audit: How AI Really Works module 1 and Deepfake Scams (1 October 2026)
 
 **Method:** as for the other courses. A fresh agent played the four module 1 cards sets and the

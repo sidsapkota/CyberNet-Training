@@ -11,16 +11,16 @@
       "prompt": "A word-vote model sorts messages into **homework** or **games**. \"Maths\" has only ever appeared in its homework examples, so it calls **\"Is the maths game fun?\"** homework (1 vote to 0). Which **one** new example makes it guess games?",
       "options": [
         {
-          "id": "maths-game",
-          "text": "\"That maths game is fun\", labelled games"
-        },
-        {
           "id": "fun-games",
           "text": "\"Fun games online\", labelled games"
         },
         {
           "id": "maths-homework",
           "text": "\"Maths homework is due\", labelled homework"
+        },
+        {
+          "id": "maths-game",
+          "text": "\"That maths game is fun\", labelled games"
         },
         {
           "id": "delete",
@@ -47,12 +47,12 @@
       "prompt": "Model A gets **18 of 24** test examples right. Model B gets **15 of 20** right. Which is more accurate?",
       "options": [
         {
-          "id": "same",
-          "text": "They're the same"
-        },
-        {
           "id": "a",
           "text": "Model A"
+        },
+        {
+          "id": "same",
+          "text": "They're the same"
         },
         {
           "id": "b",
@@ -73,16 +73,16 @@
       "prompt": "A model scores **99%** on its training examples and **55%** on new ones. What does that suggest?",
       "options": [
         {
-          "id": "overfit",
-          "text": "It memorised its examples (overfitting)"
-        },
-        {
           "id": "great",
           "text": "It's a great model: look at the 99%"
         },
         {
           "id": "need-more-tests",
           "text": "It should be tested on its training examples again"
+        },
+        {
+          "id": "overfit",
+          "text": "It memorised its examples (overfitting)"
         },
         {
           "id": "fine",

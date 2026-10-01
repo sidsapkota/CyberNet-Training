@@ -185,6 +185,17 @@ describe("real content in /content", () => {
     ]);
   });
 
+  it("doesn't give multiple-choice answers away by position (How AI Really Works)", () => {
+    // Options are shown in the order written, so the right one mustn't usually come first.
+    const mcs = [...loadContent().lessons.values()]
+      .filter((l) => l.courseId === "how-ai-really-works")
+      .flatMap((l) => l.cards)
+      .filter((c) => c.type === "multiple_choice");
+    const first = mcs.filter((c) => c.options[0]?.id === c.correctOptionId).length;
+    expect(mcs.length).toBeGreaterThan(10);
+    expect(first / mcs.length).toBeLessThan(0.4);
+  });
+
   it("lists How AI Really Works' modules and lessons in order", () => {
     const course = loadContent().courses.find((c) => c.id === "how-ai-really-works");
     expect(course?.modules.map((m) => [m.access, ...m.lessons.map((l) => l.id)])).toEqual([

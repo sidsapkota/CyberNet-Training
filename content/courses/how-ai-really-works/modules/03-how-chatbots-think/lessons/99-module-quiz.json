@@ -11,16 +11,16 @@
       "prompt": "After \"Ready, set,\" a model gives these chances at temperature 1: **go 70%**, now 15%, then 10%, slow 5%. At which temperature is it **most likely** to pick \"go\"?",
       "options": [
         {
-          "id": "low",
-          "text": "0.2"
-        },
-        {
           "id": "one",
           "text": "1"
         },
         {
           "id": "two",
           "text": "2"
+        },
+        {
+          "id": "low",
+          "text": "0.2"
         },
         {
           "id": "same",
@@ -115,20 +115,20 @@
       "prompt": "Why can a chatbot confidently name a book that doesn't exist?",
       "options": [
         {
+          "id": "temperature",
+          "text": "Its temperature was set too low, so it couldn't pick the real book"
+        },
+        {
           "id": "likely",
           "text": "It picks words that sound likely, not ones it has checked are true"
         },
         {
-          "id": "temperature",
-          "text": "Its temperature was set too low"
-        },
-        {
           "id": "window",
-          "text": "Its context window was too small"
+          "text": "Its context window was too small to hold the real list of books"
         },
         {
           "id": "lying",
-          "text": "It's lying on purpose, to sound clever"
+          "text": "It's trained to sound clever, so it makes things up on purpose"
         }
       ],
       "correctOptionId": "likely",

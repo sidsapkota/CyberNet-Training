@@ -1228,6 +1228,9 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
 - **Beginner audit:** after big content changes, have a fresh agent play the course as a 12-year-old
   with no prior knowledge (on-screen text and screenshots only, answers hidden until it commits).
   Record findings and fixes in the Beginner Audit section of `content/REVIEW.md`.
+- **No giveaways in multiple choice:** options show in the order written, so vary where the right
+  one goes, and make wrong options as long, specific and tempting as the right one (real
+  misconceptions, not jokes). Beginner audits read the cards with the answers stripped out first.
 - **Challenge cards** (`difficulty: "challenge"`) are optional stretch questions. Core cards alone must
   fully teach the lesson, and nothing later may depend on a challenge card. Aim for about 2 per lesson.
 - **Quizzes** have about 5 core, interactive questions covering the module's lessons, and nothing

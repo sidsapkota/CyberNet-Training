@@ -59,10 +59,6 @@
       "prompt": "At temperature 1, the chances after \"The cat sat on the\" are mat 60%, sofa 20%, floor 15%, moon 5%. If you turn the temperature **up to 2**, which words' chances go **up**?",
       "options": [
         {
-          "id": "all-but-mat",
-          "text": "Every word except \"mat\""
-        },
-        {
           "id": "only-mat",
           "text": "Only \"mat\"",
           "nudge": "That's what turning it down does. What does a high temperature do to the gaps?"
@@ -71,6 +67,10 @@
           "id": "only-moon",
           "text": "Only \"moon\"",
           "nudge": "\"moon\" does go up, but it isn't the only one. What happens to every word below the top?"
+        },
+        {
+          "id": "all-but-mat",
+          "text": "Every word except \"mat\""
         },
         {
           "id": "none",
@@ -242,10 +242,6 @@
       "prompt": "A model gives just two next words **50%** each. You turn the temperature **down to 0.2**. What happens to their chances?",
       "options": [
         {
-          "id": "still-even",
-          "text": "They stay 50% each"
-        },
-        {
           "id": "one-jumps",
           "text": "One of them jumps to about 99%",
           "nudge": "Which one would it be? Low temperature makes the top word likelier, but here is there a top word?"
@@ -259,6 +255,10 @@
           "id": "both-down",
           "text": "They both go down",
           "nudge": "The chances always add up to 100%, and there are only two words."
+        },
+        {
+          "id": "still-even",
+          "text": "They stay 50% each"
         }
       ],
       "correctOptionId": "still-even",

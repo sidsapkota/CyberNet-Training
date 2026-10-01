@@ -84,10 +84,6 @@
       "prompt": "Which job is easiest to solve by **learning from examples**, instead of writing rules?",
       "options": [
         {
-          "id": "handwriting",
-          "text": "Reading people's handwriting"
-        },
-        {
           "id": "bill",
           "text": "Adding up a shopping bill",
           "nudge": "Adding follows exact rules that never change. Which job has too many different possibilities to write rules for?"
@@ -96,6 +92,10 @@
           "id": "alarm",
           "text": "Ringing an alarm at 7:00",
           "nudge": "That's one simple rule. Which job would need rules for millions of different cases?"
+        },
+        {
+          "id": "handwriting",
+          "text": "Reading people's handwriting"
         },
         {
           "id": "midnight",
@@ -196,10 +196,6 @@
       "prompt": "When [[AI|artificial-intelligence]] recognises your face, does it **understand** who you are, the way a friend does?",
       "options": [
         {
-          "id": "patterns",
-          "text": "No: it matches patterns it learned from examples"
-        },
-        {
           "id": "friend",
           "text": "Yes: it knows you like a friend does",
           "nudge": "A friend knows your jokes and your favourite food. What did the AI actually learn from?"
@@ -208,6 +204,10 @@
           "id": "new-phones",
           "text": "Yes, but only on new phones",
           "nudge": "Newer phones are faster, but how the AI learned is the same. Does matching a face mean knowing the person?"
+        },
+        {
+          "id": "patterns",
+          "text": "No: it matches patterns it learned from examples"
         },
         {
           "id": "online",

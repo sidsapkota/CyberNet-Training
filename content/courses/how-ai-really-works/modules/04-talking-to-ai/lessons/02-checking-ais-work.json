@@ -73,7 +73,7 @@
       "base": "decimal",
       "answer": 8760,
       "hint": "A day has 24 hours, and the year has 365 days. Try 24 × 300, then 24 × 65, and add them.",
-      "nudge": "Check your multiplying: 24 × 365. Swapped digits are easy to miss, so compare yours with the chatbot's carefully.",
+      "nudge": "Check your multiplying: 24 × 365. Try 24 × 300, plus 24 × 65.",
       "explanation": "24 × 365 = **8,760**. The chatbot swapped two digits: 8,670 looks almost right, which is exactly why you check numbers instead of eyeballing them."
     },
     {
@@ -131,32 +131,32 @@
         }
       ],
       "hint": "Who ends up doing the thinking in each one: you, or the chatbot?",
-      "nudge": "Changing the words doesn't change who did the work. Look for the ones where the chatbot does the thinking.",
+      "nudge": "Look at who ends up doing the thinking and the writing in each one.",
       "explanation": "Explanations, quizzes and feedback help **you** think. Handing in its essay, letting it do a test, or rewording its essay to sound like you all let it **do the work**, however it's dressed up."
     },
     {
       "id": "latest-phone",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A chatbot tells you the newest model of a phone \"came out last month\". Why should you check that?",
+      "prompt": "A chatbot tells you the newest model of a phone \"came out last month\". What's the **main** reason to check that?",
       "options": [
+        {
+          "id": "mix-up",
+          "text": "It may have mixed up this phone with an older model with a similar name",
+          "nudge": "That can happen, but it isn't the main risk with \"last month\". When did the model learn?"
+        },
         {
           "id": "cutoff",
           "text": "It learned from text up to a certain date, so \"last month\" may be long gone"
         },
         {
-          "id": "mix-up",
-          "text": "It might be mixing up two phone models",
-          "nudge": "That can happen, but there's a bigger reason to be careful with \"last month\". When did it learn?"
-        },
-        {
           "id": "window",
-          "text": "Its context window may have forgotten today's date",
-          "nudge": "The context window is about your chat, not what it learned. When did it learn about phones?"
+          "text": "Its context window may have lost track of what today's date is",
+          "nudge": "The context window is about your chat. What about the things it learned, and when?"
         },
         {
           "id": "temperature",
-          "text": "Its temperature might be set too high",
+          "text": "A high temperature may have made it pick an unlikely release date",
           "nudge": "Temperature changes how it picks, but even at low temperature what might it be missing?"
         }
       ],

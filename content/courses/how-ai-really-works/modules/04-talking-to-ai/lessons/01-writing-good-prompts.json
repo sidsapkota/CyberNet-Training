@@ -77,28 +77,28 @@
       "prompt": "Your prompt is: **\"Write a summary of the water cycle.\"** It has a goal. What would improve it **most**?",
       "options": [
         {
+          "id": "facts-examples",
+          "text": "Asking it to include lots of facts and examples",
+          "nudge": "More facts makes it longer, not better aimed. Who is it for, and what shape should it be?"
+        },
+        {
+          "id": "check-facts",
+          "text": "Asking it to check its facts before it answers",
+          "nudge": "It can't really check itself, and this still doesn't say who it's for or how long."
+        },
+        {
+          "id": "important",
+          "text": "Saying please, and that it's really important",
+          "nudge": "Politeness and urgency don't tell it who the summary is for, or how long."
+        },
+        {
           "id": "who-and-length",
           "text": "Saying who it's for and how long it should be"
-        },
-        {
-          "id": "please",
-          "text": "Adding \"please\" and \"thank you\"",
-          "nudge": "Being polite is nice, but what information is still missing?"
-        },
-        {
-          "id": "detailed",
-          "text": "Adding \"with lots of detail\"",
-          "nudge": "\"Lots of detail\" makes it longer, not better aimed. Who is it for, and how long should it be?"
-        },
-        {
-          "id": "really-good",
-          "text": "Adding \"make it really good\"",
-          "nudge": "Everyone wants it good. What would actually help it aim the answer?"
         }
       ],
       "correctOptionId": "who-and-length",
-      "hint": "Check it against the three parts of a good prompt. Which two are missing?",
-      "explanation": "It has a **goal**, but no **context** (who's it for? a 12-year-old? a science test?) and no **format** (one paragraph? five bullet points?). Adding those does far more than politeness, capitals or repeating yourself."
+      "hint": "Check it against the three parts of a good prompt. Which ones are missing?",
+      "explanation": "It has a **goal**, but no **context** (who's it for? a 12-year-old? a science test?) and no **format** (one paragraph? five bullet points?). More facts, asking it to check itself, or saying it's important don't add either."
     },
     {
       "type": "sort_bins",
@@ -273,28 +273,28 @@
       "prompt": "\"Give me facts about sharks\" got a long, boring list. Which **one** change helps **most**?",
       "options": [
         {
+          "id": "lots",
+          "text": "\"Give me lots of detailed, interesting facts about every kind of shark\"",
+          "nudge": "Longer and keener, but how many facts, what for, and how long each?"
+        },
+        {
           "id": "goal-format",
           "text": "\"Give me 3 surprising shark facts for a class talk, one sentence each\""
         },
         {
-          "id": "again",
-          "text": "Send the same prompt again",
-          "nudge": "Same prompt, same kind of answer. What did the prompt not say?"
+          "id": "accurate",
+          "text": "\"Give me shark facts. Be accurate, double-check them, make no mistakes\"",
+          "nudge": "Asking it to be accurate doesn't make it accurate, and it still doesn't say how many or what for."
         },
         {
-          "id": "hot",
-          "text": "Turn the temperature up as high as it goes",
-          "nudge": "High temperatures add randomness, and nonsense. They don't add what you were missing."
-        },
-        {
-          "id": "interesting",
-          "text": "\"Give me facts about sharks, but make them really, really interesting!!!\"",
-          "nudge": "That's closer, but how many facts, for what, and how long?"
+          "id": "expert",
+          "text": "\"You are a shark expert. Tell me the most amazing facts about sharks\"",
+          "nudge": "That sets a style, but how many facts, for what, and how long?"
         }
       ],
       "correctOptionId": "goal-format",
-      "hint": "Which option adds a clear goal, context and format?",
-      "explanation": "Only the first says **how many** (3), **what kind** (surprising), **what for** (a class talk) and **what shape** (one sentence each). \"Really, really interesting!!!\" is enthusiastic, but still doesn't say what you need."
+      "hint": "Which parts of a good prompt was the original missing? Which option adds them?",
+      "explanation": "Only the 3-surprising-facts prompt says **how many** (3), **what kind** (surprising), **what for** (a class talk) and **what shape** (one sentence each). The others sound keen, careful or expert, but none says how many, what for, or how long."
     },
     {
       "id": "no-answers-please",

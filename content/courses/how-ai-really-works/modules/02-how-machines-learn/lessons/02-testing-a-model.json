@@ -45,23 +45,23 @@
       "prompt": "A model scores **100%** on its training examples but only **60%** on new test examples. What's the most likely reason?",
       "options": [
         {
-          "id": "memorised",
-          "text": "It memorised its training examples instead of the real pattern"
+          "id": "bad-tests",
+          "text": "Its test examples were much harder than the ones it trained on",
+          "nudge": "Harder tests can lower a score a bit, but a 40-point gap is the classic sign of something else. What does 100% on training suggest?"
+        },
+        {
+          "id": "more-data",
+          "text": "It needs more training examples of exactly the same kind",
+          "nudge": "More of the same would make it even better at memorising. What does the gap between the scores tell you?"
         },
         {
           "id": "perfect",
-          "text": "It's perfect: 100% is what counts",
-          "nudge": "Which score shows how it does on examples it hasn't seen?"
+          "text": "It's a good model: 100% on its training data is what counts",
+          "nudge": "Which score shows how it does on examples it has never seen?"
         },
         {
-          "id": "bad-tests",
-          "text": "The test examples must all be labelled wrong",
-          "nudge": "That's possible, but it isn't the usual reason. What does a big gap between the two scores suggest?"
-        },
-        {
-          "id": "slow",
-          "text": "It needs a faster computer",
-          "nudge": "Speed doesn't change which answers it gives. Think about how it learned."
+          "id": "memorised",
+          "text": "It memorised its training examples instead of the real pattern"
         }
       ],
       "correctOptionId": "memorised",
@@ -258,13 +258,13 @@
       "prompt": "Model A gets **45 of 60** test days right. Model B gets **38 of 50** right. Which is more accurate?",
       "options": [
         {
-          "id": "b",
-          "text": "Model B"
-        },
-        {
           "id": "a",
           "text": "Model A",
           "nudge": "A got more right, but it was also tested on more days. Work out each one as a percentage."
+        },
+        {
+          "id": "b",
+          "text": "Model B"
         },
         {
           "id": "same",

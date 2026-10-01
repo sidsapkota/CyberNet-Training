@@ -186,23 +186,23 @@
         },
         {
           "id": "ask-again",
-          "text": "Ask the same question again and see if the answer matches",
+          "text": "Ask the same question again and see if the two answers match",
           "nudge": "A chatbot can repeat the same mistake. Where can you check it outside the chatbot?"
         },
         {
           "id": "ask-sure",
-          "text": "Ask the chatbot if it's sure",
+          "text": "Ask the chatbot to explain how it knows, and if it's sure",
           "nudge": "It can be confidently wrong about its own mistakes. Where else could you look?"
         },
         {
-          "id": "confident",
-          "text": "Check that the answer sounds confident",
-          "nudge": "Hallucinations sound confident too. What would really show it's true?"
+          "id": "other-chatbot",
+          "text": "Ask a different chatbot and see if it gives the same answer",
+          "nudge": "Another chatbot can make the same kind of mistake. Where can you check outside chatbots?"
         }
       ],
       "correctOptionId": "trusted-source",
       "hint": "Look back at how to check: the answer has to come from outside the chatbot.",
-      "explanation": "Only a **trusted source** outside the chatbot really checks a fact. Asking again, asking if it's sure, or judging how confident it sounds all stay inside the chatbot, which can repeat or defend a hallucination."
+      "explanation": "Only a **trusted source** outside chatbots really checks a fact. Asking again, asking it how it knows, or asking a different chatbot all stay inside chatbots, which can repeat or defend a hallucination."
     },
     {
       "id": "link-works",

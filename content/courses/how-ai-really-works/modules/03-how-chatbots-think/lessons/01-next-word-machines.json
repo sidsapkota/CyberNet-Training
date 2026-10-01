@@ -135,23 +135,23 @@
       "prompt": "A chatbot writes \"The Eiffel Tower is in Paris\". How did it come up with that?",
       "options": [
         {
-          "id": "together",
-          "text": "Those words often appear together in its training text"
-        },
-        {
           "id": "looked-up",
-          "text": "It looked it up on a map",
+          "text": "It looked it up on a map before it answered",
           "nudge": "A language model on its own doesn't look things up. What did it learn from?"
         },
         {
           "id": "understands",
-          "text": "It understands geography like a person",
+          "text": "It understands where famous places are, like a person",
           "nudge": "It doesn't understand places. Think about how it chooses each word."
         },
         {
           "id": "checked",
-          "text": "It checked the fact before writing it",
+          "text": "It checked the fact was true before writing it",
           "nudge": "It doesn't check facts as it writes. Each word is a guess about what usually comes next."
+        },
+        {
+          "id": "together",
+          "text": "Those words often appear together in its training text"
         }
       ],
       "correctOptionId": "together",
@@ -176,10 +176,6 @@
       "prompt": "Which word is a language model most likely to split into **more than one** token?",
       "options": [
         {
-          "id": "unbelievably",
-          "text": "unbelievably"
-        },
-        {
           "id": "the",
           "text": "the",
           "nudge": "Very common words are usually a single token. Which word is long and less common?"
@@ -193,6 +189,10 @@
           "id": "and",
           "text": "and",
           "nudge": "\"and\" is one of the most common words of all, so it's one token. Look for a long, rarer word."
+        },
+        {
+          "id": "unbelievably",
+          "text": "unbelievably"
         }
       ],
       "correctOptionId": "unbelievably",

@@ -211,10 +211,6 @@
       "prompt": "Where does bias in a model usually come from?",
       "options": [
         {
-          "id": "data",
-          "text": "Gaps and imbalances in its training data"
-        },
-        {
           "id": "not-enough",
           "text": "Not having enough training data overall",
           "nudge": "A huge pile of data can still leave whole groups out. What matters more: how much, or who's in it?"
@@ -228,6 +224,10 @@
           "id": "code-bug",
           "text": "A mistake somewhere in the computer code",
           "nudge": "The code can be perfect and the model still unfair. Where does a model's behaviour come from?"
+        },
+        {
+          "id": "data",
+          "text": "Gaps and imbalances in its training data"
         }
       ],
       "correctOptionId": "data",

@@ -54,20 +54,20 @@
           "text": "Saying who they're for and how many you want"
         },
         {
-          "id": "polite",
-          "text": "Adding \"please\" at the start"
+          "id": "detail",
+          "text": "Asking for lots of detail and plenty of examples"
         },
         {
-          "id": "detail",
-          "text": "Asking for \"lots of detail\""
+          "id": "only-healthy",
+          "text": "Asking it to include only snacks that are healthy"
         },
         {
           "id": "temperature",
-          "text": "Turning the temperature up"
+          "text": "Turning the temperature up for more variety"
         }
       ],
       "correctOptionId": "context-format",
-      "explanation": "It has a goal but no context (for a lunchbox? a 12-year-old?) or format (how many?). Politeness, \"lots of detail\" and temperature don't add either."
+      "explanation": "It has a goal but no context (for a lunchbox? a 12-year-old?) or format (how many?). More detail, repeating \"healthy\", or a higher temperature don't add either."
     },
     {
       "id": "q-sum",
@@ -111,7 +111,7 @@
         },
         {
           "id": "sorry",
-          "text": "You tell the chatbot. It replies: \"Sorry, you're right, it's 17.\" Which number do you use?",
+          "text": "You tell the chatbot the page says about 18. It replies: \"Sorry, you're right, it's 17.\" Which number do you use?",
           "choices": [
             {
               "id": "page",
@@ -176,24 +176,24 @@
       "prompt": "A chatbot (that can't search the web) says a band's newest album came out \"this year\". What's the main risk?",
       "options": [
         {
+          "id": "mix-up",
+          "text": "It may have mixed this band up with another band's album"
+        },
+        {
+          "id": "window",
+          "text": "Its context window is too small to hold the band's whole history"
+        },
+        {
           "id": "cutoff",
           "text": "It learned up to a certain date, so \"this year\" may be out of date"
         },
         {
-          "id": "mix-up",
-          "text": "It might be mixing up two bands"
-        },
-        {
-          "id": "hallucinate-always",
-          "text": "It always makes up album names"
-        },
-        {
-          "id": "window",
-          "text": "Its context window is too small to hold the album"
+          "id": "temperature",
+          "text": "Its temperature was set too high, so it picked a random year"
         }
       ],
       "correctOptionId": "cutoff",
-      "explanation": "Without web search, a model only knows what it learned up to a certain date. \"This year\" and \"newest\" may be long out of date."
+      "explanation": "Without web search, a model only knows what it learned up to a certain date, so \"this year\" and \"newest\" may be long out of date. Mix-ups can happen too, but that's the main risk here."
     },
     {
       "type": "sort_bins",

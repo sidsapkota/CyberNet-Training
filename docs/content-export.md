@@ -1110,6 +1110,7 @@ Write clear prompts, check the answers, and know today's tools.
 **Key facts**
 
 - *Chat assistants:* Some widely used AI chat assistants (in A to Z order) are **ChatGPT** (made by OpenAI), **Claude** (Anthropic), **Copilot** (Microsoft) and **Gemini** (Google).
+- *AI you already use:* There are **voice assistants** you talk to that answer out loud, **image generators** that make pictures from a description, and **translation apps** that turn text into another language.
 - *Age rules and good habits:* Every AI app has its own rules, including **who can use it**, and they differ a lot. **Check the app's own rules**, and **ask a parent or carer** before signing up.
 
 **Best interactive cards**
