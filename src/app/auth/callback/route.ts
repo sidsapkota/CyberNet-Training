@@ -1,6 +1,6 @@
 import type { EmailOtpType } from "@supabase/supabase-js";
 import { type NextRequest, NextResponse } from "next/server";
-import { NEXT_COOKIE, readNextCookie } from "@/lib/auth/afterSignIn";
+import { afterSignInPath, NEXT_COOKIE, readNextCookie } from "@/lib/auth/afterSignIn";
 import { safeNextPath } from "@/lib/auth/redirect";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
   const { data } = await supabase.auth.getUser();
   if (data.user) {
     const { data: profile } = await supabase.from("profiles").select("display_name").eq("id", data.user.id).maybeSingle();
-    if (!profile?.display_name) return to(next === "/" ? "/account?welcome=1" : `/account?welcome=1&next=${encodeURIComponent(next)}`);
+    return to(afterSignInPath(next, Boolean(profile?.display_name)));
   }
   return to(next);
 }
