@@ -122,9 +122,9 @@ export function withoutUnentitledPro(
  * When guests had to make a free account for every lesson but each course's first (and the help
  * modules). Records a guest made on account-only lessons after this could only come from
  * tampering, so the merge drops them; earlier ones (when every free lesson was open) stay.
- * null: the gate hasn't launched, so everything stays.
+ * null would mean the gate hasn't launched (everything stays). Set to when guest-gate was merged.
  */
-export const GUEST_GATE_AT: Date | null = null;
+export const GUEST_GATE_AT: Date | null = new Date("2026-10-01T03:34:24Z");
 
 /** Guest progress on lessons that need an account, made after the gate launched, is dropped. */
 export function withoutGatedGuestProgress(local: ProgressSnapshot, index: ContentIndex, gateAt: Date | null): ProgressSnapshot {

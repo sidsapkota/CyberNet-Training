@@ -580,7 +580,7 @@ src/dev/                 dev-only card samples + playground (served at /dev/card
   `http://localhost:3000/auth/callback` and `https://cyber-net-training.vercel.app/auth/callback`
   are allowed (see `docs/launch-checklist.md`, which also covers preview deployments). Any other
   origin (a phone on the LAN) must be added there, or sign-in falls back to the Site URL.
-- **Google sign-in** is in Testing mode (only allow-listed test accounts can use it). The
+- **Google sign-in** is published (anyone with a Google account can use it). The
   "Continue with Google" button (`src/components/account/GoogleSignInButton.tsx`) follows Google's
   Sign in with Google branding guidelines, so the app can be published:
   - Google's official full-colour "G" (`public/brand/google/google-g.png`, from Google's asset pack;
@@ -672,7 +672,7 @@ outline's), and everything reads it: `lessonAccessLevel()` in `src/lib/pro/acces
   (`cybernet_next`, `src/lib/auth/afterSignIn.ts`) that `/auth/callback` reads and clears; new
   accounts pick a name on `/account?welcome=1&next=…` and carry on there. `/login?next=` works too.
 - **Progress:** the usual guest merge, plus `withoutGatedGuestProgress`: guest records on account
-  lessons made after `GUEST_GATE_AT` (in `merge.ts`, set when the gate shipped) are dropped, since a
+  lessons made after `GUEST_GATE_AT` (in `merge.ts`: 2026-10-01 03:34 UTC, when the gate was merged) are dropped, since a
   guest couldn't have played them.
 - **Events:** `signup_prompt_viewed` (lesson) when the gate shows, and `signed_up` (the lesson that
   prompted it, kept for a day in localStorage) when a new account has chosen its name.
