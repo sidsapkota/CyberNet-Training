@@ -28,6 +28,8 @@ Last updated: 1 October 2026.
 
 ## 2. Open branches
 
+- `ldyd-pilot` (**don't merge: owner reviews first**): "learn before you do" pilot. Three new card types (`reveal`: tap to learn, ungraded; `true_false`; `fill_gap`), time-based lesson rules for listed modules (`LEARN_FIRST_MODULES`: 3–5 min of core cards, ≥60% hands-on by time, ≥3 styles), and Inside Your Devices module 1 rewritten (lessons 4.5, 3.2 and 3.5 min; quiz 8 questions). Depth-not-exam-prep applied (calculations removed, label card places jobs not names). Removed card ids are listed in REVIEW.md (never reuse them). Fit at 360×640: 15 of 51 module-1 cards still overflow (teardowns, simulators with the device mockup, label hotspot, sorts, bonus cards). The rest is the player: the Listen + Hint rows (~120px) and scene sizes, which need a layout change (e.g. Listen in the header, a reveal sentence over the scene). Design QA clean on the preview. Preview: `https://cyber-net-training-git-ldyd-pilot-sidsapkotas-projects.vercel.app` (Vercel login), the module at `/course/inside-your-devices`.
+
 - `player-flow-fixes`: the player feedback rounds (one Check flow with no early reveals; Try again clears only what's wrong, Check waits for a change; scenes fit the screen with pinned callouts and "glowing" parts; footer Back; tap-the-trace card list; lesson menu; "Up next" step; glossary full names and one-sentence definitions; themed wrong-answer animations; `about` lines for every lesson; fit audit + `/dev/fit`). **Don't merge until the owner has seen it.** Preview URLs follow `https://cyber-net-training-git-<branch>-sidsapkotas-projects.vercel.app` (behind Vercel login; scripts use a share link).
 
 ## 3. In progress
