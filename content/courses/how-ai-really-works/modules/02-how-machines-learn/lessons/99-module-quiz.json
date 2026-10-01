@@ -5,92 +5,92 @@
   "order": 99,
   "cards": [
     {
-      "id": "q-homework",
+      "id": "q-cold-drinks",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A word-vote model sorts messages into **homework** or **games**. \"Maths\" has only ever appeared in its homework examples, so it calls **\"Is the maths game fun?\"** homework (1 vote to 0). Which **one** new example makes it guess games?",
+      "prompt": "A café's review sorter learned that **\"cold\"** means unhappy, because it only ever saw it in reviews like \"Cold food, slow service\". Now it calls **\"Lovely cold drinks on a hot day\"** unhappy. What's the **best** fix?",
       "options": [
         {
-          "id": "fun-games",
-          "text": "\"Fun games online\", labelled games"
+          "id": "happy-cold",
+          "text": "Add happy reviews that use \"cold\", like \"Ice-cold lemonade, really lovely\""
         },
         {
-          "id": "maths-homework",
-          "text": "\"Maths homework is due\", labelled homework"
+          "id": "more-unhappy",
+          "text": "Add more unhappy reviews that use \"cold\", like \"Cold chips, cold tea\""
         },
         {
-          "id": "maths-game",
-          "text": "\"That maths game is fun\", labelled games"
+          "id": "delete-cold",
+          "text": "Delete every training review with \"cold\" in it, happy or not"
         },
         {
-          "id": "delete",
-          "text": "Delete the homework example with \"maths\" in it"
+          "id": "copies",
+          "text": "Add 100 copies of \"Cold food, slow service\", labelled unhappy"
         }
       ],
-      "correctOptionId": "maths-game",
-      "explanation": "\"That maths game is fun\" adds games votes for **maths**, **game** and **fun**: 3 to 1. \"Fun games online\" only matches **fun** (\"games\" isn't the same word as \"game\"), so it's a 1 to 1 tie: not sure. Another homework example makes it worse, and deleting one leaves no votes at all: not sure."
+      "correctOptionId": "happy-cold",
+      "explanation": "The sorter never saw \"cold\" used happily, so **add examples where it is**. More unhappy \"cold\" reviews, or copies of one, only make it surer that cold means unhappy. Deleting them might fix this one review, but then it can't spot real complaints about cold food."
+    },
+    {
+      "id": "q-rushed-labels",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "A team labels 5,000 photos of cats and dogs in a big rush, and never checks them. About **1 in 10 dogs** ends up labelled \"cat\" by mistake. What will this most likely do to the model they train?",
+      "options": [
+        {
+          "id": "wrong-lessons",
+          "text": "It learns some wrong lessons, so it mixes up more dogs"
+        },
+        {
+          "id": "cancel-out",
+          "text": "Nothing much: 9 in 10 labels are right, so it all evens out"
+        },
+        {
+          "id": "spots-them",
+          "text": "It notices the wrong labels by itself and skips over them"
+        },
+        {
+          "id": "slower",
+          "text": "It just takes longer to train, then ends up just as good"
+        }
+      ],
+      "correctOptionId": "wrong-lessons",
+      "explanation": "A model learns from its labels exactly as they are. It can't tell a wrong label from a right one, so every dog labelled \"cat\" teaches it a **wrong lesson**, and it will mix up more dogs. That's why good training data has labels **checked**, not rushed."
     },
     {
       "id": "q-accuracy",
       "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "A model gets **28 of 35** test examples right. What is its accuracy?",
+      "prompt": "A plant model is tested on **10** new photos. It gets **4 wrong**. What is its accuracy?",
       "base": "decimal",
-      "answer": 80,
+      "answer": 60,
       "unit": "%",
-      "explanation": "28 ÷ 35 = 0.8, and 0.8 × 100 = **80%**."
+      "explanation": "It got 6 of the 10 right, and each photo is worth 10%: **60%**. Accuracy counts the ones it got **right**."
     },
     {
-      "id": "q-compare",
+      "id": "q-own-photos",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Model A gets **18 of 24** test examples right. Model B gets **15 of 20** right. Which is more accurate?",
+      "prompt": "A bird-spotting app's makers say it scored **100%**. They tested it on the same photos it trained on. Is that a good test?",
       "options": [
         {
-          "id": "a",
-          "text": "Model A"
+          "id": "no-seen",
+          "text": "No: it may just have remembered those photos"
         },
         {
-          "id": "same",
-          "text": "They're the same"
+          "id": "yes-perfect",
+          "text": "Yes: 100% means it will never get a bird wrong"
         },
         {
-          "id": "b",
-          "text": "Model B"
+          "id": "yes-variety",
+          "text": "Yes, as long as the photos showed lots of different birds"
         },
         {
-          "id": "cant",
-          "text": "You can't compare them"
+          "id": "no-hardest",
+          "text": "No: a good test should use only the hardest bird photos"
         }
       ],
-      "correctOptionId": "same",
-      "explanation": "A: 18 ÷ 24 = **75%**. B: 15 ÷ 20 = **75%**. A got more right, but out of more examples: as percentages they're exactly the same."
-    },
-    {
-      "id": "q-overfitting",
-      "type": "multiple_choice",
-      "difficulty": "core",
-      "prompt": "A model scores **99%** on its training examples and **55%** on new ones. What does that suggest?",
-      "options": [
-        {
-          "id": "great",
-          "text": "It's a great model: look at the 99%"
-        },
-        {
-          "id": "need-more-tests",
-          "text": "It should be tested on its training examples again"
-        },
-        {
-          "id": "overfit",
-          "text": "It memorised its examples (overfitting)"
-        },
-        {
-          "id": "fine",
-          "text": "Nothing: scores always drop a lot"
-        }
-      ],
-      "correctOptionId": "overfit",
-      "explanation": "A big gap between training and test scores means **overfitting**: it memorised instead of learning the pattern. The 55% on new examples is the score that matters."
+      "correctOptionId": "no-seen",
+      "explanation": "Photos it trained on only test its **memory**: it may have **memorised them instead of learning** what birds look like. A fair test uses photos it has **never seen**, easy and hard, like the ones people will really take. Variety helps, but not if the model has seen them all before."
     },
     {
       "id": "q-fair-test",
@@ -119,17 +119,22 @@
           "bin": "fair"
         },
         {
+          "id": "real-light",
+          "label": "Photos in all kinds of light",
+          "bin": "fair"
+        },
+        {
           "id": "picked",
           "label": "Only the photos it already gets right",
           "bin": "unfair"
         },
         {
-          "id": "reused",
-          "label": "Its own training photos",
+          "id": "changed",
+          "label": "Swapping photos until it scores 100%",
           "bin": "unfair"
         }
       ],
-      "explanation": "A fair test uses **unseen** examples with a **mix** of difficulty. Re-using training photos, or picking ones it already gets right, makes it look better than it is."
+      "explanation": "A fair test uses **unseen**, **realistic** examples with a **mix** of difficulty. Picking photos it already gets right, or swapping photos until the score looks good, makes it look better than it is."
     },
     {
       "id": "q-better-data",
@@ -195,30 +200,30 @@
       "id": "q-words",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Match each word to what it means.",
+      "prompt": "Match each situation to the idea it shows.",
       "pairs": [
         {
           "id": "test",
-          "left": "Test examples",
-          "right": "Kept aside to check the model"
+          "left": "Photos hidden from the model while it learns",
+          "right": "Test examples"
         },
         {
           "id": "accuracy",
-          "left": "Accuracy",
-          "right": "Right ÷ tested, as a percentage"
+          "left": "It got 9 of 10 new photos right: 90%",
+          "right": "Accuracy"
         },
         {
           "id": "overfitting",
-          "left": "Overfitting",
-          "right": "Memorising instead of learning"
+          "left": "Perfect on its training photos, poor on new ones",
+          "right": "Memorising, not learning"
         },
         {
           "id": "bias",
-          "left": "Bias",
-          "right": "Working worse for some people"
+          "left": "Understands one accent well, others badly",
+          "right": "Bias"
         }
       ],
-      "explanation": "**Test examples** are kept aside; **accuracy** is right ÷ tested as a percentage; **overfitting** is memorising instead of learning; **bias** is when a model works worse for some people."
+      "explanation": "**Test examples** are hidden while it learns; **accuracy** is the share it gets right; perfect on training but poor on new ones means it **memorised**; and working worse for some people is **bias**."
     }
   ]
 }

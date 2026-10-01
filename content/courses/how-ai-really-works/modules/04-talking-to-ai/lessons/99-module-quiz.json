@@ -5,43 +5,30 @@
   "order": 99,
   "cards": [
     {
-      "id": "q-vague-clear",
-      "type": "sort_bins",
+      "id": "q-best-prompt",
+      "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Sort these prompts: **vague**, or **clear** about what they want?",
-      "bins": [
-        {
-          "id": "vague",
-          "label": "Vague"
-        },
+      "prompt": "You need a chatbot to draft a short thank-you email to a client who helped with a project. Which prompt will get the most useful first draft?",
+      "options": [
         {
           "id": "clear",
-          "label": "Clear"
+          "text": "\"Thank-you email to Sam, a client who helped us finish early. Friendly, under 100 words\""
+        },
+        {
+          "id": "polite",
+          "text": "\"Please could you write a really lovely, thoughtful and professional thank-you email?\""
+        },
+        {
+          "id": "long",
+          "text": "\"Write a thank-you email. Make it as long and detailed as you can, with lots of examples\""
+        },
+        {
+          "id": "hot",
+          "text": "\"Write a thank-you email to a client\", with the temperature turned right up for variety"
         }
       ],
-      "items": [
-        {
-          "id": "fix",
-          "label": "Fix this",
-          "bin": "vague"
-        },
-        {
-          "id": "about-rome",
-          "label": "Write lots and lots about ancient Rome",
-          "bin": "vague"
-        },
-        {
-          "id": "five-words",
-          "label": "List 5 words that rhyme with \"light\"",
-          "bin": "clear"
-        },
-        {
-          "id": "explain-fractions",
-          "label": "Explain dividing fractions in 4 steps",
-          "bin": "clear"
-        }
-      ],
-      "explanation": "Clear prompts say exactly what they want and what shape (5 words, 4 steps). \"Lots and lots\" is long, but still vague."
+      "correctOptionId": "clear",
+      "explanation": "Only the first prompt gives the **goal** (a thank-you email), the **context** (who Sam is, what they did) and the **format** (friendly, under 100 words). Being polite, asking for length, or turning up the temperature doesn't tell it who the email is for or what to say."
     },
     {
       "id": "q-missing",
@@ -70,13 +57,61 @@
       "explanation": "It has a goal but no context (for a lunchbox? a 12-year-old?) or format (how many?). More detail, repeating \"healthy\", or a higher temperature don't add either."
     },
     {
+      "type": "sort_bins",
+      "difficulty": "core",
+      "bins": [
+        {
+          "id": "goal",
+          "label": "Goal"
+        },
+        {
+          "id": "context",
+          "label": "Context"
+        },
+        {
+          "id": "format",
+          "label": "Format"
+        }
+      ],
+      "id": "q-parts",
+      "prompt": "Sort these bits of prompts: the **goal**, the **context** or the **format**?",
+      "items": [
+        {
+          "id": "volcano",
+          "label": "Explain how volcanoes erupt",
+          "bin": "goal"
+        },
+        {
+          "id": "test",
+          "label": "I'm 12 and it's for a science test",
+          "bin": "context"
+        },
+        {
+          "id": "notes",
+          "label": "Here are my notes from class",
+          "bin": "context"
+        },
+        {
+          "id": "bullets",
+          "label": "In 5 bullet points",
+          "bin": "format"
+        },
+        {
+          "id": "short",
+          "label": "No longer than one paragraph",
+          "bin": "format"
+        }
+      ],
+      "explanation": "The **goal** is what to do; the **context** is who it's for and what you already have (your age, your notes); the **format** is the shape and length."
+    },
+    {
       "id": "q-sum",
       "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "A chatbot says: \"15% of 80 is **10**.\" Check it. What is 15% of 80?",
+      "prompt": "A chatbot helping with a bake sale says: \"You have 5 trays with 8 cupcakes on each, so that's **45** cupcakes.\" Check it. How many cupcakes are there really?",
       "base": "decimal",
-      "answer": 12,
-      "explanation": "10% of 80 is 8, and 5% is 4, so 15% is **12**. Check sums yourself."
+      "answer": 40,
+      "explanation": "5 × 8 = **40**, not 45. A likely-looking number isn't always right, so check sums yourself."
     },
     {
       "id": "q-link",
@@ -131,45 +166,6 @@
       "explanation": "Open sources **and read them**, then go with what the source says. A chatbot's correction is just another prediction."
     },
     {
-      "id": "q-learn-do",
-      "type": "sort_bins",
-      "difficulty": "core",
-      "prompt": "Sort each one: does it help you **learn**, or let AI **do your work**?",
-      "bins": [
-        {
-          "id": "learn",
-          "label": "Learning"
-        },
-        {
-          "id": "do",
-          "label": "Doing your work"
-        }
-      ],
-      "items": [
-        {
-          "id": "why-wrong",
-          "label": "Asking why your answer was wrong",
-          "bin": "learn"
-        },
-        {
-          "id": "flashcards",
-          "label": "Making flashcards from your notes",
-          "bin": "learn"
-        },
-        {
-          "id": "book-report",
-          "label": "Handing in its book report as yours",
-          "bin": "do"
-        },
-        {
-          "id": "paraphrase",
-          "label": "Changing a few words in its answer",
-          "bin": "do"
-        }
-      ],
-      "explanation": "Asking why and practising with flashcards help you learn. Handing in its report, or lightly rewording its answer, is letting it do your work."
-    },
-    {
       "id": "q-latest",
       "type": "multiple_choice",
       "difficulty": "core",
@@ -180,8 +176,8 @@
           "text": "It may have mixed this band up with another band's album"
         },
         {
-          "id": "window",
-          "text": "Its context window is too small to hold the band's whole history"
+          "id": "random-year",
+          "text": "Chatbots can't handle dates, so every year they give is a random guess"
         },
         {
           "id": "cutoff",
@@ -196,52 +192,64 @@
       "explanation": "Without web search, a model only knows what it learned up to a certain date, so \"this year\" and \"newest\" may be long out of date. Mix-ups can happen too, but that's the main risk here."
     },
     {
-      "type": "sort_bins",
+      "id": "q-stuck",
+      "type": "scenario",
       "difficulty": "core",
-      "bins": [
+      "prompt": "It's late, and you're stuck on one question in tomorrow's maths homework.",
+      "start": "stuck",
+      "steps": [
         {
-          "id": "goal",
-          "label": "Goal"
-        },
-        {
-          "id": "context",
-          "label": "Context"
-        },
-        {
-          "id": "format",
-          "label": "Format"
+          "id": "stuck",
+          "text": "You open a chatbot. What do you ask it?",
+          "choices": [
+            {
+              "id": "explain",
+              "text": "Explain the method with a different example, then try mine myself",
+              "consequence": "It walks through a similar question, and you work out yours. You did the thinking, so you've learned it.",
+              "outcome": "success"
+            },
+            {
+              "id": "answer-reword",
+              "text": "Give me the answer, and I'll write it out in my own words",
+              "consequence": "Rewriting its answer doesn't change who did the thinking. It's still the chatbot's work, and you haven't learned the method.",
+              "outcome": "fail"
+            },
+            {
+              "id": "answer-check",
+              "text": "Give me the answer and the working, so I can copy it neatly",
+              "consequence": "You'd hand in its work as yours, and you'd still be stuck on the test. Ask it to help you learn instead.",
+              "outcome": "fail"
+            }
+          ]
         }
       ],
-      "id": "q-parts",
-      "prompt": "Sort these bits of prompts: the **goal**, the **context** or the **format**?",
-      "items": [
+      "explanation": "Using AI to **learn** (explaining a method, then trying it yourself) is great. Getting it to **do the work**, even if you reword it, isn't, and many schools have rules about it."
+    },
+    {
+      "id": "q-app-rules",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "You're 14. A new AI chat app's rules say users must be **18 or older**. All your friends are using it. What's the best move?",
+      "options": [
         {
-          "id": "volcano",
-          "label": "Explain how volcanoes erupt",
-          "bin": "goal"
+          "id": "ask",
+          "text": "Don't sign up yet: talk to a parent or carer about it"
         },
         {
-          "id": "test",
-          "label": "I'm 12 and it's for a science test",
-          "bin": "context"
+          "id": "nobody-checks",
+          "text": "Ask a friend who's 18 to sign up and share their account"
         },
         {
-          "id": "notes",
-          "label": "Here are my notes from class",
-          "bin": "context"
+          "id": "no-photos",
+          "text": "Sign up, but never upload any photos of yourself"
         },
         {
-          "id": "bullets",
-          "label": "In 5 bullet points",
-          "bin": "format"
-        },
-        {
-          "id": "short",
-          "label": "No longer than one paragraph",
-          "bin": "format"
+          "id": "friends-ok",
+          "text": "Sign up anyway: lots of people your age already use it"
         }
       ],
-      "explanation": "The **goal** is what to do; the **context** is who it's for and what you already have (your age, your notes); the **format** is the shape and length."
+      "correctOptionId": "ask",
+      "explanation": "Each app sets its own rules about who can use it. If an app says 18+, it isn't for you yet, whatever friends do, and using someone else's account still breaks the rules. **Check the rules and ask a parent or carer**; some apps do allow younger users with a parent's OK."
     }
   ]
 }

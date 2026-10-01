@@ -5,59 +5,64 @@
   "order": 99,
   "cards": [
     {
-      "id": "q-steps",
-      "type": "drag_to_order",
-      "difficulty": "core",
-      "prompt": "Order the stages of an AI picture, from start to finish.",
-      "items": [
-        {
-          "id": "static",
-          "label": "Random static, like a fuzzy TV"
-        },
-        {
-          "id": "blobs",
-          "label": "Blurry blobs of colour"
-        },
-        {
-          "id": "shapes",
-          "label": "Rough shapes"
-        },
-        {
-          "id": "details",
-          "label": "Details and texture"
-        },
-        {
-          "id": "finished",
-          "label": "The finished picture"
-        }
-      ],
-      "explanation": "Random static, blobs of colour, rough shapes, details, the finished picture."
-    },
-    {
-      "id": "q-twice",
+      "id": "q-halfway",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Why does the same image prompt give a different picture each time?",
+      "prompt": "You could pause an AI image tool halfway through making \"a lighthouse in a storm\". What would you most likely see?",
       "options": [
         {
-          "id": "learns",
-          "text": "The model learns from each picture and changes it"
+          "id": "rough",
+          "text": "Rough shapes and colours, with no fine details yet"
         },
         {
-          "id": "noise",
-          "text": "Each picture starts from different random static"
+          "id": "top-half",
+          "text": "The top half of the picture finished, the bottom still blank"
         },
         {
-          "id": "words",
-          "text": "It reads the words in a different order each time"
+          "id": "small",
+          "text": "The whole finished picture, only smaller and lower quality"
         },
         {
-          "id": "busy",
-          "text": "It uses a different model when the app is busy"
+          "id": "pieces",
+          "text": "Pieces of real lighthouse photos waiting to be stuck together"
         }
       ],
-      "correctOptionId": "noise",
-      "explanation": "Each picture starts from **different random static**, so the steps lead somewhere different, while still matching the words."
+      "correctOptionId": "rough",
+      "explanation": "The picture is cleared from static **all over at once**, rough to fine: blobs of colour, then **rough shapes**, then details. It isn't drawn top to bottom, and it isn't stuck together from saved photos."
+    },
+    {
+      "id": "q-perfect-picture",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "A picture of a famous footballer eating at a small local café is spreading fast. You check it closely: normal hands, readable signs, shadows all fine.",
+      "start": "checked",
+      "steps": [
+        {
+          "id": "checked",
+          "text": "No give-aways anywhere. What now?",
+          "choices": [
+            {
+              "id": "share",
+              "text": "Share it: it passed every check for AI mistakes",
+              "consequence": "Good AI pictures often have no give-aways, so passing those checks proves nothing. Find out where it came from first.",
+              "outcome": "fail"
+            },
+            {
+              "id": "zoom",
+              "text": "Zoom in even closer and look for smaller mistakes",
+              "consequence": "Still nothing odd, and still no proof either way. Staring at the picture can't tell you if it's real.",
+              "outcome": "fail"
+            },
+            {
+              "id": "search",
+              "text": "Search with the picture to see where it first appeared",
+              "consequence": "It first appeared on an account that posts AI pictures, with a caption saying it was made with AI.",
+              "outcome": "success"
+            }
+          ]
+        }
+      ],
+      "explanation": "Finding **no give-aways proves nothing**: good AI pictures often have none. Check from outside the picture: **where it first appeared**, trusted news and the account that posted it."
     },
     {
       "id": "q-clues",
@@ -77,7 +82,7 @@
       "items": [
         {
           "id": "earrings",
-          "label": "Two earrings that don't match",
+          "label": "A mirror reflection that doesn't match",
           "bin": "clue"
         },
         {
@@ -96,7 +101,7 @@
           "bin": "not"
         }
       ],
-      "explanation": "Mismatched earrings and jumbled letters can be AI give-aways. Grainy and blurry photos are just normal photos."
+      "explanation": "A reflection that doesn't match and jumbled letters can be AI give-aways. Grainy and blurry photos are just normal photos."
     },
     {
       "id": "q-no-label",
@@ -114,7 +119,7 @@
         },
         {
           "id": "no-missing",
-          "text": "No: watermarks get cropped or stripped, and many tools add none"
+          "text": "No: marks get cropped off, and many tools add none"
         },
         {
           "id": "no-ai",
@@ -149,8 +154,8 @@
             },
             {
               "id": "forward",
-              "text": "Forward it so everyone knows",
-              "consequence": "If it's fake, you're spreading it. Check first.",
+              "text": "Ask the group chat whether anyone knows if it's real",
+              "consequence": "People in the chat have only seen the same video. Check with the real source, another way.",
               "outcome": "fail"
             }
           ]
@@ -198,33 +203,33 @@
       "explanation": "With the person's **permission** and nobody fooled, it helps. Fakes that trick or embarrass people harm."
     },
     {
-      "id": "q-words",
+      "id": "q-name-it",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Match each word to what it means.",
+      "prompt": "Match each situation to the right term.",
       "pairs": [
         {
           "id": "generative",
-          "left": "Generative AI",
-          "right": "AI that makes new things"
+          "left": "An app turns your words into a new painting",
+          "right": "Generative AI"
         },
         {
           "id": "deepfake",
-          "left": "Deepfake",
-          "right": "Fake video of a real person"
+          "left": "A video shows a real singer saying words they never said",
+          "right": "Deepfake"
         },
         {
           "id": "clone",
-          "left": "Voice clone",
-          "right": "AI copy of someone's voice"
+          "left": "A call sounds just like your aunt, but it's AI",
+          "right": "Voice clone"
         },
         {
           "id": "watermark",
-          "left": "Watermark",
-          "right": "A mark saying AI made it"
+          "left": "Hidden information in a picture file says AI made it",
+          "right": "Watermark"
         }
       ],
-      "explanation": "**Generative AI** makes new things; a **deepfake** fakes a real person; a **voice clone** copies a voice; a **watermark** marks something as AI-made."
+      "explanation": "Making something new from words is **generative AI**; a fake video of a real person is a **deepfake**; an AI copy of a voice is a **voice clone**; and a mark, visible or hidden, saying AI made it is a **watermark**."
     }
   ]
 }

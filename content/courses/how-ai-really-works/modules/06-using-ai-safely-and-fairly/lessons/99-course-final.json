@@ -5,43 +5,30 @@
   "order": 99,
   "cards": [
     {
-      "id": "f-rules-or-learns",
-      "type": "sort_bins",
+      "id": "f-bias",
+      "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Follows rules someone wrote, or learns from examples?",
-      "bins": [
+      "prompt": "A smart speaker understands adults well, but often gets children's voices wrong. What's the most likely cause?",
+      "options": [
         {
-          "id": "rules",
-          "label": "Follows rules"
+          "id": "few-children",
+          "text": "Few children's voices in the examples it learned from"
         },
         {
-          "id": "learns",
-          "label": "Learns"
+          "id": "microphone",
+          "text": "Its microphone is too weak to pick up quieter voices"
+        },
+        {
+          "id": "not-enough",
+          "text": "It wasn't given enough training data of any kind"
+        },
+        {
+          "id": "on-purpose",
+          "text": "Someone set it up to ignore children on purpose"
         }
       ],
-      "items": [
-        {
-          "id": "sprinkler",
-          "label": "Garden sprinklers on a timer",
-          "bin": "rules"
-        },
-        {
-          "id": "convert",
-          "label": "Converting kilometres to miles",
-          "bin": "rules"
-        },
-        {
-          "id": "plants",
-          "label": "An app that names plants from photos",
-          "bin": "learns"
-        },
-        {
-          "id": "captions",
-          "label": "Automatic captions on videos",
-          "bin": "learns"
-        }
-      ],
-      "explanation": "Timers and unit conversions follow exact rules. Naming plants from photos and turning speech into captions **learn from examples**."
+      "correctOptionId": "few-children",
+      "explanation": "This is **bias**: it usually comes from **gaps in the training data**. If few children's voices were in its examples, it works worse for children. A huge pile of adult voices wouldn't fix that, and nobody has to mean it. The fix: add children's voices and test with them."
     },
     {
       "id": "f-day-night",
@@ -177,11 +164,11 @@
       "id": "f-accuracy",
       "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "A model gets **36 of 45** test examples right. What is its accuracy?",
+      "prompt": "A model is tested on **20** new photos it never saw in training, and gets **18** right. What is its accuracy?",
       "base": "decimal",
-      "answer": 80,
+      "answer": 90,
       "unit": "%",
-      "explanation": "36 ÷ 45 = 0.8, so **80%**."
+      "explanation": "18 right out of 20 is the same share as 9 out of 10: **90%**. Accuracy is the share of **test** examples it gets right."
     },
     {
       "id": "f-next-word",
@@ -217,11 +204,11 @@
       "id": "f-confident",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A chatbot gives you a quote from a famous scientist, word for word, sounding completely sure. What's the most accurate thing to say?",
+      "prompt": "A chatbot gives you a quote from a famous scientist, word for word, sounding completely sure. What should you do?",
       "options": [
         {
           "id": "low-temp",
-          "text": "It's right if the chatbot's temperature was set low"
+          "text": "Trust it if the chatbot's temperature was set low"
         },
         {
           "id": "which-book",
@@ -229,58 +216,54 @@
         },
         {
           "id": "check",
-          "text": "It might be invented: find the quote in a trusted source"
+          "text": "Find the quote in a trusted source: it might be invented"
         },
         {
           "id": "sure",
-          "text": "It's right, because it sounded completely sure of it"
+          "text": "Use it: it sounded completely sure of the words"
         }
       ],
       "correctOptionId": "check",
       "explanation": "Quotes are classic **hallucinations**: likely-sounding words, not checked ones. Asking the chatbot for the book can just produce another invented answer, and low temperature makes it predictable, not true. Check a trusted source."
     },
     {
-      "id": "f-prompt-parts",
+      "id": "f-honest",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Sort these bits of prompts: **goal**, **context** or **format**?",
+      "prompt": "Is each use of AI **honest**, or **not honest**?",
       "bins": [
         {
-          "id": "goal",
-          "label": "Goal"
+          "id": "honest",
+          "label": "Honest"
         },
         {
-          "id": "context",
-          "label": "Context"
-        },
-        {
-          "id": "format",
-          "label": "Format"
+          "id": "not",
+          "label": "Not honest"
         }
       ],
       "items": [
         {
-          "id": "explain",
-          "label": "Explain how bees make honey",
-          "bin": "goal"
+          "id": "work-note",
+          "label": "Noting \"AI helped draft this\" at work",
+          "bin": "honest"
         },
         {
-          "id": "seven",
-          "label": "It's for my 7-year-old cousin",
-          "bin": "context"
+          "id": "ask-contest",
+          "label": "Asking if AI is allowed in a contest",
+          "bin": "honest"
         },
         {
-          "id": "comic",
-          "label": "As a 4-panel comic",
-          "bin": "format"
+          "id": "photo-contest",
+          "label": "An AI picture entered as your photo",
+          "bin": "not"
         },
         {
-          "id": "short",
-          "label": "Under 50 words",
-          "bin": "format"
+          "id": "poem",
+          "label": "Giving a friend an AI poem as yours",
+          "bin": "not"
         }
       ],
-      "explanation": "The **goal** says what to do, the **context** who it's for, and the **format** its shape and length."
+      "explanation": "Saying how AI helped and asking about the rules first are **honest**. Entering an AI picture as your own photo, or passing off an AI poem as yours, claims work that isn't yours."
     },
     {
       "id": "f-viral-video",
@@ -321,8 +304,8 @@
           "choices": [
             {
               "id": "full",
-              "text": "Type the whole secret, with your friend's name",
-              "consequence": "It isn't your secret to share, and the chat may be stored.",
+              "text": "Ask the chatbot for advice, but leave out your friend's name",
+              "consequence": "Better, but it's still your friend's secret to keep, and the details can give away who it is. The chat may be stored, too.",
               "outcome": "fail"
             },
             {
@@ -340,7 +323,7 @@
           ]
         }
       ],
-      "explanation": "A friend's secret isn't yours to type into an app. A **trusted adult** can help without it leaving your hands."
+      "explanation": "A friend's secret isn't yours to type into an app, even without their name. A **trusted adult** can help without it leaving your hands."
     }
   ]
 }

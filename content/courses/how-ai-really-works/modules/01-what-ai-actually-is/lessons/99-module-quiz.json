@@ -8,7 +8,7 @@
       "id": "q-rules-or-learning",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Does each one **follow rules** someone wrote, or **learn from examples**?",
+      "prompt": "Which of these **learn from examples**, and which just **follow rules** someone wrote?",
       "bins": [
         {
           "id": "rules",
@@ -186,44 +186,41 @@
       "explanation": "A model only knows what it was shown. It never saw a dog at night, so night photos are where it will slip up, like the yellow apple. Adding night photos to its training data would help."
     },
     {
-      "id": "q-steps",
-      "type": "drag_to_order",
+      "id": "q-skipped-test",
+      "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Put the steps of teaching a computer in order, from first to last.",
-      "items": [
+      "prompt": "A café trained a burnt-toast spotter on lots of toast photos, each labelled \"burnt\" or \"fine\". Then they used it in the kitchen straight away. It keeps calling dark rye bread burnt, and nobody noticed until customers complained. What went wrong?",
+      "options": [
         {
-          "id": "collect",
-          "label": "Collect lots of examples"
+          "id": "no-test",
+          "text": "They skipped trying it on new toast before using it for real"
         },
         {
-          "id": "label",
-          "label": "Label each example"
+          "id": "use-first",
+          "text": "They should have used it in the kitchen first, then labelled photos"
         },
         {
-          "id": "train",
-          "label": "Train the model on them"
+          "id": "no-labels",
+          "text": "The labels confused it: it would learn better from unlabelled photos"
         },
         {
-          "id": "test",
-          "label": "Test it on new examples"
-        },
-        {
-          "id": "use",
-          "label": "Use it for real"
+          "id": "too-hard",
+          "text": "Rye is just too dark: trying it out first wouldn't have shown anything"
         }
       ],
-      "explanation": "Collect, label, train, test, then use. Testing on new examples before using a model shows how often it gets things wrong."
+      "correctOptionId": "no-test",
+      "explanation": "The steps are collect, label, train, **test on new examples**, then use. Trying it on new toast, including darker breads, would have shown the mistake before customers did. Labels are how it learns, so they're needed, and using it for real comes last."
     },
     {
       "id": "q-check-it",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "You're writing a report on volcanoes with an AI helper.",
+      "prompt": "You're writing questions for a quiz night with an AI helper.",
       "start": "the-fact",
       "steps": [
         {
           "id": "the-fact",
-          "text": "The AI confidently tells you the highest volcano in the world. Your report will be marked. What do you do?",
+          "text": "The AI confidently tells you the name of the world's highest volcano. Teams will argue about every answer. What do you do?",
           "choices": [
             {
               "id": "trust",
@@ -249,33 +246,59 @@
       "explanation": "An AI's answer is a prediction. For anything important, **check it with a trusted source** before you rely on it."
     },
     {
+      "id": "q-who-decides",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "A company uses AI to sort 500 job applications. Who should make the final call on who gets the job?",
+      "options": [
+        {
+          "id": "person",
+          "text": "A person, who checks the AI's suggestions and is responsible"
+        },
+        {
+          "id": "ai-fast",
+          "text": "The AI, because it's faster and never gets tired or grumpy"
+        },
+        {
+          "id": "ai-sure",
+          "text": "A manager, who hires the AI's top pick without reading the others"
+        },
+        {
+          "id": "ai-trained",
+          "text": "The AI, because it learned from thousands of past job choices"
+        }
+      ],
+      "correctOptionId": "person",
+      "explanation": "Who gets a job is a **big decision about people**. AI can help sort applications, but its picks are predictions and can be wrong, so a person checks them, decides and is responsible. A manager who just rubber-stamps the AI's top pick isn't really deciding. Speed and lots of examples don't change that."
+    },
+    {
       "id": "q-words",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Match each word to what it means.",
+      "prompt": "A team is building an app that sorts photos into cats and dogs. Match each part of their work to the word for it.",
       "pairs": [
         {
           "id": "data",
-          "left": "Training data",
-          "right": "Examples to learn from"
+          "left": "500 photos of cats and dogs to learn from",
+          "right": "Training data"
         },
         {
           "id": "label",
-          "left": "Label",
-          "right": "What one example really is"
+          "left": "The word \"cat\" written on one photo",
+          "right": "Label"
         },
         {
           "id": "model",
-          "left": "Model",
-          "right": "What the computer builds to guess"
+          "left": "The program that now sorts new photos by itself",
+          "right": "Model"
         },
         {
           "id": "prediction",
-          "left": "Prediction",
-          "right": "The model's best guess"
+          "left": "\"Dog\": its best guess about a new photo",
+          "right": "Prediction"
         }
       ],
-      "explanation": "**Training data** is the examples; a **label** says what each example really is; the **model** is what the computer builds from them; and a **prediction** is its best guess about something new."
+      "explanation": "The 500 photos are the **training data**; \"cat\" on one photo is a **label**; the program that sorts new photos is the **model**; and its guess about a new photo is a **prediction**."
     }
   ]
 }

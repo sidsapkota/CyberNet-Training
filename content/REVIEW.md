@@ -1473,6 +1473,46 @@ live AI calls. The two AI card types use tiny, pure models (`src/cards/train-mod
 `src/cards/next-word/model.ts`), so every "guess" a learner sees is worked out from the card's data.
 No real people appear anywhere.
 
+## Right-level rewrite (October 2026)
+
+The course was rewritten for curious beginners aged 13+ at level **Medium** (simple maths and
+prediction, everything taught first). Every lesson has 5–7 core cards plus up to 2 bonus cards
+(about 5 minutes), is at least 60% hands-on, opens with something to do, and keeps explainers to
+60 words. Cut (approved list A1–A17): percentage and fraction drills, vote-counting arithmetic,
+tokenizer trivia, exact temperature percentages, the context window as a topic, vocabulary-match
+quizzes and quiz cards copied from lessons. "Token" is now "word" (once: "really word-pieces").
+**Where this section and the per-lesson notes below disagree, this section wins.**
+
+**What each lesson teaches now**
+- 1.1 Rules vs learning from examples (**machine learning**). 1.2 Training data, labels and a model; missing examples cause mistakes. 1.3 Answers are predictions that can't check themselves; check important facts; a person makes big decisions; where to get help.
+- 2.1 Models learn only from their examples, gaps included; fix the data, don't just add more. 2.2 Test on new, realistic examples; accuracy as a share out of 10; memorising isn't learning. 2.3 Bias comes from gaps in the data; fix the data, test with many kinds of people, keep a person checking; never the fault of the people it gets wrong.
+- 3.1 A chatbot gives each next word a chance, picks one, adds it and repeats, never going back; "likely" isn't "checked". 3.2 Low temperature is predictable, high gives variety and then nonsense; the order never changes; when one word has nearly all the chance, it's still usually picked. 3.3 Hallucinations are fluent and false; they hide in names, dates, numbers, quotes and sources; check a trusted source (asking again checks nothing).
+- 4.1 Prompts: goal, context and format; specific beats long; your own material, never private details; repeat instructions in long chats. 4.2 Check facts and dates, open sources, do the maths yourself; learning vs having it done; school rules. 4.3 AI in everyday apps; kinds of tool; named chat assistants and makers (ChatGPT/OpenAI, Claude/Anthropic, Copilot/Microsoft, Gemini/Google); age rules (some 18+, some 13+ with a parent's OK) — check and ask a parent or carer.
+- 5.1 Image models learned from captioned pictures and clear random speckles colour first, then shapes, then detail; the same prompt gives different pictures; finding no give-aways proves nothing. 5.2 Deepfakes and voice clones; permission; situation clues beat video clues; check with the real person another way; the Australian law line and "report it at esafety.gov.au, and tell a trusted adult" are shown in the explainer and recap. 5.3 A label or watermark is evidence, but no label proves nothing; the 4 checks; correct a share kindly; say when your own pictures are AI.
+- 6.1 Fake reviews and bots; strong feeling → stop and check outside. 6.2 Chats may be saved, read by staff or used for training; keep personal details private; only the permissions an app needs; get help from people. 6.3 Be open about AI use; credit artists who inspire you; when AI decides about people, ask who it's unfair to and keep a person deciding.
+
+**Help content:** the Kids Helpline (1800 55 1800, free, any time, in Australia) and 000 card is now in
+free lesson 1.3 (`if-a-chat-upsets-you`) as well as 6.2 (`not-a-person`), with the service sentences
+word for word the same in both. The 5.2 recap points to Stay Safe Online's free "Deepfake Scams and
+Fakes" lesson. (Kids Helpline serves ages 5–25; the owner may want to add an adult service, verified
+first.)
+
+**Simplifications added in the rewrite**
+- "AI = software that learns from examples" (working definition); every answer is "a prediction that can't check if it's true"; a model can only output the labels it was trained on; a language model on its own doesn't look things up (some apps add search).
+- Word-vote is a toy model (words of 3+ letters, one vote per training message); accuracy is a share out of 10; "memorising instead of learning" stands in for overfitting; a fair test is "new, realistic, easy and hard".
+- Temperature described as Low / 1 / High without numbers; all chances are for small imaginary models (e.g. seat 50% in `rocket-cat`; a deliberately wrong "Sydney" top word in `cold-but-wrong`).
+- Diffusion as clearing speckles "colour first, then shapes, then detail"; "most tools learn from many voices, then copy one from a short clip" (face tools can work from one photo; not mentioned).
+- `f-bias`: a smart speaker failing children's voices "most likely" from few children's voices in training (sound quality can also play a part); `q-rushed-labels`: wrong labels make more mix-ups (direction true; size depends on the model).
+- Long chats "can lose track of the start" stands in for the context window; "a model learned from text up to a certain date" stands in for the training cutoff.
+
+**Beginner audit after the rewrite:** every `train_model` and `next_word` card was simulated and
+behaves as its prompt says. Fixed: the deepfake law and eSafety line made visible; the course final
+now covers bias and honest use, with new numbers; `noise-steps` and `short-clip` now taught before
+they're tested; `rocket-cat` made unambiguous; quiz near-copies replaced with new situations;
+long-answer and stem give-aways removed; straw-man choices replaced with tempting near-misses.
+
+---
+
 ## Module 1: What AI Actually Is (free; guests get 1.1)
 
 ### 1.1 Spot the AI (`spot-the-ai`)
