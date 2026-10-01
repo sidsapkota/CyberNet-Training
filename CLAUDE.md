@@ -427,7 +427,8 @@ interactive, update `isInteractiveCard` / `InteractiveCard` in `schema.ts`.
     same twice in a row), and every wrong line says plainly that it isn't right yet. Quizzes keep
     the plain "Correct" / "Incorrect".
   - Continue unlocks only after a correct answer. **Bonus cards** (challenge) show a "Bonus ·
-    Optional: skip it any time" chip and a **Skip bonus** button.
+    Optional: skip it any time" chip and a **Skip** button at the end of that row (accessible name
+    "Skip bonus"; not a second footer row, so the card keeps its room).
   - **Where you are:** the current card's node on the trace is larger and filled with a soft ring.
     Tapping the trace opens the lesson's cards as 44px numbered nodes (answered ones open read-only,
     the current one returns you, upcoming ones are disabled).
