@@ -28,13 +28,13 @@
         }
       ],
       "correctOptionId": "few-children",
-      "explanation": "This is **bias**: it usually comes from **gaps in the training data**. If few children's voices were in its examples, it works worse for children. A huge pile of adult voices wouldn't fix that, and nobody has to mean it. The fix: add children's voices and test with them."
+      "explanation": "This is **bias** from **gaps in the training data**: few children's voices, so it works worse for children. The fix: add children's voices and test with them."
     },
     {
       "id": "f-day-night",
       "type": "train_model",
       "difficulty": "core",
-      "prompt": "This model guesses whether a photo was taken by day or by night, from its brightness and how much sky it shows. It calls a sunny day **indoors** night. Choose the examples to train on, so it gets **every** test photo right.",
+      "prompt": "This day-or-night model calls a sunny day **indoors** night. Choose examples so it gets **every** test photo right.",
       "model": {
         "kind": "nearest",
         "k": 1,
@@ -158,13 +158,13 @@
           "n3"
         ]
       },
-      "explanation": "The model had only seen day photos with lots of sky, so a bright room with no sky sat nearest the night photos. Adding **\"Bright classroom, no sky\"** fills that gap. More sunny outdoor photos don't help."
+      "explanation": "It had only seen day photos with lots of sky, so the bright room sat nearest the night photos. **\"Bright classroom, no sky\"** fills that gap."
     },
     {
       "id": "f-accuracy",
       "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "A model is tested on **20** new photos it never saw in training, and gets **18** right. What is its accuracy?",
+      "prompt": "A model gets **18** of **20** new test photos right. What is its accuracy?",
       "base": "decimal",
       "answer": 90,
       "unit": "%",
@@ -204,7 +204,7 @@
       "id": "f-confident",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A chatbot gives you a quote from a famous scientist, word for word, sounding completely sure. What should you do?",
+      "prompt": "A chatbot quotes a famous scientist word for word, sounding completely sure. What should you do?",
       "options": [
         {
           "id": "low-temp",
@@ -224,7 +224,7 @@
         }
       ],
       "correctOptionId": "check",
-      "explanation": "Quotes are classic **hallucinations**: likely-sounding words, not checked ones. Asking the chatbot for the book can just produce another invented answer, and low temperature makes it predictable, not true. Check a trusted source."
+      "explanation": "Quotes are classic **hallucinations**. Asking for the book can produce another invented answer, and low temperature means predictable, not true: check a trusted source."
     },
     {
       "id": "f-honest",
@@ -269,7 +269,7 @@
       "id": "f-viral-video",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A video of a famous athlete announcing a surprise retirement is going viral. No AI label, lips match perfectly. What's the **best** check?",
+      "prompt": "A viral video shows a famous athlete retiring. No AI label, and the lips match perfectly. What's the **best** check?",
       "options": [
         {
           "id": "watermark",
@@ -304,13 +304,13 @@
           "choices": [
             {
               "id": "full",
-              "text": "Ask the chatbot for advice, but leave out your friend's name",
-              "consequence": "Better, but it's still your friend's secret to keep, and the details can give away who it is. The chat may be stored, too.",
+              "text": "Ask the chatbot, but leave out your friend's name",
+              "consequence": "Better, but it's still your friend's secret, details can give them away, and chats may be stored.",
               "outcome": "fail"
             },
             {
               "id": "trusted-adult",
-              "text": "Talk it through with a trusted adult, without naming your friend",
+              "text": "Talk to a trusted adult, without naming your friend",
               "consequence": "A person you trust can really help, and your friend's secret stays safe.",
               "outcome": "success"
             },

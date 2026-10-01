@@ -11,69 +11,69 @@
       "difficulty": "core",
       "prompt": "Your router's public address is `203.0.113.7`. Build its first octet, **203**, in binary.",
       "target": 203,
-      "explanation": "203 = 128 + 64 + 8 + 2 + 1, which is `11001011`. Start with the biggest position that fits: 128 leaves 75, 64 leaves 11, 8 leaves 3, 2 leaves 1, and 1 leaves 0."
+      "explanation": "Start with the biggest place that fits: 128, 64, 8, 2 and 1 add up to 203, so it's `11001011`."
     },
     {
       "id": "server-sees",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Your phone at `192.168.1.21` loads a page. Your router's public address is `203.0.113.7`. Which address does the web server see as the sender?",
+      "prompt": "Your phone (`192.168.1.21`) loads a page, and your router's public address is `203.0.113.7`.\n\nWhich sender does the server see?",
       "options": [
         { "id": "public", "text": "203.0.113.7, the router's public address" },
         { "id": "phone", "text": "192.168.1.21, the phone's own address" },
-        { "id": "router-inside", "text": "192.168.1.1, the router's address inside your home" },
-        { "id": "none", "text": "No address at all, because HTTPS hides it" }
+        { "id": "router-inside", "text": "192.168.1.1, the router's inside address" },
+        { "id": "none", "text": "No address at all, as HTTPS hides it" }
       ],
       "correctOptionId": "public",
-      "explanation": "Private addresses like `192.168.1.21` only work inside your home, so the router uses **NAT** to send the request from its public address, `203.0.113.7`, and notes who asked. HTTPS encrypts the content, but packets still need addresses to be delivered."
+      "explanation": "Private addresses stay at home, so **NAT** sends the request from `203.0.113.7` and notes who asked. HTTPS hides the content, but packets still need addresses."
     },
     {
       "id": "lost-packet",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "You download a photo over **TCP**. It's split into packets, and one of them gets lost on the way. What happens?",
+      "prompt": "You download a photo over **TCP**, and one of its packets gets lost. What happens?",
       "options": [
-        { "id": "resent", "text": "The missing packet is sent again, and the photo arrives complete" },
-        { "id": "gap", "text": "The photo arrives with a small strip missing where that packet was" },
-        { "id": "restart", "text": "The whole download starts again from the very first packet" },
-        { "id": "router-copy", "text": "The last router keeps a spare copy and quietly fills the gap" }
+        { "id": "resent", "text": "That packet is resent, and the photo arrives whole" },
+        { "id": "gap", "text": "The photo arrives with a small strip missing" },
+        { "id": "restart", "text": "The whole download starts again from the start" },
+        { "id": "router-copy", "text": "The last router fills the gap from a spare copy" }
       ],
       "correctOptionId": "resent",
-      "explanation": "TCP numbers its packets and the receiver confirms what arrived, so it notices the gap and gets **just that packet** sent again, then puts everything back in order. A strip going missing is what can happen with UDP, which doesn't resend. Routers just pass packets on; they don't keep copies."
+      "explanation": "TCP spots the gap from the numbers, gets **just that packet** resent, then puts everything in order. Missing strips can happen with UDP, and routers don't keep copies."
     },
     {
       "id": "lookup-order",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "Nobody on your network has looked up `shop.example.org` before. Put the DNS lookup in order.",
+      "prompt": "Nobody on your network has looked up `shop.example.org`. Put the DNS lookup in order.",
       "items": [
-        { "id": "cache", "label": "Your device checks its cache, and finds nothing" },
+        { "id": "cache", "label": "Your device checks its cache: nothing" },
         { "id": "resolver", "label": "Your device asks a resolver" },
-        { "id": "root", "label": "The resolver asks a root server who handles .org" },
-        { "id": "tld", "label": "The resolver asks a .org server who's in charge of example.org" },
-        { "id": "authoritative", "label": "The resolver asks example.org's authoritative server for the address" }
+        { "id": "root", "label": "Resolver asks a root server about .org" },
+        { "id": "tld", "label": "Resolver asks a .org server where to go" },
+        { "id": "authoritative", "label": "Resolver asks the authoritative server" }
       ],
-      "explanation": "Cache first. Then the resolver goes from general to specific: **root**, then the **.org** TLD server, then the **authoritative** server, the one that actually holds the address."
+      "explanation": "Cache first, then general to specific: **root**, the **.org** TLD server, then the **authoritative** server, which holds the address."
     },
     {
       "id": "which-door",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "One server at `198.51.100.10` runs a website, an email program and a game server. A packet arrives addressed to `198.51.100.10:443`. Which program gets it?",
+      "prompt": "One server runs a website, email and a game. A packet arrives for `198.51.100.10:443`, the usual HTTPS port. Which program gets it?",
       "options": [
-        { "id": "web", "text": "The website, because 443 is the door for secure web pages (HTTPS)" },
-        { "id": "all", "text": "All three programs get a copy, and each ignores what isn't for it" },
-        { "id": "email", "text": "The email program, because email always has to be encrypted" },
-        { "id": "game", "text": "The game server, because games need the fastest door on the server" }
+        { "id": "web", "text": "The website: 443 is the door for HTTPS" },
+        { "id": "all", "text": "All three get a copy and ignore what isn't theirs" },
+        { "id": "email", "text": "The email program: email must always be encrypted" },
+        { "id": "game", "text": "The game: games need the server's fastest door" }
       ],
       "correctOptionId": "web",
-      "explanation": "The IP address gets the packet to the right **computer**; the **port** picks the program. Port **443** is the standard door for HTTPS, so the web server gets it. Nothing is copied to every program: that's exactly what ports prevent."
+      "explanation": "The IP address finds the **computer** and the **port** picks the program: **443** is the standard HTTPS door. Nothing is copied to every program."
     },
     {
       "id": "first-digit-final",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "You've never seen these status codes before. Sort each response: did it work, or where was the problem?",
+      "prompt": "You haven't seen these codes before. Sort each: did it work, or where was the problem?",
       "bins": [
         { "id": "fine", "label": "All fine" },
         { "id": "mine", "label": "Problem with the request" },
@@ -87,21 +87,21 @@
         { "id": "s502", "label": "`502 Bad Gateway`", "bin": "server" },
         { "id": "s504", "label": "`504 Gateway Timeout`", "bin": "server" }
       ],
-      "explanation": "Only the first digit matters: **2** means it worked, **4** means a problem with the request, and **5** means a problem on the server's side. You don't need to know a code to know whose problem it is."
+      "explanation": "Only the first digit matters: **2** worked, **4** a problem with the request, **5** a problem on the server."
     },
     {
       "id": "padlock-final",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A text message links to `parcels-redelivery.example`. The page has a padlock and asks for your card details. What does the padlock tell you for sure?",
+      "prompt": "A text links to `parcels-redelivery.example`, a padlocked page asking for card details. What does the padlock prove?",
       "options": [
-        { "id": "encrypted", "text": "Encrypted, to a server that owns that exact name; not who runs it" },
-        { "id": "trustworthy", "text": "A certificate authority has checked that the company is honest" },
-        { "id": "invisible", "text": "Nobody, not even the network, can tell which site you're on" },
-        { "id": "real-company", "text": "The site really belongs to the parcel company you use" }
+        { "id": "encrypted", "text": "It's encrypted to that exact name's owner, no more" },
+        { "id": "trustworthy", "text": "An authority has checked the company is honest" },
+        { "id": "invisible", "text": "Nobody, not even the network, sees which site" },
+        { "id": "real-company", "text": "It really belongs to your parcel company" }
       ],
       "correctOptionId": "encrypted",
-      "explanation": "The padlock means the connection is **encrypted**, to a server that really owns the exact name `parcels-redelivery.example`. Anyone can get a certificate for a name they own, scammers included, so it says nothing about honesty or which company is behind it."
+      "explanation": "It's **encrypted** to a server that owns `parcels-redelivery.example`. Anyone, scammers included, can get a certificate for a name they own."
     },
     {
       "id": "journey-final",
@@ -109,13 +109,13 @@
       "difficulty": "core",
       "prompt": "You open `https://shop.example.org/cart`. Put what happens in order.",
       "items": [
-        { "id": "dns", "label": "A resolver finds shop.example.org's IP address" },
-        { "id": "tcp", "label": "TCP handshake with the server on port 443" },
-        { "id": "tls", "label": "Secret keys agreed and the certificate checked" },
+        { "id": "dns", "label": "DNS finds shop.example.org's address" },
+        { "id": "tcp", "label": "TCP handshake on port 443" },
+        { "id": "tls", "label": "Keys agreed, certificate checked" },
         { "id": "get", "label": "Encrypted GET request for /cart" },
         { "id": "response", "label": "200 OK comes back, and the page is drawn" }
       ],
-      "explanation": "**DNS** finds the address, **TCP** connects, **TLS** secures the connection, **HTTP** asks, and the response is drawn as the page. That's the whole course in five steps."
+      "explanation": "**DNS** finds the address, **TCP** connects, **TLS** secures it, **HTTP** asks, and the response is drawn: the whole course in five steps."
     }
   ]
 }

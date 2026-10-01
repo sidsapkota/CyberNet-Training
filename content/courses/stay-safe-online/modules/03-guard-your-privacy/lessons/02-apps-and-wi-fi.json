@@ -10,7 +10,7 @@
       "id": "needs-it",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Apps ask to use parts of your phone, like the camera, microphone or your location. Each one is an [[app permission]]. Does the app **need** it for its job?",
+      "prompt": "Apps ask to use your camera, microphone or location: an [[app permission]]. Does the app **need** it?",
       "bins": [
         {
           "id": "needs",
@@ -53,9 +53,9 @@
           "bin": "doesnt"
         }
       ],
-      "explanation": "Allow what fits the app's job: location for maps, the microphone for calls, photos for a photo editor. A torch app needs your light. It doesn't need to know who your aunt is.",
+      "explanation": "Allow what fits the app's job, like location for maps or the microphone for calls. A torch app needs your light, not who your aunt is.",
       "hint": "For each one, ask: could the app do its main job without it?",
-      "nudge": "Think about what each app is for. A permission that has nothing to do with that job isn't needed."
+      "nudge": "Think about what each app is for. A permission unrelated to that job isn't needed."
     },
     {
       "id": "allow-or-not",
@@ -90,14 +90,14 @@
           ]
         }
       ],
-      "explanation": "Say no to permissions an app doesn't need. If an app **won't work at all** without permissions that have nothing to do with its job, choose a different app.",
+      "explanation": "Say no to permissions an app doesn't need. If it **won't work at all** without ones unrelated to its job, choose a different app.",
       "hint": "Would a drawing game need your contacts, or your location all the time?"
     },
     {
       "id": "weather-location",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "A weather app asks for your location. Which choice gives it what it needs for your local forecast, **and no more**?",
+      "prompt": "Which choice gives a weather app your location for its forecast, **and no more**?",
       "options": [
         {
           "id": "while-using",
@@ -105,24 +105,24 @@
         },
         {
           "id": "always",
-          "text": "Always: the forecast is only right if it tracks you all day",
-          "nudge": "The forecast only matters when you look at it. Does the app need to know where you go while it's closed?"
+          "text": "Always: it must track you all day to be right",
+          "nudge": "The forecast only matters when you look. Does it need to know where you go while it's closed?"
         },
         {
           "id": "never",
-          "text": "Never: a weather app has no use for your location at all",
-          "nudge": "A local forecast does use where you are. The question is how much of the time it needs to know."
+          "text": "Never: a weather app has no use for your location",
+          "nudge": "A local forecast does use where you are. The question is how much of the time."
         }
       ],
       "correctOptionId": "while-using",
-      "explanation": "**\"Only while using the app\"** gives the weather app your location when you check the forecast, and not while it's closed. \"Always\" lets it follow you all day, which is more than it needs. (\"Never\" works too if you're happy to type your town in.)",
+      "explanation": "**\"Only while using the app\"** shares your location when you check, not while it's closed. \"Always\" is more than it needs. (\"Never\" works too if you type your town in.)",
       "hint": "When do you actually need the forecast for where you are?"
     },
     {
       "id": "mic-dot",
       "type": "scenario",
       "difficulty": "challenge",
-      "prompt": "Many phones show a small **dot** at the top of the screen while an app is using the microphone or camera. You're reading on your phone, and a **microphone dot** appears.",
+      "prompt": "Many phones show a **dot** at the top while an app uses the microphone. You're reading, and a **microphone dot** appears.",
       "start": "start",
       "steps": [
         {
@@ -131,7 +131,7 @@
           "choices": [
             {
               "id": "check",
-              "text": "Check which app is using the microphone, and switch its permission off",
+              "text": "Check which app it is, and switch its microphone off",
               "consequence": "Your phone shows which app it is. You turn its microphone permission off in Settings.",
               "outcome": "success"
             },
@@ -157,7 +157,7 @@
       "id": "wi-fi-ok",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "**Public Wi-Fi** at a café or library is shared with strangers. Most sites already scramble what you send. But you can't always be sure a network is the real one, so use **mobile data** for money and important accounts. Sort each one.",
+      "prompt": "On **public Wi-Fi** you can't always be sure the network is real. Fine there, or better on **mobile data**?",
       "bins": [
         {
           "id": "fine",
@@ -195,15 +195,15 @@
           "bin": "mobile"
         }
       ],
-      "explanation": "Everyday browsing is fine on public Wi-Fi. For banking or important accounts, **mobile data** is safer, because you can't always be sure a network is the real one.",
-      "hint": "Which activities involve your money or your most important accounts?",
-      "nudge": "Save banking and important account changes for mobile data. Videos, news and recipes are fine."
+      "explanation": "Everyday browsing is fine on public Wi-Fi. For money or important accounts, **mobile data** is safer, since you can't always be sure a network is real.",
+      "hint": "Which ones involve your money or your most important accounts?",
+      "nudge": "Ask of each one again: does it involve money or an important account?"
     },
     {
       "id": "riskiest-wi-fi",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Anyone can set up a **fake hotspot**: a Wi-Fi network named to look like the café's. So ask staff for the real network's name. You're at a café. Which is the **riskiest**?",
+      "prompt": "A **fake hotspot** is Wi-Fi named to look like the café's. You're at a café. Which is **riskiest**?",
       "options": [
         {
           "id": "unknown-network",
@@ -212,16 +212,16 @@
         {
           "id": "news",
           "text": "Read the news on the network staff told you about",
-          "nudge": "Reading the news on the café's real network is low-risk. Look for the choice that could hand your details to a stranger."
+          "nudge": "The café's real network is fine for news. Which choice could hand your details to a stranger?"
         },
         {
           "id": "mobile",
           "text": "Check your bank account on mobile data, not Wi-Fi",
-          "nudge": "Mobile data is the safer choice for banking. Look for the choice with a network nobody can vouch for."
+          "nudge": "Mobile data is the safer choice for banking. Which network can nobody vouch for?"
         }
       ],
       "correctOptionId": "unknown-network",
-      "explanation": "\"Free Cafe WiFi 2\": the café's second network, which the café has never heard of. It might be a **fake hotspot** set up by a stranger. The café's real network is fine for everyday browsing, and mobile data is best for banking. Tip: turn off auto-join for public networks.",
+      "explanation": "Staff have never heard of \"Free Cafe WiFi 2\", so it might be a **fake hotspot**. Ask staff for the real name, and turn off auto-join for public networks.",
       "hint": "Which network could belong to a stranger instead of the café?"
     },
     {

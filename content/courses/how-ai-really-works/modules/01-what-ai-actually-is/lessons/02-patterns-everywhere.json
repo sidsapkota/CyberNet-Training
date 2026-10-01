@@ -10,7 +10,7 @@
       "id": "label-the-fruit",
       "type": "train_model",
       "difficulty": "core",
-      "prompt": "Teach a computer to tell **apples** from **bananas**. Label each fruit, then press Check.\n\nThe chart shows how round each fruit is (across) and how yellow (up). The computer will guess 3 new fruits by finding the example **closest** to each one.",
+      "prompt": "Label each fruit as an apple or a banana. The computer then guesses new fruits from the **closest** example.",
       "model": {
         "kind": "nearest",
         "k": 1,
@@ -112,15 +112,15 @@
         "goal": "label"
       },
       "hint": "Read each fruit's name: is it an apple or a banana?",
-      "nudge": "Check the names again. Every apple here is red and round, and every banana is long and yellow.",
-      "explanation": "Your labels were right. Then the computer guessed each new fruit's label from the **nearest** fruit you'd labelled. It got the red apple and the banana right, but called the **yellow apple** a banana. Why? See the next card."
+      "nudge": "Check the names again: each one says whether it's an apple or a banana.",
+      "explanation": "Your labels were right. The computer then guessed from the **nearest** labelled fruit, and called the **yellow apple** a banana. The next card shows why."
     },
     {
       "id": "examples-labels-models",
       "type": "explainer",
       "difficulty": "core",
       "title": "What just happened",
-      "body": "You made **training data**: examples, each with a **label** saying what it is. From them the computer built a **model**, its own way of guessing labels for new things.\n\nEvery apple you showed it was red, so the yellow apple sat nearest the bananas. As far as the model knew, a yellow apple was just a very round banana."
+      "body": "You made **training data**: examples, each with a **label** saying what it is. From them the computer built a **model**: its way of guessing labels for new things.\n\nEvery apple it saw was red, so the yellow apple sat nearest the bananas."
     },
     {
       "id": "best-fix",
@@ -135,28 +135,28 @@
         {
           "id": "more-red",
           "text": "Add lots more red apples, big and small",
-          "nudge": "It already knows red apples well. What kind of apple is it missing?"
+          "nudge": "It already knows red apples. What kind of apple is it missing?"
         },
         {
           "id": "more-bananas",
           "text": "Add more bananas, so it knows them better",
-          "nudge": "The yellow apple got mixed up with bananas. Would more bananas teach it anything new about apples?"
+          "nudge": "Would more bananas teach it anything new about apples?"
         },
         {
           "id": "no-bananas",
           "text": "Remove the bananas from its training data",
-          "nudge": "Then it couldn't recognise bananas at all. What could you add, instead of taking away?"
+          "nudge": "Then it couldn't spot bananas at all. What could you add instead?"
         }
       ],
       "correctOptionId": "yellow-apples",
       "hint": "The model only knows what it was shown. What was it never shown?",
-      "explanation": "The model went wrong because it had never seen a **yellow apple**. Adding some to its training data teaches it that apples can be yellow too. More red apples or more bananas teach it nothing new about apples, and removing the bananas would break the banana guesses."
+      "explanation": "It went wrong because it had never seen a **yellow apple**, so adding some teaches it apples can be yellow. More red apples or bananas teach it nothing new about apples."
     },
     {
       "id": "choose-the-data",
       "type": "train_model",
       "difficulty": "core",
-      "prompt": "Here's the same [[model]], plus a **golden apple** it isn't using yet. Choose which examples to train on, so it gets **every** test fruit right.",
+      "prompt": "Choose which examples to train on, so the [[model]] gets **every** test fruit right.",
       "model": {
         "kind": "nearest",
         "k": 1,
@@ -266,15 +266,15 @@
           "b3"
         ]
       },
-      "hint": "Which example looks most like the yellow apple, but isn't being used yet?",
-      "nudge": "Leaving out the bananas makes it call everything an apple. What could you add instead?",
-      "explanation": "Adding the **golden apple** shows the model that apples can be yellow too. Now the yellow apple sits closest to an apple, and the bananas still help it recognise the ripe banana. Better examples, better guesses."
+      "hint": "Which unused example looks most like the yellow apple?",
+      "nudge": "See which test fruit it still gets wrong, and find the example most like it.",
+      "explanation": "The **golden apple** shows apples can be yellow, so the yellow apple now sits nearest an apple. The bananas still help with the ripe banana."
     },
     {
       "id": "steps-of-learning",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "You just taught a model about fruit. Put the steps of teaching a computer in order, from first to last.",
+      "prompt": "Put the steps of teaching a computer in order, first to last.",
       "items": [
         {
           "id": "collect",
@@ -297,15 +297,15 @@
           "label": "Use it for real"
         }
       ],
-      "hint": "Think about the fruit: you needed the fruit before you could label it, and you saw the model's guesses on new fruit before trusting it.",
-      "nudge": "Start with gathering the examples. What has to happen to them before the model can learn?",
-      "explanation": "First **collect** examples, then **label** them, then **train** the model on them. Before trusting it, **test** it on examples it hasn't seen, like your test fruit. Only then **use** it for real."
+      "hint": "Think of the fruit: you needed fruit before labelling it, and tested guesses before trusting them.",
+      "nudge": "Start by gathering examples. What must happen to them before the model can learn?",
+      "explanation": "**Collect** examples, **label** them and **train** the model. Then **test** it on new examples, like your test fruit, before you **use** it for real."
     },
     {
       "id": "three-fruits",
       "type": "train_model",
       "difficulty": "challenge",
-      "prompt": "Now there are three kinds of fruit. This [[model]] looks at the **3 nearest** examples and goes with the most common label. Label the fruit, then see its guesses.",
+      "prompt": "This [[model]] goes with the most common label of the **3 nearest** examples. Label the fruit, then Check.",
       "model": {
         "kind": "nearest",
         "k": 3,
@@ -428,39 +428,39 @@
       "task": {
         "goal": "label"
       },
-      "hint": "The names tell you each fruit's label. Lemons are yellow and fairly round.",
-      "nudge": "Check the names again: each one says whether it's an apple, a banana or a lemon.",
-      "explanation": "Your labels were right. The model got the lemon and the red-and-yellow apple right, but its 3 nearest examples to the **yellow apple** were all lemons, so it guessed lemon. Again, it had never seen a yellow apple."
+      "hint": "The names tell you each label. Lemons are yellow and fairly round.",
+      "nudge": "Check the names again: each one says apple, banana or lemon.",
+      "explanation": "Your labels were right. But the **yellow apple**'s 3 nearest examples were all lemons, so it guessed lemon. It had never seen a yellow apple."
     },
     {
       "id": "green-pear",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "After you added the golden apple, the model got all 3 test fruits right. It only knows two labels: apple and banana.\n\nNow someone shows it a **green pear**. Will it be right?",
+      "prompt": "The model knows only apple and banana, and passed every test. Will it name a **green pear** right?",
       "options": [
         {
           "id": "cant-say-pear",
-          "text": "No: it can only answer apple or banana, so it must be wrong"
+          "text": "No: it can only say apple or banana, so it's wrong"
         },
         {
           "id": "passed-tests",
-          "text": "Yes: it got every test right, so it's ready for any fruit",
-          "nudge": "Passing 3 tests shows it's good at apples and bananas. What would it need to know to name a pear?"
+          "text": "Yes: it passed every test, so it can do any fruit",
+          "nudge": "Passing 3 tests shows it's good at apples and bananas. Can it name a pear?"
         },
         {
           "id": "learns-pear",
-          "text": "Yes: it will see the pear is new and make up a pear label",
-          "nudge": "The model can only choose from the labels it was taught. Where would a new label come from?"
+          "text": "Yes: it will notice it's new and add a pear label",
+          "nudge": "Where would a new label come from, if nobody taught it one?"
         },
         {
           "id": "near-apple",
-          "text": "Yes, if the pear sits closest to an apple on the chart",
+          "text": "Yes, if the pear sits nearest an apple on the chart",
           "nudge": "Then it would say apple. Is a pear an apple?"
         }
       ],
       "correctOptionId": "cant-say-pear",
       "hint": "List every answer this model is able to give. Is \"pear\" one of them?",
-      "explanation": "The model can only pick from the labels it learned, so it will call the pear an **apple** or a **banana**, and be wrong either way. Passing its tests only shows it's good at the kinds of things it was tested on."
+      "explanation": "It can only pick labels it learned, so it will say **apple** or **banana** and be wrong. Passing tests only shows it's good at what was tested."
     },
     {
       "id": "patterns-recap",

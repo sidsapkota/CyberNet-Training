@@ -10,7 +10,7 @@
       "id": "two-routes",
       "type": "packet_path",
       "difficulty": "core",
-      "prompt": "Your [[packet]] needs to get from the **laptop** to the **web [[server]]**. Plan its trip: follow the lines from box to box. There's more than one way.",
+      "prompt": "Get your [[packet]] from the **laptop** to the **web [[server]]** by following the lines. There's more than one way.",
       "nodes": [
         { "id": "laptop", "kind": "device", "label": "Laptop", "address": "192.168.1.20", "col": 0, "row": 1 },
         { "id": "home", "kind": "router", "label": "Home router", "address": "192.168.1.1", "col": 1, "row": 1 },
@@ -31,16 +31,16 @@
         ["laptop", "home", "isp-a", "server"],
         ["laptop", "home", "isp-b", "server"]
       ],
-      "explanation": "Both routes work. The internet is built with lots of connections, so there's usually more than one way to reach a destination. Having spare routes also means the internet keeps working when one connection fails.",
-      "hint": "Start at the laptop and follow the lines from box to box until you reach the server. Any route along the lines will do.",
-      "nudge": "Each step has to follow a line that joins two boxes. Start at the laptop and only move along the lines you can see."
+      "explanation": "Both routes work. The internet has lots of connections, so there's usually more than one way, and it keeps working when one fails.",
+      "hint": "From the laptop, follow the lines box to box until you reach the server.",
+      "nudge": "Each step has to follow a line that joins two boxes."
     },
     {
       "id": "routers",
       "type": "explainer",
       "difficulty": "core",
       "title": "Routers and hops",
-      "body": "The boxes in the middle are **routers**: they join networks and pass packets on. No router plans the whole trip. Each one checks its **routing table**, a list saying which neighbour to send each address to next. It's like signposts at road junctions. Each step, from one box to the next, is a **hop**."
+      "body": "The boxes in the middle are **routers**: they join networks and pass packets on. No router plans the whole trip: each checks its **routing table**, a list of which neighbour to send each address to next, like signposts at junctions. Each step from one box to the next is a **hop**."
     },
     {
       "id": "count-routers",
@@ -50,30 +50,30 @@
       "base": "decimal",
       "answer": 4,
       "unit": "routers",
-      "explanation": "The routers are the home router, the ISP router, the main internet router and the server's router: **4**. The laptop and the web server are the two ends of the journey, where the packet starts and finishes, so they aren't routers.",
-      "hint": "Go along the journey and count only the routers. Where the packet starts and finishes aren't routers.",
-      "nudge": "The laptop and the web server are the two ends of the journey, not routers. Count only the boxes in between."
+      "explanation": "The home, ISP, main internet and server's routers: **4**. The laptop and the web server are the two ends of the journey, not routers.",
+      "hint": "Count only the routers: where the packet starts and finishes aren't routers.",
+      "nudge": "The laptop and the web server are the ends: count only the boxes in between."
     },
     {
       "id": "device-jobs",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Routers work **between** networks. Inside one network (say, an office), devices are joined by a **switch**, which passes data between them. Match each job to the device that does it.",
+      "prompt": "Routers work **between** networks; inside one network, a **switch** joins the devices. Match each job to its device.",
       "pairs": [
-        { "id": "router", "left": "Passes the office's data out to the internet", "right": "Router" },
-        { "id": "switch", "left": "Passes a document from a laptop to the office printer", "right": "Switch" },
-        { "id": "server", "left": "Hands out a website's pages to anyone who asks", "right": "Server" },
-        { "id": "laptop", "left": "Where you type the email in the first place", "right": "Laptop" }
+        { "id": "router", "left": "Sends the office's data to the internet", "right": "Router" },
+        { "id": "switch", "left": "Sends a file from laptop to printer", "right": "Switch" },
+        { "id": "server", "left": "Hands out web pages to anyone who asks", "right": "Server" },
+        { "id": "laptop", "left": "Where you type the email first", "right": "Laptop" }
       ],
-      "explanation": "Leaving the office for the internet means crossing **between** networks: a **router**'s job. Laptop to printer stays **inside** one network, so a **switch** handles it. A **server** provides something, like web pages. A **laptop** is where packets start or finish. Your home router is really three in one: a router, a switch and a Wi-Fi access point.",
-      "hint": "Ask of each job: does the data leave the network, stay inside it, get served to others, or start with a person?",
-      "nudge": "A router works between networks, while a switch works inside one network. Try sorting those two out first."
+      "explanation": "Leaving the office crosses **between** networks (a **router**), while laptop to printer stays **inside** one (a **switch**). A **server** hands out pages, and a **laptop** is where packets start or finish.",
+      "hint": "Does the data leave the network, stay inside it, get served to others, or start with a person?",
+      "nudge": "A router works between networks and a switch inside one: sort those two out first."
     },
     {
       "id": "first-hop",
       "type": "terminal",
       "difficulty": "core",
-      "prompt": "A tool called **traceroute** lists every router on the way to a website, one numbered line per [[hop]] (on Windows it's `tracert`). Run `traceroute example.com`, then find the address of **hop 1**.",
+      "prompt": "**Traceroute** lists each router on the way to a website, one numbered line per [[hop]].\n\nRun `traceroute example.com`. What is **hop 1**'s address?",
       "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
       "commands": [
         {
@@ -88,42 +88,42 @@
         "question": "What is the address of hop 1?",
         "accepted": ["192.168.1.1"]
       },
-      "explanation": "Hop 1 is `192.168.1.1`, a [[private address]]: it's your **home router**, the first stop on every trip out of your home. Hops 2 to 4 are routers belonging to internet companies, and hop 5 is example.com itself. The three times on each line are how long that router took to reply, in [[milliseconds|millisecond]] (ms). They grow as the packets travel further.",
-      "hint": "Run `traceroute example.com`, then find the line numbered 1. The very first line of output only repeats where you're going.",
-      "nudge": "Hop 1 is the line that starts with the number 1, not the top line. Type that hop's address exactly, without the times."
+      "explanation": "Hop 1, `192.168.1.1`, is a [[private address]]: your **home router**, the first stop out of your home. Hops 2 to 4 are internet companies' routers, hop 5 is example.com itself, and the times are replies in [[milliseconds|millisecond]] (ms).",
+      "hint": "Find the line numbered 1: the top line only repeats where you're going.",
+      "nudge": "Hop 1 is the line starting with the number 1, not the top line: type just its address."
     },
     {
       "id": "stars",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Each line of a traceroute is a router answering. In one traceroute, hop 3 looks like this:\n\n```\n 3  * * *\n```\n\nBut hops 4 and 5 still show up after it. What does `* * *` most likely mean?",
+      "prompt": "Each traceroute line is one hop answering, and the last line is the site itself.\n\nHop 3 shows `* * *`, yet hops 4 and 5 still appear. What does that mean?",
       "options": [
         { "id": "no-reply", "text": "That router stayed quiet, but passed the packets on" },
         {
           "id": "broken",
-          "text": "That router is broken, so the packets had to find another way",
-          "nudge": "If the router at hop 3 were broken, why would there still be a hop 3 line with hops 4 and 5 after it?"
+          "text": "That router is broken, so packets went another way",
+          "nudge": "If hop 3 were broken, why would hops 4 and 5 still appear after it?"
         },
         {
           "id": "lost",
-          "text": "All the packets were lost for good when they reached hop 3",
-          "nudge": "Hops 4 and 5 still answered, so packets must have got past hop 3."
+          "text": "All the packets were lost for good at hop 3",
+          "nudge": "Hops 4 and 5 still answered, so packets got past hop 3."
         },
         {
           "id": "no-router",
           "text": "There's no router at hop 3, just a gap in the cable",
-          "nudge": "Traceroute gives one line per hop, so something is there at hop 3. It just didn't send back an answer."
+          "nudge": "There's one line per hop, so something is at hop 3: it just didn't answer."
         }
       ],
       "correctOptionId": "no-reply",
-      "explanation": "Each `*` means *no reply arrived in time*. Many routers are set up to ignore traceroute, or to answer it last when they're busy. That router saw the question and left you on read. Hops 4 and 5 answered, so packets clearly **did** get through hop 3.",
-      "hint": "Look at what happens after hop 3. If hops 4 and 5 still reply, what does that tell you about the packets?"
+      "explanation": "Each `*` means *no reply in time*: many routers ignore traceroute, or answer it last when busy. Hops 4 and 5 answered, so packets **did** get through hop 3.",
+      "hint": "Hops 4 and 5 still reply: what does that tell you about the packets?"
     },
     {
       "id": "router-down",
       "type": "packet_path",
       "difficulty": "challenge",
-      "prompt": "**Router 2 is down** (it has stopped working). Find a route from the **laptop** to the **web [[server]]** that avoids it.",
+      "prompt": "**Router 2 is down.** Find a route from the **laptop** to the **web [[server]]** that avoids it.",
       "nodes": [
         { "id": "laptop", "kind": "device", "label": "Laptop", "address": "192.168.1.20", "col": 0, "row": 0 },
         { "id": "home", "kind": "router", "label": "Home router", "address": "192.168.1.1", "col": 1, "row": 0 },
@@ -149,16 +149,16 @@
         ["laptop", "home", "r1", "r4", "server"],
         ["laptop", "home", "r3", "r4", "server"]
       ],
-      "explanation": "Every working route goes through **Router 4**, the only other router linked to the server. You can reach it through Router 1 or Router 3, and both count. Router 1 still works; it's only its link onwards to Router 2 that leads nowhere. Real routers do this automatically when something fails: they [[update]] their [[routing tables|routing-table]] and send [[packets|packet]] around the problem.",
-      "hint": "Router 2 is broken, so no route can go through it. Find another router that links to the web server, then work back to the laptop.",
-      "nudge": "Any route through Router 2 fails. Check which other router has a link to the web server, and find a way to reach it."
+      "explanation": "Every working route goes through **Router 4**, the server's only other link, reached via Router 1 or Router 3. Real routers [[update]] their [[routing tables|routing-table]] and send [[packets|packet]] around failures by themselves.",
+      "hint": "No route can use Router 2: find another router linked to the server, then work back.",
+      "nudge": "Check which other router links to the web server, and find a way to reach it."
     },
     {
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- **Routers** pass packets on, one **hop** at a time.\n- Each router only picks the next step, using its routing table.\n- **Traceroute** lists the hops; `* * *` means a router stayed quiet."
+      "body": "- **Routers** pass packets on, one **hop** at a time, using routing tables.\n- **Traceroute** lists the hops; its last line is the destination itself.\n- `* * *` means a router stayed quiet but still passed packets on."
     }
   ]
 }

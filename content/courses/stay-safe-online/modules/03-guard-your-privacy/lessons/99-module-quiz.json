@@ -53,7 +53,7 @@
       "id": "q-quiz-post",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A comment thread says: \"Reply with the street you grew up on and your first pet's name to get your elf name!\" Your uncle has already replied. What's the risk?",
+      "prompt": "\"Reply with your childhood street and first pet's name to get your elf name!\" Your uncle replied. What's the risk?",
       "options": [
         {
           "id": "security",
@@ -65,11 +65,11 @@
         },
         {
           "id": "slow",
-          "text": "None, because a pet's name and a street can't unlock anything"
+          "text": "None: a pet's name and a street can't unlock anything"
         }
       ],
       "correctOptionId": "security",
-      "explanation": "Pet names and streets are common security questions, so sharing them can help someone reset his accounts. Comments can also be seen, copied and screenshotted by people he doesn't know."
+      "explanation": "Pet names and streets are common security questions, so sharing them can help someone reset his accounts. Strangers can see and screenshot comments too."
     },
     {
       "id": "q-permissions",
@@ -123,7 +123,7 @@
           "choices": [
             {
               "id": "safe",
-              "text": "Don't send anything, block and report them, and tell a trusted adult",
+              "text": "Send nothing, block and report, and tell a trusted adult",
               "consequence": "Right. You're not in trouble, and telling someone keeps you safe.",
               "outcome": "success"
             },
@@ -183,7 +183,7 @@
         },
         {
           "id": "tags",
-          "left": "Photos of you appear on your profile without asking",
+          "left": "Photos of you appear without asking",
           "right": "Tag review"
         }
       ],

@@ -11,7 +11,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "AI is already in your pocket",
-      "body": "Your phone unlocks when it sees your face. Your keyboard guesses your next word.\n\nMost programs follow **rules** a person wrote: at 7:00, ring the alarm. But nobody could write rules for every face. So people give the computer lots of **examples** and let it find the patterns they share.\n\nIn this course, **AI** means software that learns from examples."
+      "body": "Your phone unlocks when it sees your face. Most programs follow **rules** a person wrote: at 7:00, ring the alarm. Nobody could write rules for every face, so face unlock learns from lots of **examples** instead.\n\nIn this course, **artificial intelligence (AI)** means software that learns from examples, called **machine learning**."
     },
     {
       "id": "rules-or-learning",
@@ -61,24 +61,24 @@
         }
       ],
       "hint": "Ask: could a person write down every step exactly? If yes, it follows rules.",
-      "nudge": "Look again at the jobs that have to cope with things nobody planned for, like a new photo of a face or a word you've never typed before.",
-      "explanation": "An alarm clock, a calculator and timed traffic lights follow exact rules someone wrote. Face unlock, a spam filter and keyboard suggestions **learn from examples**: there are too many faces, emails and sentences to write rules for every one."
+      "nudge": "Look again at the jobs that must cope with things nobody planned, like a new face.",
+      "explanation": "Alarms, calculators and timed lights follow exact rules. Face unlock, spam filters and keyboard suggestions **learn from examples**: there are too many faces, emails and sentences for rules."
     },
     {
       "id": "which-needs-learning",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Learning from examples is called **machine learning**. Most of what people call AI today works this way.\n\nWhich job is easiest to solve by **learning from examples**, instead of writing rules?",
+      "prompt": "Which job is easiest to solve by **learning from examples**?",
       "options": [
         {
           "id": "bill",
           "text": "Adding up a shopping bill",
-          "nudge": "Adding follows exact rules that never change. Which job has too many different possibilities to write rules for?"
+          "nudge": "Adding follows a few exact rules. Which job has endless variety?"
         },
         {
           "id": "alarm",
           "text": "Ringing an alarm at 7:00",
-          "nudge": "That's one simple rule. Which job would need rules for millions of different cases?"
+          "nudge": "That's one simple rule. Which job has millions of different cases?"
         },
         {
           "id": "handwriting",
@@ -87,12 +87,12 @@
         {
           "id": "midnight",
           "text": "Turning the lights off at midnight",
-          "nudge": "A timer can do that with one rule. Think about a job where every example looks a bit different."
+          "nudge": "One timer rule can do that. Which job has examples that all look different?"
         }
       ],
       "correctOptionId": "handwriting",
-      "hint": "Which job has to cope with endless variety, where no two examples look exactly the same?",
-      "explanation": "Everyone's handwriting is different, so nobody could write rules for every way of writing every letter. Instead, a computer learns from thousands of handwriting examples. Adding up, alarms and timers each need just a few exact rules."
+      "hint": "Which job has endless variety, where no two examples look the same?",
+      "explanation": "Everyone's handwriting is different, so nobody could write rules for it all; a computer learns from examples instead. Adding, alarms and timers need just a few exact rules."
     },
     {
       "id": "what-it-learned-from",
@@ -121,9 +121,9 @@
           "right": "Words people usually type next"
         }
       ],
-      "hint": "For each one, ask: what would it need to see lots of to get good at its job?",
-      "nudge": "Think about what each one is trying to guess, and which examples would show it the right answers.",
-      "explanation": "Song suggestions learn from what you **skip and replay**; face unlock from **scans of your face**; spam filters from emails people **mark as spam**; keyboards from the words people **usually type next**. Each one gets good at its job by seeing lots of examples of it."
+      "hint": "Ask: what would it need to see lots of to get good at its job?",
+      "nudge": "Ask what each one is trying to guess, and which examples would show it.",
+      "explanation": "Each one learns from examples of its own job: songs you **skip and replay**, **scans of your face**, emails **marked as spam**, and words people **usually type next**."
     },
     {
       "id": "trickier-sort",
@@ -172,39 +172,39 @@
           "bin": "learns"
         }
       ],
-      "hint": "Two things can do the same job in different ways. Ask: could someone write every step in advance, or does it change by noticing what happens?",
-      "nudge": "Some pairs look alike. Ask whether a person wrote the exact steps, or whether it got better by seeing examples.",
-      "explanation": "A timer, a set path and a unit converter follow exact rules. A heater that adapts to your routine, an enemy that copies top players and a photo app that finds dogs all **learn from examples**. The same kind of job can be done either way."
+      "hint": "Ask: did someone write every step in advance, or does it improve by noticing what happens?",
+      "nudge": "Some pairs look alike: did a person write the steps, or did it learn from examples?",
+      "explanation": "A timer, a set path and a converter follow exact rules. The adapting heater, the copying enemy and the dog finder **learn from examples**. The same job can be done either way."
     },
     {
       "id": "does-it-understand",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "When [[AI|artificial-intelligence]] recognises your face, does it **understand** who you are, the way a friend does?",
+      "prompt": "When [[AI|artificial-intelligence]] recognises your face, does it **understand** you like a friend does?",
       "options": [
         {
           "id": "friend",
-          "text": "Yes: it knows you like a friend does",
-          "nudge": "A friend knows your jokes and your favourite food. What did the AI actually learn from?"
+          "text": "Yes: it knows you just like a friend does",
+          "nudge": "A friend knows your jokes and favourite food. What did the AI learn from?"
         },
         {
           "id": "name-not-feelings",
-          "text": "Partly: it knows your name and face, just not your feelings",
-          "nudge": "Face unlock never needs your name. All it has is what the patterns in your face look like. Is that the same as knowing someone?"
+          "text": "Partly: it knows your name, but not your feelings",
+          "nudge": "Face unlock never needs your name. What did it actually learn from?"
         },
         {
           "id": "patterns",
-          "text": "No: it matches patterns it learned from examples"
+          "text": "No: it matches patterns learned from examples"
         },
         {
           "id": "online",
           "text": "No: it looks up your name online each time",
-          "nudge": "It doesn't need to look anything up. Think about how it learned to recognise you."
+          "nudge": "It doesn't look anything up. How did it learn to recognise you?"
         }
       ],
       "correctOptionId": "patterns",
-      "hint": "Think back to how AI learns: from examples, finding what they have in common.",
-      "explanation": "Face unlock matches the **patterns** in your face to the examples it learned from. It doesn't know who you are, what you like or how you feel. That's a big difference between AI and people, and it's why AI can be fooled or make odd mistakes."
+      "hint": "Think back to how AI learns: from examples.",
+      "explanation": "Face unlock matches **patterns** in your face to examples it learned. It doesn't know who you are or how you feel, which is why AI can be fooled."
     },
     {
       "id": "spot-the-ai-recap",

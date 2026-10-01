@@ -10,56 +10,56 @@
       "id": "why-dns",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "You type `example.com` into your [[browser]]. But [[routers|router]] deliver [[packets|packet]] using [[IP addresses|ip-address]], like `198.51.100.10`, and have no idea what \"example.com\" means.\n\nSo why do websites have names at all?",
+      "prompt": "[[Routers|router]] deliver [[packets|packet]] by [[IP address|ip-address]], like `198.51.100.10`, not by name.\n\nSo why do websites have names?",
       "options": [
-        { "id": "routers-need-numbers", "text": "Routers need numbers, but people remember names more easily" },
+        { "id": "routers-need-numbers", "text": "Routers need numbers, but people remember names" },
         {
           "id": "names-faster",
-          "text": "Names make packets travel faster than plain numbers do",
-          "nudge": "A name doesn't change how fast a packet moves. Think about who finds names easier: people or routers?"
+          "text": "Names make packets travel faster than numbers",
+          "nudge": "A name doesn't change a packet's speed: who finds names easier, people or routers?"
         },
         {
           "id": "secret",
-          "text": "Names keep a website's IP address secret from hackers",
-          "nudge": "Names don't hide anything: anyone can look up a website's address. Think about who finds names easier."
+          "text": "Names hide a website's IP address from hackers",
+          "nudge": "Anyone can look up a site's address, so names hide nothing: who finds them easier?"
         },
         {
           "id": "skip-routers",
-          "text": "Names let your device skip the routers and go straight to the site",
-          "nudge": "Every packet still travels through routers, and routers only read IP addresses. So who are the names really for?"
+          "text": "Names let you skip the routers and go straight there",
+          "nudge": "Every packet still goes through routers, which only read addresses: so who are names for?"
         }
       ],
       "correctOptionId": "routers-need-numbers",
-      "explanation": "Every packet needs a destination **IP address**, because that's what routers use to deliver it. Names exist for people: `example.com` is far easier to remember than `198.51.100.10`. So before your browser can connect, something has to turn the name into an address.",
-      "hint": "Think about who uses names, and what routers need to deliver a packet."
+      "explanation": "Routers deliver packets by **IP address**; names are for people, since `example.com` is easier to remember than `198.51.100.10`. So something has to turn the name into an address first.",
+      "hint": "Who uses names, and what do routers need to deliver a packet?"
     },
     {
       "id": "phone-book",
       "type": "explainer",
       "difficulty": "core",
       "title": "The internet's contacts app",
-      "body": "A phone's contacts app works like this: you tap a **name**, and it finds the **number**.\n\nThe internet has the same thing, the **Domain Name System**, or **DNS**. Give it a name like `example.com`, and it gives back an [[IP address]] like `198.51.100.10`. That's a **DNS lookup**, and it happens before almost every connection you make."
+      "body": "A contacts app turns a **name** into a **number**. The internet has the same thing: the **Domain Name System**, or **DNS**.\n\nGive it a name like `example.com`, and it gives back an [[IP address]] like `198.51.100.10`. That's a **DNS lookup**, and it happens before almost every connection."
     },
     {
       "id": "contacts-analogy",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Match each part of the contacts-app idea to its internet version.",
+      "prompt": "Match each part of the contacts app to its internet version.",
       "pairs": [
         { "id": "name", "left": "A contact's name", "right": "A domain name, like `example.com`" },
         { "id": "number", "left": "A contact's phone number", "right": "An IP address, like `198.51.100.10`" },
         { "id": "app", "left": "The contacts app", "right": "DNS" },
         { "id": "call", "left": "Making the call", "right": "Connecting to the server" }
       ],
-      "explanation": "The **name** is what people use, the **number** (IP address) is what the network uses, and **DNS** is the look-up service that connects the two. Once your device has the address, it can connect, just like a phone dials once it has the number.",
-      "hint": "Ask what each thing is used for: people remember the name, the [[network]] uses the number, and something looks one up from the other.",
-      "nudge": "Keep the two sides lined up by job: what you remember, what the network uses, the look-up service, and the step that happens once you have the number."
+      "explanation": "People use the **name**, the network uses the **number** (IP address), and **DNS** looks one up from the other. With the address, your device connects, like a phone dialling.",
+      "hint": "People remember the name, the [[network]] uses the number, and something looks one up from the other.",
+      "nudge": "Line them up by job: what you remember, what the network uses, the look-up, and the step after."
     },
     {
       "id": "first-lookup",
       "type": "terminal",
       "difficulty": "core",
-      "prompt": "Time for a real lookup. Run `nslookup example.com` to ask [[DNS]] for example.com's address (the top lines show who answered).",
+      "prompt": "Run `nslookup example.com` to ask [[DNS]] for example.com's address.",
       "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
       "commands": [
         {
@@ -70,77 +70,77 @@
         }
       ],
       "success": { "type": "ran_command", "command": "nslookup example.com" },
-      "explanation": "DNS answered with **two** addresses for example.com: an [[IPv4]] address, `198.51.100.10`, and an [[IPv6]] address, `2001:db8::10`. Your device can use either one.\n\nThe `Server` and `Address` lines at the very top aren't example.com. They show the DNS helper that answered your question.",
-      "hint": "Type the [[command]] exactly as it's shown in the prompt, then press Enter.",
-      "nudge": "Check the spelling and the space: the tool name comes first, then the website name."
+      "explanation": "DNS gave **two** addresses: [[IPv4]] `198.51.100.10` and [[IPv6]] `2001:db8::10`, and either works. The `Server` and `Address` lines at the top are the DNS helper that answered, not example.com.",
+      "hint": "Type the [[command]] exactly as it's shown, then press Enter.",
+      "nudge": "Check the spelling and the space: the tool's name first, then the website's."
     },
     {
       "id": "order-name-parts",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "A [[domain name|domain-name]] like `mail.example.org` is made of parts:\n\n- `mail` is a **subdomain**: a name the owner chose to add.\n- `org` is the **top-level domain** (**TLD**), shared by millions of names.\n- `example` is the **domain** someone registered: `example.org`.\n\nNames are read from **right to left**. Put the parts in order, from the **most general** at the top to the **most specific** at the bottom.",
+      "prompt": "In `mail.example.org`, `mail` is a **subdomain** the owner added, `org` is the **top-level domain** (**TLD**), shared by millions, and `example` is the registered **domain**.\n\nNames read right to left: order the parts, **most general** first.",
       "items": [
         { "id": "tld", "label": "org" },
         { "id": "domain", "label": "example" },
         { "id": "subdomain", "label": "mail" }
       ],
-      "explanation": "Read right to left: the TLD `org` comes first, shared by millions of names. Then the domain `example`, making `example.org`, which one person or group registered. Last comes the subdomain `mail`, which the owner of example.org chose to add.",
-      "hint": "Start at the right-hand end of the name. Which part is shared by the most names?",
-      "nudge": "Reading left to right gives you the most specific part first. Flip it: the right-hand end is the most general."
+      "explanation": "Right to left: the TLD `org`, shared by millions; then `example`, making the registered `example.org`; then `mail`, a subdomain its owner added.",
+      "hint": "Start at the right-hand end: which part is shared by the most names?",
+      "nudge": "Reading left to right gives the most specific part first: flip it."
     },
     {
       "id": "who-controls",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Whoever registers a domain can add any subdomains they like to its **left**. Who controls the name `login.example.com.example.org`?",
+      "prompt": "A domain's owner can add any subdomains to its **left**. Who controls `login.example.com.example.org`?",
       "options": [
         { "id": "org-owner", "text": "Whoever registered example.org" },
         {
           "id": "com-owner",
           "text": "Whoever registered example.com",
-          "nudge": "That name appears in the middle, not at the end. What matters is the registered domain on the right-hand side."
+          "nudge": "That's in the middle, not at the end: what matters is the registered domain on the right."
         },
         {
           "id": "both",
           "text": "Both owners share control of it",
-          "nudge": "Only one domain is actually registered here. Read from the right to find it; the rest is just a subdomain."
+          "nudge": "Only one domain is registered here: read from the right to find it."
         },
         {
           "id": "login",
           "text": "Whoever owns the login part",
-          "nudge": "The leftmost part is the most specific: a subdomain chosen by the owner. Look at the right-hand end instead."
+          "nudge": "The leftmost part is a subdomain the owner chose: look at the right-hand end instead."
         }
       ],
       "correctOptionId": "org-owner",
-      "explanation": "Read from the right: the TLD is `org` and the registered domain is `example.org`. Everything to its left, including `login.example.com`, is just a subdomain that **example.org's owner** chose to add. It says \"example.com\" in the middle, but the owner of example.com has nothing to do with it. Scammers use this trick to make links *look* like they belong to a site they don't.",
-      "hint": "Read from the right. Find the [[TLD]], then the registered domain next to it. Everything to its left is a [[subdomain]]."
+      "explanation": "From the right, the registered domain is `example.org`, so `login.example.com` is just a subdomain **its owner** added. Scammers use this trick to make links *look* like another site's.",
+      "hint": "Read from the right: find the [[TLD]], then the domain next to it; the rest is a [[subdomain]]."
     },
     {
       "id": "who-controls-co-uk",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "Some countries add an extra level. Many UK businesses register names ending in `.co.uk`: the TLD is `uk`, and `co.uk` is shared by millions of companies, a bit like `.com`.\n\nWho controls `shop.example.co.uk`?",
+      "prompt": "Many UK names end in `.co.uk`: the TLD is `uk`, and `co.uk` is shared by millions of companies, like `.com`.\n\nWho controls `shop.example.co.uk`?",
       "options": [
         { "id": "example-owner", "text": "Whoever registered example.co.uk" },
         {
           "id": "co-uk-owner",
           "text": "Whoever runs co.uk, since it sits next to the TLD",
-          "nudge": "`co.uk` is shared by millions of companies, just like `.com`. It isn't one company's domain. Look one step further left."
+          "nudge": "`co.uk` is shared by millions, like `.com`: look one step further left."
         },
         {
           "id": "government",
-          "text": "The UK government, because the name ends in uk",
-          "nudge": "A country code shows where a name is registered, not who runs the site. Look further left for the part someone registered."
+          "text": "The UK government, because it ends in uk",
+          "nudge": "A country code shows where a name is registered, not who runs the site."
         },
         {
           "id": "shop-owner",
           "text": "Whoever owns the shop part at the start",
-          "nudge": "The leftmost part is a subdomain, the most specific part. Its owner is whoever registered the domain to its right."
+          "nudge": "The leftmost part is a subdomain: its owner is whoever registered the domain to its right."
         }
       ],
       "correctOptionId": "example-owner",
-      "explanation": "Read from the right: `uk` is the TLD and `co.uk` is a shared ending, like `.com`. The first part after that, `example.co.uk`, is the domain someone registered, so **its owner** controls `shop.example.co.uk` and any other subdomain they add.",
-      "hint": "Use the right-to-left rule, as with `.com` names. Which part would one person or company actually have registered?"
+      "explanation": "From the right, `uk` is the TLD and `co.uk` a shared ending, like `.com`. So `example.co.uk` is the registered domain, and **its owner** controls `shop.example.co.uk`.",
+      "hint": "Use the right-to-left rule: which part would one company actually register?"
     },
     {
       "id": "recap",

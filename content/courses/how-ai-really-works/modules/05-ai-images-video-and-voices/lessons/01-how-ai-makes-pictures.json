@@ -11,13 +11,13 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "A cat astronaut, in seconds",
-      "body": "Type \"a cat in a space suit, floating past the Moon, as a watercolour\" into an image tool. Seconds later, there it is. Nobody drew it.\n\nAI that makes new things (pictures, text, music, voices) is called **generative AI**. Chatbots are one kind; image tools are another."
+      "body": "Type \"a cat in a space suit, floating past the Moon, as a watercolour\" into an image tool, and seconds later there it is. Nobody drew it.\n\nAI that makes new things (pictures, text, music, voices) is called **generative AI**. Chatbots are one kind; image tools are another."
     },
     {
       "id": "prompt-words",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "An image model learned from millions of pictures, each with a caption. So it knows which looks go with which words. Match each word in a picture [[prompt]] to what it changes.",
+      "prompt": "An image model learned from captioned pictures. Match each word in a picture [[prompt]] to what it changes.",
       "pairs": [
         {
           "id": "watercolour",
@@ -41,14 +41,14 @@
         }
       ],
       "hint": "Think about what each word would change if you were painting it yourself.",
-      "nudge": "\"Close-up\" is about the camera, and \"at sunset\" is about the time of day. What does each of those change?",
-      "explanation": "Style words (**watercolour**) change how it's painted, time words (**at sunset**) change the light, camera words (**close-up**) change how near it seems, and numbers (**two cats**) change what's in it."
+      "nudge": "Pick out the camera word and the time-of-day word first: what does each change?",
+      "explanation": "Style words (**watercolour**) change how it's painted, time words (**at sunset**) the light, camera words (**close-up**) how near it seems, and numbers (**two cats**) what's in it."
     },
     {
       "id": "noise-steps",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "Most image tools start from **random static**: random coloured speckles, a bit like an untuned TV. Step by step they clear a little of it, nudging what's left towards your words: colour first, then shapes, then detail. Put the stages in order, from first to last.",
+      "prompt": "Image tools start from **random static** and clear it step by step: colour, then shapes, then detail. Order the stages.",
       "items": [
         {
           "id": "static",
@@ -71,9 +71,9 @@
           "label": "The finished picture"
         }
       ],
-      "hint": "The first and last stages are the easy ones: speckles at the start, the finished picture at the end. For the middle three, use the order the prompt gives.",
-      "nudge": "Big, rough things come before small, fine things. Which stage is only colour, with no shapes yet?",
-      "explanation": "It starts from **random static** (coloured speckles), then each step removes a little: **blobs of colour**, then **rough shapes**, then **details**, until the **finished picture**."
+      "hint": "Speckles come first and the finished picture last. The middle follows the prompt's order.",
+      "nudge": "Big, rough things come before fine things. Which stage is only colour, with no shapes?",
+      "explanation": "It starts from **random static**, then clears to **blobs of colour**, **rough shapes** and **details**, until the **finished picture**."
     },
     {
       "id": "same-prompt-twice",
@@ -83,13 +83,13 @@
       "options": [
         {
           "id": "same",
-          "text": "The exact same picture twice, because computers are exact",
+          "text": "The same picture twice, because computers are exact",
           "nudge": "Each picture starts from new random static. What does that do to the result?"
         },
         {
           "id": "better",
-          "text": "A better picture the second time, because it learned from the first",
-          "nudge": "The model doesn't learn from each picture you make. What changes between the two tries?"
+          "text": "A better one the second time: it learned from the first",
+          "nudge": "It doesn't learn from your pictures. What changes between the two tries?"
         },
         {
           "id": "different",
@@ -102,14 +102,14 @@
         }
       ],
       "correctOptionId": "different",
-      "hint": "Think back to the very first stage of every picture. Is it ever the same twice?",
-      "explanation": "Each picture starts from **different random static**, so the same prompt gives **two different pictures**, both matching the words. The model doesn't learn from your pictures as you make them."
+      "hint": "Think of every picture's first stage. Is it ever the same twice?",
+      "explanation": "Each picture starts from **different random static**, so you get **two different pictures**, both matching your words."
     },
     {
       "id": "clue-or-not",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "AI pictures **sometimes** have give-aways: things that rarely happen in real photos. Newer tools make fewer of them. Is each one a **possible clue** that a picture was made by AI, or **not a clue**?",
+      "prompt": "AI pictures **sometimes** have give-aways that real photos rarely do. Is each a **possible clue**, or **not a clue**?",
       "bins": [
         {
           "id": "clue",
@@ -153,8 +153,8 @@
         }
       ],
       "hint": "Which of these happen in ordinary photos taken with a phone?",
-      "nudge": "Blur, filters and night shots happen in real photos all the time. Which things don't happen in real life?",
-      "explanation": "Jumbled letters, six fingers and wrong-way shadows **rarely happen in real photos**, so they're possible clues (not proof). Blur, filters and dark night shots happen in ordinary photos all the time, so they tell you nothing."
+      "nudge": "Which of these rarely happen in real photos?",
+      "explanation": "Jumbled letters, six fingers and wrong-way shadows **rarely happen in real photos**: possible clues, not proof. Blur, filters and night shots are normal in real photos."
     },
     {
       "id": "no-mistakes",
@@ -164,7 +164,7 @@
       "options": [
         {
           "id": "real",
-          "text": "It's a real photo, because AI pictures always have mistakes",
+          "text": "It's real, because AI pictures always have mistakes",
           "nudge": "AI pictures sometimes have give-aways, but lots don't. Does finding none prove anything?"
         },
         {
@@ -174,47 +174,47 @@
         },
         {
           "id": "old-tool",
-          "text": "It was made by an older AI tool that didn't make mistakes",
-          "nudge": "Older tools made more mistakes, not fewer. What does finding no give-aways really tell you?"
+          "text": "It's from an older AI tool that didn't make mistakes",
+          "nudge": "Older tools made more mistakes, not fewer. What does finding none tell you?"
         },
         {
           "id": "nothing-sure",
-          "text": "Nothing for sure: good AI pictures often have no visible mistakes"
+          "text": "Nothing for sure: good AI pictures often look flawless"
         }
       ],
       "correctOptionId": "nothing-sure",
-      "hint": "Spotting a give-away is a clue. Newer tools make fewer of them. So what does **not** spotting one tell you?",
-      "explanation": "Give-aways are a clue when you find them, but lots of AI pictures have none, and real photos have none either. So \"no mistakes\" proves **nothing either way**. You need other checks, like finding where the picture came from."
+      "hint": "Newer tools make fewer give-aways. So what does **not** spotting one tell you?",
+      "explanation": "Lots of AI pictures have no give-aways, and neither do real photos, so \"no mistakes\" proves **nothing either way**. Check where it came from instead."
     },
     {
       "id": "where-it-learned",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "An image model has never been given a single rule about paint. How did it learn what \"watercolour\" looks like?",
+      "prompt": "Nobody gave an image model rules about paint. How did it learn what \"watercolour\" looks like?",
       "options": [
         {
           "id": "search-copy",
           "text": "It searches for a watercolour each time, and copies it",
-          "nudge": "It doesn't look up and copy one picture. It makes a new one. Where did it learn the style?"
+          "nudge": "It makes a new picture, not a copy. Where did it learn the style?"
         },
         {
           "id": "captions",
-          "text": "From lots of watercolour pictures with captions in its training data"
+          "text": "From many captioned watercolours in its training data"
         },
         {
           "id": "collage",
-          "text": "It cuts up a few watercolours it saved and mixes the pieces",
-          "nudge": "It doesn't keep pictures to cut up: it starts from static and learned the pattern. Where from?"
+          "text": "It cuts up saved watercolours and mixes the pieces",
+          "nudge": "It keeps no pictures to cut up: it learned a pattern. From where?"
         },
         {
           "id": "rules",
-          "text": "Someone wrote rules describing every watercolour brush stroke",
-          "nudge": "Remember rules versus learning. Could anyone write rules for every brush stroke?"
+          "text": "Someone wrote rules for every watercolour brush stroke",
+          "nudge": "Rules versus learning: could anyone write rules for every brush stroke?"
         }
       ],
       "correctOptionId": "captions",
       "hint": "Think back to what an image model learned from, and what came with each picture.",
-      "explanation": "It saw lots of pictures **captioned** as watercolours, and learned the pattern: soft edges, runny colours, paper texture. It makes a **new** picture from static with that pattern, rather than copying one or cutting pieces out of saved ones."
+      "explanation": "It saw lots of pictures **captioned** as watercolours and learned the pattern. It makes a **new** picture from static, rather than copying or cutting up saved ones."
     },
     {
       "id": "pictures-recap",

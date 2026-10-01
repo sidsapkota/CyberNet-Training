@@ -1496,6 +1496,15 @@ this list and fix anything busy.**
   13-year-old and a 45-year-old alike, with light humour in examples where it fits (never in help or
   safety content). Teach how things work, not job-training detail (no memorising ports, flags,
   record types or standards trivia). Questions test understanding ("I get it"), not recall.
+- **Depth, not exam prep:** CyberNet Training teaches understanding of foundations, not
+  certification or exam prep (not CCNA, CompTIA or school exams).
+  - **Easy:** what it is and why it matters in everyday life.
+  - **Medium:** how it works, with simple cause and effect.
+  - **Hard:** how it really works underneath, going deeper through explanation and hands-on
+    exploration, never through memorisation. It should feel like "whoa, so that's how it works",
+    not like studying for a test.
+  - **Never:** memorising numbers, codes, command flags or acronym lists; exam-style trick
+    questions; questions only answerable by recall rather than understanding.
 - **Do first, explain after:** where possible, start a lesson or a new idea with a hands-on card
   (predict, drag, try) set up by its own prompt, then name the idea in a short explainer.
 - **Explain before naming.** Introduce an idea with an everyday analogy first, then give the technical

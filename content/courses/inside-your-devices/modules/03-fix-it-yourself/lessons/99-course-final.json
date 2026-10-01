@@ -9,7 +9,7 @@
       "id": "q-label-laptop",
       "type": "hotspot",
       "difficulty": "core",
-      "prompt": "Label four parts inside this laptop: the one that carries heat away, where the battery joins, the main board, and the fast workspace.",
+      "prompt": "Label these four parts inside the laptop.",
       "scene": "laptop",
       "view": "open",
       "mode": "label",
@@ -31,21 +31,21 @@
           "label": "RAM"
         }
       ],
-      "explanation": "The copper **heat pipe** carries the CPU's heat to the fan. The **battery connector** joins the battery to the board. The **motherboard** is the big board everything plugs into, and the stick in its slot is **RAM**."
+      "explanation": "The copper **heat pipe** carries heat to the fan, and the **battery connector** joins the battery to the board. The **motherboard** is the main board; the stick in its slot is **RAM**."
     },
     {
       "id": "q-phone-safe-order",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "A repair shop is swapping a broken phone camera. Put its steps in a **safe** order, first at the top.",
+      "prompt": "A repair shop is swapping a phone camera. Put the steps in a **safe** order.",
       "items": [
         { "id": "soften", "label": "Soften the glue on the back cover" },
         { "id": "lift-back", "label": "Lift off the back cover" },
-        { "id": "lift-bracket", "label": "Lift off the bracket over the battery connector" },
+        { "id": "lift-bracket", "label": "Lift off the battery connector's bracket" },
         { "id": "unplug", "label": "Unplug the battery" },
         { "id": "swap-camera", "label": "Take out the broken camera" }
       ],
-      "explanation": "The glue holds the back on, and the bracket covers the battery connector. The battery is **unplugged before** the camera, or any other part, is touched. Repair shops do this with special tools and training: it's never something to try at home."
+      "explanation": "The battery is **unplugged before** the camera, or any other part, is touched. Repair shops use special tools and training: never try this at home."
     },
     {
       "id": "q-make-room-in-ram",
@@ -208,7 +208,7 @@
           "bin": "heat"
         }
       ],
-      "explanation": "Lag with lots of apps or tabs open points to **RAM**. Messages about space when saving or downloading mean **storage**. A roaring fan, or soft things blocking the vents, mean the CPU is **throttling**: slowing itself down to cool off."
+      "explanation": "Lag with lots of apps or tabs means **RAM**. Space messages mean **storage**. A roaring fan or blocked vents mean the CPU is **throttling**."
     },
     {
       "id": "q-no-charge",
@@ -248,7 +248,7 @@
       "id": "q-stretch-battery",
       "type": "simulator",
       "difficulty": "core",
-      "prompt": "A whole day at a theme park. You need **location on** for the park map. Make the battery last **at least 10 hours**.",
+      "prompt": "A theme park day with **location on** for the map. Make the battery last **at least 10 hours**.",
       "model": "battery",
       "params": {
         "wattHours": 15
@@ -317,13 +317,13 @@
           }
         ]
       },
-      "explanation": "With location staying on, the other drains have to go: lower brightness and background apps off (or low power mode) cut the power used. Music can stay on or go; it uses very little."
+      "explanation": "With location on, cut the other drains: lower brightness, background apps off, or low power mode. Music uses very little."
     },
     {
       "id": "q-fix-it-loop",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "Your phone's camera says **\"Storage full\"** when you try to take a photo. Put what you do in fix-it-loop order.",
+      "prompt": "Your camera says **\"Storage full\"**. Put what you do in fix-it-loop order.",
       "items": [
         {
           "id": "describe",
@@ -331,7 +331,7 @@
         },
         {
           "id": "guess",
-          "label": "Guess that big videos are filling storage"
+          "label": "Guess big videos are filling storage"
         },
         {
           "id": "try",
@@ -342,7 +342,7 @@
           "label": "Try taking the photo again"
         }
       ],
-      "explanation": "**Describe, guess, try, check.** The exact message is the clue, it points to storage, deleting backed-up videos is a safe fix, and taking the photo again checks it worked."
+      "explanation": "**Describe, guess, try, check.** The message points to storage, deleting backed-up videos is safe, and retrying checks it worked."
     },
     {
       "id": "q-disguised-file",
@@ -364,7 +364,7 @@
         }
       ],
       "correctOptionId": "program",
-      "explanation": "Only the **last** extension counts. `.exe` means it's a program that runs when opened, dressed up to look like a picture. That's a common trick, so it's one to leave unopened."
+      "explanation": "Only the **last** extension counts: `.exe` is a program dressed up as a picture. Leave it unopened."
     }
   ]
 }

@@ -10,7 +10,7 @@
       "id": "helps-or-worse",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Scams and online bullying happen to lots of people, including adults and experts. **It's never your fault.** Scammers **count on people feeling embarrassed** and staying quiet, so telling someone is the brave and smart thing to do.\n\nReports are much easier to act on with **evidence**.\n\nDoes each one help, or make things worse?",
+      "prompt": "Scams and online bullying happen to lots of people, even experts. **It's never your fault.** Scammers **count on embarrassment** to keep people quiet, so telling someone is brave and smart. **Evidence** makes reports easier to act on.\n\nHelps, or makes it worse?",
       "bins": [
         {
           "id": "helps",
@@ -61,25 +61,25 @@
       "id": "who-to-tell",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A **trusted adult** is someone you feel safe talking to: a parent or carer, a teacher, a school counsellor, or an older relative.\n\nIf you'd rather talk to someone outside your family, **Kids Helpline** (in Australia) is free, private and open any time, for ages 5 to 25: call **1800 55 1800**. Over 25, or anyone: **Lifeline** on **13 11 14**, any time.\n\nSomething online is worrying Ali, and he doesn't want to tell his family yet. What could he do?",
+      "prompt": "A **trusted adult** is someone you feel safe with: a parent or carer, teacher, school counsellor or older relative. Outside your family, in Australia:\n\n- **Kids Helpline**, ages 5 to 25: **1800 55 1800**. Free, private, any time.\n- **Lifeline**, for anyone: **13 11 14**, any time.\n\nAli is worried about something online, but isn't ready to tell his family. What could he do?",
       "options": [
         {
           "id": "helpline",
-          "text": "Call Kids Helpline on 1800 55 1800, or talk to a school counsellor"
+          "text": "Call Kids Helpline, or talk to a school counsellor"
         },
         {
           "id": "wait",
-          "text": "Wait until it's bad enough to be worth telling someone about",
-          "nudge": "You don't need a big problem to ask for help. Look back at who Ali could talk to outside his family."
+          "text": "Wait until it's bad enough to be worth telling anyone",
+          "nudge": "You don't need a big problem to ask for help. Who could Ali talk to outside his family?"
         },
         {
           "id": "forum",
-          "text": "Ask people in an online forum, since they can't see who he is",
-          "nudge": "Strangers online aren't trusted adults, and some aren't who they say. Who could Ali talk to that's free and private?"
+          "text": "Ask an online forum, since nobody there can see who he is",
+          "nudge": "Strangers online aren't trusted adults, and some aren't who they say they are."
         }
       ],
       "correctOptionId": "helpline",
-      "explanation": "**Kids Helpline (1800 55 1800)** is free, private and open any time for ages 5 to 25, and a school counsellor is a trusted adult outside the family. Ali doesn't have to wait, or deal with it alone.",
+      "explanation": "**Kids Helpline (1800 55 1800)** is free, private and open any time for ages 5 to 25, and **Lifeline (13 11 14)** is there any time too. A school counsellor is a trusted adult outside the family, so Ali doesn't have to wait or cope alone.",
       "hint": "The prompt names some people outside the family who can help."
     },
     {
@@ -129,7 +129,7 @@
       "id": "group-chat",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "**Save the evidence:** before you block someone, screenshot the messages, their username, the web address and the date. Then **block** and **report**.\n\nOne exception: if it's a **private or nude image**, **don't copy, save or share the image itself**. Write down the username and where it is, and report it.\n\nIn a group chat, some people start posting mean messages about you.",
+      "prompt": "**Save evidence** before you block: screenshot the messages, username, web address and date. Then **block** and **report**.\n\nA **private or nude image**? **Don't copy, save or share the image itself.** Write down the username and where it is, and report it.\n\nNow, people in a group chat start posting mean messages about you.",
       "start": "start",
       "steps": [
         {
@@ -190,12 +190,12 @@
         },
         {
           "id": "wait",
-          "text": "Wait a day to see whether the bank notices and fixes it",
+          "text": "Wait a day to see if the bank notices and fixes it",
           "nudge": "Every hour counts with money. Who did the lesson say to contact straight away?"
         },
         {
           "id": "post",
-          "text": "Post about it online so other people don't get caught too",
+          "text": "Post about it online so others don't get caught",
           "nudge": "Warning people is good later. First, stop more money going."
         }
       ],
@@ -229,20 +229,20 @@
             {
               "id": "get-help",
               "text": "Stop replying, tell a trusted adult, and report it",
-              "consequence": "You did the right thing. Report it to the app and eSafety (which can help remove images), and if you're under 18, to the ACCCE. Kids Helpline is there any time: 1800 55 1800.",
+              "consequence": "You did the right thing. Report it to the app and eSafety (which can help remove images), and if you're under 18, the ACCCE. Kids Helpline (1800 55 1800) and Lifeline (13 11 14) are there any time.",
               "outcome": "success"
             }
           ]
         }
       ],
-      "explanation": "**It is never your fault**, and you won't be in trouble. **Don't pay** and stop replying. Screenshot the messages and their profile (never the image itself), block them, and **tell a trusted adult**. Report it to the app and to **eSafety** (esafety.gov.au/report). If you're **under 18**, also report it to the **ACCCE** (accce.gov.au/report). Anyone in danger right now: **000**. To talk to someone, any time, for free: **Kids Helpline, 1800 55 1800**.",
+      "explanation": "**It is never your fault**, and you won't be in trouble. **Don't pay**, and stop replying. Screenshot the messages and their profile (never the image itself), block them, and **tell a trusted adult**. Report it to the app and to **eSafety** (esafety.gov.au/report), and if you're **under 18**, to the **ACCCE** (accce.gov.au/report) too. Anyone in danger right now: **000**. To talk to someone any time: **Kids Helpline** (free, 1800 55 1800) or **Lifeline** (13 11 14).",
       "hint": "Look back at where to report a threat about a private image (including for under-18s), and who to tell."
     },
     {
       "id": "danger-now",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "Late at night, a friend messages you: someone she met online has found out where she lives, and says he's **on his way to her house now**. What should happen first?",
+      "prompt": "Late at night, a friend messages: someone she met online knows where she lives, and is **on his way there now**. What first?",
       "options": [
         {
           "id": "call-000",
@@ -251,12 +251,12 @@
         {
           "id": "esafety",
           "text": "Report it to eSafety: it started online",
-          "nudge": "eSafety helps with online abuse, but it can't send help to her door. What's the number for danger right now?"
+          "nudge": "eSafety helps with online abuse, but it can't send help to her door."
         },
         {
           "id": "screenshot",
           "text": "Screenshot the chat first, then report it",
-          "nudge": "Evidence matters, but not more than her safety. Which number is for someone in danger right now?"
+          "nudge": "Evidence matters, but not more than her safety right now."
         }
       ],
       "correctOptionId": "call-000",

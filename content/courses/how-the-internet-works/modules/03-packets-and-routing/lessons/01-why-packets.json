@@ -10,62 +10,62 @@
       "id": "film-or-game",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Someone at home is streaming a film while you play an online game, on the same Wi-Fi. Imagine the film was sent as **one giant piece**, all in one go. What would happen to your game meanwhile?",
+      "prompt": "A film streams on your Wi-Fi while you play an online game.\n\nIf the film came as **one giant piece**, what would happen to your game?",
       "options": [
-        { "id": "game-waits", "text": "Your game would freeze, waiting until the whole film had finished arriving" },
+        { "id": "game-waits", "text": "It would freeze until the whole film had arrived" },
         {
           "id": "side-by-side",
-          "text": "Nothing changes: the Wi-Fi would carry the film and the game side by side",
-          "nudge": "One giant piece takes up the whole connection until it's done. Could anything else squeeze past it in the meantime?"
+          "text": "Nothing: the Wi-Fi carries both side by side",
+          "nudge": "One giant piece fills the whole connection until it's done: could anything squeeze past it?"
         },
         {
           "id": "game-faster",
-          "text": "Your game would run faster, because the film would be out of the way sooner",
-          "nudge": "The film isn't out of the way while it's still arriving. Think about your game's data while that giant piece is on its way."
+          "text": "It would run faster, as the film clears out sooner",
+          "nudge": "The film isn't out of the way while it's still arriving: what about your game's data meanwhile?"
         },
         {
           "id": "film-split-by-tv",
-          "text": "The TV would cut the film into pieces itself, so the game wouldn't notice",
-          "nudge": "In this question the film is sent as one giant piece, and the TV only receives it. What happens to anything else that needs the connection?"
+          "text": "The TV would cut the film up, so you'd never notice",
+          "nudge": "Here the film is sent as one piece and the TV only receives it: what happens to everything else?"
         }
       ],
       "correctOptionId": "game-waits",
-      "explanation": "One giant piece would hog the connection, so your game would have to **wait** until the whole film had arrived. That's why the internet never sends data that way. It chops everything into small pieces that take turns, so both the film and the game keep going.",
-      "hint": "Picture one enormous lorry blocking a single-lane road. What happens to the small cars behind it?"
+      "explanation": "One giant piece would hog the connection, so your game would **wait** for the whole film. That's why the internet chops data into small pieces that take turns, so both keep going.",
+      "hint": "Picture one enormous lorry on a single-lane road: what happens to the cars behind it?"
     },
     {
       "id": "whats-in-a-packet",
       "type": "explainer",
       "difficulty": "core",
       "title": "Numbered postcards",
-      "body": "So the internet chops data into **packets**: small pieces that **take turns** on the connection. Each is like a numbered postcard: some data (the **payload**) plus a label with the **source** address (from), the **destination** address (to) and, for most data, a **sequence number**. With the rules called **TCP**, a lost packet is sent again on its own."
+      "body": "So the internet chops data into **packets** that **take turns**. Each is like a numbered postcard: data (the **payload**) plus a label with the **source** address (from), the **destination** (to) and, usually, a **sequence number**. With **TCP** rules, a lost packet is resent alone."
     },
     {
       "id": "packet-parts",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Here's one [[packet]] from a selfie you're sending. Match each part to what it's used for.",
+      "prompt": "Here's one [[packet]] of a selfie you're sending. Match each part to what it's for.",
       "pairs": [
         { "id": "source", "left": "From: `192.168.1.20`", "right": "Where the reply goes back to" },
         { "id": "destination", "left": "To: `198.51.100.10`", "right": "Where the packet is heading" },
         { "id": "sequence", "left": "Piece #3", "right": "Where it fits when the selfie is rebuilt" },
         { "id": "payload", "left": "A strip of the selfie's pixels", "right": "The actual data being carried" }
       ],
-      "explanation": "**From** is the source address: the device that sent it, so that's where any reply goes. **To** is the destination address: where the packet is heading. **#3** is the sequence number, so the selfie can be rebuilt in order. And the strip of pixels is the **payload**, the actual data.",
-      "hint": "Think of the numbered postcard: who it's from, who it's to, its number, and the bit of the story it carries.",
-      "nudge": "A reply goes back to whoever sent the packet. The number is only about putting pieces back in order."
+      "explanation": "**From** is the source, so replies go there, and **To** is where it's heading. **#3** puts the selfie back in order, and the pixels are the **payload**, the actual data.",
+      "hint": "Think of the postcard: who it's from, who it's to, its number and its bit of the story.",
+      "nudge": "A reply goes back to whoever sent the packet; the number only puts pieces back in order."
     },
     {
       "id": "count-packets",
       "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "A message is **6,000 [[bytes|byte]]** long. If each [[packet]] carries exactly **1,500 bytes of data**, how many packets are needed?",
+      "prompt": "A **6,000-[[byte]]** message goes in [[packets|packet]] carrying **1,500 bytes** of data each. How many packets?",
       "base": "decimal",
       "answer": 4,
       "unit": "packets",
-      "explanation": "6,000 ÷ 1,500 = **4** packets. In real [[networks|network]], the label (addresses and so on) uses up a little of each packet's space, so each one carries slightly less data and this message would need one more packet.",
+      "explanation": "6,000 ÷ 1,500 = **4** packets. In real [[networks|network]] the label uses a little of each packet's space, so it would need one more.",
       "hint": "How many 1,500-byte loads fit in 6,000 bytes?",
-      "nudge": "Each packet carries 1,500 bytes of the message. How many lots of 1,500 make 6,000?"
+      "nudge": "Each packet carries 1,500 bytes of the message: divide, don't multiply."
     },
     {
       "id": "message-journey",
@@ -74,67 +74,67 @@
       "prompt": "Put a message's journey in order.",
       "items": [
         { "id": "split", "label": "The message is split into small pieces" },
-        { "id": "label", "label": "Addresses and a sequence number are added to each piece" },
+        { "id": "label", "label": "Each piece gets addresses and a number" },
         { "id": "travel", "label": "The packets travel across the network" },
-        { "id": "rebuild", "label": "The receiver uses the sequence numbers to rebuild the message" }
+        { "id": "rebuild", "label": "Receiver puts it back together by number" }
       ],
-      "explanation": "The data is **split** first, then each piece gets its **addresses and sequence number**, which turns it into a packet ready to travel. The receiver can only rebuild the message once packets have arrived, using the sequence numbers to put them in order.",
-      "hint": "Something has to exist before it can be labelled, and a message can only be rebuilt once its pieces have arrived.",
-      "nudge": "The addresses and sequence number are added to each piece, so the pieces must exist first. Rebuilding happens at the very end of the trip."
+      "explanation": "The data is **split** first, then each piece gets its addresses and sequence number. Only after the packets arrive can the receiver rebuild the message in order.",
+      "hint": "A thing must exist before it's labelled, and pieces must arrive before they're rebuilt.",
+      "nudge": "Labels go on pieces, so the pieces must exist first; rebuilding comes at the very end."
     },
     {
       "id": "why-packets",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "So why does the internet split data into [[packets|packet]] instead of sending it as one long stream?",
+      "prompt": "Why does the internet split data into [[packets|packet]] instead of one long stream?",
       "options": [
-        { "id": "share-and-resend", "text": "Conversations can share the connections, and with TCP a lost piece is resent alone" },
+        { "id": "share-and-resend", "text": "Connections are shared, and TCP resends just a lost piece" },
         {
           "id": "smaller",
-          "text": "Splitting data into pieces makes the files smaller, so they travel across the internet faster",
-          "nudge": "Splitting a file into pieces doesn't shrink it. Each piece even gets a label added, like addresses."
+          "text": "Pieces make the files smaller, so they travel faster",
+          "nudge": "Splitting doesn't shrink a file: each piece even gets a label added."
         },
         {
           "id": "secret",
-          "text": "Splitting data up keeps it secret, because nobody can read just one small piece",
-          "nudge": "Anyone who collects all the packets can put them back together, so splitting doesn't hide anything."
+          "text": "Nobody can read one small piece, so data stays secret",
+          "nudge": "Anyone who collects all the packets can rebuild them, so nothing is hidden."
         },
         {
           "id": "one-letter",
-          "text": "Cables can only carry one letter at a time, so big files have to be broken up",
-          "nudge": "Cables aren't limited to one letter at a time. Think about the film and the game sharing the Wi-Fi."
+          "text": "Cables carry one letter at a time, so files must split",
+          "nudge": "Cables aren't limited to one letter: think of the film and the game sharing the Wi-Fi."
         }
       ],
       "correctOptionId": "share-and-resend",
-      "explanation": "Packets let lots of conversations **take turns** on the same connections, and with TCP, if one goes missing, only that piece needs sending again. Splitting doesn't make data smaller (the labels actually add a little), and it doesn't hide anything: anyone who collects the packets can put them back together. Keeping data secret is a job for **encryption**.",
-      "hint": "Think back to the film and the game sharing the Wi-Fi, and what happens when one piece goes missing."
+      "explanation": "Packets let many conversations **take turns** on the same connections, and with TCP only a lost piece is resent. Splitting adds labels rather than shrinking data, and hides nothing: keeping secrets is **encryption**'s job.",
+      "hint": "Think of the film and the game, and what happens when one piece goes missing."
     },
     {
       "id": "lost-packet",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "You're downloading a file split into 10 packets, using [[TCP]] rules. **Packet 7** gets lost on the way. What happens?",
+      "prompt": "A file comes in 10 packets using [[TCP]] rules, and **packet 7** gets lost. What happens?",
       "options": [
-        { "id": "resend-7", "text": "The receiver spots the gap after 6, and only packet 7 is sent again" },
+        { "id": "resend-7", "text": "The receiver spots the gap, and only 7 is resent" },
         {
           "id": "restart",
-          "text": "The whole file is sent again from the start, because one piece is missing",
-          "nudge": "The other nine packets arrived safely. With packets, only the missing piece needs sending again, not the whole file."
+          "text": "The whole file is sent again from the start",
+          "nudge": "The other nine arrived safely: only the missing piece needs sending again."
         },
         {
           "id": "hole",
-          "text": "The file arrives with a hole in it, and nobody notices anything is wrong",
-          "nudge": "The sequence numbers show a gap between 6 and 8, so the receiver can tell something is missing."
+          "text": "The file arrives with a hole, and nobody notices",
+          "nudge": "The numbers jump from 6 to 8, so the receiver can tell one is missing."
         },
         {
           "id": "stop",
-          "text": "The download stops for good, and you have to start it again yourself",
-          "nudge": "One lost packet isn't the end. Think about what the sequence numbers let the receiver notice and ask for."
+          "text": "The download stops, and you must restart it",
+          "nudge": "One lost packet isn't the end: what do the numbers let the receiver ask for?"
         }
       ],
       "correctOptionId": "resend-7",
-      "explanation": "Thanks to the sequence numbers, the receiver can see there's a gap between 6 and 8. Under TCP's rules it tells the sender, so **packet 7** is sent again. The other packets already arrived safely, so there's no need to start over.",
-      "hint": "Each packet carries a [[sequence number]]. What could the receiver notice when number 7 never turns up?"
+      "explanation": "The sequence numbers show a gap between 6 and 8, so under TCP the receiver tells the sender and **packet 7** is resent. The others arrived safely, so there's no need to start over.",
+      "hint": "Each packet carries a [[sequence number]]: what could the receiver notice when 7 never turns up?"
     },
     {
       "id": "recap",

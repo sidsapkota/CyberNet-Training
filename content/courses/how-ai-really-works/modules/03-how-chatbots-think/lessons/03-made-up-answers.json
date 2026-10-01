@@ -10,7 +10,7 @@
       "id": "mars-walk",
       "type": "next_word",
       "difficulty": "core",
-      "prompt": "Imagine a small model that has only read space adventure stories, full of lines like \"Captain Rivera stepped onto Mars\". It gets this text. Which word is it **most likely** to write next?",
+      "prompt": "This model only read space stories like \"Captain Rivera stepped onto Mars\". What's it **most likely** to write next?",
       "context": "The first person to walk on Mars was",
       "candidates": [
         {
@@ -35,15 +35,15 @@
         "word": "Captain"
       },
       "hint": "It isn't choosing what's true. What did this model read again and again?",
-      "nudge": "Think about the stories this model learned from. Which word filled this spot in them?",
-      "explanation": "Nobody has walked on Mars yet, and Neil Armstrong walked on the **Moon**. But in this model's stories, sentences like this carry on with \"**Captain** …\", so it's likely to invent a Mars walker, one likely word at a time. (Big chatbots have seen this question and usually get it right; the risk is highest for things they've seen less.)"
+      "nudge": "Think about its stories. Which word filled this spot in them?",
+      "explanation": "Nobody has walked on Mars yet (Neil Armstrong walked on the **Moon**), but in its stories this line goes on \"**Captain** …\". So it invents a Mars walker, one likely word at a time."
     },
     {
       "id": "hallucination",
       "type": "explainer",
       "difficulty": "core",
       "title": "Fluent, confident, wrong",
-      "body": "A **hallucination** is when a chatbot says something false, smoothly and confidently. It picks words that *sound* likely, not facts it has checked, so a made-up book sounds as real as a true one. Watch names, dates, numbers, quotes and sources. Check them in a trusted source, like a library catalogue. Asking the chatbot \"are you sure?\" checks nothing."
+      "body": "A **hallucination** is when a chatbot says something false, smoothly and confidently. It picks words that *sound* likely, not checked facts, so a made-up book sounds as real as a true one. Watch names, dates, numbers, quotes and sources: check them in a trusted source, like a library catalogue. Asking \"are you sure?\" checks nothing."
     },
     {
       "id": "volcano-book",
@@ -54,24 +54,24 @@
       "steps": [
         {
           "id": "the-suggestion",
-          "text": "A chatbot suggests the book \"Fire Below\" by Dr Helen Marsh, with a confident summary and a quote for your report. What do you do?",
+          "text": "A chatbot suggests the book \"Fire Below\" by Dr Helen Marsh, with a quote for your report. What do you do?",
           "choices": [
             {
               "id": "use-quote",
-              "text": "Use the quote: it's from a book",
-              "consequence": "Nobody can find the book anywhere, because it doesn't exist. A made-up quote in a report is a real problem.",
+              "text": "Use the quote: the chatbot named the book",
+              "consequence": "Nobody can find the book: it doesn't exist. A made-up quote in a report is a real problem.",
               "outcome": "fail"
             },
             {
               "id": "search",
               "text": "Search for the book in the library catalogue",
-              "consequence": "No results, for the book or the author. A great title, a confident author, and one small problem: none of it exists.",
+              "consequence": "No results for the book or the author. None of it exists.",
               "next": "no-results"
             },
             {
               "id": "ask-sure",
-              "text": "Ask the chatbot if the book is real",
-              "consequence": "It says \"Yes, it's a well-known book!\" It can be just as confident about a hallucination.",
+              "text": "Ask the chatbot whether the book is real",
+              "consequence": "It says \"Yes, it's a well-known book!\" It can be just as sure about a hallucination.",
               "outcome": "fail"
             }
           ]
@@ -83,26 +83,26 @@
             {
               "id": "drop-it",
               "text": "Leave it out, and find a real source in the library",
-              "consequence": "Right: the book was a hallucination. A real source gives you facts you can trust, and quote.",
+              "consequence": "Right: the book was a hallucination. A real source gives you facts you can trust.",
               "outcome": "success"
             },
             {
               "id": "keep-it",
               "text": "Keep the quote, but don't say where it's from",
-              "consequence": "The quote is made up too, so it's still not true, and now it's hidden. Use a real source.",
+              "consequence": "The quote is made up too, and now it's hidden. Use a real source.",
               "outcome": "fail"
             }
           ]
         }
       ],
       "hint": "What's a trusted source for whether a book exists?",
-      "explanation": "Book titles, authors and quotes are classic hallucinations. **Check them in a trusted source**, like a library catalogue. Asking the chatbot doesn't help: it can be confidently wrong about its own mistakes."
+      "explanation": "Titles, authors and quotes are classic hallucinations: **check them in a trusted source**, like a library catalogue. Asking the chatbot doesn't help."
     },
     {
       "id": "check-or-fine",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Would you **double-check** each thing a chatbot gives you, or is it **fine to use** as it is? (Anything about health always goes to a doctor, a pharmacist or a trusted adult.)",
+      "prompt": "**Double-check** each chatbot answer, or **fine as it is**? Health questions go to a doctor, pharmacist or trusted adult.",
       "bins": [
         {
           "id": "check",
@@ -150,55 +150,55 @@
           "bin": "fine"
         }
       ],
-      "hint": "Ask: if it were made up, would it matter? Names, dates, quotes and sources are where hallucinations hide.",
-      "nudge": "Ideas can't really be wrong. Facts, quotes, sources and anything about health can be, and it matters.",
-      "explanation": "Dates, quotes, sources and anything about health are **facts** that could be hallucinated, and getting them wrong matters, so double-check. Medicine questions go to a doctor, a pharmacist or a trusted adult. Party themes, rhymes and chat names are fine: there's no \"wrong\" to catch."
+      "hint": "Ask: if it were made up, would it matter?",
+      "nudge": "Ideas can't really be wrong; facts, quotes, sources and health can, and it matters.",
+      "explanation": "Dates, quotes, sources and health facts could be hallucinated, so double-check (medicine: a doctor, pharmacist or trusted adult). Themes, rhymes and chat names have no \"wrong\" to catch."
     },
     {
       "id": "best-check",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A chatbot tells you a fact you need for a report at work. What's the **best** way to check it?",
+      "prompt": "A chatbot gives you a fact for a work report. What's the **best** way to check it?",
       "options": [
         {
           "id": "trusted-source",
-          "text": "Find it in a trusted source, like a textbook or an official website"
+          "text": "Find it in a trusted source, like an official website"
         },
         {
           "id": "ask-again",
-          "text": "Ask the same question again and see if the two answers match",
-          "nudge": "A chatbot can repeat the same mistake. Where can you check it outside the chatbot?"
+          "text": "Ask the same question again and compare answers",
+          "nudge": "A chatbot can repeat a mistake. Where can you check outside it?"
         },
         {
           "id": "ask-sure",
-          "text": "Ask the chatbot to explain how it knows, and if it's sure",
+          "text": "Ask the chatbot how it knows, and if it's sure",
           "nudge": "It can be confidently wrong about its own mistakes. Where else could you look?"
         },
         {
           "id": "other-chatbot",
-          "text": "Ask a different chatbot and see if it gives the same answer",
-          "nudge": "Another chatbot can make the same kind of mistake. Where can you check outside chatbots?"
+          "text": "Ask a different chatbot if it gives the same answer",
+          "nudge": "Another chatbot can make the same mistake. Where can you check outside chatbots?"
         }
       ],
       "correctOptionId": "trusted-source",
       "hint": "The check has to come from somewhere that isn't a chatbot.",
-      "explanation": "Only a **trusted source** outside chatbots really checks a fact. Asking again, asking it how it knows, or asking a different chatbot all stay inside chatbots, which can repeat or defend a hallucination."
+      "explanation": "Only a **trusted source** outside chatbots really checks a fact. Asking again, asking how it knows or asking another chatbot can repeat or defend a hallucination."
     },
     {
       "id": "link-works",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "A chatbot tells you a famous ship sank in **1915**, and gives a link to a museum website.",
+      "prompt": "A chatbot says a famous ship sank in **1915**, with a link to a museum website.",
       "start": "the-link",
       "steps": [
         {
           "id": "the-link",
-          "text": "You click the link, and it opens a real museum page about the ship. What now?",
+          "text": "The link opens a real museum page about the ship. What now?",
           "choices": [
             {
               "id": "done",
               "text": "Use 1915: the link works, so it's checked",
-              "consequence": "The page is real, but you didn't read it. It actually says the ship sank in **1912**. A real link isn't proof of the claim.",
+              "consequence": "The page is real, but it says **1912**. A real link isn't proof of the claim.",
               "outcome": "fail"
             },
             {
@@ -210,32 +210,32 @@
             {
               "id": "ask",
               "text": "Ask the chatbot to double-check its date",
-              "consequence": "It apologises and says 1914. Still not checked: the answer is on the page you already have.",
+              "consequence": "It apologises and says 1914. The answer is on the page you already have.",
               "outcome": "fail"
             }
           ]
         },
         {
           "id": "different-date",
-          "text": "The museum page says 1912. The chatbot said 1915. Which do you use?",
+          "text": "The page says 1912; the chatbot said 1915. Which do you use?",
           "choices": [
             {
               "id": "museum",
-              "text": "1912, from the museum page",
+              "text": "1912: what the museum page actually says",
               "consequence": "Right: the trusted source you actually read wins.",
               "outcome": "success"
             },
             {
               "id": "chatbot",
               "text": "1915: the chatbot found the page, so it knows",
-              "consequence": "The chatbot linked the right page but wrote the wrong date. Go with what the source really says.",
+              "consequence": "It linked the right page but wrote the wrong date. Go with the source.",
               "outcome": "fail"
             }
           ]
         }
       ],
-      "hint": "Chatbots can invent sources, or link a real one and get it wrong. A source only checks a fact if it really says what the chatbot claims.",
-      "explanation": "A link that works isn't enough: chatbots can link a real page and still get the detail wrong. **Read the source**, and go with what it actually says."
+      "hint": "A source only checks a fact if it really says what the chatbot claims.",
+      "explanation": "A working link isn't enough: chatbots can link a real page and still get details wrong. **Read the source** and go with what it says."
     },
     {
       "id": "problem-and-check",
@@ -264,9 +264,9 @@
           "right": "Use them as they are"
         }
       ],
-      "hint": "For each one, ask: is it a fact to check, a source to open, a health question, or just ideas?",
-      "nudge": "Ideas can't really be wrong, and health questions need an expert. Which of the other two is about a book, and which about a source?",
-      "explanation": "Books get checked in a **catalogue**; sources get **opened and read**; medicine questions go to a **doctor or pharmacist**; and party themes are ideas, so there's nothing to catch."
+      "hint": "Is each one a fact to check, a source to open, a health question, or just ideas?",
+      "nudge": "Ideas can't be wrong and health needs an expert. Which is the book, which the source?",
+      "explanation": "Books: check a **catalogue**. Sources: **open and read** them. Medicine: ask a **doctor or pharmacist**. Party themes are ideas, so there's nothing to catch."
     },
     {
       "id": "made-up-recap",

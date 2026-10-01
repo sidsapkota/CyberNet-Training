@@ -62,7 +62,7 @@
       ],
       "hint": "Look for whether the person is open about the AI's part.",
       "nudge": "Using AI isn't the problem. Which ones hide it, or claim its work?",
-      "explanation": "Saying how you used AI, asking first and writing it yourself are **honest**. Entering AI art as yours, giving an AI speech as yours, or denying it when asked are **not**, however good the result."
+      "explanation": "Saying how you used AI, asking first and writing it yourself are **honest**. Passing off AI art or speeches, or denying it when asked, is **not**."
     },
     {
       "id": "spelling-only",
@@ -72,7 +72,7 @@
       "options": [
         {
           "id": "different-tool",
-          "text": "Use a different AI app, so it isn't the one that's banned",
+          "text": "Use a different AI app, so it's not the banned one",
           "nudge": "The rule is about AI, not one app. What would make it clear?"
         },
         {
@@ -98,37 +98,37 @@
       "id": "inspired-by-an-artist",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "AI learned from huge amounts of work by people: artists' pictures, writers' stories, musicians' songs. Many weren't asked, and people still disagree about what's fair.\n\nYou love one illustrator's style, and use AI to make a poster in that style for your band's gig. What's the **fairest** thing to do?",
+      "prompt": "AI learned from artists' work, often without asking. You make an AI poster in one illustrator's style. **Fairest** move?",
       "options": [
         {
           "id": "credit",
-          "text": "Credit the illustrator who inspired it, and say AI helped make it"
+          "text": "Credit the illustrator, and say AI helped make it"
         },
         {
           "id": "styles-free",
-          "text": "Say nothing: a style can't belong to anyone, so no credit is needed",
-          "nudge": "People argue about styles, but this one came from a real person's work. Is hiding that fair to them, or to your audience?"
+          "text": "Say nothing: nobody owns a style, so no credit needed",
+          "nudge": "People argue about styles, but this came from a real person's work. Is hiding that fair?"
         },
         {
           "id": "free-tool",
           "text": "Say nothing, as long as the AI app you used was free",
-          "nudge": "The price of the app doesn't change whose work it learned from. What would be fair to the artist?"
+          "nudge": "The app's price doesn't change whose work it learned from. What's fair to the artist?"
         },
         {
           "id": "say-painted",
-          "text": "Say you drew it yourself, since choosing the style was your idea",
-          "nudge": "Choosing a style is your idea, but the drawing isn't your work. Look back at what's honest."
+          "text": "Say you drew it, since choosing the style was your idea",
+          "nudge": "Choosing a style is your idea, but the drawing isn't your work."
         }
       ],
       "correctOptionId": "credit",
-      "hint": "Two things are true here: a real artist inspired it, and AI made it. Which answer is open about both?",
-      "explanation": "**Credit the artist and say AI helped.** That respects the person whose work inspired it, and it's honest with everyone who sees the poster. Your own ideas and voice are still yours."
+      "hint": "A real artist inspired it, and AI made it. Which answer is open about both?",
+      "explanation": "**Credit the artist and say AI helped.** That respects the artist, and it's honest with everyone who sees the poster."
     },
     {
       "id": "captain-picker",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "Remember [[bias]]: AI can work better for some people than others. When AI picks, sorts or scores people, it's worth asking who it might leave out, and keeping a person in charge of decisions that matter.\n\nYour sports club wants an AI tool to pick team captains \"fairly\", based on who talks most at training.",
+      "prompt": "When AI picks people, ask who it might leave out. Your club wants AI to pick captains by who talks most at training.",
       "start": "the-plan",
       "steps": [
         {
@@ -138,26 +138,26 @@
             {
               "id": "fair",
               "text": "\"It's fair: everyone is judged by the same rule\"",
-              "consequence": "The same rule for everyone can still be unfair, if the rule itself leaves people out. Quiet players would never get picked.",
+              "consequence": "The same rule can still be unfair if the rule leaves people out. Quiet players would never get picked.",
               "outcome": "fail"
             },
             {
               "id": "unfair-who",
               "text": "\"Who might this be unfair to? Quiet players can lead too\"",
-              "consequence": "Exactly. Talking a lot isn't the same as leading well. The club agrees to have a person decide, using more than one thing.",
+              "consequence": "Exactly: talking a lot isn't leading well. The club agrees a person decides, using more than one thing.",
               "outcome": "success"
             },
             {
               "id": "random",
-              "text": "\"Fine, as long as it also counts who scores the most goals\"",
-              "consequence": "Another number doesn't ask who the rule leaves out, and the AI is still deciding alone. Quiet players who'd lead well still miss out.",
+              "text": "\"Fine, if it also counts who scores the most goals\"",
+              "consequence": "Another number doesn't ask who's left out, and the AI still decides alone.",
               "outcome": "fail"
             }
           ]
         }
       ],
       "hint": "Look back at the question to ask whenever AI makes decisions about people.",
-      "explanation": "Judging by who **talks most** leaves out quieter people who could lead well, even though it's the same rule for everyone, and adding another number doesn't fix that. Ask **who it might be unfair to**, and keep a **person** deciding."
+      "explanation": "Judging by who **talks most** leaves out quiet people who could lead, even with one rule for all. Ask **who it might be unfair to**, and keep a **person** deciding."
     },
     {
       "id": "fair-move",
@@ -187,7 +187,7 @@
         }
       ],
       "hint": "Each fix is about being open, or about keeping people in charge.",
-      "nudge": "One is about credit for someone else's work, one about decisions about people, and two about saying what the AI did.",
+      "nudge": "One is about credit, one about decisions about people, and two about saying what AI did.",
       "explanation": "Be **open** about AI pictures and essay help, **credit** artists who inspire you, and keep **a person deciding** when AI picks people."
     },
     {
@@ -204,26 +204,26 @@
             {
               "id": "announce",
               "text": "Tell the other entrants, since it's unfair on them",
-              "consequence": "It is unfair on them, but this could embarrass your friend in front of everyone before they've had a chance to put it right.",
+              "consequence": "It is unfair on them, but this could embarrass your friend before they can put it right.",
               "outcome": "fail"
             },
             {
               "id": "talk-friend",
-              "text": "Talk to your friend privately, and encourage them to tell the organisers",
-              "consequence": "Fair to your friend and to the others who entered. If they won't, you can talk to a trusted adult about it.",
+              "text": "Privately urge your friend to tell the organisers",
+              "consequence": "Fair to your friend and the other entrants. If they won't, talk to a trusted adult.",
               "outcome": "success"
             },
             {
               "id": "nothing",
               "text": "Say nothing: it's the judges' job to spot AI writing",
-              "consequence": "Judges can't always tell, and the rules said own work only. Other people did theirs themselves, so staying quiet isn't fair on them.",
+              "consequence": "Judges can't always tell, and others did their own work, so staying quiet isn't fair.",
               "outcome": "fail"
             }
           ]
         }
       ],
       "hint": "Think about being fair to the other entrants, and kind to your friend.",
-      "explanation": "Talking to your friend **privately** gives them the chance to put it right, which is fair to everyone who did their own work. A trusted adult can help if they won't."
+      "explanation": "Talking to your friend **privately** lets them put it right, which is fair to everyone. A trusted adult can help if they won't."
     },
     {
       "id": "course-recap",

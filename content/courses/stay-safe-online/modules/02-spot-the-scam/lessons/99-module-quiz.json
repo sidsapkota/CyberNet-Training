@@ -75,7 +75,7 @@
       "id": "q-parcel-text",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "You're waiting for a parcel. A text from \"Parcels\" says: **\"Missed delivery. Pay $2.50 within 1 hour: parcels-fee.example\"**",
+      "prompt": "You're expecting a parcel. A text from \"Parcels\": **\"Missed delivery. Pay $2.50 within 1 hour: parcels-fee.example\"**",
       "start": "start",
       "steps": [
         {
@@ -109,7 +109,7 @@
       "id": "q-bank-call",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "A caller says they're from Your Bank's fraud team. They ask you to read out the code that was just texted to you.",
+      "prompt": "A caller from \"Your Bank's fraud team\" asks you to read out the code just texted to you.",
       "start": "start",
       "steps": [
         {
@@ -143,7 +143,7 @@
       "id": "q-padlock-pin",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "You open a page from a link in a text. It has a padlock next to the address, and it asks for your **card PIN**.",
+      "prompt": "A page you opened from a text has a padlock, and it asks for your **card PIN**.",
       "start": "start",
       "steps": [
         {
@@ -153,7 +153,7 @@
             {
               "id": "type-pin",
               "text": "Type the PIN in: the padlock shows the page is safe",
-              "consequence": "The padlock only means encrypted. Your PIN goes safely to whoever runs the page, and that could be a scammer.",
+              "consequence": "A padlock only means encrypted. Your PIN goes safely to whoever runs the page, and that could be a scammer.",
               "outcome": "fail"
             },
             {
@@ -171,7 +171,7 @@
           ]
         }
       ],
-      "explanation": "A padlock only means **encrypted**: nobody can read what you send on the way. It doesn't tell you who runs the site, and a bank **never** asks for your card PIN."
+      "explanation": "A padlock only means **encrypted**. It doesn't tell you who runs the site, and a bank **never** asks for your card PIN."
     },
     {
       "id": "q-addresses",

@@ -10,23 +10,23 @@
       "id": "order-the-path",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "Everything you save is a **file**. Files go in **folders**, and folders can sit inside other folders, like boxes inside boxes. The route to a file is its **path**. Here, `volcanoes.docx` is inside `Science`, which is inside `School`, which is inside `Documents`. Put its path in order, from the **biggest folder** (the one holding everything else) to the file.",
+      "prompt": "`volcanoes.docx` is in `Science`, inside `School`, inside `Documents`. Order its **path**, biggest folder first.",
       "items": [
         { "id": "documents", "label": "`Documents`" },
         { "id": "school", "label": "`School`" },
         { "id": "science", "label": "`Science`" },
         { "id": "essay", "label": "`volcanoes.docx`" }
       ],
-      "explanation": "A path goes from the biggest box inwards: `Documents > School > Science > volcanoes.docx`. The file itself always comes last.",
-      "hint": "Think of boxes inside boxes: start with the biggest box that holds everything, then go inwards.",
-      "nudge": "A path goes from the biggest folder inwards, one box at a time. The file itself always comes last."
+      "explanation": "A path runs from the biggest folder inwards: `Documents > School > Science > volcanoes.docx`. The file comes last.",
+      "hint": "Folders are like boxes in boxes: start with the one that holds everything.",
+      "nudge": "Go from the biggest folder inwards; the file comes last."
     },
     {
       "id": "files-folders-extensions",
       "type": "explainer",
       "difficulty": "core",
       "title": "Extensions",
-      "body": "The end of a file's name, after the **last** dot, is its **extension**. It tells the OS what kind of file it is, and which app opens it.\n\n`.jpg` is a photo, `.mp3` a song and `.mp4` a video. `.exe` is a **program**: opening it *runs* it, so only open ones you trust."
+      "body": "The end of a file's name, after the **last** dot, is its **extension**. It tells the OS what kind of file it is.\n\n`.jpg` is a photo, `.mp3` a song, `.mp4` a video. `.exe` is a **program**: opening it *runs* it, so only open ones you trust."
     },
     {
       "id": "match-extensions",
@@ -39,9 +39,9 @@
         { "id": "mp4", "left": "`.mp4`", "right": "A video" },
         { "id": "exe", "left": "`.exe`", "right": "A program that runs when opened" }
       ],
-      "explanation": "`.jpg` is a photo, `.mp3` a song and `.mp4` a video. `.exe` is different: it's a **program**. Opening it *runs* it, so only open ones you trust.",
-      "hint": "The extension tells the OS what kind of file it is. Think back to the list: photos, songs, videos and programs.",
-      "nudge": "Look again at the letters: `.mp3` and `.mp4` look alike but mark different things, and one extension means a program."
+      "explanation": "`.mp3` is a song and `.mp4` a video: one letter apart. `.exe` is a **program**, so opening it *runs* it.",
+      "hint": "Think back to the list: photos, songs, videos and programs.",
+      "nudge": "`.mp3` and `.mp4` look alike but mark different things."
     },
     {
       "id": "label-the-files",
@@ -55,9 +55,9 @@
         { "part": "file-song", "label": "Song" },
         { "part": "file-fake-photo", "label": "Program" }
       ],
-      "explanation": "`holiday.jpg` is a photo and `song.mp3` a song. `photo.jpg.exe` ends in **.exe**, so it's a program, whatever the `.jpg` in the middle says.",
-      "hint": "Read each file name right to the end. Only the [[extension]] after the **last** dot counts.",
-      "nudge": "A name can have more than one dot. Ignore anything in the middle and look only at what comes after the last dot."
+      "explanation": "`photo.jpg.exe` ends in **.exe**, so it's a program, whatever the `.jpg` in the middle says.",
+      "hint": "Only the [[extension]] after the **last** dot counts.",
+      "nudge": "Ignore anything in the middle; look only after the last dot."
     },
     {
       "id": "suspicious-download",
@@ -72,13 +72,13 @@
           "choices": [
             {
               "id": "is-photo",
-              "text": "A photo: it says .jpg",
+              "text": "A photo: the name says .jpg",
               "consequence": "Only the **last** [[extension]] counts. The `.jpg` in the middle is a disguise.",
               "outcome": "fail"
             },
             {
               "id": "is-program",
-              "text": "A program pretending to be a photo",
+              "text": "A program dressed as a photo",
               "consequence": "Right. It ends in **.exe**, so opening it would run it.",
               "next": "what-now"
             }
@@ -90,33 +90,33 @@
           "choices": [
             {
               "id": "open-check",
-              "text": "Open it once, just to check what it is",
+              "text": "Open it once, just to check",
               "consequence": "Opening a program runs it, and it only takes one run for it to do harm.",
               "outcome": "fail"
             },
             {
               "id": "send-friend",
               "text": "Send it to a friend to try",
-              "consequence": "Now your friend's device is at risk too. Never pass on a file you don't trust.",
+              "consequence": "Now your friend's device is at risk too.",
               "outcome": "fail"
             },
             {
               "id": "delete-tell",
-              "text": "Delete it without opening it, and tell an adult you trust",
+              "text": "Delete it unopened, tell an adult",
               "consequence": "The file is gone, and they can check nothing else came with it.",
               "outcome": "success"
             }
           ]
         }
       ],
-      "explanation": "Read to the **last** dot. `photo.jpg.exe` is a program in disguise. Some computers hide the last extension, so it might even show as `photo.jpg`. Delete files like this without opening them, and tell a parent, teacher or other adult you trust.",
-      "hint": "Read the file name right to the last dot. What does that extension mean happens when you open it?"
+      "explanation": "`photo.jpg.exe` is a program in disguise, and some computers even hide the last extension. Delete it unopened and tell a parent, teacher or other adult you trust.",
+      "hint": "Read to the last dot: what happens when you open that kind of file?"
     },
     {
       "id": "local-or-cloud",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Saving to **the cloud** means storing a file on a company's **server**: a powerful computer in a data centre, reached over the internet. The cloud isn't in the sky. It's someone else's computer, in a building with very serious air conditioning. Where is each file stored?",
+      "prompt": "**The cloud** is a company's **server**: a computer you reach over the internet. Where is each file stored?",
       "bins": [{ "id": "device", "label": "On your device" }, { "id": "cloud", "label": "In the cloud" }],
       "items": [
         { "id": "offline-song", "label": "A song downloaded to play offline", "bin": "device" },
@@ -125,9 +125,9 @@
         { "id": "web-email", "label": "Emails in a web mail inbox", "bin": "cloud" },
         { "id": "online-save", "label": "A game save kept in your online account", "bin": "cloud" }
       ],
-      "explanation": "Files you **downloaded** or **saved to the device** are in its storage. Files you reach through a **website or online account** live on the company's servers, in the cloud.",
-      "hint": "Ask yourself: did you download or save it to the device, or do you reach it through a website or online account?",
-      "nudge": "Files downloaded or saved to the device live in its storage. Files you reach through a website or account live on a company's server."
+      "explanation": "Files you **downloaded** or **saved to the device** are in its storage. Files you reach **online** live on a company's servers.",
+      "hint": "Did you save it to the device, or do you reach it through a website or account?",
+      "nudge": "Downloaded or saved to the device means its storage; reached online means a server."
     },
     {
       "id": "essay-on-a-plane",
@@ -142,19 +142,19 @@
           "choices": [
             {
               "id": "yes-my-file",
-              "text": "Yes: it's my file, so my laptop already has it",
-              "consequence": "The file lives on a company's server, not in your laptop's storage. With no internet, the laptop can't reach it.",
+              "text": "Yes: it's my file, so my laptop has it",
+              "consequence": "It lives on a company's server, not your laptop. With no internet, you can't reach it.",
               "outcome": "fail"
             },
             {
               "id": "yes-signal",
-              "text": "Yes: cloud files reach you through the air, anywhere",
+              "text": "Yes: cloud files reach you through the air",
               "consequence": "The cloud isn't in the sky. It's a server in a building, and you can only reach it over the internet.",
               "outcome": "fail"
             },
             {
               "id": "no-internet",
-              "text": "No: I need the internet to reach the server it's on",
+              "text": "No: I need the internet to reach its server",
               "consequence": "Right. No internet, no essay. Time for the in-flight movie.",
               "next": "next-time"
             }
@@ -166,14 +166,14 @@
           "choices": [
             {
               "id": "download-copy",
-              "text": "Download a copy to the laptop before the flight",
-              "consequence": "A copy in the laptop's storage opens anywhere. Back online, you can save your changes to the cloud again.",
+              "text": "Download a copy before the flight",
+              "consequence": "A copy in the laptop's storage opens anywhere, even on a plane.",
               "outcome": "success"
             },
             {
               "id": "save-twice",
-              "text": "Save it to the cloud twice, so there's a spare copy",
-              "consequence": "Two copies on the server are still on the server. You need one in the laptop's own storage.",
+              "text": "Save it to the cloud twice as a spare",
+              "consequence": "Both copies are still on the server. You need one on the laptop.",
               "outcome": "fail"
             }
           ]

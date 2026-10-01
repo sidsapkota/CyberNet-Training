@@ -13,11 +13,11 @@
       "options": [
         { "id": "delivery", "text": "It uses the sender's IP address on the request" },
         { "id": "name", "text": "It uses the website's own name, like example.com" },
-        { "id": "password", "text": "It uses the visitor's password to find their device" },
-        { "id": "storage", "text": "It sends the page to every device until one accepts it" }
+        { "id": "password", "text": "It uses the visitor's password to find them" },
+        { "id": "storage", "text": "It sends the page to every device online" }
       ],
       "correctOptionId": "delivery",
-      "explanation": "Like a return address on an envelope, the request carries the **sender's IP address**, so the server knows where to deliver the reply. The website's name is the server's own, not the visitor's. Passwords don't locate devices, and sending to everyone would flood the internet."
+      "explanation": "The request carries the **sender's IP address**, like a return address. The name is the server's own, passwords don't locate devices, and sending to all would flood the internet."
     },
     {
       "id": "make-168",
@@ -25,34 +25,34 @@
       "difficulty": "core",
       "prompt": "The second octet of `192.168.1.20` is **168**. Build it in binary.",
       "target": 168,
-      "explanation": "**128** fits in 168, leaving 40. 64 is too big. **32** fits, leaving 8. 16 is too big. **8** fits, leaving 0. So 168 = 128 + 32 + 8, which is `10101000`."
+      "explanation": "128 fits, leaving 40; 32 fits, leaving 8; then 8 fits. So 168 = 128 + 32 + 8: `10101000`."
     },
     {
       "id": "kinds-of-address",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Match each address to what it is.",
+      "prompt": "Private: `10.`, `192.168.` and `172.16`–`172.31`. Match each value to what it is.",
       "pairs": [
         { "id": "private", "left": "`172.16.0.8`", "right": "A private IPv4 address" },
         { "id": "public", "left": "`203.0.113.8`", "right": "A public IPv4 address" },
         { "id": "ipv6", "left": "`2001:db8::8`", "right": "An IPv6 address" },
         { "id": "not-address", "left": "`example.org`", "right": "A name, not an address" }
       ],
-      "explanation": "`172.16.0.8` is in the private range `172.16` to `172.31`. `203.0.113.8` isn't in any private range, so it stands for a public address (this range is kept for examples). `2001:db8::8` uses colons and hex, so it's IPv6. `example.org` is a name for people, not an address."
+      "explanation": "`172.16.0.8` is in the private range `172.16` to `172.31`. `203.0.113.8` isn't private, so it stands for public; colons and hex mean IPv6, and `example.org` is a name."
     },
     {
       "id": "ipv6-no-sharing",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A home on IPv4 shares one public address between all its devices. Why don't IPv6 devices need to share like that?",
+      "prompt": "IPv4 homes share one public address. Why don't IPv6 devices need to?",
       "options": [
-        { "id": "enough", "text": "IPv6 has so many addresses that every device can have its own" },
-        { "id": "faster", "text": "IPv6 is fast enough that devices can take turns with one address" },
-        { "id": "no-router", "text": "IPv6 devices connect to the internet without going through a router" },
-        { "id": "names", "text": "IPv6 devices are found by their names, so they don't need addresses" }
+        { "id": "enough", "text": "There are enough for every device to have its own" },
+        { "id": "faster", "text": "IPv6 is fast enough for devices to take turns" },
+        { "id": "no-router", "text": "IPv6 devices reach the internet without a router" },
+        { "id": "names", "text": "IPv6 devices are found by name, not address" }
       ],
       "correctOptionId": "enough",
-      "explanation": "Sharing with NAT was only a workaround for IPv4's shortage of 32-bit addresses. IPv6 addresses are 128 bits, giving enough for every device to have **its own**. Devices still reach the internet through a router, and they still need addresses."
+      "explanation": "Sharing with NAT was only a workaround for IPv4's 32-bit shortage; 128-bit IPv6 has enough for every device to have **its own**. Devices still use routers and addresses."
     },
     {
       "id": "phone-to-server",
@@ -80,21 +80,21 @@
       "validPaths": [
         ["phone", "home", "isp-b", "server"]
       ],
-      "explanation": "Every device at home reaches the internet through the **home router**. Router A is down, so the request has to go through **ISP router B**, which sends it on to the server. The smart TV is on the same home network, but it isn't a way out."
+      "explanation": "Home devices go out through the **home router**. Router A is down, so the request goes via **ISP router B**; the smart TV isn't a way out."
     },
     {
       "id": "sender-seen",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "At home, a tablet (`192.168.0.31`) asks a website for a page. The home router's inside address is `192.168.0.1`, and its public address is `198.51.100.23`. The website sends the page back. Which address is the reply sent to?",
+      "prompt": "Tablet `192.168.0.31` asks a website for a page. Your router is `192.168.0.1` inside and `198.51.100.23` in public.\n\nWhere is the reply sent?",
       "options": [
-        { "id": "public", "text": "198.51.100.23, and the router passes it to the tablet" },
+        { "id": "public", "text": "198.51.100.23, then the router hands it to the tablet" },
         { "id": "phone", "text": "192.168.0.31, so it goes straight to the tablet" },
         { "id": "router-inside", "text": "192.168.0.1, the router's address inside the home" },
-        { "id": "none", "text": "198.51.100.23, and the router sends it to every device at home" }
+        { "id": "none", "text": "198.51.100.23, then the router sends it to all devices" }
       ],
       "correctOptionId": "public",
-      "explanation": "The router used **NAT** to swap the tablet's private address for its public address, `198.51.100.23`, and noted who asked. That's the only address the website saw, so the reply goes there first. The router checks its notes and passes it to the tablet alone. Private addresses never leave the home."
+      "explanation": "The router's **NAT** swapped in `198.51.100.23` and noted who asked, so the reply goes there. Its notes send it to the tablet alone: private addresses never leave home."
     },
     {
       "id": "spot-real-ipv6",
@@ -108,7 +108,7 @@
         { "id": "ipv4", "text": "192.168.1.300" }
       ],
       "correctOptionId": "correct",
-      "explanation": "`2001:db8::7a` uses hex digits (0 to 9 and a to f) split by colons, and `::` shows where zero groups were left out. `2001.db8.0.7a` uses dots, which belong to IPv4. `dg8` contains a `g`, which isn't a hex digit. `192.168.1.300` looks like IPv4, but 300 is too big for an octet."
+      "explanation": "`2001:db8::7a` uses hex digits (0–9, a–f) with colons. Dots belong to IPv4, `g` isn't a hex digit, and 300 is too big for an octet."
     }
   ]
 }

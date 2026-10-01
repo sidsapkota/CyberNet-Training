@@ -10,19 +10,19 @@
       "id": "bits-in-five-bytes",
       "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "Your phone says a photo is **3 MB**. 3 MB of what? Of [[bytes|byte]], the unit for measuring data, like litres for water.\n\nOne letter of plain text takes about 1 byte. A long message takes about a hundred. Replying \"k\" takes one.\n\nWarm-up: how many **bits** are in **5 bytes**?",
+      "prompt": "Data is measured in [[bytes|byte]], like water in litres. One letter of text is about 1 byte.\n\nHow many **bits** are in **5 bytes**?",
       "base": "decimal",
       "answer": 40,
       "unit": "bits",
-      "explanation": "Every byte is 8 bits, so 5 bytes is 5 × 8 = **40 bits**. If you typed 5, that's the number of bytes, not bits. Bits are the single 0s and 1s, and bytes are groups of eight of them.",
-      "hint": "Each byte is a group of 8 bits. How many bits are in 5 of those groups?",
-      "nudge": "The question asks for bits, not bytes. Every byte is a group of several bits, so multiply."
+      "explanation": "Every byte is 8 bits, so 5 bytes is 5 × 8 = **40 bits**. 5 is the number of bytes, not bits.",
+      "hint": "Each byte is a group of 8 bits: how many bits are in 5 groups?",
+      "nudge": "It asks for bits, not bytes: each byte holds several bits, so multiply."
     },
     {
       "id": "order-sizes",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "Files hold thousands or millions of [[bytes|byte]], so we use bigger units. Each step up is **1,000 times** bigger (*kilo* means a thousand, as in kilometre):\n\n**bytes → KB (kilobyte) → MB (megabyte) → GB (gigabyte) → TB (terabyte)**\n\nDrag these sizes into order, from **smallest** at the top to **largest** at the bottom.",
+      "prompt": "Each bigger unit is **1,000 times** the last (*kilo* means a thousand): **bytes → KB → MB → GB → TB**.\n\nDrag the sizes into order, **smallest** at the top.",
       "items": [
         { "id": "bytes-800", "label": "800 bytes" },
         { "id": "kb-900", "label": "900 KB" },
@@ -30,9 +30,9 @@
         { "id": "gb-1-5", "label": "1.5 GB" },
         { "id": "tb-1", "label": "1 TB" }
       ],
-      "explanation": "Compare the units first, then the numbers. **900 KB** is less than 1 MB (that would be 1,000 KB), so it's smaller than **2 MB**, even though 900 is a bigger number than 2. Then **1.5 GB** is 1,500 MB, and **1 TB** is 1,000 GB.",
-      "hint": "Compare the units first (bytes, KB, MB, GB, TB), then the numbers. Each step up is 1,000 times bigger.",
-      "nudge": "A bigger number isn't always a bigger size. Check the unit first: it takes 1,000 of one unit to make 1 of the next unit up."
+      "explanation": "Compare units first: 900 KB is less than 1 MB, so it's smaller than 2 MB even though 900 is bigger than 2. 1.5 GB is 1,500 MB, and 1 TB is 1,000 GB.",
+      "hint": "Compare the units first, then the numbers.",
+      "nudge": "A bigger number isn't always a bigger size: check the unit, since 1,000 of one unit make 1 of the next."
     },
     {
       "id": "photo-in-kb",
@@ -42,9 +42,9 @@
       "base": "decimal",
       "answer": 3000,
       "unit": "KB",
-      "hint": "Each step up the ladder is 1,000 times bigger. How many KB make 1 MB?",
-      "explanation": "1 MB is 1,000 KB, so 3 MB is 3 × 1,000 = **3,000 KB**. Same photo, smaller unit, bigger number.",
-      "nudge": "MB is the bigger unit, so the same photo in KB should be a bigger number. Multiply, don't divide."
+      "hint": "How many KB make 1 MB?",
+      "explanation": "1 MB is 1,000 KB, so 3 MB is 3 × 1,000 = **3,000 KB**: a smaller unit, so a bigger number.",
+      "nudge": "KB is the smaller unit, so the number should get bigger: multiply, don't divide."
     },
     {
       "id": "typical-sizes",
@@ -57,54 +57,54 @@
         { "id": "film", "left": "A two-hour film in HD", "right": "A few GB" },
         { "id": "phone", "left": "A phone's whole storage", "right": "Tens to hundreds of GB" }
       ],
-      "explanation": "A letter of plain text is about **1 byte**. A phone photo is usually a few **MB**. An HD film is a few **GB**, and a phone can hold tens to hundreds of **GB**: thousands of photos and a good few films.",
-      "hint": "Put the four things in size order first, smallest to biggest. Then match them to the sizes in the same order.",
-      "nudge": "A phone holds lots of photos and films, so its storage must be the biggest. A film is made of many pictures, so it's bigger than one photo."
+      "explanation": "A letter of text is about 1 byte, a phone photo a few MB and an HD film a few GB. A phone holds tens to hundreds of GB: thousands of photos.",
+      "hint": "Put the four things in size order first, then match them in the same order.",
+      "nudge": "A phone holds many photos and films, so it's the biggest; a film is many pictures, so it beats one photo."
     },
     {
       "id": "shrinking-drive",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "You plug in a brand-new **500 GB** drive, and Windows says it holds about **465 GB**. What's going on?",
+      "prompt": "Windows counts storage in steps of 1,024, not 1,000. Why does a new **500 GB** drive show only **465 GB**?",
       "options": [
-        { "id": "counting", "text": "Windows counts the same bytes in steps of 1,024, so the number shrinks" },
+        { "id": "counting", "text": "Windows counts the same bytes in bigger steps" },
         {
           "id": "hidden-files",
-          "text": "35 GB is taken up by hidden system files that Windows doesn't show you",
-          "nudge": "A brand-new drive has almost nothing on it. Think about how the drive maker and Windows each count the same bytes."
+          "text": "35 GB is hidden system files Windows doesn't show",
+          "nudge": "A new drive is almost empty: think about how the maker and Windows count the same bytes."
         },
         {
           "id": "faulty",
-          "text": "The drive is faulty and some of its space has already worn out",
-          "nudge": "Nothing is broken here. Think about how the drive maker and Windows each count the same bytes."
+          "text": "The drive is faulty and some space has worn out",
+          "nudge": "Nothing is broken: think about how the maker and Windows count the same bytes."
         },
         {
           "id": "rounded",
-          "text": "The maker rounded 465 up to 500 on the box to make it sound bigger",
-          "nudge": "Drive makers count in 1,000s, so the box is honest. Think about how Windows counts those same bytes."
+          "text": "The maker rounded 465 up to 500 to sound bigger",
+          "nudge": "Drive makers count in 1,000s, so the box is honest: how does Windows count?"
         }
       ],
       "correctOptionId": "counting",
-      "explanation": "The drive really holds 500,000,000,000 bytes. Windows divides by 1,024 three times instead of 1,000, and 500,000,000,000 ÷ 1,024 ÷ 1,024 ÷ 1,024 ≈ **465**. A new drive does keep a little space for organising files, but that's tiny compared with 35 GB. Nothing is faulty, and nothing was rounded.",
-      "hint": "Drive makers count in steps of 1,000. Windows counts in steps of 1,024 but still writes \"GB\". Counting the same bytes in bigger steps gives a bigger or a smaller number?"
+      "explanation": "The drive holds 500,000,000,000 bytes, and dividing by 1,024 three times gives about **465**. A new drive's hidden space is tiny, and nothing is faulty or rounded.",
+      "hint": "Both numbers describe the same bytes: compare how the maker and Windows count them."
     },
     {
       "id": "meet-hex",
       "type": "explainer",
       "difficulty": "core",
       "title": "Hex: a shorthand for binary",
-      "body": "Long rows of 0s and 1s are easy to misread, so people often write [[bytes|byte]] in **hex**. Hex has 16 digits: 0–9, then A–F for 10 to 15.\n\nOne hex digit stands for exactly 4 [[bits|bit]], so any byte is two hex digits: `11111111` is `FF`. You'll spot hex in colour codes like `#FF0000`."
+      "body": "Long rows of 0s and 1s are easy to misread, so people often write [[bytes|byte]] in **hex**: 16 digits, 0–9 then A–F for 10 to 15.\n\nOne hex digit is exactly 4 [[bits|bit]], so a byte is two hex digits: `11111111` is `FF`. Colour codes like `#FF0000` are hex."
     },
     {
       "id": "hex-2a",
       "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "Earlier you made 42: `00101010`. Split it into two groups of 4 [[bits|bit]]: `0010` and `1010`.\n\nIn a group of 4 bits, the places are worth 8, 4, 2 and 1. Turn each group into one hex digit. What is 42 in hex?",
+      "prompt": "42 is `00101010`: split it into `0010` and `1010`. Each group of 4 [[bits|bit]] (places 8, 4, 2, 1) is one hex digit.\n\nWhat is 42 in hex?",
       "base": "hex",
       "answer": 42,
-      "hint": "Read each group on its own by adding up its places that are on. Any group worth 10 to 15 is written as a letter, A to F.",
-      "explanation": "`0010` is **2**, and `1010` is 8 + 2 = 10, which is **A**. So 42 is `2A` in hex: two hex digits for one byte.",
-      "nudge": "Type hex digits, not an ordinary number. Each group of 4 bits becomes one digit, and a group worth 10 to 15 becomes a letter."
+      "hint": "Add up each group's places that are on; 10 to 15 is written as a letter, A to F.",
+      "explanation": "`0010` is **2**, and `1010` is 8 + 2 = 10, which is **A**. So 42 is `2A`: two hex digits for one byte.",
+      "nudge": "Type hex digits: one per group of 4 bits, with 10 to 15 as a letter."
     },
     {
       "id": "why-ff-biggest",
@@ -112,25 +112,25 @@
       "difficulty": "challenge",
       "prompt": "Why is `FF` the biggest number you can write with two hex digits?",
       "options": [
-        { "id": "all-bits-on", "text": "F is the top hex digit, so FF is all 8 bits on: 11111111, or 255" },
+        { "id": "all-bits-on", "text": "F is the top digit, so FF is all 8 bits on: 255" },
         {
           "id": "f-for-full",
-          "text": "F stands for \"full\", a special code that marks the end of a byte",
-          "nudge": "In hex, letters are just digits: A to F stand for the numbers 10 to 15. Think about what each F means as bits."
+          "text": "F means \"full\", a code that marks a byte's end",
+          "nudge": "In hex, A to F are just digits for 10 to 15: what is F as bits?"
         },
         {
           "id": "sixteen-plus-sixteen",
-          "text": "Each F is worth 16, and 16 + 16 is the most two digits can add up to",
-          "nudge": "Hex digits go 0 to 15, so F is 15, not 16. And the two digits aren't simply added: each one stands for its own 4 bits."
+          "text": "Each F is worth 16, and 16 + 16 is the most",
+          "nudge": "F is 15, not 16, and each digit stands for its own 4 bits."
         },
         {
           "id": "no-more-letters",
-          "text": "Computers can't store letters after F, so hex has to stop there",
-          "nudge": "Computers can store any letter. Hex has 16 digits because 4 bits make exactly 16 patterns. What does F look like as 4 bits?"
+          "text": "Computers can't store any letter after F",
+          "nudge": "Computers store any letter; hex has 16 digits because 4 bits make 16 patterns."
         }
       ],
       "correctOptionId": "all-bits-on",
-      "explanation": "Hex has 16 digits because 4 bits make 16 patterns, and **F** (15) is `1111`, every bit on. Two F's are `11111111`, a byte with every bit on, which is **255**, the biggest a byte can hold. One more would need a ninth bit.",
+      "explanation": "F (15) is `1111`, all 4 bits on, so `FF` is `11111111`: a full byte, **255**. Anything bigger needs a ninth bit.",
       "hint": "Turn F into 4 bits. What does `FF` look like as a whole byte?"
     },
     {

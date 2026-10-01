@@ -10,50 +10,50 @@
       "id": "who-can-read",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "You're on café Wi-Fi, logging in to a site that uses **plain [[HTTP]]** (no S). Your [[packets|packet]] pass through the café's [[router]], then your provider's routers, then a string of others owned by people you've never met.\n\nWho could read your password on its way?",
+      "prompt": "On café Wi-Fi you log in to a **plain [[HTTP]]** site (no S). Your [[packets|packet]] pass the café's [[router]], then many more run by strangers.\n\nWho could read your password?",
       "options": [
-        { "id": "anyone-on-path", "text": "Anyone who controls a device along the route, like the café's router" },
+        { "id": "anyone-on-path", "text": "Anyone running a device on the route, like the café" },
         {
           "id": "only-server",
-          "text": "Only the website's server, because the password is addressed to it",
-          "nudge": "An address on a packet doesn't stop others reading it, any more than an address on a postcard does. Who handles it on the way?"
+          "text": "Only the website, since it's addressed there",
+          "nudge": "An address doesn't stop others reading, any more than on a postcard: who handles it on the way?"
         },
         {
           "id": "nobody",
-          "text": "Nobody, because the password box hides what you type",
-          "nudge": "The dots only hide your password on your screen. On the network, plain HTTP travels as readable text."
+          "text": "Nobody, because the password box hides it",
+          "nudge": "The dots only hide it on your screen; plain HTTP travels as readable text."
         },
         {
           "id": "only-cafe",
-          "text": "Only the café, since its Wi-Fi is the one you joined",
-          "nudge": "The café's router is only the first stop. Your packets pass through many more routers after it."
+          "text": "Only the café, since you joined its Wi-Fi",
+          "nudge": "The café's router is only the first stop: many more come after it."
         }
       ],
       "correctOptionId": "anyone-on-path",
-      "explanation": "Plain HTTP is like a **postcard**: the password travels as readable text through **every** device on the route, from the café's router to your provider's routers and beyond. The dots you see when typing only hide it on your screen, not on the [[network]].",
-      "hint": "Think of plain HTTP as a postcard. Who gets to handle a postcard on its way to the address?"
+      "explanation": "Plain HTTP is a **postcard**: your password travels as readable text through **every** device on the route. The dots only hide it on your screen, not on the [[network]].",
+      "hint": "Plain HTTP is a postcard: who handles a postcard on its way?"
     },
     {
       "id": "plain-vs-https",
       "type": "explainer",
       "difficulty": "core",
       "title": "HTTPS: HTTP in a locked box",
-      "body": "**HTTPS** is the same [[HTTP]], carried inside another [[protocol]] called **TLS**. TLS **encrypts** the data: it scrambles it with secret keys that only your [[browser]] and the [[server]] have. To every router in between, it looks like random noise.\n\nHTTPS uses [[port]] **443** (plain HTTP uses 80), and your browser shows a **padlock** beside the address."
+      "body": "**HTTPS** is [[HTTP]] carried inside another [[protocol]], **TLS**, which **encrypts** it: scrambles it with secret keys only your [[browser]] and the [[server]] have. To routers in between, it's random noise.\n\nHTTPS uses [[port]] **443** (plain HTTP uses 80), and browsers show a **padlock** beside the address."
     },
     {
       "id": "order-https",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "Before any [[HTTP]] travels, TLS does a [[handshake]] of its own. The two sides agree secret keys, and the server shows its **certificate**: a digital ID card saying \"I really am example.com\". A **certificate authority**, an organisation your [[browser]] trusts, issued it after checking who owns that name.\n\nPut the steps of loading an HTTPS page in order.",
+      "prompt": "TLS does its own [[handshake]]: keys are agreed, and the server shows its **certificate**, a digital ID proving it owns the name, issued by a **certificate authority** your [[browser]] trusts.\n\nPut the steps of loading an HTTPS page in order.",
       "items": [
         { "id": "tcp", "label": "TCP handshake: SYN, SYN-ACK, ACK" },
-        { "id": "tls", "label": "TLS handshake: keys agreed and the certificate checked" },
-        { "id": "request", "label": "The browser sends an encrypted GET request" },
-        { "id": "response", "label": "The server sends back an encrypted response" }
+        { "id": "tls", "label": "TLS handshake: keys and certificate" },
+        { "id": "request", "label": "Browser sends an encrypted GET request" },
+        { "id": "response", "label": "Server sends an encrypted response" }
       ],
-      "explanation": "TCP opens the connection first (\"Can we talk?\", \"Yes, can you hear me?\", \"Yes\"). Then the **TLS handshake** agrees the keys and checks the certificate. Only then does any HTTP travel, and all of it is encrypted.",
-      "hint": "A connection has to be open before it can be made secure, and it has to be secure before anything private travels.",
-      "nudge": "TLS can't start until TCP's connection is open. And the request can't be encrypted until the keys are agreed."
+      "explanation": "TCP opens the connection first, then the **TLS handshake** agrees keys and checks the certificate. Only then does any HTTP travel, all of it encrypted.",
+      "hint": "A connection must be open before it's secured, and secure before anything private travels.",
+      "nudge": "TLS needs TCP's connection open first, and the request needs the keys agreed."
     },
     {
       "id": "https-terms",
@@ -66,54 +66,54 @@
         { "id": "ca", "left": "Vouch that a certificate is genuine", "right": "A certificate authority" },
         { "id": "padlock", "left": "Check at a glance that you're encrypted", "right": "The padlock icon" }
       ],
-      "explanation": "**Encryption** keeps what you send private on the way. The **certificate** is the server's ID card, and a **certificate authority** is who vouches for that ID. The **padlock** is your browser's quick sign that the connection is encrypted.",
-      "hint": "One is scrambling, one is an ID card, one is whoever issues ID cards, and one is an icon in the address bar.",
-      "nudge": "Don't mix up the ID card with who issues it: the server shows its certificate, and the certificate authority vouches for it."
+      "explanation": "**Encryption** keeps what you send private, the **certificate** is the server's ID, a **certificate authority** vouches for it, and the **padlock** shows the connection is encrypted.",
+      "hint": "Scrambling, an ID card, whoever issues ID cards, and an icon in the address bar.",
+      "nudge": "Don't mix up the ID card with who issues it: the server shows one, the authority vouches for it."
     },
     {
       "id": "padlock-promise",
       "type": "hotspot",
       "difficulty": "core",
-      "prompt": "A padlock means just two things: the connection is encrypted, and the server proved with its certificate that it owns the **name in the address**. It says nothing about who's behind that name, or whether they're honest.\n\nThis page shows a padlock. Tap the **one** thing on it that the padlock really vouches for.",
+      "prompt": "A padlock means the connection is encrypted and the server owns the **name in the address**, nothing about who runs it.\n\nTap the **one** thing here that the padlock vouches for.",
       "scene": "fake-website",
       "mode": "tap",
       "targets": ["site-address"],
-      "explanation": "The certificate only backs up the **address**: this server really does belong to whoever owns `login-check.example`. The logo, the warning banner and the boxes are just things drawn on the page, and anyone can draw a bank's name. Here the padlock is real, but the site isn't Your Bank at all.",
-      "hint": "A certificate is an ID card for a name. Which part of the page shows the site's name, as opposed to what the page says about itself?",
-      "nudge": "The logo and the banner are just parts of the page that anyone could draw. The certificate is about something your browser shows, not the page."
+      "explanation": "The certificate only backs the **address**: this server belongs to whoever owns `login-check.example`. The logo and banner are just drawn on the page, so this padlocked site isn't Your Bank at all.",
+      "hint": "A certificate is an ID card for a name: which part shows the site's real name?",
+      "nudge": "The logo and banner are page parts anyone could draw: the certificate is about something your browser shows."
     },
     {
       "id": "lookalike-padlock",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "You land on a login page at `examp1e.com` (with a digit 1), and it shows a **padlock**. What does the padlock prove?",
+      "prompt": "A login page at `examp1e.com` (with a digit 1) shows a **padlock**. What does it prove?",
       "options": [
-        { "id": "encrypted-only", "text": "Encrypted, to a server that owns examp1e.com: not who runs it" },
+        { "id": "encrypted-only", "text": "It's encrypted to examp1e.com's owner, nothing more" },
         {
           "id": "real-site",
-          "text": "That it's really example.com, checked by a certificate authority",
-          "nudge": "Look again at the name: it has a digit 1. Whoever owns that lookalike name can get a certificate for it."
+          "text": "It's really example.com, checked by an authority",
+          "nudge": "Look at the name: it has a digit 1, and its owner can get a certificate for it."
         },
         {
           "id": "safe-password",
-          "text": "That it's safe to type your password, since nobody can read it",
-          "nudge": "Nobody in between can read it, true. But whoever runs this site still gets it at the other end."
+          "text": "Your password is safe, since nobody can read it",
+          "nudge": "Nobody in between can read it, but whoever runs the site still gets it."
         },
         {
           "id": "checked-scams",
-          "text": "That your browser has checked the site and found no scams on it",
-          "nudge": "The padlock isn't a scam check. It tells you about the connection and the name, not about who runs the site."
+          "text": "Your browser checked the site and found no scams",
+          "nudge": "The padlock isn't a scam check: it's about the connection and the name."
         }
       ],
       "correctOptionId": "encrypted-only",
-      "explanation": "The padlock proves your connection is encrypted, to a server that really owns the exact name **examp1e.com**: whoever registered that lookalike name. It says nothing about whether they're honest, and it's certainly not the real example.com. Nobody can read what you type on the way, but the scammer receives it at the other end.",
-      "hint": "Read the name closely: is it really example.com? Then remember the two things a padlock means."
+      "explanation": "The padlock proves your connection is encrypted to a server that owns the exact name **examp1e.com**, a lookalike. Nobody can read your typing on the way, but the scammer gets it at the other end.",
+      "hint": "Read the name closely, then remember the two things a padlock means."
     },
     {
       "id": "cafe-can-see",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "With HTTPS, the whole HTTP request is encrypted, including the path. But every [[packet]] still carries the server's [[IP address]] on the outside, or routers couldn't deliver it. The site's **name** usually shows too: in your [[DNS]] lookup and at the start of the secure connection.\n\nOn café Wi-Fi you open `https://example.com/account/settings` and change your password. What can the café's [[network]] most likely see?",
+      "prompt": "HTTPS encrypts the whole request, path included. But every [[packet]] shows the server's [[IP address]], and the name usually shows in your [[DNS]] lookup.\n\nOn café Wi-Fi you change your password at `https://example.com/account/settings`. What can the café see?",
       "options": [
         { "id": "site-only", "text": "Which site you're on, but not the page or what you type" },
         {
@@ -133,22 +133,22 @@
         }
       ],
       "correctOptionId": "site-only",
-      "explanation": "The **path** and everything you type are inside the [[encrypted|encryption]] request, so they're hidden. But the server's address is on every packet, and the name usually shows up too, in your DNS lookup and at the start of the TLS [[handshake]]. So the café can usually tell **which site**, but not which page or what you send.",
+      "explanation": "The **path** and your typing are inside the [[encrypted|encryption]] request. But the address is on every packet and the name usually shows too, so the café can tell **which site**, not which page or what you send.",
       "hint": "Split it into what's inside the encrypted request and what has to stay on the outside of each packet."
     },
     {
       "id": "certificate-warnings",
       "type": "match_pairs",
       "difficulty": "challenge",
-      "prompt": "A certificate only counts if it's within its valid dates, written for the name you visited, and issued by a certificate authority your [[browser]] trusts. If a check fails, the browser warns you. Match each warning to what went wrong.",
+      "prompt": "A certificate must be in date, issued for the name you visited, and from an authority your [[browser]] trusts.\n\nMatch each warning to what went wrong.",
       "pairs": [
         { "id": "expired", "left": "Certificate has expired", "right": "Its valid dates have run out" },
         { "id": "mismatch", "left": "Name doesn't match", "right": "It was issued for a different name" },
         { "id": "untrusted", "left": "Issuer isn't trusted", "right": "No trusted authority vouches for it" }
       ],
-      "explanation": "Each warning means one check failed: the **dates**, the **name**, or a **trusted issuer**. On a site where you'd log in or pay, don't click past the warning.",
+      "explanation": "Each warning means one check failed: the **dates**, the **name** or a **trusted issuer**. On a site where you'd log in or pay, don't click past it.",
       "hint": "Three checks, three warnings: dates, names, and who issued it.",
-      "nudge": "Read each warning's own words: one is about time, one is about the name, and one is about who issued it."
+      "nudge": "Read each warning's own words: one is about time, one the name, one who issued it."
     },
     {
       "id": "recap",

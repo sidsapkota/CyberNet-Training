@@ -8,7 +8,7 @@
       "id": "q-rules-or-learning",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Which of these **learn from examples**, and which just **follow rules** someone wrote?",
+      "prompt": "Does each one **learn from examples**, or **follow rules** someone wrote?",
       "bins": [
         {
           "id": "rules",
@@ -41,13 +41,13 @@
           "bin": "learns"
         }
       ],
-      "explanation": "A microwave timer and a spreadsheet's adding follow exact rules. Turning speech into text and suggesting things you might like have endless variety, so they **learn from examples**."
+      "explanation": "A microwave timer and spreadsheet sums follow exact rules. Speech to text and \"you might like\" lists face endless variety, so they **learn from examples**."
     },
     {
       "id": "q-sports-balls",
       "type": "train_model",
       "difficulty": "core",
-      "prompt": "The model calls the mini basketball a tennis ball. Choose which examples to train on, so it gets **every** test ball right.",
+      "prompt": "It calls the mini basketball a tennis ball. Choose examples so it gets **every** test ball right.",
       "model": {
         "kind": "nearest",
         "k": 1,
@@ -157,13 +157,13 @@
           "e6"
         ]
       },
-      "explanation": "Every basketball the model learned from was big, so the mini one sat closer to the tennis balls. Adding the **small basketball** shows it that basketballs can be small too. Taking the tennis balls out would break the tennis ball test."
+      "explanation": "Every basketball it learned from was big, so adding the **small basketball** fixes the mini one. Removing tennis balls would break the tennis ball test."
     },
     {
       "id": "q-daylight-dogs",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A model learned to spot dogs from photos taken **only in daylight**. What will it most likely get wrong?",
+      "prompt": "A dog spotter learned only from **daylight** photos. What will it most likely get wrong?",
       "options": [
         {
           "id": "day",
@@ -183,49 +183,49 @@
         }
       ],
       "correctOptionId": "night",
-      "explanation": "A model only knows what it was shown. It never saw a dog at night, so night photos are where it will slip up, like the yellow apple. Adding night photos to its training data would help."
+      "explanation": "It never saw a dog at night, so night photos are where it will slip up, like the yellow apple. Adding night photos would help."
     },
     {
       "id": "q-skipped-test",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A café trained a burnt-toast spotter on lots of toast photos, each labelled \"burnt\" or \"fine\". Then they used it in the kitchen straight away. It keeps calling dark rye bread burnt, and nobody noticed until customers complained. What went wrong?",
+      "prompt": "A café trained a burnt-toast spotter on labelled photos, used it at once, and it calls dark rye burnt. Why?",
       "options": [
         {
           "id": "no-test",
-          "text": "They skipped trying it on new toast before using it for real"
+          "text": "They skipped trying it on new toast before using it"
         },
         {
           "id": "use-first",
-          "text": "They should have used it in the kitchen first, then labelled photos"
+          "text": "They should have used it before labelling photos"
         },
         {
           "id": "no-labels",
-          "text": "The labels confused it: it would learn better from unlabelled photos"
+          "text": "Labels confused it: unlabelled photos work better"
         },
         {
           "id": "too-hard",
-          "text": "Rye is just too dark: trying it out first wouldn't have shown anything"
+          "text": "Rye is too dark: testing first wouldn't have helped"
         }
       ],
       "correctOptionId": "no-test",
-      "explanation": "The steps are collect, label, train, **test on new examples**, then use. Trying it on new toast, including darker breads, would have shown the mistake before customers did. Labels are how it learns, so they're needed, and using it for real comes last."
+      "explanation": "The steps are collect, label, train, **test on new examples**, then use. Testing on darker breads would have caught the mistake before customers did."
     },
     {
       "id": "q-check-it",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "You're writing questions for a quiz night with an AI helper.",
+      "prompt": "You're writing quiz-night questions with an AI helper.",
       "start": "the-fact",
       "steps": [
         {
           "id": "the-fact",
-          "text": "The AI confidently tells you the name of the world's highest volcano. Teams will argue about every answer. What do you do?",
+          "text": "The AI confidently names the world's highest volcano. Teams will argue every answer. What do you do?",
           "choices": [
             {
               "id": "trust",
               "text": "Use it: it sounded certain",
-              "consequence": "It might be right, but it might not. AI answers are predictions, and confidence doesn't make them true.",
+              "consequence": "It might be right or not. AI answers are predictions, however confident.",
               "outcome": "fail"
             },
             {
@@ -237,7 +237,7 @@
             {
               "id": "ask-again",
               "text": "Ask the AI to promise it's right",
-              "consequence": "It may well promise, but it can't be sure its own answer is right, so a promise doesn't make it true.",
+              "consequence": "It may promise, but it can't be sure its own answer is right.",
               "outcome": "fail"
             }
           ]
@@ -249,37 +249,37 @@
       "id": "q-who-decides",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A company uses AI to sort 500 job applications. Who should make the final call on who gets the job?",
+      "prompt": "A company uses AI to sort 500 job applications. Who should make the final call?",
       "options": [
         {
           "id": "person",
-          "text": "A person, who checks the AI's suggestions and is responsible"
+          "text": "A person who checks the AI's picks and is responsible"
         },
         {
           "id": "ai-fast",
-          "text": "The AI, because it's faster and never gets tired or grumpy"
+          "text": "The AI, because it's faster and never gets tired"
         },
         {
           "id": "ai-sure",
-          "text": "A manager, who hires the AI's top pick without reading the others"
+          "text": "A manager who simply hires whoever the AI picks"
         },
         {
           "id": "ai-trained",
-          "text": "The AI, because it learned from thousands of past job choices"
+          "text": "The AI, as it learned from thousands of past hires"
         }
       ],
       "correctOptionId": "person",
-      "explanation": "Who gets a job is a **big decision about people**. AI can help sort applications, but its picks are predictions and can be wrong, so a person checks them, decides and is responsible. A manager who just rubber-stamps the AI's top pick isn't really deciding. Speed and lots of examples don't change that."
+      "explanation": "Jobs are a **big decision about people**. AI picks are predictions, so a person checks them, decides and is responsible. Rubber-stamping the AI isn't deciding."
     },
     {
       "id": "q-words",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "A team is building an app that sorts photos into cats and dogs. Match each part of their work to the word for it.",
+      "prompt": "An app sorts photos into cats and dogs. Match each part of it to its word.",
       "pairs": [
         {
           "id": "data",
-          "left": "500 photos of cats and dogs to learn from",
+          "left": "500 cat and dog photos to learn from",
           "right": "Training data"
         },
         {
@@ -289,7 +289,7 @@
         },
         {
           "id": "model",
-          "left": "The program that now sorts new photos by itself",
+          "left": "The program that sorts new photos itself",
           "right": "Model"
         },
         {
@@ -298,7 +298,7 @@
           "right": "Prediction"
         }
       ],
-      "explanation": "The 500 photos are the **training data**; \"cat\" on one photo is a **label**; the program that sorts new photos is the **model**; and its guess about a new photo is a **prediction**."
+      "explanation": "The photos are **training data**, \"cat\" on one photo is a **label**, the sorting program is the **model**, and its guess is a **prediction**."
     }
   ]
 }

@@ -19,6 +19,10 @@ with a short glow on the part.
 - **Quick questions** (owner, 1 Oct; the rest of that message was cut off): one short sentence,
   everyday words, no double negatives, no "smallest/largest that still…" puzzles; about 5–15
   seconds of thought; answers recognisable from what the lesson showed.
+- **Depth, not exam prep** (owner, 2 Oct; CLAUDE.md): understanding of foundations, never
+  certification or exam prep. Easy = what and why it matters; Medium = how it works (cause and
+  effect); Hard = how it really works underneath, through explanation and exploration, never
+  memorising numbers, codes, flags or acronym lists, never recall-only or trick questions.
 - **Nothing below the fold** at 360×640 and in the Instagram browser (~560px): a card that can't
   fit is split in two. `npm run e2e:fit-audit` checks every card (the current content has
   over 100 cards that don't fit, mostly long prompts with a scene, or long explanations; the

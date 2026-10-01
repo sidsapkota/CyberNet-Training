@@ -9,15 +9,15 @@
       "id": "dns-job",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "You type `example.org` into your browser. Before any packet can be sent to the website, what has to happen first?",
+      "prompt": "You type `example.org` into your browser. What must happen before any packet goes to the site?",
       "options": [
         { "id": "names-to-addresses", "text": "DNS turns the name into an IP address" },
-        { "id": "routing", "text": "Routers read the name example.org to choose a route" },
-        { "id": "encrypt", "text": "The website encrypts its name so nobody can read it" },
-        { "id": "private", "text": "Your home router gives example.org a private address" }
+        { "id": "routing", "text": "Routers read the name to choose a route" },
+        { "id": "encrypt", "text": "The site encrypts its name so nobody can read it" },
+        { "id": "private", "text": "Your router gives example.org a private address" }
       ],
       "correctOptionId": "names-to-addresses",
-      "explanation": "Routers deliver packets using **IP addresses**, not names. So your device first asks **DNS** to turn example.org into an address, like looking up a number in a contacts app. Only then can packets be sent."
+      "explanation": "Routers deliver by **IP address**, not by name, so your device first asks **DNS** for example.org's address, like a contacts app. Only then can packets go."
     },
     {
       "id": "controlled-by-example-org",
@@ -31,34 +31,34 @@
         { "id": "org-then-net", "text": "news.example.org.example.net" }
       ],
       "correctOptionId": "news-subdomain",
-      "explanation": "Read from the right. `news.example.org` ends in **example.org**, so it's a subdomain its owner added. The others end in `example.com` or `example.net`, so they belong to whoever registered those, even though they contain the words \"example.org\"."
+      "explanation": "Read from the right: only `news.example.org` ends in **example.org**. The others end in `example.com` or `example.net`, whatever words they contain."
     },
     {
       "id": "server-jobs",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Nobody has looked up example.com recently. Match each DNS server to what it would \"say\" during the lookup.",
+      "prompt": "Nobody has looked up example.com lately. Match each DNS server to what it would \"say\".",
       "pairs": [
-        { "id": "resolver", "left": "Resolver", "right": "\"Leave it with me, I'll find out for you.\"" },
-        { "id": "root", "left": "Root server", "right": "\"I don't know, but here are the .com servers.\"" },
+        { "id": "resolver", "left": "Resolver", "right": "\"Leave it with me, I'll find out.\"" },
+        { "id": "root", "left": "Root server", "right": "\"Not me, but here are the .com servers.\"" },
         { "id": "tld", "left": "TLD server", "right": "\"Ask example.com's own server.\"" },
         { "id": "authoritative", "left": "Authoritative server", "right": "\"example.com is at 198.51.100.10.\"" }
       ],
-      "explanation": "The **resolver** does the asking for you. The **root** server points to the `.com` servers, the **TLD** server points to example.com's own server, and only the **authoritative** server gives the real answer."
+      "explanation": "The **resolver** asks for you, **root** points to the `.com` servers, **TLD** to example.com's own server, and only the **authoritative** server gives the real answer."
     },
     {
       "id": "ttl-move-in-time",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A website will move to a new IP address in 10 minutes. Its DNS answers have a TTL of **3,600**. Will every device that has just looked it up switch to the new address as soon as it moves?",
+      "prompt": "A site moves to a new address in 10 minutes, and its TTL is **3,600**.\n\nWill devices that just looked it up switch right away?",
       "options": [
-        { "id": "no-hour", "text": "No: they may keep using the old answer for up to an hour" },
-        { "id": "yes-updates", "text": "Yes: every cache is updated the moment the site moves" },
-        { "id": "yes-ten", "text": "Yes: 10 minutes is longer than the TTL, so it runs out first" },
-        { "id": "no-forever", "text": "No: they'll keep the old answer forever, until restarted" }
+        { "id": "no-hour", "text": "No: they may use the old answer for up to an hour" },
+        { "id": "yes-updates", "text": "Yes: every cache updates the moment the site moves" },
+        { "id": "yes-ten", "text": "Yes: the TTL runs out before the 10 minutes do" },
+        { "id": "no-forever", "text": "No: they keep the old answer until restarted" }
       ],
       "correctOptionId": "no-hour",
-      "explanation": "DNS TTLs are in seconds: 3,600 seconds is **one hour**. A device that has just cached the answer may keep it for up to an hour, which is longer than the 10 minutes before the move. Nothing tells caches that a site moved, but the answer isn't kept forever either. Website owners often lower the TTL before a move for this reason."
+      "explanation": "3,600 seconds is **one hour**, longer than the 10 minutes, and nothing tells caches a site moved. But answers aren't kept forever, which is why owners lower the TTL before a move."
     },
     {
       "id": "after-cname",
@@ -72,7 +72,7 @@
         { "id": "ask-mx", "text": "It asks for shop.example.org's MX record instead" }
       ],
       "correctOptionId": "look-up-target",
-      "explanation": "A **CNAME** holds a name, not an address, and you can't connect to a name. So the lookup carries on with `example.org` until it finds an **A** record with a real address. MX records are about email, not websites."
+      "explanation": "A **CNAME** holds a name, and you can't connect to a name, so the lookup carries on with `example.org` to its **A** record. MX records are for email."
     },
     {
       "id": "lookup-example-org",
@@ -93,21 +93,21 @@
         "question": "What is example.org's IPv4 address?",
         "accepted": ["203.0.113.80"]
       },
-      "explanation": "example.org's IPv4 address is `203.0.113.80`. The other answer, `2001:db8::80`, is its IPv6 address, and `127.0.0.53` at the top is the DNS helper that answered the question."
+      "explanation": "It's `203.0.113.80`. `2001:db8::80` is its IPv6 address, and `127.0.0.53` at the top is the DNS helper that answered."
     },
     {
       "id": "web-and-email",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Visits to `example.org` go to one server, but email to `hello@example.org` goes to a different machine. How does DNS make that work?",
+      "prompt": "Visits to `example.org` and email to `hello@example.org` go to different machines. How does DNS do that?",
       "options": [
-        { "id": "two-records", "text": "One name holds an A record for the site and an MX record for email" },
-        { "id": "cname-email", "text": "The name holds a CNAME record that sends email to the website server" },
-        { "id": "no-dns", "text": "Email doesn't use DNS at all, so it finds its server another way" },
-        { "id": "two-domains", "text": "DNS can only hold one answer, so email must use a second domain" }
+        { "id": "two-records", "text": "An A record for the site, an MX record for email" },
+        { "id": "cname-email", "text": "A CNAME record sends email to the website server" },
+        { "id": "no-dns", "text": "Email skips DNS and finds its server another way" },
+        { "id": "two-domains", "text": "DNS holds one answer, so email needs a second domain" }
       ],
       "correctOptionId": "two-records",
-      "explanation": "One name can hold several **records**. The **A** record gives the website's address, and the **MX** record names the mail server, so the two jobs can go to different machines. A CNAME is just an alias to another name."
+      "explanation": "One name can hold several **records**: **A** gives the site's address and **MX** names the mail server. A CNAME is just an alias."
     }
   ]
 }

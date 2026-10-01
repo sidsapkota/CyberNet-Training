@@ -10,44 +10,44 @@
       "id": "make-5",
       "type": "binary_toggle",
       "difficulty": "core",
-      "prompt": "Every computer and phone is packed with billions of tiny switches, each **off** (0) or **on** (1). Here are 8 of them.\n\nWhen a switch is on, it's worth the number above it. Switches that are on add up. Tap them to make **5**.",
+      "prompt": "Computers hold billions of tiny switches, each **off** (0) or **on** (1). On switches add up the numbers above them.\n\nTap switches to make **5**.",
       "target": 5,
-      "explanation": "5 = **4 + 1**, so the 4 switch and the 1 switch are on and everything else is off: `00000101`.",
-      "hint": "Look at the small numbers above the switches on the right: 4, 2 and 1. Which of them add up to 5?",
-      "nudge": "Only the switches that are on count. Add up the numbers above the ones you've switched on: do they make exactly 5?"
+      "explanation": "4 + 1 = 5, so the 4 and the 1 are on and the rest are off: `00000101`.",
+      "hint": "Look at the 4, 2 and 1 on the right: which of them add up to 5?",
+      "nudge": "Only on switches count: add the numbers above them and check you get exactly 5."
     },
     {
       "id": "switches-and-bits",
       "type": "explainer",
       "difficulty": "core",
       "title": "You just counted in binary",
-      "body": "Each on/off switch is a **bit**: 0 for off, 1 for on. Counting with only 0 and 1 is called **binary**.\n\nEach place is worth **double** the one to its right. (Our everyday places, ones, tens and hundreds, go up 10 times.) To read binary, add the places that are on: `00000101` is 4 + 1 = **5**, the number you made.",
-      "image": { "src": "/illustrations/switches.svg", "alt": "A row of eight switches. Some are on, labelled 1, and some are off, labelled 0.", "width": 640, "height": 240 }
+      "body": "Each switch is a **bit**: 0 for off, 1 for on. Counting with only 0 and 1 is **binary**. Each place is worth **double** the one to its right: the switches pictured read `10110010`, so 128 + 32 + 16 + 2 = **178**.",
+      "image": { "src": "/illustrations/switches.svg", "alt": "A row of eight switches reading 10110010. Switches that are on are labelled 1, and switches that are off are labelled 0.", "width": 640, "height": 240 }
     },
     {
       "id": "make-42",
       "type": "binary_toggle",
       "difficulty": "core",
-      "prompt": "Now a bigger one: make **42**.\n\nTip: start with the biggest place that fits, then work your way down.",
+      "prompt": "Now make **42**. Tip: switch on the biggest place that fits, then work down.",
       "target": 42,
-      "explanation": "The biggest place that fits in 42 is **32**, leaving 10. Then **8** fits, leaving 2. Then **2** fits, leaving 0. So 42 = 32 + 8 + 2, which is `00101010`.",
-      "hint": "Find the biggest place that fits in 42 and switch it on. Then see what's left and do the same again.",
-      "nudge": "Add up the [[bits|bit]] you have on. Too big? Switch one off. Too small? Find the biggest place that fits what's left."
+      "explanation": "32 fits in 42, leaving 10. Then 8 fits, leaving 2, then 2 fits. So 42 = 32 + 8 + 2: `00101010`.",
+      "hint": "Switch on the biggest place that fits in 42, then do the same with what's left.",
+      "nudge": "Add up the [[bits|bit]] that are on: too big, switch one off; too small, add the biggest place that fits."
     },
     {
       "id": "order-binary",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "Drag these [[binary]] numbers into order, from **smallest** at the top to **largest** at the bottom.",
+      "prompt": "Drag these [[binary]] numbers into order, **smallest** at the top.",
       "items": [
         { "id": "three", "label": "00000011" },
         { "id": "six", "label": "00000110" },
         { "id": "nine", "label": "00001001" },
         { "id": "sixteen", "label": "00010000" }
       ],
-      "explanation": "Add up the places that are on:\n\n- `00000011` = 2 + 1 = **3**\n- `00000110` = 4 + 2 = **6**\n- `00001001` = 8 + 1 = **9**\n- `00010000` = **16**\n\n16 is the biggest even though it has only one [[bit]] on. A bit is worth more than all the bits to its right put together (8 + 4 + 2 + 1 is only 15).",
-      "hint": "Turn each one into an ordinary number by adding up the places that are on, then compare.",
-      "nudge": "It's not about how many 1s there are. A 1 further to the left is worth much more, so add up each number's places and compare."
+      "explanation": "`00000011` is 3, `00000110` is 6, `00001001` is 9 and `00010000` is 16. One [[bit]] further left beats all the bits to its right put together.",
+      "hint": "Turn each one into an ordinary number by adding up its places that are on.",
+      "nudge": "It's not how many 1s there are: a 1 further left is worth more, so add up each one's places."
     },
     {
       "id": "make-200",
@@ -55,58 +55,58 @@
       "difficulty": "challenge",
       "prompt": "Ready for a harder one? Make **200**.",
       "target": 200,
-      "explanation": "Start from the left. **128** fits, leaving 72. **64** fits, leaving 8. 32 and 16 are too big. **8** fits, leaving 0. So 200 = 128 + 64 + 8, which is `11001000`.",
-      "hint": "Work from the left: switch on each place that still fits in what's left of 200, and skip any that are too big.",
-      "nudge": "Check your total. Go through the places from the left: if one fits in what's left, keep it on; if it's too big, leave it off."
+      "explanation": "128 fits, leaving 72. 64 fits, leaving 8, and 32 and 16 are too big. 8 fits, so 200 = 128 + 64 + 8: `11001000`.",
+      "hint": "Work from the left: switch on each place that fits in what's left, and skip any that are too big.",
+      "nudge": "Check your total: from the left, keep a place on only if it fits in what's left."
     },
     {
       "id": "largest-byte",
       "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "Computers usually group [[bits|bit]] in eights. A group of 8 bits is called a **byte**.\n\nEach extra bit doubles the patterns you can make: 1 bit gives 2, 2 bits give 4, and so on, up to **256** patterns for 8 bits.\n\nWhat's the **largest** number a byte can hold? Type it as an ordinary number.",
+      "prompt": "8 [[bits|bit]] make a **byte**. Each extra bit doubles the patterns (2, 4, 8…), so a byte has **256**.\n\nWhat's the **largest** number a byte can hold?",
       "base": "decimal",
       "answer": 255,
-      "hint": "The largest number has every bit on. Add up all eight places: 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1.",
-      "explanation": "With every bit on: 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1 = **255**.\n\nIf you typed 256, you counted the patterns. There are 256 of them, but one is 0 (every bit off). Counting 0, 1, 2 … uses 256 numbers and ends at 255.",
-      "nudge": "The number of patterns isn't the largest number, because one pattern is 0. Switch every bit on and add up the places."
+      "hint": "The largest number has every bit on: add up all eight places.",
+      "explanation": "Every bit on: 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1 = **255**. There are 256 patterns, but one is 0, so counting ends at 255.",
+      "nudge": "The pattern count isn't the largest number, because one pattern is 0: switch every bit on and add up."
     },
     {
       "id": "valid-ip",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Every device online needs an address so messages can find it. A common kind is an **IPv4 address**: four numbers with dots, like `192.168.1.10`. Each number is stored in one byte (8 [[bits|bit]]), which networking calls an **octet**.\n\nWhich of these is a **valid** IPv4 address?",
+      "prompt": "Devices online have addresses. An **IPv4 address** is four numbers with dots, like `192.168.1.10`, each one byte (an **octet**).\n\nWhich of these is **valid**?",
       "options": [
-        { "id": "has-256", "text": "192.168.1.256", "nudge": "Look closely at each number. An octet is one byte, and a byte can only hold 0 to 255." },
+        { "id": "has-256", "text": "192.168.1.256", "nudge": "An octet is one byte, and a byte only holds 0 to 255." },
         { "id": "valid", "text": "10.0.0.254" },
         {
           "id": "has-300",
           "text": "172.16.300.1",
-          "nudge": "Check every part, not just the first. Each part is one byte, so none of them can go above 255."
+          "nudge": "Check every part: each is one byte, so none can go above 255."
         },
-        { "id": "three-parts", "text": "192.0.2", "nudge": "Count the parts between the dots. An IPv4 address always has four numbers, one for each octet." }
+        { "id": "three-parts", "text": "192.0.2", "nudge": "Count the parts: an IPv4 address always has four numbers." }
       ],
       "correctOptionId": "valid",
-      "explanation": "`10.0.0.254` has four parts, and each one is between 0 and 255. **256** and **300** are too big to fit in one byte, and `192.0.2` only has three parts instead of four.",
-      "hint": "Check two things: does it have four parts, and is every part between 0 and 255?"
+      "explanation": "`10.0.0.254` has four parts, all from 0 to 255. 256 and 300 don't fit in a byte, and `192.0.2` has only three parts.",
+      "hint": "Does it have four parts, and is every part from 0 to 255?"
     },
     {
       "id": "ten-bit-octet",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "Imagine each part of an address used **10 [[bits|bit]]** instead of 8. What would the largest possible number be?",
+      "prompt": "If each part used **10 [[bits|bit]]** instead of 8, what would the largest number be?",
       "options": [
-        { "id": "one-thousand", "text": "1,000", "nudge": "Binary works in doubles, not tens. Start from 256 patterns for 8 bits and double once for each extra bit." },
+        { "id": "one-thousand", "text": "1,000", "nudge": "Binary doubles, not tens: start at 256 patterns for 8 bits and double once per extra bit." },
         { "id": "ten-twenty-three", "text": "1,023" },
         {
           "id": "ten-twenty-four",
           "text": "1,024",
-          "nudge": "Is that the number of patterns, or the largest number? For 8 bits there are 256 patterns, but the largest is 255."
+          "nudge": "That's the number of patterns: 8 bits make 256 patterns, but the largest is 255."
         },
-        { "id": "twenty-forty-seven", "text": "2,047", "nudge": "Check how many times you doubled. 8 bits give 256 patterns, and 10 bits is only two more doublings." }
+        { "id": "twenty-forty-seven", "text": "2,047", "nudge": "8 bits give 256 patterns, and 10 bits is only two more doublings." }
       ],
       "correctOptionId": "ten-twenty-three",
-      "explanation": "Each extra bit doubles the patterns. 8 bits give 256, 9 bits give 512 and 10 bits give **1,024**. Counting from 0, the largest is **1,023**. It's the same *one less than the number of patterns* rule that gives 255 for 8 bits.",
-      "hint": "Each extra bit doubles the number of patterns. Work out the patterns for 10 bits, then remember counting starts at 0."
+      "explanation": "8 bits give 256 patterns, 9 give 512 and 10 give 1,024. Counting from 0, the largest is **1,023**, just as 8 bits top out at 255.",
+      "hint": "Double the patterns once for each extra bit, then remember counting starts at 0."
     },
     {
       "id": "recap",

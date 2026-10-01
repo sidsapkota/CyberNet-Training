@@ -109,7 +109,7 @@
         },
         {
           "id": "scam",
-          "left": "A fake parcel text you want to warn others about",
+          "left": "A fake parcel text to warn others about",
           "right": "Scamwatch"
         },
         {
@@ -129,7 +129,7 @@
       "id": "q-voice-message",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "A voice message from a new number sounds just like your aunt: \"Lost my phone! Please buy two gift cards and send me the codes, quick.\"",
+      "prompt": "A new number's voice message sounds like your aunt: \"Lost my phone! Buy two gift cards and send me the codes, quick.\"",
       "start": "start",
       "steps": [
         {
@@ -202,7 +202,7 @@
       "id": "q-two-step",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Your password leaked when a website was hacked. But you'd turned on two-step sign-in, using codes from an app on your phone. What else would an attacker need to get in?",
+      "prompt": "Your password leaked, but you use two-step sign-in with codes from a phone app. What else would an attacker need?",
       "options": [
         {
           "id": "app-code",
@@ -218,13 +218,13 @@
         }
       ],
       "correctOptionId": "app-code",
-      "explanation": "With two-step sign-in, a stolen password on its own isn't enough: they'd also need the code from your phone. That's why it's worth turning on."
+      "explanation": "With two-step sign-in, a stolen password isn't enough: they'd also need the code from your phone. That's why it's worth turning on."
     },
     {
       "id": "q-code",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "A message from your cousin's account: \"I've entered you in a giveaway! A code is about to arrive by text. Just send it to me.\"",
+      "prompt": "Your cousin's account messages: \"I entered you in a giveaway! A code will arrive by text. Just send it to me.\"",
       "start": "start",
       "steps": [
         {
@@ -262,7 +262,7 @@
       "options": [
         {
           "id": "tell",
-          "text": "Tell a trusted adult"
+          "text": "Tell a trusted adult what's been happening"
         },
         {
           "id": "hide",
@@ -270,7 +270,7 @@
         },
         {
           "id": "reply",
-          "text": "Reply with something nasty so they stop"
+          "text": "Send one sharp reply so they know to stop"
         }
       ],
       "correctOptionId": "tell",

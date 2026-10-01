@@ -10,7 +10,7 @@
       "id": "the-shark",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "After a big storm, a picture spreads everywhere: a shark swimming down a flooded street, past a bus stop. Your friend sends it: \"OMG look at this!!\" Staring at it won't tell you if it's real. But many search tools let you search with a picture itself.",
+      "prompt": "After a storm, a friend sends a picture of a shark in a flooded street. You can search with a picture itself.",
       "start": "first-look",
       "steps": [
         {
@@ -25,14 +25,14 @@
             },
             {
               "id": "search",
-              "text": "Search with the picture to see where it first appeared",
-              "consequence": "The same shark picture turns up years ago, after a different storm, in another country, already marked as edited.",
+              "text": "Search with the picture to find where it began",
+              "consequence": "The same picture appeared years ago, after another storm, already marked as edited.",
               "next": "what-now"
             },
             {
               "id": "stare",
               "text": "Zoom in and look for six fingers or jumbled signs",
-              "consequence": "You find nothing odd, but that proves nothing. The fastest check is where it came from.",
+              "consequence": "Nothing odd, but that proves nothing. Where it came from is the faster check.",
               "outcome": "fail"
             }
           ]
@@ -49,15 +49,15 @@
             },
             {
               "id": "say-nothing",
-              "text": "Say nothing: it's their problem, not yours",
+              "text": "Say nothing: it's their problem to sort out",
               "consequence": "They might share it further. A kind word now stops it spreading.",
               "outcome": "fail"
             }
           ]
         }
       ],
-      "hint": "Think about what you can find out from outside the picture, instead of from staring at it.",
-      "explanation": "**Search for where it first appeared**: old pictures often come back after every storm. Staring for give-aways can't prove a picture is real. And be kind: anyone can be fooled."
+      "hint": "What can you find out from outside the picture, instead of staring at it?",
+      "explanation": "**Search for where it first appeared**: old pictures come back after every storm. Staring can't prove it's real, and be kind: anyone can be fooled."
     },
     {
       "id": "how-to-check-a-picture",
@@ -70,7 +70,7 @@
       "id": "no-label",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Some AI tools add a [[watermark]]: a visible mark, or hidden information inside the file, saying AI made it. Some apps add an AI label too.\n\nA picture has no AI label and no watermark. What does that tell you?",
+      "prompt": "A [[watermark]], seen or hidden in the file, can mark AI pictures. This has none, and no AI label. What does that tell you?",
       "options": [
         {
           "id": "checked",
@@ -80,7 +80,7 @@
         {
           "id": "hidden",
           "text": "It was made by AI, and the label was hidden on purpose",
-          "nudge": "That's possible, but you can't tell from a missing label. What does \"no label\" really prove?"
+          "nudge": "Possible, but a missing label can't tell you that. What does it really prove?"
         },
         {
           "id": "not-much",
@@ -88,13 +88,13 @@
         },
         {
           "id": "real",
-          "text": "It's a real photo, because AI pictures always have a label",
-          "nudge": "Many AI tools add nothing, and labels can be cropped off. What does that mean?"
+          "text": "It's real, because AI pictures always have a label",
+          "nudge": "Many AI tools add nothing, and labels can be cropped off. So what does it prove?"
         }
       ],
       "correctOptionId": "not-much",
-      "hint": "Could a visible mark be cut off? Could hidden information get lost when someone takes a screenshot? Does every tool add one?",
-      "explanation": "Visible marks get cropped off, a screenshot can throw away hidden information saved with the file, and many tools add nothing. So an AI label is good evidence when it's there, but **no label proves nothing**."
+      "hint": "Could a mark be cropped, lost in a screenshot, or never added?",
+      "explanation": "Marks get cropped, a screenshot can lose hidden file data, and many tools add nothing. An AI label is good evidence when it's there, but **no label proves nothing**."
     },
     {
       "id": "clue-or-myth",
@@ -148,9 +148,9 @@
           "bin": "myth"
         }
       ],
-      "hint": "Which ones tell you where the picture came from, and which only tell you how popular or nice it looks?",
-      "nudge": "A friend can be fooled too, and fakes spread fast and look sharp. Which ones are about the picture's real origin?",
-      "explanation": "Where it **first appeared**, **trusted news**, and an **AI label** are real evidence. Likes, a trusted friend sending it, sharpness, and a missing label are **myths**: fakes get likes, friends get fooled, AI pictures are sharp, and labels go missing."
+      "hint": "Which tell you where it came from, and which only how popular or nice it looks?",
+      "nudge": "Friends get fooled, and fakes spread fast and look sharp. Which show its real origin?",
+      "explanation": "Where it **first appeared**, **trusted news** and an **AI label** are real evidence. Likes, a trusted friend, sharpness and no label are **myths**."
     },
     {
       "id": "strongest-sign",
@@ -161,7 +161,7 @@
         {
           "id": "shares",
           "text": "It's been shared over a million times today",
-          "nudge": "Fakes spread fast, often faster than the truth. What would really show it happened?"
+          "nudge": "Fakes spread fast, often faster than the truth. What would show it happened?"
         },
         {
           "id": "quality",
@@ -170,7 +170,7 @@
         },
         {
           "id": "news-angles",
-          "text": "Several trusted news sites show it, from different angles"
+          "text": "Trusted news sites show it from different angles"
         },
         {
           "id": "no-label",
@@ -180,7 +180,7 @@
       ],
       "correctOptionId": "news-angles",
       "hint": "Which one is evidence from **outside** the picture itself?",
-      "explanation": "Several **trusted news** sources showing it from **different angles** is strong evidence: it's hard to fake many independent views of the same moment. Shares, sharpness and missing labels prove nothing."
+      "explanation": "Several **trusted news** sources showing it from **different angles** is strong: many independent views are hard to fake. Shares, sharpness and no label prove nothing."
     },
     {
       "id": "crown-dog",
@@ -196,13 +196,13 @@
             {
               "id": "real",
               "text": "Post it, and say it's AI only if someone asks",
-              "consequence": "Most people won't ask, and the picture can travel far from your post without the answer. Say it up front.",
+              "consequence": "Most people won't ask, and it can travel far from your post. Say it up front.",
               "outcome": "fail"
             },
             {
               "id": "nothing",
-              "text": "Post it without saying anything about how it was made",
-              "consequence": "Most people will guess, but some won't, and it can travel far from your caption. Saying it's AI is better.",
+              "text": "Post it without saying how it was made",
+              "consequence": "Some people won't guess, and it can travel far from your caption. Saying it's AI is better.",
               "outcome": "fail"
             },
             {
@@ -215,13 +215,13 @@
         }
       ],
       "hint": "Look back at what to do when **you** make an AI picture.",
-      "explanation": "When you post an AI picture, **say it's AI**, even when it's obviously a joke. Pictures travel far from their captions, and it keeps the internet a little more honest."
+      "explanation": "When you post an AI picture, **say it's AI**, even as an obvious joke. Pictures travel far from their captions."
     },
     {
       "id": "shared-too-soon",
       "type": "scenario",
       "difficulty": "challenge",
-      "prompt": "An hour ago you shared a picture to your group chat: snow piled high on a summer beach. Now you find it was made with AI.",
+      "prompt": "You shared a picture of snow on a summer beach to your group chat. Now you find out it was made with AI.",
       "start": "found-out",
       "steps": [
         {
@@ -231,26 +231,26 @@
             {
               "id": "delete-quietly",
               "text": "Delete your message and say nothing",
-              "consequence": "People have already seen it, and some may have shared it on. Deleting doesn't tell them it's fake.",
+              "consequence": "People already saw it, and some may have shared it. Deleting doesn't tell them it's fake.",
               "outcome": "fail"
             },
             {
               "id": "leave-it",
               "text": "Wait and see whether anyone actually believed it",
-              "consequence": "By the time you find out, it may have spread further. A quick correction now is easier than chasing it later.",
+              "consequence": "It may spread further meanwhile. A quick correction now is easier than chasing it later.",
               "outcome": "fail"
             },
             {
               "id": "correct",
               "text": "Post in the chat: \"Sorry, that picture was AI, not real\"",
-              "consequence": "Good call. Everyone who saw it now knows. Then a friend says they've already sent it to their work chat.",
+              "consequence": "Good call: everyone who saw it knows. Then a friend says they've sent it to their work chat.",
               "next": "forwarded"
             }
           ]
         },
         {
           "id": "forwarded",
-          "text": "Your friend has already sent it to their work chat. What now?",
+          "text": "Your friend already sent it to their work chat. What now?",
           "choices": [
             {
               "id": "ask-kindly",
@@ -261,14 +261,14 @@
             {
               "id": "not-mine",
               "text": "Nothing: adults in a work chat will spot it's fake",
-              "consequence": "Adults get fooled too, and the fake keeps travelling without its correction. One kind message could have stopped it.",
+              "consequence": "Adults get fooled too, and the fake keeps travelling without its correction.",
               "outcome": "fail"
             }
           ]
         }
       ],
       "hint": "A picture keeps travelling after you send it. How can the truth travel with it?",
-      "explanation": "You can't unsend a picture, but you can **send the correction after it**: tell the people who saw it, and kindly ask anyone who passed it on to do the same. Everyone gets fooled sometimes; fixing it is what counts."
+      "explanation": "You can't unsend a picture, but you can **send the correction after it**, and kindly ask anyone who passed it on to do the same."
     },
     {
       "id": "who-made-recap",
