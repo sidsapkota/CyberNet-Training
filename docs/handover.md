@@ -12,17 +12,14 @@ Last updated: 2 October 2026.
 - Free accounts: any lesson, 3 new lessons a day. CyberNet Pro (Stripe, live): unlimited, certificates, extra streak freeze; 7-day trial with a reminder email 3 days before it ends.
 - One-screen Pro pitch (`ProPitch`) on every Pro screen; annual preselected.
 - Lesson player: Back/forward (read-only), Listen (browser speech), bonus cards, mascot reactions, `lesson_quit` event.
+- "Start here" lesson (`strong-passwords`): a one-drag win first and a one-tap card second; no how-to-play panel on a newcomer's very first card in any lesson.
+- AI lesson 4.3 age rules checked 1 October 2026 (ChatGPT, Copilot, Claude, Gemini), recorded in REVIEW.md.
 - Daily goals and streaks; leagues (hidden until 20 learners earn XP in one week); certificates.
 - Help lines: Kids Helpline and Lifeline (verified), eSafety, ACCCE, Scamwatch, IDCARE, ReportCyber, 000.
 
 ## 2. Open branches
 
-| Branch | What's on it | Merged? | Preview |
-|---|---|---|---|
-| `age-rules` | AI lesson 4.3: "Rules can differ by country"; ChatGPT and Copilot age rules recorded in REVIEW.md | No, waiting for the owner | https://cyber-net-training-git-age-rules-sidsapkotas-projects.vercel.app |
-| `quick-start` | "Start here" lesson: no how-to-play panel on a newcomer's first card; `strong-passwords` card 1 is a one-drag win; new one-tap card 2 `which-takes-longer` | No, waiting for the owner | https://cyber-net-training-git-quick-start-sidsapkotas-projects.vercel.app |
-
-Preview URLs follow `https://cyber-net-training-git-<branch>-sidsapkotas-projects.vercel.app`.
+None. Preview URLs follow `https://cyber-net-training-git-<branch>-sidsapkotas-projects.vercel.app`.
 
 ## 3. In progress
 
@@ -37,7 +34,6 @@ Nothing half-done. Next up is item 1 of the queue.
 
 ## 5. Waiting on the owner
 
-- Approve and merge `age-rules` and `quick-start`.
 - Recheck AI lesson 4.3 (product names, makers, age rules) by 1 January 2027, then every 3 months.
 - Have an adult (ideally a lawyer) review the privacy and terms drafts (`content/legal/`).
 - Playtest the courses with real learners (audits by AI overstate beginner ability).
