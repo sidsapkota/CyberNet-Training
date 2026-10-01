@@ -88,7 +88,7 @@ With CyberNet Pro, you can create a certificate when you pass a course final. We
 
 ## Feedback
 
-If you use "Send feedback", we store your **message**, and optionally **which lesson** it's about and a **star rating**. Feedback isn't linked to your account. We also keep a random code for your browser tab, only to stop spam. **Please don't include personal details in your message.**
+If you use "Send feedback", we store your **message**, and optionally **which lesson** it's about and a **star rating**. Feedback isn't linked to your account. We also keep a random code for your browser tab, only to stop spam. Each message is also emailed to us, with the page you came from, the time, and whether you were signed in (never who you are). **Please don't include personal details in your message.**
 
 ## Analytics
 
@@ -108,7 +108,7 @@ We share information only with the services that run the website:
 - **Supabase**: our database and sign-in system. Stores account data and feedback.
 - **Vercel**: hosts the website and runs our cookieless analytics.
 - **Google**: only if you choose "Continue with Google" to sign in.
-- **Resend**: sends sign-in emails, a reminder 3 days before a Pro free trial ends (to that subscriber only), and our daily summary of handle reports (sent only to us).
+- **Resend**: sends sign-in emails, a reminder 3 days before a Pro free trial ends (to that subscriber only), our daily summary of handle reports, and a copy of each feedback message (both sent only to us).
 - **Stripe**: only if you subscribe to CyberNet Pro. Stripe runs the checkout and handles your card; it also has your email (for receipts). See [Stripe's privacy policy](https://stripe.com/privacy).
 
 These companies may store data on servers outside Australia. They're only allowed to use it to provide their service to us.

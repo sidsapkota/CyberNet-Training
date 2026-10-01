@@ -1465,10 +1465,18 @@ from ~2.8s to ~0.4s (`npm run e2e:latency`).
 ### Feedback
 - `/feedback` (from the footer, and "Send feedback about this lesson" on the lesson-complete
   screen): a message (1,000 characters max, with "Please don't include personal details"), an
-  optional lesson and an optional 1–5 rating (native radio inputs). It inserts straight into the
-  `feedback` table with the publishable key; RLS makes it insert-only, and the database
-  rate-limits it (see Row Level Security rules). Without Supabase env vars it shows the contact
-  email instead.
+  optional lesson and an optional 1–5 rating (native radio inputs). It posts to `/api/feedback`,
+  which inserts into the `feedback` table with the visitor's own session (RLS makes it insert-only,
+  and the database rate-limits it: see Row Level Security rules). Without Supabase env vars it
+  shows the contact email instead.
+- **Emailed to the owner:** after storing it, the route emails a plain-text copy via Resend
+  (`src/lib/feedback/`, sent with `after()`, so a failed email never fails the form) to
+  `FEEDBACK_INBOX` in `src/lib/site.ts` (cybernettraining10@gmail.com for now; switch it to
+  `CONTACT_EMAIL` once hello@ forwarding works). It holds the message, the lesson, the page the
+  sender came from (same-site path only, no query string), the rating, the time, and only
+  **whether** they were signed in, never who. At most `FEEDBACK_EMAILS_PER_HOUR` (12) emails an
+  hour, counted from the table; the first message over the cap sends one "more are waiting" note,
+  the rest stay in the table only. Without `RESEND_API_KEY` (previews, local) nothing is emailed.
 
 ## Minimalism guardrail (Brilliant-level clean)
 
