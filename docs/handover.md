@@ -10,7 +10,7 @@ Last updated: 2 October 2026.
 - Guests: each course's first lesson and the help module; everything else needs a free account.
 - Accounts: Google, email 6-digit code; in-app browsers (Instagram, TikTok…) get the code and an "open in browser" tip.
 - Free accounts: any lesson, 3 new lessons a day. CyberNet Pro (Stripe, live): unlimited, certificates, extra streak freeze; 7-day trial with a reminder email 3 days before it ends.
-- One-screen Pro pitch (`ProPitch`) on every Pro screen; annual preselected.
+- One-screen Pro pitch (`ProPitch`) on every Pro screen; annual preselected. "Not now" asks "What's stopping you?" once a week per device (`pro_declined`: `reason` + `source` = screen `paywall`/`limit`/`pro_page`; Skip sends `skipped`). Read it in Vercel → Analytics → Events.
 - Lesson player: Back/forward (read-only), Listen (browser speech), bonus cards, mascot reactions, `lesson_quit` event.
 - "Start here" lesson (`strong-passwords`): a one-drag win first and a one-tap card second; no how-to-play panel on a newcomer's very first card in any lesson.
 - AI lesson 4.3 age rules checked 1 October 2026 (ChatGPT, Copilot, Claude, Gemini), recorded in REVIEW.md.
@@ -19,18 +19,17 @@ Last updated: 2 October 2026.
 
 ## 2. Open branches
 
-- `pro-declined-reason`: queue item 1, "What's stopping you?" after "Not now" on the paywall, the daily-limit screen and /pro. Waiting for the owner to try the preview and say merge. Preview URLs follow `https://cyber-net-training-git-<branch>-sidsapkotas-projects.vercel.app`.
+- `mistake-review`: queue item 2 (below). Preview URLs follow `https://cyber-net-training-git-<branch>-sidsapkotas-projects.vercel.app`.
 
 ## 3. In progress
 
-Nothing half-done. Item 1 is built on its branch (above); next up after it merges is item 2.
+Mistake review (item 2): migration written, SQL shown to the owner, **not applied** until they approve.
 
 ## 4. Queue (in order)
 
-1. ~~"What's stopping you?"~~ Built on `pro-declined-reason`, awaiting merge. `source` is the screen (`paywall`, `limit`, `pro_page`), Skip sends `reason: skipped`; read it in Vercel → Analytics → Events → `pro_declined`.
-2. **B: Mistake review** (Pro). Show the SQL before applying. When it ships, add "Review your mistakes" to the Pro benefits (`ProPitch`).
-3. **C: Streak freeze** (Pro). Show the SQL before applying. (Pro already allows holding 3 freezes instead of 2.)
-4. Family plan: **on hold**, don't build.
+1. **B: Mistake review** (Pro). Show the SQL before applying. When it ships, add "Review your mistakes" to the Pro benefits (`ProPitch`).
+2. **C: Streak freeze** (Pro). Show the SQL before applying. (Pro already allows holding 3 freezes instead of 2.)
+3. Family plan: **on hold**, don't build.
 
 ## 5. Waiting on the owner
 
