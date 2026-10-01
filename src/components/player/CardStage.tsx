@@ -27,12 +27,15 @@ export function CardStage({
   card,
   scope,
   challengeXp,
+  onSkip,
   children,
 }: {
   cardKey: string;
   card: Card;
   scope: RefObject<HTMLDivElement | null>;
   challengeXp?: number;
+  /** "Skip" on a bonus card, at the end of its Bonus row (instead of a second footer row). */
+  onSkip?: () => void;
   children: ReactNode;
 }) {
   return (
@@ -48,12 +51,23 @@ export function CardStage({
         transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
       >
         {card.difficulty === "challenge" && (
-          <div className="mb-3 flex flex-wrap items-center gap-2">
+          <div className="mb-2 flex flex-wrap items-center gap-2">
             <span className="inline-flex items-center gap-1.5 rounded-sm border border-warning/40 bg-warning-soft px-2 py-1 font-mono text-caption font-semibold tracking-wider text-warning uppercase">
               <ChallengeIcon className="size-3.5" />
               Bonus
             </span>
             <span className="text-small text-ink-muted">Optional{challengeXp ? ` · +${challengeXp} XP` : ""}</span>
+            {onSkip && (
+              <button
+                type="button"
+                data-keyboard-passthrough
+                onClick={onSkip}
+                aria-label="Skip bonus"
+                className="ml-auto inline-flex min-h-11 items-center rounded-control px-3 text-small font-semibold text-accent-ink hover:bg-surface-raised"
+              >
+                Skip
+              </button>
+            )}
           </div>
         )}
         <div ref={scope}>{children}</div>

@@ -140,7 +140,7 @@ function LabelMode({ card, answer, onAnswerChange, parts, hidden, locked, onPlac
 
   return (
     <>
-      <p className="mt-2 text-small text-ink-muted">Pick a label, then tap its glowing spot. Tap a placed label to take it off.</p>
+      <p className="mt-2 text-small text-ink-muted">Pick a label, then tap its spot.</p>
       {/* The labels sit above the scene, so labels and spots are on screen together. */}
       {!locked && (
         <div role="group" aria-label="Labels" className="mt-3 flex min-h-11 flex-wrap gap-2">

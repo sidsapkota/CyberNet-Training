@@ -96,7 +96,7 @@ function Bin({
       ref={setNodeRef}
       data-drop-bin
       aria-label={label}
-      className={`flex min-h-32 flex-col rounded-card border-2 border-dashed p-2 transition-colors ${
+      className={`flex min-h-24 flex-col rounded-card sm:min-h-32 border-2 border-dashed p-2 transition-colors ${
         isOver || canDrop ? "border-accent-ink bg-accent-soft" : "border-line-strong bg-surface-raised"
       }`}
     >
@@ -168,7 +168,7 @@ export function SortBinsCardView({ card, answer, onAnswerChange, status }: CardC
   return (
     <div>
       <CardPrompt>{card.prompt}</CardPrompt>
-      <p className="mt-2 text-small text-ink-muted">Tap an item, then tap its box. Or drag it there.</p>
+      <p className="mt-2 text-small text-ink-muted">Tap an item, then a box, or drag it.</p>
 
       <DndContext id={`dnd-${card.id}`} sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd} onDragCancel={() => setDragging(null)}>
         <LayoutGroup id={card.id}>
@@ -216,7 +216,7 @@ function TrayZone({ children, empty, locked }: { children: React.ReactNode; empt
       ref={setNodeRef}
       aria-label="Items to sort"
       role="group"
-      className={`mt-5 flex min-h-14 flex-wrap gap-2 rounded-card p-2 transition-colors ${isOver ? "bg-surface-raised" : ""}`}
+      className={`mt-3 flex min-h-14 flex-wrap gap-2 rounded-card p-2 sm:mt-5 transition-colors ${isOver ? "bg-surface-raised" : ""}`}
     >
       {children}
       {empty && !locked && <span className="self-center px-1 text-small text-ink-faint">All sorted. Press Check.</span>}

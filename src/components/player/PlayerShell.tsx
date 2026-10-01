@@ -45,7 +45,7 @@ export function PlayerShell({
   return (
     <div className="flex min-h-dvh flex-col">
       <header className="sticky top-0 z-20 border-b border-line bg-canvas">
-        <div className="mx-auto flex max-w-lesson items-center gap-2 px-gutter py-3 sm:gap-3">
+        <div className="mx-auto flex max-w-lesson items-center gap-2 px-gutter py-2 sm:gap-3 sm:py-3">
           <Link
             href={exitHref}
             aria-label="Exit to the course path"
@@ -64,7 +64,7 @@ export function PlayerShell({
           </span>
         </div>
       </header>
-      <main className="mx-auto w-full max-w-lesson flex-1 px-gutter pt-5 pb-6 sm:pt-10 sm:pb-10">{children}</main>
+      <main className="mx-auto w-full max-w-lesson flex-1 px-gutter pt-4 pb-6 sm:pt-10 sm:pb-10">{children}</main>
       {footer}
     </div>
   );
