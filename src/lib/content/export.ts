@@ -21,6 +21,8 @@ const TYPE_RANK: Partial<Record<CardType, number>> = {
   scenario: 4,
   hotspot: 5,
   sort_bins: 6,
+  train_model: 0,
+  next_word: 2,
   binary_toggle: 7,
   match_pairs: 8,
   drag_to_order: 9,
@@ -43,6 +45,8 @@ const TYPE_LABEL: Record<CardType, string> = {
   simulator: "Simulator",
   scenario: "Choose what happens",
   sort_bins: "Sort into groups",
+  train_model: "Train a model",
+  next_word: "Next word",
 };
 
 const PICKS_PER_LESSON = 3;

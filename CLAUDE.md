@@ -156,6 +156,8 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
 | `simulator` | `model`, `params`, `controls[]` (toggle/slider/button), `outputs[]` (meter/bar/timer/device/list), `goal.all[]` | `{controlId: value}` | every goal condition holds |
 | `scenario` | `start`, `steps[] {id, text, choices[] {id, text, consequence, next \| outcome}}` | choice ids in order | the last choice's outcome is `success` |
 | `sort_bins` | `bins[]` (2–3), `items[] {id, label, bin}` (4–10) | `{itemId: binId}` | every item in its bin |
+| `train_model` | `model` (`nearest` + `k` 1/3 + `x`/`y` axes, or `word-vote`), `labels[]` (2–3), `examples[] {id, text, x?, y?, label, given?}` (4–12), `tests[] {id, text, x?, y?, truth}` (1–4), `task` (`label`, or `include` + `start[]`) | `{labels: {exampleId: labelId}, included: exampleId[]}` | label: every example labelled right; include: the model gets every test right |
+| `next_word` | `context`, `candidates[] {word, p}` (3–6, sum 1), `temperature {min, max, start, step}`, `goal` (`pick` + `word`, or `probability` + `word?`, `atLeast?`, `atMost?`) | `{temperature, pick}` | pick: the likeliest word; probability: the goal holds at that temperature |
 
 - **`numeric_input`:**
   - Spaces and underscores are ignored.
@@ -272,6 +274,29 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - **Not counted** in the 8–12 cards per lesson, and never in quizzes.
 - **`sort_bins`:** tap an item then a bin, or drag (dnd-kit). Snap sound; wrong items go back to the
   tray after Try again.
+- **`train_model`** (AI course): learners teach a tiny model and see it make mistakes. The models
+  (`src/cards/train-model/model.ts`) are pure and deterministic: `nearest` (points on a 0–10 chart;
+  the nearest example's label, or the majority of the 3 nearest) and `word-vote` (each word of 3+
+  letters votes for the labels it was seen with; a tie is "Not sure"). No ML libraries, no
+  randomness, nothing run from content.
+  - **`label` goal:** label every example that isn't `given`; graded on the labels only. After
+    Check the model trains on them and shows its guesses. The schema requires that, trained on the
+    true labels, it gets at least one test **wrong** (the lesson) and one right.
+  - **`include` goal:** tick which examples to train on; guesses update live; correct when **every**
+    test is guessed right (one target alone could be "solved" by training on a single example).
+    The schema checks it starts unsolved and that some choice works (every subset is tried).
+  - The chart is display only; learners act on the 44px rows under it. Labels have a shape each
+    (circle, square, triangle), never colour alone. Try again clears only wrong labels.
+- **`next_word`** (AI course): pre-written chances for the next word, reshaped by temperature
+  (`p^(1/T)`, rescaled; the same as dividing scores by T before softmax; the order of the words
+  never changes). Nothing is generated live.
+  - **`pick` goal:** which word is most likely? The chances stay hidden until Check, and the word
+    must be the single likeliest.
+  - **`probability` goal:** move the slider until a word (or, without `word`, the likeliest one) is
+    at least / at most a share, compared to 3 decimal places. The schema checks it starts unsolved
+    and that a slider stop meets it. Answers off the slider's stops are refused by the grader.
+  - "Generate 5" shows seeded sample picks for the current temperature (display only, the same
+    every time). Bars always show the % in text; reduced motion skips the width transition.
 - **Enter key:** single-answer text fields (`numeric_input`, the terminal's answer box) carry
   `data-enter-submits`, so Enter runs Check. The terminal's command line keeps Enter for running
   commands.

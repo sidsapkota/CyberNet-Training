@@ -298,6 +298,38 @@ function SortDemo() {
   );
 }
 
+function TrainDemo() {
+  const kf = useKf();
+  return (
+    <>
+      <circle cx={40} cy={30} r={7} fill={C.ink} />
+      <circle cx={60} cy={44} r={7} fill={C.ink} />
+      <rect x={154} y={56} width={14} height={14} rx={2} fill={C.ink} />
+      <rect x={176} y={40} width={14} height={14} rx={2} fill={C.ink} />
+      <motion.circle cx={84} cy={30} r={7} stroke={C.ink} strokeWidth={2} strokeDasharray="3 2" {...kf({ fill: ["none", "none", C.ink, C.ink] }, [0, 0.35, 0.4, 1])} />
+      <path d="M120 72 l10 -10 10 10 -10 10Z" fill={C.box} stroke={C.edge} strokeWidth={1.5} />
+      <motion.circle cx={130} cy={72} r={4} fill={C.ink} {...kf({ opacity: [0, 0, 1, 1] }, [0, 0.7, 0.75, 1])} />
+      <Finger points={[{ x: 84, y: 30, t: 0.35 }]} taps={[0.35]} />
+    </>
+  );
+}
+
+function NextWordDemo() {
+  const kf = useKf();
+  return (
+    <>
+      <Box x={24} y={10} w={60} h={10} />
+      <Box x={24} y={30} w={130} h={10} />
+      <Box x={24} y={50} w={130} h={10} />
+      <motion.rect x={24} y={30} height={10} rx={4} fill={C.ink} {...kf({ width: [90, 90, 125, 125] }, [0, 0.4, 0.75, 1])} />
+      <motion.rect x={24} y={50} height={10} rx={4} fill={C.ink} {...kf({ width: [40, 40, 8, 8] }, [0, 0.4, 0.75, 1])} />
+      <rect x={24} y={78} width={192} height={4} rx={2} fill={C.faint} />
+      <motion.circle cy={80} r={8} fill={C.accent} {...kf({ cx: [140, 140, 50, 50] }, [0, 0.4, 0.75, 1])} />
+      <Finger points={[{ x: 140, y: 80, t: 0.35 }, { x: 50, y: 80, t: 0.75 }]} taps={[0.35]} />
+    </>
+  );
+}
+
 export const DEMOS: Record<CoachKey, () => ReactNode> = {
   numeric_input: NumericDemo,
   binary_toggle: BinaryDemo,
@@ -312,4 +344,6 @@ export const DEMOS: Record<CoachKey, () => ReactNode> = {
   simulator: SimulatorDemo,
   scenario: ScenarioDemo,
   sort_bins: SortDemo,
+  train_model: TrainDemo,
+  next_word: NextWordDemo,
 };

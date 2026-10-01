@@ -12,6 +12,8 @@ import { simulatorDefinition } from "./simulator/definition";
 import { sortBinsDefinition } from "./sort-bins/definition";
 import { teardownDefinition } from "./teardown/definition";
 import { terminalDefinition } from "./terminal/definition";
+import { nextWordDefinition } from "./next-word/definition";
+import { trainModelDefinition } from "./train-model/definition";
 import { type Card, type CardType, isExploreCard } from "./schema";
 import type { GuidedCardDefinition, InteractiveCardDefinition, StaticCardDefinition } from "./types";
 
@@ -35,6 +37,8 @@ const definitions = {
   simulator: simulatorDefinition,
   scenario: scenarioDefinition,
   sort_bins: sortBinsDefinition,
+  train_model: trainModelDefinition,
+  next_word: nextWordDefinition,
 } satisfies { [K in CardType]: { type: K } };
 
 /** Type-erased views used by the player, which treats answers as opaque values. */

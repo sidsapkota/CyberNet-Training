@@ -42,6 +42,14 @@ export const COACH_COPY: Record<CoachKey, { title: string; lines: string[] }> = 
   },
   scenario: { title: "Choose what to do", lines: ["Read what's happening and tap what you'd do.", "Each choice shows what happens next."] },
   sort_bins: { title: "Sort them", lines: ["Tap an item, then tap the box it belongs in. Or drag it there."] },
+  train_model: {
+    title: "Teach the model",
+    lines: ["Give each example its label, or tick the examples to train on.", "Then see what the model guesses about new ones."],
+  },
+  next_word: {
+    title: "Guess the next word",
+    lines: ["Pick the word you think comes next, or move the slider and watch the chances change."],
+  },
 };
 
 /**

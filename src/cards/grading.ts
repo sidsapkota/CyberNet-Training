@@ -16,6 +16,8 @@ import { gradeSimulator } from "./simulator/grade";
 import { gradeSortBins } from "./sort-bins/grade";
 import { gradeTeardown } from "./teardown/grade";
 import { gradeTerminal } from "./terminal/grade";
+import { gradeNextWord } from "./next-word/grade";
+import { gradeTrainModel } from "./train-model/grade";
 import type { GradeResult } from "./types";
 
 type Graders = {
@@ -35,6 +37,8 @@ const GRADERS = {
   simulator: gradeSimulator,
   scenario: gradeScenario,
   sort_bins: gradeSortBins,
+  train_model: gradeTrainModel,
+  next_word: gradeNextWord,
 } satisfies Graders;
 
 /**
