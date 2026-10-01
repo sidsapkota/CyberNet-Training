@@ -40,6 +40,7 @@ export function WhatsNext({
       sub={`Next up: ${module.title}`}
       track={{ course: course.id }}
       headingLevel={headingLevel}
+      declineSource="paywall"
       notNow={onClose ? { onClick: onClose } : { href: `/course/${course.id}` }}
       sample={module.teaser ? <TeaserCard card={module.teaser} courseId={course.id} /> : undefined}
     />

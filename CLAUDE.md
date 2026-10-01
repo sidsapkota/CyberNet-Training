@@ -41,6 +41,7 @@ npm run check:rls         # prove users can't read/write each other's rows (need
 npm run e2e:design-qa     # every card type and main page at 360px/desktop, light/dark, motion on/off:
                           # sideways scrolling, controls under 44px, touch drag (dev server running)
 npm run e2e:player-back   # Back/forward (read-only), Listen and lesson_quit in the lesson player
+npm run e2e:pro-declined  # "What's stopping you?" after Not now on /pro (360px, event data, once a week)
 ```
 
 Tap targets are at least **44px** everywhere (inline text links and glossary terms excepted); the
@@ -915,7 +916,13 @@ parent or guardian before subscribing" is shown to everyone.
   each), the price with **annual preselected** ("A$59.99 a year, just A$5 a month"; monthly is a
   small switch), one big button ("Start 7-day free trial" via `PlanButton`, which sends
   `checkout_started`), "Not now", and the parent line. A gentle staggered entrance (none under
-  reduced motion). It sends `paywall_viewed`. Mistake review joins the benefits only once it ships.
+  reduced motion). It sends `paywall_viewed`.
+- **"What's stopping you?"** (`DeclinedQuestion`, rules in `src/lib/pro/declined.ts`): "Not now"
+  on the paywall, the daily-limit screen or `/pro` (`declineSource`) first swaps the pitch for one
+  optional question with four one-tap answers and Skip, then carries on where "Not now" was going.
+  It sends `pro_declined` with only `reason` and `source` (the screen: `paywall`, `limit`,
+  `pro_page`; not the visitor's source). At most once a week per device (localStorage; never if
+  storage is blocked). The sheet's ✕ and Escape just close. `npm run e2e:pro-declined` checks it. Mistake review joins the benefits only once it ships.
 - **"What's next"** (`WhatsNext`) is `ProPitch` with the next module named; its **teaser card**
   (`TeaserCard`: a sandbox, no XP, nothing saved) sits behind a small "Try a sample" link. With
   accounts it only shows where Pro is still needed (a copy without accounts).
@@ -1272,7 +1279,7 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   `beforeSend` runs `redactUrl`: query strings are dropped except `utm_*`, and `/dev` isn't
   tracked, so a sign-in token or email can never be sent.
 - **Custom events** (`trackEvent` in `src/lib/analytics.ts`): `landing_cta`, `lesson_start`,
-  `lesson_complete`, `lesson_quit` (lesson id and card number only, without `source`: `quitEventData`), `quiz_pass`, the sign-up gate's `signup_prompt_viewed` and `signed_up`, and the
+  `lesson_complete`, `lesson_quit` (lesson id and card number only, without `source`: `quitEventData`), `pro_declined` (reason and screen only: `declinedEventData`), `quiz_pass`, the sign-up gate's `signup_prompt_viewed` and `signed_up`, and the
   Pro funnel: `paywall_viewed`, `limit_reached` (a free account hit today's limit, with the lesson),
   `teaser_played`, `checkout_started`, `trial_started`, `subscribed`, `certificate_issued`. Each
   has at most two properties: `lesson` (or `course`) and `source`; `eventData` only lets a content

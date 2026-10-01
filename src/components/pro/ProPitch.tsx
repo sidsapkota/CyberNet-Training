@@ -1,13 +1,22 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
+import { useRouter } from "next/navigation";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Mascot } from "@/components/mascot/Mascot";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { CertificateIcon, FreezeIcon, UnlimitedIcon } from "@/components/ui/icons";
-import { type EventTarget as AnalyticsTarget, trackEvent } from "@/lib/analytics";
+import { type EventTarget as AnalyticsTarget, trackEvent, trackProDeclined } from "@/lib/analytics";
+import {
+  type DeclineReason,
+  type DeclineSource,
+  declinedEventData,
+  declinedQuestionDue,
+  markDeclinedAsked,
+} from "@/lib/pro/declined";
 import type { Plan } from "@/lib/pro/env";
 import type { PitchPrices } from "@/lib/pro/pricing";
+import { DeclinedQuestion } from "./DeclinedQuestion";
 import { PlanButton } from "./PlanButton";
 
 /** What Pro adds, one line each. Mistake review joins this list when it ships. */
@@ -41,6 +50,9 @@ function usePitchPrices(given: PitchPrices | null | undefined): PitchPrices | nu
  * that fits a 360×640 phone with the button in view. Mascot, one headline, three benefits, the price
  * (annual first, monthly a small switch), one big button, "Not now", and the parent line. No timers,
  * no pressure. A gentle entrance; the final state at once under reduced motion.
+ *
+ * With `declineSource`, "Not now" first asks "What's stopping you?" in the same place (at most once
+ * a week per device), then carries on to where it was going.
  */
 export function ProPitch({
   headline,
@@ -50,6 +62,7 @@ export function ProPitch({
   notNow,
   sample,
   headingLevel = 1,
+  declineSource,
 }: {
   headline: string;
   /** One short line under the headline. */
@@ -62,7 +75,11 @@ export function ProPitch({
   /** An optional "Try a sample" area, collapsed until asked for. */
   sample?: ReactNode;
   headingLevel?: 1 | 2;
+  /** Which screen this is, for the optional "What's stopping you?" after "Not now". */
+  declineSource?: DeclineSource;
 }) {
+  const router = useRouter();
+  const [asking, setAsking] = useState(false);
   const reduceMotion = useReducedMotion();
   const prices = usePitchPrices(givenPrices);
   const [plan, setPlan] = useState<Plan>("annual");
@@ -75,6 +92,29 @@ export function ProPitch({
     viewed.current = true;
     trackEvent("paywall_viewed", track === "page" ? undefined : track);
   }, [track]);
+
+  function leave() {
+    if ("href" in notNow) router.push(notNow.href);
+    else notNow.onClick();
+  }
+
+  /** "Not now": ask the question instead when this device is due it; otherwise go straight on. */
+  function onNotNow(event: { preventDefault: () => void }) {
+    if (!declineSource || !declinedQuestionDue()) {
+      if ("onClick" in notNow) notNow.onClick();
+      return; // a link just follows its href
+    }
+    event.preventDefault();
+    markDeclinedAsked();
+    setAsking(true);
+  }
+
+  function onAnswer(reason: DeclineReason) {
+    if (declineSource) trackProDeclined(declinedEventData(reason, declineSource));
+    leave();
+  }
+
+  if (asking) return <DeclinedQuestion onAnswer={onAnswer} headingLevel={headingLevel} />;
 
   // The same props on the server and in the browser (so hydration matches); under reduced motion
   // the entrance just takes no time.
@@ -142,11 +182,11 @@ export function ProPitch({
       <motion.div {...rise(4)} className="mt-1 w-full">
         {prices && <PlanButton key={plan} plan={plan} label="Go unlimited with Pro" primary big />}
         {"href" in notNow ? (
-          <ButtonLink href={notNow.href} variant="ghost" className="mt-1 w-full">
+          <ButtonLink href={notNow.href} variant="ghost" className="mt-1 w-full" onClick={onNotNow}>
             Not now
           </ButtonLink>
         ) : (
-          <Button variant="ghost" className="mt-1 w-full" onClick={notNow.onClick}>
+          <Button variant="ghost" className="mt-1 w-full" onClick={onNotNow}>
             Not now
           </Button>
         )}

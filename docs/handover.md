@@ -19,15 +19,15 @@ Last updated: 2 October 2026.
 
 ## 2. Open branches
 
-None. Preview URLs follow `https://cyber-net-training-git-<branch>-sidsapkotas-projects.vercel.app`.
+- `pro-declined-reason`: queue item 1, "What's stopping you?" after "Not now" on the paywall, the daily-limit screen and /pro. Waiting for the owner to try the preview and say merge. Preview URLs follow `https://cyber-net-training-git-<branch>-sidsapkotas-projects.vercel.app`.
 
 ## 3. In progress
 
-Nothing half-done. Next up is item 1 of the queue.
+Nothing half-done. Item 1 is built on its branch (above); next up after it merges is item 2.
 
 ## 4. Queue (in order)
 
-1. **"What's stopping you?"** After "Not now" on any Pro screen (paywall, daily limit, /pro), show one optional question in the same sheet with four one-tap answers ("Too expensive", "Need to ask a parent", "Not sure it's worth it yet", "Just exploring") plus "Skip". Send `pro_declined` with `reason` and `source` only (nothing personal). At most once per week per device. One tap. Own branch + preview.
+1. ~~"What's stopping you?"~~ Built on `pro-declined-reason`, awaiting merge. `source` is the screen (`paywall`, `limit`, `pro_page`), Skip sends `reason: skipped`; read it in Vercel → Analytics → Events → `pro_declined`.
 2. **B: Mistake review** (Pro). Show the SQL before applying. When it ships, add "Review your mistakes" to the Pro benefits (`ProPitch`).
 3. **C: Streak freeze** (Pro). Show the SQL before applying. (Pro already allows holding 3 freezes instead of 2.)
 4. Family plan: **on hold**, don't build.

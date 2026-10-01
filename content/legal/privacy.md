@@ -91,7 +91,7 @@ If you use "Send feedback", we store your **message**, and optionally **which le
 
 ## Analytics
 
-We use Vercel Web Analytics to count page visits and a few events, such as "lesson started", "lesson completed" and "quiz passed", and which video or website sent a visitor (for example "tiktok"). It **doesn't use cookies**, doesn't track you across other websites, and we never send it your email, name or anything you type. Web addresses are trimmed before they're counted.
+We use Vercel Web Analytics to count page visits and a few events, such as "lesson started", "lesson completed" and "quiz passed", the answer you tap if you choose to tell us why you're not getting Pro yet (like "Just exploring"), and which video or website sent a visitor (for example "tiktok"). It **doesn't use cookies**, doesn't track you across other websites, and we never send it your email, name or anything you type. Web addresses are trimmed before they're counted.
 
 ## Cookies and storage
 

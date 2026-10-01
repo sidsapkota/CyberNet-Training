@@ -31,6 +31,7 @@ export function LimitReached({ lessonId, course }: { lessonId: string; course: C
       headline={`You've done ${DAILY_LESSON_LIMIT} lessons today.`}
       sub="Come back tomorrow, or go unlimited with Pro."
       track={lessonId}
+      declineSource="limit"
       notNow={{ href: `/course/${course.id}` }}
     />
   );
