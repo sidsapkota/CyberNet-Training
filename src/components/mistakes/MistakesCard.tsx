@@ -14,7 +14,7 @@ import { usePro } from "@/lib/pro/ProProvider";
  */
 export function MistakesCard({ className = "" }: { className?: string }) {
   const { auth } = useAuth();
-  const { hasPro } = usePro();
+  const { pro, hasPro } = usePro();
   const signedIn = auth.status === "signed-in";
   const [count, setCount] = useState<number | null>(null);
 
@@ -30,7 +30,8 @@ export function MistakesCard({ className = "" }: { className?: string }) {
     };
   }, [signedIn]);
 
-  if (!signedIn || !count) return null;
+  // Waits for Pro status, so a Pro member never sees "Review with Pro", even for a moment.
+  if (!signedIn || !count || pro.loading) return null;
   return (
     <section aria-labelledby="mistakes-card-title" className={`${className} flex flex-wrap items-center gap-4 p-5`}>
       <span className="grid size-12 shrink-0 place-items-center rounded-node bg-accent-soft text-accent-ink">

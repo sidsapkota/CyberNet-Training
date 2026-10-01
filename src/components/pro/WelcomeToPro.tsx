@@ -11,6 +11,9 @@ import { celebrate } from "@/lib/celebrate";
 import { useFeedback } from "@/lib/feedback";
 import { usePro } from "@/lib/pro/ProProvider";
 import { ProBadge } from "./ProBadge";
+import { markProCelebrated } from "./ProCelebration";
+import { useAuth } from "@/lib/auth/AuthProvider";
+import { currentProStart } from "@/lib/pro/plans";
 
 const dateFormat = new Intl.DateTimeFormat("en-AU", { day: "numeric", month: "long", year: "numeric" });
 
@@ -29,6 +32,13 @@ export function WelcomeToPro({ confirmed }: { confirmed: boolean }) {
     // Once, on arrival.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // This device has now celebrated this Pro start: the first-open welcome won't show again.
+  const { auth } = useAuth();
+  const userId = auth.status === "signed-in" ? auth.userId : null;
+  useEffect(() => {
+    if (confirmed && userId && !pro.loading && pro.status.kind === "subscription") markProCelebrated(userId, currentProStart(pro.intervals, Date.now()));
+  }, [confirmed, userId, pro]);
 
   const trialEnd = !pro.loading && pro.status.kind === "subscription" && pro.status.trialEnd ? pro.status.trialEnd : null;
   const subscription = !pro.loading && pro.status.kind === "subscription" ? pro.status.status : null;

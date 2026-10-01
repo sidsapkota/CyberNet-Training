@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
-import { cleanSource, eventData, quitEventData, redactUrl, sourceFromUrl } from "./analytics";
+import { afterEach, describe, expect, it } from "vitest";
+import { cleanSource, eventData, quitEventData, redactUrl, sourceFromUrl, trackEvent } from "./analytics";
 
 describe("analytics: where visitors came from", () => {
   it("takes utm_source first, then a /from/<platform> path", () => {
@@ -53,5 +53,27 @@ describe("quitEventData (where people leave a lesson)", () => {
     expect(quitEventData("someone@example.com", 0)).toEqual({});
     expect(quitEventData("meet-the-os", 2.5)).toEqual({ lesson: "meet-the-os" });
     expect(quitEventData("meet-the-os", 400)).toEqual({ lesson: "meet-the-os" });
+  });
+});
+
+describe("analytics: events sent before Vercel's script starts", () => {
+  afterEach(() => {
+    delete (globalThis as { window?: unknown }).window;
+  });
+
+  it("are queued for the script, not dropped", () => {
+    const fake: { va?: unknown; vaq?: unknown[][] } = {};
+    (globalThis as { window?: unknown }).window = fake;
+    trackEvent("lesson_start", "meet-the-os");
+    expect(fake.vaq).toHaveLength(1);
+    expect(fake.vaq?.[0]?.[0]).toBe("event");
+    expect(fake.vaq?.[0]?.[1]).toMatchObject({ name: "lesson_start", data: { lesson: "meet-the-os" } });
+  });
+
+  it("go straight through once the script has set up its queue", () => {
+    const calls: unknown[][] = [];
+    (globalThis as { window?: unknown }).window = { va: (...p: unknown[]) => calls.push(p) };
+    trackEvent("quiz_pass", "q");
+    expect(calls).toHaveLength(1);
   });
 });

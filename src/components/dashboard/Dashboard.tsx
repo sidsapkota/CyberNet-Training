@@ -25,6 +25,7 @@ import {
 import { TodayPanel } from "@/components/streak/TodayPanel";
 import { LeaguesCard } from "@/components/leagues/LeaguesCard";
 import { MistakesCard } from "@/components/mistakes/MistakesCard";
+import { DashboardIdentity } from "./DashboardIdentity";
 import { DailyLimitNotice } from "@/components/pro/DailyLimitNotice";
 import { EarlyUserThanks } from "@/components/pro/EarlyUserThanks";
 import { useAuth } from "@/lib/auth/AuthProvider";
@@ -84,6 +85,7 @@ export function Dashboard({ courses }: { courses: CourseOutline[] }) {
   return (
     <>
       <h1 className="sr-only">Dashboard</h1>
+      <DashboardIdentity />
       <EarlyUserThanks />
       <DailyLimitNotice />
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">

@@ -1,64 +1,44 @@
 "use client";
 
-import { useState } from "react";
-import { openPortalAction } from "@/app/actions/pro";
-import { Button, ButtonLink } from "@/components/ui/Button";
+import { ButtonLink } from "@/components/ui/Button";
 import { useAuth } from "@/lib/auth/AuthProvider";
+import { DAILY_LESSON_LIMIT } from "@/lib/pro/dailyLimit";
 import { proLine } from "@/lib/pro/describe";
 import { usePro } from "@/lib/pro/ProProvider";
 import { ProBadge } from "./ProBadge";
 
 /**
- * CyberNet Pro on /account: the learner's plan in one line, and Stripe's Customer Portal to switch
- * plans, update the card or cancel (Stripe returns here afterwards). Learners without a
- * subscription get a link to /pro.
+ * "Your plan" on /account: the plan in one line, and the way to Your plan (/account/plan), where
+ * members manage their subscription. Free learners go to the plans on /pro.
  */
 export function ManageProPanel({ className }: { className: string }) {
   const { available } = useAuth();
-  const { pro } = usePro();
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { pro, hasPro } = usePro();
   if (!available || pro.loading || !pro.available) return null;
 
-  const subscribed = pro.status.kind === "subscription";
+  const pastDue = pro.status.kind === "subscription" && pro.status.status === "past_due";
   return (
     <section aria-labelledby="pro-heading" className={className}>
       <div className="flex items-center gap-2">
         <h2 id="pro-heading" className="font-semibold">
-          CyberNet Pro
+          Your plan
         </h2>
-        {pro.hasPro && <ProBadge size="sm" />}
+        {hasPro ? <ProBadge size="sm" lit /> : <span className="text-small text-ink-muted">Free</span>}
       </div>
-      <p className="mt-1 text-small text-ink-muted">{proLine(pro.status)}</p>
+      <p className="mt-1 text-small text-ink-muted">
+        {hasPro || (pro.status.kind === "none" && pro.status.hadSubscription) ? proLine(pro.status) : `${DAILY_LESSON_LIMIT} new lessons a day, every course.`}
+      </p>
       <div className="mt-4">
-        {subscribed ? (
-          <Button
-            variant={pro.status.kind === "subscription" && pro.status.status === "past_due" ? "primary" : "secondary"}
-            disabled={busy}
-            onClick={async () => {
-              setBusy(true);
-              setError(null);
-              const result = await openPortalAction();
-              if ("url" in result) window.location.assign(result.url);
-              else {
-                setError(result.error);
-                setBusy(false);
-              }
-            }}
-          >
-            {busy ? "Opening…" : "Manage subscription"}
-          </Button>
+        {hasPro ? (
+          <ButtonLink href="/account/plan" variant={pastDue ? "primary" : "secondary"}>
+            {pastDue ? "Update your card" : "See your plan"}
+          </ButtonLink>
         ) : (
-          <ButtonLink href="/pro" variant={pro.hasPro ? "secondary" : "primary"}>
-            {pro.status.kind === "none" && pro.status.hadSubscription ? "Come back to Pro" : "See Pro"}
+          <ButtonLink href="/pro?from=account" variant="secondary">
+            {pro.status.kind === "none" && pro.status.hadSubscription ? "Come back to Pro" : "See plans"}
           </ButtonLink>
         )}
       </div>
-      {error && (
-        <p role="alert" className="mt-2 text-small text-danger">
-          {error}
-        </p>
-      )}
     </section>
   );
 }
