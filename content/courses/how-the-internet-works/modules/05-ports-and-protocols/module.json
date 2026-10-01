@@ -4,5 +4,5 @@
   "description": "Discover how one address runs many services, how TCP and UDP deliver data, and the shared rules that let every computer talk.",
   "order": 5,
   "access": "pro",
-  "teaserCard": { "lesson": "ports", "card": "how-many-ports" }
+  "teaserCard": { "lesson": "ports", "card": "pick-the-program" }
 }

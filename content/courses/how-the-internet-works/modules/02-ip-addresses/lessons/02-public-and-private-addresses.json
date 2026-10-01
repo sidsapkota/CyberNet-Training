@@ -6,51 +6,10 @@
   "icon": "house",
   "cards": [
     {
-      "id": "one-address-many-devices",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "One address, a whole house",
-      "body": "At home, a laptop, a phone and a games console can all be online at the same time. But the company that connects your home to the internet, your **internet service provider** or **ISP**, usually gives your home just **one** address that the rest of the internet can reach.\n\nEvery home [[network]] has a **router**, the box (often the same one that makes your Wi-Fi) that links your home to the internet. So how do all those devices share one address? The answer is two kinds of address: one kind for inside your home, and another for out on the internet."
-    },
-    {
-      "id": "private-ranges",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "Private addresses",
-      "body": "Think of room numbers in a school. Room 12 exists in thousands of schools, and that's fine, because a room number only has to make sense *inside* its own building.\n\nSome [[IPv4]] addresses work the same way. These three ranges are set aside as **private addresses**, for use inside homes, schools and offices:\n\n- `10.0.0.0` to `10.255.255.255`\n- `172.16.0.0` to `172.31.255.255`\n- `192.168.0.0` to `192.168.255.255`\n\nMillions of [[networks|network]] reuse the same private addresses, so [[routers|router]] on the internet won't deliver data to them. An address that *is* unique across the whole internet is called a **public address**. (In this course, public addresses come from ranges like `203.0.113.x` that are reserved for examples, so we never point at anyone's real computer.)"
-    },
-    {
-      "id": "which-is-private",
-      "type": "multiple_choice",
-      "difficulty": "core",
-      "prompt": "Which of these is a **private** address?",
-      "options": [
-        { "id": "p172", "text": "172.20.5.9" },
-        {
-          "id": "p192-0",
-          "text": "192.0.2.9",
-          "nudge": "Starting with 192 isn't enough. That private range needs the first two numbers to be 192.168. Check the second number here."
-        },
-        {
-          "id": "p203",
-          "text": "203.0.113.9",
-          "nudge": "`203.0.113.x` is one of the ranges this course uses for public example addresses. Look for one that fits a private range."
-        },
-        {
-          "id": "p198",
-          "text": "198.51.100.9",
-          "nudge": "Does 198 start any of the three private ranges? Compare the first two numbers with `10`, `172.16` to `172.31`, and `192.168`."
-        }
-      ],
-      "correctOptionId": "p172",
-      "explanation": "`172.20.5.9` is in the private range `172.16.0.0` to `172.31.255.255`, because its second number, 20, is between 16 and 31.\n\n`192.0.2.9` is a trap: it starts with 192, but only addresses starting **192.168** are private. The other two aren't in any private range either.",
-      "hint": "Compare each address with the three private ranges: `10.x`, `172.16` to `172.31`, and `192.168`. Check the first two numbers, not just the first."
-    },
-    {
       "id": "the-way-out",
       "type": "packet_path",
       "difficulty": "core",
-      "prompt": "Send a request from the **laptop** to the **web [[server]]** on the internet.",
+      "prompt": "At home, a laptop, a phone and a printer are all on the same Wi-Fi. Send a request from the **laptop** to the web [[server]] out on the internet.",
       "nodes": [
         { "id": "laptop", "kind": "device", "label": "Laptop", "address": "192.168.1.20", "col": 0, "row": 0 },
         { "id": "phone", "kind": "device", "label": "Phone", "address": "192.168.1.21", "col": 0, "row": 1 },
@@ -71,22 +30,43 @@
       "validPaths": [
         ["laptop", "home", "internet", "server"]
       ],
-      "explanation": "Every device in your home reaches the internet through the **home [[router]]**. It's the doorway between your private network and the internet, and it's the only device at home with a [[public address]]. The phone and printer are on the same home network, but they aren't a way out.",
-      "hint": "Follow the links from the laptop, and think about which box links a home to the internet.",
-      "nudge": "The phone and printer are on the same home [[network]], but they don't connect to the internet. Find the box that does."
+      "explanation": "Every device in your home reaches the internet through the **home [[router]]**. It's the doorway between your home [[network]] and the internet. The phone and printer are on the same home network, but they aren't a way out.",
+      "hint": "Follow the links from the laptop, and look for the box that links the home to the internet.",
+      "nudge": "The phone and printer are on the same home network, but they don't connect to the internet. Find the box that does."
     },
     {
-      "id": "nat",
+      "id": "private-ranges",
       "type": "explainer",
       "difficulty": "core",
-      "title": "NAT: the router as receptionist",
-      "body": "Imagine an office where every call to the outside world goes through one receptionist. When you ask for something, the receptionist makes the call from the office's main number, and notes down that the request came from you. When the answer comes back, they check their notes and pass it to your desk.\n\nYour home [[router]] does this with addresses. It's called **NAT**, short for **Network Address Translation**:\n\n1. Your laptop (`192.168.1.20`) sends a request.\n2. The router swaps the private sender address for its own [[public address]] (`203.0.113.7`) and notes who asked.\n3. The reply comes back to `203.0.113.7`.\n4. The router checks its notes and passes the reply to `192.168.1.20`.\n\nWhen several devices are talking at once, the router tells the replies apart using extra numbers called **ports**. You'll meet ports in a later module."
+      "title": "Public and private",
+      "body": "Your **ISP**, the company that connects your home, usually gives it just **one** address the whole internet can reach: a **public address**.\n\nInside, devices use **private addresses**. They're like room numbers: room 12 exists in thousands of schools. Private addresses start `10.`, `192.168.`, or `172.16.` to `172.31.`"
+    },
+    {
+      "id": "sort-private-public",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Sort each address. Is it a **private** address, or could it be a **public** one? (This course uses ranges like `203.0.113.x` for public examples.)",
+      "bins": [
+        { "id": "private", "label": "Private" },
+        { "id": "public", "label": "Public" }
+      ],
+      "items": [
+        { "id": "a10", "label": "10.0.0.5", "bin": "private" },
+        { "id": "a192-168", "label": "192.168.1.20", "bin": "private" },
+        { "id": "a172-20", "label": "172.20.5.9", "bin": "private" },
+        { "id": "a192-0", "label": "192.0.2.9", "bin": "public" },
+        { "id": "a203", "label": "203.0.113.7", "bin": "public" },
+        { "id": "a198", "label": "198.51.100.10", "bin": "public" }
+      ],
+      "explanation": "`10.0.0.5` and `192.168.1.20` start like private ranges. `172.20.5.9` is private too, because its second number, 20, is between 16 and 31.\n\n`192.0.2.9` is the trap: it starts with 192, but only addresses starting **192.168** are private. The rest aren't in any private range, so they can be public.",
+      "hint": "Check the first **two** numbers of each address against the private ranges: `10`, `192.168`, and `172.16` to `172.31`.",
+      "nudge": "Starting with 192 isn't enough to be private: the second number matters too. Recheck the addresses that start with 192 or 172."
     },
     {
       "id": "nat-steps",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "Your phone at `192.168.1.21` loads a web page. Put the [[NAT]] steps in order.",
+      "prompt": "Your [[router]] works like an office receptionist. A request goes out from the home's one public address (`203.0.113.7`), and the router notes who asked. When the reply comes back, it checks its notes and hands it on. This is **NAT** (Network Address Translation).\n\nYour phone at `192.168.1.21` loads a web page. Put the steps in order.",
       "items": [
         { "id": "send", "label": "The phone sends a request, from 192.168.1.21" },
         { "id": "swap-out", "label": "The router changes the sender to its public address, 203.0.113.7, and notes who asked" },
@@ -94,14 +74,14 @@
         { "id": "swap-back", "label": "The router checks its notes and passes the reply to 192.168.1.21" }
       ],
       "explanation": "The request goes out first, and the router swaps in its public address on the way. The server can only reply to the address it saw, `203.0.113.7`. The router then uses its notes to send the reply back to the phone.",
-      "hint": "Think of the office receptionist: a request goes out before any reply comes back, and notes are made before they're needed.",
+      "hint": "Think of the receptionist: a request goes out before any reply comes back, and notes are made before they're needed.",
       "nudge": "The server can only reply to the address it saw. When does the router swap the address, and when does it use its notes?"
     },
     {
       "id": "what-server-sees",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Your laptop at `192.168.1.20` asks the web [[server]] at `198.51.100.10` for a page. Your [[router]]'s [[public address]] is `203.0.113.7`. Which **sender** address does the web server see?",
+      "prompt": "Your laptop at `192.168.1.20` asks the web [[server]] at `198.51.100.10` for a page. Your router's [[public address]] is `203.0.113.7`. Which **sender** address does the web server see?",
       "options": [
         { "id": "public", "text": "203.0.113.7" },
         {
@@ -124,28 +104,38 @@
       "id": "address-terms",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Match each term to what it means.",
+      "prompt": "Match each situation to what's behind it.",
       "pairs": [
-        { "id": "private", "left": "Private address", "right": "Only used inside a home or office network" },
-        { "id": "public", "left": "Public address", "right": "Unique across the whole internet" },
-        { "id": "nat", "left": "NAT", "right": "Swaps private addresses for a public one" },
-        { "id": "isp", "left": "ISP", "right": "The company that connects you to the internet" }
+        { "id": "private", "left": "Your laptop's address on your home Wi-Fi", "right": "A private address" },
+        { "id": "public", "left": "The address a website sees when you visit", "right": "Your router's public address" },
+        { "id": "nat", "left": "Five devices at home sharing one address", "right": "NAT" },
+        { "id": "isp", "left": "Who gave your home its public address", "right": "Your ISP" }
       ],
-      "explanation": "A **private address** only means something inside its own network, and a **public address** is unique across the whole internet. **NAT** is the swapping trick that lets a home's devices share one public address. Your **ISP** (internet service provider) is the company that gives your home its connection and its public address.",
-      "hint": "Think back to the school room numbers, the office receptionist, and the company that connects your home.",
-      "nudge": "Private and public are opposites: one only makes sense inside its own network, the other works everywhere. Recheck those two first."
+      "explanation": "Your laptop's address at home is a **private address**: it only means something inside your home. A website sees your router's **public address**, because **NAT** swaps it in, which is how five devices can share one address. Your **ISP**, the company that connects your home, gave it that public address.",
+      "hint": "Think back to the room numbers, the receptionist, and the company that connects your home.",
+      "nudge": "Inside your home, devices use one kind of address; out on the internet, websites see the other. Recheck those two first."
     },
     {
-      "id": "count-172-range",
-      "type": "numeric_input",
+      "id": "same-address-two-houses",
+      "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "In the private range `172.16.0.0` to `172.31.255.255`, the second number can be anything from **16** to **31**. How many different values is that?",
-      "base": "decimal",
-      "answer": 16,
-      "unit": "values",
-      "explanation": "Count both ends: 31 − 16 = 15, then add 1 because 16 itself counts too, which gives **16** values. It's easy to answer 15 by forgetting the first one. It's the same idea as 0 to 255 being 256 values.",
-      "hint": "Count both ends. It might help to try a smaller range first: how many values are there from 1 to 3?",
-      "nudge": "Just subtracting the ends misses one, because 16 itself counts too. Test your method on a small range, like 1 to 3."
+      "prompt": "Your laptop shows `192.168.1.20`. Your friend's laptop, in another house across town, shows `192.168.1.20` too. Is that a problem?",
+      "options": [
+        { "id": "fine", "text": "No: private addresses only need to be unique inside each home" },
+        {
+          "id": "clash",
+          "text": "Yes: websites won't know which of the two laptops to reply to",
+          "nudge": "Websites never see either laptop's private address. What address does a request carry once it leaves each home?"
+        },
+        {
+          "id": "copied",
+          "text": "Yes: one of the routers copied the other's address by mistake",
+          "nudge": "Think about room 12: thousands of schools have one, and nobody made a mistake. Where does a private address need to be unique?"
+        }
+      ],
+      "correctOptionId": "fine",
+      "explanation": "It's fine. Like room 12 in two different schools, a private address only has to be unique **inside its own home**. Out on the internet, each home's requests carry that home's own public address, thanks to [[NAT]], so replies never get mixed up.",
+      "hint": "Think about room numbers in two different schools. And which address does a website actually see?"
     },
     {
       "id": "why-unreachable",
@@ -157,7 +147,7 @@
         {
           "id": "banned",
           "text": "Addresses starting 192.168 are banned from the internet as unsafe",
-          "nudge": "Nothing about 192.168 is unsafe or banned. Think back to the school room numbers."
+          "nudge": "Nothing about 192.168 is unsafe or banned. Think back to the room numbers."
         },
         {
           "id": "wifi-only",
@@ -171,15 +161,15 @@
         }
       ],
       "correctOptionId": "not-routed",
-      "explanation": "`192.168.1.20` is used in millions of homes at once, so it can't point to just one of them. Internet routers don't carry data addressed to private ranges at all. Private addresses aren't unsafe, they work over cables too, and their length has nothing to do with it.\n\nThis is a handy side effect of [[NAT]], but it isn't full protection. That job belongs to a **firewall**, which you'll learn about later.",
-      "hint": "Think about school room numbers: could a letter addressed only to \"Room 12\" find one particular school?"
+      "explanation": "`192.168.1.20` is used in millions of homes at once, so it can't point to just one of them. Internet [[routers|router]] don't carry data addressed to private ranges at all. Private addresses aren't unsafe, they work over cables too, and their length has nothing to do with it.\n\nThis is a handy side effect of [[NAT]], but it isn't full protection. That job belongs to a **firewall**.",
+      "hint": "Think about room numbers: could a letter addressed only to \"Room 12\" find one particular school?"
     },
     {
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- **Private addresses** (`10.x.x.x`, `172.16.x.x` to `172.31.x.x`, `192.168.x.x`) are reused inside millions of homes and offices. Internet [[routers|router]] don't deliver to them.\n- A **public address** is unique across the whole internet. Your **ISP** usually gives your home one.\n- Your home router uses **NAT** to swap private addresses for its public address, and to pass replies back to the right device.\n- A web [[server]] sees your router's public address, not your device's private one.\n\nNext: what happens now that [[IPv4]] addresses have run out."
+      "body": "- **Private addresses** are reused inside millions of homes.\n- Your home shares one **public address** from your **ISP**.\n- **NAT** swaps addresses on the way out, and back."
     }
   ]
 }

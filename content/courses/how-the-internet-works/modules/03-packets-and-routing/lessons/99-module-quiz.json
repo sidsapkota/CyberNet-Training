@@ -6,82 +6,92 @@
   "passThreshold": 0.7,
   "cards": [
     {
+      "id": "update-and-call",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Your flatmate starts downloading a huge game update while you're on a video call, on the same Wi-Fi. Your call keeps working. Why?",
+      "options": [
+        { "id": "take-turns", "text": "Both travel as small packets that take turns on the same connection" },
+        { "id": "call-first", "text": "The download is paused automatically until your call has ended" },
+        { "id": "two-wifis", "text": "The Wi-Fi gives each device its own separate connection to the internet" },
+        { "id": "one-piece", "text": "The update arrives as one giant piece, which is so fast it finishes instantly" }
+      ],
+      "correctOptionId": "take-turns",
+      "explanation": "All data travels as small **packets** that take turns on the same connection. The call's packets slip in between the download's, so both keep going. If the update came as one giant piece, the call would have to wait for it."
+    },
+    {
       "id": "packet-info",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Match each piece of packet information to what it tells the network.",
+      "prompt": "Which part of a packet is used in each situation?",
       "pairs": [
-        { "id": "destination", "left": "Destination address", "right": "Where the packet is going" },
-        { "id": "source", "left": "Source address", "right": "Where a reply should be sent" },
-        { "id": "sequence", "left": "Sequence number", "right": "Where this piece fits in the message" },
-        { "id": "payload", "left": "Payload", "right": "The data itself" }
+        { "id": "destination", "left": "A router decides which way to pass the packet on", "right": "Destination address" },
+        { "id": "source", "left": "The web server needs to know where to send its reply", "right": "Source address" },
+        { "id": "sequence", "left": "The receiver puts a jumbled message back together", "right": "Sequence number" },
+        { "id": "payload", "left": "Your video app shows the next bit of the film", "right": "Payload" }
       ],
-      "explanation": "The **destination address** says where the packet is going. The **source address** says who sent it, which is also where any reply goes back to. The **sequence number** says where the piece fits, and the **payload** is the data being carried."
+      "explanation": "Routers look at the **destination address** to choose the next step. A reply goes back to the **source address**, the sender. The **sequence number** says where each piece fits, and the **payload** is the actual data, here a bit of the film."
     },
     {
-      "id": "packets-for-9000",
-      "type": "numeric_input",
-      "difficulty": "core",
-      "prompt": "A file is **9,000 bytes**. If each packet carries exactly **1,500 bytes of data**, how many packets are needed?",
-      "base": "decimal",
-      "answer": 6,
-      "unit": "packets",
-      "explanation": "9,000 ÷ 1,500 = **6** packets. (Real packets use part of their space for addresses and other added information, so in practice you'd need one more.)"
-    },
-    {
-      "id": "avoid-the-outage",
+      "id": "long-way-round",
       "type": "packet_path",
       "difficulty": "core",
-      "prompt": "**Router B is down.** Get the packet from the **laptop** to the **web server**.",
+      "prompt": "One router on this map is **down** today. Get the packet from the **laptop** to the **web server**.",
       "nodes": [
         { "id": "laptop", "kind": "device", "label": "Laptop", "address": "192.168.1.20", "col": 0, "row": 1 },
         { "id": "home", "kind": "router", "label": "Home router", "address": "192.168.1.1", "col": 1, "row": 1 },
-        { "id": "ra", "kind": "router", "label": "Router A", "address": "203.0.113.1", "col": 2, "row": 0 },
-        { "id": "rb", "kind": "router", "label": "Router B", "address": "203.0.113.2", "col": 2, "row": 2, "down": true },
-        { "id": "server", "kind": "server", "label": "Web server", "address": "198.51.100.10", "col": 3, "row": 1 }
+        { "id": "rd", "kind": "router", "label": "Router D", "address": "203.0.113.4", "col": 2, "row": 0 },
+        { "id": "ra", "kind": "router", "label": "Router A", "address": "203.0.113.1", "col": 2, "row": 1, "down": true },
+        { "id": "rb", "kind": "router", "label": "Router B", "address": "203.0.113.2", "col": 2, "row": 2 },
+        { "id": "server", "kind": "server", "label": "Web server", "address": "198.51.100.10", "col": 3, "row": 1 },
+        { "id": "rc", "kind": "router", "label": "Router C", "address": "198.51.100.1", "col": 3, "row": 2 }
       ],
       "links": [
         { "from": "laptop", "to": "home" },
         { "from": "home", "to": "ra" },
-        { "from": "home", "to": "rb" },
         { "from": "ra", "to": "server" },
-        { "from": "rb", "to": "server" }
+        { "from": "home", "to": "rd" },
+        { "from": "rd", "to": "ra" },
+        { "from": "home", "to": "rb" },
+        { "from": "rb", "to": "rc" },
+        { "from": "rc", "to": "server" }
       ],
       "source": "laptop",
       "destination": "server",
       "validPaths": [
-        ["laptop", "home", "ra", "server"]
+        ["laptop", "home", "rb", "rc", "server"]
       ],
-      "explanation": "With Router B down, the only working route is **laptop → home router → Router A → web server**. Real routers do this automatically: they update their routing tables and send packets around the problem."
+      "explanation": "The shortest route, straight through **Router A**, is down. Router D looks like a way round, but its only link onwards goes back into Router A. The working route is the long one: **laptop → home router → Router B → Router C → web server**. Real routers do this automatically: they update their routing tables and send packets around the problem."
     },
     {
-      "id": "what-is-a-hop",
+      "id": "next-step-only",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "What is a **hop**?",
+      "prompt": "A router in Sydney receives a packet for a server in London, about 20 hops away. What does that router need to know?",
       "options": [
-        { "id": "step", "text": "One step of a packet's journey, from one router to the next" },
-        { "id": "lost", "text": "A packet that got lost" },
-        { "id": "whole-route", "text": "The whole route from sender to receiver" },
-        { "id": "address", "text": "A kind of IP address" }
+        { "id": "next", "text": "Only which neighbour to pass the packet to next, from its routing table" },
+        { "id": "whole-route", "text": "The full list of every router between Sydney and London, worked out in advance" },
+        { "id": "contents", "text": "What's inside the packet, so it can decide whether it's worth sending on" },
+        { "id": "ask-sender", "text": "Nothing yet: it asks the sender's laptop which way the packet should go" }
       ],
-      "correctOptionId": "step",
-      "explanation": "A **hop** is one step from one router to the next. A journey across the internet is made of many hops, and traceroute lists them one per line."
+      "correctOptionId": "next",
+      "explanation": "No router plans the whole trip. Each one checks its **routing table** for the packet's destination and passes it to the right neighbour, like following signposts at each junction. The next router does the same, hop by hop, all the way to London."
     },
     {
-      "id": "resend-which",
+      "id": "resend-count",
       "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "A message was sent as packets 1 to 5. Packets **1, 2, 4 and 5** arrived. Which packet number needs to be sent again?",
+      "prompt": "A photo is sent with TCP as packets 1 to 8. Packets **1, 3, 4, 7 and 8** arrive. How many packets must be sent again?",
       "base": "decimal",
       "answer": 3,
-      "explanation": "The sequence numbers jump from 2 to 4, so **packet 3** is missing. TCP gets just that packet sent again, and the others are kept."
+      "unit": "packets",
+      "explanation": "Packets **2, 5 and 6** never arrived, so **3** are sent again. TCP keeps the five that did arrive and slots the missing ones in by their sequence numbers. Nothing else is resent."
     },
     {
       "id": "traceroute-first-hop",
       "type": "terminal",
       "difficulty": "core",
-      "prompt": "Run `traceroute example.org`, then find the address of the **first hop** (the line numbered 1).",
+      "prompt": "Run `traceroute example.org`, then work out how many **routers** your packets pass through on the way to example.org.",
       "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
       "commands": [
         {
@@ -93,16 +103,16 @@
       ],
       "success": {
         "type": "answer",
-        "question": "What is the address of the first hop?",
-        "accepted": ["10.0.0.1"]
+        "question": "How many routers are between you and example.org?",
+        "accepted": ["4", "four"]
       },
-      "explanation": "Hop 1 is `10.0.0.1`, a private address. It's this network's own router, the first stop on the way out. (Hop 3 shows `* * *` because that router didn't reply to traceroute, but hops 4 and 5 prove packets got through it.)"
+      "explanation": "Hops 1 to 4 are routers, and hop 5 is example.org itself: **4** routers. Hop 3 still counts: `* * *` only means that router didn't reply to traceroute, and hops 4 and 5 prove packets got through it."
     },
     {
       "id": "reorder-packets",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "These packets arrived out of order. Put them back in the order they were sent.",
+      "prompt": "A photo's packets took different roads and arrived out of order. Put them back in the order they were sent.",
       "items": [
         { "id": "p1", "label": "#1 THE" },
         { "id": "p2", "label": "#2 PHOTO" },

@@ -6,134 +6,54 @@
   "icon": "scroll-text",
   "cards": [
     {
-      "id": "same-rules",
-      "type": "explainer",
+      "id": "order-layers",
+      "type": "drag_to_order",
       "difficulty": "core",
-      "title": "How strangers understand each other",
-      "body": "Your phone was made by one company, the Wi-Fi [[router]] by another, and a website's [[server]] by a third. They've never met, yet they understand each other perfectly, billions of times a second.\n\nThat works because they all follow the same **rules**, written down and shared openly for anyone to use."
+      "prompt": "When your [[browser]] asks for a page, the request travels like a letter inside envelopes inside a parcel. Each wrapper follows its own set of rules, a **protocol**, with one job.\n\nPut them in order, from the **letter in the middle** at the top to the **outside wrapper** at the bottom.",
+      "items": [
+        { "id": "http", "label": "HTTP: the request for the page" },
+        { "id": "tcp", "label": "TCP: gets it to the right program, reliably" },
+        { "id": "ip", "label": "IP: addresses to reach the right computer" },
+        { "id": "link", "label": "Wi-Fi or Ethernet (wired): carries it to the next device" }
+      ],
+      "explanation": "The **HTTP** request is the letter at the centre. **TCP** wraps it so it reaches the right program reliably, **IP** wraps that so it reaches the right computer, and **Wi-Fi or Ethernet** carries the whole bundle one step at a time. At the other end, the wrappers come off in reverse: the outside first, the letter last.",
+      "hint": "The request itself is the letter. The outside wrapper is whatever physically carries the bundle to the next device.",
+      "nudge": "Each wrapper goes around everything before it. Start with what the browser actually wants to say, then add the program, the computer and the next device."
     },
     {
       "id": "what-is-a-protocol",
       "type": "explainer",
       "difficulty": "core",
-      "title": "What a protocol is",
-      "body": "You met the word **protocol** in Module 2: a set of rules that devices agree to follow. A protocol says:\n\n- what each message looks like\n- what order messages are sent in\n- what to do when something goes wrong\n\nYou already know several: **IP** (addresses and delivery), **TCP** and **UDP** (getting data to the right program, reliably or quickly), and **DNS** (names). The rules for internet protocols are published as free documents, so anyone can build something that works with everything else."
+      "title": "How strangers understand each other",
+      "body": "Your phone, your [[router]] and a website's [[server]] were made by different companies, yet they understand each other perfectly. They all follow the same **protocols**: rules for what each message looks like, what order messages go in, and what to do when something goes wrong.\n\nThe rules are published free, so anyone can build something that works with everything else."
     },
     {
-      "id": "envelopes",
-      "type": "explainer",
+      "id": "which-protocol-job",
+      "type": "sort_bins",
       "difficulty": "core",
-      "title": "Envelopes inside envelopes",
-      "body": "[[Protocols|protocol]] work in **layers**, like a letter inside an envelope inside a parcel. Each layer has one job and doesn't need to know about the others.\n\nWhen your [[browser]] asks for a page:\n\n1. The request itself follows **HTTP**.\n2. **TCP** wraps it, adding [[ports|port]] and [[sequence numbers|sequence-number]].\n3. **IP** wraps that, adding the addresses.\n4. **Wi-Fi** or **Ethernet** (wired networking) wraps it all to carry it to the next device.\n\nAt the other end, each layer is unwrapped in reverse, until the [[server]] reads the HTTP request."
-    },
-    {
-      "id": "order-layers",
-      "type": "drag_to_order",
-      "difficulty": "core",
-      "prompt": "Put the layers of a web request in order, from the **innermost** at the top to the **outermost** at the bottom.",
+      "prompt": "Every job online has its own protocol. **HTTPS** fetches web pages securely. **DNS** turns names into addresses. **SMTP** and **IMAP** handle email.\n\nWhich protocol does each job?",
+      "bins": [
+        { "id": "https", "label": "HTTPS" },
+        { "id": "dns", "label": "DNS" },
+        { "id": "email", "label": "SMTP or IMAP" }
+      ],
       "items": [
-        { "id": "http", "label": "HTTP: the request for the page" },
-        { "id": "tcp", "label": "TCP: ports and sequence numbers" },
-        { "id": "ip", "label": "IP: source and destination addresses" },
-        { "id": "link", "label": "Wi-Fi or Ethernet: carries it to the next device" }
+        { "id": "recipe", "label": "Loading a recipe page", "bin": "https" },
+        { "id": "bank", "label": "Logging in to your bank's website", "bin": "https" },
+        { "id": "site-address", "label": "Finding the address for example.org", "bin": "dns" },
+        { "id": "mail-server", "label": "Finding where example.org's email goes", "bin": "dns" },
+        { "id": "send-gran", "label": "Emailing Gran a birthday message", "bin": "email" },
+        { "id": "inbox", "label": "Checking your inbox on a new phone", "bin": "email" }
       ],
-      "explanation": "The **HTTP** request is the letter at the centre. **TCP** wraps it so it reaches the right program reliably, **IP** wraps that so it reaches the right computer, and **Wi-Fi or Ethernet** carries the whole bundle one step at a time.",
-      "hint": "Think of the letter inside envelopes. The request itself is the letter, and each layer wraps the one before it.",
-      "nudge": "Each layer wraps everything added before it, so inside-to-outside is the order the layers are added. Look back at the envelopes card."
-    },
-    {
-      "id": "email-protocols",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "Email uses two protocols",
-      "body": "Email is a good example of [[protocols|protocol]] working together:\n\n- **Sending** uses **SMTP**. Your email app hands the message to your mail provider's [[server]] (usually on [[port]] **587**), and servers pass email between each other on port **25**.\n- **Reading** usually uses **IMAP**. Your app fetches messages that are kept on your provider's server (port **143**, or **993** when **encrypted**: scrambled so only your app and the server can read it), so you see the same inbox on your phone and your laptop.\n\nAnd to find where to deliver email for a domain, the sending server looks up the domain's **MX record** with [[DNS]]."
-    },
-    {
-      "id": "protocol-jobs",
-      "type": "match_pairs",
-      "difficulty": "core",
-      "prompt": "Match each [[protocol]] to its job.",
-      "pairs": [
-        { "id": "http", "left": "HTTP", "right": "Fetches web pages" },
-        { "id": "https", "left": "HTTPS", "right": "Fetches web pages over an encrypted connection" },
-        { "id": "dns", "left": "DNS", "right": "Turns names into IP addresses" },
-        { "id": "ssh", "left": "SSH", "right": "Securely controls another computer remotely" },
-        { "id": "smtp", "left": "SMTP", "right": "Sends email on towards its destination" },
-        { "id": "imap", "left": "IMAP", "right": "Lets your app read mail kept on a server" }
-      ],
-      "explanation": "**HTTP** fetches pages and **HTTPS** does the same with encryption. **DNS** looks up names. **SSH** (Secure Shell) is for remote control. **SMTP** (Simple Mail Transfer Protocol) sends email, and **IMAP** (Internet Message Access Protocol) lets you read it.",
-      "hint": "Email uses two protocols: one for sending and one for reading. And the S in HTTPS is the secure version of fetching pages.",
-      "nudge": "Check the email pair: one protocol sends mail on, the other lets your app read it. Also check which web one is encrypted."
-    },
-    {
-      "id": "between-servers",
-      "type": "multiple_choice",
-      "difficulty": "core",
-      "prompt": "Which [[protocol]] carries an email from one mail [[server]] to another?",
-      "options": [
-        { "id": "smtp", "text": "SMTP" },
-        { "id": "imap", "text": "IMAP", "nudge": "IMAP is about reading mail that's kept on a server. Moving an email from one server to another is a different job." },
-        { "id": "http", "text": "HTTP", "nudge": "HTTP fetches web pages. Email has its own protocols, one for sending and one for reading." },
-        { "id": "dns", "text": "DNS", "nudge": "DNS helps find where to deliver, through the MX record, but it only looks things up. It doesn't carry the email itself." }
-      ],
-      "correctOptionId": "smtp",
-      "explanation": "**SMTP** moves email between servers, on [[port]] 25. **IMAP** is for *reading* mail kept on a server, not delivering it. **DNS** helps the sending server find the right destination through the [[MX record]], but it doesn't carry the email itself.",
-      "hint": "Email uses one protocol for sending and another for reading. Moving mail between servers is part of which job?"
-    },
-    {
-      "id": "check-ports",
-      "type": "terminal",
-      "difficulty": "core",
-      "prompt": "`nc` (netcat) can check whether a [[server]] answers on a [[port]]. Run `nc -zv example.com 22 25 80 443` to test four ports on example.com's server.",
-      "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
-      "commands": [
-        {
-          "command": "nc -zv example.com 22 25 80 443",
-          "description": "Check which of these ports example.com answers on",
-          "output": "Connection to example.com (198.51.100.10) 22 port [tcp/ssh] succeeded!\nnc: connect to example.com (198.51.100.10) port 25 (tcp) failed: Connection refused\nConnection to example.com (198.51.100.10) 80 port [tcp/http] succeeded!\nConnection to example.com (198.51.100.10) 443 port [tcp/https] succeeded!"
-        }
-      ],
-      "success": {
-        "type": "answer",
-        "question": "Which port number is NOT answering?",
-        "accepted": ["25", "port 25"]
-      },
-      "explanation": "Port **25** was refused, so this server doesn't accept email by SMTP. That's normal: example.com's email goes to a separate mail server named in its MX record. Ports 22 (SSH), 80 ([[HTTP]]) and 443 ([[HTTPS]]) all answered.\n\nOnly ever check ports on computers you own or have permission to test. Probing other people's servers can break rules or laws, even if you only look.",
-      "hint": "Run the `nc` [[command]] exactly as shown, then read each line. Most say **succeeded**. Look for the one that doesn't.",
-      "nudge": "Look for the line that says **failed** or **refused**, not **succeeded**. The port number is right after the word port."
-    },
-    {
-      "id": "port-8080",
-      "type": "multiple_choice",
-      "difficulty": "challenge",
-      "prompt": "A developer runs a website at `http://example.com:8080`, not on port 80. How can that work?",
-      "options": [
-        { "id": "convention", "text": "Standard ports are an agreement, not a law: a program can listen on any port if the browser is told which one" },
-        {
-          "id": "hex",
-          "text": "8080 is how 80 is written in hex, so it's the same port",
-          "nudge": "80 and 8080 are different port numbers, and hex has nothing to do with it. Think about what the `:8080` in the address tells the browser."
-        },
-        {
-          "id": "auto",
-          "text": "Browsers try every port until one answers",
-          "nudge": "Browsers don't guess. Look at the address again: it already contains the information the browser needs."
-        },
-        {
-          "id": "high-web",
-          "text": "All ports above 1,024 are reserved for websites",
-          "nudge": "Websites can use lots of different ports. Think about what the `:8080` in the address is doing."
-        }
-      ],
-      "correctOptionId": "convention",
-      "explanation": "Standard port numbers are an **agreement** so that nobody has to ask where to knock. A web [[server]] can listen on any free port, and the `:8080` in the address tells the browser which one to use. 80 in hex is `50`, not 8080. Browsers don't guess ports, and high port numbers aren't reserved for websites.",
-      "hint": "Think about why standard ports exist: so everyone knows where to knock. Is that a rule computers must obey, or an agreement?"
+      "explanation": "Web pages come with **HTTPS**. Looking up names is **DNS**'s job, and that includes finding where a domain's email goes: its MX record. Sending and reading email use the email protocols, **SMTP** and **IMAP**. The tricky one is \"where example.org's email goes\": it's about email, but it's a lookup, so it's DNS.",
+      "hint": "Ask what each job really is: fetching a page, looking something up, or moving or reading an email?",
+      "nudge": "Check the email-sounding jobs. Finding **where** a domain's email should go is a lookup, not sending or reading mail."
     },
     {
       "id": "email-journey",
       "type": "drag_to_order",
-      "difficulty": "challenge",
-      "prompt": "You email `hello@example.org`. Put the email's journey in order.",
+      "difficulty": "core",
+      "prompt": "Email uses two protocols. **SMTP** sends mail on its way, from your app to your provider and between mail [[servers|server]]. **IMAP** lets an app read mail that's kept on a server.\n\nYou email `hello@example.org`. Put the email's journey in order.",
       "items": [
         { "id": "press-send", "label": "You press Send in your email app" },
         { "id": "to-provider", "label": "Your app sends it with SMTP to your provider's mail server" },
@@ -141,16 +61,70 @@
         { "id": "server-to-server", "label": "Your provider delivers it with SMTP to example.org's mail server" },
         { "id": "read", "label": "The recipient's app fetches it with IMAP" }
       ],
-      "explanation": "SMTP carries the email **twice**: from your app to your provider, then from server to server. In between, DNS's **MX record** says where example.org's email goes. Finally, the recipient reads it with **IMAP**. Four steps and three [[protocols|protocol]] (SMTP, DNS, SMTP again, then IMAP) for one email!",
+      "explanation": "SMTP carries the email **twice**: from your app to your provider, then from server to server. In between, DNS's **MX record** says where example.org's email goes. Finally, the recipient reads it with **IMAP**. One email, three protocols!",
       "hint": "SMTP carries the email twice. Before the second trip, your provider must find out where example.org's mail should go.",
       "nudge": "Reading with IMAP only happens once the email has arrived. And your provider can't deliver it until it knows where to send it."
+    },
+    {
+      "id": "between-servers",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Ana reads an email in her phone's email app, then opens the email app on her laptop. The same email is already there, marked as read. Which protocol makes that possible?",
+      "options": [
+        { "id": "imap", "text": "IMAP, because her mail stays on the server for every app" },
+        {
+          "id": "smtp",
+          "text": "SMTP, because it copies each email onto every device she owns",
+          "nudge": "SMTP's job is sending mail on its way. Think about where the email is kept while Ana reads it on two devices."
+        },
+        {
+          "id": "dns",
+          "text": "DNS, because it looks up which of her devices has the email",
+          "nudge": "DNS turns names into addresses, like where a domain's email goes. It doesn't keep track of what Ana has read."
+        },
+        {
+          "id": "https",
+          "text": "HTTPS, because her inbox is really just a secure web page",
+          "nudge": "Her email app isn't fetching a web page here. Think about the protocol for reading mail kept on a server."
+        }
+      ],
+      "correctOptionId": "imap",
+      "explanation": "With **IMAP**, the email stays on her provider's [[server]], and each app reads it from there. So her phone and laptop see the same inbox, read marks and all. SMTP only sends mail on its way, and DNS only looks things up. (If Ana used her provider's website instead, that would be HTTPS, but here she uses email apps.)",
+      "hint": "Where is the email kept while Ana reads it on two devices? Which protocol reads mail from there?"
+    },
+    {
+      "id": "port-8080",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "prompt": "A developer runs a website at `http://example.com:8080`, not on the usual port 80. How can that work?",
+      "options": [
+        { "id": "convention", "text": "Port 80 is a custom, not a law: the `:8080` says which door" },
+        {
+          "id": "hex",
+          "text": "8080 is how 80 is written in hex, so it's really the same port",
+          "nudge": "80 and 8080 are different port numbers, and hex has nothing to do with it. Think about what the `:8080` in the address tells the browser."
+        },
+        {
+          "id": "auto",
+          "text": "Browsers try every port in turn until one of them answers",
+          "nudge": "Browsers don't guess. Look at the address again: it already contains the information the browser needs."
+        },
+        {
+          "id": "high-web",
+          "text": "All ports above 1,024 are kept for websites, so any of them works",
+          "nudge": "Websites can use lots of different ports. Think about what the `:8080` in the address is doing."
+        }
+      ],
+      "correctOptionId": "convention",
+      "explanation": "Standard port numbers are an **agreement** (part of the shared rules), so nobody has to ask where to knock. A web [[server]] can listen on any free [[port]], and the `:8080` in the address tells the browser which one to use. Browsers don't guess ports, and high port numbers aren't kept for websites.",
+      "hint": "Think about why standard ports exist: so everyone knows where to knock. Is that a rule computers must obey, or an agreement?"
     },
     {
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- A **protocol** is a shared set of rules: message format, order, and what to do when things go wrong.\n- Protocols come in **layers**: [[HTTP]] inside [[TCP]] inside IP inside Wi-Fi or Ethernet.\n- **HTTP/HTTPS**: web pages. **DNS**: names. **SSH**: remote control. **SMTP**: sending email. **IMAP**: reading email.\n- Standard [[ports|port]] are an agreement, not a law.\n\nThat's the end of Ports and Protocols. Take the quiz to unlock the final module: The Web."
+      "body": "- A **protocol** is a shared set of rules for one job.\n- Protocols wrap like envelopes: [[HTTP]] inside [[TCP]] inside IP.\n- Email: **SMTP** sends it, **IMAP** reads it.\n\nTake the quiz to unlock the final module: The Web."
     }
   ]
 }

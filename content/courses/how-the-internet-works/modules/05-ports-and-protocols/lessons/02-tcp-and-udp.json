@@ -6,72 +6,89 @@
   "icon": "handshake",
   "cards": [
     {
-      "id": "two-kinds-of-post",
-      "type": "explainer",
+      "id": "parcel-or-postcard",
+      "type": "sort_bins",
       "difficulty": "core",
-      "title": "Tracked parcel or postcard?",
-      "body": "You can send something important as a **tracked parcel**: it's signed for, you're told when it arrives, and if it gets lost it's sent again. Or you can drop a **postcard** in the postbox: quick and easy, but if it goes missing, nobody knows.\n\nThe internet has both options. They're called **TCP** and **UDP**, and every app picks the one that suits it."
+      "prompt": "Apps send data in one of two ways. **TCP** is like a tracked parcel: the sender finds out whether it arrived, lost pieces are sent again, and everything is put back in order. **UDP** is like a postcard: quick, but nobody checks that it arrived, and a lost one is never sent again.\n\nWhich way suits each job?",
+      "bins": [
+        { "id": "tcp", "label": "Tracked parcel (TCP)" },
+        { "id": "udp", "label": "Postcard (UDP)" }
+      ],
+      "items": [
+        { "id": "download", "label": "Downloading a game update", "bin": "tcp" },
+        { "id": "email", "label": "Sending an email", "bin": "tcp" },
+        { "id": "chat-photo", "label": "Sending a photo in a chat", "bin": "tcp" },
+        { "id": "cloud-save", "label": "Saving a document to the cloud", "bin": "tcp" },
+        { "id": "video-call", "label": "A live video call", "bin": "udp" },
+        { "id": "race", "label": "Your car's position in a racing game", "bin": "udp" },
+        { "id": "voice-chat", "label": "Voice chat while gaming", "bin": "udp" }
+      ],
+      "explanation": "A download, an email, a photo or a saved document is broken if a single piece is missing, so they use **TCP**. Live calls, voice chat and game positions are about **right now**: a lost moment is soon replaced by a newer one, so waiting for it would only cause lag. They usually use **UDP**.",
+      "hint": "For each job, ask: would one missing piece ruin it? Or is it live, so old data is useless by the time it could be sent again?",
+      "nudge": "Look at the live jobs again. By the time a lost piece of a call or a game could be sent again, a newer one has already replaced it."
     },
     {
       "id": "tcp-vs-udp",
       "type": "explainer",
       "difficulty": "core",
       "title": "Reliable or fast",
-      "body": "**TCP** (Transmission Control [[Protocol]]) is the tracked parcel. It sets up a connection first, numbers the data, and the receiver confirms what arrived. Anything lost is sent again, and everything is put back in order.\n\n**UDP** (User Datagram Protocol) is the postcard. There's no setup and no confirmation: it just sends. That makes it quick and simple, but lost data stays lost and may arrive out of order.\n\nBoth travel inside IP [[packets|packet]], and both use **ports** to reach the right program."
-    },
-    {
-      "id": "sequence-numbers-properly",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "Sequence numbers, properly",
-      "body": "In Module 3 we said each [[packet]] carries a **sequence number**. Here's the more exact picture:\n\n- **IP** adds the source and destination **addresses**.\n- **TCP** adds its own information inside, including the **ports** and the **sequence number**.\n\nAnd TCP's sequence number counts **bytes**, not packets. It says where the packet's data starts in the whole stream. If one packet carries bytes 1 to 1,000, the next one starts at byte 1,001, so that's its sequence number. (Real sequence numbers start from a random-looking number chosen for each connection, but they count up the same way.) [[UDP]] doesn't use sequence numbers at all."
-    },
-    {
-      "id": "next-sequence",
-      "type": "numeric_input",
-      "difficulty": "core",
-      "prompt": "A [[TCP]] [[packet]] has [[sequence number]] **1** and carries **1,000 [[bytes|byte]]** of data. What is the sequence number of the **next** packet?",
-      "base": "decimal",
-      "answer": 1001,
-      "explanation": "The first packet covers bytes 1 to 1,000, so the next one starts at byte **1,001**. If you typed 2, that's counting packets. TCP counts bytes, so the receiver knows exactly which bytes it has, even if packets are different sizes.",
-      "hint": "TCP's sequence number counts bytes, not packets. Work out which bytes the first packet carries, then where the next one starts.",
-      "nudge": "Did you count packets? TCP counts bytes: the next packet starts at the byte right after the last one the first packet carried."
-    },
-    {
-      "id": "handshake",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "The three-way handshake",
-      "body": "Before any data flows, [[TCP]] sets up the connection with three short messages, called the **three-way [[handshake]]**:\n\n1. **SYN** (*synchronise*): your [[browser]] asks \"Can we talk?\"\n2. **SYN-ACK** (*synchronise-acknowledge*): the [[server]] replies \"Yes, and can I talk to you too?\"\n3. **ACK** (*acknowledge*): your browser answers \"Yes!\"\n\nIn the SYN and SYN-ACK, each side also shares the [[sequence number]] it will start counting from. After the ACK, the connection is open and the real data can flow."
+      "body": "**TCP** (Transmission Control [[Protocol]]) is the tracked parcel. It sets up a connection first, numbers the pieces so they go back in order, and resends anything lost.\n\n**UDP** (User Datagram Protocol) is the postcard: no setup, no checking that it arrived. Quick, but lost data stays lost.\n\nBoth travel inside IP [[packets|packet]], and both use **ports**."
     },
     {
       "id": "order-handshake",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "Put the start of a [[TCP]] connection in order.",
+      "prompt": "Before TCP sends any data, both sides check they can hear each other, using three short messages. This is the **three-way handshake**. Put the start of a connection in order.",
       "items": [
-        { "id": "syn", "label": "Browser sends SYN" },
-        { "id": "syn-ack", "label": "Server replies SYN-ACK" },
-        { "id": "ack", "label": "Browser sends ACK" },
+        { "id": "syn", "label": "Browser: \"Can we talk?\" (SYN)" },
+        { "id": "syn-ack", "label": "Server: \"Yes! Can you hear me too?\" (SYN-ACK)" },
+        { "id": "ack", "label": "Browser: \"Yes!\" (ACK)" },
         { "id": "request", "label": "Browser sends its request for the web page" }
       ],
-      "explanation": "The browser asks (**SYN**), the server agrees and asks back (**SYN-ACK**), and the browser confirms (**ACK**). Only then is the connection open for the request.",
-      "hint": "It's called a **three-way [[handshake]]**: ask, agree and ask back, then confirm. The name of each message gives a clue.",
-      "nudge": "The data can't flow until the handshake is done, and each message answers the one before it. Who asks first: browser or server?"
+      "explanation": "The browser asks (**SYN**, short for *synchronise*), the server agrees and checks back (**SYN-ACK**), and the browser confirms (**ACK**, *acknowledge*). Only then is the connection open, so the request comes last.",
+      "hint": "Each message answers the one before it. And no data is sent until all three handshake messages are done.",
+      "nudge": "The request can't go until the handshake is finished. Which message starts a conversation, and which one replies to a question?"
+    },
+    {
+      "id": "frozen-call",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "You're on a video call and one [[packet]] of video goes missing. Imagine the call used **TCP**. What would happen?",
+      "options": [
+        { "id": "freeze", "text": "The picture freezes until the lost piece is resent, then jumps ahead" },
+        {
+          "id": "skip",
+          "text": "The call skips the lost piece straight away and carries on smoothly",
+          "nudge": "Skipping lost data is what a postcard does. TCP is the tracked parcel: what does it insist on before moving on?"
+        },
+        {
+          "id": "end-call",
+          "text": "The call ends, because TCP can't carry on with a missing piece",
+          "nudge": "TCP doesn't give up after one lost piece. Think about what it does with anything that goes missing."
+        },
+        {
+          "id": "switch",
+          "text": "The call quietly switches to UDP for the rest of the conversation",
+          "nudge": "TCP never turns itself into a different protocol. It has its own way of dealing with a lost piece."
+        }
+      ],
+      "correctOptionId": "freeze",
+      "explanation": "TCP waits for the lost piece to be **sent again** and keeps everything in order, so the picture would freeze, then rush to catch up. That's why calls usually use **UDP**: a face frozen mid-sneeze for a split second beats the whole call stopping to wait.",
+      "hint": "TCP resends anything lost and keeps the pieces in order. What does the video have to do while it waits for the missing piece?"
     },
     {
       "id": "which-and-why",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Match each activity to the reason for how it's delivered.",
+      "prompt": "Match each activity to the reason it's delivered that way.",
       "pairs": [
-        { "id": "download", "left": "Downloading a file (TCP)", "right": "Every byte must arrive, in order" },
-        { "id": "call", "left": "A live video call (usually UDP)", "right": "Fresh data matters more than late data" },
+        { "id": "download", "left": "Downloading a file (TCP)", "right": "Every piece must arrive, in order" },
+        { "id": "call", "left": "Voice chat in a game (usually UDP)", "right": "Fresh sound matters more than late sound" },
         { "id": "dns", "left": "A DNS lookup (usually UDP)", "right": "One tiny question and answer, so skip the setup" }
       ],
-      "explanation": "A download is useless with a single byte missing, so it uses **TCP**. A video call would rather skip a lost moment than freeze waiting for it, so it usually uses **UDP**. A DNS lookup is one small question, so a handshake would take longer than the question itself: it usually uses **UDP**, and switches to TCP for large answers.",
+      "explanation": "A download is useless with a single piece missing, so it uses **TCP**. Voice chat would rather skip a lost moment than stall waiting for it, so it usually uses **UDP**. A DNS lookup is one small question, so a handshake would take longer than the question itself: it usually uses **UDP**, and switches to TCP for large answers.",
       "hint": "Ask of each one: would it be ruined by one missing piece, would it rather skip old data, or is it too small to be worth a setup?",
-      "nudge": "Think tracked parcel vs postcard. A file needs every byte; a live call can't wait for late data; a tiny question isn't worth a [[handshake]]."
+      "nudge": "Think tracked parcel vs postcard. A file needs every piece; live sound can't wait for late data; a tiny question isn't worth a [[handshake]]."
     },
     {
       "id": "udp-true",
@@ -87,22 +104,26 @@
         },
         {
           "id": "no-ip",
-          "text": "UDP data doesn't travel inside IP packets",
+          "text": "Its data travels on its own, without going inside IP packets",
           "nudge": "Both TCP and UDP travel inside IP packets. IP gets the data to the right computer either way."
         },
-        { "id": "no-ports", "text": "UDP doesn't use port numbers", "nudge": "Both TCP and UDP need to reach the right program on a computer. What does that job?" }
+        {
+          "id": "no-ports",
+          "text": "It skips port numbers, so it only works for one program at a time",
+          "nudge": "Both TCP and UDP need to reach the right program on a computer. What does that job?"
+        }
       ],
       "correctOptionId": "no-handshake",
-      "explanation": "UDP has **no handshake** and **no resending**. It doesn't guarantee order either: data can arrive jumbled. Like [[TCP]], it travels inside IP packets and uses ports. [[DNS]] on port 53 is a UDP example.",
-      "hint": "UDP is the postcard: no setup, no confirmation, it just sends. Which statement fits that and nothing more?"
+      "explanation": "UDP has **no handshake** and **no resending**. It doesn't guarantee order either: data can arrive jumbled. Like [[TCP]], it travels inside IP packets and uses ports. A [[DNS]] lookup is a common UDP example.",
+      "hint": "UDP is the postcard: no setup, no checking that it arrived, it just sends. Which statement fits that and nothing more?"
     },
     {
       "id": "lost-syn-ack",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "Your browser sends a SYN and the server replies with a SYN-ACK, but the SYN-ACK is **lost** on the way. What happens?",
+      "prompt": "Your browser sends a SYN (\"Can we talk?\") and the server replies with a SYN-ACK, but the SYN-ACK is **lost** on the way. What happens?",
       "options": [
-        { "id": "both-retry", "text": "Neither side gets the reply it expects in time, so they try again until the handshake completes or they give up" },
+        { "id": "both-retry", "text": "Both sides wait, then resend their message" },
         {
           "id": "opens-anyway",
           "text": "The connection opens anyway, because the server received the SYN",
@@ -124,22 +145,11 @@
       "hint": "The connection only opens after all three messages arrive. If one goes missing, what is each side still waiting for?"
     },
     {
-      "id": "which-bytes-resent",
-      "type": "numeric_input",
-      "difficulty": "challenge",
-      "prompt": "Three [[TCP]] [[packets|packet]] are sent, carrying [[bytes|byte]] **1–1,000**, **1,001–2,000** and **2,001–3,000**. The **middle** one is lost. What is the [[sequence number]] of the data that must be sent again?",
-      "base": "decimal",
-      "answer": 1001,
-      "explanation": "The lost packet's data started at byte **1,001**, so that's its sequence number. This is what Module 3 was hinting at: the receiver notices the gap in the byte numbers, and TCP sends just the missing bytes again.",
-      "hint": "A TCP sequence number is where a packet's data starts in the stream. Which byte does the lost middle packet start with?",
-      "nudge": "It's not the packet's position in the line. Look at the byte range the lost packet carried and find where it starts."
-    },
-    {
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- **TCP** is reliable: a [[handshake]], numbered bytes, confirmations, resending and correct order.\n- **UDP** is quick and simple: no handshake, no resending, no guaranteed order.\n- TCP's handshake is **SYN**, **SYN-ACK**, **ACK**.\n- **Sequence numbers** belong to TCP, not IP, and they count **bytes**.\n- Downloads and web pages use TCP. Live calls, games and [[DNS]] lookups usually use UDP.\n\nNext: the rules that sit on top, like [[HTTP]], DNS and email."
+      "body": "- **TCP**: a handshake first, numbered pieces, and resending anything lost.\n- **UDP**: no handshake, no resending; quick, but lost data stays lost.\n- Files and email need TCP; live calls and games prefer UDP.\n\nNext: the rules on top, like [[HTTP]], DNS and email."
     }
   ]
 }

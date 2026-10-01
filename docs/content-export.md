@@ -833,23 +833,19 @@ Discover how computers store everything using just 0s and 1s, and why internet a
 
 **Key facts**
 
-- *Computers are made of switches:* It can only be **off** or **on**. We write off as **0** and on as **1**.
-- *Counting with only 0 and 1:* In everyday numbers, each position is worth **10 times** the one to its right: ones, tens, hundreds. So in their number system, each position is worth **double** the one to its right.
-- *8 bits make a byte:* A group of 8 bits is called a **byte**. Every bit you add **doubles** the number of patterns you can make. 1 bit gives 2 patterns, 2 bits give 4, 3 bits give 8, and so on.
-- *Why this matters for the internet:* The most common kind is an **IPv4 address**. It's four numbers separated by dots, and each number is stored in exactly **8 bits**.
-- *Recap:* A **bit** is a single on/off switch, written as **0** or **1**. In **binary**, each position is worth double the one to its right: 128, 64, 32, 16, 8, 4, 2, 1.
+- *You just counted in binary:* Each on/off switch is a **bit**: 0 for off, 1 for on. Counting with only 0 and 1 is called **binary**.
+- *Recap:* A **bit** is one switch: 0 for off, 1 for on. To read **binary**, add up the places that are on.
 
 **Best interactive cards**
 
-- Binary switches: Tap the bits to switch them on and off. Make the number **5**.
-- Binary switches: Now a bigger one: make **42**. Tip: start with the biggest position that fits, then work your way down.
+- Binary switches: Every computer and phone is packed with billions of tiny switches, each **off** (0) or **on** (1). Here are 8 of them. When a switch is on, it's worth the number above it. Switches that are on add up. Tap them to make…
+- Binary switches: Now a bigger one: make **42**. Tip: start with the biggest place that fits, then work your way down.
 - Binary switches: Ready for a harder one? Make **200**.
 
 **Surprising facts**
 
-- Inside every computer, phone and games console are billions of tiny switches like this, flipping on and off incredibly fast.
-- `00000101` has the **4** and the **1** on, so it means 4 + 1 = **5**.
-- The smallest pattern is every bit off: `00000000`, which is **0**.
+- (Our everyday places, ones, tens and hundreds, go up 10 times.) To read binary, add the places that are on: `00000101` is 4 + 1 = **5**, the number you made.
+- A **byte** is 8 bits, so IPv4 parts go 0 to 255.
 
 #### Bytes, File Sizes and Hex
 
@@ -858,23 +854,20 @@ Discover how computers store everything using just 0s and 1s, and why internet a
 
 **Key facts**
 
-- *3 MB of what?:* Your phone says a photo is **3 MB**. You already know that 8 bits make a **byte**.
-- *The size ladder:* Each step up the ladder is **1,000 times** bigger, just like *kilo* in kilometre means a thousand: 1 **kilobyte** (KB) = 1,000 bytes
-- *1,000 or 1,024?:* Computers love **powers of 2**: the numbers you get by doubling, like 2, 4, 8, 16 and 32. The power of 2 closest to 1,000 is 2¹⁰ (ten 2s multiplied together: 2 × 2 × … × 2) = **1,024**, so for years people used *kilobyte* to mean 1,024 bytes as well as 1,000.
-- *Hexadecimal: a shorthand for binary:* So people often write bytes in **hexadecimal**, or **hex**. Hex is **base 16**: it has 16 digits instead of our usual 10.
-- *Recap:* A **byte** is 8 bits, and it's the unit for measuring data. **KB, MB, GB, TB**: each is 1,000 times the one before.
+- *Hex: a shorthand for binary:* Long rows of 0s and 1s are easy to misread, so people often write bytes in **hex**.
+- *Recap:* A **byte** is 8 bits; one letter of text is about 1 byte. **Hex** uses 0–9 and A–F; one hex digit is 4 bits.
 
 **Best interactive cards**
 
-- Number answer: How many **bits** are in **5 bytes**?
-- Put in order: Drag these sizes into order, from **smallest** at the top to **largest** at the bottom.
+- Number answer: Your phone says a photo is **3 MB**. 3 MB of what? Of bytes, the unit for measuring data, like litres for water. One letter of plain text takes about 1 byte. A long message takes about a hundred. Replying "k" takes…
+- Put in order: Files hold thousands or millions of bytes, so we use bigger units. Each step up is **1,000 times** bigger (*kilo* means a thousand, as in kilometre): **bytes → KB (kilobyte) → MB (megabyte) → GB (gigabyte) → TB…
 - Match pairs: Match each thing to its typical size.
 
 **Surprising facts**
 
-- The letter **A** is stored as the number 65, which is `01000001`.
-- Files are made of thousands or millions of bytes, so we use bigger units.
-- So a 3 MB photo is about 3 million bytes, or 24 million bits.
+- One hex digit stands for exactly 4 bits, so any byte is two hex digits: `11111111` is `FF`.
+- You'll spot hex in colour codes like `#FF0000`.
+- KB, MB, GB, TB: each is 1,000 times the last.
 
 #### Module quiz (7 questions)
 
@@ -891,22 +884,20 @@ Learn how every device gets an address, how a whole home shares one, and why the
 
 **Key facts**
 
-- *One device out of billions:* How does your message find **their** phone? The internet works the same way: every device on a **network** (a group of devices connected so they can talk to each other, like everything on your home Wi-Fi) gets a number that works as its address, called an **IP address**.
-- *Four octets, 32 bits:* The most common kind of IP address is **IPv4**, which is version 4 of the Internet Protocol. Each of those numbers is an **octet**: exactly 8 bits, so it can only be 0 to 255.
-- *How many addresses are there?:* With 32 bits, that's 2 multiplied by itself 32 times: just over **4 billion** IPv4 addresses. Many of them have a phone, a laptop, a games console and a smart TV, and there are millions of **servers** too (computers that provide things like websites to other devices).
-- *Recap:* An **IP address** tells the network which device data should be delivered to. A **protocol** is a set of rules devices agree to follow.
+- *IP addresses:* That number is an **IP address**. IP stands for **Internet Protocol**, and a **protocol** is a set of rules devices agree to follow so they understand each other.
+- *Recap:* An **IP address** tells the network where data should go. **IPv4** is four octets of 8 bits: 32 bits.
 
 **Best interactive cards**
 
-- Binary switches: The first octet of `192.0.2.44` is **192**. Build it in binary.
+- Binary switches: Every part of an IPv4 address is an octet: 8 bits. The first octet of `192.0.2.44` is **192**. Build it in binary.
 - Match pairs: Match each octet to its binary pattern.
 - Terminal: This is a **terminal**: instead of tapping, you type **commands** (instructions) and press Enter. You can use it to see your own computer's IP address. Type `ipconfig`, press Enter, then find this computer's **IPv4…
 
 **Surprising facts**
 
-- There are billions of devices on the internet.
-- Four octets of 8 bits make **32 bits** altogether.
-- That sounds like plenty, but there are about 8 billion people.
+- The most common kind, **IPv4**, is four numbers separated by dots, like `192.0.2.44`.
+- Each number is an octet: 8 bits, so 0 to 255.
+- About 4.3 billion addresses isn't enough for every device.
 
 #### Public and Private Addresses
 
@@ -915,22 +906,18 @@ Learn how every device gets an address, how a whole home shares one, and why the
 
 **Key facts**
 
-- *One address, a whole house:* But the company that connects your home to the internet, your **internet service provider** or **ISP**, usually gives your home just **one** address that the rest of the internet can reach. Every home network has a **router**, the box (often the same one that makes your Wi-Fi) that links your home to the internet.
-- *Private addresses:* These three ranges are set aside as **private addresses**, for use inside homes, schools and offices: An address that *is* unique across the whole internet is called a **public address**.
-- *NAT: the router as receptionist:* It's called **NAT**, short for **Network Address Translation**: When several devices are talking at once, the router tells the replies apart using extra numbers called **ports**.
-- *Recap:* **Private addresses** (`10.x.x.x`, `172.16.x.x` to `172.31.x.x`, `192.168.x.x`) are reused inside millions of homes and offices. A **public address** is unique across the whole internet.
+- *Public and private:* Your **ISP**, the company that connects your home, usually gives it just **one** address the whole internet can reach: a **public address**. Inside, devices use **private addresses**.
+- *Recap:* **Private addresses** are reused inside millions of homes. Your home shares one **public address** from your **ISP**.
 
 **Best interactive cards**
 
-- Route a packet: Send a request from the **laptop** to the **web server** on the internet.
-- Put in order: Your phone at `192.168.1.21` loads a web page. Put the NAT steps in order.
-- Match pairs: Match each term to what it means.
+- Route a packet: At home, a laptop, a phone and a printer are all on the same Wi-Fi. Send a request from the **laptop** to the web server out on the internet.
+- Sort into groups: Sort each address. Is it a **private** address, or could it be a **public** one? (This course uses ranges like `203.0.113.x` for public examples.)
+- Match pairs: Match each situation to what's behind it.
 
 **Surprising facts**
 
-- Room 12 exists in thousands of schools, and that's fine, because a room number only has to make sense *inside* its own building.
-- Millions of networks reuse the same private addresses, so routers on the internet won't deliver data to them.
-- (In this course, public addresses come from ranges like `203.0.113.x` that are reserved for examples, so we never point at anyone's real computer.)
+- They're like room numbers: room 12 exists in thousands of schools.
 
 #### Running Out: Meet IPv6
 
@@ -939,22 +926,14 @@ Learn how every device gets an address, how a whole home shares one, and why the
 
 **Key facts**
 
-- *What happens when you run out?:* The real fix is a new version of the Internet Protocol with far longer addresses: **IPv6**, which is version 6.
-- *128 bits, written in hex:* An IPv6 address is **128 bits** long, four times the length of an IPv4 address. Writing 128 bits in binary would be far too long, so IPv6 uses **hex**, from the last module.
-- *Two rules for shortening:* **Rule 1:** drop the zeros at the *start* of any group. **Rule 2:** replace one row of all-zero groups that sit side by side with a double colon, `::`.
-- *Recap:* IPv4 ran out of addresses, so **IPv6** was created. An IPv6 address is **128 bits**, written as 8 groups of 4 hex digits separated by colons.
+- *128 bits, written in hex:* That fix is **IPv6**. Its addresses are **128 bits**, four times as long as IPv4: far more than we'll ever need.
+- *Recap:* **IPv6** fixes the shortage with **128-bit** addresses.
 
 **Best interactive cards**
 
 - Number answer: Each group in an IPv6 address has 4 hex digits. How many **bits** is one group?
+- Number answer: Written out in full with no shortening, how many hex digits does an IPv6 address have?
 - Match pairs: Match each value to what it is.
-- Terminal: Most devices today have **both** an IPv4 and an IPv6 address. This laptop runs Linux. Run `ip -brief addr` and find the IPv6 address that starts with `2001:db8`. Each line is one connection: `wlan0` is the Wi-Fi, and…
-
-**Surprising facts**
-
-- IPv4 has about 4.3 billion addresses, and there are more connected devices than that.
-- The organisations that hand out addresses gave away their last big blocks of IPv4 addresses in the 2010s.
-- That gives about 340 trillion trillion trillion addresses, enough to never run out.
 
 #### Module quiz (7 questions)
 
@@ -971,20 +950,14 @@ See how data is chopped into packets, passed from router to router, and rebuilt 
 
 **Key facts**
 
-- *Sharing one connection:* Instead, the internet chops all data into small pieces called **packets**, and sends them one at a time.
-- *Numbered postcards:* It carries a small piece of the data, called the **payload**, plus some information added to help it arrive: the **source address**: who sent it, and so where any reply goes back to
-- *Taking turns:* Packets from different conversations do the same thing: they **take turns** on the same connection.
-- *Recap:* Data travels in small pieces called **packets**, typically up to about 1,500 bytes each. Each packet carries a piece of data (the **payload**) plus added information: the **source** and **destination addresses**, and a **sequence number**.
+- *Numbered postcards:* So the internet chops data into **packets**: small pieces that **take turns** on the connection. Each is like a numbered postcard: some data (the **payload**) plus a label with the **source** address (from), the **destination** address (to) and, for most data, a **sequence number**.
+- *Recap:* Data travels in small pieces called **packets**. Each carries data plus addresses and a **sequence number**.
 
 **Best interactive cards**
 
-- Match pairs: Match each part of a packet to its job.
+- Match pairs: Here's one packet from a selfie you're sending. Match each part to what it's used for.
 - Number answer: A message is **6,000 bytes** long. If each packet carries exactly **1,500 bytes of data**, how many packets are needed?
 - Put in order: Put a message's journey in order.
-
-**Surprising facts**
-
-- On Wi-Fi and most home networks, a packet can be up to about **1,500 bytes**, and the added information takes up some of that space.
 
 #### Routers and Hops
 
@@ -993,15 +966,13 @@ See how data is chopped into packets, passed from router to router, and rebuilt 
 
 **Key facts**
 
-- *Routers and routing tables:* A **router** is a device that connects different networks and passes packets between them. When a packet arrives, the router reads its destination address and checks its **routing table**: a list that says, for each group of addresses, which neighbour to send packets to next.
-- *Switches, and the box at home:* Inside one network, devices are usually joined by a **switch**, which passes data between devices on that same network. Your home router is really three boxes in one: a **router** (the way out to the internet), a **switch** (joining your home devices) and a **Wi-Fi access point** (the part that sends out the Wi-Fi signal).
-- *Seeing the hops with traceroute:* You can see the routers your packets pass through using a tool called **traceroute** (on Windows it's called `tracert`). The times are in **ms** (milliseconds, thousandths of a second), and they show how long the router took to reply.
-- *Recap:* A **router** passes packets between networks. It checks its **routing table** to choose the next step, not the whole route.
+- *Routers and hops:* The boxes in the middle are **routers**: they join networks and pass packets on. Each one checks its **routing table**, a list saying which neighbour to send each address to next.
+- *Recap:* **Routers** pass packets on, one **hop** at a time. **Traceroute** lists the hops; `* * *` means a router stayed quiet.
 
 **Best interactive cards**
 
-- Route a packet: Get the packet from the **laptop** to the **web server**. There's more than one way.
-- Terminal: Run `traceroute example.com` on this Linux laptop, then find the address of the **first hop**.
+- Route a packet: Your packet needs to get from the **laptop** to the **web server**. Plan its trip: follow the lines from box to box. There's more than one way.
+- Terminal: A tool called **traceroute** lists every router on the way to a website, one numbered line per hop (on Windows it's `tracert`). Run `traceroute example.com`, then find the address of **hop 1**.
 - Route a packet: **Router 2 is down** (it has stopped working). Find a route from the **laptop** to the **web server** that avoids it.
 
 #### Different Roads, Same Destination
@@ -1011,10 +982,8 @@ See how data is chopped into packets, passed from router to router, and rebuilt 
 
 **Key facts**
 
-- *The internet makes no promises:* Here's a surprise: the Internet Protocol **doesn't promise** that packets arrive in order.
-- *Routes can change:* Most of the time a conversation's packets all follow the same road, but when the route changes, packets that took different roads can arrive in a **different order** from the one they were sent in.
-- *Missing packets and TCP:* For things like web pages, photos and downloads, computers follow a set of rules called **TCP**, short for **Transmission Control Protocol**.
-- *Recap: Packets and Routing:* Data travels in **packets**, each with addresses and a **sequence number** added. **Routers** pass packets hop by hop, using their routing tables.
+- *The internet makes no promises:* So packets from one message can take different roads and arrive in a **different order**.
+- *Recap: Packets and Routing:* **Sequence numbers** put the pieces back in order. **TCP** gets any missing packet sent again.
 
 **Best interactive cards**
 
@@ -1037,21 +1006,18 @@ Find out how a name like example.com becomes an address, through a chain of serv
 
 **Key facts**
 
-- *Who translates?:* You type **example.com** into your browser.
-- *The internet's phone book:* You tap a friend's **name**, and the phone looks up their **number** to make the call. The internet has the same thing, called the **Domain Name System**, or **DNS**.
-- *Reading a name from right to left:* Domain names are read from **right to left**, from the most general part to the most specific. `com` is the **top-level domain**, or **TLD**: the last part of the name.
-- *Recap:* Packets are delivered using **IP addresses**, but people prefer **names**. **DNS** (the Domain Name System) turns names into addresses, like a contacts app for the internet.
+- *The internet's contacts app:* A phone's contacts app works like this: you tap a **name**, and it finds the **number**. The internet has the same thing, the **Domain Name System**, or **DNS**.
+- *Recap:* **DNS** turns names into IP addresses, like a contacts app. Names are read **right to left**: TLD, domain, then subdomains.
 
 **Best interactive cards**
 
 - Match pairs: Match each part of the contacts-app idea to its internet version.
-- Terminal: Time for a real lookup. Run `nslookup example.com` to ask DNS for example.com's address.
-- Match pairs: Some TLDs belong to countries. Two-letter TLDs are country codes, often from the country's own name (Germany is *Deutschland*). Match each TLD to what it stands for.
+- Terminal: Time for a real lookup. Run `nslookup example.com` to ask DNS for example.com's address (the top lines show who answered).
+- Put in order: A domain name like `mail.example.org` is made of parts: `mail` is a **subdomain**: a name the owner chose to add. `org` is the **top-level domain** (**TLD**), shared by millions of names. `example` is the **domain**…
 
 **Surprising facts**
 
-- But you learned earlier that routers deliver packets using IP addresses, like `198.51.100.10`.
-- You give it a name like `example.com`, and it gives back an IP address like `198.51.100.10`.
+- Give it a name like `example.com`, and it gives back an IP address like `198.51.100.10`.
 
 #### The Lookup Journey
 
@@ -1060,21 +1026,14 @@ Find out how a name like example.com becomes an address, through a chain of serv
 
 **Key facts**
 
-- *First stop: memory:* Your device keeps recent answers in a **cache**: a short-term memory of lookups it has already done. If it isn't, your device asks a **resolver**.
-- *The resolver's trip:* It asks a **root server**: "Who handles `.com`?" There are 13 root servers, each copied many times, so well over a thousand copies are spread around the world. It asks a **`.com` TLD server**: "Who's in charge of `example.com`?"
-- *How long to remember: TTL:* So every DNS answer comes with a **TTL** in **seconds**: how long it may be kept in a cache before it has to be looked up again. Packets carry a **TTL** too, and it's a different thing: a packet's TTL is a **hop limit**, lowered by 1 at each router.
-- *Recap:* Your device checks its **cache** first, then asks a **resolver**. The resolver asks a **root server**, then a **TLD server**, then the domain's **authoritative server**, which holds the real answer.
+- *The resolver's trip:* First, your device checks its **cache**. If the answer isn't there, it asks a **resolver**: a server that hunts for answers for you.
+- *Recap:* Your device checks its **cache**, then asks a **resolver**. The resolver asks root, TLD, then the **authoritative** server.
 
 **Best interactive cards**
 
 - Put in order: Nobody has looked up example.com recently. Put the steps of the lookup in order.
 - Match pairs: Match each DNS server to its job.
-- Terminal: `dig` is another tool for DNS lookups, and it shows more detail. Run `dig example.com`, then find the **TTL** in the ANSWER SECTION. It's the number just after the name.
-
-**Surprising facts**
-
-- There are hundreds of millions of domain names.
-- A TTL of 300 means "remember this for 5 minutes".
+- Terminal: `dig` is another tool for DNS lookups. Run `dig example.com`, then find the **TTL**: it's the number just after the name in the answer.
 
 #### DNS Records and Tools
 
@@ -1083,20 +1042,14 @@ Find out how a name like example.com becomes an address, through a chain of serv
 
 **Key facts**
 
-- *One name, many answers:* DNS keeps each kind of answer in a different **record**. When you look something up, you ask for a particular **record type**.
-- *Four record types:* An **A** record holds an **IPv4** address, like `198.51.100.10`. An **AAAA** record holds an **IPv6** address, like `2001:db8::10`.
-- *Recap:* DNS stores different kinds of answer in **records**. **A**: an IPv4 address.
+- *One name, many answers:* DNS keeps each kind of answer in its own **record**: **A**: the website's IPv4 address (an **AAAA** record holds its IPv6 address).
+- *Recap:* One name can hold several **records**, one for each job. **A** gives an address, **CNAME** an alias, **MX** the mail server.
 
 **Best interactive cards**
 
-- Match pairs: Match each record type to a value it could hold for example.com.
-- Terminal: Ask DNS for example.com's **AAAA** record by running `nslookup -type=AAAA example.com`.
-- Terminal: Run `dig www.example.com` and look at the ANSWER SECTION. There are two lines this time.
-
-**Surprising facts**
-
-- It's called *quad-A* because an IPv6 address is four times as long as an IPv4 one: 128 bits instead of 32.
-- An **MX** record (mail exchange) names the server that receives **email** for the domain, with a priority number, like `10 mail.example.com`.
+- Match pairs: Match each record for example.com to the value it could hold.
+- Terminal: Run `dig www.example.com` and look at the answer. There are two lines this time.
+- Put in order: Put the steps in order for a browser opening `www.example.com`.
 
 #### Module quiz (7 questions)
 
@@ -1113,23 +1066,18 @@ Discover how one address runs many services, how TCP and UDP deliver data, and t
 
 **Key facts**
 
-- *Which program gets the packet?:* The address got it to the right computer, but which **program** on that computer should it go to?
-- *Ports are like apartment numbers:* The street address gets a letter to the right **building**, and the apartment number gets it to the right **door**. On the internet, the IP address is the building, and a **port** number is the door.
-- *Your side has a port too:* When your laptop connects to `198.51.100.10:443`, it also picks a port for **its own** end of the conversation: a temporary one, usually a high number like `51000`. So a conversation is really identified by **four** numbers: your address and port, and the server's address and port.
-- *NAT, the full story:* In Module 2 you learned that your home router uses **NAT** to swap private addresses for its public one, and "notes down who asked". Now you can see how it really does that: with **ports**.
-- *Recap:* A **port** picks which program on a computer gets the data. Ports are 16-bit numbers, from **0 to 65,535**.
+- *Ports are like apartment numbers:* The street address gets a letter to the **building**, and the apartment number gets it to the right **door**. The IP address is the building, and a **port** is the door.
+- *Recap:* The IP address finds the computer; the **port** finds the program. Your router's **NAT table** uses ports to route each reply home.
 
 **Best interactive cards**
 
-- Match pairs: Match each service to its standard port.
-- Put in order: Put the NAT steps in order, now with ports.
-- Terminal: On Windows, `netstat -n` lists this computer's connections. Run it and find which **port on the server** `198.51.100.10` this laptop is connected to.
+- Terminal: Your side of a conversation needs a port too, so replies reach the right app. Your laptop picks a temporary one, usually a high number like `51544`. On Windows, `netstat -n` lists connections. **Local Address** is your…
+- Put in order: Your home router shares one public address using **NAT**. Ports are how it keeps replies apart: it swaps your laptop's private address and port for its public address and a port it picks, and writes the pair in its…
+- Number answer: The router's NAT table says: `203.0.113.7:40001` → `192.168.1.20:51000` `203.0.113.7:40002` → `192.168.1.21:51000` A reply arrives for `203.0.113.7:40002`. Which device gets it? Type the **last number** of its private…
 
 **Surprising facts**
 
-- The server at `198.51.100.10` runs a website, an email service and a remote login service (for controlling the computer from far away), all at the same time, all on one IP address.
-- You'll often see them written together with a colon: `198.51.100.10:443` means port 443 at that address.
-- When your laptop sends from `192.168.1.20:51000`, the router rewrites the sender as `203.0.113.7:40001`, using its public address and a port it picks.
+- Websites use port `80`, and secure websites (HTTPS) use `443`.
 
 #### TCP and UDP
 
@@ -1138,21 +1086,14 @@ Discover how one address runs many services, how TCP and UDP deliver data, and t
 
 **Key facts**
 
-- *Tracked parcel or postcard?:* You can send something important as a **tracked parcel**: it's signed for, you're told when it arrives, and if it gets lost it's sent again. Or you can drop a **postcard** in the postbox: quick and easy, but if it goes missing, nobody knows.
-- *Reliable or fast:* **TCP** (Transmission Control Protocol) is the tracked parcel. **UDP** (User Datagram Protocol) is the postcard.
-- *Sequence numbers, properly:* In Module 3 we said each packet carries a **sequence number**. **IP** adds the source and destination **addresses**.
-- *The three-way handshake:* Before any data flows, TCP sets up the connection with three short messages, called the **three-way handshake**: **SYN** (*synchronise*): your browser asks "Can we talk?"
-- *Recap:* **TCP** is reliable: a handshake, numbered bytes, confirmations, resending and correct order. **UDP** is quick and simple: no handshake, no resending, no guaranteed order.
+- *Reliable or fast:* **TCP** (Transmission Control Protocol) is the tracked parcel. **UDP** (User Datagram Protocol) is the postcard: no setup, no checking that it arrived.
+- *Recap:* **TCP**: a handshake first, numbered pieces, and resending anything lost. **UDP**: no handshake, no resending; quick, but lost data stays lost.
 
 **Best interactive cards**
 
-- Number answer: A TCP packet has sequence number **1** and carries **1,000 bytes** of data. What is the sequence number of the **next** packet?
-- Put in order: Put the start of a TCP connection in order.
-- Match pairs: Match each activity to the reason for how it's delivered.
-
-**Surprising facts**
-
-- If one packet carries bytes 1 to 1,000, the next one starts at byte 1,001, so that's its sequence number.
+- Sort into groups: Apps send data in one of two ways. **TCP** is like a tracked parcel: the sender finds out whether it arrived, lost pieces are sent again, and everything is put back in order. **UDP** is like a postcard: quick, but…
+- Put in order: Before TCP sends any data, both sides check they can hear each other, using three short messages. This is the **three-way handshake**. Put the start of a connection in order.
+- Match pairs: Match each activity to the reason it's delivered that way.
 
 #### Protocols: Shared Rules
 
@@ -1161,22 +1102,14 @@ Discover how one address runs many services, how TCP and UDP deliver data, and t
 
 **Key facts**
 
-- *How strangers understand each other:* That works because they all follow the same **rules**, written down and shared openly for anyone to use.
-- *What a protocol is:* You met the word **protocol** in Module 2: a set of rules that devices agree to follow. You already know several: **IP** (addresses and delivery), **TCP** and **UDP** (getting data to the right program, reliably or quickly), and **DNS** (names).
-- *Envelopes inside envelopes:* Protocols work in **layers**, like a letter inside an envelope inside a parcel. The request itself follows **HTTP**.
-- *Email uses two protocols:* **Sending** uses **SMTP**. Your email app hands the message to your mail provider's server (usually on port **587**), and servers pass email between each other on port **25**.
-- *Recap:* A **protocol** is a shared set of rules: message format, order, and what to do when things go wrong. Protocols come in **layers**: HTTP inside TCP inside IP inside Wi-Fi or Ethernet.
+- *How strangers understand each other:* They all follow the same **protocols**: rules for what each message looks like, what order messages go in, and what to do when something goes wrong.
+- *Recap:* A **protocol** is a shared set of rules for one job. Email: **SMTP** sends it, **IMAP** reads it.
 
 **Best interactive cards**
 
-- Put in order: Put the layers of a web request in order, from the **innermost** at the top to the **outermost** at the bottom.
-- Match pairs: Match each protocol to its job.
-- Terminal: `nc` (netcat) can check whether a server answers on a port. Run `nc -zv example.com 22 25 80 443` to test four ports on example.com's server.
-
-**Surprising facts**
-
-- They've never met, yet they understand each other perfectly, billions of times a second.
-- Your app fetches messages that are kept on your provider's server (port **143**, or **993** when **encrypted**: scrambled so only your app and the server can read it), so you see the same inbox on your phone and your laptop.
+- Put in order: When your browser asks for a page, the request travels like a letter inside envelopes inside a parcel. Each wrapper follows its own set of rules, a **protocol**, with one job. Put them in order, from the **letter in…
+- Sort into groups: Every job online has its own protocol. **HTTPS** fetches web pages securely. **DNS** turns names into addresses. **SMTP** and **IMAP** handle email. Which protocol does each job?
+- Put in order: Email uses two protocols. **SMTP** sends mail on its way, from your app to your provider and between mail servers. **IMAP** lets an app read mail that's kept on a server. You email `hello@example.org`. Put the email's…
 
 #### Module quiz (7 questions)
 
@@ -1193,23 +1126,14 @@ Put it all together: follow one web page from the moment you press Enter to the 
 
 **Key facts**
 
-- *Nothing arrives unless you ask:* Every web page, picture and video you've ever seen online arrived because your browser **asked** for it. The asking and answering follows a protocol you met in the last module: **HTTP**.
-- *Requests:* **HTTP** stands for **HyperText Transfer Protocol** (*hypertext* just means text with links). Your browser (the **client**) sends a **request**, and the server sends back a **response**.
-- *Responses:* The server's **response** starts with a **status line**, like `HTTP/1.1 200 OK`, that says how it went. More headers follow, then the **body**: the page's content itself, usually written in **HTML** (the code that describes a web page).
-- *GET and POST:* **GET**: "please give me this". **POST**: "please take this data".
-- *Status codes:* Every response has a three-digit **status code**. The **first digit** tells you the kind of answer:
-- *Recap:* **HTTP** is request and response: the browser asks, the server answers. A request has a **method**, a **path** and **headers** like `Host`.
+- *Ask and answer:* That asking follows a protocol called **HTTP**. Your browser sends a **request**, like `GET /news`: a **method** (what to do) and a **path** (which page).
+- *Recap:* **HTTP**: the browser requests, the server responds. **GET** fetches things; **POST** sends your data to the server.
 
 **Best interactive cards**
 
-- Match pairs: Match each part of an HTTP message to its job.
-- Match pairs: Match each status code to its meaning.
-- Terminal: `curl -I` (that's a capital **I**, for *information*) asks a server for just the headers of a response, without the page itself. Run it on `http://example.com/old-news` and find where that page has moved to. (The other…
-
-**Surprising facts**
-
-- Let's see what those messages actually look like.
-- Four you'll see often: **200 OK** (here it is), **301 Moved Permanently** (it's at a new address now, go there), **404 Not Found** (there's nothing at that path) and **500 Internal Server Error** (something broke on the server).
+- Sort into groups: The two methods you'll meet most: **GET** means "please give me this", and **POST** means "please take this data". Which does your browser use for each?
+- Sort into groups: Every response starts with a three-digit **status code**, and its **first digit** says how it went: **2**: all fine, here it is **4**: a problem with the request, like asking for a page that isn't there **5**: a…
+- Terminal: `curl -I` (a capital **I**) asks a server for just the top of a response: the status code and some labelled lines called **headers**. A code starting with **3** means "this has moved", and a `Location` line gives the…
 
 #### HTTPS and the Padlock
 
@@ -1218,20 +1142,18 @@ Put it all together: follow one web page from the moment you press Enter to the 
 
 **Key facts**
 
-- *HTTPS: HTTP in a locked box:* Plain **HTTP** sends everything as readable text, rather like writing on a postcard. **HTTPS** is the same HTTP, but carried inside another protocol called **TLS** (**Transport Layer Security**).
-- *The TLS handshake:* In it, the browser and server **say hello and agree secret keys**, and the server **proves its identity with its certificate**. A **certificate** is like a digital ID card for a website.
-- *What the padlock doesn't mean:* The padlock means your connection to **that name** is encrypted. It does **not** mean the site is honest or safe.
-- *Recap:* **HTTPS** is HTTP inside **TLS**, which **encrypts** everything between your browser and the server (port 443). In the **TLS handshake**, the two sides agree secret keys and the server proves its identity with a **certificate** from a **certificate authority**.
+- *HTTPS: HTTP in a locked box:* **HTTPS** is the same HTTP, carried inside another protocol called **TLS**. TLS **encrypts** the data: it scrambles it with secret keys that only your browser and the server have.
+- *Recap:* **HTTPS** is HTTP inside **TLS**: encrypted between browser and server. A **certificate** proves the server owns the name in the address.
 
 **Best interactive cards**
 
-- Match pairs: Match each HTTPS term to what it means.
-- Terminal: Run `curl -v https://example.com` to watch a real HTTPS connection being made, then find **who issued** the certificate. Look for `O=` (the letter O, for *organisation*) on the issuer line.
-- Match pairs: Browsers show a warning when a certificate check fails. Match each warning to what went wrong.
+- Match pairs: Match each thing you want to the part of HTTPS that does it.
+- Tap the picture: A padlock means just two things: the connection is encrypted, and the server proved with its certificate that it owns the **name in the address**. It says nothing about who's behind that name, or whether they're…
+- Match pairs: A certificate only counts if it's within its valid dates, written for the name you visited, and issued by a certificate authority your browser trusts. If a check fails, the browser warns you. Match each warning to what…
 
 **Surprising facts**
 
-- It normally uses port **443**, while plain HTTP uses 80.
+- HTTPS uses port **443** (plain HTTP uses 80), and your browser shows a **padlock** beside the address.
 
 #### What Happens When You Type a URL
 
@@ -1240,20 +1162,14 @@ Put it all together: follow one web page from the moment you press Enter to the 
 
 **Key facts**
 
-- *One press of Enter:* You type `https://www.example.com/news` and press **Enter**.
-- *Reading the address:* The web address you type is called a **URL** (Uniform Resource Locator). `https` is the **scheme**: which protocol to use.
-- *Rebuilding the page:* The response comes back as a stream of **packets**, hop by hop, to your router's public address and port. The router's **NAT table** sends them on to your laptop.
-- *Recap: How the Internet Works:* Everything is **bits**, grouped into bytes and written in binary or hex. Devices have **IP addresses**.
+- *Rebuilding the page:* The reply comes back as **packets**, hop by hop, to your router's public address. **NAT** passes them to your laptop.
+- *Recap: How the Internet Works:* **DNS** finds the address; **packets** travel router to router. **TCP** connects reliably, **TLS** encrypts, **HTTP** asks and answers.
 
 **Best interactive cards**
 
-- Terminal: **Step 1: DNS.** The browser needs an IP address for `www.example.com`. Do the lookup yourself with `nslookup www.example.com`. (In the output, `canonical name` means the name is an alias for another name: a CNAME.)
-- Route a packet: **Step 2: the first packet leaves.** Send the laptop's first packet (a TCP SYN to `198.51.100.10:443`) to the web server. (The home router is shown with its **public** address, the one the internet sees.)
-- Route a packet: Now the **reply**. The server sends the page to `203.0.113.7:40001`, the router's public address and port. **Router A is down.** Route the reply back to the laptop.
-
-**Surprising facts**
-
-- HTTPS means HTTP inside TLS, on port 443 unless the URL says otherwise.
+- Terminal: **Step 1: DNS.** The browser needs an IP address for `www.example.com`. Do the lookup yourself with `nslookup www.example.com`.
+- Route a packet: **Step 2: the first packet leaves.** It's the first message of TCP's handshake ("Can we talk?"), addressed to `198.51.100.10:443`. Send it from the laptop to the web server. (The home router shows its **public**…
+- Route a packet: Now the **reply**. The server sends the page to `203.0.113.7`, your home router's public address. **Router A is down.** Route the reply back to the laptop that asked for it.
 
 #### Module quiz (8 questions)
 

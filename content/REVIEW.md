@@ -47,6 +47,62 @@ fall in IETF-reserved space.
 
 ---
 
+## Right-level rewrite (October 2026)
+
+The whole course was rewritten for curious beginners aged 13+ (level **Hard**: think harder, but
+everything is taught first). Every lesson now has 5–7 core cards plus up to 2 bonus cards (about 5
+minutes), is at least 60% hands-on, opens with something to do, and keeps explainers to 60 words.
+Job-training detail was cut (approved list N1–N25): memorising port numbers, IPv6 shortening rules,
+DNS record types beyond "address, alias, mail", TCP byte counting, KiB/MiB, the 1,500-byte packet
+size drills, packet TTL, the hidden root dot, and admin commands with flags (`ip -brief`, `nc -zv`,
+`curl -v`). **Where this section and the per-lesson notes below disagree, this section wins**; the
+notes below describe the course before the rewrite.
+
+**What each lesson teaches now**
+- 1.1 A bit is an on/off switch; binary places double; read by adding, build biggest place first; a byte is 8 bits (0–255); an IPv4 address is four octets.
+- 1.2 The byte as the unit (one letter of plain text ≈ 1 byte); KB → MB → GB → TB in steps of 1,000; hex is 0–9 and A–F, one hex digit = 4 bits, `FF` = 255. Bonus: why Windows shows a "500 GB" drive as about 465 GB.
+- 2.1 What an IP address is for; IPv4 is 4 octets (32 bits); reading your address with `ipconfig`; about 4.3 billion addresses isn't enough.
+- 2.2 Private vs public addresses; the router is the way out; NAT (Network Address Translation) swaps the sender address and passes replies back; websites see the public address.
+- 2.3 IPv6 is 128 bits in 8 hex groups; `::` hides a run of zero groups; most devices have an IPv4 and an IPv6 address at once; IPv6 needs no address sharing.
+- 3.1 Why data is split into packets, and what a packet carries (source, destination and, for most data, a sequence number).
+- 3.2 Routers choose only the next hop; reading traceroute (hop 1 is your home router; `* * *` means no reply, not a fault).
+- 3.3 Routes change, so packets can arrive out of order or go missing; sequence numbers put them back in order; TCP re-sends missing ones; live apps skip them.
+- 4.1 Why names need DNS; reading names right to left (ending, domain, the parts in front); the owner controls everything in front of their name, which scammers exploit.
+- 4.2 Cache → resolver → root → ending (TLD) → the domain's own server; TTL is how long an answer may be remembered.
+- 4.3 One name can hold several answers: an address (IPv4 or IPv6), an alias (CNAME) and where email goes (MX).
+- 5.1 The IP address finds the computer, the port finds the program; 80 and 443; your side's temporary port; NAT uses ports.
+- 5.2 TCP is reliable (handshake, numbered pieces, re-sends); UDP is quick (no checking that it arrived); pick by need.
+- 5.3 Protocols are shared rules; they wrap like envelopes; email uses SMTP to send, IMAP to read and DNS (MX) to find the server.
+- 6.1 HTTP is request and response: method and path, status code and body; GET vs POST; reading a status code by its first digit.
+- 6.2 HTTPS is HTTP inside TLS (encrypted); the certificate and certificate authority; the padlock means "encrypted, to a server that owns that exact name", never "honest".
+- 6.3 One page load end to end: DNS → route and NAT → TCP → TLS → HTTP → rebuild → draw.
+
+**Simplifications added in the rewrite** (each deliberate)
+- "A lost packet is sent again on its own" is credited to TCP only; packets carry a sequence number "for most data" (UDP traffic doesn't). "TCP numbers the pieces": really it counts bytes.
+- A sequence number is shown on the packet's label next to the addresses, without saying which layer adds it.
+- The 1,500-byte packet size appears only in `count-packets`; elsewhere a packet holds "a small piece".
+- A routing table is "which neighbour to send each address to next" (really groups of addresses).
+- NAT is first taught without ports ("notes who asked"); 5.1 then adds ports.
+- Documentation ranges (`192.0.2.x`, `198.51.100.x`, `203.0.113.x`) are labelled "public" in sorts.
+- IPv6 gives "far more addresses than we'll ever need"; "a home doesn't need to share one address" (IPv6 NAT exists but is rare); the leading-zero shortening rule isn't spelled out.
+- KiB/MiB aren't named: the bonus just says Windows counts in 1,024s but writes "GB". Sizes use 1,000s; typical file sizes are rough.
+- "Billions of tiny switches" stands in for transistors; one letter ≈ 1 byte only for plain English text.
+- `dig` output is shortened to the answer lines (the card says so); `IN A` is glossed as "a kind of answer that holds an internet address"; the trailing dot is "how dig writes a full name"; `co.uk` is a shared ending like `.com`; MX priority numbers are left out.
+- Status codes are taught by first digit; the 4xx bin is "Problem with the request" (403 and 410 aren't user typos); "one request per file" ignores caching; curl output is shortened (the card says so).
+- The café can usually see which site you visit from the DNS lookup and the start of the secure connection (SNI isn't named).
+- TCP is "for downloads and the web" (HTTP/3 over QUIC/UDP isn't mentioned); calls and games "usually" use UDP; layers are HTTP / TCP / IP / Wi-Fi or Ethernet, with TLS left out; IMAP "keeps mail on the server"; SMTP is shown without submission ports.
+- The handshake uses plain labels first ("Can we talk?" / "Yes, can you hear me?" / "Yes"), with SYN, SYN-ACK and ACK once.
+
+**Beginner audit after the rewrite** (a fresh play-through as a 13-year-old, answers hidden): about
+80% first-try success; no factual howlers. Fixed: sequence numbers and re-sending tied to TCP; the
+padlock answers made consistent ("encrypted, to a server that owns that exact name"); the right
+multiple-choice answer is never more than 8 characters longer than the longest wrong one; Module 3
+made harder (counting how many packets to re-send; a detour around a down router in the quiz); the
+4xx bin renamed; dual stack taught before it's tested; UDP's "no checking that it arrived"; the
+CNAME line added to the `nslookup` output in 6.3; a few ambiguous options and give-away hints fixed.
+
+---
+
 ## Module 1: Binary and Data
 
 ### 1.1 Bits and Binary: How Computers Count (`bits-and-binary`)

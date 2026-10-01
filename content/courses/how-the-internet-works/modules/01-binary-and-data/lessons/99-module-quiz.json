@@ -6,18 +6,14 @@
   "passThreshold": 0.7,
   "cards": [
     {
-      "id": "what-is-a-bit",
-      "type": "multiple_choice",
+      "id": "three-switch-patterns",
+      "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "What is a **bit**?",
-      "options": [
-        { "id": "zero-or-one", "text": "A single 0 or 1" },
-        { "id": "group-of-eight", "text": "A group of 8 numbers" },
-        { "id": "screen-dot", "text": "One tiny dot on a screen" },
-        { "id": "up-to-255", "text": "Any number from 0 to 255" }
-      ],
-      "correctOptionId": "zero-or-one",
-      "explanation": "A bit (binary digit) is one on/off value, written as **0** or **1**. A group of 8 bits is a byte, which can hold 0 to 255."
+      "prompt": "A tiny gadget has just **3** on/off switches (3 bits). How many different on/off **patterns** can they make?",
+      "base": "decimal",
+      "answer": 8,
+      "unit": "patterns",
+      "explanation": "Each extra bit doubles the patterns: 1 bit gives 2, 2 bits give 4, and 3 bits give **8** (from `000` to `111`). If you typed 7, that's the largest number 3 bits can show, not the number of patterns: 0 is a pattern too."
     },
     {
       "id": "make-100",
@@ -39,7 +35,7 @@
         { "id": "ten-thousand-one", "text": "10,001" }
       ],
       "correctOptionId": "seventeen",
-      "explanation": "The bits that are on are in the **16** and **1** positions, so the value is 16 + 1 = **17**. (2 is just how many bits are on, and 10,001 is what you'd get reading it like an everyday base-10 number.)"
+      "explanation": "The bits that are on are in the **16** and **1** places, so the value is 16 + 1 = **17**. (2 is just how many bits are on, and 10,001 is what you'd get reading it like an everyday number.)"
     },
     {
       "id": "convert-13-steps",
@@ -52,7 +48,7 @@
         { "id": "two", "label": "Does 2 fit in 1? No: leave 2 off" },
         { "id": "one", "label": "Does 1 fit in 1? Yes: switch on 1, leaving 0" }
       ],
-      "explanation": "Always work from the **biggest** position down: 8, then 4, then 2, then 1. That gives 8 + 4 + 1 = 13, which is `00001101`."
+      "explanation": "Always work from the **biggest** place down: 8, then 4, then 2, then 1. That gives 8 + 4 + 1 = 13, which is `00001101`."
     },
     {
       "id": "why-255",
@@ -60,10 +56,10 @@
       "difficulty": "core",
       "prompt": "Why can't any part of an IPv4 address be **300**?",
       "options": [
-        { "id": "eight-bits", "text": "Each part is stored in 8 bits, and 8 bits can only go up to 255" },
-        { "id": "two-digits", "text": "Address parts can only have two digits" },
-        { "id": "reserved", "text": "300 is reserved for private home networks" },
-        { "id": "even-only", "text": "Address parts can only be even numbers" }
+        { "id": "eight-bits", "text": "Each part is one byte, and a byte can only go up to 255" },
+        { "id": "two-digits", "text": "Address parts can only have two digits, so 99 is the limit" },
+        { "id": "reserved", "text": "300 is reserved for private home networks, so it can't be used" },
+        { "id": "even-only", "text": "Numbers from 300 up are kept back for special network messages" }
       ],
       "correctOptionId": "eight-bits",
       "explanation": "Each part of an IPv4 address is an **octet**: exactly 8 bits. 8 bits make 256 patterns, which cover the numbers **0 to 255**, so 300 simply doesn't fit."
@@ -72,25 +68,25 @@
       "id": "two-mb-in-kb",
       "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "A song file is **2 MB**. How many **KB** is that?",
+      "prompt": "A video clip is **4,000 KB**. How many **MB** is that?",
       "base": "decimal",
-      "answer": [2000, 2048],
-      "unit": "KB",
-      "explanation": "1 MB is 1,000 KB, so 2 MB is **2,000 KB**. Software that counts in 1,024s would call it 2,048, so that's accepted too."
+      "answer": 4,
+      "unit": "MB",
+      "explanation": "1 MB is 1,000 KB, so 4,000 KB is 4,000 ÷ 1,000 = **4 MB**. MB is the bigger unit, so the same clip gives a smaller number."
     },
     {
-      "id": "hex-digit-bits",
+      "id": "why-hex",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "One **hex** digit stands for how many bits?",
+      "prompt": "Why do people often write bytes in **hex** rather than binary?",
       "options": [
-        { "id": "two", "text": "2" },
-        { "id": "four", "text": "4" },
-        { "id": "eight", "text": "8" },
-        { "id": "sixteen", "text": "16" }
+        { "id": "shorter", "text": "It's easier to read: each hex digit stands for 4 bits, so a byte is 2 digits" },
+        { "id": "less-space", "text": "Hex takes less storage, because the computer saves 2 digits instead of 8" },
+        { "id": "computers-use-hex", "text": "Computers work in hex inside, so binary has to be turned into hex first" },
+        { "id": "bigger-numbers", "text": "Hex has 16 digits instead of 2, so one byte can hold much bigger numbers" }
       ],
-      "correctOptionId": "four",
-      "explanation": "Hex has 16 digits (0 to 9 and A to F), and 4 bits make exactly 16 patterns, so one hex digit is **4 bits**. That's why a byte (8 bits) is written as two hex digits, like `FF`. 16 is the number of hex digits, not the number of bits."
+      "correctOptionId": "shorter",
+      "explanation": "Hex is only a way of **writing** the same bits for people: one hex digit for every 4 bits, so a byte is 2 digits (`FF`) instead of 8 (`11111111`). The computer still stores the same bits, the same space, and a byte still tops out at 255."
     }
   ]
 }
