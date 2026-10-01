@@ -1537,6 +1537,35 @@ this list and fix anything busy.**
 - **Rewards and avatars** live on the lesson-complete screen and the profile, never in the lesson
   itself.
 
+## CyberNet design playbook
+
+Applies to all content work: the "learn before you do" rollout, new courses and card redesigns.
+1. **Start from real life:** every lesson opens from something the learner does or uses (their
+   phone, a game, a scam text), then shows the tech underneath.
+2. **Predict, then play:** open new ideas with "What do you think happens?" before explaining.
+3. **Interactive first:** drag, tap and try; explainers are one sentence and come after doing.
+4. **Wrong answers teach:** show visually why it's wrong (the diagram or scene changes), then Try
+   again. Never punish mistakes.
+5. **Tiny steps that build:** each card uses what the previous one proved.
+6. **3-second rule:** know what to do instantly (the zero-confusion rule below).
+7. **Useful today:** each lesson ends with one thing they can do in real life now ("Try this: …").
+8. **Learning over streaks:** XP and streaks reward real progress, not speed-running.
+
+### Zero-confusion rule (every card type, every course)
+A learner should know what to do within **3 seconds** of seeing a card.
+1. **Problem first:** the top of the card says what's wrong or what to do, in one short sentence
+   ("Fix the model's mistake", "Tap the battery").
+2. **Show, don't describe:** real-looking pictures and real colours instead of abstract dots,
+   charts or labels. Charts only in Hard bonus cards.
+3. **One action per card:** one clear thing to tap, drag or choose. Nothing pre-selected unless the
+   task is to change it.
+4. **Few choices:** 3–4 options at most on Easy and Medium cards.
+5. **Instant, visible feedback:** when they act, something on screen changes right away (a guess
+   flips, a part lights up, a packet moves).
+6. **Plain words:** everyday language, short sentences, no jargon in instructions (jargon only as
+   a tappable glossary word).
+7. **Everything visible:** fits 360×560 with no scrolling.
+
 ## Content style guide
 
 - **Plain, jargon-light language** for curious beginners aged 13+: a reading age of about 12. Short
