@@ -44,3 +44,23 @@ frame rate while it animates (average and worst 5%), and tap-to-paint delay.
   ≤2 GB of memory, the 3D phone switches to the 2D phone scene and the race to a simple animated
   diagram (no physics).
 - **No WebGL:** the 2D fallback.
+
+## 5. Results (2 Oct 2026, preview build, emulated devices)
+
+`npm run e2e:hero-perf`. Emulation, not real phones: CPU slowed (4× mid-range, 6× Instagram),
+network throttled (mid-range 9 Mbps / 70 ms; Instagram 1.6 Mbps / 150 ms), WebGL in software.
+"Worst 5% frame" is main-thread work per frame; a 60 Hz phone has 16.7 ms.
+
+| Hero | Own code (KB, compressed) | Touchable after (mid / Instagram) | Worst 5% frame | Tap to paint |
+|---|---|---|---|---|
+| 3D phone (three.js, R3F, drei) | ~265 | 1.9 s / 5.2 s | 7 ms | 40–64 ms |
+| Packet race (Matter.js) | ~45 | 1.2 s / 3.4 s | 7 ms | 40–56 ms |
+| Train the model (gestures) | ~30 | 1.1 s / 3.2 s | 7 ms | 40–56 ms |
+
+- Every hero animates well inside the frame budget and answers a tap in under 100 ms.
+- **Load size is the cost:** the 3D phone's ~265 KB means ~5 s before it can be touched on a slow
+  Instagram connection. Recommendation: keep the 2D scene as the lesson default and offer the 3D
+  phone behind a "See it in 3D" button (loaded on tap, with the loading network mark), never on the
+  first screen.
+- The race and the fruit trainer are light enough to use directly in lessons.
+- Reduced motion: all three show their still versions (checked by the script).
