@@ -26,6 +26,9 @@ export type AnalyticsEvent =
   | "limit_reached"
   // Someone left a lesson without finishing it: the lesson and the card they were on (1-based).
   | "lesson_quit"
+  // After "Not now" on a Pro screen: the one-tap answer to "What's stopping you?" and the screen
+  // (`declinedEventData` in src/lib/pro/declined.ts), without the visitor's source.
+  | "pro_declined"
   | "teaser_played"
   | "checkout_started"
   | "trial_started"
@@ -124,6 +127,15 @@ export function quitEventData(lessonId: string, cardNumber: number): Record<stri
 export function trackLessonQuit(lessonId: string, cardNumber: number): void {
   try {
     track("lesson_quit", quitEventData(lessonId, cardNumber));
+  } catch {
+    // analytics must never break the app
+  }
+}
+
+/** "What's stopping you?" was answered (or skipped) on this Pro screen. Never throws. */
+export function trackProDeclined(data: Record<string, string>): void {
+  try {
+    track("pro_declined", data);
   } catch {
     // analytics must never break the app
   }

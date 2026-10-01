@@ -60,6 +60,7 @@ export default async function ProPage() {
           headline="Go unlimited with Pro"
           prices={prices ? pitchPrices(prices.monthly, prices.annual) : null}
           track="page"
+          declineSource="pro_page"
           notNow={{ href: "/" }}
         />
       </section>
