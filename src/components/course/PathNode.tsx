@@ -11,6 +11,7 @@ import { Button, ButtonLink } from "@/components/ui/Button";
 import { AccountIcon, CheckIcon, ExploreModeIcon, LessonIcon, LockIcon, PlayIcon, RetryIcon } from "@/components/ui/icons";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { estimateMinutes } from "@/lib/content/estimate";
+import { formatChecked } from "@/lib/content/lastChecked";
 import type { CourseOutline, LessonOutline, ModuleOutline } from "@/lib/content/schema";
 import { EASE_OUT_QUICK, POPOVER_SPRING, PRESS_SPRING } from "@/lib/motion";
 import { useProgress } from "@/lib/progress/ProgressProvider";
@@ -210,6 +211,7 @@ export function PathNode({
             <p className="mt-1 text-small text-ink-muted">
               {snapshot ? summary(state, look, snapshot, blocking) : ""}
               {needsAccount && look !== "locked" ? " · free account" : ""}
+              {lesson.lastChecked ? ` · checked ${formatChecked(lesson.lastChecked)}` : ""}
             </p>
             <div className="mt-4 flex flex-col gap-2">
               {look === "locked" ? (

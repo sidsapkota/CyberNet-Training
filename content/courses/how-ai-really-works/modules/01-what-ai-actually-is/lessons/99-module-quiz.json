@@ -1,0 +1,281 @@
+{
+  "id": "what-ai-actually-is-quiz",
+  "kind": "quiz",
+  "title": "What AI Actually Is: Module Quiz",
+  "order": 99,
+  "cards": [
+    {
+      "id": "q-rules-or-learning",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Does each one **follow rules** someone wrote, or **learn from examples**?",
+      "bins": [
+        {
+          "id": "rules",
+          "label": "Follows rules"
+        },
+        {
+          "id": "learns",
+          "label": "Learns"
+        }
+      ],
+      "items": [
+        {
+          "id": "microwave",
+          "label": "A microwave timer",
+          "bin": "rules"
+        },
+        {
+          "id": "spreadsheet",
+          "label": "A spreadsheet adding a column",
+          "bin": "rules"
+        },
+        {
+          "id": "voice",
+          "label": "Turning your speech into text",
+          "bin": "learns"
+        },
+        {
+          "id": "shop",
+          "label": "An online shop's \"you might like\" list",
+          "bin": "learns"
+        }
+      ],
+      "explanation": "A microwave timer and a spreadsheet's adding follow exact rules. Turning speech into text and suggesting things you might like have endless variety, so they **learn from examples**."
+    },
+    {
+      "id": "q-sports-balls",
+      "type": "train_model",
+      "difficulty": "core",
+      "prompt": "The model calls the mini basketball a tennis ball. Choose which examples to train on, so it gets **every** test ball right.",
+      "model": {
+        "kind": "nearest",
+        "k": 1,
+        "x": {
+          "label": "Size",
+          "low": "Small",
+          "high": "Big"
+        },
+        "y": {
+          "label": "Weight",
+          "low": "Light",
+          "high": "Heavy"
+        }
+      },
+      "labels": [
+        {
+          "id": "tennis",
+          "text": "Tennis ball"
+        },
+        {
+          "id": "basketball",
+          "text": "Basketball"
+        }
+      ],
+      "examples": [
+        {
+          "id": "e1",
+          "text": "Tennis ball",
+          "x": 1,
+          "y": 1,
+          "label": "tennis"
+        },
+        {
+          "id": "e2",
+          "text": "Fuzzy tennis ball",
+          "x": 1.5,
+          "y": 1.5,
+          "label": "tennis"
+        },
+        {
+          "id": "e3",
+          "text": "Old tennis ball",
+          "x": 2,
+          "y": 0.5,
+          "label": "tennis"
+        },
+        {
+          "id": "e7",
+          "text": "Small basketball",
+          "x": 4.5,
+          "y": 4.5,
+          "label": "basketball"
+        },
+        {
+          "id": "e4",
+          "text": "Basketball",
+          "x": 8,
+          "y": 7,
+          "label": "basketball"
+        },
+        {
+          "id": "e5",
+          "text": "Big basketball",
+          "x": 9,
+          "y": 8,
+          "label": "basketball"
+        },
+        {
+          "id": "e6",
+          "text": "Worn basketball",
+          "x": 8.5,
+          "y": 6,
+          "label": "basketball"
+        }
+      ],
+      "tests": [
+        {
+          "id": "t1",
+          "text": "New tennis ball",
+          "x": 1.5,
+          "y": 0.8,
+          "truth": "tennis"
+        },
+        {
+          "id": "t2",
+          "text": "Mini basketball",
+          "x": 4,
+          "y": 4,
+          "truth": "basketball"
+        },
+        {
+          "id": "t3",
+          "text": "Match basketball",
+          "x": 8.5,
+          "y": 7.5,
+          "truth": "basketball"
+        }
+      ],
+      "task": {
+        "goal": "include",
+        "start": [
+          "e1",
+          "e2",
+          "e3",
+          "e4",
+          "e5",
+          "e6"
+        ]
+      },
+      "explanation": "Every basketball the model learned from was big, so the mini one sat closer to the tennis balls. Adding the **small basketball** shows it that basketballs can be small too. Taking the tennis balls out would break the tennis ball test."
+    },
+    {
+      "id": "q-daylight-dogs",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "A model learned to spot dogs from photos taken **only in daylight**. What will it most likely get wrong?",
+      "options": [
+        {
+          "id": "night",
+          "text": "Dogs in photos taken at night"
+        },
+        {
+          "id": "day",
+          "text": "Dogs in sunny photos"
+        },
+        {
+          "id": "own",
+          "text": "The photos it was trained on"
+        },
+        {
+          "id": "nothing",
+          "text": "Nothing: the kind of photos doesn't matter"
+        }
+      ],
+      "correctOptionId": "night",
+      "explanation": "A model only knows what it was shown. It never saw a dog at night, so night photos are where it will slip up, like the yellow apple. Adding night photos to its training data would help."
+    },
+    {
+      "id": "q-steps",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "Put the steps of teaching a computer in order, from first to last.",
+      "items": [
+        {
+          "id": "collect",
+          "label": "Collect lots of examples"
+        },
+        {
+          "id": "label",
+          "label": "Label each example"
+        },
+        {
+          "id": "train",
+          "label": "Train the model on them"
+        },
+        {
+          "id": "test",
+          "label": "Test it on new examples"
+        },
+        {
+          "id": "use",
+          "label": "Use it for real"
+        }
+      ],
+      "explanation": "Collect, label, train, test, then use. Testing on new examples before using a model shows how often it gets things wrong."
+    },
+    {
+      "id": "q-check-it",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "You're writing a report on volcanoes with an AI helper.",
+      "start": "the-fact",
+      "steps": [
+        {
+          "id": "the-fact",
+          "text": "The AI confidently tells you the highest volcano in the world. Your report will be marked. What do you do?",
+          "choices": [
+            {
+              "id": "trust",
+              "text": "Use it: it sounded certain",
+              "consequence": "It might be right, but it might not. AI answers are predictions, and confidence doesn't make them true.",
+              "outcome": "fail"
+            },
+            {
+              "id": "check",
+              "text": "Check it in a trusted source first",
+              "consequence": "Exactly: important facts get checked with a source you trust.",
+              "outcome": "success"
+            },
+            {
+              "id": "ask-again",
+              "text": "Ask the AI to promise it's right",
+              "consequence": "It may well promise, but it can't be sure its own answer is right, so a promise doesn't make it true.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "explanation": "An AI's answer is a prediction. For anything important, **check it with a trusted source** before you rely on it."
+    },
+    {
+      "id": "q-words",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each word to what it means.",
+      "pairs": [
+        {
+          "id": "data",
+          "left": "Training data",
+          "right": "Examples to learn from"
+        },
+        {
+          "id": "label",
+          "left": "Label",
+          "right": "What one example really is"
+        },
+        {
+          "id": "model",
+          "left": "Model",
+          "right": "What the computer builds to guess"
+        },
+        {
+          "id": "prediction",
+          "left": "Prediction",
+          "right": "The model's best guess"
+        }
+      ],
+      "explanation": "**Training data** is the examples; a **label** says what each example really is; the **model** is what the computer builds from them; and a **prediction** is its best guess about something new."
+    }
+  ]
+}

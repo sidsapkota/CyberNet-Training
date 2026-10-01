@@ -810,6 +810,29 @@ Signs of a hack, what to do step by step, and where to get help.
 - Choose what happens: Your friends say you've been sending them strange links. You haven't.
 - Choose what happens: You check your account's security settings.
 
+#### Deepfake Scams and Fakes
+
+- **Access:** Free, no account needed (best for video links)
+- **Link:** `cybernettraining.com/from/<platform>/deepfake-scams`
+
+**Key facts**
+
+- *Fake voices and faces:* Then it can make **new** audio or video of them saying things they never said. A fake video or picture made like this is called a **deepfake**.
+- *The same old tricks:* **Hurry:** you must act right now, so you don't stop to check. **Keep it secret:** don't tell anyone, so nobody can warn you.
+- *Ask something only they'd know:* Some families agree a **code word** together, just for emergencies, and never post it online.
+- *If someone makes a fake of you:* It's **not your fault**, and you won't be in trouble for asking for help. **Don't share it** any further, even to show someone.
+- *Recap:* AI can copy voices and faces: **deepfakes** and **voice clones**. The red flags still work: **hurry**, **secrets**, **money or codes**, a **new number**.
+
+**Best interactive cards**
+
+- Sort into groups: Sort each message: **red flag**, or **normal**?
+- Choose what happens: Your phone rings from a number you don't know.
+- Choose what happens: A video message arrives from an account with your coach's name and face.
+
+**Surprising facts**
+
+- If you're under 18 and someone is threatening to share it, or asking you for sexual images or money, report it to the **ACCCE** too (accce.gov.au/report).
+
 #### Getting Help
 
 - **Access:** Free, no account needed (best for video links)
@@ -836,5 +859,73 @@ Signs of a hack, what to do step by step, and where to get help.
 - Then: **eSafety** for serious abuse and private images (and the **ACCCE** if you're under 18), **Scamwatch** for scams, your **bank** for money, **IDCARE** for stolen details, **000** for danger.
 
 #### Module quiz (8 questions)
+
+Not exported, so the answers stay secret.
+
+## How AI Really Works
+
+Teach a model, watch a chatbot pick its words, and use AI safely.
+
+### Module 1: What AI Actually Is (Free)
+
+What counts as AI, how it learns from examples, and where it goes wrong.
+
+#### Spot the AI
+
+- **Access:** Free, no account needed (best for video links)
+- **Link:** `cybernettraining.com/from/<platform>/spot-the-ai`
+
+**Key facts**
+
+- *AI is already in your pocket:* All of these use **artificial intelligence**, or **AI**.
+- *Rules or examples?:* Most programs follow **rules** that a person wrote, step by step. Try writing rules for "what does my friend's face look like?" So instead, people give the computer lots of **examples** and let it work out what they have in common.
+- *Learning by example:* It's called **machine learning**: the computer is shown many examples and finds the patterns in them itself.
+- *Recap:* Ordinary programs follow **rules** a person wrote. **AI** learns from **examples** instead, finding patterns in them.
+
+**Best interactive cards**
+
+- Sort into groups: Does each one **follow rules** someone wrote, or **learn from examples**?
+- Match pairs: Match each kind of AI to the examples it learns from.
+- Sort into groups: Trickier: does each one **follow rules**, or **learn from examples**?
+
+**Surprising facts**
+
+- An alarm clock's rule is simple: at 7:00, ring.
+
+#### Patterns Everywhere
+
+- **Access:** Free with a free account
+- **Link:** `cybernettraining.com/from/<platform>/patterns-everywhere`
+
+**Key facts**
+
+- *Examples, labels and models:* A **pattern** is something that shows up again and again, like apples being round and bananas being long. To teach a computer, you give it **training data**: lots of examples, each with a **label** that says what it really is ("apple" or "banana").
+- *Why did it get one wrong?:* Every apple in its training data was **red**.
+- *Recap:* **Training data** is lots of examples, each with a **label** saying what it really is. The computer finds **patterns** in them and builds a **model** that guesses labels for new things.
+
+**Best interactive cards**
+
+- Train a model: Label each fruit as an **apple** or a **banana**. Then press Check to train the model and see what it guesses about 3 new fruits.
+- Train a model: Here's the same model, plus a **golden apple** it isn't using yet. Choose which examples to train on, so it gets **every** test fruit right.
+- Train a model: Now there are three kinds of fruit. This model looks at the **3 nearest** examples and goes with the most common label. Label the fruit, then see its guesses.
+
+#### What AI Can't Do
+
+- **Access:** Free with a free account
+- **Link:** `cybernettraining.com/from/<platform>/what-ai-cant-do`
+
+**Key facts**
+
+- *A guess, not a fact:* Everything a model gives you is a **prediction**: its best guess, based on patterns in its training data.
+- *People are responsible:* Big decisions about people, like a punishment at school, a medical treatment or who gets a job, need a **person** to decide and to be responsible.
+- *Recap:* Everything AI gives you is a **prediction**, not a fact.
+
+**Best interactive cards**
+
+- Choose what happens: You're using an AI helper for history homework.
+- Sort into groups: Is each job **fine for AI to help with**, or does it **need a person** to decide?
+- Choose what happens: Your photo app sorts pictures by who's in them.
+
+#### Module quiz (6 questions)
 
 Not exported, so the answers stay secret.

@@ -1,0 +1,237 @@
+{
+  "id": "what-ai-cant-do",
+  "kind": "lesson",
+  "title": "What AI Can't Do",
+  "order": 3,
+  "icon": "brain",
+  "cards": [
+    {
+      "id": "sure-of-itself",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Sure of itself",
+      "body": "Ask an AI chatbot a question and it answers straight away, in smooth, confident sentences. It sounds like it knows.\n\nBut sounding sure and being right aren't the same thing. This lesson is about what AI can't do, and what that means for you."
+    },
+    {
+      "id": "a-guess-not-a-fact",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "A guess, not a fact",
+      "body": "Everything a model gives you is a **prediction**: its best guess, based on [[patterns|pattern]] in its [[training data]]. Remember the yellow apple: the model guessed banana, and it was wrong.\n\nAI doesn't know what's true. Even when it searches the web, it can't be sure its answer is right, and it can't always tell when it's guessing. So a confident answer can still be wrong. That's why you check anything important with a second source you trust, like a textbook or a trusted website."
+    },
+    {
+      "id": "homework-helper",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "You're using an AI helper for history homework.",
+      "start": "the-date",
+      "steps": [
+        {
+          "id": "the-date",
+          "text": "The AI says the big bridge in your city opened in **1952**. It sounds very sure. What do you do?",
+          "choices": [
+            {
+              "id": "write-it",
+              "text": "Write it down: it sounds certain",
+              "consequence": "Your teacher marks it wrong: the bridge opened years later. Confident isn't the same as correct.",
+              "outcome": "fail"
+            },
+            {
+              "id": "check",
+              "text": "Check a trusted source, like your textbook",
+              "consequence": "Good thinking. Let's see what it says.",
+              "next": "the-textbook"
+            },
+            {
+              "id": "ask-ai",
+              "text": "Ask the AI if it's sure",
+              "consequence": "It says \"Yes, I'm sure!\" An AI can say it's sure and still be wrong, because it can't be sure its own answer is right.",
+              "outcome": "fail"
+            }
+          ]
+        },
+        {
+          "id": "the-textbook",
+          "text": "Your textbook says the bridge opened in **1958**. What now?",
+          "choices": [
+            {
+              "id": "use-book",
+              "text": "Use 1958, from the textbook",
+              "consequence": "Right: you checked a source you trust and caught the AI's mistake.",
+              "outcome": "success"
+            },
+            {
+              "id": "use-ai",
+              "text": "Use 1952: computers are always right",
+              "consequence": "Computers can be wrong too. The AI was making a guess, and the textbook was checked by people.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "hint": "Think back to the last card: what should you do with anything important an AI tells you?",
+      "explanation": "An AI's answer is a **prediction**, so even a confident one can be wrong. Asking the AI again doesn't help: it can't be sure its own answer is right. Check important facts with a **trusted source**, like a textbook, and go with the source."
+    },
+    {
+      "id": "people-are-responsible",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "People are responsible",
+      "body": "AI is handy for quick, low-stakes jobs: suggesting a song, fixing a spelling, sorting photos. If it gets one wrong, it's easy to spot and nobody gets hurt.\n\nBig decisions about people, like a punishment at school, a medical treatment or who gets a job, need a **person** to decide and to be responsible. AI might help them, but it can be wrong, so a person should check and take responsibility."
+    },
+    {
+      "id": "ai-or-person",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Is each job **fine for AI to help with**, or does it **need a person** to decide?",
+      "bins": [
+        {
+          "id": "ai",
+          "label": "AI can help"
+        },
+        {
+          "id": "person",
+          "label": "Needs a person"
+        }
+      ],
+      "items": [
+        {
+          "id": "spelling",
+          "label": "Suggesting spelling fixes",
+          "bin": "ai"
+        },
+        {
+          "id": "photos",
+          "label": "Sorting your holiday photos",
+          "bin": "ai"
+        },
+        {
+          "id": "songs",
+          "label": "Suggesting songs",
+          "bin": "ai"
+        },
+        {
+          "id": "punishment",
+          "label": "Deciding a student's punishment",
+          "bin": "person"
+        },
+        {
+          "id": "treatment",
+          "label": "Choosing a medical treatment",
+          "bin": "person"
+        },
+        {
+          "id": "job",
+          "label": "Deciding who gets a job",
+          "bin": "person"
+        }
+      ],
+      "hint": "Ask: if the AI got it wrong, would someone be hurt or treated unfairly?",
+      "nudge": "Look again at the jobs where a mistake would really affect someone's life.",
+      "explanation": "Spelling, photos and songs are low-stakes: a mistake is easy to spot and fix. Punishments, medical treatment and jobs are **big decisions about people**, so a person must decide and be responsible, even if AI helps."
+    },
+    {
+      "id": "why-confidently-wrong",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Why can an AI give a confident answer that's wrong?",
+      "options": [
+        {
+          "id": "predicts",
+          "text": "It predicts from patterns, and can't check if it's true"
+        },
+        {
+          "id": "lying",
+          "text": "It's lying on purpose",
+          "nudge": "AI doesn't have intentions or feelings. Think about how it makes an answer."
+        },
+        {
+          "id": "battery",
+          "text": "Its battery is running low",
+          "nudge": "Battery level doesn't change its answers. Where do its answers come from?"
+        },
+        {
+          "id": "old-phones",
+          "text": "It only goes wrong on old phones",
+          "nudge": "New and old devices use the same kind of model. What is every answer it gives?"
+        }
+      ],
+      "correctOptionId": "predicts",
+      "hint": "What is every answer an AI gives you: a fact, or something else?",
+      "explanation": "Every answer is a **prediction** from the patterns it learned. It doesn't check whether the answer is true, so it can sound just as sure when it's wrong as when it's right. It isn't lying: it doesn't know the difference."
+    },
+    {
+      "id": "photo-tag",
+      "type": "scenario",
+      "difficulty": "challenge",
+      "prompt": "Your photo app sorts pictures by who's in them.",
+      "start": "the-tag",
+      "steps": [
+        {
+          "id": "the-tag",
+          "text": "It labels a picture of your friend as someone else, and suggests sharing it with that person. What do you do?",
+          "choices": [
+            {
+              "id": "share",
+              "text": "Share it: the app knows best",
+              "consequence": "Now someone else has your friend's photo. Apps can mislabel faces, so check before you share.",
+              "outcome": "fail"
+            },
+            {
+              "id": "fix",
+              "text": "Fix the label, and don't share it",
+              "consequence": "Good: you caught the app's mistake before it spread. Matching a face is a prediction, so it can be wrong.",
+              "outcome": "success"
+            },
+            {
+              "id": "delete-app",
+              "text": "Delete the app straight away",
+              "consequence": "You don't need to: it made a mistake you can fix. Just don't trust its guesses without checking.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "hint": "The app's label is a prediction. What do you do with a prediction before acting on it?",
+      "explanation": "Face matching is a **prediction**, so it can mislabel people. Check before acting on it: fix the label and don't share. You don't have to stop using the app, just don't trust its guesses blindly."
+    },
+    {
+      "id": "limits",
+      "type": "match_pairs",
+      "difficulty": "challenge",
+      "prompt": "Match each AI limit to an example of it.",
+      "pairs": [
+        {
+          "id": "examples",
+          "left": "Only knows its examples",
+          "right": "Calls a yellow apple a banana"
+        },
+        {
+          "id": "confident",
+          "left": "Sounds sure when wrong",
+          "right": "Gives the wrong year, confidently"
+        },
+        {
+          "id": "faces",
+          "left": "Can mislabel people",
+          "right": "Tags your friend as someone else"
+        },
+        {
+          "id": "responsible",
+          "left": "Can't be responsible",
+          "right": "A person decides punishments"
+        }
+      ],
+      "hint": "Each example comes from this module. Which limit explains what went wrong in each one?",
+      "nudge": "Think about each example's story: was the problem missing examples, false confidence, a mislabelled face, or a big decision?",
+      "explanation": "The yellow apple shows a model **only knows its examples**; the wrong year shows it can **sound sure when wrong**; the photo app shows it can **mislabel people**; and big decisions about people need **a person** to be responsible."
+    },
+    {
+      "id": "cant-do-recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- Everything AI gives you is a **prediction**, not a fact.\n- It can sound sure and still be wrong, so check important things with a trusted source.\n- Big decisions about people need a person to decide and be responsible.\n- You're in charge: AI is a tool, and you decide when to trust it.\n\nNext: the module quiz."
+    }
+  ]
+}

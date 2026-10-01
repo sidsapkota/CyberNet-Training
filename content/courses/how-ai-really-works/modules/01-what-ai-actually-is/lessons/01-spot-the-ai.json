@@ -1,0 +1,230 @@
+{
+  "id": "spot-the-ai",
+  "kind": "lesson",
+  "title": "Spot the AI",
+  "order": 1,
+  "icon": "bot",
+  "cards": [
+    {
+      "id": "ai-in-your-pocket",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "AI is already in your pocket",
+      "body": "Your phone unlocks when it sees your face. Your keyboard guesses the word you're about to type. A voice assistant turns what you say into text. Your music app suggests a song you end up loving.\n\nAll of these use **artificial intelligence**, or **AI**. In this course you'll find out what AI really is, how it learns and where it goes wrong, so you can use it well and spot its mistakes."
+    },
+    {
+      "id": "rules-or-examples",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Rules or examples?",
+      "body": "Most programs follow **rules** that a person wrote, step by step. An alarm clock's rule is simple: at 7:00, ring.\n\nSome jobs are far too hard to write rules for. Try writing rules for \"what does my friend's face look like?\" So instead, people give the computer lots of **examples** and let it work out what they have in common.\n\nIn this course, **AI** means software that learns from examples like this, instead of only following rules someone wrote."
+    },
+    {
+      "id": "rules-or-learning",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Does each one **follow rules** someone wrote, or **learn from examples**?",
+      "bins": [
+        {
+          "id": "rules",
+          "label": "Follows rules"
+        },
+        {
+          "id": "learns",
+          "label": "Learns"
+        }
+      ],
+      "items": [
+        {
+          "id": "alarm",
+          "label": "An alarm clock",
+          "bin": "rules"
+        },
+        {
+          "id": "calculator",
+          "label": "A calculator",
+          "bin": "rules"
+        },
+        {
+          "id": "lights",
+          "label": "Traffic lights on a timer",
+          "bin": "rules"
+        },
+        {
+          "id": "face",
+          "label": "Face unlock",
+          "bin": "learns"
+        },
+        {
+          "id": "spam",
+          "label": "A spam filter that learns from you",
+          "bin": "learns"
+        },
+        {
+          "id": "keyboard",
+          "label": "Keyboard word suggestions",
+          "bin": "learns"
+        }
+      ],
+      "hint": "Ask: could a person write down every step exactly? If yes, it follows rules.",
+      "nudge": "Look again at the jobs that have to cope with things nobody planned for, like a new photo of a face or a word you've never typed before.",
+      "explanation": "An alarm clock, a calculator and timed traffic lights follow exact rules someone wrote. Face unlock, a spam filter that learns from you and keyboard suggestions **learn from examples**: there are too many faces, emails and sentences to write rules for every one."
+    },
+    {
+      "id": "learning-by-example",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Learning by example",
+      "body": "Think about learning to cook. You could follow a recipe exactly, step by step. Or you could cook lots of meals, taste them and slowly learn what works.\n\nComputers can learn the second way too. It's called **machine learning**: the computer is shown many examples and finds the patterns in them itself. Most of what people call AI today works like this."
+    },
+    {
+      "id": "which-needs-learning",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Which job is easiest to solve by **learning from examples**, instead of writing rules?",
+      "options": [
+        {
+          "id": "handwriting",
+          "text": "Reading people's handwriting"
+        },
+        {
+          "id": "bill",
+          "text": "Adding up a shopping bill",
+          "nudge": "Adding follows exact rules that never change. Which job has too many different possibilities to write rules for?"
+        },
+        {
+          "id": "alarm",
+          "text": "Ringing an alarm at 7:00",
+          "nudge": "That's one simple rule. Which job would need rules for millions of different cases?"
+        },
+        {
+          "id": "midnight",
+          "text": "Turning the lights off at midnight",
+          "nudge": "A timer can do that with one rule. Think about a job where every example looks a bit different."
+        }
+      ],
+      "correctOptionId": "handwriting",
+      "hint": "Which job has to cope with endless variety, where no two examples look exactly the same?",
+      "explanation": "Everyone's handwriting is different, so nobody could write rules for every way of writing every letter. Instead, a computer learns from thousands of handwriting examples. Adding up, alarms and timers each need just a few exact rules."
+    },
+    {
+      "id": "what-it-learned-from",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each kind of [[AI|artificial-intelligence]] to the examples it learns from.",
+      "pairs": [
+        {
+          "id": "songs",
+          "left": "Song suggestions",
+          "right": "Songs you skip and replay"
+        },
+        {
+          "id": "face",
+          "left": "Face unlock",
+          "right": "Scans of your face"
+        },
+        {
+          "id": "spam",
+          "left": "Spam filter",
+          "right": "Emails people mark as spam"
+        },
+        {
+          "id": "keyboard",
+          "left": "Keyboard suggestions",
+          "right": "Words people usually type next"
+        }
+      ],
+      "hint": "For each one, ask: what would it need to see lots of to get good at its job?",
+      "nudge": "Think about what each one is trying to guess, and which examples would show it the right answers.",
+      "explanation": "Song suggestions learn from what you **skip and replay**; face unlock from **scans of your face**; spam filters from emails people **mark as spam**; keyboards from the words people **usually type next**. Each one gets good at its job by seeing lots of examples of it."
+    },
+    {
+      "id": "trickier-sort",
+      "type": "sort_bins",
+      "difficulty": "challenge",
+      "prompt": "Trickier: does each one **follow rules**, or **learn from examples**?",
+      "bins": [
+        {
+          "id": "rules",
+          "label": "Follows rules"
+        },
+        {
+          "id": "learns",
+          "label": "Learns"
+        }
+      ],
+      "items": [
+        {
+          "id": "heater-timer",
+          "label": "A heater on a timer",
+          "bin": "rules"
+        },
+        {
+          "id": "heater-learns",
+          "label": "A heater that learns when you're home",
+          "bin": "learns"
+        },
+        {
+          "id": "enemy-path",
+          "label": "A game enemy on a set path",
+          "bin": "rules"
+        },
+        {
+          "id": "enemy-trained",
+          "label": "A game enemy trained on players",
+          "bin": "learns"
+        },
+        {
+          "id": "converter",
+          "label": "A cups-to-millilitres converter",
+          "bin": "rules"
+        },
+        {
+          "id": "dog-photos",
+          "label": "A photo app that finds dogs",
+          "bin": "learns"
+        }
+      ],
+      "hint": "Two things can do the same job in different ways. Look for words like \"learns\" and \"trained\", and ask whether someone could write every step.",
+      "nudge": "Some pairs look alike. Ask whether a person wrote the exact steps, or whether it got better by seeing examples.",
+      "explanation": "A timer, a set path and a unit converter follow exact rules. A heater that **learns** your routine, an enemy **trained** on players and a photo app that finds dogs all **learn from examples**. The same kind of job can be done either way."
+    },
+    {
+      "id": "does-it-understand",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "prompt": "When [[AI|artificial-intelligence]] recognises your face, does it **understand** who you are, the way a friend does?",
+      "options": [
+        {
+          "id": "patterns",
+          "text": "No: it matches patterns it learned from examples"
+        },
+        {
+          "id": "friend",
+          "text": "Yes: it knows you like a friend does",
+          "nudge": "A friend knows your jokes and your favourite food. What did the AI actually learn from?"
+        },
+        {
+          "id": "new-phones",
+          "text": "Yes, but only on new phones",
+          "nudge": "Newer phones are faster, but how the AI learned is the same. Does matching a face mean knowing the person?"
+        },
+        {
+          "id": "online",
+          "text": "No: it looks up your name online each time",
+          "nudge": "It doesn't need to look anything up. Think about how it learned to recognise you."
+        }
+      ],
+      "correctOptionId": "patterns",
+      "hint": "Think back to how AI learns: from examples, finding what they have in common.",
+      "explanation": "Face unlock matches the **patterns** in your face to the examples it learned from. It doesn't know who you are, what you like or how you feel. That's a big difference between AI and people, and it's why AI can be fooled or make odd mistakes."
+    },
+    {
+      "id": "spot-the-ai-recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- Ordinary programs follow **rules** a person wrote.\n- **AI** learns from **examples** instead, finding patterns in them. This is called **machine learning**.\n- AI is everywhere: face unlock, keyboard suggestions, spam filters, song suggestions.\n- It matches patterns. It doesn't understand things the way people do.\n\nNext: you'll teach a model yourself."
+    }
+  ]
+}

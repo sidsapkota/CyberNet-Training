@@ -57,9 +57,11 @@ All of `build`, `lint`, `test` and `typecheck` must pass with zero errors and wa
 
 Courses, in catalog order: **Inside Your Devices** (`inside-your-devices`, hardware, the OS and
 troubleshooting, built on the hands-on card types), **How the Internet Works**
-(`how-the-internet-works`) and **Stay Safe Online** (`stay-safe-online`: passwords and two-step
-sign-in, spotting scams, privacy, and what to do when things go wrong; modules 1 and 4 free,
-modules 2 and 3 Pro).
+(`how-the-internet-works`), **Stay Safe Online** (`stay-safe-online`: passwords and two-step
+sign-in, spotting scams, privacy, and what to do when things go wrong, including deepfake scams;
+modules 1 and 4 free, modules 2 and 3 Pro) and **How AI Really Works** (`how-ai-really-works`,
+being built on `ai-course`: module 1 free, modules 2 to 6 Pro; uses the `train_model` and
+`next_word` cards).
 Each `module.json` has `"access": "free" | "pro"`. Every course's first module must be free (the
 loader checks), and help, reporting and recovery modules are always free. Every Pro module also has
 `"teaserCard": { "lesson", "card" }`: one card from its **first lesson** that learners without Pro
@@ -74,7 +76,10 @@ content/courses/<course-dir>/modules/<module-dir>/lessons/*.json
 ```
 
 - A lesson file holds `{ id, kind: "lesson" | "quiz", title, order, cards[] }` (plus `icon` for
-  lessons). Access comes from its module. Quizzes also
+  lessons). A lesson about fast-changing things (real products) also has `lastChecked`
+  (`YYYY-MM-DD`): learners see "Last checked …" on its first card and in its path popover, and
+  `validate-content` warns (never fails) 3 months later (`src/lib/content/lastChecked.ts`; the
+  recheck list is in `content/REVIEW.md`). Access comes from its module. Quizzes also
   take `passThreshold` (0 to 1, default 0.7).
 - **Lesson icons:** every regular lesson has an `icon` from the allow-list in
   `src/lib/content/lessonIcons.ts` (lucide names, drawn by `LessonIcon` in

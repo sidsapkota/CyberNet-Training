@@ -1,0 +1,468 @@
+{
+  "id": "patterns-everywhere",
+  "kind": "lesson",
+  "title": "Patterns Everywhere",
+  "order": 2,
+  "icon": "scan-eye",
+  "cards": [
+    {
+      "id": "is-it-a-cat",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "How do you know it's a cat?",
+      "body": "Look at a blurry photo of a cat and you know it's a cat in a split second. Nobody gave you a rule like \"four legs plus pointy ears equals cat\". You've just seen lots of cats.\n\nAI learns in a similar way. In this lesson, you'll teach one."
+    },
+    {
+      "id": "examples-labels-models",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Examples, labels and models",
+      "body": "A **pattern** is something that shows up again and again, like apples being round and bananas being long.\n\nTo teach a computer, you give it **training data**: lots of examples, each with a **label** that says what it really is (\"apple\" or \"banana\"). The computer finds the patterns and builds a **model**: its own way of guessing the label of new things it has never seen.\n\nNext, you'll label some fruit on a chart. Across the bottom is how round each fruit is. Up the side is how yellow it is. This model guesses by finding the example **closest** to each new fruit on the chart."
+    },
+    {
+      "id": "label-the-fruit",
+      "type": "train_model",
+      "difficulty": "core",
+      "prompt": "Label each fruit as an **apple** or a **banana**. Then press Check to train the [[model]] and see what it guesses about 3 new fruits.",
+      "model": {
+        "kind": "nearest",
+        "k": 1,
+        "x": {
+          "label": "Shape",
+          "low": "Long",
+          "high": "Round"
+        },
+        "y": {
+          "label": "Colour",
+          "low": "Red",
+          "high": "Yellow"
+        }
+      },
+      "labels": [
+        {
+          "id": "apple",
+          "text": "Apple"
+        },
+        {
+          "id": "banana",
+          "text": "Banana"
+        }
+      ],
+      "examples": [
+        {
+          "id": "a1",
+          "text": "Red apple",
+          "x": 9.5,
+          "y": 0.5,
+          "label": "apple",
+          "given": false
+        },
+        {
+          "id": "a2",
+          "text": "Small red apple",
+          "x": 7.5,
+          "y": 2,
+          "label": "apple",
+          "given": false
+        },
+        {
+          "id": "a3",
+          "text": "Big red apple",
+          "x": 9.5,
+          "y": 3.5,
+          "label": "apple",
+          "given": true
+        },
+        {
+          "id": "b1",
+          "text": "Banana",
+          "x": 0.5,
+          "y": 9.5,
+          "label": "banana",
+          "given": false
+        },
+        {
+          "id": "b2",
+          "text": "Long banana",
+          "x": 2.5,
+          "y": 9.5,
+          "label": "banana",
+          "given": true
+        },
+        {
+          "id": "b3",
+          "text": "Spotty banana",
+          "x": 1.5,
+          "y": 7,
+          "label": "banana",
+          "given": false
+        }
+      ],
+      "tests": [
+        {
+          "id": "t1",
+          "text": "Shiny red apple",
+          "x": 8.5,
+          "y": 1.5,
+          "truth": "apple"
+        },
+        {
+          "id": "t2",
+          "text": "Ripe banana",
+          "x": 1,
+          "y": 8.2,
+          "truth": "banana"
+        },
+        {
+          "id": "t3",
+          "text": "Yellow apple",
+          "x": 6,
+          "y": 8,
+          "truth": "apple"
+        }
+      ],
+      "task": {
+        "goal": "label"
+      },
+      "hint": "Read each fruit's name: is it an apple or a banana?",
+      "nudge": "Check the names again. Every apple here is red and round, and every banana is long and yellow.",
+      "explanation": "Your labels were right. Then the model guessed each new fruit's label from the **nearest** fruit it had learned. It got the red apple and the banana right, but called the **yellow apple** a banana. Find out why on the next card."
+    },
+    {
+      "id": "why-it-went-wrong",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Why did it get one wrong?",
+      "body": "Your labels were right, yet the model called the yellow apple a banana. Why?\n\nEvery apple in its [[training data]] was **red**. On the chart, the yellow apple sat closer to the bananas than to any red apple, so the model guessed banana.\n\nA model only knows what it was shown. If the examples leave something out, it will make mistakes about it, even when every label is correct."
+    },
+    {
+      "id": "best-fix",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "What would help this model most with yellow apples?",
+      "options": [
+        {
+          "id": "yellow-apples",
+          "text": "Add some yellow apples to its training data"
+        },
+        {
+          "id": "more-red",
+          "text": "Add more red apples",
+          "nudge": "It already knows red apples well. What kind of apple is it missing?"
+        },
+        {
+          "id": "try-harder",
+          "text": "Tell it to try harder",
+          "nudge": "A model can't try harder: all it has is its examples. What should those examples include?"
+        },
+        {
+          "id": "no-bananas",
+          "text": "Remove the bananas",
+          "nudge": "Then it couldn't recognise bananas at all. What could you add, instead of taking away?"
+        }
+      ],
+      "correctOptionId": "yellow-apples",
+      "hint": "The model only knows what it was shown. What was it never shown?",
+      "explanation": "The model went wrong because it had never seen a **yellow apple**. Adding some to its training data teaches it that apples can be yellow too. More red apples teach it nothing new, and removing the bananas would break the banana guesses."
+    },
+    {
+      "id": "choose-the-data",
+      "type": "train_model",
+      "difficulty": "core",
+      "prompt": "Here's the same [[model]], plus a **golden apple** it isn't using yet. Choose which examples to train on, so it gets **every** test fruit right.",
+      "model": {
+        "kind": "nearest",
+        "k": 1,
+        "x": {
+          "label": "Shape",
+          "low": "Long",
+          "high": "Round"
+        },
+        "y": {
+          "label": "Colour",
+          "low": "Red",
+          "high": "Yellow"
+        }
+      },
+      "labels": [
+        {
+          "id": "apple",
+          "text": "Apple"
+        },
+        {
+          "id": "banana",
+          "text": "Banana"
+        }
+      ],
+      "examples": [
+        {
+          "id": "a1",
+          "text": "Red apple",
+          "x": 9.5,
+          "y": 0.5,
+          "label": "apple"
+        },
+        {
+          "id": "a2",
+          "text": "Small red apple",
+          "x": 7.5,
+          "y": 2,
+          "label": "apple"
+        },
+        {
+          "id": "a3",
+          "text": "Big red apple",
+          "x": 9.5,
+          "y": 3.5,
+          "label": "apple"
+        },
+        {
+          "id": "g1",
+          "text": "Golden apple",
+          "x": 8,
+          "y": 9.5,
+          "label": "apple"
+        },
+        {
+          "id": "b1",
+          "text": "Banana",
+          "x": 0.5,
+          "y": 9.5,
+          "label": "banana"
+        },
+        {
+          "id": "b2",
+          "text": "Long banana",
+          "x": 2.5,
+          "y": 9.5,
+          "label": "banana"
+        },
+        {
+          "id": "b3",
+          "text": "Spotty banana",
+          "x": 1.5,
+          "y": 7,
+          "label": "banana"
+        }
+      ],
+      "tests": [
+        {
+          "id": "t1",
+          "text": "Shiny red apple",
+          "x": 8.5,
+          "y": 1.5,
+          "truth": "apple"
+        },
+        {
+          "id": "t2",
+          "text": "Ripe banana",
+          "x": 1,
+          "y": 8.2,
+          "truth": "banana"
+        },
+        {
+          "id": "t3",
+          "text": "Yellow apple",
+          "x": 6,
+          "y": 8,
+          "truth": "apple"
+        }
+      ],
+      "task": {
+        "goal": "include",
+        "start": [
+          "a1",
+          "a2",
+          "a3",
+          "b1",
+          "b2",
+          "b3"
+        ]
+      },
+      "hint": "Which example looks most like the yellow apple, but isn't being used yet?",
+      "nudge": "Leaving out the bananas makes it call everything an apple. What could you add instead?",
+      "explanation": "Adding the **golden apple** shows the model that apples can be yellow too. Now the yellow apple sits closest to an apple, and the bananas still help it recognise the ripe banana. Better examples, better guesses."
+    },
+    {
+      "id": "steps-of-learning",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "Put the steps of teaching a computer in order, from first to last.",
+      "items": [
+        {
+          "id": "collect",
+          "label": "Collect lots of examples"
+        },
+        {
+          "id": "label",
+          "label": "Label each example"
+        },
+        {
+          "id": "train",
+          "label": "Train the model on them"
+        },
+        {
+          "id": "test",
+          "label": "Test it on new examples"
+        },
+        {
+          "id": "use",
+          "label": "Use it for real"
+        }
+      ],
+      "hint": "You can't label examples you don't have yet, and you should test a model before you trust it.",
+      "nudge": "Start with gathering the examples. What has to happen to them before the model can learn?",
+      "explanation": "First **collect** examples, then **label** them, then **train** the model on them. Before trusting it, **test** it on examples it hasn't seen, like your test fruit. Only then **use** it for real."
+    },
+    {
+      "id": "three-fruits",
+      "type": "train_model",
+      "difficulty": "challenge",
+      "prompt": "Now there are three kinds of fruit. This [[model]] looks at the **3 nearest** examples and goes with the most common label. Label the fruit, then see its guesses.",
+      "model": {
+        "kind": "nearest",
+        "k": 3,
+        "x": {
+          "label": "Shape",
+          "low": "Long",
+          "high": "Round"
+        },
+        "y": {
+          "label": "Colour",
+          "low": "Red",
+          "high": "Yellow"
+        }
+      },
+      "labels": [
+        {
+          "id": "apple",
+          "text": "Apple"
+        },
+        {
+          "id": "banana",
+          "text": "Banana"
+        },
+        {
+          "id": "lemon",
+          "text": "Lemon"
+        }
+      ],
+      "examples": [
+        {
+          "id": "a1",
+          "text": "Red apple",
+          "x": 9.5,
+          "y": 0.5,
+          "label": "apple",
+          "given": true
+        },
+        {
+          "id": "a2",
+          "text": "Small red apple",
+          "x": 8,
+          "y": 2.5,
+          "label": "apple"
+        },
+        {
+          "id": "a3",
+          "text": "Big red apple",
+          "x": 9.5,
+          "y": 3.5,
+          "label": "apple"
+        },
+        {
+          "id": "b1",
+          "text": "Banana",
+          "x": 0.5,
+          "y": 9.5,
+          "label": "banana",
+          "given": true
+        },
+        {
+          "id": "b2",
+          "text": "Long banana",
+          "x": 2.5,
+          "y": 9.5,
+          "label": "banana"
+        },
+        {
+          "id": "b3",
+          "text": "Spotty banana",
+          "x": 1.5,
+          "y": 7.5,
+          "label": "banana"
+        },
+        {
+          "id": "l1",
+          "text": "Lemon",
+          "x": 6.5,
+          "y": 9.5,
+          "label": "lemon",
+          "given": true
+        },
+        {
+          "id": "l2",
+          "text": "Small lemon",
+          "x": 7,
+          "y": 8.5,
+          "label": "lemon"
+        },
+        {
+          "id": "l3",
+          "text": "Pointy lemon",
+          "x": 5.5,
+          "y": 8,
+          "label": "lemon"
+        }
+      ],
+      "tests": [
+        {
+          "id": "t1",
+          "text": "Big lemon",
+          "x": 6.5,
+          "y": 8.8,
+          "truth": "lemon"
+        },
+        {
+          "id": "t2",
+          "text": "Red-and-yellow apple",
+          "x": 7.5,
+          "y": 5,
+          "truth": "apple"
+        },
+        {
+          "id": "t3",
+          "text": "Yellow apple",
+          "x": 7.5,
+          "y": 7.5,
+          "truth": "apple"
+        }
+      ],
+      "task": {
+        "goal": "label"
+      },
+      "hint": "The names tell you each fruit's label. Lemons are yellow and fairly round.",
+      "nudge": "Check the names again: each one says whether it's an apple, a banana or a lemon.",
+      "explanation": "Your labels were right. The model got the lemon and the red-and-yellow apple right, but its 3 nearest examples to the **yellow apple** were all lemons, so it guessed lemon. Again, it had never seen a yellow apple."
+    },
+    {
+      "id": "model-accuracy",
+      "type": "numeric_input",
+      "difficulty": "challenge",
+      "prompt": "A model guessed 12 new fruits and got 9 right. What **percentage** did it get right?\n\n(Divide the number right by the number tested, then multiply by 100.)",
+      "base": "decimal",
+      "answer": 75,
+      "unit": "%",
+      "hint": "First work out what fraction of the fruits it got right, then turn that fraction into a percentage.",
+      "nudge": "Divide 9 by 12 first, then multiply by 100.",
+      "explanation": "9 ÷ 12 = 0.75, and 0.75 × 100 = **75%**. Testing on new examples like this shows how often a model is right, and how often it isn't."
+    },
+    {
+      "id": "patterns-recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- **Training data** is lots of examples, each with a **label** saying what it really is.\n- The computer finds **patterns** in them and builds a **model** that guesses labels for new things.\n- A model only knows what it was shown. Leave something out, and it gets that wrong, even with perfect labels.\n- Better, more varied examples make better guesses.\n\nNext: what AI can't do."
+    }
+  ]
+}

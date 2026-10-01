@@ -7,6 +7,7 @@
       "term": "app permission",
       "definition": "Your OK for an app to use something on your device, like the camera, microphone, location or contacts. You can change it later in Settings."
     },
+    { "id": "artificial-intelligence", "term": "artificial intelligence (AI)", "definition": "Software that learns patterns from lots of examples, instead of only following rules a person wrote, so it can make guesses about new things." },
     {
       "id": "authenticator-app",
       "term": "authenticator app",
@@ -52,6 +53,7 @@
       "definition": "Using the internet or phones to be mean to someone so they feel bad or upset: hurtful messages, posts, threats or leaving them out on purpose."
     },
     { "id": "data-breach", "term": "data breach", "definition": "When information a company keeps, such as email addresses and passwords, is stolen or leaked." },
+    { "id": "deepfake", "term": "deepfake", "definition": "A fake video or picture made with AI, showing a real person doing or saying something they never did." },
     {
       "id": "default-gateway",
       "term": "default gateway",
@@ -106,9 +108,11 @@
       "term": "low power mode",
       "definition": "A setting that makes a device save energy, for example by pausing background apps, so the battery lasts longer."
     },
+    { "id": "machine-learning", "term": "machine learning", "definition": "A way of making AI: the computer is shown many examples and finds the patterns in them itself." },
     { "id": "megabyte", "term": "megabyte (MB)", "definition": "A unit for amounts of data: 1,000 kilobytes, or a million bytes. A phone photo is a few MB." },
     { "id": "memory-leak", "term": "memory leak", "definition": "A bug where an app keeps taking RAM and never gives it back, so it uses more and more over time." },
     { "id": "millisecond", "term": "millisecond (ms)", "definition": "A thousandth of a second." },
+    { "id": "model", "term": "model", "definition": "What a computer builds from its training data: its own way of guessing the answer for new things it has never seen." },
     { "id": "motherboard", "term": "motherboard", "definition": "The main circuit board that all a device's parts plug into and send signals through." },
     { "id": "mx-record", "term": "MX record", "definition": "A DNS record that names the server that receives email for a domain." },
     {
@@ -144,6 +148,7 @@
       "term": "path",
       "definition": "The route through folders to a file, like Documents > School > essay.docx. Also the part of a web address after the name."
     },
+    { "id": "pattern", "term": "pattern", "definition": "Something that shows up again and again, like apples being round. AI learns by finding patterns in examples." },
     { "id": "payload", "term": "payload", "definition": "The actual data a packet carries, apart from the addresses and other added information." },
     {
       "id": "phishing",
@@ -151,6 +156,7 @@
       "definition": "A scam message, like an email, text or call, that pretends to be someone you trust to trick you into sharing details or clicking a link."
     },
     { "id": "port", "term": "port", "definition": "A number that picks which program on a computer a packet is for, like an apartment number in a building." },
+    { "id": "prediction", "term": "prediction", "definition": "A model's best guess, based on the patterns it learned. It can be wrong, even when it sounds sure." },
     {
       "id": "private-address",
       "term": "private address",
@@ -204,6 +210,7 @@
     { "id": "tld", "term": "top-level domain (TLD)", "definition": "The last part of a domain name, like com in example.com, or uk in example.co.uk." },
     { "id": "tls", "term": "TLS", "definition": "Transport Layer Security: the protocol that encrypts HTTPS connections and checks the server's certificate." },
     { "id": "traceroute", "term": "traceroute", "definition": "A tool that lists the routers (hops) your packets pass through on the way to a destination." },
+    { "id": "training-data", "term": "training data", "definition": "The examples a model learns from, each with a label saying what it really is." },
     {
       "id": "two-step-sign-in",
       "term": "two-step sign-in",
@@ -213,6 +220,7 @@
     { "id": "update", "term": "update", "definition": "A new version of software that fixes bugs and security holes, and sometimes adds features." },
     { "id": "url", "term": "URL", "definition": "A full web address, like https://www.example.com/news, saying which protocol, which site and which page." },
     { "id": "virus", "term": "virus", "definition": "A harmful program that spreads to other files or devices. Security apps look for them." },
+    { "id": "voice-clone", "term": "voice clone", "definition": "A fake copy of someone's voice made with AI, which can say things the real person never said." },
     { "id": "warranty", "term": "warranty", "definition": "The maker's promise to repair a device for free if it breaks by itself within a set time." },
     { "id": "watt", "term": "watt (W)", "definition": "A unit for how fast energy is used. A phone uses a few watts; the more watts, the faster the battery empties." },
     { "id": "wi-fi-access-point", "term": "Wi-Fi access point", "definition": "The part of a network that sends out the Wi-Fi signal, so wireless devices can join." }

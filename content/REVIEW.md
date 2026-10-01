@@ -1328,7 +1328,35 @@ like `.com.au`, have two parts, and the examples only use `.example`.
 **Simplifications:** real apps word these settings differently. The order is a sensible default,
 not a rule every service states.
 
-### 4.2 Getting Help (`getting-help`)
+### 4.2 Deepfake Scams and Fakes (`deepfake-scams`)
+Added 1 October 2026 (moved here from the AI course plan, because help is always free and this
+module is open to guests). Self-contained: Spot the Scam is Pro, so the red flags it needs are
+re-taught here.
+
+**Goals:** know that AI can copy voices and faces; spot the red flags anyway (hurry, secrecy,
+money or codes, a new number) and know why scammers use each; check by hanging up and contacting
+the person on the number you already have, a question only they'd know, or a trusted adult; know
+what to do if someone fakes a picture of you.
+
+**Key claims (sources checked 1 October 2026):**
+- AI can make convincing fake video and audio of a real person from real recordings, sometimes a
+  few seconds long. You can't always tell by looking or listening.
+- Scamwatch (Text or SMS scams): if someone says they have a new number, call them on the
+  **existing number** you have for them, or ask a question only they would know.
+- A family code word: common advice, not a Scamwatch quote, so it's offered as something "some
+  families" do, beside the question only they'd know.
+- eSafety (Image-based abuse, esafety.gov.au/key-topics/image-based-abuse): covers intimate images
+  "digitally altered or faked to look like you (such as a deepfake created with an AI tool or
+  app)", which can be reported to eSafety, which can help get them removed. Its deepfakes guide
+  page (esafety-guide/deepfakes) returned 404 on this date, so it isn't cited.
+- Evidence, ACCCE and "never save the image itself" match 4.3 Getting Help (verified 30 September
+  2026).
+
+**Simplifications:** "a few seconds" of audio is the low end; quality varies. The step order
+(don't share, save evidence, tell an adult, report) is a sensible default that matches Getting
+Help.
+
+### 4.3 Getting Help (`getting-help`)
 **Key claims:**
 - The help services verified above.
 - Save evidence before blocking: screenshots of messages, usernames, addresses and dates. Never
@@ -1379,3 +1407,86 @@ to each answer before reading the key.
 | 1.1 `easy-or-hard` | "A random one from an app" came before password managers | "A long random one made by a password app" |
 | 2.2 `spot-the-text` | Fee and deadline are two targets inside one bubble | Kept: each line gets its own tap highlight, and the prompt names the new message |
 | M2 quiz, final | Quiz hotspots reuse the lesson scenes | Kept for now (noted): variants need new scene artwork |
+
+---
+
+# Content review: How AI Really Works
+
+Built on the branch `ai-course`. Every AI output in the course is written in advance: there are no
+live AI calls. The two AI card types use tiny, pure models (`src/cards/train-model/model.ts`,
+`src/cards/next-word/model.ts`), so every "guess" a learner sees is worked out from the card's data.
+No real people appear anywhere.
+
+## Module 1: What AI Actually Is (free; guests get 1.1)
+
+### 1.1 Spot the AI (`spot-the-ai`)
+**Goals:** tell programs that follow written rules from AI that learns from examples; name
+machine learning; know AI matches patterns and doesn't understand like a person.
+
+**Key claims:** face unlock, keyboard suggestions, spam filters and song suggestions use machine
+learning; timers, calculators and unit converters follow fixed rules.
+
+**Simplifications:** "AI" is used for systems that learn from examples (machine learning), which
+is how the word is mostly used today; older rule-based "expert systems" were also called AI. Face
+unlock is described as learning from "scans of your face"; in reality a general face model is
+trained on many people, and your phone stores a description of your face to compare against.
+
+### 1.2 Patterns Everywhere (`patterns-everywhere`)
+**Goals:** training data, labels, patterns and models; see a model trained on correct labels still
+get something wrong; fix it with better examples; the steps collect, label, train, test, use;
+accuracy as a percentage.
+
+**Key claims:** a nearest-neighbour model guesses a new item's label from the nearest training
+examples (k = 1, or the majority of the 3 nearest). Leaving a kind of example out of the training
+data causes mistakes on it.
+
+**Simplifications:** fruit is described by just two features (roundness and yellowness) on a 0 to
+10 chart. Real models use many more features and far more examples. Nearest neighbour is one real,
+simple method; most modern AI uses other kinds of model.
+
+### 1.3 What AI Can't Do (`what-ai-cant-do`)
+**Goals:** a model's output is a prediction, not a fact; confident is not the same as correct;
+check important facts with a trusted source; big decisions about people need a person.
+
+**Key claims:** AI can't reliably check its own answers, so asking it "are you sure?" doesn't
+verify anything. The bridge dates (1952, 1958) are fictional.
+
+**Simplifications:** "it can't always tell when it's guessing" stands in for the fact that a
+model's confidence isn't a reliable sign of being right.
+
+### Module 1 quiz (`what-ai-actually-is-quiz`)
+Six core questions: rules or learning, a labelling card (a mini basketball the model gets wrong),
+missing training examples, the steps, checking a fact, and the four words.
+
+## AI Tools Today (lesson 4.3, not built yet)
+The only lesson that names real products. It carries `lastChecked` (shown to learners), and
+`validate-content` warns once a recheck is due. **Recheck by 1 January 2027, then every 3 months:**
+the tools named, what each one does, and every age limit quoted (from each tool's own terms).
+
+## Beginner audit: How AI Really Works module 1 and Deepfake Scams (1 October 2026)
+
+**Method:** as for the other courses. A fresh agent played the four module 1 cards sets and the
+deepfake lesson in order as a 12-year-old with no AI or online-safety knowledge, seeing only the
+on-screen text, and committed to each answer before reading the key.
+
+**Result:** 28 graded cards, 27 right first try, no hints. No teach-before-test failures; tone
+calm and never blaming; nothing teaches making a scam or a deepfake; the nearest-neighbour results
+match the explanations.
+
+| Where | Issue | Fix |
+|---|---|---|
+| Deepfake `fake-steps` | The order (don't share, evidence, tell, report) was debatable: telling an adult first is also right | Replaced with a do / don't sort (`do-or-dont`), which also covers not paying and not saving the image |
+| Deepfake `if-its-you` | "Threatening you" was broader than what the ACCCE handles | "Threatening to share it, or asking you for sexual images or money" |
+| Deepfake `if-its-you` | "You won't be in trouble" was an absolute promise | "You won't be in trouble for asking for help"; adds "Don't pay or send anything they ask for" |
+| Quiz `q-rules-or-learning` | "A voice assistant understanding speech" contradicted "AI doesn't understand"; the shop item was vague | "Turning your speech into text" (now also in the 1.1 hook) and "An online shop's 'you might like' list" |
+| Quiz `q-sports-balls` | A one-try labelling card where the names give the labels: a reading test | Now a "choose the data" card: add the small basketball so every test ball is right |
+| 1.2 `three-fruits` | "Green apple" on a red-to-yellow axis | "Red-and-yellow apple" |
+| 1.2 `label-the-fruit` | How the model guesses wasn't said before its guesses appeared | `examples-labels-models` now says it finds the example closest to each new fruit |
+| 1.2 `model-accuracy` | The hint (9 of 12 is 3 of 4) nearly gave the answer | Points at the method instead |
+| 1.3 `a-guess-not-a-fact`, `homework-helper`, quiz `q-check-it` | "It doesn't check its answers" was too absolute: some chatbots search the web | "Even when it searches the web, it can't be sure its answer is right" |
+| 1.1 `what-it-learned-from` | Face unlock's model is trained on many faces | Kept, recorded as a simplification above |
+
+**Also found while testing (app bug, not content):** a newcomer who followed a link straight to a
+lesson that isn't first got the Path gate after their first card, because their own progress in
+that lesson counted. `deepLinkGate` now ignores progress in the lesson being played
+(`hasProgressOutside`).
