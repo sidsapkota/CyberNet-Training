@@ -8,6 +8,9 @@ import {
   getCurrentLesson,
   getNextLesson,
   hasAnyProgress,
+  hasCourseProgress,
+  hasFinishedFreeLesson,
+  startingLesson,
   snapshotBefore,
   lessonFinishState,
   resumeIndex,
@@ -308,6 +311,31 @@ describe("deepLinkGate (lesson links from videos)", () => {
   });
 });
 
+
+describe("starting with the free lessons", () => {
+  it("points \"Start here\" at the course's first lesson", () => {
+    expect(startingLesson(proCourse())?.id).toBe("l1");
+  });
+
+  it("knows when a learner has any progress in this course", () => {
+    expect(hasCourseProgress(emptySnapshot(), proCourse())).toBe(false);
+    const elsewhere = emptySnapshot();
+    elsewhere.cards[cardKey("other-course-lesson", "c1")] = done;
+    expect(hasCourseProgress(elsewhere, proCourse())).toBe(false);
+    const started = emptySnapshot();
+    started.cards[cardKey("l1", "c1")] = done;
+    expect(hasCourseProgress(started, proCourse())).toBe(true);
+  });
+
+  it("offers the free lessons first until one is finished (a started one doesn't count)", () => {
+    const started = emptySnapshot();
+    started.cards[cardKey("l1", "c1")] = done;
+    expect(hasFinishedFreeLesson(started, proCourse())).toBe(false);
+    expect(hasFinishedFreeLesson(withLessons("l1"), proCourse())).toBe(true);
+    // A finished Pro lesson (from before Pro launched, or a lapsed trial) isn't a free one.
+    expect(hasFinishedFreeLesson(withLessons("l3"), proCourse())).toBe(false);
+  });
+});
 
 describe("CyberNet Pro in the course state", () => {
   const afterModule1 = () => passQuiz(withLessons("l1", "l2"), "quiz1");

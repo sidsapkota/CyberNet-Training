@@ -168,6 +168,29 @@ export function hasAnyProgress(snapshot: ProgressSnapshot): boolean {
   );
 }
 
+/** Any progress at all in this course: a card, a finished lesson or a quiz attempt. */
+export function hasCourseProgress(snapshot: ProgressSnapshot, course: CourseOutline): boolean {
+  const ids = new Set(flattenCourse(course).map((l) => l.id));
+  return (
+    Object.keys(snapshot.cards).some((key) => ids.has(key.slice(0, key.indexOf("/")))) ||
+    Object.keys(snapshot.lessons).some((id) => ids.has(id)) ||
+    Object.keys(snapshot.quizzes).some((id) => ids.has(id))
+  );
+}
+
+/**
+ * Whether the learner has finished a free lesson (or passed a free quiz) in this course. Until
+ * they have, a Pro node offers "Start with the free lessons first" instead of the paywall.
+ */
+export function hasFinishedFreeLesson(snapshot: ProgressSnapshot, course: CourseOutline): boolean {
+  return flattenCourse(course).some((l) => l.access === "free" && isLessonDone(snapshot, l));
+}
+
+/** The course's first regular lesson: where "Start here" points. */
+export function startingLesson(course: CourseOutline): LessonOutline | undefined {
+  return flattenCourse(course).find((l) => l.kind === "lesson");
+}
+
 /** Every lesson and quiz of a course, in the order a learner takes them. */
 export function flattenCourse(course: CourseOutline): LessonOutline[] {
   return course.modules.flatMap((m) => m.lessons);

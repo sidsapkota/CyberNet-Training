@@ -47,7 +47,9 @@ try {
     const gotIt = page.getByRole("button", { name: "Got it" });
     if (await gotIt.isVisible().catch(() => false)) await gotIt.click();
     if (card.type === "multiple_choice") {
-      await page.keyboard.press(String(card.options.findIndex((o) => o.id === card.correctOptionId) + 1));
+      // Options are shown shuffled, so pick the right one by its text, not its position in the file.
+      const right = card.options.find((o) => o.id === card.correctOptionId).text;
+      await page.getByRole("radio", { name: right, exact: true }).click();
     } else if (card.type === "binary_toggle") {
       // Bits left to right are 128 … 1; keys 1–8 toggle them.
       for (let b = 0; b < 8; b++) if (card.target & (128 >> b)) await page.keyboard.press(String(b + 1));
