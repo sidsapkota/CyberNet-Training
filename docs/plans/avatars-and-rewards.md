@@ -1,58 +1,86 @@
 # Plan: avatars and rewards
 
-Status: **plan only, not built** (owner, 1 Oct). The owner's message was cut off at "Pro members";
-that part is an open question below.
+Status: **plan only, not built** (owner, 2 Oct 2026). Aim: ready before leagues open.
+Mockups (360×640): `docs/plans/avatars/*.png` (from `mockups.html`).
 
 ## Avatars
+- **Choose, never upload.** On-brand items drawn from the mascot's parts and the logo geometry:
+  mascot colourways, accessories (cap, headphones, hoodie, glasses, scarf) and tech badges (shield,
+  chip, router, terminal, rocket, satellite). No photos, ever (learners may be 12).
+- **Starter set (free for everyone):** plain mascot, 2 colourways, shield, chip, terminal.
+- **Shown:** header node, dashboard identity row, `/account`, league player cards and rows (beside
+  the username; the tier badge moves to a small corner). Never on certificates.
 
-- **Choose, never upload.** A set of on-brand avatars: mascot variations (colours from our palette,
-  a cap, headphones, a hoodie) and tech badges (shield, router, chip, terminal), drawn from the
-  mascot's parts and the logo geometry like everything else. No photos (learners may be 12).
-- **Default:** the plain mascot. **Starter set:** 6 free (plain mascot, 2 colours, shield, chip,
-  terminal); more are unlocked by earning (below).
-- **Where:** the header node, the dashboard identity row, `/account`, and the league player card
-  (where the tier badge sits today, so the tier moves to a small corner badge). Not on
-  certificates.
-- **Data:** `profiles.avatar` (an item id, default `mascot`), and `avatar_unlocks (user_id,
-  item_id, unlocked_at, reason)` written only by the server (RLS: read own rows). Items are a
-  fixed list in code (`src/lib/avatars/items.ts`), so nothing can be unlocked that doesn't exist.
-- **Leagues:** other learners see only the avatar id (an item from the fixed list), never anything
-  personal; `league_standings()` adds it.
+## Reward spin (every spin wins)
+- **Earned only by learning:** a perfect lesson (every core card right first time, judged on the
+  server from `card_completions.xp`; once per lesson, ever), a finished module, a finished course,
+  and streak milestones (7, 30, 100 days). Never for speed, never bought, never for watching ads.
+- **Every spin wins:** the server picks, with equal chance, one item from the list you don't own
+  yet (Pro-only items excluded). The ring animation just lands on it. When you own everything, a
+  spin gives a colour for your node ring instead, so there is never "nothing".
+- **Not gambling-like:** no money anywhere; no odds tiers, "rare" or "legendary" labels; no
+  near-miss effects or slot imagery; no extra spins for anything but learning; the **full reward
+  list is always visible** (Rewards page: every item, which you own, how each is earned). The
+  spin is a ring of nodes lighting in sequence (our loading motif), ~1.2 s, a still result under
+  reduced motion. *(Even so, a spin is a chance mechanic; my earlier recommendation was "pick one
+  of three". Built as you asked, with these limits.)*
+- **Where:** the lesson-complete screen (after the celebration, before "Up next") and the Rewards
+  page (unspun spins wait there). Never inside a lesson (minimalism guardrail).
 
-## Rewards (cosmetic, never gambling)
+## Pro-only cosmetics (a few)
+- **3 items:** Holo shield (badge), Circuit crown (accessory), Trace frame (animated node ring, the
+  only animated item, 2 beats then still). Shown in the list with the Pro badge.
+- **Granted with Pro, never spun:** they unlock while a learner has Pro and stay chosen but
+  greyed when it ends (choose another). Spins are the same for everyone, so paying never changes
+  a learner's chances. Purple stays reserved for the Quantum tier.
 
-- **When:** a perfect lesson (every core card right first try, which the server can tell from
-  `card_completions.xp`), a 7-day streak, a finished module, a finished course.
-- **What:** always something: an avatar item, a profile frame or a colour. Never "nothing", never
-  XP, never Pro. All cosmetic. Rewards can never be bought, and nothing about them costs money.
-- **The full list is always visible** (a "Rewards" page on the profile showing every item, which
-  ones you have and how each is earned), so it's never a mystery box.
-- **Where:** on the lesson-complete screen (after the celebration step, before "Up next") and the
-  profile. Never inside a lesson (minimalism guardrail).
+## SQL (not applied; shown for approval)
+```sql
+-- Avatars and rewards: cosmetic only. Items are a fixed list in code (src/lib/rewards/items.ts);
+-- the database stores ids. Only the server writes (secret key); learners read their own rows.
+alter table public.profiles
+  add column avatar text not null default 'mascot' check (avatar ~ '^[a-z0-9-]{1,40}$');
 
-### Recommendation: no spin
+create table public.reward_items_owned (
+  user_id     uuid not null references auth.users on delete cascade,
+  item_id     text not null check (item_id ~ '^[a-z0-9-]{1,40}$'),
+  source      text not null check (source in ('starter', 'spin', 'pro')),
+  unlocked_at timestamptz not null default now(),
+  primary key (user_id, item_id)
+);
 
-A spin wheel is a chance mechanic. Even with free spins and only cosmetic prizes, it looks and
-feels like gambling, and Australia's classification rules (since September 2024) treat simulated
-gambling in games strictly. For an app marketed to 13-year-olds, and to keep our "honest, no
-dark patterns" promise, I'd avoid it. Two alternatives, both fully transparent:
-1. **Pick one of three (recommended):** the reward screen shows three items from the list you
-   don't have yet; you choose one. A real choice, no chance, still exciting.
-2. **A reward track:** each reward unlocks the next item on a visible path (like a battle-pass
-   track with no paid tier).
+-- One spin per thing earned (the key makes it idempotent), spun later or straight away.
+create table public.reward_spins (
+  user_id    uuid not null references auth.users on delete cascade,
+  earned_for text not null check (earned_for ~ '^(perfect|module|course|streak):[a-z0-9-]{1,80}$'),
+  earned_at  timestamptz not null default now(),
+  spun_at    timestamptz,
+  item_id    text check (item_id ~ '^[a-z0-9-]{1,40}$'),
+  primary key (user_id, earned_for)
+);
 
-## Server rules
+alter table public.reward_items_owned enable row level security;
+alter table public.reward_spins       enable row level security;
+revoke all on public.reward_items_owned, public.reward_spins from anon, authenticated;
+grant select on public.reward_items_owned, public.reward_spins to authenticated;
+create policy "read own items" on public.reward_items_owned for select to authenticated using ((select auth.uid()) = user_id);
+create policy "read own spins" on public.reward_spins       for select to authenticated using ((select auth.uid()) = user_id);
 
-- Rewards are decided on the server when the triggering event is recorded (lesson completion,
-  quiz pass, streak milestone), in the same Server Actions, and stored in `reward_grants
-  (user_id, trigger, offered[], chosen, granted_at)`; one per trigger, idempotent (a replayed
-  lesson never pays twice). The client only sends which offered item it picked.
-- Guests: rewards need an account (they're saved to it); the lesson-complete screen tells a
-  guest what they'd have earned and offers the free account (no pressure, "Not now" as always).
+-- Leaderboards show the avatar id too (an item from the fixed list; nothing personal).
+-- league_standings(): add `pr.avatar` to the returned columns (same function otherwise).
+```
 
-## Questions for the owner
+## Code (when approved)
+- `src/lib/rewards/` (pure, tested): item list, `spinsEarned` (perfect lesson, module, course,
+  streak rules), `pickReward(owned, random)` (uniform over unowned, never Pro-only), Pro grants.
+- Server Actions: `spinRewardAction` (server picks and saves, returns the item), `setAvatarAction`
+  (only owned items), `claimSpinsAction` (records earned spins after XP writes).
+- UI: `RewardSpin` (lesson-complete step), `/account/rewards` (full list), avatar picker on
+  `/account`, `Avatar` component used by the header node, dashboard and player cards.
+- Tests: no Pro item from a spin, every spin wins, idempotent earning, perfect-lesson rule;
+  `check:rls` (learners can't write items, spins or the avatar); e2e at 360px.
 
-1. "Pro members…" was cut off: what should Pro members get (an extra choice? a Pro-only frame)?
-   Keep it cosmetic and never pay-to-win, as with the league card frame.
-2. Pick one of three, or a reward track (or a spin, if you still want it after the note above)?
-3. Should the league player card show the avatar instead of the tier badge, or both?
+## Open questions
+1. Spin as above (with the limits), or switch to "pick one of three"?
+2. Streak milestones 7 / 30 / 100: OK?
+3. The 3 Pro items: OK, and granted (not spun)?
