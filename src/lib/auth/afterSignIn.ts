@@ -65,9 +65,9 @@ export function takeSignupLesson(now = Date.now()): string | undefined {
  * where they were going; everyone else goes straight there. Shared by /auth/callback (links and
  * Google) and the email code, which signs in without leaving the page. Pure.
  */
-export function afterSignInPath(next: string, hasDisplayName: boolean): string {
+export function afterSignInPath(next: string, hasUsername: boolean): string {
   const safe = safeNextPath(next);
-  if (hasDisplayName) return safe;
+  if (hasUsername) return safe;
   return safe === "/" ? "/account?welcome=1" : `/account?welcome=1&next=${encodeURIComponent(safe)}`;
 }
 

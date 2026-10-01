@@ -4,7 +4,7 @@ import Link from "next/link";
 import { UserNode } from "@/components/account/UserNode";
 import { ProBadge } from "@/components/pro/ProBadge";
 import { useAuth } from "@/lib/auth/AuthProvider";
-import { FALLBACK_DISPLAY_NAME } from "@/lib/auth/profile";
+import { FALLBACK_NAME } from "@/lib/auth/profile";
 import { usePro } from "@/lib/pro/ProProvider";
 
 /**
@@ -15,10 +15,10 @@ export function DashboardIdentity() {
   const { auth } = useAuth();
   const { pro, hasPro } = usePro();
   if (auth.status !== "signed-in" || pro.loading) return null;
-  const name = auth.displayName ?? FALLBACK_DISPLAY_NAME;
+  const name = auth.username ?? FALLBACK_NAME;
   return (
     <div className="mb-4 flex items-center gap-3">
-      <UserNode name={auth.displayName} pro={hasPro} className="size-9 text-small" />
+      <UserNode name={auth.username} pro={hasPro} className="size-9 text-small" />
       <p className="min-w-0 flex-1 truncate font-semibold">{name}</p>
       {hasPro ? (
         <Link href="/account/plan" aria-label="Your plan: Pro" className="inline-flex min-h-11 items-center rounded-control px-1">

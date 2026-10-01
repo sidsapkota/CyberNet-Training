@@ -18,22 +18,15 @@ export interface CertificateStatus {
   passedFinal: boolean;
   hasPro: boolean;
   certificate: Certificate | null;
-  /** The display name, to start the name field with (editable). */
-  suggestedName: string;
 }
 
 export async function getCertificateStatusAction(courseId: string): Promise<CertificateStatus> {
   const user = await requireUser();
   const id = CourseId.parse(courseId);
   if (!getCourses().some((c) => c.id === id)) throw new Error("Unknown course.");
-  const supabase = await createSupabaseServerClient();
-  const [passedAt, entitlement, certificate, profile] = await Promise.all([
-    firstFinalPass(user.id, id),
-    getEntitlement(user),
-    currentCertificate(user.id, id),
-    supabase.from("profiles").select("display_name").eq("id", user.id).maybeSingle(),
-  ]);
-  return { passedFinal: passedAt !== null, hasPro: entitlement.hasPro, certificate, suggestedName: profile.data?.display_name ?? "" };
+  // No suggested name: the name on a certificate is chosen at issue (a username isn't a real name).
+  const [passedAt, entitlement, certificate] = await Promise.all([firstFinalPass(user.id, id), getEntitlement(user), currentCertificate(user.id, id)]);
+  return { passedFinal: passedAt !== null, hasPro: entitlement.hasPro, certificate };
 }
 
 export async function issueCertificateAction(courseId: string, name: string): Promise<IssueResult> {

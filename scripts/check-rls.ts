@@ -67,7 +67,8 @@ async function main() {
     await admin.from("card_completions").insert({ user_id: b.id, lesson_id: "bits-and-binary", card_id: "make-5", completed_at: now, xp: 10 });
     await admin.from("lesson_completions").insert({ user_id: b.id, lesson_id: "bits-and-binary", completed_at: now, xp: 20 });
     await admin.from("quiz_attempts").insert({ user_id: b.id, quiz_id: "binary-and-data-quiz", attempted_at: now, score: 1, passed: true, xp: 50 });
-    await admin.from("profiles").update({ display_name: "Bee" }).eq("id", b.id);
+    const bUsername = `RlsB_${Date.now().toString(36).slice(-8)}`;
+    await admin.from("profiles").update({ username: bUsername }).eq("id", b.id);
 
     // Triggers
     const profileA = await admin.from("profiles").select("id").eq("id", a.id).maybeSingle();
@@ -93,7 +94,7 @@ async function main() {
     );
     record("A can't update B's XP", blocked(await a.client.from("card_completions").update({ xp: 20 }).eq("user_id", b.id).select()));
     record("A can't delete B's rows", blocked(await a.client.from("quiz_attempts").delete().eq("user_id", b.id).select()));
-    record("A can't rename B", blocked(await a.client.from("profiles").update({ display_name: "Hacked" }).eq("id", b.id).select()));
+    record("A can't rename B", blocked(await a.client.from("profiles").update({ username: "Hacked_name" }).eq("id", b.id).select()));
 
     // Writes to A's own XP and premium flag.
     record(
@@ -168,8 +169,13 @@ async function main() {
     record("A can't set age_confirmed directly", blocked(await a.client.from("profiles").update({ age_confirmed: true }).eq("id", a.id).select()));
     const ageDefault = await admin.from("profiles").select("age_confirmed").eq("id", a.id).single();
     record("New profiles start with age not confirmed", ageDefault.data?.age_confirmed === false);
-    const rename = await a.client.from("profiles").update({ display_name: "Ace" }).eq("id", a.id).select("display_name");
-    record("A can change their own display name (control)", !rename.error && rename.data?.[0]?.display_name === "Ace");
+    // Usernames go only through the server's checks (a Server Action with the secret key).
+    record("A can't set their own username directly", blocked(await a.client.from("profiles").update({ username: "Picked_direct" }).eq("id", a.id).select()));
+    record("A can't change their old display name either", blocked(await a.client.from("profiles").update({ display_name: "Ace" }).eq("id", a.id).select()));
+    const dupe = await admin.from("profiles").update({ username: bUsername.toUpperCase() }).eq("id", a.id).select();
+    record("Usernames are unique ignoring case (even for the server)", dupe.error?.code === "23505");
+    const badShape = await admin.from("profiles").update({ username: "no spaces!" }).eq("id", a.id).select();
+    record("The database rejects a badly shaped username", Boolean(badShape.error));
 
     // CyberNet Pro: learners read their own subscription and grant, and nothing else; only the
     // server (webhook and Server Actions) writes any of it.
@@ -223,16 +229,20 @@ async function main() {
 
     // B's data is untouched.
     const bCard = await admin.from("card_completions").select("xp").eq("user_id", b.id).single();
-    const bName = await admin.from("profiles").select("display_name").eq("id", b.id).single();
+    const bName = await admin.from("profiles").select("username").eq("id", b.id).single();
     const bQuiz = await admin.from("quiz_attempts").select("id").eq("user_id", b.id);
-    record("B's data is unchanged afterwards", bCard.data?.xp === 10 && bName.data?.display_name === "Bee" && (bQuiz.data ?? []).length === 1);
+    record("B's data is unchanged afterwards", bCard.data?.xp === 10 && bName.data?.username === bUsername && (bQuiz.data ?? []).length === 1);
 
     // Leagues: others in your own league are visible only through league_standings(), with public
     // fields only; everything else is server-only.
     const lt = Date.now().toString(36).slice(-6);
     const week = (await admin.rpc("league_week")).data as string;
-    const player = (id: string, handle: string) => ({ user_id: id, handle, handle_key: handle.toLowerCase(), tier: "quantum" });
-    const seedPlayers = await admin.from("league_players").insert([player(a.id, `RlsAce${lt}`), player(b.id, `RlsBee${lt}`), player(c.id, `RlsCee${lt}`)]);
+    // Leaderboards show each learner's username.
+    for (const [id, name] of [[a.id, `RlsAce${lt}`], [b.id, `RlsBee${lt}`], [c.id, `RlsCee${lt}`]] as const) {
+      await admin.from("profiles").update({ username: name }).eq("id", id);
+    }
+    const player = (id: string) => ({ user_id: id, tier: "quantum" });
+    const seedPlayers = await admin.from("league_players").insert([player(a.id), player(b.id), player(c.id)]);
     const xpAt = new Date().toISOString();
     const xp = (id: string, amount: number) => ({ user_id: id, at: xpAt, day: xpAt.slice(0, 10), time_zone: "Australia/Sydney", kind: "card", lesson_id: "bits-and-binary", card_id: `rls-${lt}`, xp: amount });
     await admin.from("xp_events").insert([xp(a.id, 10), xp(b.id, 30), xp(c.id, 50)]);
@@ -260,7 +270,7 @@ async function main() {
     const standingsA = await a.client.rpc("league_standings");
     const rowsA = standingsA.data ?? [];
     record(
-      "A sees their own league: handles, tier, weekly XP and Pro only",
+      "A sees their own league: usernames, tier, weekly XP and Pro only",
       !standingsA.error &&
         rowsA.length === 2 &&
         rowsA.every((r) => Object.keys(r).sort().join() === "handle,is_me,pro,rank,tier,weekly_xp") &&
@@ -276,8 +286,8 @@ async function main() {
     record("Hidden learners disappear from others' standings (but still see themselves)", hiddenA.length === 1 && hiddenB.some((r) => r.is_me));
     await admin.from("league_players").update({ show_on_leaderboards: true }).eq("user_id", b.id);
 
-    const ownPlayer = await a.client.from("league_players").select("handle");
-    record("A can read only their own player row", !ownPlayer.error && (ownPlayer.data ?? []).length === 1 && ownPlayer.data?.[0]?.handle === `RlsAce${lt}`);
+    const ownPlayer = await a.client.from("league_players").select("user_id");
+    record("A can read only their own player row", !ownPlayer.error && (ownPlayer.data ?? []).length === 1 && ownPlayer.data?.[0]?.user_id === a.id);
     let serverOnlyLeagues = true;
     for (const table of ["leagues", "league_members", "league_weeks", "league_state", "handle_reports"] as const) {
       const r = await a.client.from(table).select("*");
@@ -285,9 +295,9 @@ async function main() {
     }
     record("Learners can't read leagues, members, weeks, state or reports directly", serverOnlyLeagues);
     record(
-      "A can't change their own tier or handle, or anyone's",
+      "A can't change their own tier or visibility, or anyone's",
       blocked(await a.client.from("league_players").update({ tier: "mainframe" }).eq("user_id", a.id).select()) &&
-        blocked(await a.client.from("league_players").update({ handle: "Hacked1", handle_key: "hacked1" }).eq("user_id", b.id).select()),
+        blocked(await a.client.from("league_players").update({ show_on_leaderboards: false }).eq("user_id", b.id).select()),
     );
     record(
       "A can't join, leave or create leagues, or open them",

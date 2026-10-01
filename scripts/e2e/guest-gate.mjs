@@ -107,8 +107,9 @@ try {
   await page.goto(`${BASE}/auth/callback?token_hash=${link.data.properties.hashed_token}&type=magiclink`);
   await page.waitForURL(/\/account\?welcome=1/, { timeout: 15_000 });
   record("A new account picks a name first, keeping where it was going", page.url().includes(`next=${encodeURIComponent("/lesson/two-step-sign-in")}`), page.url());
-  await page.getByLabel("Display name").fill("Gate Tester");
-  await page.getByRole("button", { name: /Save/ }).first().click();
+  // "Pick a username" starts with a suggestion, so keeping it is one tap.
+  await page.waitForFunction(() => (document.querySelector("input[autocomplete=username]")?.value ?? "") !== "", null, { timeout: 30_000 });
+  await page.getByRole("button", { name: "Use this" }).click();
   await page.waitForURL(/\/lesson\/two-step-sign-in/, { timeout: 15_000 });
   const plays = await page.getByRole("heading", { name: GATE }).isVisible().catch(() => false);
   await page.waitForTimeout(2500);

@@ -1,47 +1,26 @@
 "use client";
 
 import { useId, useState, useTransition } from "react";
-import { changeHandleAction, setShowOnLeaderboardsAction } from "@/app/actions/leagues";
-import { Button } from "@/components/ui/Button";
+import { setShowOnLeaderboardsAction } from "@/app/actions/leagues";
 import { HiddenIcon } from "@/components/ui/icons";
-import { HANDLE_MAX } from "@/lib/leagues/handles";
 
 /**
- * The learner's public handle and the "Show me on leaderboards" switch (on /leagues and
- * /account). Handles are checked on the server: no real names, contact details or rude words.
+ * The "Show me on leaderboards" switch (on /leagues and /account). Leaderboards show the learner's
+ * username, which they change in account settings (one place for it).
  */
 export function LeagueSettings({
-  handle: initialHandle,
   showOnLeaderboards: initialShow,
   onChange,
   className = "",
 }: {
-  handle: string;
   showOnLeaderboards: boolean;
   onChange?: () => void;
   className?: string;
 }) {
   const id = useId();
-  const [saved, setSaved] = useState(initialHandle);
-  const [handle, setHandle] = useState(initialHandle);
   const [show, setShow] = useState(initialShow);
   const [message, setMessage] = useState<{ tone: "ok" | "error"; text: string } | null>(null);
   const [pending, startTransition] = useTransition();
-
-  function saveHandle(event: React.FormEvent) {
-    event.preventDefault();
-    startTransition(async () => {
-      const result = await changeHandleAction(handle);
-      if (result.ok) {
-        setSaved(result.handle);
-        setHandle(result.handle);
-        setMessage({ tone: "ok", text: "Saved." });
-        onChange?.();
-      } else {
-        setMessage({ tone: "error", text: result.error });
-      }
-    });
-  }
 
   function toggleShow() {
     const next = !show;
@@ -62,39 +41,7 @@ export function LeagueSettings({
       <h2 id={`${id}-title`} className="font-semibold">
         Leaderboards
       </h2>
-      <form onSubmit={saveHandle} className="mt-3">
-        <label htmlFor={`${id}-handle`} className="text-small font-semibold">
-          Your public handle
-        </label>
-        <div className="mt-2 flex flex-col gap-2 @md:flex-row">
-          <input
-            id={`${id}-handle`}
-            value={handle}
-            maxLength={HANDLE_MAX}
-            autoComplete="off"
-            spellCheck={false}
-            onChange={(e) => {
-              setHandle(e.target.value);
-              setMessage(null);
-            }}
-            aria-describedby={`${id}-handle-help`}
-            className="min-h-12 flex-1 rounded-control border border-line-strong bg-surface px-4 font-semibold text-ink outline-none focus-visible:border-accent-ink"
-          />
-          <Button type="submit" variant="secondary" disabled={pending || handle.trim() === "" || handle.trim() === saved}>
-            Save
-          </Button>
-        </div>
-        <p id={`${id}-handle-help`} className="mt-2 text-caption text-ink-faint">
-          Others in your league see this. Never use your real name or contact details. You can change it once a week.
-        </p>
-        {message && (
-          <p role={message.tone === "error" ? "alert" : "status"} className={`mt-2 text-small ${message.tone === "error" ? "text-danger" : "text-success"}`}>
-            {message.text}
-          </p>
-        )}
-      </form>
-
-      <div className="mt-5 flex items-center justify-between gap-4">
+      <div className="mt-3 flex items-center justify-between gap-4">
         <div>
           <p id={`${id}-show`} className="text-small font-semibold">
             Show me on leaderboards
@@ -116,6 +63,11 @@ export function LeagueSettings({
           />
         </button>
       </div>
+      {message && (
+        <p role="alert" className="mt-2 text-small text-danger">
+          {message.text}
+        </p>
+      )}
       {!show && (
         <p role="status" className="mt-3 flex items-center gap-2 rounded-control bg-surface-raised px-3 py-2 text-small text-ink-muted">
           <HiddenIcon className="size-4 shrink-0" /> You&apos;re hidden from leaderboards.

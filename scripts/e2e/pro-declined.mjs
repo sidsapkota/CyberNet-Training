@@ -30,7 +30,7 @@ if (error) throw error;
 const userId = created.user.id;
 const browser = await chromium.launch({ channel: process.env.E2E_BROWSER ?? "msedge", headless: true });
 try {
-  await admin.from("profiles").update({ display_name: "Declined Tester", age_confirmed: true }).eq("id", userId);
+  await admin.from("profiles").update({ username: `E2e_${Math.random().toString(36).slice(2, 12)}`, age_confirmed: true }).eq("id", userId);
   const link = await admin.auth.admin.generateLink({ type: "magiclink", email });
   const page = await browser.newPage({ viewport: { width: 360, height: 640 } });
   await prepare(page);

@@ -38,6 +38,7 @@ npm run brand:assets      # regenerate logo SVGs + favicon from src/components/b
 npm run brand:mascot      # regenerate public/brand/mascot/<expression>.svg from the Mascot parts
 npm run check:supabase    # verify the Supabase URL + publishable key in .env.local (health check)
 npm run check:rls         # prove users can't read/write each other's rows (needs SUPABASE_SECRET_KEY)
+npm run usernames:scan    # re-check every username with the current rules (-- --apply replaces failures; counts only)
 npm run e2e:design-qa     # every card type and main page at 360px/desktop, light/dark, motion on/off:
                           # sideways scrolling, controls under 44px, touch drag (dev server running)
 npm run e2e:player-back   # Back/forward (read-only), Listen and lesson_quit in the lesson player
@@ -47,6 +48,7 @@ npm run e2e:latency       # time a lesson save, a lesson fetch and the dashboard
 npm run e2e:plans         # plans at 360px and desktop (guest, free, Pro), plan events, nav, Pro identity
 npm run e2e:account-speed # how fast /account opens from the profile icon (PHONE=1 for throttled 4G)
 npm run e2e:mascot-motion # mascot reactions timed in the browser, the scan filmstrip, reduced motion
+npm run e2e:usernames    # pick a username at sign-up, rude/taken names refused, the 30-day change (secret key: local build)
 npm run e2e:fit-audit     # every card at 360x640 and 360x560: does it fit without scrolling? (COURSE=<id>, LESSONS=<id,id>;
                           # E2E_SHARE_URL for a protected preview)
 npm run e2e:player-flow   # before/after screenshots: a hotspot card and the wrong-answer flow (SHOTS_TAG=)
@@ -633,7 +635,8 @@ src/components/course/   course path, path nodes + popovers, mode toggle, course
 src/components/certificates/ certificate view, issue flow, account list; src/lib/certificates/ rules, server, PDF
 src/components/mistakes/ Mistake review: dashboard card (count), review player (/review)
 src/components/leagues/  tier badges, player card, leagues page view, result screen, settings
-src/lib/leagues/         league rules (week, grouping, settling, handles), server code, config
+src/lib/leagues/         league rules (week, grouping, settling), server code, config
+src/lib/usernames/       usernames: safety check and word lists, generator, change rule, server code
 src/components/illustrations/ course covers (CourseCover registry, keyed by course id)
 src/components/mascot/   the mascot: geometry + palette, poses, SVG parts, <Mascot>
 src/components/ui/       Button, Markdown, icons (lucide wrappers), CountUp, ProgressRing, ThemeToggle
@@ -728,8 +731,8 @@ src/dev/                 dev-only card samples + playground (served at /dev/card
   `AgeGate` saves `age_confirmed` via `confirmAgeAction` right after sign-in). Signed-in accounts
   without a confirmation (made before the check) see a one-time full-screen prompt; "I'm under
   13" signs them out. Guests of any age can play. The only personal data we collect is the
-  email and a display name. Learners may be 12, so there are no avatars, birthdays or real names:
-  - `/account` suggests a nickname.
+  email and a username. Learners may be 12, so there are no avatars, birthdays or real names:
+  - The username is the one public identity (see [Usernames](#usernames)); never a real name.
   - A trigger strips `avatar_url`, `picture`, `full_name` and `name` from auth user metadata.
     Supabase still keeps the provider's data in `auth.identities`, which account deletion removes.
 - **Email code and in-app browsers:** the email sign-in sends a **6-digit code** (Supabase email
@@ -745,7 +748,7 @@ src/dev/                 dev-only card samples + playground (served at /dev/card
   with `getClaims()`. It doesn't gate pages.
 - **`/auth/callback`** exchanges `?code=` (Google, and the default magic-link email, which uses PKCE
   and so needs the same browser) or `?token_hash=&type=` (`verifyOtp`). Redirects only go to
-  same-site paths (`safeNextPath`). New users without a display name go to `/account?welcome=1`.
+  same-site paths (`safeNextPath`). New users without a username go to `/account?welcome=1` ("Pick a username").
 - **Redirect URLs** (Supabase → Auth → URL Configuration): the Site URL is
   `https://cybernettraining.com`, and `https://cybernettraining.com/auth/callback`,
   `http://localhost:3000/auth/callback` and `https://cyber-net-training.vercel.app/auth/callback`
@@ -766,15 +769,44 @@ src/dev/                 dev-only card samples + playground (served at /dev/card
   the client.** `src/lib/auth/server-actions.test.ts` checks every action, and that `getSession(`
   appears nowhere in `src/`.
 - **`AuthProvider`** (`src/lib/auth/AuthProvider.tsx`) holds the UI's auth state from
-  `onAuthStateChange`, plus the display name.
+  `onAuthStateChange`, plus the username.
   - It creates the browser client only in effects, so server and client render the same markup.
   - It also chooses the progress store (see below).
   - `useAuth()` exposes the auth state, whether accounts are available, `refreshProfile()` and
     `signOut()`.
 - **Header:** guests see "Sign in" (desktop header, and the third phone tab). Signed-in learners
-  see their initial as a node, plus their name on desktop, linking to `/account`.
-- **`/account`:** edit the display name (via the user's own session, so RLS and the column grant
-  apply), sign out, and delete the account after a confirmation step.
+  see their initial as a node, plus their username on desktop, linking to `/account`.
+- **`/account`:** the username (pick it, or change it: see Usernames), sign out, and delete the
+  account after a confirmation step.
+
+### Usernames
+One public identity per learner (`profiles.username`), shown in the header, dashboard (with the Pro
+badge), `/account`, leagues (rows, player cards, reports), the Mistake review finish screen and the
+trial-reminder email. It replaced the private display name and the league handle (2 Oct 2026).
+Nothing from Google is ever shown. Certificates keep their own "Name on certificate", chosen at issue.
+- **Rules** (`src/lib/usernames/check.ts`, pure; `usernames.test.ts` has the tricky examples):
+  3–20 letters, numbers and underscores, at least one letter, at most 3 digits (no phone numbers or
+  birth years), unique ignoring case (`profiles_username_key` on `lower(username)`), and no blocked
+  word in any disguise: leetspeak, underscores removed, repeated letters collapsed, and words hidden
+  inside longer names. Lists in `words.ts`: swears, slurs and hate terms, sexual terms, drugs,
+  violence and self-harm, staff and app names (impersonation), contact details and social apps,
+  rude number codes. Short words count only as a whole part of the name; an allow-list stops known
+  false positives ("Assassin", "Therapist", "Sussex"); `obscenity` is a second layer. A blocked word
+  gets only "Try a different username." (never which word); shape problems say which rule.
+- **Checked on the server only:** sign-up, every change, generating, after reports and the scan.
+  Learners can't write their profile row (no update grant or policy); `setUsernameAction` writes it
+  with the secret key (`src/lib/usernames/server.ts`, vetted in `server-actions.test.ts`).
+- **Sign-up:** "Pick a username", prefilled with a suggestion (`generateUsername`: two brand words
+  and up to 3 digits, "PacketPilot482"; re-rolled until it passes the check) and a Shuffle button,
+  so skipping is one tap. Anything that needs a name before then (leagues) gets a generated one
+  (`ensureUsername`).
+- **Changing it:** picking the first one doesn't count; the first change is free, then one every 30
+  days (`username_changed_at`, `nextUsernameChange`). A name replaced after 3 reports (or by the
+  scan) clears it, so the learner can choose again straight away.
+- **The scan** (`npm run usernames:scan`, `-- --apply` to write): fills empty usernames and
+  re-checks every username with the current rules, replacing failures with generated names. Prints
+  counts only, never names. Run it after changing the word lists. Existing accounts got generated
+  names, never their old display name (it was private and may be a real name).
 - **Account deletion:** `deleteAccountAction` calls `auth.admin.deleteUser`. Every table references
   `auth.users` with `ON DELETE CASCADE`, so the profile and all progress go with it.
 
@@ -871,10 +903,13 @@ Migrations, all applied to the linked project:
   `limit_time_zone_changes` trigger (see [Daily lesson limit](#daily-lesson-limit)).
 - `20261003100000_card_mistakes.sql`: `card_mistakes` and `record_mistake()` (security definer,
   `search_path ''`, execute for `service_role` only; see [Mistake review](#mistake-review)).
+- `20261004100000_usernames.sql` and `20261004110000_usernames_server_only.sql`: `profiles.username`,
+  `username_changed_at`, the shape check and the unique index; league handles copied over;
+  `league_standings()` returns the username; then learners lose their direct profile write.
 
 | Table | Holds |
 |---|---|
-| `profiles` | `id` (= auth user), `display_name` (1 to 40 chars, nullable until chosen), `learning_mode` (`path` or `explore`), `sound_enabled` (default true), `coach_seen` (how-to-play panels dismissed), `age_confirmed` (13+ confirmed; never a date of birth), `daily_goal` (20, 50 or 100; default 50), `daily_goal_chosen`, `time_zone` (IANA name, for dating days) |
+| `profiles` | `id` (= auth user), `username` (public, 3–20 `[A-Za-z0-9_]`, unique ignoring case, nullable until chosen), `username_changed_at`, `display_name` (unused since usernames; dropped later), `learning_mode` (`path` or `explore`), `sound_enabled` (default true), `coach_seen` (how-to-play panels dismissed), `age_confirmed` (13+ confirmed; never a date of birth), `daily_goal` (20, 50 or 100; default 50), `daily_goal_chosen`, `time_zone` (IANA name, for dating days) |
 | `card_completions` | `(user_id, lesson_id, card_id)` primary key, `completed_at`, `xp` (0 to 20) |
 | `lesson_completions` | `(user_id, lesson_id)` primary key, `completed_at`, `xp` (0 to 20) |
 | `quiz_attempts` | `id`, `user_id`, `quiz_id`, `attempted_at` (unique per user and quiz), `score` 0 to 1, `passed`, `xp` (0 to 50), `answers` jsonb |
@@ -894,10 +929,9 @@ Migrations, all applied to the linked project:
 - **Reads:** `authenticated` users may **select only their own rows** (`auth.uid() = user_id`, or
   `= id` for profiles).
 - **Writes:**
-  - Users may **update only `profiles.display_name`**, on their own row. There's a column-level
-    grant and an update policy; `learning_mode`, `sound_enabled`, `coach_seen`,
-    `age_confirmed`, `daily_goal`, `daily_goal_chosen` and `time_zone` aren't writable (Server
-    Actions set them with the secret key).
+  - **Learners can't write their profile row at all** (since the usernames migration): the
+    username, `learning_mode`, `sound_enabled`, `coach_seen`, `age_confirmed`, `daily_goal`,
+    `daily_goal_chosen` and `time_zone` are set by Server Actions with the secret key.
   - **`card_mistakes` is read-only for learners** (select own rows only); the server records
     misses with `record_mistake()` and clears them after re-grading a review answer.
   - **`xp_events` and `goal_days` are read-only for learners** (select own rows only, no write
@@ -920,7 +954,7 @@ Migrations, all applied to the linked project:
     progress writes go through Server Actions with the secret key, so users can never set their
     own XP.
 - **`anon`** has no privileges except inserting feedback, and `authenticated` has only `SELECT`
-  on its own rows, `UPDATE (display_name)` on profiles, and inserting feedback. The second migration removed Supabase's default `TRUNCATE`,
+  on its own rows and inserting feedback. The second migration removed Supabase's default `TRUNCATE`,
   `REFERENCES` and `TRIGGER`. New tables get those defaults again, so revoke them in the same
   migration.
 - **`npm run check:rls`** proves all of this against the linked project. It uses two throwaway
@@ -1121,14 +1155,14 @@ number is in `src/lib/leagues/config.ts`.
   window (card, lesson, quiz and practice), summed on the server; never from the client. The page
   shows the reset in the learner's own time zone too.
 - **Joining:** a signed-in learner's first XP of the week puts them in a league (`onXpEarned`, run
-  with `after()` from `recordXp`, never blocking the XP). Their player row (generated handle, tier
-  Packet, shown on leaderboards) is made then. Not playing a week keeps your tier.
+  with `after()` from `recordXp`, never blocking the XP). Their player row (tier Packet, shown on
+  leaderboards) is made then; leaderboards show their username. Not playing a week keeps your tier.
 - **Grouping:** same tier only, then an activity band from the last 3 weeks' XP (light < 100 a
   week ≤ regular < 400 ≤ keen). `join_league` puts them in the first league of their tier with space
   (under 30), own band first then the nearest, and makes a new league only when all are full, under
   a lock per week and tier (no duplicates, never over 30).
 - **Settling** (`settleLeague`, pure): ranked by weekly XP, ties to whoever got there first, then
-  the handle. The top 20% move up (at least 1 in leagues of 3+, and only with 50+ XP), the bottom
+  the username. The top 20% move up (at least 1 in leagues of 3+, and only with 50+ XP), the bottom
   15% move down (at least 1 in leagues of 6+). Never above Quantum or below Packet. Hidden learners
   aren't ranked and keep their tier. Vercel Cron calls `/api/cron/leagues` hourly (`vercel.json`;
   `CRON_SECRET`, checked first): `finalizeDueWeeks` settles every finished week since leagues opened,
@@ -1142,19 +1176,16 @@ number is in `src/lib/leagues/config.ts`.
   (Server, Mainframe; Mainframe is a wide multi-cabinet unit), purple Quantum. Always shown with the
   tier's name (`TierLabel`), never the badge alone.
 - **Player cards** (`PlayerCard`; concept: `docs/brand/leagues/player-card.png`): the avatar circle
-  holds the tier badge (**never photos**), the handle, the tier, and on your own card total XP
+  holds the tier badge (**never photos**), the username, the tier, and on your own card total XP
   (bolt), streak (node chain, no flame) and courses completed. Other learners' cards show only the
-  public fields: handle, tier, weekly XP and Pro.
+  public fields: username, tier, weekly XP and Pro.
 - **Pro is cosmetic only:** no extra XP or ranking advantage. Pro cards get the Pro frame and badge;
   `pro_cosmetic_until` is stamped from `getEntitlement()` (`proCosmeticUntil`).
-- **Handles** (`handles.ts`): generated as two brand words and a number ("SwiftRouter42"),
-  re-rolled if the filter objects. Learners can change theirs once a week: 3–20 letters and digits,
-  starting with a letter, at most 3 digits (no phone numbers or birth years), unique ignoring case,
-  no profanity (`obscenity`, with leetspeak) and no names, contact or social words, or staff words.
-  The private display name is never public.
+- **Names:** leaderboards show each learner's username (see [Usernames](#usernames)); it's changed
+  in account settings, not on `/leagues`. (`league_players.handle` is unused, dropped later.)
 - **Safety:** "Show me on leaderboards" (on by default) hides the learner from every public view.
-  Any handle in your league can be reported (`handle_reports`, at most 10 a day); when 3 different
-  learners report the same handle it's replaced with a generated one (reports are kept). The cron
+  Any username in your league can be reported (`handle_reports`, at most 10 a day); when 3 different
+  learners report the same username it's replaced with a generated one (reports are kept). The cron
   emails yesterday's (Sydney) reports to `CONTACT_EMAIL` from 8 am, only on days with reports, via
   Resend (`RESEND_API_KEY`; one idempotency key per day, so hourly retries never send twice).
 - **Dashboard card** (`LeaguesCard`, state from `leagueCardState` in `src/lib/leagues/card.ts`):
@@ -1505,6 +1536,35 @@ this list and fix anything busy.**
   once or twice), **never decorative loops.**
 - **Rewards and avatars** live on the lesson-complete screen and the profile, never in the lesson
   itself.
+
+## CyberNet design playbook
+
+Applies to all content work: the "learn before you do" rollout, new courses and card redesigns.
+1. **Start from real life:** every lesson opens from something the learner does or uses (their
+   phone, a game, a scam text), then shows the tech underneath.
+2. **Predict, then play:** open new ideas with "What do you think happens?" before explaining.
+3. **Interactive first:** drag, tap and try; explainers are one sentence and come after doing.
+4. **Wrong answers teach:** show visually why it's wrong (the diagram or scene changes), then Try
+   again. Never punish mistakes.
+5. **Tiny steps that build:** each card uses what the previous one proved.
+6. **3-second rule:** know what to do instantly (the zero-confusion rule below).
+7. **Useful today:** each lesson ends with one thing they can do in real life now ("Try this: …").
+8. **Learning over streaks:** XP and streaks reward real progress, not speed-running.
+
+### Zero-confusion rule (every card type, every course)
+A learner should know what to do within **3 seconds** of seeing a card.
+1. **Problem first:** the top of the card says what's wrong or what to do, in one short sentence
+   ("Fix the model's mistake", "Tap the battery").
+2. **Show, don't describe:** real-looking pictures and real colours instead of abstract dots,
+   charts or labels. Charts only in Hard bonus cards.
+3. **One action per card:** one clear thing to tap, drag or choose. Nothing pre-selected unless the
+   task is to change it.
+4. **Few choices:** 3–4 options at most on Easy and Medium cards.
+5. **Instant, visible feedback:** when they act, something on screen changes right away (a guess
+   flips, a part lights up, a packet moves).
+6. **Plain words:** everyday language, short sentences, no jargon in instructions (jargon only as
+   a tappable glossary word).
+7. **Everything visible:** fits 360×560 with no scrolling.
 
 ## Content style guide
 

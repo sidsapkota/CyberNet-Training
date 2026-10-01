@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import { deleteAccountAction, updateDisplayNameAction } from "@/app/actions/account";
+import { deleteAccountAction } from "@/app/actions/account";
 import { Button } from "@/components/ui/Button";
 import { DailyGoalSetting } from "./DailyGoalSetting";
 import { ManageProPanel } from "@/components/pro/ManageProPanel";
@@ -13,49 +13,42 @@ import { trackEvent } from "@/lib/analytics";
 import { takeSignupLesson } from "@/lib/auth/afterSignIn";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { initialOf } from "@/lib/auth/profile";
+import { UsernameForm } from "./UsernameForm";
 
 const panel = "rounded-card border border-line bg-surface p-5 shadow-card";
 
 export function AccountPanel({
   courseTitles,
   email,
-  displayName,
+  username,
+  nextChange,
   welcome,
   next = "/",
 }: {
   /** Course id → title, for the certificates list. */
   courseTitles: Record<string, string>;
   email: string | null;
-  displayName: string | null;
+  username: string | null;
+  /** When the next username change is allowed ("20 October"), or null for now. */
+  nextChange: string | null;
   welcome: boolean;
   /** Where a new account carries on after choosing a name (e.g. the lesson that asked them to sign up). */
   next?: string;
 }) {
   const router = useRouter();
   const { refreshProfile, signOut } = useAuth();
-  const [name, setName] = useState(displayName ?? "");
-  const [saved, setSaved] = useState(displayName);
-  const [message, setMessage] = useState<{ tone: "ok" | "error"; text: string } | null>(null);
+  const [saved, setSaved] = useState(username);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [pending, startTransition] = useTransition();
 
-  function saveName(event: React.FormEvent) {
-    event.preventDefault();
-    startTransition(async () => {
-      const result = await updateDisplayNameAction(name);
-      if (result.ok) {
-        setSaved(result.displayName);
-        setName(result.displayName);
-        setMessage({ tone: "ok", text: "Saved." });
-        await refreshProfile();
-        if (welcome) {
-          trackEvent("signed_up", takeSignupLesson()); // a new account has just finished setting up
-          router.push(next);
-        }
-      } else {
-        setMessage({ tone: "error", text: result.error });
-      }
-    });
+  async function onSaved(name: string) {
+    const first = saved === null;
+    setSaved(name);
+    await refreshProfile();
+    if (welcome && first) {
+      trackEvent("signed_up", takeSignupLesson()); // a new account has just finished setting up
+      router.push(next);
+    }
   }
 
   function deleteAccount() {
@@ -78,38 +71,11 @@ export function AccountPanel({
 
       {welcome && !saved && (
         <p role="status" className="rounded-card border border-accent-ink bg-accent-soft p-4 text-small">
-          You&apos;re in! Pick a display name. It&apos;s shown only to you, so a nickname is perfect.
+          You&apos;re in! Pick a username. It&apos;s how other learners see you, so keep it fun and never your real name.
         </p>
       )}
 
-      <form onSubmit={saveName} className={panel}>
-        <label htmlFor="display-name" className="text-small font-semibold">
-          Display name
-        </label>
-        <div className="mt-2 flex flex-col gap-2 sm:flex-row">
-          <input
-            id="display-name"
-            value={name}
-            maxLength={40}
-            autoComplete="nickname"
-            onChange={(e) => {
-              setName(e.target.value);
-              setMessage(null);
-            }}
-            className="min-h-12 flex-1 rounded-control border border-line-strong bg-surface px-4 text-body text-ink outline-none focus-visible:border-accent-ink"
-            placeholder="e.g. Sam"
-          />
-          <Button type="submit" disabled={pending || name.trim() === "" || name.trim() === saved}>
-            Save
-          </Button>
-        </div>
-        <p className="mt-2 text-caption text-ink-faint">Use a nickname rather than your full name.</p>
-        {message && (
-          <p role={message.tone === "error" ? "alert" : "status"} className={`mt-2 text-small ${message.tone === "error" ? "text-danger" : "text-success"}`}>
-            {message.text}
-          </p>
-        )}
-      </form>
+      <UsernameForm className={panel} initial={username} nextChange={nextChange} welcome={welcome} onSaved={(name) => void onSaved(name)} />
 
       <ManageProPanel className={panel} />
 

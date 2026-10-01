@@ -10,8 +10,8 @@ import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { CONTACT_EMAIL, SITE_NAME } from "@/lib/site";
 import { BAND_WEEKS, LEAGUE_CAP, LEAGUE_TIME_ZONE, REPORTS_PER_DAY } from "./config";
 import { bandFor, bandPreference } from "./grouping";
-import { checkHandle, generateHandle, handleKey } from "./handles";
-import { nextHandleChange, shouldOpenLeagues, shouldReplaceHandle } from "./rules";
+import { ensureUsername, replaceUsername } from "@/lib/usernames/server";
+import { shouldOpenLeagues, shouldReplaceHandle } from "./rules";
 import { type LeagueEntry, type LeagueOutcome, settleLeague } from "./settle";
 import { isTier, type Tier } from "./tiers";
 import { leagueWeek, weekWindow } from "./week";
@@ -23,31 +23,32 @@ function fail(message: string, error: { message: string } | null | undefined): a
 }
 
 export interface LeaguePlayer {
+  /** The learner's public username (`profiles.username`), shown on leaderboards. */
   handle: string;
   tier: Tier;
   showOnLeaderboards: boolean;
-  handleChangedAt: string | null;
 }
 
-/** The learner's league player row, created with a generated handle the first time. */
+/** The learner's league player row, created the first time. Their public name is their username. */
 export async function ensurePlayer(admin: Admin, userId: string): Promise<LeaguePlayer> {
-  const existing = await admin.from("league_players").select("handle, tier, show_on_leaderboards, handle_changed_at").eq("user_id", userId).maybeSingle();
+  const username = await ensureUsername(admin, userId);
+  const existing = await admin.from("league_players").select("tier, show_on_leaderboards").eq("user_id", userId).maybeSingle();
   fail("Couldn't read the league player", existing.error);
-  if (existing.data) return playerFromRow(existing.data);
-  for (let attempt = 0; attempt < 8; attempt++) {
-    const handle = generateHandle();
-    const { error } = await admin.from("league_players").insert({ user_id: userId, handle, handle_key: handleKey(handle) });
-    if (!error) return { handle, tier: "packet", showOnLeaderboards: true, handleChangedAt: null };
-    if (error.code !== "23505") fail("Couldn't create the league player", error);
-    // 23505: that handle is taken, or a parallel request just created this player.
-    const again = await admin.from("league_players").select("handle, tier, show_on_leaderboards, handle_changed_at").eq("user_id", userId).maybeSingle();
-    if (again.data) return playerFromRow(again.data);
+  if (existing.data) {
+    return { handle: username, tier: isTier(existing.data.tier) ? existing.data.tier : "packet", showOnLeaderboards: existing.data.show_on_leaderboards };
   }
-  throw new Error("Couldn't find a free handle.");
+  const { error } = await admin.from("league_players").insert({ user_id: userId });
+  // 23505: a parallel request just created this player.
+  if (error && error.code !== "23505") fail("Couldn't create the league player", error);
+  return { handle: username, tier: "packet", showOnLeaderboards: true };
 }
 
-function playerFromRow(row: { handle: string; tier: string; show_on_leaderboards: boolean; handle_changed_at: string | null }): LeaguePlayer {
-  return { handle: row.handle, tier: isTier(row.tier) ? row.tier : "packet", showOnLeaderboards: row.show_on_leaderboards, handleChangedAt: row.handle_changed_at };
+/** Usernames for a set of learners (leaderboards show nothing else about them). */
+async function usernames(admin: Admin, userIds: string[]): Promise<Map<string, string>> {
+  if (userIds.length === 0) return new Map();
+  const { data, error } = await admin.from("profiles").select("id, username").in("id", userIds);
+  fail("Couldn't read usernames", error);
+  return new Map((data ?? []).map((r) => [r.id, r.username ?? ""]));
 }
 
 /** Weekly XP per user over a time window, with each user's last XP time (for ties). */
@@ -161,9 +162,10 @@ async function finalizeWeek(admin: Admin, week: string): Promise<void> {
   fail("Couldn't read the week's leagues", leagues.error ?? members.error);
   const userIds = (members.data ?? []).map((m) => m.user_id);
   const players = userIds.length
-    ? await admin.from("league_players").select("user_id, handle, show_on_leaderboards").in("user_id", userIds)
+    ? await admin.from("league_players").select("user_id, show_on_leaderboards").in("user_id", userIds)
     : { data: [], error: null };
   fail("Couldn't read players", players.error);
+  const names = await usernames(admin, userIds);
   const { starts, ends } = weekWindow(week);
   const xp = await weeklyXp(admin, userIds, starts, ends);
   const byUser = new Map((players.data ?? []).map((p) => [p.user_id, p]));
@@ -175,7 +177,7 @@ async function finalizeWeek(admin: Admin, week: string): Promise<void> {
       .map((m) => {
         const p = byUser.get(m.user_id)!;
         const w = xp.get(m.user_id) ?? { xp: 0, lastAt: null };
-        return { userId: m.user_id, handle: p.handle, weeklyXp: w.xp, lastAt: w.lastAt, visible: p.show_on_leaderboards };
+        return { userId: m.user_id, handle: names.get(m.user_id) ?? "", weeklyXp: w.xp, lastAt: w.lastAt, visible: p.show_on_leaderboards };
       });
     for (const outcome of settleLeague(entries, league.tier)) results.push({ ...outcome, leagueId: league.id });
   }
@@ -196,27 +198,6 @@ async function finalizeWeek(admin: Admin, week: string): Promise<void> {
 
 // ── Handles and reports ──────────────────────────────────────────────────────
 
-export type HandleResult = { ok: true; handle: string } | { ok: false; error: string };
-
-export async function changeHandle(userId: string, input: string, now = new Date()): Promise<HandleResult> {
-  const checked = checkHandle(input);
-  if (!checked.ok) return checked;
-  const admin = createSupabaseAdminClient();
-  const player = await ensurePlayer(admin, userId);
-  if (player.handle === checked.handle) return { ok: true, handle: player.handle };
-  const next = nextHandleChange(player.handleChangedAt, now);
-  if (next) {
-    return { ok: false, error: `You can change your handle again on ${new Intl.DateTimeFormat("en-AU", { day: "numeric", month: "long" }).format(next)}.` };
-  }
-  const { error } = await admin
-    .from("league_players")
-    .update({ handle: checked.handle, handle_key: handleKey(checked.handle), handle_changed_at: now.toISOString() })
-    .eq("user_id", userId);
-  if (error?.code === "23505") return { ok: false, error: "That handle is taken. Try another." };
-  fail("Couldn't save the handle", error);
-  return { ok: true, handle: checked.handle };
-}
-
 export async function setShowOnLeaderboards(userId: string, show: boolean): Promise<void> {
   const admin = createSupabaseAdminClient();
   await ensurePlayer(admin, userId);
@@ -229,15 +210,17 @@ export type ReportReason = (typeof REPORT_REASONS)[number];
 export type ReportResult = { ok: true } | { ok: false; error: string };
 
 /**
- * Reports a handle in the reporter's own league this week. Once REPORTS_TO_REPLACE different
- * learners report the same handle, it's replaced with a generated one (the reports are kept).
+ * Reports a username in the reporter's own league this week. Once REPORTS_TO_REPLACE different
+ * learners report the same username, it's replaced with a generated one (the reports are kept),
+ * and the learner can choose a new one straight away.
  */
 export async function reportHandle(reporterId: string, handle: string, reason: ReportReason, now = new Date()): Promise<ReportResult> {
   const admin = createSupabaseAdminClient();
   const week = leagueWeek(now);
-  const reported = await admin.from("league_players").select("user_id, handle").eq("handle_key", handleKey(handle.trim())).maybeSingle();
-  fail("Couldn't look up that handle", reported.error);
-  const target = reported.data;
+  const pattern = handle.trim().replace(/[\\%_]/g, (c) => `\\${c}`); // ilike wildcards
+  const reported = await admin.from("profiles").select("id, username").ilike("username", pattern).maybeSingle();
+  fail("Couldn't look up that username", reported.error);
+  const target = reported.data?.username ? { user_id: reported.data.id, handle: reported.data.username } : null;
   if (!target || target.user_id === reporterId) return { ok: false, error: "You can only report other learners in your league." };
   const [mine, theirs] = await Promise.all([
     admin.from("league_members").select("league_id").match({ week, user_id: reporterId }).maybeSingle(),
@@ -259,25 +242,10 @@ export async function reportHandle(reporterId: string, handle: string, reason: R
 
   const reporters = await admin.from("handle_reports").select("reporter_id").match({ reported_user_id: target.user_id, handle: target.handle }).not("reporter_id", "is", null);
   fail("Couldn't count reports", reporters.error);
-  if (shouldReplaceHandle(new Set((reporters.data ?? []).map((r) => r.reporter_id)).size)) await replaceHandle(admin, target.user_id, target.handle);
-  return { ok: true };
-}
-
-/** Swaps a reported handle for a generated one. The learner can choose a new one straight away. */
-async function replaceHandle(admin: Admin, userId: string, current: string): Promise<void> {
-  for (let attempt = 0; attempt < 8; attempt++) {
-    const handle = generateHandle();
-    const { data, error } = await admin
-      .from("league_players")
-      .update({ handle, handle_key: handleKey(handle), handle_changed_at: null })
-      .match({ user_id: userId, handle: current })
-      .select("user_id");
-    if (!error) {
-      if (data?.length) console.info("Leagues: replaced a handle after reports");
-      return;
-    }
-    if (error.code !== "23505") fail("Couldn't replace the handle", error);
+  if (shouldReplaceHandle(new Set((reporters.data ?? []).map((r) => r.reporter_id)).size)) {
+    if (await replaceUsername(admin, target.user_id, target.handle)) console.info("Leagues: replaced a username after reports");
   }
+  return { ok: true };
 }
 
 // ── The daily report summary ────────────────────────────────────────────────

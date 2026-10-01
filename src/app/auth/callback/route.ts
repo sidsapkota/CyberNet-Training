@@ -39,8 +39,8 @@ export async function GET(request: NextRequest) {
 
   const { data } = await supabase.auth.getUser();
   if (data.user) {
-    const { data: profile } = await supabase.from("profiles").select("display_name").eq("id", data.user.id).maybeSingle();
-    return to(afterSignInPath(next, Boolean(profile?.display_name)));
+    const { data: profile } = await supabase.from("profiles").select("username").eq("id", data.user.id).maybeSingle();
+    return to(afterSignInPath(next, Boolean(profile?.username)));
   }
   return to(next);
 }

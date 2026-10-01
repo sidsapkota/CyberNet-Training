@@ -26,7 +26,6 @@ export const BAND_WEEKS = 3;
 export const BAND_REGULAR_XP = 100;
 export const BAND_KEEN_XP = 400;
 
-/** Handles: how often they can change, and when reports replace one automatically. */
-export const HANDLE_CHANGE_DAYS = 7;
+/** Reports: when they replace a username automatically, and how many one learner may send a day. */
 export const REPORTS_TO_REPLACE = 3;
 export const REPORTS_PER_DAY = 10;
