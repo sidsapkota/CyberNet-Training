@@ -810,6 +810,29 @@ Signs of a hack, what to do step by step, and where to get help.
 - Choose what happens: Your friends say you've been sending them strange links. You haven't.
 - Choose what happens: You check your account's security settings.
 
+#### Deepfake Scams and Fakes
+
+- **Access:** Free, no account needed (best for video links)
+- **Link:** `cybernettraining.com/from/<platform>/deepfake-scams`
+
+**Key facts**
+
+- *Fake voices and faces:* Then it can make **new** audio or video of them saying things they never said. A fake video or picture made like this is called a **deepfake**.
+- *The same old tricks:* **Hurry:** you must act right now, so you don't stop to check. **Keep it secret:** don't tell anyone, so nobody can warn you.
+- *Ask something only they'd know:* Some families agree a **code word** together, just for emergencies, and never post it online.
+- *If someone makes a fake of you:* It's **not your fault**, and you won't be in trouble for asking for help. **Don't share it** any further, even to show someone.
+- *Recap:* AI can copy voices and faces: **deepfakes** and **voice clones**. The red flags still work: **hurry**, **secrets**, **money or codes**, a **new number**.
+
+**Best interactive cards**
+
+- Sort into groups: Sort each message: **red flag**, or **normal**?
+- Choose what happens: Your phone rings from a number you don't know.
+- Choose what happens: A video message arrives from an account with your coach's name and face.
+
+**Surprising facts**
+
+- If you're under 18 and someone is threatening to share it, or asking you for sexual images or money, report it to the **ACCCE** too (accce.gov.au/report).
+
 #### Getting Help
 
 - **Access:** Free, no account needed (best for video links)

@@ -181,7 +181,7 @@ describe("real content in /content", () => {
       ["strong-passwords", "two-step-sign-in", "lock-your-accounts-quiz"],
       ["phishing-emails", "scam-texts-and-calls", "fake-websites", "spot-the-scam-quiz"],
       ["your-digital-footprint", "apps-and-wi-fi", "guard-your-privacy-quiz"],
-      ["signs-of-a-hack", "getting-help", "stay-safe-online-final"],
+      ["signs-of-a-hack", "deepfake-scams", "getting-help", "stay-safe-online-final"],
     ]);
   });
 

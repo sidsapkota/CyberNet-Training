@@ -1328,7 +1328,35 @@ like `.com.au`, have two parts, and the examples only use `.example`.
 **Simplifications:** real apps word these settings differently. The order is a sensible default,
 not a rule every service states.
 
-### 4.2 Getting Help (`getting-help`)
+### 4.2 Deepfake Scams and Fakes (`deepfake-scams`)
+Added 1 October 2026 (moved here from the AI course plan, because help is always free and this
+module is open to guests). Self-contained: Spot the Scam is Pro, so the red flags it needs are
+re-taught here.
+
+**Goals:** know that AI can copy voices and faces; spot the red flags anyway (hurry, secrecy,
+money or codes, a new number) and know why scammers use each; check by hanging up and contacting
+the person on the number you already have, a question only they'd know, or a trusted adult; know
+what to do if someone fakes a picture of you.
+
+**Key claims (sources checked 1 October 2026):**
+- AI can make convincing fake video and audio of a real person from real recordings, sometimes a
+  few seconds long. You can't always tell by looking or listening.
+- Scamwatch (Text or SMS scams): if someone says they have a new number, call them on the
+  **existing number** you have for them, or ask a question only they would know.
+- A family code word: common advice, not a Scamwatch quote, so it's offered as something "some
+  families" do, beside the question only they'd know.
+- eSafety (Image-based abuse, esafety.gov.au/key-topics/image-based-abuse): covers intimate images
+  "digitally altered or faked to look like you (such as a deepfake created with an AI tool or
+  app)", which can be reported to eSafety, which can help get them removed. Its deepfakes guide
+  page (esafety-guide/deepfakes) returned 404 on this date, so it isn't cited.
+- Evidence, ACCCE and "never save the image itself" match 4.3 Getting Help (verified 30 September
+  2026).
+
+**Simplifications:** "a few seconds" of audio is the low end; quality varies. The step order
+(don't share, save evidence, tell an adult, report) is a sensible default that matches Getting
+Help.
+
+### 4.3 Getting Help (`getting-help`)
 **Key claims:**
 - The help services verified above.
 - Save evidence before blocking: screenshots of messages, usernames, addresses and dates. Never
@@ -1379,3 +1407,15 @@ to each answer before reading the key.
 | 1.1 `easy-or-hard` | "A random one from an app" came before password managers | "A long random one made by a password app" |
 | 2.2 `spot-the-text` | Fee and deadline are two targets inside one bubble | Kept: each line gets its own tap highlight, and the prompt names the new message |
 | M2 quiz, final | Quiz hotspots reuse the lesson scenes | Kept for now (noted): variants need new scene artwork |
+
+## Beginner audit: Deepfake Scams (1 October 2026)
+
+A fresh agent played the lesson as a 12-year-old (alongside the AI course's module 1): every card
+right first try except `fake-steps`. Tone calm and never blaming; nothing teaches making a scam or
+a deepfake; it stands alone without Spot the Scam.
+
+| Where | Issue | Fix |
+|---|---|---|
+| `fake-steps` | The order (don't share, evidence, tell, report) was debatable: telling an adult first is also right | Replaced with a do / don't sort (`do-or-dont`), which also covers not paying and not saving the image |
+| `if-its-you` | "Threatening you" was broader than what the ACCCE handles | "Threatening to share it, or asking you for sexual images or money" |
+| `if-its-you` | "You won't be in trouble" was an absolute promise | "You won't be in trouble for asking for help"; adds "Don't pay or send anything they ask for" |

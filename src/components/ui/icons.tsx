@@ -79,6 +79,7 @@ import {
   KeyRound,
   Layers,
   LifeBuoy,
+  AudioLines,
   Link,
   MailWarning,
   MapPin,
@@ -264,6 +265,7 @@ export const LESSON_ICON_COMPONENTS = {
   "eye-off": EyeOff,
   users: Users,
   "life-buoy": LifeBuoy,
+  "audio-lines": AudioLines,
 } satisfies Record<LessonIconName, LucideIcon>;
 
 /** A lesson's icon, with the brand stroke. Decorative: the lesson title always carries the meaning. */

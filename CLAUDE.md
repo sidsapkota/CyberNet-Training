@@ -58,7 +58,8 @@ All of `build`, `lint`, `test` and `typecheck` must pass with zero errors and wa
 Courses, in catalog order: **Inside Your Devices** (`inside-your-devices`, hardware, the OS and
 troubleshooting, built on the hands-on card types), **How the Internet Works**
 (`how-the-internet-works`) and **Stay Safe Online** (`stay-safe-online`: passwords and two-step
-sign-in, spotting scams, privacy, and what to do when things go wrong; modules 1 and 4 free,
+sign-in, spotting scams, privacy, and what to do when things go wrong, including deepfake scams;
+modules 1 and 4 free,
 modules 2 and 3 Pro).
 Each `module.json` has `"access": "free" | "pro"`. Every course's first module must be free (the
 loader checks), and help, reporting and recovery modules are always free. Every Pro module also has

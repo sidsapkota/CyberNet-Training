@@ -70,6 +70,7 @@ export const LESSON_ICONS = [
   "eye-off",
   "users",
   "life-buoy",
+  "audio-lines",
 ] as const;
 
 export type LessonIconName = (typeof LESSON_ICONS)[number];

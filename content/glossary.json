@@ -52,6 +52,7 @@
       "definition": "Using the internet or phones to be mean to someone so they feel bad or upset: hurtful messages, posts, threats or leaving them out on purpose."
     },
     { "id": "data-breach", "term": "data breach", "definition": "When information a company keeps, such as email addresses and passwords, is stolen or leaked." },
+    { "id": "deepfake", "term": "deepfake", "definition": "A fake video or picture made with AI, showing a real person doing or saying something they never did." },
     {
       "id": "default-gateway",
       "term": "default gateway",
@@ -213,6 +214,7 @@
     { "id": "update", "term": "update", "definition": "A new version of software that fixes bugs and security holes, and sometimes adds features." },
     { "id": "url", "term": "URL", "definition": "A full web address, like https://www.example.com/news, saying which protocol, which site and which page." },
     { "id": "virus", "term": "virus", "definition": "A harmful program that spreads to other files or devices. Security apps look for them." },
+    { "id": "voice-clone", "term": "voice clone", "definition": "A fake copy of someone's voice made with AI, which can say things the real person never said." },
     { "id": "warranty", "term": "warranty", "definition": "The maker's promise to repair a device for free if it breaks by itself within a set time." },
     { "id": "watt", "term": "watt (W)", "definition": "A unit for how fast energy is used. A phone uses a few watts; the more watts, the faster the battery empties." },
     { "id": "wi-fi-access-point", "term": "Wi-Fi access point", "definition": "The part of a network that sends out the Wi-Fi signal, so wireless devices can join." }
