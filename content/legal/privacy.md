@@ -36,7 +36,7 @@ CyberNet Training ("we", "us") is a free website for learning how devices and th
 ## The short version
 
 - You can play every lesson **without an account**. Your progress then stays on your device.
-- If you make an account (you must be **13 or older**), we keep your **email**, the **display name** you choose, your **learning progress** (including when you learn and your time zone, for daily goals and streaks) and your **settings**.
+- If you make an account (you must be **13 or older**), we keep your **email**, the **username** you choose, your **learning progress** (including when you learn and your time zone, for daily goals and streaks) and your **settings**.
 - **No ads. We never sell your data. No tracking cookies.**
 - You can **delete your account** at any time on the [Account page](/account).
 
@@ -51,12 +51,12 @@ We also count visits with privacy-friendly analytics (see "Analytics" below). It
 Accounts are for people **aged 13 or older**. When you sign in we keep:
 
 - **Your email address**, so you can sign in.
-- **Your display name**, a nickname you choose. Please don't use your real full name.
+- **Your username**, a made-up name you choose (or the one we suggest, like "PacketPilot482"). Other learners can see it in leagues, so never use your real name or contact details; we check every username for that. You can change it once every 30 days.
 - **Your learning progress**: which cards, lessons and quizzes you've finished, your quiz answers and scores, and your XP.
 - **Cards you got wrong**, for "Review your mistakes": which card, how many times you've missed it, when, and when you got it right in a review. We never keep the wrong answer you gave in a lesson. We keep this for every account, so it's ready if you get CyberNet Pro; only Pro can review the cards. Resetting your progress clears it.
 - **When your learning happens, and your time zone**: the time of each moment you earn XP, and your device's time zone (for example "Australia/Sydney": it shows roughly which part of the world you're in, never your address or exact location). We use these **only** to work out your daily goal, your streak and your weekly league XP, so a day counts on your own calendar.
 - **Your settings**: Path or Explore mode, sound on or off, your daily goal, which "how to play" tips you've seen, and whether you show on leaderboards.
-- **Your league details**: your public handle, your tier, which league you're in each week and how you finished.
+- **Your league details**: your tier, which league you're in each week and how you finished.
 - **That you confirmed you're 13 or older.** We only store "confirmed", never your date of birth.
 - **Which new lessons you open each day** (the lesson and the day, nothing else), because free accounts can open 3 new lessons a day, and **when you last changed your time zone** (it can change once a week, so the day can't be reset early).
 - **If you subscribe to CyberNet Pro:** your Stripe customer number and your subscription's plan, status and dates (for example when it renews). **We never see or store your card details**: Stripe handles them.
@@ -69,20 +69,20 @@ We use this information only to run your account and save your progress across d
 
 If you have an account, you take part in weekly leagues of up to 30 learners. **What others in your league can see:**
 
-- your **handle** (a made-up name, like "SwiftRouter42", that we give you and you can change),
+- your **username** (a made-up name, like "SwiftRouter42"),
 - your **tier** (Packet up to Quantum), your **XP this week**, and whether you have **Pro**.
 
-That's all. They never see your email, your display name, your real name, your other stats or where you are. Only learners in your own league that week see you, and only while they're signed in.
+That's all. They never see your email, your real name, your other stats or where you are. Only learners in your own league that week see you, and only while they're signed in.
 
-- **Handles must stay anonymous:** no real names, contact details, social media names or rude words (we check them). Please never put personal information in your handle.
+- **Usernames must stay anonymous:** no real names, contact details, social media names or rude words (we check them). Please never put personal information in your username.
 - **Hide yourself any time:** turn off "Show me on leaderboards" on the [Account page](/account) or the Leagues page, and nobody else sees you in any league. Your tier then stays as it is.
-- **Reports:** if you report a handle, we keep the report (your account, the handle and the reason) so an adult can review it, and we email a short daily summary of new reports to our own inbox. If three different learners report the same handle, we replace it with a new made-up one.
+- **Reports:** if you report a username, we keep the report (your account, the username and the reason) so an adult can review it, and we email a short daily summary of new reports to our own inbox. If three different learners report the same username, we replace it with a new made-up one.
 
 ## Certificates
 
 With CyberNet Pro, you can create a certificate when you pass a course final. We keep **the name you choose for it** (a first name or nickname is fine), the **course**, the **date you finished** and a random **certificate ID**.
 
-- **Its public check page** (cybernettraining.com/certificate/your-ID) shows only that **name, course, date and ID**, so anyone you give the link to can see it's genuine. Nobody can find it without the ID, it's hidden from search engines, and it never shows your email, display name or anything else about your account.
+- **Its public check page** (cybernettraining.com/certificate/your-ID) shows only that **name, course, date and ID**, so anyone you give the link to can see it's genuine. Nobody can find it without the ID, it's hidden from search engines, and it never shows your email, username or anything else about your account.
 - **Withdraw it any time** on the certificate's page or your [Account page](/account): its check page then says it isn't valid. Creating a new one (for example with a different name) withdraws the old one.
 - Deleting your account deletes your certificates.
 
@@ -108,7 +108,7 @@ We share information only with the services that run the website:
 - **Supabase**: our database and sign-in system. Stores account data and feedback.
 - **Vercel**: hosts the website and runs our cookieless analytics.
 - **Google**: only if you choose "Continue with Google" to sign in.
-- **Resend**: sends sign-in emails, a reminder 3 days before a Pro free trial ends (to that subscriber only), our daily summary of handle reports, and a copy of each feedback message (both sent only to us).
+- **Resend**: sends sign-in emails, a reminder 3 days before a Pro free trial ends (to that subscriber only), our daily summary of username reports, and a copy of each feedback message (both sent only to us).
 - **Stripe**: only if you subscribe to CyberNet Pro. Stripe runs the checkout and handles your card; it also has your email (for receipts). See [Stripe's privacy policy](https://stripe.com/privacy).
 
 These companies may store data on servers outside Australia. They're only allowed to use it to provide their service to us.
@@ -122,11 +122,11 @@ These companies may store data on servers outside Australia. They're only allowe
 
 ## How long we keep it
 
-We keep account information while your account exists. When you delete your account, your email, display name, progress and settings are deleted straight away (our providers' backups may keep a copy for a short time before it's gone for good). Feedback isn't linked to accounts, so it isn't deleted with them.
+We keep account information while your account exists. When you delete your account, your email, username, progress and settings are deleted straight away (our providers' backups may keep a copy for a short time before it's gone for good). Feedback isn't linked to accounts, so it isn't deleted with them.
 
 ## Your choices and rights
 
-- **See or change** your display name on the [Account page](/account).
+- **See or change** your username on the [Account page](/account).
 - **Delete your account** on the [Account page](/account). This deletes everything linked to it.
 - **Ask us** what we hold about you, or to fix or delete it, by emailing us.
 - If you're unhappy with how we handle your information, you can complain to the **Office of the Australian Information Commissioner** (oaic.gov.au).

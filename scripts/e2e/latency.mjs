@@ -39,7 +39,7 @@ try {
   if (error) throw error;
   userId = created.user.id;
   // Explore mode: no "Play it anyway" gate on later lessons.
-  await admin.from("profiles").update({ display_name: "Latency Tester", age_confirmed: true, learning_mode: "explore" }).eq("id", userId);
+  await admin.from("profiles").update({ username: `E2e_${Math.random().toString(36).slice(2, 12)}`, age_confirmed: true, learning_mode: "explore" }).eq("id", userId);
   const now = Date.now();
   await admin.from("pro_grants").insert({
     user_id: userId,

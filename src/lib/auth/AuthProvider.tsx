@@ -19,7 +19,8 @@ export type AuthState =
       status: "signed-in";
       userId: string;
       email: string | null;
-      displayName: string | null;
+      /** The public username (null until chosen). */
+      username: string | null;
       /** Confirmed 13 or older (accounts are 13+). Unconfirmed accounts see a one-time prompt. */
       ageConfirmed: boolean;
     };
@@ -28,7 +29,7 @@ interface AuthContextValue {
   auth: AuthState;
   /** False when Supabase isn't configured: the app runs guest-only. */
   available: boolean;
-  /** Re-reads the profile (display name and age confirmation) after changing it. */
+  /** Re-reads the profile (username and age confirmation) after changing it. */
   refreshProfile: () => Promise<void>;
   signOut: () => Promise<void>;
 }
@@ -48,9 +49,9 @@ function supabaseConfigured(): boolean {
 async function loadProfile(
   client: SupabaseClient<Database>,
   userId: string,
-): Promise<{ displayName: string | null; ageConfirmed: boolean }> {
-  const { data } = await client.from("profiles").select("display_name, age_confirmed").eq("id", userId).maybeSingle();
-  return { displayName: data?.display_name ?? null, ageConfirmed: data?.age_confirmed ?? false };
+): Promise<{ username: string | null; ageConfirmed: boolean }> {
+  const { data } = await client.from("profiles").select("username, age_confirmed").eq("id", userId).maybeSingle();
+  return { username: data?.username ?? null, ageConfirmed: data?.age_confirmed ?? false };
 }
 
 /**
@@ -78,14 +79,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       // Defer Supabase calls out of the callback (supabase-js recommends not awaiting inside it).
       setTimeout(() => {
-        void loadProfile(client, user.id).then(({ displayName, ageConfirmed }) =>
+        void loadProfile(client, user.id).then(({ username, ageConfirmed }) =>
           setAuth((current) =>
             current.status === "signed-in" &&
             current.userId === user.id &&
-            current.displayName === displayName &&
+            current.username === username &&
             current.ageConfirmed === ageConfirmed
               ? current
-              : { status: "signed-in", userId: user.id, email: user.email ?? null, displayName, ageConfirmed },
+              : { status: "signed-in", userId: user.id, email: user.email ?? null, username, ageConfirmed },
           ),
         );
       }, 0);

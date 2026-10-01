@@ -90,8 +90,9 @@ try {
   await page.getByRole("button", { name: "Sign in" }).click();
   await page.waitForURL(/\/account\?welcome=1/, { timeout: 20000 });
   record("The code signs in; a new account picks a name first, keeping the lesson", page.url().includes(`next=${encodeURIComponent(NEXT)}`), page.url());
-  await page.getByLabel("Display name").fill("Insta Tester");
-  await page.getByRole("button", { name: /Save/ }).first().click();
+  // "Pick a username" starts with a suggestion, so keeping it is one tap.
+  await page.waitForFunction(() => (document.querySelector("input[autocomplete=username]")?.value ?? "") !== "", null, { timeout: 30000 });
+  await page.getByRole("button", { name: "Use this" }).click();
   await page.waitForURL(/\/lesson\/bytes-file-sizes-and-hex/, { timeout: 20000 });
   await page.waitForTimeout(2500);
   record("…then the lesson that needed an account opens", (await page.getByRole("heading", { name: "Create a free account to keep going." }).count()) === 0);

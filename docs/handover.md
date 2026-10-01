@@ -28,6 +28,8 @@ Last updated: 1 October 2026.
 
 ## 2. Open branches
 
+- `usernames` (owner approved 2 Oct; merge after checks): one public username replaces the display name and league handle. Server-side safety check with tricky-example tests, "Pick a username" with a suggestion and Shuffle, first change free then every 30 days, reports replace a name after 3 reporters. **SQL part 1 applied** (additive). **Scan run on production:** checked 11, generated 6, replaced 1 (counts only). Part 2 (no learner profile writes) goes on right after the code is live, then `check:rls`.
+
 - **Live 2 Oct:** the wording pass, the player layout (Listen in the header, Hint in the footer, teardown and simulator layout) and fit-560 (every card fits 360×560: tighter chrome on phones, Skip in the bonus row, one-line instructions, smaller minimum scenes). Production checks passed on cybernettraining.com each time; the earlier rollback is resolved (the deploy was promoted and auto-promotion works again).
 - **Plans waiting for the owner:** `docs/plans/what-really-happens.md` (new Medium course, plan only) and the usernames plan + SQL (not applied).
 

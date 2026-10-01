@@ -70,14 +70,14 @@ export async function POST(request: Request) {
       }
       const [{ data: user, error }, { data: profile }] = await Promise.all([
         admin.auth.admin.getUserById(userId),
-        admin.from("profiles").select("display_name, time_zone").eq("id", userId).maybeSingle(),
+        admin.from("profiles").select("username, time_zone").eq("id", userId).maybeSingle(),
       ]);
       if (error) throw error;
       const email = user.user?.email;
       if (!email) return;
       const message = trialReminderEmail({
         sub,
-        name: profile?.display_name ?? null,
+        name: profile?.username ?? null,
         timeZone: profile?.time_zone ?? null,
         accountUrl: new URL("/account", siteUrl()).toString(),
       });

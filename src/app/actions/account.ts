@@ -2,27 +2,29 @@
 
 /**
  * Account actions. The user id always comes from the server-verified session (`requireUserId()`).
- * Display names are updated with the user's own session, so RLS and the column grant apply;
- * deleting the account needs the secret key.
+ * Usernames are set here with the secret key, after the server's checks (src/lib/usernames), so
+ * they can't be skipped from the browser; deleting the account needs the secret key too.
  */
 import { redirect } from "next/navigation";
+import { z } from "zod";
 import { requireUserId } from "@/lib/auth/server";
-import { DisplayNameSchema } from "@/lib/auth/profile";
 import { deleteStripeCustomer } from "@/lib/pro/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { setUsername, suggestUsername, type UsernameResult } from "@/lib/usernames/server";
 
-export type DisplayNameResult = { ok: true; displayName: string } | { ok: false; error: string };
-
-export async function updateDisplayNameAction(name: string): Promise<DisplayNameResult> {
+/** Sets the learner's public username (sign-up's pick, or a change: first free, then every 30 days). */
+export async function setUsernameAction(name: string): Promise<UsernameResult> {
   const userId = await requireUserId();
-  const parsed = DisplayNameSchema.safeParse(name);
-  if (!parsed.success) return { ok: false, error: parsed.error.issues[0]?.message ?? "Try a different name." };
+  const parsed = z.string().max(64).safeParse(name);
+  if (!parsed.success) return { ok: false, error: "Try a different username." };
+  return setUsername(userId, parsed.data);
+}
 
-  const supabase = await createSupabaseServerClient();
-  const { error } = await supabase.from("profiles").update({ display_name: parsed.data }).eq("id", userId);
-  if (error) return { ok: false, error: "Couldn't save your name. Try again." };
-  return { ok: true, displayName: parsed.data };
+/** A fresh suggestion nobody has yet ("Shuffle"). */
+export async function suggestUsernameAction(): Promise<string> {
+  await requireUserId();
+  return suggestUsername();
 }
 
 /**

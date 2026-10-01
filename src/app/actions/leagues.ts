@@ -9,9 +9,7 @@ import { z } from "zod";
 import { requireUserId } from "@/lib/auth/server";
 import { LEAGUE_TIME_ZONE } from "@/lib/leagues/config";
 import {
-  changeHandle,
   ensurePlayer,
-  type HandleResult,
   leaguesOpenedAt,
   REPORT_REASONS,
   reportHandle,
@@ -44,7 +42,8 @@ export interface MyLeague {
   open: boolean;
   week: string;
   timeZone: string;
-  player: { handle: string; tier: Tier; showOnLeaderboards: boolean; handleChangedAt: string | null };
+  /** `handle` is the learner's public username. */
+  player: { handle: string; tier: Tier; showOnLeaderboards: boolean };
   /** This week's league, ranked; empty until the learner earns XP this week. */
   standings: StandingRow[];
   /** Last week's result, until the learner has seen it. */
@@ -95,11 +94,6 @@ export async function markResultSeenAction(week: string): Promise<void> {
     .match({ user_id: userId, week: day })
     .is("seen_at", null);
   if (error) throw new Error(`Couldn't save that: ${error.message}`);
-}
-
-export async function changeHandleAction(handle: string): Promise<HandleResult> {
-  const userId = await requireUserId();
-  return changeHandle(userId, z.string().max(64).parse(handle));
 }
 
 export async function setShowOnLeaderboardsAction(show: boolean): Promise<void> {

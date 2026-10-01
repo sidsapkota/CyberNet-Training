@@ -70,7 +70,7 @@ async function makeUser(tag) {
   const { data, error } = await admin.auth.admin.createUser({ email, email_confirm: true });
   if (error) throw error;
   const id = data.user.id;
-  await admin.from("profiles").update({ display_name: tag === "pro" ? "Sam" : "Alex", age_confirmed: true }).eq("id", id);
+  await admin.from("profiles").update({ username: `E2e_${Math.random().toString(36).slice(2, 12)}`, age_confirmed: true }).eq("id", id);
   // A finished card, so the dashboard (not the welcome) shows.
   await admin.from("card_completions").insert({ user_id: id, lesson_id: "what-is-an-ip-address", card_id: "ip-purpose", xp: 10, completed_at: new Date().toISOString() });
   return { id, email };

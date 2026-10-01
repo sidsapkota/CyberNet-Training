@@ -1,8 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { LEAGUE_CAP, LEAGUES_MIN_ACTIVE, PROMOTE_MIN_XP } from "./config";
 import { bandFor, bandPreference, placeLearner, type Band } from "./grouping";
-import { checkHandle, generateHandle, handleKey } from "./handles";
-import { nextHandleChange, outcomeOf, shouldOpenLeagues, shouldReplaceHandle } from "./rules";
+import { outcomeOf, shouldOpenLeagues, shouldReplaceHandle } from "./rules";
 import { type LeagueEntry, rankEntries, settleLeague, zoneOf, zoneSizes } from "./settle";
 import { moveTier, TIERS } from "./tiers";
 import { leagueWeek, nextWeek, previousWeek, resetInZone, timeLeft, weekWindow } from "./week";
@@ -160,52 +159,9 @@ describe("opening leagues", () => {
   });
 });
 
-describe("handles", () => {
-  it("generates friendly, valid handles", () => {
-    let seed = 1;
-    const random = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
-    for (let i = 0; i < 2000; i++) {
-      const handle = generateHandle(random);
-      expect(checkHandle(handle), handle).toEqual({ ok: true, handle });
-    }
-  });
-
-  it("accepts ordinary handles", () => {
-    for (const h of ["CalmPacket17", "Ada", "NetNinja", "Scunthorpe", "Assassin42"]) expect(checkHandle(h).ok, h).toBe(true);
-    expect(checkHandle("  SwiftRouter42 ")).toEqual({ ok: true, handle: "SwiftRouter42" });
-  });
-
-  it("rejects bad shapes, phone numbers and birth years", () => {
-    for (const h of ["ab", "A".repeat(21), "1Router", "Router_1", "my handle", "Bob@mail", "Bob.com", "Ann2012", "Call0412345678"]) {
-      expect(checkHandle(h).ok, h).toBe(false);
-    }
-  });
-
-  it("rejects rude words, including disguised ones", () => {
-    for (const h of ["Sh1tPacket", "B1tch3s", "FuckRouter", "PenIsland"]) expect(checkHandle(h).ok, h).toBe(false);
-  });
-
-  it("rejects names, contact details, social apps and staff words", () => {
-    for (const h of ["MyNameIsSam", "RealNameAva", "SnapMeBro", "InstaKid", "GmailBoy", "AdminBob", "CyberNetStaff", "Mod", "TextMe99"]) {
-      expect(checkHandle(h).ok, h).toBe(false);
-    }
-  });
-
-  it("is unique ignoring case", () => {
-    expect(handleKey("SwiftRouter42")).toBe(handleKey("swiftrouter42"));
-  });
-});
-
-describe("reports and handle changes", () => {
-  it("replaces a handle after three different learners report it", () => {
+describe("reports", () => {
+  it("replaces a username after three different learners report it", () => {
     expect(shouldReplaceHandle(2)).toBe(false);
     expect(shouldReplaceHandle(3)).toBe(true);
-  });
-
-  it("allows a handle change once a week", () => {
-    const now = new Date("2026-10-10T00:00:00Z");
-    expect(nextHandleChange(null, now)).toBeNull();
-    expect(nextHandleChange("2026-10-01T00:00:00Z", now)).toBeNull();
-    expect(nextHandleChange("2026-10-05T00:00:00Z", now)?.toISOString()).toBe("2026-10-12T00:00:00.000Z");
   });
 });
