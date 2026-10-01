@@ -4,7 +4,6 @@ import { AnimatePresence, motion, useAnimate, useReducedMotion } from "motion/re
 import { type ReactNode, type RefObject, useCallback } from "react";
 import type { Card } from "@/cards/schema";
 import { ChallengeIcon } from "@/components/ui/icons";
-import { ListenButton } from "./ListenButton";
 
 /**
  * A short, soft shake for a wrong answer (~250ms). Correct answers don't move the card; their
@@ -28,15 +27,12 @@ export function CardStage({
   card,
   scope,
   challengeXp,
-  listen,
   children,
 }: {
   cardKey: string;
   card: Card;
   scope: RefObject<HTMLDivElement | null>;
   challengeXp?: number;
-  /** What "Listen" reads (src/cards/speech.ts); no button without it. */
-  listen?: string;
   children: ReactNode;
 }) {
   return (
@@ -51,22 +47,13 @@ export function CardStage({
         exit={{ opacity: 0, x: -24 }}
         transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
       >
-        {(card.difficulty === "challenge" || listen) && (
-          <div className="mb-4 flex flex-wrap items-center gap-2">
-            {card.difficulty === "challenge" && (
-              <>
-                <span className="inline-flex items-center gap-1.5 rounded-sm border border-warning/40 bg-warning-soft px-2 py-1 font-mono text-caption font-semibold tracking-wider text-warning uppercase">
-                  <ChallengeIcon className="size-3.5" />
-                  Bonus
-                </span>
-                <span className="text-small text-ink-muted">Optional{challengeXp ? ` · +${challengeXp} XP` : ""}</span>
-              </>
-            )}
-            {listen && (
-              <span className="ml-auto">
-                <ListenButton text={listen} />
-              </span>
-            )}
+        {card.difficulty === "challenge" && (
+          <div className="mb-3 flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-sm border border-warning/40 bg-warning-soft px-2 py-1 font-mono text-caption font-semibold tracking-wider text-warning uppercase">
+              <ChallengeIcon className="size-3.5" />
+              Bonus
+            </span>
+            <span className="text-small text-ink-muted">Optional{challengeXp ? ` · +${challengeXp} XP` : ""}</span>
           </div>
         )}
         <div ref={scope}>{children}</div>

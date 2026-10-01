@@ -254,6 +254,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
         nodes={reviewNodes}
         progressLabel={`Quiz progress: looking back at question ${viewing + 1} of ${total}`}
         menu={<LessonMenu course={course} lessonId={quiz.id} />}
+        listen={speechText(reviewCard, "answering")}
         footer={
           <FeedbackFooter
             key={`review-${viewing}`}
@@ -268,7 +269,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
         <p className="mb-4 font-mono text-caption font-semibold tracking-wider text-ink-faint uppercase">
           Question {viewing + 1} / {total} · looking back
         </p>
-        <CardStage cardKey={`${quiz.id}-review-${viewing}`} card={reviewCard} scope={scope} listen={speechText(reviewCard, "answering")}>
+        <CardStage cardKey={`${quiz.id}-review-${viewing}`} card={reviewCard} scope={scope}>
           {reviewDefinition.interactive && past && (
             <reviewDefinition.Component
               card={reviewCard}
@@ -297,6 +298,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
       pulse={pulse}
       progressLabel={`Quiz progress: question ${index + 1} of ${total}`}
       menu={<LessonMenu course={course} lessonId={quiz.id} />}
+      listen={speechText(card, "answering")}
       footer={
         primary && (
           <FeedbackFooter
@@ -315,7 +317,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
         Question {index + 1} / {total}
       </p>
       {showCoach && <CoachPanel key={showCoach} coachKey={showCoach} onDone={coach.dismiss} />}
-      <CardStage cardKey={`${quiz.id}-${index}`} card={card} scope={scope} listen={speechText(card, "answering")}>
+      <CardStage cardKey={`${quiz.id}-${index}`} card={card} scope={scope}>
         {definition.interactive && (
           <definition.Component
             card={card}

@@ -48,15 +48,15 @@ function DeviceMockup({ smooth, frame, label }: { smooth: number; frame: "phone"
 
   return (
     <figure className="flex flex-col items-center gap-2">
-      <div className="rounded-card bg-screen p-3">
+      <div className="rounded-card bg-screen p-2.5 sm:p-3">
         {frame === "phone" ? (
-          <div className="relative h-36 w-20 overflow-hidden rounded-[14px] border-2 border-scene-edge bg-scene-shell p-1.5">
+          <div className="relative h-28 w-16 overflow-hidden rounded-[14px] border-2 border-scene-edge bg-scene-shell p-1.5 sm:h-36 sm:w-20">
             {feed}
           </div>
         ) : (
           <div className="flex flex-col items-center">
-            <div className="relative h-24 w-36 overflow-hidden rounded-sm border-2 border-scene-edge bg-scene-shell p-1.5">{feed}</div>
-            <div className="h-2 w-44 rounded-b-sm bg-scene-edge" />
+            <div className="relative h-20 w-28 overflow-hidden rounded-sm border-2 border-scene-edge bg-scene-shell p-1.5 sm:h-24 sm:w-36">{feed}</div>
+            <div className="h-2 w-34 rounded-b-sm bg-scene-edge sm:w-44" />
           </div>
         )}
       </div>
@@ -231,14 +231,20 @@ export function SimulatorCardView({ card, answer, onAnswerChange, status }: Card
   return (
     <div>
       <CardPrompt>{card.prompt}</CardPrompt>
-      <div className="mt-5 grid gap-4 sm:grid-cols-2">
-        <section aria-label="What's happening" className="space-y-2.5">
+      <div className="mt-4 grid gap-3 sm:mt-5 sm:grid-cols-2 sm:gap-4">
+        {/* On phones the device sits beside the other outputs, so the controls stay on screen. */}
+        <section aria-label="What's happening" className={device.length > 0 ? "flex items-start gap-3 sm:block sm:space-y-2.5" : "space-y-2.5"}>
           {device.map((o) => (
             <OutputView key={o.id} output={o} value={outputs[o.id]} />
           ))}
-          {others.map((o) => (
-            <OutputView key={o.id} output={o} value={outputs[o.id]} />
-          ))}
+          {others.length > 0 && (
+            // Two or more number tiles sit side by side on phones (they're short on width, tall on height).
+            <div className={`min-w-0 flex-1 ${device.length === 0 && others.length >= 2 && others.every((o) => o.kind === "meter") ? "grid grid-cols-2 gap-2.5" : "space-y-2.5"}`}>
+              {others.map((o) => (
+                <OutputView key={o.id} output={o} value={outputs[o.id]} />
+              ))}
+            </div>
+          )}
         </section>
         <section aria-label="Controls" className="space-y-2">
           {card.controls.map((control) => (

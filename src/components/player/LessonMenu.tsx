@@ -16,6 +16,7 @@ import { lessonsLeftLine } from "@/lib/pro/dailyLimit";
 import { usePro } from "@/lib/pro/ProProvider";
 import { moduleNav } from "@/lib/progress/lessonNav";
 import { useProgress } from "@/lib/progress/ProgressProvider";
+import { ReadingSpeed } from "./ListenButton";
 
 /**
  * The lesson header's menu: this module's lessons with their state (done, you're here, locked,
@@ -138,6 +139,7 @@ export function LessonMenu({ course, lessonId }: { course: CourseOutline; lesson
                 );
               })}
             </ol>
+            <ReadingSpeed />
             <Link href={`/course/${course.id}`} className="mt-3 flex min-h-11 items-center justify-center rounded-control text-small font-semibold text-accent-ink hover:bg-surface-raised">
               Course path
             </Link>

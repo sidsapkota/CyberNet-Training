@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useId, useState } from "react";
 import { Button, type ButtonVariant } from "@/components/ui/Button";
-import { BackIcon, CheckIcon, ChevronDownIcon, GoalIcon, XIcon, XpIcon } from "@/components/ui/icons";
+import { BackIcon, CheckIcon, ChevronDownIcon, GoalIcon, HintIcon, XIcon, XpIcon } from "@/components/ui/icons";
 import { Markdown } from "@/components/ui/Markdown";
 import { Mascot } from "@/components/mascot/Mascot";
 import { type WrongTheme, WrongBurst } from "./WrongBurst";
@@ -11,6 +11,16 @@ import { StreakIcon } from "@/components/streak/StreakIcon";
 import type { MascotExpression } from "@/components/mascot/poses";
 
 export type FeedbackTone = "neutral" | "correct" | "incorrect";
+
+/** The card's hint (lessons and Mistake review): a footer button, its text above the buttons. */
+export interface FooterHint {
+  text: string;
+  /** Opened before on this card: it starts open, and opening it costs nothing more. */
+  used: boolean;
+  onUse: () => void;
+  /** e.g. "costs 5 XP", shown on the button so the cost is known before tapping. */
+  cost?: string;
+}
 
 export interface FooterAction {
   label: string;
@@ -38,6 +48,7 @@ interface FeedbackFooterProps {
   wrongTheme?: WrongTheme;
   /** A small mascot beside the feedback (lessons, every answer), with a one-shot reaction. */
   mascot?: MascotExpression;
+  hint?: FooterHint;
 }
 
 const toneStyles: Record<FeedbackTone, { panel: string; text: string; button: ButtonVariant }> = {
@@ -94,9 +105,12 @@ export function FeedbackFooter({
   back,
   mascot,
   wrongTheme,
+  hint,
 }: FeedbackFooterProps) {
   const [showExplanation, setShowExplanation] = useState(!collapseExplanation);
+  const [hintOpen, setHintOpen] = useState(hint?.used ?? false);
   const explanationId = useId();
+  const hintId = useId();
   const style = toneStyles[tone];
   const hasFeedback = tone !== "neutral";
 
@@ -206,6 +220,25 @@ export function FeedbackFooter({
           )}
         </AnimatePresence>
 
+        <AnimatePresence initial={false}>
+          {hint && hintOpen && (
+            <motion.div
+              id={hintId}
+              key="hint"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.18 }}
+              className="overflow-hidden"
+            >
+              <div className="mb-3 flex max-h-[30dvh] gap-2 overflow-y-auto rounded-control border border-line bg-surface-raised px-3 py-2">
+                <HintIcon className="mt-0.5 size-4 shrink-0 text-ink-muted" />
+                <Markdown className="text-small text-ink">{hint.text}</Markdown>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <div className="flex flex-col-reverse gap-2 sm:flex-row sm:items-center sm:justify-end">
           {secondary && (
             <Button
@@ -233,6 +266,26 @@ export function FeedbackFooter({
                 <BackIcon className="size-5" />
                 <span className="hidden min-[400px]:inline">Back</span>
               </Button>
+            )}
+            {hint && (
+              <button
+                type="button"
+                data-keyboard-passthrough
+                aria-expanded={hintOpen}
+                aria-controls={hintId}
+                aria-label={hintOpen ? "Hide hint" : `Hint${!hint.used && hint.cost ? `, ${hint.cost}` : ""}`}
+                onClick={() => {
+                  if (!hint.used) hint.onUse();
+                  setHintOpen((v) => !v);
+                }}
+                className="inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-control border border-line bg-surface px-3 text-left hover:border-line-strong"
+              >
+                <HintIcon className="size-4 shrink-0" />
+                <span className="flex flex-col leading-tight">
+                  <span className="text-small font-semibold text-ink">{hintOpen ? "Hide hint" : "Hint"}</span>
+                  {!hint.used && hint.cost && <span className="text-caption text-ink-faint">{hint.cost}</span>}
+                </span>
+              </button>
             )}
             <Button
               variant={style.button}

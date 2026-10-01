@@ -55,8 +55,8 @@ const MIN_HEIGHT = 180;
  * that doesn't fit must be split (the fit audit lists it).
  */
 const READABLE = new Set<SceneId>(["file-browser", "email", "text-message", "fake-website"]);
-/** Room kept under the scene for a line of controls (the hint, a status line). */
-const BELOW = 72;
+/** Room kept under the scene: the page's bottom padding (the hint and Back live in the footer). */
+const BELOW = 28;
 
 /**
  * How tall the scene can be so the whole card fits the screen: from the scene's top (as laid out
@@ -121,6 +121,7 @@ export function SceneStage({
   children,
   callout,
   calloutAt = "bottom",
+  status,
   pick,
   ref,
 }: {
@@ -136,11 +137,13 @@ export function SceneStage({
   children?: ReactNode;
   callout?: ReactNode;
   calloutAt?: "top" | "bottom";
+  /** A short live status on the panel's top row, opposite the "Simplified diagram" chip (e.g. "1/4 steps"). */
+  status?: ReactNode;
   ref?: Ref<HTMLDivElement>;
 }) {
   const scene = getScene(sceneId)!;
   const ratio = scene.width / scene.height;
-  const fitted = useFittedHeight(scene.simplified === true);
+  const fitted = useFittedHeight(scene.simplified === true || Boolean(status));
   // Wide scenes (laptop, email, web page) are short, so the callout fits below them, in view,
   // without covering the scene; tall ones (phones) pin it inside the panel instead.
   const wide = ratio >= 1.2;
@@ -156,10 +159,17 @@ export function SceneStage({
   );
   return (
     <div ref={setRefs} data-scene-stage className="relative scroll-mt-20 scroll-mb-28 rounded-card bg-screen p-3 sm:p-4">
-      {scene.simplified && (
-        <p className="mb-2 w-fit rounded-sm border border-screen-line px-1.5 py-0.5 font-mono text-caption text-on-screen-muted">
-          Simplified diagram
-        </p>
+      {(scene.simplified || status) && (
+        <div className="mb-2 flex items-center justify-between gap-2">
+          {scene.simplified ? (
+            <p className="w-fit rounded-sm border border-screen-line px-1.5 py-0.5 font-mono text-caption text-on-screen-muted">
+              Simplified diagram
+            </p>
+          ) : (
+            <span />
+          )}
+          {status}
+        </div>
       )}
       <div
         className="relative mx-auto"
