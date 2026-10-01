@@ -285,6 +285,16 @@ describe("deepLinkGate (lesson links from videos)", () => {
     expect(deepLinkGate(emptySnapshot(), twoModuleCourse(), "quiz2")).toBeNull();
   });
 
+  it("keeps a newcomer playing after their first card (their progress in this lesson doesn't count)", () => {
+    const midLesson = emptySnapshot();
+    midLesson.cards["quiz2/c1"] = { completedAt: "2026-10-01T00:00:00Z", xp: 0 };
+    midLesson.lessons.quiz2 = { completedAt: "2026-10-01T00:00:00Z", xp: 0 };
+    expect(deepLinkGate(midLesson, twoModuleCourse(), "quiz2")).toBeNull();
+    // Progress in another lesson still brings the Path gate.
+    midLesson.cards["l1/c1"] = { completedAt: "2026-10-01T00:00:00Z", xp: 0 };
+    expect(deepLinkGate(midLesson, twoModuleCourse(), "quiz2")?.id).toBeTruthy();
+  });
+
   it("keeps the Path gate for learners with progress, unless they choose to play anyway", () => {
     const started = withLessons("l1");
     expect(deepLinkGate(started, twoModuleCourse(), "quiz2")?.id).toBeTruthy();

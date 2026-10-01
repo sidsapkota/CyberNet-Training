@@ -260,11 +260,22 @@ export function snapshotBefore(snapshot: ProgressSnapshot, lessonId: string): Pr
   return { ...snapshot, lessons, quizzes };
 }
 
+/** Progress anywhere except this lesson (its own cards, completion and quiz attempts). */
+export function hasProgressOutside(snapshot: ProgressSnapshot, lessonId: string): boolean {
+  const prefix = `${lessonId}/`;
+  return (
+    Object.keys(snapshot.cards).some((key) => !key.startsWith(prefix)) ||
+    Object.keys(snapshot.lessons).some((id) => id !== lessonId) ||
+    Object.keys(snapshot.quizzes).some((id) => id !== lessonId)
+  );
+}
+
 /**
  * The lesson a link can't open yet, or null to play it. Deep links from videos must always work
- * for a newcomer: a learner with no progress at all plays any lesson straight away (it counts on
- * their path as usual). Learners with progress keep the Path gate, which offers "Play it anyway"
- * (`playAnyway`) as well as switching to Explore.
+ * for a newcomer: a learner with no progress anywhere else plays any lesson straight away (it
+ * counts on their path as usual), and keeps playing it: their own progress in this lesson never
+ * brings the gate up mid-lesson. Learners with other progress keep the Path gate, which offers
+ * "Play it anyway" (`playAnyway`) as well as switching to Explore.
  */
 export function deepLinkGate(
   snapshot: ProgressSnapshot,
@@ -272,7 +283,7 @@ export function deepLinkGate(
   lessonId: string,
   playAnyway = false,
 ): LessonOutline | null {
-  if (playAnyway || !hasAnyProgress(snapshot)) return null;
+  if (playAnyway || !hasProgressOutside(snapshot, lessonId)) return null;
   return getBlockingLesson(snapshot, course, lessonId);
 }
 
