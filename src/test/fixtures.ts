@@ -267,6 +267,7 @@ export const lessonOutline = (over: Partial<LessonOutline> = {}): LessonOutline 
   title: "Lesson",
   order: 1,
   access: "free",
+  guests: true,
   courseId: "course",
   moduleId: "module",
   cardCount: 3,

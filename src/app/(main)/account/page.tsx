@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { AccountPanel } from "@/components/account/AccountPanel";
+import { safeNextPath } from "@/lib/auth/redirect";
 import { signedInUserId } from "@/lib/auth/session";
 import { getCourses } from "@/lib/content/server";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
@@ -16,7 +17,7 @@ export default async function AccountPage({ searchParams }: PageProps<"/account"
     supabase.auth.getUser(),
     supabase.from("profiles").select("display_name").eq("id", userId).maybeSingle(),
   ]);
-  const { welcome } = await searchParams;
+  const { welcome, next } = await searchParams;
 
   return (
     <main className="px-gutter py-8 sm:py-12">
@@ -25,6 +26,7 @@ export default async function AccountPage({ searchParams }: PageProps<"/account"
         email={user.user?.email ?? null}
         displayName={profile?.display_name ?? null}
         welcome={welcome === "1"}
+        next={safeNextPath(typeof next === "string" ? next : null)}
       />
     </main>
   );

@@ -8,7 +8,8 @@ import { UpgradeSheet } from "@/components/pro/UpgradeSheet";
 import { NetworkMark } from "@/components/network/NetworkMark";
 import { ProBadge } from "@/components/pro/ProBadge";
 import { Button, ButtonLink } from "@/components/ui/Button";
-import { CheckIcon, ExploreModeIcon, LessonIcon, LockIcon, PlayIcon, RetryIcon } from "@/components/ui/icons";
+import { AccountIcon, CheckIcon, ExploreModeIcon, LessonIcon, LockIcon, PlayIcon, RetryIcon } from "@/components/ui/icons";
+import { useAuth } from "@/lib/auth/AuthProvider";
 import { estimateMinutes } from "@/lib/content/estimate";
 import type { CourseOutline, LessonOutline, ModuleOutline } from "@/lib/content/schema";
 import { EASE_OUT_QUICK, POPOVER_SPRING, PRESS_SPRING } from "@/lib/motion";
@@ -93,6 +94,10 @@ export function PathNode({
   const kindLabel = isQuiz ? "Module quiz" : `Lesson ${number}`;
   const stateWord = { done: "completed", current: "up next", available: "available", locked: "locked", pro: "part of CyberNet Pro" }[look];
   const [sheetOpen, setSheetOpen] = useState(false);
+  const { auth, available } = useAuth();
+  // A free lesson a guest needs a (free) account for: everything but each course's first lesson
+  // and the help modules. Its page shows the sign-up gate. Finished ones stay plain "done".
+  const needsAccount = available && auth.status === "guest" && lesson.access === "free" && !lesson.guests && look !== "done";
 
   // Pro lessons without Pro open the gentle upgrade sheet instead of the popover.
   if (state.needsPro) {
@@ -155,7 +160,7 @@ export function PathNode({
           <motion.button
             type="button"
             data-current={look === "current" ? "" : undefined}
-            aria-label={`${kindLabel}, ${lesson.title}, ${stateWord}`}
+            aria-label={`${kindLabel}, ${lesson.title}, ${stateWord}${needsAccount ? ", needs a free account" : ""}`}
             whileHover={reduceMotion ? undefined : { scale: 1.06 }}
             whileTap={reduceMotion ? undefined : { scale: 0.92 }}
             transition={PRESS_SPRING}
@@ -178,7 +183,7 @@ export function PathNode({
                 transition={{ duration: 0.7, ease: EASE_OUT_QUICK }}
               />
             )}
-            <NodeGlyph look={look} lesson={lesson} />
+            <NodeGlyph look={look} lesson={lesson} account={needsAccount} />
           </motion.button>
         </Popover.Trigger>
       </motion.div>
@@ -202,7 +207,10 @@ export function PathNode({
               {lesson.icon && <LessonIcon name={lesson.icon} className="mt-0.5 size-6 shrink-0 text-ink-muted" />}
               {lesson.title}
             </p>
-            <p className="mt-1 text-small text-ink-muted">{snapshot ? summary(state, look, snapshot, blocking) : ""}</p>
+            <p className="mt-1 text-small text-ink-muted">
+              {snapshot ? summary(state, look, snapshot, blocking) : ""}
+              {needsAccount && look !== "locked" ? " · free account" : ""}
+            </p>
             <div className="mt-4 flex flex-col gap-2">
               {look === "locked" ? (
                 <>
@@ -215,6 +223,10 @@ export function PathNode({
                     </ButtonLink>
                   )}
                 </>
+              ) : needsAccount ? (
+                <ButtonLink href={`/lesson/${lesson.id}`} className="w-full">
+                  <AccountIcon className="size-5" /> Create a free account
+                </ButtonLink>
               ) : (
                 <ButtonLink href={`/lesson/${lesson.id}`} variant={look === "done" ? "secondary" : "primary"} className="w-full">
                   {look === "done" ? (
@@ -238,10 +250,11 @@ export function PathNode({
 }
 
 /**
- * The badge on a node's corner: a check when done, a lock when locked, and the Pro badge (gem and
- * the word, never colour alone) on Pro lessons the learner can't open yet, in place of the lock.
+ * The badge on a node's corner: a check when done, a lock when locked, the Pro badge (gem and
+ * the word, never colour alone) on Pro lessons the learner can't open yet, and a person on free
+ * lessons a guest needs an account for (the lock wins while it's also locked by the path).
  */
-function StateBadge({ look, size }: { look: "done" | "locked" | "pro"; size: "lesson" | "quiz" }) {
+function StateBadge({ look, size }: { look: "done" | "locked" | "pro" | "account"; size: "lesson" | "quiz" }) {
   if (look === "pro") {
     return <ProBadge size="sm" className="absolute -right-2 -bottom-1 ring-2 ring-canvas" />;
   }
@@ -249,7 +262,13 @@ function StateBadge({ look, size }: { look: "done" | "locked" | "pro"; size: "le
   const colours = look === "done" ? "border-accent-ink bg-accent text-on-accent" : "border-line-strong bg-surface-raised text-ink-muted";
   return (
     <span className={`absolute -right-1 -bottom-1 grid ${box} place-items-center rounded-node border-2 ring-2 ring-canvas ${colours}`}>
-      {look === "done" ? <CheckIcon className="size-4" strokeWidth={2.5} /> : <LockIcon className="size-4" />}
+      {look === "done" ? (
+        <CheckIcon className="size-4" strokeWidth={2.5} />
+      ) : look === "account" ? (
+        <AccountIcon className="size-4" />
+      ) : (
+        <LockIcon className="size-4" />
+      )}
     </span>
   );
 }
@@ -258,8 +277,8 @@ function StateBadge({ look, size }: { look: "done" | "locked" | "pro"; size: "le
  * What's inside a node. Lessons show their icon in every state (done, current, available and
  * locked differ by fill, ring and badge); the module quiz keeps the network hub.
  */
-function NodeGlyph({ look, lesson }: { look: NodeLook; lesson: LessonOutline }) {
-  const badge = look === "done" || look === "locked" || look === "pro" ? look : null;
+function NodeGlyph({ look, lesson, account = false }: { look: NodeLook; lesson: LessonOutline; account?: boolean }) {
+  const badge = look === "done" || look === "locked" || look === "pro" ? look : account ? "account" : null;
   if (lesson.kind === "quiz") {
     return (
       <>

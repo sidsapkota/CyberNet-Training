@@ -13,6 +13,8 @@ export interface IndexedLesson {
   kind: Lesson["kind"];
   /** The lesson's module: Pro lessons need Pro before the server records anything. */
   access: Lesson["access"];
+  /** Playable without an account (the course's first lesson, or a module open to guests). */
+  guests: boolean;
   cards: Map<string, Card>;
   coreCardIds: string[];
   /** Quizzes only. */
@@ -28,6 +30,7 @@ export function buildContentIndex(lessons: Iterable<Lesson>): ContentIndex {
     index.set(lesson.id, {
       kind: lesson.kind,
       access: lesson.access,
+      guests: lesson.guests,
       cards: new Map(lesson.cards.map((c) => [c.id, c])),
       coreCardIds: lesson.cards.filter((c) => c.difficulty === "core").map((c) => c.id),
       ...(lesson.kind === "quiz" ? { passThreshold: lesson.passThreshold } : {}),

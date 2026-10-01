@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { interactivePicks, plainText, renderContentExport, sentences, taggedLink, truncate } from "./export";
+import { accessLabel, interactivePicks, plainText, renderContentExport, sentences, taggedLink, truncate } from "./export";
 import { loadContent } from "./load";
 
 const content = loadContent();
@@ -70,6 +70,12 @@ describe("export helpers", () => {
     const picks = interactivePicks(lesson);
     expect(picks.length).toBeLessThanOrEqual(3);
     expect(picks.some((p) => p.type === "Simulator")).toBe(true);
+  });
+
+  it("says who can open a lesson from a link", () => {
+    expect(accessLabel({ access: "free", guests: true })).toMatch(/no account needed/);
+    expect(accessLabel({ access: "free", guests: false })).toBe("Free with a free account");
+    expect(accessLabel({ access: "pro", guests: false })).toBe("Pro");
   });
 
   it("builds the tagged link from the production host", () => {

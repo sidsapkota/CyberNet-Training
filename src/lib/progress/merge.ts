@@ -115,7 +115,29 @@ export function withoutUnentitledPro(
 ): ProgressSnapshot {
   if (hasPro || !launchAt) return local;
   const launch = launchAt.getTime();
-  const keep = (lessonId: string, at: string) => index.get(lessonId)?.access !== "pro" || time(at) < launch;
+  return keepRecords(local, (lessonId, at) => index.get(lessonId)?.access !== "pro" || time(at) < launch);
+}
+
+/**
+ * When guests had to make a free account for every lesson but each course's first (and the help
+ * modules). Records a guest made on account-only lessons after this could only come from
+ * tampering, so the merge drops them; earlier ones (when every free lesson was open) stay.
+ * null: the gate hasn't launched, so everything stays.
+ */
+export const GUEST_GATE_AT: Date | null = null;
+
+/** Guest progress on lessons that need an account, made after the gate launched, is dropped. */
+export function withoutGatedGuestProgress(local: ProgressSnapshot, index: ContentIndex, gateAt: Date | null): ProgressSnapshot {
+  if (!gateAt) return local;
+  const gate = gateAt.getTime();
+  return keepRecords(local, (lessonId, at) => {
+    const lesson = index.get(lessonId);
+    // Pro lessons are judged by withoutUnentitledPro; unknown ids are dropped by the merge.
+    return !lesson || lesson.access === "pro" || lesson.guests || time(at) < gate;
+  });
+}
+
+function keepRecords(local: ProgressSnapshot, keep: (lessonId: string, at: string) => boolean): ProgressSnapshot {
   const cards = Object.fromEntries(Object.entries(local.cards).filter(([key, c]) => keep(key.slice(0, key.indexOf("/")), c.completedAt)));
   const lessons = Object.fromEntries(Object.entries(local.lessons).filter(([id, l]) => keep(id, l.completedAt)));
   const quizzes = Object.fromEntries(

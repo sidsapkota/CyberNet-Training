@@ -154,6 +154,25 @@ describe("real content in /content", () => {
     const help = [...loadContent().lessons.values()].filter((l) => l.moduleId === "when-things-go-wrong");
     expect(help.length).toBeGreaterThan(0);
     for (const lesson of help) expect(lesson.access, lesson.id).toBe("free");
+    // Nor behind a sign-up: help modules are open to guests, quizzes included.
+    for (const file of alwaysFree) {
+      const mod = JSON.parse(fs.readFileSync(path.join(process.cwd(), file), "utf8")) as { openToGuests?: boolean };
+      expect(mod.openToGuests, `${file} needs "openToGuests": true`).toBe(true);
+    }
+    for (const lesson of help) expect(lesson.guests, lesson.id).toBe(true);
+  });
+
+  it("lets guests play each course's first lesson and the help modules, and nothing else", () => {
+    const content = loadContent();
+    const open = [...content.lessons.values()].filter((l) => l.guests).map((l) => l.id);
+    const firsts = content.courses.map((c) => c.modules[0]!.lessons.find((l) => l.kind === "lesson")!.id);
+    const help = [...content.lessons.values()].filter((l) => l.moduleId === "when-things-go-wrong").map((l) => l.id);
+    expect(open.sort()).toEqual([...firsts, ...help].sort());
+    expect(firsts).toEqual(["whats-in-the-box", "bits-and-binary", "strong-passwords"]);
+    // Outlines (sent to the browser for the path) agree with the lessons.
+    for (const mod of content.courses.flatMap((c) => c.modules)) {
+      for (const outline of mod.lessons) expect(outline.guests, outline.id).toBe(content.lessons.get(outline.id)!.guests);
+    }
   });
 
   it("lists Stay Safe Online's modules and lessons in order", () => {
@@ -411,6 +430,29 @@ describe("loadContent validation", () => {
     expect(loaded.lessons.get("l1")?.access).toBe("free");
     expect(loaded.lessons.get("l3")?.access).toBe("pro");
     expect(loaded.courses[0]?.modules[1]?.lessons.map((l) => l.access)).toEqual(["pro", "pro"]);
+  });
+
+  it("opens a course's first lesson to guests, and whole modules marked openToGuests", () => {
+    const files = validFiles();
+    files["courses/c1/modules/m2/module.json"] = { ...mod, id: "m2", order: 2, openToGuests: true };
+    files["courses/c1/modules/m2/lessons/01.json"] = lesson("l3", 1);
+    files["courses/c1/modules/m2/lessons/99.json"] = quiz("q3", 99);
+    // The first lesson by order, even when its file sorts later.
+    files[`${M}/lessons/01.json`] = lesson("l1", 5);
+    files[`${M}/lessons/02.json`] = lesson("l2", 2);
+    const loaded = loadContent(makeContent(files));
+    const guests = (id: string) => loaded.lessons.get(id)?.guests;
+    expect([guests("l2"), guests("l1"), guests("q1")]).toEqual([true, false, false]);
+    expect([guests("l3"), guests("q3")]).toEqual([true, true]);
+    expect(loaded.courses[0]?.modules[0]?.lessons.map((l) => l.guests)).toEqual([true, false, false]);
+  });
+
+  it("only lets free modules be open to guests", () => {
+    const files = validFiles();
+    files["courses/c1/modules/m2/module.json"] = { ...mod, id: "m2", order: 2, access: "pro", openToGuests: true, teaserCard: { lesson: "l3", card: "try-me" } };
+    files["courses/c1/modules/m2/lessons/01.json"] = { ...lesson("l3", 1), cards: [explainer(), multipleChoice({ id: "try-me" })] };
+    files["courses/c1/modules/m2/lessons/99.json"] = quiz("q3", 99);
+    expect(problemsFor(files).join(" | ")).toMatch(/only free modules can be open to guests/);
   });
 
   it("requires the quiz to come last", () => {

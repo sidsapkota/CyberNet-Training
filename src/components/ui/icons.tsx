@@ -42,6 +42,8 @@ import {
   Snowflake,
   Gem,
   Target,
+  UserRound,
+  MonitorSmartphone,
 } from "lucide-react";
 import {
   AppWindow,
@@ -165,6 +167,9 @@ export const SignInIcon = brandIcon(LogIn, "SignInIcon");
 export const SignOutIcon = brandIcon(LogOut, "SignOutIcon");
 export const MailIcon = brandIcon(Mail, "MailIcon");
 export const DeleteIcon = brandIcon(Trash2, "DeleteIcon");
+/** A free account: the badge on course path nodes a guest needs one for, and the sign-up gate. */
+export const AccountIcon = brandIcon(UserRound, "AccountIcon");
+export const AnyDeviceIcon = brandIcon(MonitorSmartphone, "AnyDeviceIcon");
 
 // Sound
 export const SoundOnIcon = brandIcon(Volume2, "SoundOnIcon");

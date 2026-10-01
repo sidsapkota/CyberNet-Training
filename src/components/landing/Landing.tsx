@@ -10,11 +10,11 @@ const COUNT_WORDS: Record<number, string> = { 2: "Two", 3: "Three", 4: "Four", 5
 const FAQ: { q: string; a: string }[] = [
   {
     q: "Is it free?",
-    a: "The first module of every course is free, and you can play it without an account. The rest is CyberNet Pro, which starts with a 7-day free trial. Help after something goes wrong online is always free.",
+    a: "The first module of every course is free: play its first lesson straight away, then make a free account to keep going. The rest is CyberNet Pro, which starts with a 7-day free trial. Help after something goes wrong online is always free, with no account needed.",
   },
   {
     q: "Do I need an account?",
-    a: "No. Your progress is saved on this device. Sign in (age 13 or older) to keep it on every device.",
+    a: "Not to start. The first lesson of every course, and help after something goes wrong online, work without one. A free account (age 13 or older) opens the rest of each first module and keeps your progress on every device.",
   },
   {
     q: "Is it safe for kids?",
@@ -22,11 +22,11 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: "What ages is it for?",
-    a: "Anyone from about 12 up. Accounts are for ages 13 and older; younger learners can play as guests.",
+    a: "Anyone from about 12 up. Accounts are for ages 13 and older; younger learners can play each course's first lesson and the help lessons as guests.",
   },
   {
     q: "Can I use it in class?",
-    a: "Yes. Lessons are short, work on phones, tablets and laptops, and you can link straight to any lesson.",
+    a: "Yes. Lessons are short, work on phones, tablets and laptops, and you can link straight to any lesson. After each course's first lesson, students need a free account (13+).",
   },
 ];
 
@@ -61,7 +61,7 @@ export function Landing({
         </p>
         <div className="mt-8 flex w-full max-w-sm flex-col items-center gap-2 sm:max-w-none">
           <LandingCta lessonId={firstLessonId} />
-          <p className="text-small text-ink-muted">No sign-up needed</p>
+          <p className="text-small text-ink-muted">No sign-up for your first lesson</p>
         </div>
       </section>
 
@@ -105,7 +105,7 @@ export function Landing({
           {[
             "No ads, and no tracking cookies",
             "We never sell anyone's data",
-            "Play without an account. Accounts (13+) keep only an email, a display name and learning progress",
+            "Start without an account. Free accounts (13+) keep only an email, a display name and learning progress",
           ].map((text) => (
             <li key={text} className="flex items-start gap-3 text-body">
               <SafeIcon className="mt-0.5 size-5 shrink-0 text-ink-muted" />

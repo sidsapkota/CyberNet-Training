@@ -1,5 +1,6 @@
 import type { EmailOtpType } from "@supabase/supabase-js";
 import { type NextRequest, NextResponse } from "next/server";
+import { NEXT_COOKIE, readNextCookie } from "@/lib/auth/afterSignIn";
 import { safeNextPath } from "@/lib/auth/redirect";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
@@ -9,15 +10,21 @@ const OTP_TYPES: EmailOtpType[] = ["magiclink", "email", "signup", "invite", "re
  * Finishes sign-in:
  * - `?code=…`: Google OAuth and the default magic-link email (PKCE, same browser).
  * - `?token_hash=…&type=…`: magic links whose email template links here directly.
- * New accounts without a display name go to /account to pick one.
+ * Then to `?next=`, or the path the browser saved before sign-in started (the cookie from
+ * lib/auth/afterSignIn.ts, e.g. the lesson that asked a guest to sign up). New accounts without a
+ * display name pick one on /account first, then carry on there.
  */
 export async function GET(request: NextRequest) {
   const url = request.nextUrl;
   const code = url.searchParams.get("code");
   const tokenHash = url.searchParams.get("token_hash");
   const type = url.searchParams.get("type") as EmailOtpType | null;
-  const next = safeNextPath(url.searchParams.get("next"));
-  const to = (path: string) => NextResponse.redirect(new URL(path, url.origin));
+  const next = safeNextPath(url.searchParams.get("next") ?? readNextCookie(request.cookies.get(NEXT_COOKIE)?.value));
+  const to = (path: string) => {
+    const response = NextResponse.redirect(new URL(path, url.origin));
+    response.cookies.delete(NEXT_COOKIE);
+    return response;
+  };
 
   const supabase = await createSupabaseServerClient();
   let error: unknown = null;
@@ -33,7 +40,7 @@ export async function GET(request: NextRequest) {
   const { data } = await supabase.auth.getUser();
   if (data.user) {
     const { data: profile } = await supabase.from("profiles").select("display_name").eq("id", data.user.id).maybeSingle();
-    if (!profile?.display_name) return to("/account?welcome=1");
+    if (!profile?.display_name) return to(next === "/" ? "/account?welcome=1" : `/account?welcome=1&next=${encodeURIComponent(next)}`);
   }
   return to(next);
 }

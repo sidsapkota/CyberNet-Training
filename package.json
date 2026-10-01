@@ -19,7 +19,8 @@
     "brand:mascot": "tsx --tsconfig tsconfig.json scripts/generate-mascot-assets.tsx",
     "check:supabase": "tsx scripts/check-supabase.ts",
     "check:rls": "tsx scripts/check-rls.ts",
-    "e2e:quiz-pass": "node scripts/e2e/quiz-pass-whats-next.mjs"
+    "e2e:quiz-pass": "node scripts/e2e/quiz-pass-whats-next.mjs",
+    "e2e:guest-gate": "node scripts/e2e/guest-gate.mjs"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
