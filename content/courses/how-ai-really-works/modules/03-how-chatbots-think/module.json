@@ -1,0 +1,11 @@
+{
+  "id": "how-chatbots-think",
+  "title": "How Chatbots Think",
+  "description": "Next-word guessing, temperature, and why chatbots make things up.",
+  "order": 3,
+  "access": "pro",
+  "teaserCard": {
+    "lesson": "next-word-machines",
+    "card": "hungry-horse"
+  }
+}

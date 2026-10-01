@@ -1,0 +1,282 @@
+{
+  "id": "temperature",
+  "kind": "lesson",
+  "title": "Temperature",
+  "order": 2,
+  "icon": "thermometer-sun",
+  "cards": [
+    {
+      "id": "same-question-twice",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Same question, different answers",
+      "body": "Ask a chatbot for a story idea twice, and you'll probably get two different ideas. Ask it to add 2 and 2 twice, and you'll get 4 both times.\n\nThe model is almost certain about 4, but much less sure which story idea comes next. A setting called **temperature** decides how it picks between its options."
+    },
+    {
+      "id": "what-temperature-does",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Turning the dial",
+      "body": "Temperature changes how the model uses its chances:\n\n- **Low temperature:** the likeliest token gets even likelier. At a very low temperature it picks the top token almost every time. Predictable.\n- **Temperature 1:** the chances are used as the model learned them.\n- **High temperature:** the chances even out, so unlikely tokens get picked more often. Surprising, and sometimes nonsense.\n\nThe order never changes: the top token stays the top token. Temperature only stretches or squashes the gaps."
+    },
+    {
+      "id": "make-it-predictable",
+      "type": "next_word",
+      "difficulty": "core",
+      "prompt": "Move the temperature until **mat** has a chance of at least **80%**.",
+      "context": "The cat sat on the",
+      "candidates": [
+        {
+          "word": "mat",
+          "p": 0.6
+        },
+        {
+          "word": "sofa",
+          "p": 0.2
+        },
+        {
+          "word": "floor",
+          "p": 0.15
+        },
+        {
+          "word": "moon",
+          "p": 0.05
+        }
+      ],
+      "goal": {
+        "type": "probability",
+        "word": "mat",
+        "atLeast": 0.8
+      },
+      "hint": "Which way makes the top word even more likely?",
+      "nudge": "Higher temperatures spread the chances out. Try the other way.",
+      "explanation": "A **low** temperature makes the likeliest word even likelier: at 0.5, \"mat\" has about 85%. Lower still, and it's almost always \"mat\"."
+    },
+    {
+      "id": "which-go-up",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "At temperature 1, the chances after \"The cat sat on the\" are mat 60%, sofa 20%, floor 15%, moon 5%. If you turn the temperature **up to 2**, which words' chances go **up**?",
+      "options": [
+        {
+          "id": "all-but-mat",
+          "text": "Every word except \"mat\""
+        },
+        {
+          "id": "only-mat",
+          "text": "Only \"mat\"",
+          "nudge": "That's what turning it down does. What does a high temperature do to the gaps?"
+        },
+        {
+          "id": "only-moon",
+          "text": "Only \"moon\"",
+          "nudge": "\"moon\" does go up, but it isn't the only one. What happens to every word below the top?"
+        },
+        {
+          "id": "none",
+          "text": "None: only the order changes",
+          "nudge": "The order never changes. It's the chances that move."
+        }
+      ],
+      "correctOptionId": "all-but-mat",
+      "hint": "A high temperature evens the chances out. If the top word comes down, where does its share go?",
+      "explanation": "Evening out takes share from the top word and spreads it around: at 2, \"mat\" drops to about 42%, while sofa, floor and moon all rise (moon more than doubles, to about 12%). The order stays the same."
+    },
+    {
+      "id": "even-it-out",
+      "type": "next_word",
+      "difficulty": "core",
+      "prompt": "Now make the model more surprising: move the temperature until **no word** has more than a **45%** chance.",
+      "context": "The cat sat on the",
+      "candidates": [
+        {
+          "word": "mat",
+          "p": 0.6
+        },
+        {
+          "word": "sofa",
+          "p": 0.2
+        },
+        {
+          "word": "floor",
+          "p": 0.15
+        },
+        {
+          "word": "moon",
+          "p": 0.05
+        }
+      ],
+      "goal": {
+        "type": "probability",
+        "atMost": 0.45
+      },
+      "hint": "The top word is the one to bring down. Which way evens the chances out?",
+      "nudge": "\"mat\" still has too big a share. Keep going in the same direction, further than feels normal.",
+      "explanation": "Only a **high** temperature brings \"mat\" below 45%. Press \"Generate 5\" up there: even \"moon\" turns up sometimes. More surprising, and more likely to be nonsense."
+    },
+    {
+      "id": "when-to-use-which",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Which temperature, when?",
+      "body": "Low temperatures suit jobs with **one right answer**: maths, facts, summaries, code. You want the most likely answer every time.\n\nHigher temperatures suit jobs where you want **variety**: brainstorming, story ideas, silly poems. Turn it up too far and the words stop making sense.\n\nMost chatbot apps choose the temperature for you, but some apps and tools let you change it."
+    },
+    {
+      "id": "low-or-high",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Would each job be better with a **low** temperature, or a **higher** one?",
+      "bins": [
+        {
+          "id": "low",
+          "label": "Low"
+        },
+        {
+          "id": "high",
+          "label": "Higher"
+        }
+      ],
+      "items": [
+        {
+          "id": "maths",
+          "label": "Answering a maths question",
+          "bin": "low"
+        },
+        {
+          "id": "summary",
+          "label": "Summarising your notes",
+          "bin": "low"
+        },
+        {
+          "id": "spelling",
+          "label": "Fixing spelling",
+          "bin": "low"
+        },
+        {
+          "id": "band-names",
+          "label": "Brainstorming band names",
+          "bin": "high"
+        },
+        {
+          "id": "poem",
+          "label": "Writing a silly poem",
+          "bin": "high"
+        },
+        {
+          "id": "story",
+          "label": "Coming up with story twists",
+          "bin": "high"
+        }
+      ],
+      "hint": "Does the job have one right answer, or do you want lots of different ideas?",
+      "nudge": "Jobs with one right answer want the most likely answer every time. Which ones are like that?",
+      "explanation": "Maths, summaries and spelling have **one right answer**, so low is best. Band names, silly poems and story twists want **variety**, so a higher temperature helps."
+    },
+    {
+      "id": "cold-ten-times",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "At temperature 1, \"mat\" has a 60% chance. At temperature **0.2**, the model carries on from \"The cat sat on the\" **10** times. What happens?",
+      "options": [
+        {
+          "id": "almost-always",
+          "text": "It picks \"mat\" almost every time"
+        },
+        {
+          "id": "six",
+          "text": "It picks \"mat\" about 6 times out of 10",
+          "nudge": "That's what happens at temperature 1. What does a very low temperature do to the top word?"
+        },
+        {
+          "id": "different",
+          "text": "It picks a different word each time",
+          "nudge": "That's closer to what a very high temperature does."
+        },
+        {
+          "id": "never",
+          "text": "It never picks \"mat\"",
+          "nudge": "Low temperature helps the top word, it doesn't hide it."
+        }
+      ],
+      "correctOptionId": "almost-always",
+      "hint": "What does a very low temperature do to the top token's chance?",
+      "explanation": "At a very low temperature, the top token's chance shoots up: at 0.2, \"mat\" has over 99%. So it picks \"mat\" almost every time. 6 out of 10 is what you'd expect at temperature **1**."
+    },
+    {
+      "id": "get-sofa",
+      "type": "next_word",
+      "difficulty": "challenge",
+      "prompt": "Can you get **sofa** up to at least **24%**? This slider goes higher than before.",
+      "context": "The cat sat on the",
+      "candidates": [
+        {
+          "word": "mat",
+          "p": 0.6
+        },
+        {
+          "word": "sofa",
+          "p": 0.2
+        },
+        {
+          "word": "floor",
+          "p": 0.15
+        },
+        {
+          "word": "moon",
+          "p": 0.05
+        }
+      ],
+      "temperature": {
+        "min": 0.2,
+        "max": 3,
+        "start": 1,
+        "step": 0.1
+      },
+      "goal": {
+        "type": "probability",
+        "word": "sofa",
+        "atLeast": 0.24
+      },
+      "hint": "\"sofa\" is second, so it can never overtake \"mat\". But which way gives the less likely words a bigger share?",
+      "nudge": "Keep going right. The higher the temperature, the more evenly the chances are shared.",
+      "explanation": "\"sofa\" passes 24% from about temperature 2. High temperatures share the chances out more evenly, but \"mat\" stays on top: the order never changes, and \"sofa\" can never get much past 25%."
+    },
+    {
+      "id": "hotter-smarter",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "prompt": "Does turning the temperature **up** make a chatbot's answers more likely to be **correct**?",
+      "options": [
+        {
+          "id": "no",
+          "text": "No: it only makes less likely tokens get picked more often"
+        },
+        {
+          "id": "yes-thinks",
+          "text": "Yes: it makes the model think harder",
+          "nudge": "Temperature doesn't change how the model works things out. What does it change?"
+        },
+        {
+          "id": "yes-maths",
+          "text": "Yes, but only for maths questions",
+          "nudge": "For a question with one right answer, which temperature picks the most likely answer every time?"
+        },
+        {
+          "id": "yes-above-2",
+          "text": "Yes, once it's above 2",
+          "nudge": "High temperatures pick unlikely tokens more often. Are unlikely answers more often right?"
+        }
+      ],
+      "correctOptionId": "no",
+      "hint": "Temperature changes how the model picks from its chances. Does it change what it knows?",
+      "explanation": "Temperature only changes **how** the model picks from its chances. Turning it up makes unlikely tokens more common, which adds variety, and more mistakes. It never adds knowledge."
+    },
+    {
+      "id": "temperature-recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- **Temperature** changes how a model picks from its chances; the order of the tokens never changes.\n- Low: the top token wins almost every time. Good for facts, maths and summaries.\n- High: the chances even out. Good for ideas and stories; too high, and it's nonsense.\n- It never makes answers more correct.\n\nNext: why chatbots sometimes make things up."
+    }
+  ]
+}

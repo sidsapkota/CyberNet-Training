@@ -994,3 +994,69 @@ Training data, fair tests, and how bias sneaks in.
 #### Module quiz (8 questions)
 
 Not exported, so the answers stay secret.
+
+### Module 3: How Chatbots Think (Pro)
+
+Next-word guessing, temperature, and why chatbots make things up.
+
+#### Next-Word Machines
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/next-word-machines`
+
+**Key facts**
+
+- *Guessing the next word:* A chatbot is built on a **language model**: a model trained on a huge amount of text, so it learns which words tend to follow which. Give it some text, and it gives every possible next word a **chance**.
+- *Recap:* A **language model** learned from huge amounts of text which words tend to follow which. For the text so far, it gives every possible next **token** a chance, picks one, adds it, and repeats.
+
+**Best interactive cards**
+
+- Next word: A language model is choosing the next word. Which one is it **most likely** to pick?
+- Put in order: Put the steps a chatbot repeats for every token in order.
+- Number answer: After "Fish and", a model gives "chips" a **70%** chance. If it carries on from "Fish and" **200** times, about how many times will it pick "chips"?
+
+**Surprising facts**
+
+- After "The cat sat on the", it might give "mat" 60%, "sofa" 20%, "floor" 15% and "moon" 5%.
+- A 60% chance means that if it carried on from here 100 times, it would pick "mat" about 60 of them.
+- A 70% chance means about 70 times in every 100, not every time.
+
+#### Temperature
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/temperature`
+
+**Key facts**
+
+- *Same question, different answers:* A setting called **temperature** decides how it picks between its options.
+- *Turning the dial:* **Low temperature:** the likeliest token gets even likelier. **Temperature 1:** the chances are used as the model learned them.
+- *Which temperature, when?:* Low temperatures suit jobs with **one right answer**: maths, facts, summaries, code. Higher temperatures suit jobs where you want **variety**: brainstorming, story ideas, silly poems.
+- *Recap:* **Temperature** changes how a model picks from its chances; the order of the tokens never changes.
+
+**Best interactive cards**
+
+- Next word: Move the temperature until **mat** has a chance of at least **80%**.
+- Next word: Now make the model more surprising: move the temperature until **no word** has more than a **45%** chance.
+- Next word: Can you get **sofa** up to at least **24%**? This slider goes higher than before.
+
+#### Made-Up Answers
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/made-up-answers`
+
+**Key facts**
+
+- *Fluent, confident, wrong:* When a chatbot writes something false but says it smoothly and confidently, it's called a **hallucination**. It happens because the model picks tokens that **sound** likely, not tokens it has checked are true.
+- *How to check:* **Find it in a trusted source**: a textbook, a library catalogue, an official website. **Ask for sources, then open them**: chatbots can invent sources too, so make sure each one really exists and says what the chatbot claims.
+- *A short memory:* This is called its **context window**.
+- *Recap:* A **hallucination** is a fluent, confident answer that's false, because the model picks likely tokens, not checked facts. The **context window** is how much of the chat it can see at once; in long chats it can forget the start.
+
+**Best interactive cards**
+
+- Next word: This small model learned mostly from space adventure stories, where the hero is usually called "Captain" something. Which word is it **most likely** to write next?
+- Choose what happens: You're writing a report on volcanoes.
+- Choose what happens: You're using a chatbot to practise for a quiz.
+
+#### Module quiz (8 questions)
+
+Not exported, so the answers stay secret.

@@ -85,6 +85,9 @@ import {
   AudioLines,
   Tags,
   Scale,
+  MessageSquare,
+  ThermometerSun,
+  Sparkles,
   Link,
   MailWarning,
   MapPin,
@@ -277,6 +280,9 @@ export const LESSON_ICON_COMPONENTS = {
   tags: Tags,
   target: Target,
   scale: Scale,
+  "message-square": MessageSquare,
+  "thermometer-sun": ThermometerSun,
+  sparkles: Sparkles,
 } satisfies Record<LessonIconName, LucideIcon>;
 
 /** A lesson's icon, with the brand stroke. Decorative: the lesson title always carries the meaning. */

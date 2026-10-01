@@ -47,6 +47,7 @@
     { "id": "cloud", "term": "the cloud", "definition": "Storage and services on a company's servers, which you reach over the internet." },
     { "id": "cname", "term": "CNAME record", "definition": "A DNS record that says a name is an alias: look up this other name instead." },
     { "id": "command", "term": "command", "definition": "An instruction you type into a terminal, like ipconfig, then run by pressing Enter." },
+    { "id": "context-window", "term": "context window", "definition": "How much text a chatbot can look at at once. In a very long chat, the earliest messages can fall out of it and be forgotten." },
     { "id": "core", "term": "core", "definition": "One complete worker inside a CPU. A CPU with 4 cores can work on 4 things at once." },
     { "id": "cpu", "term": "CPU", "definition": "Central processing unit: the chip that follows a program's instructions. The device's brain." },
     {
@@ -80,6 +81,7 @@
     { "id": "ghz", "term": "GHz", "definition": "Gigahertz: a billion ticks per second. A CPU's clock speed is measured in GHz." },
     { "id": "gigabyte", "term": "gigabyte (GB)", "definition": "A unit for amounts of data: 1,000 megabytes. Phone storage and RAM are measured in GB." },
     { "id": "gps", "term": "GPS", "definition": "The system a phone uses to work out where it is, using signals from satellites. Also called location." },
+    { "id": "hallucination", "term": "hallucination", "definition": "When an AI chatbot says something false, smoothly and confidently, because it picks words that sound likely rather than checking facts." },
     { "id": "handshake", "term": "handshake", "definition": "A few quick messages two devices swap to set up a connection before sending the real data." },
     { "id": "hardware", "term": "hardware", "definition": "The physical parts of a device that you could touch, like the screen, battery and chips." },
     { "id": "header", "term": "header", "definition": "An extra line of information at the start of a message, like which website a request is for." },
@@ -94,6 +96,7 @@
     { "id": "ipv4", "term": "IPv4", "definition": "The original kind of IP address: 32 bits, written as four numbers from 0 to 255, like 192.168.1.20." },
     { "id": "ipv6", "term": "IPv6", "definition": "The newer, much bigger kind of IP address: 128 bits, written in hex groups, like 2001:db8::1." },
     { "id": "isp", "term": "ISP", "definition": "Internet service provider: the company that connects your home to the internet." },
+    { "id": "language-model", "term": "language model", "definition": "A model trained on huge amounts of text that predicts which word (token) is likely to come next. Chatbots are built on them." },
     { "id": "linux", "term": "Linux", "definition": "A family of operating systems, like Windows but free to use. Many servers and some laptops run it." },
     {
       "id": "lithium-ion",
@@ -208,10 +211,12 @@
     { "id": "system-process", "term": "system process", "definition": "A process that's part of the operating system itself. Ending one can crash or restart the device." },
     { "id": "task-manager", "term": "task manager", "definition": "A tool in the operating system that lists every running process and lets you end one." },
     { "id": "tcp", "term": "TCP", "definition": "A protocol that makes sure data arrives complete and in order, resending anything that gets lost." },
+    { "id": "temperature", "term": "temperature", "definition": "A setting that changes how a language model picks: low makes it predictable, high makes it more surprising (and more likely to make no sense)." },
     { "id": "terminal", "term": "terminal", "definition": "A window where you control a computer by typing commands instead of tapping or clicking." },
     { "id": "throttling", "term": "throttling", "definition": "When a CPU slows itself down because it's too hot, to protect itself." },
     { "id": "tld", "term": "top-level domain (TLD)", "definition": "The last part of a domain name, like com in example.com, or uk in example.co.uk." },
     { "id": "tls", "term": "TLS", "definition": "Transport Layer Security: the protocol that encrypts HTTPS connections and checks the server's certificate." },
+    { "id": "token", "term": "token", "definition": "A piece of text a language model works with: often a whole word, sometimes part of a long or unusual one." },
     { "id": "traceroute", "term": "traceroute", "definition": "A tool that lists the routers (hops) your packets pass through on the way to a destination." },
     { "id": "training-data", "term": "training data", "definition": "The examples a model learns from, each with a label saying what it really is." },
     {

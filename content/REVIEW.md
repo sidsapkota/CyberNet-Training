@@ -1544,6 +1544,74 @@ recovers (the quiz has none, by design). Further fixes:
 | 2.1 `noisy-label` | The nudge said where to look | Points at the method |
 | Quiz | Mostly recall | New `q-compare`: 18 of 24 vs 15 of 20 (both 75%) |
 
+## Module 3: How Chatbots Think (Pro; teaser: 3.1 `hungry-horse`)
+All chances are written for a small imaginary model (said on the second card of 3.1); they show
+how next-token prediction works, not any real model's numbers.
+
+### 3.1 Next-Word Machines (`next-word-machines`)
+**Goals:** a language model predicts the next token from patterns in huge amounts of text; it
+gives every possible token a chance, picks one, adds it, repeats; chances mean "how often"; tokens
+are words or parts of words; it picks what usually comes next, not what's true.
+
+**Key claims:** "I could eat a horse" is a common saying, so it outranks sensible foods. 70% of
+200 = 140; 30% of 50 = 15. Common short words are usually one token; a long, rarer word like
+"unbelievably" is usually split (the exact pieces depend on the tokenizer). "The Eiffel Tower is
+in Paris" comes from the words appearing together; some chatbot apps can also search the web.
+
+**Simplifications:** the model is described as choosing one token at a time from chances; how
+those chances are computed (and that models can carry information ahead across tokens) is left
+out. Chatbots are also trained further, after the text, to answer helpfully; that isn't covered.
+
+### 3.2 Temperature (`temperature`)
+**Goals:** temperature reshapes the chances (low: predictable; high: surprising, more nonsense);
+the order never changes; which jobs suit which; it never makes answers more correct.
+
+**Key claims (formula p^(1/T), rescaled):** "mat" 60% at 1, 84.7% at 0.5, 99.5% at 0.2, 42.3%
+at 2.0; "sofa" reaches 24% from about 1.9 (the card's slider goes to 3; it can never get much past 25%). Most chatbot apps set the
+temperature for you; some tools let you change it.
+
+**Simplifications:** real apps combine temperature with other sampling settings; only temperature
+is taught.
+
+### 3.3 Made-Up Answers (`made-up-answers`)
+**Goals:** hallucinations (fluent, confident, false) come from picking likely-sounding tokens;
+they hide in names, dates, numbers, quotes and sources; check in a trusted source; asking the
+chatbot again doesn't check anything; the context window limits how much of a chat it can see.
+
+**Key claims:** nobody has walked on Mars (as of October 2026). The book "Fire Below" and
+"Dr Helen Marsh" are fictional, made up for the example. Chatbots can invent sources. A new chat
+usually starts with an empty context window unless the app has a memory feature. Medicine
+questions go to a doctor, pharmacist or trusted adult.
+
+**Simplifications:** the Mars model is a small imaginary one trained on space stories; the card
+says bigger chatbots usually get this right, and the risk is highest for things they've seen less.
+
+### Module 3 quiz (`how-chatbots-think-quiz`)
+Eight core questions: which temperature makes "go" likeliest (0.2), 30% of 300 = 90,
+"raining cats and dogs", low or high temperature jobs, why hallucinations happen, the token loop,
+checking a source, and the five words.
+
+## Beginner audit: Module 3 (1 October 2026)
+
+A fresh agent played module 3 as a 12-year-old who had finished modules 1 and 2, committing
+before reading the key and checking every number against p^(1/T). Result: 24 of 26 right first
+try, no hints; both misses (`even-it-out`, `get-sofa`) were recovered by their nudges, but were
+caused by an app bug, now fixed.
+
+| Where | Issue | Fix |
+|---|---|---|
+| `next_word` card (code) | **Bug:** bars rounded to whole percents but goals are checked to 0.1%, so "45%" showed for 45.5% and Check failed | Bars show one decimal ("45.5%"), the exact precision of the check (`percent`, tested) |
+| 3.2 `get-sofa` | 25% was a knife-edge (sofa never gets much past 25%) | Goal is now 24% (passes from about 1.9) |
+| 3.2 slider cards, quiz `q-ready-set` | Live bars make sliders "wiggle until it looks right" | New prediction card before the second slider (`which-go-up`: every word but "mat" rises); the quiz slider is now a prediction (`q-coldest`) |
+| 3.2 `make-it-predictable` | `temperature` glossary mark gave the direction away | Removed |
+| 3.3 `mars-walk` | Three believable story words with chances hidden | The prompt says the heroes are usually "Captain" something; the contrast is now true ("nobody") vs story |
+| 3.1 `guess-the-next-word`, `one-token-at-a-time`, recap | Overstated: real chatbots get extra training to answer helpfully | Says so; still one likely token at a time, and likely isn't checked |
+| 3.1 `guess-the-next-word` | Modules 1-2 taught labels; language models learn from unlabelled text | "The real next word in the text is the answer it learns from" |
+| 3.2 `same-question-twice` | The 4 comes from the model being certain, not temperature | Reworded |
+| 3.3 `context-window`, `long-chat` | Stated as definite; modern windows are large and apps vary | "Can fall out of the window, or get less attention"; the right choice says "may have lost track" |
+| 3.3 `problem-and-check` | "Doctor or pharmacist" only appeared in an explanation | Now taught in `check-it` |
+| Quiz `q-why-hallucinate` | Weak wrong options | "Temperature too low" and "context window too small" |
+
 ## AI Tools Today (lesson 4.3, not built yet)
 The only lesson that names real products. It carries `lastChecked` (shown to learners), and
 `validate-content` warns once a recheck is due. **Recheck by 1 January 2027, then every 3 months:**

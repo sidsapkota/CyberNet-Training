@@ -17,7 +17,7 @@ function Bars({ card, temperature, highlight }: { card: NextWordCard; temperatur
   return (
     <ul aria-label="Chance of each next word" className="mt-4 space-y-2">
       {card.candidates.map((c, i) => (
-        <li key={c.word} className="grid grid-cols-[minmax(4.5rem,auto)_1fr_3rem] items-center gap-3">
+        <li key={c.word} className="grid grid-cols-[minmax(4.5rem,auto)_1fr_3.75rem] items-center gap-3">
           <span className={`truncate text-body ${c.word === highlight ? "font-semibold text-ink" : "text-ink-muted"}`}>{c.word}</span>
           <span aria-hidden="true" className="h-3 overflow-hidden rounded-sm bg-surface-raised">
             <span

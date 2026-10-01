@@ -1,0 +1,231 @@
+{
+  "id": "how-chatbots-think-quiz",
+  "kind": "quiz",
+  "title": "How Chatbots Think: Module Quiz",
+  "order": 99,
+  "cards": [
+    {
+      "id": "q-coldest",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "After \"Ready, set,\" a model gives \"go\" a 70% chance at temperature 1. At which temperature is it **most likely** to pick \"go\"?",
+      "options": [
+        {
+          "id": "low",
+          "text": "0.2"
+        },
+        {
+          "id": "one",
+          "text": "1"
+        },
+        {
+          "id": "two",
+          "text": "2"
+        },
+        {
+          "id": "same",
+          "text": "It's the same at every temperature"
+        }
+      ],
+      "correctOptionId": "low",
+      "explanation": "A **low** temperature makes the top token even likelier: at 0.2, \"go\" has over 99%. At 2, the chances even out and \"go\" drops below 50%."
+    },
+    {
+      "id": "q-two-hundred",
+      "type": "numeric_input",
+      "difficulty": "core",
+      "prompt": "A model gives the next word a **30%** chance. If it carries on from the same text **300** times, about how many times will it pick that word?",
+      "base": "decimal",
+      "answer": 90,
+      "explanation": "30% of 300 is **90**."
+    },
+    {
+      "id": "q-pick",
+      "type": "next_word",
+      "difficulty": "core",
+      "prompt": "Which word is this model **most likely** to pick next?",
+      "context": "It's raining cats and",
+      "candidates": [
+        {
+          "word": "dogs",
+          "p": 0.8
+        },
+        {
+          "word": "mice",
+          "p": 0.08
+        },
+        {
+          "word": "puddles",
+          "p": 0.07
+        },
+        {
+          "word": "umbrellas",
+          "p": 0.05
+        }
+      ],
+      "goal": {
+        "type": "pick",
+        "word": "dogs"
+      },
+      "explanation": "\"Raining cats and **dogs**\" is a common saying, so it's by far the most likely next word, even though it isn't what rain is made of. The model picks what usually comes next."
+    },
+    {
+      "id": "q-temperature",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Would each job be better with a **low** temperature, or a **higher** one?",
+      "bins": [
+        {
+          "id": "low",
+          "label": "Low"
+        },
+        {
+          "id": "high",
+          "label": "Higher"
+        }
+      ],
+      "items": [
+        {
+          "id": "code",
+          "label": "Writing code that has to work",
+          "bin": "low"
+        },
+        {
+          "id": "facts",
+          "label": "Listing the planets in order",
+          "bin": "low"
+        },
+        {
+          "id": "names",
+          "label": "Ideas for a pet's name",
+          "bin": "high"
+        },
+        {
+          "id": "jokes",
+          "label": "Making up silly jokes",
+          "bin": "high"
+        }
+      ],
+      "explanation": "Code and facts have one right answer: **low**. Names and jokes want variety: **higher**."
+    },
+    {
+      "id": "q-why-hallucinate",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Why can a chatbot confidently name a book that doesn't exist?",
+      "options": [
+        {
+          "id": "likely",
+          "text": "It picks words that sound likely, not ones it has checked are true"
+        },
+        {
+          "id": "temperature",
+          "text": "Its temperature was set too low"
+        },
+        {
+          "id": "window",
+          "text": "Its context window was too small"
+        },
+        {
+          "id": "lying",
+          "text": "It's lying on purpose, to sound clever"
+        }
+      ],
+      "correctOptionId": "likely",
+      "explanation": "A title, an author and a summary all **sound** likely, so the model writes them, without checking they're true: a hallucination. A low temperature makes it more predictable, not more inventive, and a context window limits how much of the chat it can see, not whether it checks facts."
+    },
+    {
+      "id": "q-loop",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "Put the steps a chatbot repeats for every token in order.",
+      "items": [
+        {
+          "id": "read",
+          "label": "Read all the text so far"
+        },
+        {
+          "id": "chances",
+          "label": "Give each possible next token a chance"
+        },
+        {
+          "id": "pick",
+          "label": "Pick one token"
+        },
+        {
+          "id": "add",
+          "label": "Add it to the end of the text"
+        }
+      ],
+      "explanation": "Read, give each token a chance, pick one, add it, and repeat."
+    },
+    {
+      "id": "q-check",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "A chatbot gives you a date for your history homework.",
+      "start": "the-date",
+      "steps": [
+        {
+          "id": "the-date",
+          "text": "It says a famous ship sank in 1915, and gives a website as its source. What do you do?",
+          "choices": [
+            {
+              "id": "trust",
+              "text": "Use it: it gave a source",
+              "consequence": "Chatbots can invent sources too. A source only helps if you open it.",
+              "outcome": "fail"
+            },
+            {
+              "id": "open",
+              "text": "Open the source and check it says 1915",
+              "consequence": "Right: a source you've checked is a source you can trust.",
+              "outcome": "success"
+            },
+            {
+              "id": "again",
+              "text": "Ask the chatbot again, to see if it says 1915 twice",
+              "consequence": "It can repeat the same mistake. Check outside the chatbot.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "explanation": "Dates and sources are where hallucinations hide. **Open the source** (or find a trusted one) and check it really says what the chatbot claims."
+    },
+    {
+      "id": "q-words",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each word to what it means.",
+      "pairs": [
+        {
+          "id": "lm",
+          "left": "Language model",
+          "right": "Predicts the next token from text"
+        },
+        {
+          "id": "token",
+          "left": "Token",
+          "right": "A word, or part of one"
+        },
+        {
+          "id": "temperature",
+          "left": "Temperature",
+          "right": "How adventurous its picks are"
+        },
+        {
+          "id": "hallucination",
+          "left": "Hallucination",
+          "right": "A confident answer that's false"
+        },
+        {
+          "id": "window",
+          "left": "Context window",
+          "right": "How much of the chat it can see"
+        }
+      ],
+      "explanation": "A **language model** predicts the next **token** (a word or part of one); **temperature** sets how adventurous its picks are; a **hallucination** is a confident false answer; the **context window** is how much it can see at once."
+    }
+  ]
+}

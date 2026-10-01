@@ -87,10 +87,11 @@ describe("next_word cards: probability goal", () => {
   });
 
   it("describes answers and the working range for the quiz review", () => {
-    expect(describeNextWordAnswer(atLeast, { temperature: 0.5, pick: null })).toBe("Temperature 0.5 (mat: 85%)");
+    expect(describeNextWordAnswer(atLeast, { temperature: 0.5, pick: null })).toBe("Temperature 0.5 (mat: 84.7%)");
     expect(describeNextWordCorrect(atLeast)).toBe("Any temperature from 0.2 to 0.5");
     expect(describeNextWordCorrect(spread)).toMatch(/^Any temperature from 1\.\d to 2\.0$/);
-    expect(percent(0.847)).toBe("85%");
+    expect(percent(0.847)).toBe("84.7%");
+    expect(percent(0.4554)).toBe("45.5%"); // never "45%", which would look like it meets "at most 45%"
   });
 });
 

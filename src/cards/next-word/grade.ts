@@ -25,9 +25,13 @@ export function gradeNextWord(card: NextWordCard, answer: NextWordAnswer): Grade
   return { correct: temperature !== null && meetsGoal(card.candidates, card.goal, temperature) };
 }
 
-/** "mat 62%" style shares at a temperature, for the review screen. */
+/**
+ * A share as a percentage with one decimal ("45.5%"): exactly the precision goals are checked at
+ * (3 decimal places of the share, `meetsGoal`), so a bar can never look like it meets a goal the
+ * grader fails (45.5% showing as "45%").
+ */
 export function percent(share: number): string {
-  return `${Math.round(share * 100)}%`;
+  return `${(Math.round(share * 1000) / 10).toFixed(1)}%`;
 }
 
 function goalWordShare(card: NextWordCard, temperature: number): string {

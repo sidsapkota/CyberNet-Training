@@ -1,0 +1,178 @@
+{
+  "id": "next-word-machines",
+  "kind": "lesson",
+  "title": "Next-Word Machines",
+  "order": 1,
+  "icon": "message-square",
+  "cards": [
+    {
+      "id": "autocomplete",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Your phone already does this",
+      "body": "Start typing \"See you\" and your phone suggests \"tomorrow\" or \"soon\". It guesses the next word from what you've typed so far.\n\nAn AI chatbot works in a surprisingly similar way, just much bigger. This lesson shows how."
+    },
+    {
+      "id": "guess-the-next-word",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Guessing the next word",
+      "body": "A chatbot is built on a **language model**: a model trained on a huge amount of text, so it learns which words tend to follow which. It doesn't need labels like the fruit did: in every bit of text, the real next word is the answer it learns from.\n\nGive it some text, and it gives every possible next word a **chance**. After \"The cat sat on the\", it might give \"mat\" 60%, \"sofa\" 20%, \"floor\" 15% and \"moon\" 5%. A 60% chance means that if it carried on from here 100 times, it would pick \"mat\" about 60 of them.\n\nThese pieces of text are called **tokens**. A token is often a whole word, and sometimes part of a long or unusual one. The chances in this course are written for a small imaginary model, to show how it works."
+    },
+    {
+      "id": "hungry-horse",
+      "type": "next_word",
+      "difficulty": "core",
+      "prompt": "A [[language model]] is choosing the next word. Which one is it **most likely** to pick?",
+      "context": "I'm so hungry, I could eat a",
+      "candidates": [
+        {
+          "word": "horse",
+          "p": 0.55
+        },
+        {
+          "word": "sandwich",
+          "p": 0.25
+        },
+        {
+          "word": "pizza",
+          "p": 0.15
+        },
+        {
+          "word": "banana",
+          "p": 0.05
+        }
+      ],
+      "goal": {
+        "type": "pick",
+        "word": "horse"
+      },
+      "hint": "The model doesn't pick what makes sense to eat. It picks what most often comes next in the text it learned from. Is this sentence a common saying?",
+      "nudge": "That's a sensible thing to eat, but the model isn't choosing food. Which ending have you heard people say most often?",
+      "explanation": "\"I could eat a **horse**\" is a common saying, so it appears far more often in text than any sensible snack. This small model picks what usually comes next, not what makes sense, or what's true."
+    },
+    {
+      "id": "one-token-at-a-time",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "One token at a time",
+      "body": "The model doesn't write a whole answer at once. It picks one token, adds it to the text, then works out the chances for the next token, and the next, over and over until the answer is done.\n\nReal chatbots get extra training after reading all that text, so their likely next words make helpful answers to questions. But they still write one likely token at a time, and \"likely\" is not the same as \"checked\". That's why they sound so fluent, and why they can still be wrong."
+    },
+    {
+      "id": "the-loop",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "Put the steps a chatbot repeats for every token in order.",
+      "items": [
+        {
+          "id": "read",
+          "label": "Read all the text so far"
+        },
+        {
+          "id": "chances",
+          "label": "Give each possible next token a chance"
+        },
+        {
+          "id": "pick",
+          "label": "Pick one token"
+        },
+        {
+          "id": "add",
+          "label": "Add it to the end of the text"
+        }
+      ],
+      "hint": "It can't pick a token before it knows the chances, and it can't work out the chances before it has read the text.",
+      "nudge": "Start with what the model needs first: the text so far. What does it need before it can pick?",
+      "explanation": "**Read** the text so far, give each next token a **chance**, **pick** one, **add** it. Then the loop starts again with the longer text."
+    },
+    {
+      "id": "hundred-times",
+      "type": "numeric_input",
+      "difficulty": "core",
+      "prompt": "After \"Fish and\", a model gives \"chips\" a **70%** chance. If it carries on from \"Fish and\" **200** times, about how many times will it pick \"chips\"?",
+      "base": "decimal",
+      "answer": 140,
+      "hint": "70% means about 70 out of every 100. How many lots of 100 are in 200?",
+      "nudge": "70% of 100 is 70. You need 70% of 200.",
+      "explanation": "70% of 200 is **140**. Chances are \"how often\", not \"always\": the other 60 times it picks something else."
+    },
+    {
+      "id": "how-it-knows",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "A chatbot writes \"The Eiffel Tower is in Paris\". How did it come up with that?",
+      "options": [
+        {
+          "id": "together",
+          "text": "Those words often appear together in its training text"
+        },
+        {
+          "id": "looked-up",
+          "text": "It looked it up on a map",
+          "nudge": "A language model on its own doesn't look things up. What did it learn from?"
+        },
+        {
+          "id": "understands",
+          "text": "It understands geography like a person",
+          "nudge": "It doesn't understand places. Think about how it chooses each word."
+        },
+        {
+          "id": "checked",
+          "text": "It checked the fact before writing it",
+          "nudge": "It doesn't check facts as it writes. Each word is a guess about what usually comes next."
+        }
+      ],
+      "correctOptionId": "together",
+      "hint": "Think back to how it picks every token.",
+      "explanation": "\"Eiffel Tower\" and \"Paris\" appear together in a huge amount of text, so \"Paris\" gets a high chance. The model got it right because the pattern was common, not because it checked. (Some chatbot apps can also search the web, but the words are still written this way.)"
+    },
+    {
+      "id": "not-chips",
+      "type": "numeric_input",
+      "difficulty": "challenge",
+      "prompt": "\"Chips\" has a **70%** chance after \"Fish and\". If the model carries on from there **50** times, about how many times does it pick something **other** than \"chips\"?",
+      "base": "decimal",
+      "answer": 15,
+      "hint": "First work out the chance of **not** picking \"chips\".",
+      "nudge": "If \"chips\" is 70%, everything else adds up to 30%. What's 30% of 50?",
+      "explanation": "Everything that isn't \"chips\" shares the other **30%**, and 30% of 50 is **15**."
+    },
+    {
+      "id": "split-tokens",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "prompt": "Which word is a language model most likely to split into **more than one** token?",
+      "options": [
+        {
+          "id": "unbelievably",
+          "text": "unbelievably"
+        },
+        {
+          "id": "the",
+          "text": "the",
+          "nudge": "Very common words are usually a single token. Which word is long and less common?"
+        },
+        {
+          "id": "cat",
+          "text": "cat",
+          "nudge": "Short, common words are usually one token. Which one is long and unusual?"
+        },
+        {
+          "id": "and",
+          "text": "and",
+          "nudge": "\"and\" is one of the most common words of all, so it's one token. Look for a long, rarer word."
+        }
+      ],
+      "correctOptionId": "unbelievably",
+      "hint": "A token is often a whole word, and sometimes part of a long or unusual one.",
+      "explanation": "Common short words like \"the\", \"cat\" and \"and\" are usually one token each. A long, less common word like **\"unbelievably\"** is usually split into pieces, such as \"un\", \"believ\" and \"ably\" (the exact pieces depend on the model)."
+    },
+    {
+      "id": "next-word-recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- A **language model** learned from huge amounts of text which words tend to follow which.\n- For the text so far, it gives every possible next **token** a chance, picks one, adds it, and repeats.\n- Extra training makes its likely words helpful, but likely still isn't the same as checked or true.\n- A 70% chance means about 70 times in every 100, not every time.\n\nNext: the setting that decides how adventurous its picks are."
+    }
+  ]
+}
