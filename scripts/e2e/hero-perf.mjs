@@ -30,7 +30,6 @@ const HEROES = {
   race: async (page) => page.getByRole("button", { name: "Send" }).click(),
   fruit: async (page) => page.getByRole("button", { name: /Golden apple/ }).click(),
 };
-const primary = { phone: "Pull apart", race: "Send", fruit: /Golden apple/ };
 
 async function scriptBytes(page) {
   let total = 0;
