@@ -59,3 +59,36 @@ export function takeSignupLesson(now = Date.now()): string | undefined {
   }
   return undefined;
 }
+
+/**
+ * Where to land right after signing in: new accounts (no display name yet) pick one first, keeping
+ * where they were going; everyone else goes straight there. Shared by /auth/callback (links and
+ * Google) and the email code, which signs in without leaving the page. Pure.
+ */
+export function afterSignInPath(next: string, hasDisplayName: boolean): string {
+  const safe = safeNextPath(next);
+  if (hasDisplayName) return safe;
+  return safe === "/" ? "/account?welcome=1" : `/account?welcome=1&next=${encodeURIComponent(safe)}`;
+}
+
+/** The saved return path (the cookie), read once and cleared. For the email code, in the browser. */
+export function takeNextPath(): string {
+  try {
+    const raw = document.cookie.split("; ").find((c) => c.startsWith(`${NEXT_COOKIE}=`))?.slice(NEXT_COOKIE.length + 1);
+    document.cookie = `${NEXT_COOKIE}=; Path=/; Max-Age=0; SameSite=Lax`;
+    return readNextCookie(raw) ?? "/";
+  } catch {
+    return "/";
+  }
+}
+
+/** The sign-in code from the email: digits only (spaces and dashes from copy-paste are dropped). */
+export const CODE_LENGTH = 6;
+export function cleanCode(raw: string): string {
+  return raw.replace(/\D/g, "").slice(0, 8);
+}
+/** Ready to check: 6 digits (up to 8 accepted, in case the project's code length is set longer). */
+export function isCodeReady(code: string): boolean {
+  return /^\d{6,8}$/.test(code);
+}
+

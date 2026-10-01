@@ -14,7 +14,7 @@
 </head>
 <body style="margin:0;padding:0;background:#061630;">
 <!-- Preview text shown in the inbox list -->
-<div style="display:none;max-height:0;overflow:hidden;mso-hide:all;">Confirm your email to start saving your progress on CyberNet Training.</div>
+<div style="display:none;max-height:0;overflow:hidden;mso-hide:all;">Your CyberNet Training code is {{ .Token }}. Confirm your email to start saving your progress.</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#061630" style="background:#061630;">
   <tr>
     <td align="center" style="padding:32px 16px;">
@@ -27,7 +27,17 @@
         <tr>
           <td class="card" bgcolor="#0b2142" style="background:#0b2142;border:1px solid #1c3a66;border-radius:12px;padding:36px 32px;">
             <h1 style="margin:0 0 12px 0;font:600 24px/1.3 'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#e6eef9;">Welcome to CyberNet</h1>
-            <p style="margin:0;font:400 17px/1.5 'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#a3b6d2;">Tap the button to confirm your email and sign in. Your progress will be saved to your account. The link only works once, and it expires in an hour.</p>
+            <p style="margin:0;font:400 17px/1.5 'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#a3b6d2;">Here's your code to confirm your email and sign in. Your progress will be saved to your account. It only works once, and it expires in an hour.</p>
+            <!-- The code: for typing into the page (works in any browser, including in-app ones) -->
+            <p style="margin:24px 0 8px 0;font:600 14px/1.4 'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#a3b6d2;text-transform:uppercase;letter-spacing:1px;">Your sign-in code</p>
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 8px 0;">
+              <tr>
+                <td bgcolor="#061630" style="background:#061630;border:1px solid #1c3a66;border-radius:8px;padding:14px 22px;">
+                  <span style="font:600 32px/1 'IBM Plex Mono',Menlo,Consolas,monospace;letter-spacing:8px;color:#e6eef9;">{{ .Token }}</span>
+                </td>
+              </tr>
+            </table>
+            <p style="margin:0;font:400 15px/1.5 'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#a3b6d2;">Type it on the CyberNet page you came from. On a computer or in your phone's browser, you can tap the button instead.</p>
             <!-- One clear button (a table cell, so it works in Outlook too) -->
             <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:28px 0;">
               <tr>

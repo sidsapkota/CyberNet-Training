@@ -96,13 +96,17 @@ message body to its HTML source, and paste the whole file from `docs/email/`:
 
 | Supabase template | Subject | Paste this file |
 |---|---|---|
-| **Magic Link** | `Your CyberNet Training sign-in link` | `docs/email/magic-link.html` |
-| **Confirm signup** | `Confirm your email for CyberNet Training` | `docs/email/confirm-signup.html` |
+| **Magic Link** | `Your CyberNet Training sign-in code` | `docs/email/magic-link.html` |
+| **Confirm signup** | `Your CyberNet Training code` | `docs/email/confirm-signup.html` |
 | **Change Email Address** | `Confirm your new email for CyberNet Training` | `docs/email/change-email.html` |
 
 - "Confirm signup" is included because Supabase can send it for someone's very first sign-in.
-- The templates use Supabase's `{{ .ConfirmationURL }}`, `{{ .Email }}` and `{{ .NewEmail }}`. Keep
-  them exactly as written.
+- The templates use Supabase's `{{ .ConfirmationURL }}`, `{{ .Token }}` (the 6-digit code),
+  `{{ .Email }}` and `{{ .NewEmail }}`. Keep them exactly as written.
+- **The code** is typed into the sign-in page, so it works in any browser, including the ones
+  inside Instagram and TikTok (where Google sign-in is blocked, and a link opens in a different
+  browser). Check **Authentication → Providers → Email → Email OTP Length** is **6**: the page and
+  the emails say "6-digit". (The page accepts up to 8, just in case.)
 - They say the link "expires in an hour", which matches Supabase's default email OTP expiry
   (3,600 seconds, under Authentication → Providers → Email). If you change the expiry, change
   that sentence too.

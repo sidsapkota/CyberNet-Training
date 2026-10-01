@@ -605,6 +605,15 @@ src/dev/                 dev-only card samples + playground (served at /dev/card
   - `/account` suggests a nickname.
   - A trigger strips `avatar_url`, `picture`, `full_name` and `name` from auth user metadata.
     Supabase still keeps the provider's data in `auth.identities`, which account deletion removes.
+- **Email code and in-app browsers:** the email sign-in sends a **6-digit code** (Supabase email
+  OTP, `{{ .Token }}` in `docs/email/magic-link.html` and `confirm-signup.html`) that's typed into
+  the page and checked with `verifyOtp` (`SignInOptions`), so it works in any browser; the same
+  email keeps the sign-in button for normal browsers. Inside Instagram, TikTok, Facebook, Messenger
+  and Snapchat (`inAppBrowser` in `src/lib/auth/inApp.ts`, from the user agent, after mount),
+  Google sign-in is blocked, so its button is replaced by a short "open in your browser" tip with a
+  Copy link button. Signing in with the code happens in the same browser, so guest progress merges
+  as usual. After the code, `afterSignInPath` (shared with `/auth/callback`) sends new accounts to
+  pick a name, then on to where they were going. `npm run e2e:in-app` checks the whole flow.
 - **`src/proxy.ts`** (Next 16's name for Middleware) refreshes the session cookie on each request
   with `getClaims()`. It doesn't gate pages.
 - **`/auth/callback`** exchanges `?code=` (Google, and the default magic-link email, which uses PKCE
