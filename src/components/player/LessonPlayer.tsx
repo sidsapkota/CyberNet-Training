@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { SignUpGate } from "@/components/account/SignUpGate";
 import { Mascot } from "@/components/mascot/Mascot";
 import { ProLockedMessage } from "@/components/pro/ProLocked";
+import { StartFreeFirst } from "@/components/pro/StartFreeFirst";
 import { WhatsNext } from "@/components/pro/WhatsNext";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { ExploreModeIcon } from "@/components/ui/icons";
@@ -11,7 +12,8 @@ import { useAuth } from "@/lib/auth/AuthProvider";
 import type { CourseOutline, Lesson, LessonOutline } from "@/lib/content/schema";
 import type { LockedReason } from "@/lib/pro/access";
 import { useProgress } from "@/lib/progress/ProgressProvider";
-import { deepLinkGate, resumeIndex } from "@/lib/progress/state";
+import { deepLinkGate, hasFinishedFreeLesson, resumeIndex } from "@/lib/progress/state";
+import type { ProgressSnapshot } from "@/lib/progress/types";
 import { LessonRun } from "./LessonRun";
 import { PlayerShell, PlayerSkeleton, uniformNodes } from "./PlayerShell";
 import { QuizRun } from "./QuizRun";
@@ -82,6 +84,9 @@ export function LessonPlayer({
   const paid = usePaidLesson(pageLesson ? null : outline.id);
   const lesson = pageLesson ?? (paid.state === "ready" ? paid.lesson : null);
 
+  // A Pro lock needs progress first: before any free lesson is finished it shows the free start,
+  // not the paywall, so don't flash (or count) the paywall while progress loads.
+  if (!lesson && paid.state === "locked" && paid.reason !== "account" && !snapshot) return <PlayerSkeleton />;
   if (!lesson && (paid.state === "locked" || paid.state === "error")) {
     return (
       <PlayerShell
@@ -91,7 +96,7 @@ export function LessonPlayer({
       >
         <div className="flex min-h-[60dvh] flex-col items-center justify-center">
           {paid.state === "locked" ? (
-            <LockedLesson outline={outline} course={course} reason={paid.reason} />
+            <LockedLesson outline={outline} course={course} reason={paid.reason} snapshot={snapshot} />
           ) : (
             <div className="text-center">
               <Mascot expression="thinking" size={150} idle />
@@ -155,7 +160,17 @@ export function LessonPlayer({
  * A lesson the learner can't open yet: the sign-up gate (a free lesson, as a guest), or "What's
  * next" for a Pro module (or the plain message if there's none).
  */
-function LockedLesson({ outline, course, reason }: { outline: LessonOutline; course: CourseOutline; reason: LockedReason }) {
+function LockedLesson({
+  outline,
+  course,
+  reason,
+  snapshot,
+}: {
+  outline: LessonOutline;
+  course: CourseOutline;
+  reason: LockedReason;
+  snapshot: ProgressSnapshot | null;
+}) {
   if (reason === "account") {
     return (
       <div className="w-full py-6">
@@ -165,6 +180,14 @@ function LockedLesson({ outline, course, reason }: { outline: LessonOutline; cou
   }
   const mod = course.modules.find((m) => m.id === outline.moduleId);
   if (!mod) return <ProLockedMessage title={outline.title} reason={reason} />;
+  // Nothing free finished yet in this course: the free start, not the paywall.
+  if (snapshot && !hasFinishedFreeLesson(snapshot, course)) {
+    return (
+      <div className="mx-auto w-full max-w-lesson py-6">
+        <StartFreeFirst course={course} module={mod} headingLevel={1} />
+      </div>
+    );
+  }
   return (
     <div className="mx-auto w-full max-w-lesson py-6">
       <WhatsNext course={course} module={mod} headingLevel={1} />

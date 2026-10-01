@@ -6,6 +6,7 @@ import { CheckIcon, XIcon } from "@/components/ui/icons";
 import { digitKeyIndex, useGlobalKeyDown } from "@/lib/keyboard";
 import { CardPrompt } from "../CardPrompt";
 import type { CardComponentProps } from "../types";
+import { displayOptions } from "./grade";
 import type { MultipleChoiceAnswer, MultipleChoiceCard } from "./schema";
 
 type Tone = "idle" | "selected" | "correct" | "incorrect";
@@ -32,10 +33,12 @@ export function MultipleChoiceCardView({
 }: CardComponentProps<MultipleChoiceCard, MultipleChoiceAnswer>) {
   const promptId = useId();
   const locked = status !== "answering";
+  // Shown shuffled (stable per card); digit keys follow the order on screen.
+  const options = displayOptions(card);
 
   useGlobalKeyDown((event) => {
-    const index = digitKeyIndex(event.key, card.options.length);
-    const option = index === null ? undefined : card.options[index];
+    const index = digitKeyIndex(event.key, options.length);
+    const option = index === null ? undefined : options[index];
     if (option) {
       event.preventDefault();
       onAnswerChange(option.id);
@@ -46,7 +49,7 @@ export function MultipleChoiceCardView({
     <div>
       <CardPrompt id={promptId}>{card.prompt}</CardPrompt>
       <div role="radiogroup" aria-labelledby={promptId} className="mt-8 grid gap-2.5">
-        {card.options.map((option, i) => {
+        {options.map((option, i) => {
           const selected = answer === option.id;
           const tone: Tone = !selected
             ? "idle"

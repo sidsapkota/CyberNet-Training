@@ -158,6 +158,9 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
 | `scenario` | `start`, `steps[] {id, text, choices[] {id, text, consequence, next \| outcome}}` | choice ids in order | the last choice's outcome is `success` |
 | `sort_bins` | `bins[]` (2–3), `items[] {id, label, bin}` (4–10) | `{itemId: binId}` | every item in its bin |
 
+- **`multiple_choice`:** options are shown in a stable shuffle per card (`displayOptions`), so the
+  right answer's written position never gives it away; digit keys follow the order on screen.
+  Answers and grading use option ids, so the order can't change a score.
 - **`numeric_input`:**
   - Spaces and underscores are ignored.
   - Binary accepts `0b`, and hex accepts `0x` in any case.
@@ -805,6 +808,11 @@ parent or guardian before subscribing" is shown to everyone.
   free trial" (or "Upgrade to Pro" after a first subscription; guests sign in first). Shown in the
   course path's sheet (Pro nodes), on a Pro lesson's page, and on the quiz-pass screen after the last
   free module.
+- **Free first:** until a learner has finished a free lesson in a course (`hasFinishedFreeLesson`),
+  tapping a Pro node, or opening a Pro lesson, shows "Start with the free lessons first"
+  (`StartFreeFirst`: one button into the course's first lesson, "Not now", and a quiet link to
+  `/pro`) instead of "What's next", and no `paywall_viewed` is sent. Learners with no progress in a
+  course see **"Start here"** on its first lesson's bubble.
 - **Unlock celebration:** `/pro/welcome` (the mascot celebrating, one confetti burst), then "Keep
   learning" returns to the course the learner was upgrading from (`?unlocked=1`), where the Pro
   nodes light up one by one (120ms apart; the final state at once under reduced motion).

@@ -14,7 +14,7 @@ import { estimateMinutes } from "@/lib/content/estimate";
 import type { CourseOutline, LessonOutline, ModuleOutline } from "@/lib/content/schema";
 import { EASE_OUT_QUICK, POPOVER_SPRING, PRESS_SPRING } from "@/lib/motion";
 import { useProgress } from "@/lib/progress/ProgressProvider";
-import type { LessonState } from "@/lib/progress/state";
+import { hasCourseProgress, hasFinishedFreeLesson, type LessonState } from "@/lib/progress/state";
 import { cardKey, type ProgressSnapshot } from "@/lib/progress/types";
 
 export type NodeLook = "done" | "current" | "available" | "locked" | "pro";
@@ -124,7 +124,14 @@ export function PathNode({
           {/* Finished before Pro ended: the check stays, and the Pro badge sits on the other corner. */}
           {look === "done" && <ProBadge size="sm" className="absolute -bottom-1 -left-2 ring-2 ring-canvas" />}
         </motion.button>
-        <UpgradeSheet title={lesson.title} course={course} module={module} open={sheetOpen} onClose={() => setSheetOpen(false)} />
+        <UpgradeSheet
+          title={lesson.title}
+          course={course}
+          module={module}
+          open={sheetOpen}
+          onClose={() => setSheetOpen(false)}
+          startFirst={snapshot ? !hasFinishedFreeLesson(snapshot, course) : false}
+        />
       </motion.div>
     );
   }
@@ -150,7 +157,7 @@ export function PathNode({
             className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-3 -translate-x-1/2"
           >
             <span className="relative block rounded-control border-2 border-accent-ink bg-surface px-3 py-1.5 font-mono text-caption font-semibold tracking-widest whitespace-nowrap text-accent-ink uppercase shadow-card">
-              {state.status === "in_progress" ? "Continue" : "Start"}
+              {state.status === "in_progress" ? "Continue" : snapshot && !hasCourseProgress(snapshot, course) ? "Start here" : "Start"}
               <span className="absolute top-full left-1/2 -mt-[5px] size-2.5 -translate-x-1/2 rotate-45 border-r-2 border-b-2 border-accent-ink bg-surface" />
             </span>
           </motion.div>

@@ -2,6 +2,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
+import { displayOptions } from "@/cards/multiple-choice/grade";
 import { isInteractiveCard } from "@/cards/schema";
 import { getScene } from "@/cards/shared/scenes/manifests";
 import { goalMet, initialSimulatorAnswer, sliderRange } from "@/cards/simulator/grade";
@@ -172,6 +173,19 @@ describe("real content in /content", () => {
     // Outlines (sent to the browser for the path) agree with the lessons.
     for (const mod of content.courses.flatMap((c) => c.modules)) {
       for (const outline of mod.lessons) expect(outline.guests, outline.id).toBe(content.lessons.get(outline.id)!.guests);
+    }
+  });
+
+  it("never gives multiple-choice answers away by position on screen (every course)", () => {
+    // Options are shown shuffled (stable per card). Across each course, the right answer should
+    // land in every position, and first no more often than chance would suggest.
+    for (const course of loadContent().courses) {
+      const mcs = [...loadContent().lessons.values()]
+        .filter((l) => l.courseId === course.id)
+        .flatMap((l) => l.cards)
+        .filter((c) => c.type === "multiple_choice");
+      const first = mcs.filter((c) => displayOptions(c)[0]?.id === c.correctOptionId).length;
+      expect(first / mcs.length, course.id).toBeLessThan(0.45);
     }
   });
 
