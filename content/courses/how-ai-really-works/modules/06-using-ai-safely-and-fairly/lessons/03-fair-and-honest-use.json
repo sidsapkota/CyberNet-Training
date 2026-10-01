@@ -1,0 +1,226 @@
+{
+  "id": "fair-and-honest-use",
+  "kind": "lesson",
+  "title": "Fair and Honest Use",
+  "order": 3,
+  "icon": "handshake",
+  "cards": [
+    {
+      "id": "whose-poster",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Whose poster is it?",
+      "body": "For a school poster competition, a student types one prompt and gets an amazing poster in seconds. Another student spends a week painting theirs.\n\nWhich one is \"theirs\"? This lesson is about using AI in a way that's fair to you, and to everyone else."
+    },
+    {
+      "id": "say-how",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Say how you used it",
+      "body": "Using AI is often fine. Hiding it usually isn't.\n\n- **Say when and how** you used AI (\"I used AI to check my spelling\").\n- **Follow the rules** of your school, club or competition, and **ask** when you're not sure.\n- **Don't claim AI's work as yours**: in a competition, that's not fair on people who did the work."
+    },
+    {
+      "id": "honest-or-not",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Is each one **honest**, or **not honest**?",
+      "bins": [
+        {
+          "id": "honest",
+          "label": "Honest"
+        },
+        {
+          "id": "not",
+          "label": "Not honest"
+        }
+      ],
+      "items": [
+        {
+          "id": "say-spelling",
+          "label": "\"I used AI to check my spelling\"",
+          "bin": "honest"
+        },
+        {
+          "id": "ask-teacher",
+          "label": "Asking your teacher if AI is allowed",
+          "bin": "honest"
+        },
+        {
+          "id": "ideas-said",
+          "label": "Using AI ideas, writing it, saying so",
+          "bin": "honest"
+        },
+        {
+          "id": "contest",
+          "label": "Entering an AI picture as your own art",
+          "bin": "not"
+        },
+        {
+          "id": "speech",
+          "label": "Giving an AI-written speech as yours",
+          "bin": "not"
+        },
+        {
+          "id": "hide",
+          "label": "Saying \"no\" when asked if you used AI",
+          "bin": "not"
+        }
+      ],
+      "hint": "Look for whether the person is open about the AI's part.",
+      "nudge": "Using AI isn't the problem. Which ones hide it, or claim its work?",
+      "explanation": "Saying how you used AI, asking first and writing it yourself are **honest**. Entering AI art as yours, giving an AI speech as yours, or denying it when asked are **not**, however good the result."
+    },
+    {
+      "id": "people-behind-it",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "The people behind it",
+      "body": "AI learned from huge amounts of work made by people: artists' pictures, writers' stories, musicians' songs. Many weren't asked, and some are unhappy about it. People disagree about what's fair here, and the rules are still being argued about.\n\nWhat you can do: **respect people's work**, credit artists you're inspired by, and keep making things in your own way. AI can help, but your ideas and your voice are yours."
+    },
+    {
+      "id": "spelling-only",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Your teacher says no AI for an essay. You want to use AI just to fix your spelling. What should you do?",
+      "options": [
+        {
+          "id": "different-tool",
+          "text": "Use a different AI app, so it isn't the one that's banned",
+          "nudge": "The rule is about AI, not one app. What would make it clear?"
+        },
+        {
+          "id": "nothing",
+          "text": "Just use it: fixing spelling doesn't really count",
+          "nudge": "It might be fine, but it isn't your call when the rule says no AI. Who decides?"
+        },
+        {
+          "id": "ask",
+          "text": "Ask your teacher whether AI spelling help counts"
+        },
+        {
+          "id": "say-after",
+          "text": "Use it, and tell your teacher after you hand it in",
+          "nudge": "Saying so is good, but the rule was set before. What should you do first?"
+        }
+      ],
+      "correctOptionId": "ask",
+      "hint": "When you're not sure if something breaks a rule, who should you ask?",
+      "explanation": "When you're not sure, **ask first**. Spelling help might be allowed, but it's your teacher's rule to explain, not yours to guess."
+    },
+    {
+      "id": "fair-to-everyone",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Fair to everyone",
+      "body": "Remember bias: a model works better for some people than others when its training data leaves people out. So when AI makes decisions about people, like picking, sorting or scoring them, ask: **who might this be unfair to?** And keep a **person** checking decisions that matter."
+    },
+    {
+      "id": "captain-picker",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "Your class wants to use an AI tool to pick team captains \"fairly\", based on who talks most in class discussions.",
+      "start": "the-plan",
+      "steps": [
+        {
+          "id": "the-plan",
+          "text": "What's the best thing to say?",
+          "choices": [
+            {
+              "id": "fair",
+              "text": "\"It's fair: everyone is judged by the same rule\"",
+              "consequence": "The same rule for everyone can still be unfair, if the rule itself leaves people out. Quiet kids would never get picked.",
+              "outcome": "fail"
+            },
+            {
+              "id": "unfair-who",
+              "text": "\"Who might this be unfair to? Quieter kids can lead too\"",
+              "consequence": "Exactly. Talking a lot isn't the same as leading well. The class agrees to pick with a person deciding, using more than one thing.",
+              "outcome": "success"
+            },
+            {
+              "id": "random",
+              "text": "\"Let it pick, but check it picks the same people every time\"",
+              "consequence": "Picking the same people every time just repeats the unfairness. The question is whether its rule is fair.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "hint": "Look back at the question to ask whenever AI makes decisions about people.",
+      "explanation": "Judging by who **talks most** leaves out quieter people who could lead well, even though it's the same rule for everyone. Ask **who it might be unfair to**, and keep a **person** deciding."
+    },
+    {
+      "id": "fair-move",
+      "type": "match_pairs",
+      "difficulty": "challenge",
+      "prompt": "Match each situation to the fair thing to do.",
+      "pairs": [
+        {
+          "id": "contest",
+          "left": "An AI picture for an art contest",
+          "right": "Say it's AI, or don't enter it"
+        },
+        {
+          "id": "essay",
+          "left": "AI helped you plan an essay",
+          "right": "Say how you used it"
+        },
+        {
+          "id": "picks",
+          "left": "AI picks people for something",
+          "right": "Keep a person deciding"
+        },
+        {
+          "id": "style",
+          "left": "Your art copies an artist's style",
+          "right": "Credit the artist"
+        }
+      ],
+      "hint": "Each fix is about being open, or about keeping people in charge.",
+      "nudge": "One is about credit for someone else's work, one about decisions about people, and two about saying what the AI did.",
+      "explanation": "Be **open** about AI pictures and essay help, **credit** artists who inspire you, and keep **a person deciding** when AI picks people."
+    },
+    {
+      "id": "friends-story",
+      "type": "scenario",
+      "difficulty": "challenge",
+      "prompt": "Your friend's story wins the school writing prize. You know a chatbot wrote most of it.",
+      "start": "after",
+      "steps": [
+        {
+          "id": "after",
+          "text": "The competition rules said \"your own work only\". What's the fairest thing to do?",
+          "choices": [
+            {
+              "id": "announce",
+              "text": "Tell everyone in the class what really happened",
+              "consequence": "That could embarrass your friend in front of everyone before they've had a chance to fix it.",
+              "outcome": "fail"
+            },
+            {
+              "id": "talk-friend",
+              "text": "Talk to your friend privately, and encourage them to tell the teacher",
+              "consequence": "Fair to your friend and to the others who entered. If they won't, you can talk to a trusted adult about it.",
+              "outcome": "success"
+            },
+            {
+              "id": "nothing",
+              "text": "Say nothing: everyone uses AI anyway",
+              "consequence": "The rules said own work only, and other students did theirs themselves. Staying quiet isn't fair on them.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "hint": "Think about being fair to the other entrants, and kind to your friend.",
+      "explanation": "Talking to your friend **privately** gives them the chance to put it right, which is fair to everyone who did their own work. A trusted adult can help if they won't."
+    },
+    {
+      "id": "course-recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "You know how AI really works",
+      "body": "- AI learns **patterns from examples**, so it's only as good, and as fair, as its training data.\n- Chatbots pick **likely tokens**, not checked facts: check anything that matters.\n- Clear prompts get better answers; say what you want, who it's for and what shape.\n- Pictures, voices and videos can be faked: check **outside** the post, and get permission.\n- Keep your private stuff private, and use AI **openly and fairly**.\n\nNext: the course final."
+    }
+  ]
+}

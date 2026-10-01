@@ -12,6 +12,8 @@ import type { SimulatorCard } from "@/cards/simulator/schema";
 import type { SortBinsCard } from "@/cards/sort-bins/schema";
 import type { TeardownCard } from "@/cards/teardown/schema";
 import type { TerminalCard } from "@/cards/terminal/schema";
+import type { NextWordCard } from "@/cards/next-word/schema";
+import type { TrainModelCard } from "@/cards/train-model/schema";
 import type { CourseOutline, LessonOutline, ModuleOutline } from "@/lib/content/schema";
 
 export const explainer = (over: Partial<ExplainerCard> = {}): ExplainerCard => ({
@@ -258,6 +260,89 @@ export const sortBins = (over: Partial<SortBinsCard> = {}): SortBinsCard => ({
     { id: "d", label: "Installed apps", bin: "storage" },
   ],
   explanation: "RAM is now; storage is kept.",
+  ...over,
+});
+
+/**
+ * Fruit on a chart (roundness across, yellowness up). Every training apple is red, so the model
+ * calls a yellow apple a banana: the mistake the card is there to show.
+ */
+export const trainModel = (over: Partial<TrainModelCard> = {}): TrainModelCard => ({
+  id: "fruit",
+  type: "train_model",
+  difficulty: "core",
+  prompt: "Label each fruit, then see what the model guesses.",
+  model: {
+    kind: "nearest",
+    k: 1,
+    x: { label: "Shape", low: "Long", high: "Round" },
+    y: { label: "Colour", low: "Red", high: "Yellow" },
+  },
+  labels: [
+    { id: "apple", text: "Apple" },
+    { id: "banana", text: "Banana" },
+  ],
+  examples: [
+    { id: "a1", text: "Red apple", x: 9, y: 1, label: "apple", given: false },
+    { id: "a2", text: "Small red apple", x: 8, y: 2, label: "apple", given: false },
+    { id: "a3", text: "Big red apple", x: 9, y: 3, label: "apple", given: true },
+    { id: "b1", text: "Banana", x: 1, y: 9, label: "banana", given: false },
+    { id: "b2", text: "Long banana", x: 2, y: 8, label: "banana", given: true },
+    { id: "b3", text: "Spotty banana", x: 2, y: 7, label: "banana", given: false },
+  ],
+  tests: [
+    { id: "t1", text: "Shiny red apple", x: 8, y: 1, truth: "apple" },
+    { id: "t2", text: "Ripe banana", x: 1, y: 8, truth: "banana" },
+    { id: "t3", text: "Yellow apple", x: 6, y: 8, truth: "apple" },
+  ],
+  task: { goal: "label" },
+  explanation: "The model only saw red apples, so a yellow apple looked more like a banana.",
+  ...over,
+});
+
+/** Messages: "free" only ever appears in spam, so a friendly message with "free" is called spam. */
+export const trainModelWords = (over: Partial<TrainModelCard> = {}): TrainModelCard => ({
+  id: "spam",
+  type: "train_model",
+  difficulty: "core",
+  prompt: "Label each message as spam or not spam.",
+  model: { kind: "word-vote" },
+  labels: [
+    { id: "spam", text: "Spam" },
+    { id: "ok", text: "Not spam" },
+  ],
+  examples: [
+    { id: "m1", text: "Win a free phone now", label: "spam", given: false },
+    { id: "m2", text: "Free prize, click this link", label: "spam", given: false },
+    { id: "m3", text: "Claim your free gift card", label: "spam", given: true },
+    { id: "m4", text: "See you at training tonight", label: "ok", given: false },
+    { id: "m5", text: "Pizza for dinner tonight?", label: "ok", given: false },
+    { id: "m6", text: "Can you send me the homework", label: "ok", given: true },
+  ],
+  tests: [
+    { id: "t1", text: "Click to claim a free prize", truth: "spam" },
+    { id: "t2", text: "Free pizza at footy training", truth: "ok" },
+  ],
+  task: { goal: "label" },
+  explanation: "Every message with \"free\" in it was spam, so the model learned that \"free\" means spam.",
+  ...over,
+});
+
+export const nextWord = (over: Partial<NextWordCard> = {}): NextWordCard => ({
+  id: "cat",
+  type: "next_word",
+  difficulty: "core",
+  prompt: "Which word is the model most likely to choose next?",
+  context: "The cat sat on the",
+  candidates: [
+    { word: "mat", p: 0.6 },
+    { word: "sofa", p: 0.2 },
+    { word: "floor", p: 0.15 },
+    { word: "moon", p: 0.05 },
+  ],
+  temperature: { min: 0.2, max: 2, start: 1, step: 0.1 },
+  goal: { type: "pick", word: "mat" },
+  explanation: "\"mat\" has the biggest chance, because it follows \"The cat sat on the\" most often in the text the model learned from.",
   ...over,
 });
 

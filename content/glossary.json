@@ -1,5 +1,6 @@
 {
   "terms": [
+    { "id": "accuracy", "term": "accuracy", "definition": "How often a model is right on test examples it has never seen: the number right divided by the number tested, as a percentage." },
     { "id": "antivirus", "term": "antivirus", "definition": "A security app that looks for harmful programs, like viruses, and stops them." },
     { "id": "app", "term": "app", "definition": "A program you use for one job, like a game, a browser or a music player." },
     {
@@ -7,6 +8,7 @@
       "term": "app permission",
       "definition": "Your OK for an app to use something on your device, like the camera, microphone, location or contacts. You can change it later in Settings."
     },
+    { "id": "artificial-intelligence", "term": "artificial intelligence (AI)", "definition": "Software that learns patterns from lots of examples, instead of only following rules a person wrote, so it can make guesses about new things." },
     {
       "id": "authenticator-app",
       "term": "authenticator app",
@@ -23,8 +25,10 @@
       "definition": "A program running without a window, doing a job for you, like checking for updates or syncing files."
     },
     { "id": "backup", "term": "backed up", "definition": "Copied somewhere else (like the cloud or another drive), so it isn't lost if the original is deleted or broken." },
+    { "id": "bias", "term": "bias", "definition": "When a model works better for some people or situations than others, usually because of gaps in its training data." },
     { "id": "binary", "term": "binary", "definition": "Counting with only two digits, 0 and 1. Computers store everything this way." },
     { "id": "bit", "term": "bit", "definition": "The smallest piece of data: a single 0 or 1, like a switch that's off or on." },
+    { "id": "bot", "term": "bot", "definition": "An account run by a program instead of a person, posting and replying automatically." },
     { "id": "browser", "term": "browser", "definition": "The app you use to visit websites." },
     { "id": "browser-tab", "term": "browser tab", "definition": "One open page in your browser. You can have several tabs open at once and switch between them." },
     { "id": "bug", "term": "bug", "definition": "A mistake in a program's code that makes it go wrong." },
@@ -44,6 +48,7 @@
     { "id": "cloud", "term": "the cloud", "definition": "Storage and services on a company's servers, which you reach over the internet." },
     { "id": "cname", "term": "CNAME record", "definition": "A DNS record that says a name is an alias: look up this other name instead." },
     { "id": "command", "term": "command", "definition": "An instruction you type into a terminal, like ipconfig, then run by pressing Enter." },
+    { "id": "context-window", "term": "context window", "definition": "How much text a chatbot can look at at once. In a very long chat, the earliest messages can fall out of it and be forgotten." },
     { "id": "core", "term": "core", "definition": "One complete worker inside a CPU. A CPU with 4 cores can work on 4 things at once." },
     { "id": "cpu", "term": "CPU", "definition": "Central processing unit: the chip that follows a program's instructions. The device's brain." },
     {
@@ -74,9 +79,11 @@
     { "id": "extension", "term": "file extension", "definition": "The end of a file's name after the last dot, like .jpg. It tells the computer what kind of file it is." },
     { "id": "file", "term": "file", "definition": "One named piece of saved data, like a photo, a song or an essay." },
     { "id": "folder", "term": "folder", "definition": "A container for files, and for other folders, like a box inside a box." },
+    { "id": "generative-ai", "term": "generative AI", "definition": "AI that makes new things, like text, pictures, music or voices, from patterns it learned in huge amounts of examples." },
     { "id": "ghz", "term": "GHz", "definition": "Gigahertz: a billion ticks per second. A CPU's clock speed is measured in GHz." },
     { "id": "gigabyte", "term": "gigabyte (GB)", "definition": "A unit for amounts of data: 1,000 megabytes. Phone storage and RAM are measured in GB." },
     { "id": "gps", "term": "GPS", "definition": "The system a phone uses to work out where it is, using signals from satellites. Also called location." },
+    { "id": "hallucination", "term": "hallucination", "definition": "When an AI chatbot says something false, smoothly and confidently, because it picks words that sound likely rather than checking facts." },
     { "id": "handshake", "term": "handshake", "definition": "A few quick messages two devices swap to set up a connection before sending the real data." },
     { "id": "hardware", "term": "hardware", "definition": "The physical parts of a device that you could touch, like the screen, battery and chips." },
     { "id": "header", "term": "header", "definition": "An extra line of information at the start of a message, like which website a request is for." },
@@ -91,6 +98,7 @@
     { "id": "ipv4", "term": "IPv4", "definition": "The original kind of IP address: 32 bits, written as four numbers from 0 to 255, like 192.168.1.20." },
     { "id": "ipv6", "term": "IPv6", "definition": "The newer, much bigger kind of IP address: 128 bits, written in hex groups, like 2001:db8::1." },
     { "id": "isp", "term": "ISP", "definition": "Internet service provider: the company that connects your home to the internet." },
+    { "id": "language-model", "term": "language model", "definition": "A model trained on huge amounts of text that predicts which word (token) is likely to come next. Chatbots are built on them." },
     { "id": "linux", "term": "Linux", "definition": "A family of operating systems, like Windows but free to use. Many servers and some laptops run it." },
     {
       "id": "lithium-ion",
@@ -107,9 +115,12 @@
       "term": "low power mode",
       "definition": "A setting that makes a device save energy, for example by pausing background apps, so the battery lasts longer."
     },
+    { "id": "machine-learning", "term": "machine learning", "definition": "A way of making AI: the computer is shown many examples and finds the patterns in them itself." },
     { "id": "megabyte", "term": "megabyte (MB)", "definition": "A unit for amounts of data: 1,000 kilobytes, or a million bytes. A phone photo is a few MB." },
     { "id": "memory-leak", "term": "memory leak", "definition": "A bug where an app keeps taking RAM and never gives it back, so it uses more and more over time." },
     { "id": "millisecond", "term": "millisecond (ms)", "definition": "A thousandth of a second." },
+    { "id": "misinformation", "term": "misinformation", "definition": "False information that spreads, whether someone meant it or not. AI makes it quicker and cheaper to make." },
+    { "id": "model", "term": "model", "definition": "What a computer builds from its training data: its own way of guessing the answer for new things it has never seen." },
     { "id": "motherboard", "term": "motherboard", "definition": "The main circuit board that all a device's parts plug into and send signals through." },
     { "id": "mx-record", "term": "MX record", "definition": "A DNS record that names the server that receives email for a domain." },
     {
@@ -124,6 +135,7 @@
       "term": "operating system (OS)",
       "definition": "The main software that runs a device: it shares out the CPU and RAM, runs apps and looks after files."
     },
+    { "id": "overfitting", "term": "overfitting", "definition": "When a model memorises its training examples, quirks and all, instead of the real pattern, so it does much worse on new examples." },
     { "id": "packet", "term": "packet", "definition": "A small piece of data sent across a network, with addresses added so it can find its way." },
     {
       "id": "passkey",
@@ -145,6 +157,7 @@
       "term": "path",
       "definition": "The route through folders to a file, like Documents > School > essay.docx. Also the part of a web address after the name."
     },
+    { "id": "pattern", "term": "pattern", "definition": "Something that shows up again and again, like apples being round. AI learns by finding patterns in examples." },
     { "id": "payload", "term": "payload", "definition": "The actual data a packet carries, apart from the addresses and other added information." },
     {
       "id": "phishing",
@@ -152,12 +165,14 @@
       "definition": "A scam message, like an email, text or call, that pretends to be someone you trust to trick you into sharing details or clicking a link."
     },
     { "id": "port", "term": "port", "definition": "A number that picks which program on a computer a packet is for, like an apartment number in a building." },
+    { "id": "prediction", "term": "prediction", "definition": "A model's best guess, based on the patterns it learned. It can be wrong, even when it sounds sure." },
     {
       "id": "private-address",
       "term": "private address",
       "definition": "An IP address for use inside a home, school or office network. The same private addresses are reused in millions of networks."
     },
     { "id": "process", "term": "process", "definition": "A program that's running right now. The task manager lists them all." },
+    { "id": "prompt", "term": "prompt", "definition": "What you type (or say) to an AI tool, like a chatbot or an image maker. A good one says the goal, who it's for, and the length or shape you want." },
     { "id": "protocol", "term": "protocol", "definition": "A set of rules that devices agree to follow so they can understand each other." },
     { "id": "public-address", "term": "public address", "definition": "An IP address that's unique across the whole internet, so anyone on the internet can reach it." },
     { "id": "public-wi-fi", "term": "public Wi-Fi", "definition": "Wi-Fi that anyone nearby can join, like at a café, library or airport." },
@@ -200,11 +215,14 @@
     { "id": "system-process", "term": "system process", "definition": "A process that's part of the operating system itself. Ending one can crash or restart the device." },
     { "id": "task-manager", "term": "task manager", "definition": "A tool in the operating system that lists every running process and lets you end one." },
     { "id": "tcp", "term": "TCP", "definition": "A protocol that makes sure data arrives complete and in order, resending anything that gets lost." },
+    { "id": "temperature", "term": "temperature", "definition": "A setting that changes how a language model picks: low makes it predictable, high makes it more surprising (and more likely to make no sense)." },
     { "id": "terminal", "term": "terminal", "definition": "A window where you control a computer by typing commands instead of tapping or clicking." },
     { "id": "throttling", "term": "throttling", "definition": "When a CPU slows itself down because it's too hot, to protect itself." },
     { "id": "tld", "term": "top-level domain (TLD)", "definition": "The last part of a domain name, like com in example.com, or uk in example.co.uk." },
     { "id": "tls", "term": "TLS", "definition": "Transport Layer Security: the protocol that encrypts HTTPS connections and checks the server's certificate." },
+    { "id": "token", "term": "token", "definition": "A piece of text a language model works with: often a whole word, sometimes part of a long or unusual one." },
     { "id": "traceroute", "term": "traceroute", "definition": "A tool that lists the routers (hops) your packets pass through on the way to a destination." },
+    { "id": "training-data", "term": "training data", "definition": "The examples a model learns from, usually each with a label saying what it really is." },
     {
       "id": "two-step-sign-in",
       "term": "two-step sign-in",
@@ -216,6 +234,7 @@
     { "id": "virus", "term": "virus", "definition": "A harmful program that spreads to other files or devices. Security apps look for them." },
     { "id": "voice-clone", "term": "voice clone", "definition": "A fake copy of someone's voice made with AI, which can say things the real person never said." },
     { "id": "warranty", "term": "warranty", "definition": "The maker's promise to repair a device for free if it breaks by itself within a set time." },
+    { "id": "watermark", "term": "watermark", "definition": "A mark, which can be visible or hidden inside the file, showing something was made by AI. It can be removed, so a missing one proves nothing." },
     { "id": "watt", "term": "watt (W)", "definition": "A unit for how fast energy is used. A phone uses a few watts; the more watts, the faster the battery empties." },
     { "id": "wi-fi-access-point", "term": "Wi-Fi access point", "definition": "The part of a network that sends out the Wi-Fi signal, so wireless devices can join." }
   ]

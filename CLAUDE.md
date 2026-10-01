@@ -57,10 +57,11 @@ All of `build`, `lint`, `test` and `typecheck` must pass with zero errors and wa
 
 Courses, in catalog order: **Inside Your Devices** (`inside-your-devices`, hardware, the OS and
 troubleshooting, built on the hands-on card types), **How the Internet Works**
-(`how-the-internet-works`) and **Stay Safe Online** (`stay-safe-online`: passwords and two-step
+(`how-the-internet-works`), **Stay Safe Online** (`stay-safe-online`: passwords and two-step
 sign-in, spotting scams, privacy, and what to do when things go wrong, including deepfake scams;
-modules 1 and 4 free,
-modules 2 and 3 Pro).
+modules 1 and 4 free, modules 2 and 3 Pro) and **How AI Really Works** (`how-ai-really-works`,
+being built on `ai-course`: module 1 free, modules 2 to 6 Pro; uses the `train_model` and
+`next_word` cards).
 Each `module.json` has `"access": "free" | "pro"`. Every course's first module must be free (the
 loader checks), and help, reporting and recovery modules are always free. Every Pro module also has
 `"teaserCard": { "lesson", "card" }`: one card from its **first lesson** that learners without Pro
@@ -75,7 +76,10 @@ content/courses/<course-dir>/modules/<module-dir>/lessons/*.json
 ```
 
 - A lesson file holds `{ id, kind: "lesson" | "quiz", title, order, cards[] }` (plus `icon` for
-  lessons). Access comes from its module. Quizzes also
+  lessons). A lesson about fast-changing things (real products) also has `lastChecked`
+  (`YYYY-MM-DD`): learners see "Last checked …" on its first card and in its path popover, and
+  `validate-content` warns (never fails) 3 months later (`src/lib/content/lastChecked.ts`; the
+  recheck list is in `content/REVIEW.md`). Access comes from its module. Quizzes also
   take `passThreshold` (0 to 1, default 0.7).
 - **Lesson icons:** every regular lesson has an `icon` from the allow-list in
   `src/lib/content/lessonIcons.ts` (lucide names, drawn by `LessonIcon` in
@@ -157,6 +161,8 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
 | `simulator` | `model`, `params`, `controls[]` (toggle/slider/button), `outputs[]` (meter/bar/timer/device/list), `goal.all[]` | `{controlId: value}` | every goal condition holds |
 | `scenario` | `start`, `steps[] {id, text, choices[] {id, text, consequence, next \| outcome}}` | choice ids in order | the last choice's outcome is `success` |
 | `sort_bins` | `bins[]` (2–3), `items[] {id, label, bin}` (4–10) | `{itemId: binId}` | every item in its bin |
+| `train_model` | `model` (`nearest` + `k` 1/3 + `x`/`y` axes, or `word-vote`), `labels[]` (2–3), `examples[] {id, text, x?, y?, label, given?}` (4–12), `tests[] {id, text, x?, y?, truth}` (1–4), `task` (`label`, or `include` + `start[]`) | `{labels: {exampleId: labelId}, included: exampleId[]}` | label: every example labelled right; include: the model gets every test right |
+| `next_word` | `context`, `candidates[] {word, p}` (3–6, sum 1), `temperature {min, max, start, step}`, `goal` (`pick` + `word`, or `probability` + `word?`, `atLeast?`, `atMost?`) | `{temperature, pick}` | pick: the likeliest word; probability: the goal holds at that temperature |
 
 - **`multiple_choice`:** options are shown in a stable shuffle per card (`displayOptions`), so the
   right answer's written position never gives it away; digit keys follow the order on screen.
@@ -276,6 +282,29 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - **Not counted** in the 8–12 cards per lesson, and never in quizzes.
 - **`sort_bins`:** tap an item then a bin, or drag (dnd-kit). Snap sound; wrong items go back to the
   tray after Try again.
+- **`train_model`** (AI course): learners teach a tiny model and see it make mistakes. The models
+  (`src/cards/train-model/model.ts`) are pure and deterministic: `nearest` (points on a 0–10 chart;
+  the nearest example's label, or the majority of the 3 nearest) and `word-vote` (each word of 3+
+  letters votes for the labels it was seen with; a tie is "Not sure"). No ML libraries, no
+  randomness, nothing run from content.
+  - **`label` goal:** label every example that isn't `given`; graded on the labels only. After
+    Check the model trains on them and shows its guesses. The schema requires that, trained on the
+    true labels, it gets at least one test **wrong** (the lesson) and one right.
+  - **`include` goal:** tick which examples to train on; guesses update live; correct when **every**
+    test is guessed right (one target alone could be "solved" by training on a single example).
+    The schema checks it starts unsolved and that some choice works (every subset is tried).
+  - The chart is display only; learners act on the 44px rows under it. Labels have a shape each
+    (circle, square, triangle), never colour alone. Try again clears only wrong labels.
+- **`next_word`** (AI course): pre-written chances for the next word, reshaped by temperature
+  (`p^(1/T)`, rescaled; the same as dividing scores by T before softmax; the order of the words
+  never changes). Nothing is generated live.
+  - **`pick` goal:** which word is most likely? The chances stay hidden until Check, and the word
+    must be the single likeliest.
+  - **`probability` goal:** move the slider until a word (or, without `word`, the likeliest one) is
+    at least / at most a share, compared to 3 decimal places. The schema checks it starts unsolved
+    and that a slider stop meets it. Answers off the slider's stops are refused by the grader.
+  - "Generate 5" shows seeded sample picks for the current temperature (display only, the same
+    every time). Bars always show the % in text; reduced motion skips the width transition.
 - **Enter key:** single-answer text fields (`numeric_input`, the terminal's answer box) carry
   `data-enter-submits`, so Enter runs Check. The terminal's command line keeps Enter for running
   commands.
@@ -1207,6 +1236,9 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
 - **Beginner audit:** after big content changes, have a fresh agent play the course as a 12-year-old
   with no prior knowledge (on-screen text and screenshots only, answers hidden until it commits).
   Record findings and fixes in the Beginner Audit section of `content/REVIEW.md`.
+- **No giveaways in multiple choice:** options are shuffled on screen (stable per card), and wrong
+  options should be as long, specific and tempting as the right one (real misconceptions, not
+  jokes). Beginner audits read the cards with the answers stripped out and options shuffled.
 - **Challenge cards** (`difficulty: "challenge"`) are optional stretch questions. Core cards alone must
   fully teach the lesson, and nothing later may depend on a challenge card. Aim for about 2 per lesson.
 - **Quizzes** have about 5 core, interactive questions covering the module's lessons, and nothing

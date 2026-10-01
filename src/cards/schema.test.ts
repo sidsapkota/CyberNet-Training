@@ -12,6 +12,9 @@ import {
   scenario,
   simulator,
   sortBins,
+  trainModel,
+  trainModelWords,
+  nextWord,
   teardown,
   terminal,
 } from "@/test/fixtures";
@@ -57,6 +60,9 @@ describe("CardSchema (discriminated union)", () => {
       simulator(),
       scenario(),
       sortBins(),
+      trainModel(),
+      trainModelWords(),
+      nextWord(),
     ]) {
       expect(CardSchema.safeParse(card).success, card.type).toBe(true);
     }

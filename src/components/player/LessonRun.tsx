@@ -5,6 +5,8 @@ import { getCardDefinition, isGuidedDefinition } from "@/cards/registry";
 import { nudgeFor } from "@/cards/nudge";
 import { type Card, isInteractiveCard } from "@/cards/schema";
 import type { CardStatus } from "@/cards/types";
+import { LessonTimeIcon } from "@/components/ui/icons";
+import { formatChecked } from "@/lib/content/lastChecked";
 import type { CourseOutline, RegularLesson } from "@/lib/content/schema";
 import { useFeedback } from "@/lib/feedback";
 import { useGlobalKeyDown } from "@/lib/keyboard";
@@ -303,6 +305,11 @@ export function LessonRun({
       }
     >
       {showCoach && <CoachPanel key={showCoach} coachKey={showCoach} onDone={coach.dismiss} />}
+      {lesson.lastChecked && index === 0 && (
+        <p className="mb-4 inline-flex items-center gap-1.5 rounded-sm border border-line bg-surface px-2.5 py-1 text-caption text-ink-muted">
+          <LessonTimeIcon className="size-3.5" /> Last checked {formatChecked(lesson.lastChecked)}. These change fast.
+        </p>
+      )}
       <CardStage cardKey={`${lesson.id}-${index}`} card={card} scope={scope} challengeXp={challengeXp}>
         {definition.interactive || isGuidedDefinition(definition) ? (
           <definition.Component

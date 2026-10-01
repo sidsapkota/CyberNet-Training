@@ -13,6 +13,8 @@ import { SimulatorCardSchema } from "./simulator/schema";
 import { SortBinsCardSchema } from "./sort-bins/schema";
 import { TeardownCardSchema } from "./teardown/schema";
 import { TerminalCardSchema } from "./terminal/schema";
+import { NextWordCardSchema } from "./next-word/schema";
+import { TrainModelCardSchema } from "./train-model/schema";
 
 /**
  * Every card type. Registration step 1 of 2 when adding a card type
@@ -33,6 +35,8 @@ export const CardSchema = z.discriminatedUnion("type", [
   SimulatorCardSchema,
   ScenarioCardSchema,
   SortBinsCardSchema,
+  TrainModelCardSchema,
+  NextWordCardSchema,
 ]);
 
 export type Card = z.infer<typeof CardSchema>;

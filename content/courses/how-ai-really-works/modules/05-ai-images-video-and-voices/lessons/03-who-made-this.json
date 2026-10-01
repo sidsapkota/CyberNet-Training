@@ -1,0 +1,252 @@
+{
+  "id": "who-made-this",
+  "kind": "lesson",
+  "title": "Who Made This?",
+  "order": 3,
+  "icon": "image",
+  "cards": [
+    {
+      "id": "shark-street",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "A shark in the street",
+      "body": "After a big storm, a picture spreads everywhere: a shark swimming down a flooded street, past a bus stop. Thousands of shares in an hour.\n\nIs it real? You can't tell just by staring at it. But you can find out."
+    },
+    {
+      "id": "labels-and-watermarks",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Labels and watermarks",
+      "body": "Some AI tools add a **watermark**: a visible mark, or hidden information inside the file, saying AI made it. Some apps also label AI pictures.\n\nThat's useful when it's there. But marks can be cropped off, a screenshot can throw away hidden information saved with the file, and many tools add nothing. So a label saying AI made it is good evidence; **no label proves nothing**."
+    },
+    {
+      "id": "no-label",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "A picture has no AI label and no watermark. What does that tell you?",
+      "options": [
+        {
+          "id": "checked",
+          "text": "The app checked it and found it was a real photo",
+          "nudge": "Apps don't check every picture. Where else might a label have gone?"
+        },
+        {
+          "id": "hidden",
+          "text": "It was made by AI, and the label was hidden on purpose",
+          "nudge": "That's possible, but you can't tell from a missing label. What does \"no label\" really prove?"
+        },
+        {
+          "id": "not-much",
+          "text": "Not much: a label may have been removed, or never added"
+        },
+        {
+          "id": "real",
+          "text": "It's a real photo, because AI pictures always have a label",
+          "nudge": "Many AI tools add nothing, and labels can be cropped off. What does that mean?"
+        }
+      ],
+      "correctOptionId": "not-much",
+      "hint": "Look back at the ways a label can disappear, or never be there.",
+      "explanation": "Labels get cropped off, screenshots strip hidden marks, and many tools add none. So **no label proves nothing**, either way."
+    },
+    {
+      "id": "how-to-check-a-picture",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "How to check a picture",
+      "body": "- **Find where it first appeared.** Many search tools let you search with the picture itself: older copies, or the original, often turn up.\n- **Look for trusted news** reporting it, ideally with other photos from other angles.\n- **Check the account**: is it new? Does it post lots of shocking pictures?\n- **Check the details**: does the place, weather and date match what really happened?\n\nLikes, sharpness, or a friend sending it don't prove a picture is real: fakes get liked, AI pictures are sharp, and friends get fooled too.\n\nAnd if **you** make an AI picture and post it, say it's AI."
+    },
+    {
+      "id": "the-shark",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "Your friend sends you the shark-in-the-street picture: \"OMG look at this!!\"",
+      "start": "first-look",
+      "steps": [
+        {
+          "id": "first-look",
+          "text": "What do you do first?",
+          "choices": [
+            {
+              "id": "share",
+              "text": "Share it to your group: everyone needs to see this",
+              "consequence": "If it's fake, you've just spread it further. Check first.",
+              "outcome": "fail"
+            },
+            {
+              "id": "search",
+              "text": "Search with the picture to see where it first appeared",
+              "consequence": "The same shark picture turns up years ago, after a different storm, in another country, already marked as edited.",
+              "next": "what-now"
+            },
+            {
+              "id": "stare",
+              "text": "Zoom in and look for six fingers or jumbled signs",
+              "consequence": "You find nothing odd, but that proves nothing. The fastest check is where it came from.",
+              "outcome": "fail"
+            }
+          ]
+        },
+        {
+          "id": "what-now",
+          "text": "It's an old edited picture. What now?",
+          "choices": [
+            {
+              "id": "tell-gently",
+              "text": "Tell your friend kindly where it really came from",
+              "consequence": "Nice: they won't share it now, and nobody felt silly.",
+              "outcome": "success"
+            },
+            {
+              "id": "say-nothing",
+              "text": "Say nothing: it's their problem, not yours",
+              "consequence": "They might share it further. A kind word now stops it spreading.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "hint": "Look back at how to check a picture. Which check is fastest?",
+      "explanation": "**Search for where it first appeared**: old pictures often come back after every storm. Staring for give-aways can't prove it's real. And be kind: anyone can be fooled."
+    },
+    {
+      "id": "clue-or-myth",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Does each one **help** you tell if a picture is real, or is it a **myth**?",
+      "bins": [
+        {
+          "id": "helps",
+          "label": "Helps"
+        },
+        {
+          "id": "myth",
+          "label": "Myth"
+        }
+      ],
+      "items": [
+        {
+          "id": "first-appeared",
+          "label": "Where the picture first appeared",
+          "bin": "helps"
+        },
+        {
+          "id": "news",
+          "label": "Trusted news showing it",
+          "bin": "helps"
+        },
+        {
+          "id": "ai-label",
+          "label": "A label saying AI made it",
+          "bin": "helps"
+        },
+        {
+          "id": "likes",
+          "label": "It has lots of likes and shares",
+          "bin": "myth"
+        },
+        {
+          "id": "friend",
+          "label": "A friend you trust sent it",
+          "bin": "myth"
+        },
+        {
+          "id": "sharp",
+          "label": "It looks sharp and detailed",
+          "bin": "myth"
+        },
+        {
+          "id": "no-label",
+          "label": "It has no AI label",
+          "bin": "myth"
+        }
+      ],
+      "hint": "Which ones tell you where the picture came from, and which only tell you how popular or nice it is?",
+      "nudge": "A friend can be fooled too, and fakes spread fast and look sharp. Which ones are about the picture's real origin?",
+      "explanation": "Where it **first appeared**, **trusted news**, and an **AI label** are real evidence. Likes, a trusted friend sending it, sharpness, and a missing label are **myths**: fakes get likes, friends get fooled, AI pictures are sharp, and labels go missing."
+    },
+    {
+      "id": "strongest-sign",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Which is the **strongest** sign that a dramatic picture is real?",
+      "options": [
+        {
+          "id": "shares",
+          "text": "It's been shared over a million times today",
+          "nudge": "Fakes spread fast, often faster than the truth. What would really show it happened?"
+        },
+        {
+          "id": "quality",
+          "text": "It's very high quality, with tiny details everywhere",
+          "nudge": "AI pictures can be very detailed. What would show it really happened?"
+        },
+        {
+          "id": "news-angles",
+          "text": "Several trusted news sites show it, from different angles"
+        },
+        {
+          "id": "no-label",
+          "text": "There's no AI label or watermark anywhere on it",
+          "nudge": "Labels go missing or were never added. What would be real evidence?"
+        }
+      ],
+      "correctOptionId": "news-angles",
+      "hint": "Which one is evidence from **outside** the picture itself?",
+      "explanation": "Several **trusted news** sources showing it from **different angles** is strong evidence: it's hard to fake many independent views of the same moment. Shares, sharpness and missing labels prove nothing."
+    },
+    {
+      "id": "crown-dog",
+      "type": "scenario",
+      "difficulty": "challenge",
+      "prompt": "You made a funny AI picture of your dog wearing a crown, sitting on a throne.",
+      "start": "posting",
+      "steps": [
+        {
+          "id": "posting",
+          "text": "You're about to post it. What's the best way?",
+          "choices": [
+            {
+              "id": "real",
+              "text": "Say \"My dog's real royal photo shoot!\"",
+              "consequence": "It's a joke, but saying it's a real photo is how fakes start. Some people will believe it.",
+              "outcome": "fail"
+            },
+            {
+              "id": "nothing",
+              "text": "Post it without saying anything about how it was made",
+              "consequence": "Most people will guess, but some won't, and it can travel far from your caption. Saying it's AI is better.",
+              "outcome": "fail"
+            },
+            {
+              "id": "say-ai",
+              "text": "Post it and say it was made with AI",
+              "consequence": "Perfect: everyone gets the joke, and nobody's fooled.",
+              "outcome": "success"
+            }
+          ]
+        }
+      ],
+      "hint": "Look back at what to do when **you** make an AI picture.",
+      "explanation": "When you post an AI picture, **say it's AI**, even when it's obviously a joke. Pictures travel far from their captions, and it keeps the internet a little more honest."
+    },
+    {
+      "id": "share-rounds",
+      "type": "numeric_input",
+      "difficulty": "challenge",
+      "prompt": "A fake picture spreads. You send it to **3** people. Each of them sends it to **3** new people, and so on. After **4** rounds of sending (yours is round 1), how many people have received it altogether, across all 4 rounds?",
+      "base": "decimal",
+      "answer": 120,
+      "hint": "Work out each round: round 1 is 3 people, round 2 is 3 × 3, and so on. Then add the rounds up.",
+      "nudge": "Round 1: 3. Round 2: 9. Round 3: 27. Round 4: ? Then add all four.",
+      "explanation": "3 + 9 + 27 + 81 = **120** people, from one send. That's why checking before you share matters: a fake can reach thousands in a few more rounds."
+    },
+    {
+      "id": "who-made-recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- A **watermark** or AI label is good evidence when it's there; no label proves nothing.\n- Check where a picture **first appeared**, whether **trusted news** shows it, the account and the details.\n- Likes, sharpness and a trusted friend sending it don't make it real.\n- Check before you share, be kind when someone's fooled, and say when **your** pictures are AI.\n\nNext: the module quiz."
+    }
+  ]
+}

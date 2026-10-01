@@ -1,0 +1,247 @@
+{
+  "id": "how-ai-makes-pictures",
+  "kind": "lesson",
+  "title": "How AI Makes Pictures",
+  "order": 1,
+  "icon": "image-play",
+  "cards": [
+    {
+      "id": "cat-astronaut",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "A cat astronaut, in seconds",
+      "body": "Type \"a cat in a space suit, floating past the Moon, as a watercolour\" into an image tool, and a few seconds later there it is. Nobody drew it, and no such photo exists.\n\nHow does a computer make a picture that has never existed?"
+    },
+    {
+      "id": "generative-ai",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Learning what words look like",
+      "body": "AI that makes new things (pictures, text, music, voices) is called **generative AI**. The chatbots you've met are one kind. Image tools are another.\n\nAn image model is trained on a huge number of pictures, each with a caption describing it. From them it learns which shapes, colours and textures go with which words: what \"cat\" looks like, what \"watercolour\" looks like, what \"sunset\" does to the light.\n\nYour prompt works like a chatbot prompt: the more it says (what, what style, what light, how close), the better aimed the picture."
+    },
+    {
+      "id": "prompt-words",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each word in a picture [[prompt]] to what it changes in the picture.",
+      "pairs": [
+        {
+          "id": "watercolour",
+          "left": "\"as a watercolour\"",
+          "right": "The painting style"
+        },
+        {
+          "id": "sunset",
+          "left": "\"at sunset\"",
+          "right": "The light and colours"
+        },
+        {
+          "id": "close-up",
+          "left": "\"close-up\"",
+          "right": "How near it seems"
+        },
+        {
+          "id": "two-cats",
+          "left": "\"two cats\"",
+          "right": "How many things are in it"
+        }
+      ],
+      "hint": "Think about what each word would change if you were painting it yourself.",
+      "nudge": "\"Close-up\" is about the camera, and \"at sunset\" is about the time of day. What does each of those change?",
+      "explanation": "Style words (**watercolour**) change how it's painted, time words (**at sunset**) change the light, camera words (**close-up**) change how near it seems, and numbers (**two cats**) change what's in it."
+    },
+    {
+      "id": "from-noise",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "From static to picture",
+      "body": "Most image tools start with **random static**, like a fuzzy TV screen. Then, step by step, the model removes a little of the static, each time nudging what's left towards something that matches your words: first blurry blobs of colour, then rough shapes, then details.\n\nBecause each picture starts from **different random static**, the same prompt gives a different picture every time, a bit like temperature giving a chatbot different words."
+    },
+    {
+      "id": "noise-steps",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "Put the steps of making an AI picture in order, from first to last.",
+      "items": [
+        {
+          "id": "static",
+          "label": "Random static, like a fuzzy TV"
+        },
+        {
+          "id": "blobs",
+          "label": "Blurry blobs of colour"
+        },
+        {
+          "id": "shapes",
+          "label": "Rough shapes"
+        },
+        {
+          "id": "details",
+          "label": "Details and texture"
+        },
+        {
+          "id": "finished",
+          "label": "The finished picture"
+        }
+      ],
+      "hint": "It starts from something with no picture in it at all, and each step adds a little more detail.",
+      "nudge": "The very first step has no shapes at all. What does the model start from?",
+      "explanation": "It starts from **random static**, then each step removes a little: **blobs of colour**, then **rough shapes**, then **details**, until the **finished picture**."
+    },
+    {
+      "id": "same-prompt-twice",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "You type the **exact same** prompt into an image tool twice. What will you most likely get?",
+      "options": [
+        {
+          "id": "same",
+          "text": "The exact same picture twice, because computers are exact",
+          "nudge": "Each picture starts from new random static. What does that do to the result?"
+        },
+        {
+          "id": "better",
+          "text": "A better picture the second time, because it learned from the first",
+          "nudge": "The model doesn't learn from each picture you make. What changes between the two tries?"
+        },
+        {
+          "id": "different",
+          "text": "Two different pictures that both match your words"
+        },
+        {
+          "id": "error",
+          "text": "A message saying it has already made that picture",
+          "nudge": "It doesn't keep track like that. What does each picture start from?"
+        }
+      ],
+      "correctOptionId": "different",
+      "hint": "What does each picture start from?",
+      "explanation": "Each picture starts from **different random static**, so the same prompt gives **two different pictures**, both matching the words. The model doesn't learn from your pictures as you make them."
+    },
+    {
+      "id": "telltale-mistakes",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Mistakes AI pictures sometimes make",
+      "body": "AI pictures **sometimes** have give-aways: a hand with the wrong number of fingers, signs with jumbled letters, earrings that don't match, shadows or reflections pointing the wrong way.\n\nBut these are getting rarer as the tools improve. Lots of AI pictures have none of them. So spotting one is a clue, but **not** spotting one proves nothing. Normal photo things (blur, filters, night shots) aren't clues at all."
+    },
+    {
+      "id": "clue-or-not",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Is each one a **possible clue** that a picture was made by AI, or **not a clue**?",
+      "bins": [
+        {
+          "id": "clue",
+          "label": "Possible clue"
+        },
+        {
+          "id": "not",
+          "label": "Not a clue"
+        }
+      ],
+      "items": [
+        {
+          "id": "letters",
+          "label": "A sign with jumbled, unreadable letters",
+          "bin": "clue"
+        },
+        {
+          "id": "fingers",
+          "label": "A hand with six fingers",
+          "bin": "clue"
+        },
+        {
+          "id": "shadow",
+          "label": "A shadow going the wrong way",
+          "bin": "clue"
+        },
+        {
+          "id": "blur",
+          "label": "A blurry background",
+          "bin": "not"
+        },
+        {
+          "id": "filter",
+          "label": "Bright, colourful filters",
+          "bin": "not"
+        },
+        {
+          "id": "night",
+          "label": "A dark photo taken at night",
+          "bin": "not"
+        }
+      ],
+      "hint": "Which of these happen in ordinary photos taken with a phone?",
+      "nudge": "Blur, filters and night shots happen in real photos all the time. Which things don't happen in real life?",
+      "explanation": "Jumbled letters, six fingers and wrong-way shadows **rarely happen in real photos**, so they're possible clues (not proof). Blur, filters and dark night shots happen in ordinary photos all the time, so they tell you nothing."
+    },
+    {
+      "id": "no-mistakes",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "prompt": "You check a picture carefully: normal hands, readable signs, shadows all fine. What can you conclude?",
+      "options": [
+        {
+          "id": "real",
+          "text": "It's a real photo, because AI pictures always have mistakes",
+          "nudge": "AI pictures sometimes have give-aways, but lots don't. Does finding none prove anything?"
+        },
+        {
+          "id": "too-perfect",
+          "text": "It's AI, because a picture with no flaws is too perfect",
+          "nudge": "Real photos are often flawless too. Can \"no mistakes\" prove it either way?"
+        },
+        {
+          "id": "old-tool",
+          "text": "It was made by an older AI tool that didn't make mistakes",
+          "nudge": "Older tools made more mistakes, not fewer. What does finding no clues really tell you?"
+        },
+        {
+          "id": "nothing-sure",
+          "text": "Nothing for sure: good AI pictures often have no visible mistakes"
+        }
+      ],
+      "correctOptionId": "nothing-sure",
+      "hint": "Spotting a mistake is a clue. Does **not** spotting one work the other way?",
+      "explanation": "Give-aways are a clue when you find them, but lots of AI pictures have none, and real photos have none either. So \"no mistakes\" proves **nothing either way**: you need other checks (coming up in this module)."
+    },
+    {
+      "id": "where-it-learned",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "prompt": "How did an image model learn what \"watercolour\" looks like?",
+      "options": [
+        {
+          "id": "search-copy",
+          "text": "It searches for a watercolour each time, and copies it",
+          "nudge": "It doesn't look up and copy one picture. It makes a new one. Where did it learn the style?"
+        },
+        {
+          "id": "captions",
+          "text": "From lots of watercolour pictures with captions in its training data"
+        },
+        {
+          "id": "collage",
+          "text": "It cuts up a few watercolours it saved and mixes the pieces",
+          "nudge": "It doesn't keep pictures to cut up: it starts from static and learned the pattern. Where from?"
+        },
+        {
+          "id": "rules",
+          "text": "Someone wrote rules describing every watercolour brush stroke",
+          "nudge": "Remember rules versus learning. Could anyone write rules for every brush stroke?"
+        }
+      ],
+      "correctOptionId": "captions",
+      "hint": "Think back to how an image model is trained.",
+      "explanation": "It saw lots of pictures **captioned** as watercolours, and learned the pattern: soft edges, runny colours, paper texture. It makes a **new** picture from static with that pattern, rather than copying one or cutting pieces out of saved ones."
+    },
+    {
+      "id": "pictures-recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- **Generative AI** makes new things; image models learned from huge numbers of captioned pictures.\n- Most start from random static and remove it step by step towards your words, so the same prompt gives different pictures.\n- Give-aways like wrong fingers and jumbled signs are clues, but getting rarer: no give-aways proves nothing.\n\nNext: fake voices and faces."
+    }
+  ]
+}

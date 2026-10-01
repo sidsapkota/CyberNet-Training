@@ -1408,14 +1408,453 @@ to each answer before reading the key.
 | 2.2 `spot-the-text` | Fee and deadline are two targets inside one bubble | Kept: each line gets its own tap highlight, and the prompt names the new message |
 | M2 quiz, final | Quiz hotspots reuse the lesson scenes | Kept for now (noted): variants need new scene artwork |
 
-## Beginner audit: Deepfake Scams (1 October 2026)
+---
 
-A fresh agent played the lesson as a 12-year-old (alongside the AI course's module 1): every card
-right first try except `fake-steps`. Tone calm and never blaming; nothing teaches making a scam or
-a deepfake; it stands alone without Spot the Scam.
+# Content review: How AI Really Works
+
+Built on the branch `ai-course`. Every AI output in the course is written in advance: there are no
+live AI calls. The two AI card types use tiny, pure models (`src/cards/train-model/model.ts`,
+`src/cards/next-word/model.ts`), so every "guess" a learner sees is worked out from the card's data.
+No real people appear anywhere.
+
+## Module 1: What AI Actually Is (free; guests get 1.1)
+
+### 1.1 Spot the AI (`spot-the-ai`)
+**Goals:** tell programs that follow written rules from AI that learns from examples; name
+machine learning; know AI matches patterns and doesn't understand like a person.
+
+**Key claims:** face unlock, keyboard suggestions, spam filters and song suggestions use machine
+learning; timers, calculators and unit converters follow fixed rules.
+
+**Simplifications:** "AI" is used for systems that learn from examples (machine learning), which
+is how the word is mostly used today; older rule-based "expert systems" were also called AI. Face
+unlock is described as learning from "scans of your face"; in reality a general face model is
+trained on many people, and your phone stores a description of your face to compare against.
+
+### 1.2 Patterns Everywhere (`patterns-everywhere`)
+**Goals:** training data, labels, patterns and models; see a model trained on correct labels still
+get something wrong; fix it with better examples; the steps collect, label, train, test, use;
+accuracy as a percentage.
+
+**Key claims:** a nearest-neighbour model guesses a new item's label from the nearest training
+examples (k = 1, or the majority of the 3 nearest). Leaving a kind of example out of the training
+data causes mistakes on it.
+
+**Simplifications:** fruit is described by just two features (roundness and yellowness) on a 0 to
+10 chart. Real models use many more features and far more examples. Nearest neighbour is one real,
+simple method; most modern AI uses other kinds of model.
+
+### 1.3 What AI Can't Do (`what-ai-cant-do`)
+**Goals:** a model's output is a prediction, not a fact; confident is not the same as correct;
+check important facts with a trusted source; big decisions about people need a person.
+
+**Key claims:** AI can't reliably check its own answers, so asking it "are you sure?" doesn't
+verify anything. The bridge dates (1952, 1958) are fictional.
+
+**Simplifications:** "it can't always tell when it's guessing" stands in for the fact that a
+model's confidence isn't a reliable sign of being right.
+
+### Module 1 quiz (`what-ai-actually-is-quiz`)
+Six core questions: rules or learning, a labelling card (a mini basketball the model gets wrong),
+missing training examples, the steps, checking a fact, and the four words.
+
+## Module 2: How Machines Learn (Pro; teaser: 2.1 `label-messages`)
+Harder than module 1 on purpose: vote counting, comparing percentages, and "choose the data"
+cards where only one change fixes every test (checked by trying every subset).
+
+### 2.1 Training Data (`training-data`)
+**Goals:** how a word-vote model decides; one word or one example can tip it; wrong labels,
+copies and missing kinds of examples; better data beats more data.
+
+**Key claims:** in the spam example, "free" appears only in spam, so "Free pizza at footy
+training" gets 3 spam votes to 2 (pizza, training) and is called spam; adding "Free footy training
+on Saturday" (not spam) makes it 5 to 3. "Pizza, pizza, pizza!" adds only one vote (words count once
+per message), making a 3 to 3 tie. One mislabelled example next to a test item flips its guess.
+
+**Simplifications:** the word-vote model is a cut-down version of a naive Bayes spam filter (real
+ones weigh words by how often they appear, and use far more messages). Words of 1 or 2 letters are
+skipped, standing in for real "stop word" lists.
+
+### 2.2 Testing a Model (`testing-a-model`)
+**Goals:** training vs test examples; accuracy as right ÷ tested × 100; overfitting; fair and
+unfair tests; comparing accuracies as percentages.
+
+**Key claims:** 34 of 40 = 85%; 45 of 60 = 75% and 38 of 50 = 76%. The weather model gets 3 of
+4 test days right (it calls the cloudy but dry day rain, because every cloudy training day was
+rainy). The "grass means dog" story is the classic shortcut-learning example, told generically.
+
+**Simplifications:** weather is reduced to two features (cloud and damp air); real forecasts use
+physics models and far more data. Overfitting is explained as memorising; the technical idea (fitting
+noise in the training data) is left out. Test examples are described as "kept aside"; validation
+sets aren't mentioned.
+
+### 2.3 Bias In, Bias Out (`bias-in-bias-out`)
+**Goals:** bias as a model working better for some people than others, usually from gaps in the
+data; nobody has to mean it, and it's never the fault of the people it gets wrong; finding it
+(test with many groups, accuracy per group) and fixing it (missing examples, a person checking).
+
+**Key claims:** a checker that only saw "sick" meaning bad misreads slang praise; adding one
+example of the other use fixes it while the mean tests still pass. Voice assistants have been
+found to be less accurate for some accents (described generally; no companies or studies named).
+
+**Simplifications:** bias is shown as missing training examples; other sources (labels that
+reflect people's opinions, how a problem is framed) are left for later or out. The club, school
+and game stories are fictional.
+
+### Module 2 quiz (`how-machines-learn-quiz`)
+Eight core questions: which one example fixes a word-vote mistake (a tie for "Fun games online"),
+accuracy (28 of 35 = 80%), comparing 18 of 24 with 15 of 20 (both 75%), overfitting, fair tests, fixing a face-matching gap for children,
+a biased chat filter, and the four words.
+
+## Beginner audits: Module 2 (1 October 2026)
+
+Module 2 is meant to be harder than module 1. Two fresh agents played it as a 12-year-old who had
+finished module 1, committing to answers before reading the key; every vote count and distance
+was checked against the model code.
+
+**First audit:** 24 of 25 right first try, so too easy. Its causes, and the fixes:
 
 | Where | Issue | Fix |
 |---|---|---|
-| `fake-steps` | The order (don't share, evidence, tell, report) was debatable: telling an adult first is also right | Replaced with a do / don't sort (`do-or-dont`), which also covers not paying and not saving the image |
-| `if-its-you` | "Threatening you" was broader than what the ACCCE handles | "Threatening to share it, or asking you for sexual images or money" |
-| `if-its-you` | "You won't be in trouble" was an absolute promise | "You won't be in trouble for asking for help"; adds "Don't pay or send anything they ask for" |
+| Module | No card made the learner predict the model; live guesses carried the include cards | New core card `count-the-votes`: count the not-spam votes before the model shows its guess (2; counting "at" gives 3) |
+| 2.1 `more-or-better` | A near copy of module 1's yellow apples | Spanish spam vs English data, with a tempting "Spanish spam only" option |
+| 2.3 `club-filter`, `where-bias-comes-from`, `fixes-that-help`; quiz `q-bias-scenario`, `q-better-data` | Joke wrong options; the right answer was the longest | Tempting wrong options ("not enough data overall", "accept everyone more easily", "block fewer messages", "more data from the same group"), similar lengths |
+| Quiz `q-homework` | A one-try include card could be solved by ticking boxes and watching | Now a multiple choice: which one example fixes it ("Fun games online" makes a tie) |
+| 2.2 `weather-model` | Labels were guesses ("muggy") rather than what happened; the hint pushed "a bit humid" towards rain | Each day says what really happened ("…: it rained"); hint points at that |
+| 2.2 `overfitting` | "Grass means dog" is shortcut learning, not memorising | A memorising example: the exact photos, so a dog from a new angle fools it |
+| 2.1 `helpful-or-problem` | "Lots more of the same spam" was debatable | Replaced with unchecked, rushed labels |
+| 2.1 `words-that-vote` | "Very short words" was vague | "Words shorter than 3 letters (a, at, is, go)"; and only the exact same word counts ("game" isn't "games") |
+| 2.2 `forty-photos` | `accuracy` glossary mark on a card whose answer is the accuracy | Removed |
+| 2.1 `which-example-fixes-it`, `fix-the-data` | Hints nearly gave the answer | Point at the method |
+| 2.2 `cloudy-dry` | Watching the test while changing data contradicts the fair-test rule | Explanation and recap: real teams then check on fresh test days |
+
+**Second audit (after those fixes):** 26 of 26 for an expert-ish player, but it named the likely
+slips for a 12-year-old: `count-the-votes` (counting "at"), `which-is-better` (75% vs 76%),
+`more-or-better` (Spanish spam only) and the quiz's `q-homework`, each with a nudge or hint that
+recovers (the quiz has none, by design). Further fixes:
+
+| Where | Issue | Fix |
+|---|---|---|
+| Quiz `q-homework` | Relied on "game" ≠ "games", which wasn't taught | Now taught in `words-that-vote` |
+| 2.3 `slang-checker` | A second solution (drop r3, add x2) contradicted the nudge | x2 is now "Go away, you are rude", which can't rescue the third test |
+| 2.2 `cloudy-dry` | Only one real choice; the nudge named the answer | A tempting third day ("Cloudy, damp night: no rain") that breaks another test; nudge points at the method |
+| 2.3 `accents` | "Check each group's score" came only after this card | Taught in `finding-and-fixing` |
+| 2.2 `fair-or-unfair` | "Changing it until it scores 100%" was ambiguous | "Changing the test…" |
+| 2.3 `problem-and-fix` | Checking a score finds a problem, it doesn't fix it | "best next step" |
+| 2.1 `noisy-label` | The nudge said where to look | Points at the method |
+| Quiz | Mostly recall | New `q-compare`: 18 of 24 vs 15 of 20 (both 75%) |
+
+## Module 3: How Chatbots Think (Pro; teaser: 3.1 `hungry-horse`)
+All chances are written for a small imaginary model (said on the second card of 3.1); they show
+how next-token prediction works, not any real model's numbers.
+
+### 3.1 Next-Word Machines (`next-word-machines`)
+**Goals:** a language model predicts the next token from patterns in huge amounts of text; it
+gives every possible token a chance, picks one, adds it, repeats; chances mean "how often"; tokens
+are words or parts of words; it picks what usually comes next, not what's true.
+
+**Key claims:** "I could eat a horse" is a common saying, so it outranks sensible foods. 70% of
+200 = 140; 30% of 50 = 15. Common short words are usually one token; a long, rarer word like
+"unbelievably" is usually split (the exact pieces depend on the tokenizer). "The Eiffel Tower is
+in Paris" comes from the words appearing together; some chatbot apps can also search the web.
+
+**Simplifications:** the model is described as choosing one token at a time from chances; how
+those chances are computed (and that models can carry information ahead across tokens) is left
+out. Chatbots are also trained further, after the text, to answer helpfully; that isn't covered.
+
+### 3.2 Temperature (`temperature`)
+**Goals:** temperature reshapes the chances (low: predictable; high: surprising, more nonsense);
+the order never changes; which jobs suit which; it never makes answers more correct.
+
+**Key claims (formula p^(1/T), rescaled):** "mat" 60% at 1, 84.7% at 0.5, 99.5% at 0.2, 42.3%
+at 2.0; "sofa" reaches 24% from 1.8 (it can never get much past 25%). Most chatbot apps set the
+temperature for you; some tools let you change it.
+
+**Simplifications:** real apps combine temperature with other sampling settings; only temperature
+is taught.
+
+### 3.3 Made-Up Answers (`made-up-answers`)
+**Goals:** hallucinations (fluent, confident, false) come from picking likely-sounding tokens;
+they hide in names, dates, numbers, quotes and sources; check in a trusted source; asking the
+chatbot again doesn't check anything; the context window limits how much of a chat it can see.
+
+**Key claims:** nobody has walked on Mars (as of October 2026). The book "Fire Below" and
+"Dr Helen Marsh" are fictional, made up for the example. Chatbots can invent sources. A new chat
+usually starts with an empty context window unless the app has a memory feature. Medicine
+questions go to a doctor, pharmacist or trusted adult.
+
+**Simplifications:** the Mars model is a small imaginary one trained on space stories; the card
+says bigger chatbots usually get this right, and the risk is highest for things they've seen less.
+
+### Module 3 quiz (`how-chatbots-think-quiz`)
+Eight core questions: which temperature makes "go" likeliest (0.2), 30% of 300 = 90,
+"raining cats and dogs", low or high temperature jobs, why hallucinations happen, the token loop,
+checking a source, and the five words.
+
+## Beginner audit: Module 3 (1 October 2026)
+
+A fresh agent played module 3 as a 12-year-old who had finished modules 1 and 2, committing
+before reading the key and checking every number against p^(1/T). Result: 24 of 26 right first
+try, no hints; both misses (`even-it-out`, `get-sofa`) were recovered by their nudges, but were
+caused by an app bug, now fixed.
+
+| Where | Issue | Fix |
+|---|---|---|
+| `next_word` card (code) | **Bug:** bars rounded to whole percents but goals are checked to 0.1%, so "45%" showed for 45.5% and Check failed | Bars show one decimal ("45.5%"), the exact precision of the check (`percent`, tested) |
+| 3.2 `get-sofa` | 25% was a knife-edge (sofa never gets much past 25%) | Goal is now 24% (passes from about 1.9) |
+| 3.2 slider cards, quiz `q-ready-set` | Live bars make sliders "wiggle until it looks right" | New prediction card before the second slider (`which-go-up`: every word but "mat" rises); the quiz slider is now a prediction (`q-coldest`) |
+| 3.2 `make-it-predictable` | `temperature` glossary mark gave the direction away | Removed |
+| 3.3 `mars-walk` | Three believable story words with chances hidden | The prompt says the heroes are usually "Captain" something; the contrast is now true ("nobody") vs story |
+| 3.1 `guess-the-next-word`, `one-token-at-a-time`, recap | Overstated: real chatbots get extra training to answer helpfully | Says so; still one likely token at a time, and likely isn't checked |
+| 3.1 `guess-the-next-word` | Modules 1-2 taught labels; language models learn from unlabelled text | "The real next word in the text is the answer it learns from" |
+| 3.2 `same-question-twice` | The 4 comes from the model being certain, not temperature | Reworded |
+| 3.3 `context-window`, `long-chat` | Stated as definite; modern windows are large and apps vary | "Can fall out of the window, or get less attention"; the right choice says "may have lost track" |
+| 3.3 `problem-and-check` | "Doctor or pharmacist" only appeared in an explanation | Now taught in `check-it` |
+| Quiz `q-why-hallucinate` | Weak wrong options | "Temperature too low" and "context window too small" |
+
+**Second audit (after the rounding fix):** 26 of 27 right first try, so the content was still too
+easy. The one miss (`which-go-up`, "only moon") was recovered by its nudge. Changes:
+
+| Where | Issue | Fix |
+|---|---|---|
+| 3.1 (new) `rocket-cat` | Nothing tested "read all the text so far" | Hidden-chance pick: "Inside the rocket, the cat sat on the" (seat, not mat) |
+| 3.2 (new) `fifty-fifty`, replacing `hotter-smarter` | Temperature cards could be done by dragging until the bar looks right | Predict: two words at 50% stay 50% at any temperature (no gap to stretch); "never more correct" moves to its explanation and the recap |
+| 3.3 (new) `link-works` | "Check it says what the chatbot claims" was only in an explainer | Scenario: the link is real, but the page says 1912, not 1915 |
+| 3.3 `mars-walk` | The answer was in the prompt; odd distractors | The story-model fact is in the `hallucination` explainer; distractors "Neil" (the Moon, not Mars), "nobody" (true), "an" |
+| 3.2 `get-sofa` | Explanation said "about 2" (it's 1.8); the prompt hinted the direction | Fixed; default slider; no direction clue |
+| Quiz `q-coldest` | Its numbers couldn't be worked out from one chance | Lists all four chances |
+| Quiz `q-loop` | A word-for-word copy of the lesson card | Adds a fifth step, "Start again with the longer text" |
+| 3.1 `hungry-horse`, `split-tokens` | Hints nearly named the answer | Point at the method |
+| Glossary `training-data` | Said every example has a label (language models learn without) | "usually each with a label" |
+
+## Module 4: Talking to AI (Pro; teaser: 4.1 `vague-or-clear`)
+
+### 4.1 Writing Good Prompts (`writing-good-prompts`)
+**Goals:** a prompt works best when it says the goal, the context and the format; specific beats
+long or polite; say what was wrong when an answer misses; paste in what you have, never private
+details; a better prompt gets a better-aimed answer, not a checked one.
+
+**Key claims:** an octopus has one central brain plus a cluster of nerve cells in each of its 8
+arms (the popular "nine brains"). Chats may be stored.
+
+**Simplifications:** prompting advice is general good practice, not tied to any product.
+
+### 4.2 Checking AI's Work (`checking-ais-work`)
+**Goals:** check facts and dates in a trusted source, open and read sources, do the maths, and be
+careful with news (a model learned up to a certain date unless it can search the web); asking the
+chatbot "is that right?" doesn't check anything; use AI to learn, not to do your work, and follow
+school rules.
+
+**Key claims:** the Moon is about 384,000 km from Earth on average (the chatbot's 38,000 is
+wrong); about 3 days by spacecraft. 3 × 24 = 72; 15% of 80 = 12. Schools' AI rules vary.
+
+### 4.3 AI Tools Today (`ai-tools-today`), `lastChecked: 2026-10-01`
+The only lesson that names real products. Named neutrally, in A to Z order, with no ranking:
+ChatGPT (OpenAI), Claude (Anthropic), Copilot (Microsoft) and Gemini (Google). No card tests a
+brand name. Anthropic, which makes Claude, also made the model that drafted this course; the
+lesson treats all four the same, and the age-rules card names none of them (one app may say 18+,
+another 13+ with a parent's OK, and so on).
+
+**Age rules (checked 1 October 2026):**
+- Claude: Anthropic's Consumer Terms say "You must be at least 18 years old or the minimum age
+  required to consent to use the Services in your location, whichever is higher." (Quoted.)
+- Gemini: Google's Gemini Apps help says a parent who manages a child's account with Family Link
+  can turn off Gemini Apps for under-13s (so younger children can have access, controlled by a
+  parent). The lesson says "some let a parent switch on access for younger children (or turn it
+  off)".
+- ChatGPT and Copilot: their terms pages couldn't be read automatically (blocked), so the lesson
+  makes **no** age claim about them; it says "some other apps allow teenagers". **Check these two
+  by hand before publishing.**
+
+**Recheck by 1 January 2027, then every 3 months:**
+- The four names, their makers, and that each is still widely used (add or remove neutrally).
+- "Many can also read files, search the web, or make pictures."
+- Claude's age rule, Gemini's Family Link rule, and the general "some allow teenagers" line.
+- The "AI you already use" examples, and that much of it can be switched off.
+
+### Module 4 quiz (`talking-to-ai-quiz`)
+Seven core questions: vague or clear prompts, the missing parts of a prompt, 15% of 80, a linked
+page that says 18 (and the chatbot's "sorry, it's 17"), learning vs doing your work, knowledge up to
+a date, and sorting bits of prompts into goal, context and format.
+
+### Beginner audit: Module 4 (1 October 2026)
+First audit: 24 of 24 right first try, so too easy; facts all checked correct. Changes:
+
+| Where | Issue | Fix |
+|---|---|---|
+| 4.2 `moon-distance`, `confident-paragraph` | The bolded 38,000 km and "a factor of ten" pointed at the error | No bold; the hook says "badly wrong" |
+| 4.3 `kind-of-tool`, `school-or-ask` | Nudges listed the answers | Point at the method |
+| 4.3 `rules-and-ages` | Only Claude was named, as the restrictive one: uneven | No product named; one app 18+, another 13+ with a parent's OK, some parent-controlled for younger children |
+| 4.3 `why-dated` | A free point labelled challenge | Now core; new challenge `always-true` (true of every chat assistant, or only some: search, pictures, today's news, never wrong) |
+| 4.2 (new) `hours-in-a-year` | Checking maths was too easy (62 vs 72) | The chatbot says 8,670; really 24 × 365 = 8,760 (swapped digits look right) |
+| 4.1 (new) `goal-context-format`, quiz `q-parts` | Prompt parts were only word-matched | Sort bits of prompts into goal, context and format; context and format blur |
+| Quiz `q-link` | One step | Second step: the chatbot "corrects" itself to 17; the page says 18 |
+| 4.1 `whats-missing`, 4.2 `latest-phone`, `friends-essay`, 4.3 `best-ai`, quiz `q-missing`, `q-latest` | Silly wrong options | Tempting ones ("lots of detail", "mixing up two models", "its context window forgot", "just change some words", "use the newest version") |
+| 4.1 `vague-or-clear` | "Explain photosynthesis in 3 sentences" has no context | Prompt asks "what it wants and what shape" |
+| 4.2 `claim-and-check` | A news site is also a trusted source | Date row: "a textbook or museum site" |
+| 4.2 `honesty` | "Most schools" unverified | "Many schools" |
+
+**Second and third audits** (the third read every card with the answers stripped out first):
+24 of 24, then 31 of 31. The second found the real tell: **the right multiple-choice answer was
+the longest option, and (since options aren't shuffled) usually the first**, across the whole
+course. Fixes, course-wide:
+- Every multiple-choice card in How AI Really Works now has its right answer at a position spread
+  by card id (first/second/third/fourth: 7/7/8/6 of 28), and `load.test.ts` fails if more than 40%
+  of the course's multiple-choice answers come first.
+- Wrong options made as long, specific and tempting as the right one on the worst cards: 2.1
+  `which-example-fixes-it` ("Pizza night at my place tonight" makes a tie), 2.2 `too-good`, 3.1
+  `how-it-knows`, 3.3 `best-check` ("ask a different chatbot"), 3 quiz `q-why-hallucinate`, and in
+  module 4 `whats-missing` ("ask it to check its facts first"), `boring-list` ("You are a shark
+  expert…"), `latest-phone`, `why-dated`, `q-missing`, `q-latest`.
+- Smaller fixes: `boring-list` explanation no longer says "the first"; voice assistants, image
+  generators and translation apps are introduced before `kind-of-tool`; `learn-or-do` nudge
+  general; quiz `q-link` says what you told the chatbot.
+
+Note: the auditor is itself a strong AI model told to play a 12-year-old, so its first-try score
+overstates a real beginner's. Its near-misses (`hours-in-a-year` mental maths, `kind-of-tool`,
+`school-or-ask`, `boring-list`) are the likely real slips.
+
+## Beginner audit: How AI Really Works module 1 and Deepfake Scams (1 October 2026)
+
+**Method:** as for the other courses. A fresh agent played the four module 1 cards sets and the
+deepfake lesson in order as a 12-year-old with no AI or online-safety knowledge, seeing only the
+on-screen text, and committed to each answer before reading the key.
+
+**Result:** 28 graded cards, 27 right first try, no hints. No teach-before-test failures; tone
+calm and never blaming; nothing teaches making a scam or a deepfake; the nearest-neighbour results
+match the explanations.
+
+| Where | Issue | Fix |
+|---|---|---|
+| Deepfake `fake-steps` | The order (don't share, evidence, tell, report) was debatable: telling an adult first is also right | Replaced with a do / don't sort (`do-or-dont`), which also covers not paying and not saving the image |
+| Deepfake `if-its-you` | "Threatening you" was broader than what the ACCCE handles | "Threatening to share it, or asking you for sexual images or money" |
+| Deepfake `if-its-you` | "You won't be in trouble" was an absolute promise | "You won't be in trouble for asking for help"; adds "Don't pay or send anything they ask for" |
+| Quiz `q-rules-or-learning` | "A voice assistant understanding speech" contradicted "AI doesn't understand"; the shop item was vague | "Turning your speech into text" (now also in the 1.1 hook) and "An online shop's 'you might like' list" |
+| Quiz `q-sports-balls` | A one-try labelling card where the names give the labels: a reading test | Now a "choose the data" card: add the small basketball so every test ball is right |
+| 1.2 `three-fruits` | "Green apple" on a red-to-yellow axis | "Red-and-yellow apple" |
+| 1.2 `label-the-fruit` | How the model guesses wasn't said before its guesses appeared | `examples-labels-models` now says it finds the example closest to each new fruit |
+| 1.2 `model-accuracy` | The hint (9 of 12 is 3 of 4) nearly gave the answer | Points at the method instead |
+| 1.3 `a-guess-not-a-fact`, `homework-helper`, quiz `q-check-it` | "It doesn't check its answers" was too absolute: some chatbots search the web | "Even when it searches the web, it can't be sure its answer is right" |
+| 1.1 `what-it-learned-from` | Face unlock's model is trained on many faces | Kept, recorded as a simplification above |
+
+**Also found while testing (app bug, not content):** a newcomer who followed a link straight to a
+lesson that isn't first got the Path gate after their first card, because their own progress in
+that lesson counted. `deepLinkGate` now ignores progress in the lesson being played
+(`hasProgressOutside`).
+
+## Module 5: AI Images, Video and Voices (Pro; teaser: 5.1 `prompt-words`)
+Defence only: nothing explains how to make a deepfake or clone a voice. Every story (the principal,
+the shark, the singer, the dog) is fictional, and no real person is named or shown.
+
+### 5.1 How AI Makes Pictures (`how-ai-makes-pictures`)
+**Goals:** generative AI; image models learn from captioned pictures; most start from random static
+and remove it step by step towards the prompt, so the same prompt gives different pictures; give-
+aways are clues but rarer over time, and no give-aways proves nothing.
+
+**Simplifications:** "start from static and remove it step by step" describes diffusion models,
+the most common kind today, without the maths; some tools work differently. "Learned which shapes
+go with which words" stands in for how text and images are linked during training. The model
+makes a new picture rather than copying one; whether training on others' pictures is fair is a
+real debate the course doesn't cover.
+
+### 5.2 Cloned Voices and Faces (`cloned-voices-and-faces`)
+**Goals:** deepfakes and voice clones; why a short clip can be enough (the model already learned
+voices in general); helpful uses need permission; never make a fake of a real person without it;
+clues in the video vs the stronger clues in the situation; check another way.
+
+**Key claims (checked 1 October 2026):** in Australia, sharing sexual deepfakes of a real person
+without consent is a crime (Criminal Code Amendment (Deepfake Sexual Material) Act 2024), and
+sexual images of anyone under 18 are illegal whether real or fake. The card says exactly that; it
+doesn't claim that making one is illegal everywhere, because that differs between states. Points
+to Stay Safe Online's free Deepfake Scams lesson for help.
+
+### 5.3 Who Made This? (`who-made-this`)
+**Goals:** watermarks and labels are evidence when present, but a missing one proves nothing; check
+where a picture first appeared (searching with the picture itself), trusted news from other angles,
+the account and the details; likes, sharpness and a trusted friend aren't evidence; say when your
+own pictures are AI; be kind when someone's fooled.
+
+**Key claims:** screenshots throw away hidden information in a file; many tools add no mark. 3 + 9
++ 27 + 81 = 120.
+
+### Module 5 quiz (`ai-images-video-and-voices-quiz`)
+Seven core questions: the noise-to-picture stages, why the same prompt differs, clue or not, no
+watermark, the principal deepfake, helpful or harmful, and the four words.
+
+### Beginner audit: Module 5 (1 October 2026)
+Read with the answers stripped out and options shuffled: 24 of 24 right first try (the auditor is
+a strong AI model, so this overstates a beginner). Near-misses: "act fast" (video or situation),
+"a friend you trust sent it", the share-rounds total, and "zoom in for give-aways". Changes:
+
+| Where | Issue | Fix |
+|---|---|---|
+| 5.1 `clue-or-not` | "Can't happen in a real photo" was wrong (six fingers exist; odd shadows happen) | "Rarely happen in real photos": possible clues, not proof |
+| 5.3 `labels-and-watermarks`, quiz `q-no-label` | Some hidden watermarks are in the pixels and survive screenshots | "A screenshot can throw away hidden information saved with the file" |
+| 5.1 `telltale-mistakes` | "Too-smooth skin" clashed with "filters aren't clues" | Removed |
+| 5.3 `clue-or-myth` | "Likes", "sharp" and "a trusted friend" were only called myths in the recap | Taught in `how-to-check-a-picture` |
+| 5.2 `short-clip` | "Already learned from many voices" wasn't taught | In `deepfakes-and-clones`; tempting new option "stitches together words cut from the clip" |
+| 5.2 `video-or-situation` | "It tells you to act fast" fit both bins; the nudge gave it away | "Comes with a 'hurry!' message"; nudge points at watching and listening |
+| 5.2 `help-or-harm` | The museum guide didn't say anyone agreed | "…with OK" |
+| 5.3 `share-rounds` | 81 vs 120 | "altogether, across all 4 rounds" |
+| Quiz `q-clues` | "Zoomed in" wasn't taught | "A blurry photo of a dog running" |
+| Glossary `prompt` | Said chatbots only | "An AI tool, like a chatbot or an image maker" |
+| Free points: 5.1 `where-it-learned`, 5.2 `teacher-video`, `concert-tickets`, 5.3 `the-shark`, quiz `q-principal` | Joke wrong options | Tempting ones: "cuts up saved watercolours and mixes the pieces", "only if we put 'FAKE' in tiny letters", "check the lips match the words" (good fakes pass), "say nothing, it's their problem" |
+
+## Module 6: Using AI Safely and Fairly (Pro; teaser: 6.1 `review-check`; ends with the course final)
+
+### 6.1 Spotting AI Fakes (`spotting-ai-fakes`)
+**Goals:** AI makes fake reviews, articles and bot accounts cheap; misinformation spreads through
+strong feelings; signs of fake reviews; check outside the post (search the claim and site, trusted
+news, who runs it), not inside it; bots and what to do (don't click, report).
+
+**Key claims:** 180 of 240 = 75%. "Checking outside the post" is the lateral-reading approach
+recommended by media-literacy educators, described without naming any organisation.
+
+### 6.2 What Not to Share with AI (`what-not-to-share`)
+**Goals:** chats may be saved, read by staff or used for training, depending on the app and its
+settings; many apps let you turn off history or training (check settings with a parent or carer);
+keep names, schools, passwords, addresses and friends' things private; a chatbot is a program, not
+a friend; app permissions.
+
+**Key claims (checked):** Kids Helpline, 1800 55 1800, free, any time (as verified for Stay Safe
+Online on 30 September 2026). A chat "forgetting" in its context window doesn't delete a stored
+chat. "Many apps" offer history/training settings (true of the four apps named in 4.3 as of
+1 October 2026; stated generally so it doesn't date).
+
+**Tone:** the feeling-down scenario is calm, never alarming, and the right answer is a real person
+or Kids Helpline; the chatbot is "somewhere to start your thoughts, never instead of real people".
+This isn't a help lesson (help stays free in Stay Safe Online); it only points to help.
+
+### 6.3 Fair and Honest Use (`fair-and-honest-use`)
+**Goals:** say when and how you used AI, follow rules and ask when unsure, don't claim AI's work;
+AI learned from people's work and the fairness of that is debated; ask "who might this be unfair
+to?" and keep a person deciding; handling a friend's AI-written prize entry kindly and fairly.
+
+**Simplifications:** the debate about training on creators' work is described neutrally, without
+taking a side or naming lawsuits.
+
+### Course final (`how-ai-really-works-final`)
+Eight core questions, one or more from every module: rules or learning, a "choose the data" card
+(only adding "Bright classroom, no sky" fixes the sunny-indoors photo; checked over every subset),
+36 of 45 = 80%, "sleep tight", a quoted scientist (hallucination), goal/context/format, a viral
+deepfake (official account or trusted news), and a friend's secret (a trusted adult).
+
+### Beginner audit: Module 6 and the course final (1 October 2026)
+Answers stripped and options shuffled first: 25 of 25 (a strong AI auditor; see the note under
+Module 4). Facts, help details and tone checked correct; the final only tests what was taught.
+
+| Where | Issue | Fix |
+|---|---|---|
+| 6.1 `review-check` | New accounts and specific reviews weren't taught first | In `cheap-fakes` |
+| 6.2 `app-permissions`, `needs-it`, `type-or-keep` | Permissions and friends' things only appeared in the recap | In `where-chats-go` |
+| 6.2 `not-a-person` | Kids Helpline is Australian; no emergency line | "In Australia" and "if you're in danger right now, call 000" |
+| 6.1 `fake-share-rate` | Nudge gave 3/4 away | "Try simplifying the fraction first" |
+| 6.1 `why-feelings` | The explainer stated the answer | Now applied: which of four fakes spreads before anyone checks (the shocking one) |
+| 6.2 `best-friend-app` | Absurd distractors; blunt right answer | Tempting ("it remembers you", "turn off history", "made for teens"); "it can't care about you like people do" |
+| 6.3 `captain-picker` | Weak distractor | "It's fair: everyone's judged by the same rule" |
+| Final `f-viral-video`, `f-confident` | "Must be real" distractors | "Check for an AI watermark", "watch frame by frame", "ask the chatbot which book" |
+| Final `f-private` | Read like a trick | "What's the best thing to do?" |
+
+**Smoke test:** a throwaway account with Pro opened every lesson and quiz in the course (24) at
+360px: every first card rendered, no page errors, no sideways scrolling. The account and its grant
+were deleted.

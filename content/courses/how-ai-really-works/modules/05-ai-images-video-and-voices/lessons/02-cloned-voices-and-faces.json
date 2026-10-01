@@ -1,0 +1,277 @@
+{
+  "id": "cloned-voices-and-faces",
+  "kind": "lesson",
+  "title": "Cloned Voices and Faces",
+  "order": 2,
+  "icon": "audio-lines",
+  "cards": [
+    {
+      "id": "principal-video",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "A day off school?",
+      "body": "A video goes round your class: your principal, in their office, announcing that school is closed tomorrow. It's their face, their voice, their office.\n\nThe principal never said it. This lesson is about how that's possible, and what to do about it."
+    },
+    {
+      "id": "deepfakes-and-clones",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Fake faces and voices",
+      "body": "Generative AI can learn how a real person looks and sounds from recordings of them, then make **new** video or audio of them saying things they never said.\n\nA fake video or picture like this is a **deepfake**. A fake copy of a voice is a **voice clone**. Some swap one face onto another person's body; some make the lips move to new words. They can be very convincing. Because the model has already learned from many people's faces and voices, it may need only a short recording of the person to copy."
+    },
+    {
+      "id": "short-clip",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Why can a [[voice clone|voice-clone]] sometimes be made from just a short clip of someone talking?",
+      "options": [
+        {
+          "id": "only-replays",
+          "text": "It can only replay the exact words in the clip",
+          "nudge": "A clone can say new words the person never said. So what does it already know?"
+        },
+        {
+          "id": "already-learned",
+          "text": "The model already learned how voices work from many people, so it just needs this one's sound"
+        },
+        {
+          "id": "stitches",
+          "text": "It cuts words out of the clip and stitches them into new sentences",
+          "nudge": "That would only work for words in the clip, but clones say any words at all. What does the model already know?"
+        },
+        {
+          "id": "short-better",
+          "text": "Short clips hold more detail about a voice than long ones",
+          "nudge": "Longer recordings usually help, not hurt. Why might a short one still be enough?"
+        }
+      ],
+      "correctOptionId": "already-learned",
+      "hint": "Before it ever hears this person, what has the model already learned from?",
+      "explanation": "The model was trained on **many voices**, so it already knows how voices work. A short clip only has to show what's special about **this** voice. That's why posting your voice publicly is worth thinking about."
+    },
+    {
+      "id": "help-or-harm",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Is each use of voice or face AI **helpful**, or **harmful**?",
+      "bins": [
+        {
+          "id": "helpful",
+          "label": "Helpful"
+        },
+        {
+          "id": "harmful",
+          "label": "Harmful"
+        }
+      ],
+      "items": [
+        {
+          "id": "dubbing",
+          "label": "Dubbing a film, with the actors' OK",
+          "bin": "helpful"
+        },
+        {
+          "id": "voice-back",
+          "label": "Giving back a voice someone lost",
+          "bin": "helpful"
+        },
+        {
+          "id": "museum",
+          "label": "A museum guide in 10 languages, with OK",
+          "bin": "helpful"
+        },
+        {
+          "id": "grandma",
+          "label": "A fake call that sounds like Grandma",
+          "bin": "harmful"
+        },
+        {
+          "id": "classmate",
+          "label": "A fake video to embarrass a classmate",
+          "bin": "harmful"
+        },
+        {
+          "id": "celebrity-ad",
+          "label": "A fake singer advert selling a product",
+          "bin": "harmful"
+        }
+      ],
+      "hint": "Ask: does everyone in it know and agree, and is anyone being tricked?",
+      "nudge": "The same technology can help or harm. Look for whether people agreed, and whether someone is fooled.",
+      "explanation": "Dubbing with consent, restoring a lost voice and a museum guide **help**, and nobody's fooled. A fake Grandma call, a video to embarrass someone and a fake celebrity advert **trick or hurt** people."
+    },
+    {
+      "id": "consent-and-the-law",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Permission matters",
+      "body": "Never make or share a deepfake or voice clone of a real person without their **permission**. Even as a joke, it can hurt them, spread further than you meant, and get you in serious trouble. In Australia, sharing fake sexual images of a real person without their consent is a serious crime, and fake sexual images of anyone under 18 are always illegal.\n\nIf someone makes a fake of **you**, it's not your fault. Stay Safe Online's free lesson **Deepfake Scams and Fakes** shows exactly what to do."
+    },
+    {
+      "id": "teacher-video",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "Your friend has found an app that makes funny face-swap videos.",
+      "start": "the-idea",
+      "steps": [
+        {
+          "id": "the-idea",
+          "text": "\"Let's make a video of our teacher dancing badly and saying silly things. It's just a joke!\" What do you say?",
+          "choices": [
+            {
+              "id": "tiny-label",
+              "text": "\"Only if we put 'FAKE' in tiny letters at the end\"",
+              "consequence": "Your teacher still never agreed, and a tiny label is easy to miss or crop off. It can still spread and hurt them.",
+              "outcome": "fail"
+            },
+            {
+              "id": "small-group",
+              "text": "\"OK, but we'll only send it to two friends\"",
+              "consequence": "Two friends can share it with anyone. You can't control a video once it's sent.",
+              "outcome": "fail"
+            },
+            {
+              "id": "no",
+              "text": "\"No: they haven't agreed, and it could really hurt them\"",
+              "consequence": "Right. Without permission, it isn't a joke, it's a fake of a real person.",
+              "outcome": "success"
+            }
+          ]
+        }
+      ],
+      "hint": "Look back at what matters most before making a fake of a real person.",
+      "explanation": "Without the teacher's **permission**, it's a deepfake of a real person, even as a joke and even with a tiny label. And there's no such thing as \"just two friends\": anything sent can spread."
+    },
+    {
+      "id": "spotting-fakes",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Clues, and context",
+      "body": "Fake videos and audio **sometimes** have clues: lips slightly out of time with the words, odd blinking, a flat voice or strange breathing, the edge of a face flickering.\n\nBut the strongest clues are usually in the **situation**: who posted it, whether it pushes you to act fast, whether anyone trustworthy is reporting it, whether it makes sense. The best check is to ask the real person, or a trusted source, another way."
+    },
+    {
+      "id": "video-or-situation",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Is each one a clue **in the video itself**, or a clue **in the situation** around it?",
+      "bins": [
+        {
+          "id": "video",
+          "label": "In the video"
+        },
+        {
+          "id": "situation",
+          "label": "In the situation"
+        }
+      ],
+      "items": [
+        {
+          "id": "lips",
+          "label": "Lips don't quite match the words",
+          "bin": "video"
+        },
+        {
+          "id": "flat-voice",
+          "label": "The voice sounds flat and odd",
+          "bin": "video"
+        },
+        {
+          "id": "flicker",
+          "label": "The edge of the face flickers",
+          "bin": "video"
+        },
+        {
+          "id": "unknown-account",
+          "label": "Posted by an account you don't know",
+          "bin": "situation"
+        },
+        {
+          "id": "act-fast",
+          "label": "Comes with a \"hurry!\" message",
+          "bin": "situation"
+        },
+        {
+          "id": "nobody-else",
+          "label": "No one else is reporting it",
+          "bin": "situation"
+        }
+      ],
+      "hint": "Could you spot it by watching closely, or by asking where it came from?",
+      "nudge": "Which ones could you only spot by watching the face and listening to the voice closely?",
+      "explanation": "Lip-sync, odd voices and flickering edges are **in the video**. Who posted it, pressure to act fast and whether anyone trustworthy is reporting it are **in the situation**, and they're often the stronger clues."
+    },
+    {
+      "id": "concert-tickets",
+      "type": "scenario",
+      "difficulty": "challenge",
+      "prompt": "A video shows a famous singer saying: \"I'm giving away 1,000 free concert tickets! Click the link in the next hour.\"",
+      "start": "the-video",
+      "steps": [
+        {
+          "id": "the-video",
+          "text": "It looks and sounds exactly like them, and it's on a page you've never seen. What do you do?",
+          "choices": [
+            {
+              "id": "click",
+              "text": "Click the link quickly before the tickets go",
+              "consequence": "The rush is the trick. The link asks for your parents' card details. It was a deepfake advert.",
+              "outcome": "fail"
+            },
+            {
+              "id": "lips",
+              "text": "Watch closely to check the lips match the words",
+              "consequence": "The lips match perfectly. Good fakes pass that test. The situation (an unknown page, a rush, free tickets) is the stronger clue.",
+              "outcome": "fail"
+            },
+            {
+              "id": "check",
+              "text": "Check the singer's official account for the same news",
+              "consequence": "Their official account says nothing about it, and warns about fake giveaway videos. It was a deepfake.",
+              "outcome": "success"
+            }
+          ]
+        }
+      ],
+      "hint": "Spot the situation clues first: who posted it, and what is it pushing you to do?",
+      "explanation": "An unknown page, a rush and \"free\" are **situation clues**. The face and voice can be faked, so check the **real person's official account** or trusted news, another way."
+    },
+    {
+      "id": "words-and-meanings",
+      "type": "match_pairs",
+      "difficulty": "challenge",
+      "prompt": "Match each word to what it means.",
+      "pairs": [
+        {
+          "id": "deepfake",
+          "left": "Deepfake",
+          "right": "A fake video or picture of a real person"
+        },
+        {
+          "id": "clone",
+          "left": "Voice clone",
+          "right": "An AI copy of someone's voice"
+        },
+        {
+          "id": "consent",
+          "left": "Permission",
+          "right": "The person agreeing first"
+        },
+        {
+          "id": "generative",
+          "left": "Generative AI",
+          "right": "AI that makes new things"
+        }
+      ],
+      "hint": "Two are about fakes, one is about agreeing, and one is the big family they all belong to.",
+      "nudge": "A voice clone is only about sound. A deepfake shows a face or body. Which leaves \"AI that makes new things\"?",
+      "explanation": "A **deepfake** is a fake video or picture of a real person; a **voice clone** copies a voice; **permission** means the person agreed first; and **generative AI** is the whole family of AI that makes new things."
+    },
+    {
+      "id": "voices-recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- AI can learn a real person's face or voice from recordings and make new fakes: **deepfakes** and **voice clones**.\n- Helpful uses have everyone's permission; never make a fake of a real person without it.\n- Clues in the video are getting harder to spot; clues in the situation (who, why, how fast) still work.\n- Check with the real person or a trusted source, another way.\n\nNext: working out who made a picture."
+    }
+  ]
+}

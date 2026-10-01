@@ -1,0 +1,11 @@
+{
+  "id": "how-machines-learn",
+  "title": "How Machines Learn",
+  "description": "Training data, fair tests, and how bias sneaks in.",
+  "order": 2,
+  "access": "pro",
+  "teaserCard": {
+    "lesson": "training-data",
+    "card": "label-messages"
+  }
+}

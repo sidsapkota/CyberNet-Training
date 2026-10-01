@@ -70,7 +70,20 @@ export const LESSON_ICONS = [
   "eye-off",
   "users",
   "life-buoy",
+  // AI
+  "bot",
+  "scan-eye",
+  "brain",
   "audio-lines",
+  "tags",
+  "target",
+  "scale",
+  "message-square",
+  "thermometer-sun",
+  "sparkles",
+  "wand-sparkles",
+  "image-play",
+  "scan-face",
 ] as const;
 
 export type LessonIconName = (typeof LESSON_ICONS)[number];

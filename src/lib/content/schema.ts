@@ -56,6 +56,11 @@ export const RegularLessonSchema = z
     kind: z.literal("lesson"),
     /** The icon on its course path node (from the allow-list). Quizzes keep the network hub. */
     icon: z.enum(LESSON_ICONS, { error: "must be an icon from LESSON_ICONS (src/lib/content/lessonIcons.ts)" }),
+    /**
+     * For lessons about fast-changing things (real products): when the facts were last checked
+     * (YYYY-MM-DD). Shown to learners; validate-content warns when a recheck is due (lastChecked.ts).
+     */
+    lastChecked: z.iso.date().optional(),
   })
   .refine(uniqueCardIds, { message: "card ids must be unique within a lesson", path: ["cards"] })
   .refine((l) => l.cards.some((c) => c.difficulty === "core"), {
@@ -114,6 +119,8 @@ export interface LessonOutline {
   icon?: LessonIconName;
   /** Only set for quizzes. */
   passThreshold?: number;
+  /** Only set for lessons whose facts are dated (see `lastChecked` on the lesson). */
+  lastChecked?: string;
 }
 
 export interface ModuleOutline extends ModuleFile {
@@ -142,5 +149,6 @@ export function toLessonOutline(lesson: Lesson): LessonOutline {
     cardCount: lesson.cards.length,
     coreCardIds: lesson.cards.filter((c) => c.difficulty === "core").map((c) => c.id),
     ...(lesson.kind === "quiz" ? { passThreshold: lesson.passThreshold } : { icon: lesson.icon }),
+    ...(lesson.kind === "lesson" && lesson.lastChecked ? { lastChecked: lesson.lastChecked } : {}),
   };
 }

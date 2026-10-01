@@ -19,6 +19,8 @@ export const COACH_KEYS = [
   "simulator",
   "scenario",
   "sort_bins",
+  "train_model",
+  "next_word",
 ] as const;
 export type CoachKey = (typeof COACH_KEYS)[number];
 

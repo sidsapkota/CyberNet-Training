@@ -135,7 +135,7 @@ describe("real content in /content", () => {
 
   it("lists Inside Your Devices first, with its modules and lessons in order", () => {
     const { courses } = loadContent();
-    expect(courses.map((c) => c.id)).toEqual(["inside-your-devices", "how-the-internet-works", "stay-safe-online"]);
+    expect(courses.map((c) => c.id)).toEqual(["inside-your-devices", "how-the-internet-works", "stay-safe-online", "how-ai-really-works"]);
     expect(courses[0]?.modules.map((m) => m.lessons.map((l) => l.id))).toEqual([
       ["whats-in-the-box", "memory-vs-storage", "meet-the-cpu", "pull-it-apart-quiz"],
       ["meet-the-os", "files-and-folders", "software-in-charge-quiz"],
@@ -169,7 +169,7 @@ describe("real content in /content", () => {
     const firsts = content.courses.map((c) => c.modules[0]!.lessons.find((l) => l.kind === "lesson")!.id);
     const help = [...content.lessons.values()].filter((l) => l.moduleId === "when-things-go-wrong").map((l) => l.id);
     expect(open.sort()).toEqual([...firsts, ...help].sort());
-    expect(firsts).toEqual(["whats-in-the-box", "bits-and-binary", "strong-passwords"]);
+    expect(firsts).toEqual(["whats-in-the-box", "bits-and-binary", "strong-passwords", "spot-the-ai"]);
     // Outlines (sent to the browser for the path) agree with the lessons.
     for (const mod of content.courses.flatMap((c) => c.modules)) {
       for (const outline of mod.lessons) expect(outline.guests, outline.id).toBe(content.lessons.get(outline.id)!.guests);
@@ -196,6 +196,18 @@ describe("real content in /content", () => {
       ["phishing-emails", "scam-texts-and-calls", "fake-websites", "spot-the-scam-quiz"],
       ["your-digital-footprint", "apps-and-wi-fi", "guard-your-privacy-quiz"],
       ["signs-of-a-hack", "deepfake-scams", "getting-help", "stay-safe-online-final"],
+    ]);
+  });
+
+  it("lists How AI Really Works' modules and lessons in order", () => {
+    const course = loadContent().courses.find((c) => c.id === "how-ai-really-works");
+    expect(course?.modules.map((m) => [m.access, ...m.lessons.map((l) => l.id)])).toEqual([
+      ["free", "spot-the-ai", "patterns-everywhere", "what-ai-cant-do", "what-ai-actually-is-quiz"],
+      ["pro", "training-data", "testing-a-model", "bias-in-bias-out", "how-machines-learn-quiz"],
+      ["pro", "next-word-machines", "temperature", "made-up-answers", "how-chatbots-think-quiz"],
+      ["pro", "writing-good-prompts", "checking-ais-work", "ai-tools-today", "talking-to-ai-quiz"],
+      ["pro", "how-ai-makes-pictures", "cloned-voices-and-faces", "who-made-this", "ai-images-video-and-voices-quiz"],
+      ["pro", "spotting-ai-fakes", "what-not-to-share", "fair-and-honest-use", "how-ai-really-works-final"],
     ]);
   });
 

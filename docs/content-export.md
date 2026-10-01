@@ -861,3 +861,400 @@ Signs of a hack, what to do step by step, and where to get help.
 #### Module quiz (8 questions)
 
 Not exported, so the answers stay secret.
+
+## How AI Really Works
+
+Teach a model, watch a chatbot pick its words, and use AI safely.
+
+### Module 1: What AI Actually Is (Free)
+
+What counts as AI, how it learns from examples, and where it goes wrong.
+
+#### Spot the AI
+
+- **Access:** Free, no account needed (best for video links)
+- **Link:** `cybernettraining.com/from/<platform>/spot-the-ai`
+
+**Key facts**
+
+- *AI is already in your pocket:* All of these use **artificial intelligence**, or **AI**.
+- *Rules or examples?:* Most programs follow **rules** that a person wrote, step by step. Try writing rules for "what does my friend's face look like?" So instead, people give the computer lots of **examples** and let it work out what they have in common.
+- *Learning by example:* It's called **machine learning**: the computer is shown many examples and finds the patterns in them itself.
+- *Recap:* Ordinary programs follow **rules** a person wrote. **AI** learns from **examples** instead, finding patterns in them.
+
+**Best interactive cards**
+
+- Sort into groups: Does each one **follow rules** someone wrote, or **learn from examples**?
+- Match pairs: Match each kind of AI to the examples it learns from.
+- Sort into groups: Trickier: does each one **follow rules**, or **learn from examples**?
+
+**Surprising facts**
+
+- An alarm clock's rule is simple: at 7:00, ring.
+
+#### Patterns Everywhere
+
+- **Access:** Free with a free account
+- **Link:** `cybernettraining.com/from/<platform>/patterns-everywhere`
+
+**Key facts**
+
+- *Examples, labels and models:* A **pattern** is something that shows up again and again, like apples being round and bananas being long. To teach a computer, you give it **training data**: lots of examples, each with a **label** that says what it really is ("apple" or "banana").
+- *Why did it get one wrong?:* Every apple in its training data was **red**.
+- *Recap:* **Training data** is lots of examples, each with a **label** saying what it really is. The computer finds **patterns** in them and builds a **model** that guesses labels for new things.
+
+**Best interactive cards**
+
+- Train a model: Label each fruit as an **apple** or a **banana**. Then press Check to train the model and see what it guesses about 3 new fruits.
+- Train a model: Here's the same model, plus a **golden apple** it isn't using yet. Choose which examples to train on, so it gets **every** test fruit right.
+- Train a model: Now there are three kinds of fruit. This model looks at the **3 nearest** examples and goes with the most common label. Label the fruit, then see its guesses.
+
+#### What AI Can't Do
+
+- **Access:** Free with a free account
+- **Link:** `cybernettraining.com/from/<platform>/what-ai-cant-do`
+
+**Key facts**
+
+- *A guess, not a fact:* Everything a model gives you is a **prediction**: its best guess, based on patterns in its training data.
+- *People are responsible:* Big decisions about people, like a punishment at school, a medical treatment or who gets a job, need a **person** to decide and to be responsible.
+- *Recap:* Everything AI gives you is a **prediction**, not a fact.
+
+**Best interactive cards**
+
+- Choose what happens: You're using an AI helper for history homework.
+- Sort into groups: Is each job **fine for AI to help with**, or does it **need a person** to decide?
+- Choose what happens: Your photo app sorts pictures by who's in them.
+
+#### Module quiz (6 questions)
+
+Not exported, so the answers stay secret.
+
+### Module 2: How Machines Learn (Pro)
+
+Training data, fair tests, and how bias sneaks in.
+
+#### Training Data
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/training-data`
+
+**Key facts**
+
+- *Words that vote:* When a new message arrives, each word in it **votes**. A word gets **one vote for each training message** it appeared in, for that message's label.
+- *One word, three votes:* In those examples, **"free" only ever appeared in spam**, so to the model, "free" means spam.
+- *Good data, bad data:* **Wrong labels:** a spam message labelled "not spam" teaches the model the wrong lesson. **Copies:** a thousand copies of one example add nothing new, and make that one example count far too much.
+- *Recap:* A model learns only from its **training data**, so it repeats that data's patterns, including its gaps. Fix it with **better** data (checked, varied, realistic), not just more of it.
+
+**Best interactive cards**
+
+- Train a model: Label each message as **spam** or **not spam**. Then press Check to train the model and see what it makes of two new messages.
+- Train a model: Try it. Choose which examples to train on, so the model gets **both** test messages right.
+- Train a model: Someone made a labelling mistake in this fruit data. Find it, and choose the examples to train on so the model gets **both** test fruits right. (This model picks the **nearest** example.)
+
+#### Testing a Model
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/testing-a-model`
+
+**Key facts**
+
+- *Keep some examples aside:* **Training examples** are for learning. **Test examples** are kept aside, and the model never sees them while it learns.
+- *Memorising isn't learning:* A model can learn its training examples **too** well: every detail, instead of the general pattern. This is called **overfitting**.
+- *Recap:* Keep **test examples** aside: the model never sees them while it learns. **Accuracy** = right ÷ tested × 100.
+
+**Best interactive cards**
+
+- Sort into groups: Is each one a **fair** test of a model, or an **unfair** one?
+- Train a model: A weather model guesses whether it will rain from the clouds and the air. Each training day says what really happened: label them, then see how the model does on **4 test days** it has never seen.
+- Train a model: Now add training days so the model gets **all 4** test days right. Three new days are available.
+
+**Surprising facts**
+
+- **Accuracy** is that as a percentage: right ÷ tested × 100.
+- 100% on training examples but much less on new ones means **overfitting**: memorising instead of learning.
+
+#### Bias In, Bias Out
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/bias-in-bias-out`
+
+**Key facts**
+
+- *Bias in, bias out:* This is called **bias**.
+- *Finding and fixing bias:* **Ask who it might work worse for**, before and after it's built. **Test it with lots of different people** and situations, not just one group.
+- *Recap:* **Bias**: a model works better for some people than others, usually because of gaps in its training data.
+
+**Best interactive cards**
+
+- Train a model: This checker learned only from formal messages, so it calls **"That game was sick!"** mean. Choose the examples to train on, so it gets **all 3** test messages right. (It uses word votes, like the spam model.)
+- Choose what happens: Your club wants to sort new sign-ups with a model.
+- Choose what happens: A school is choosing a voice assistant to help in class.
+
+#### Module quiz (8 questions)
+
+Not exported, so the answers stay secret.
+
+### Module 3: How Chatbots Think (Pro)
+
+Next-word guessing, temperature, and why chatbots make things up.
+
+#### Next-Word Machines
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/next-word-machines`
+
+**Key facts**
+
+- *Guessing the next word:* A chatbot is built on a **language model**: a model trained on a huge amount of text, so it learns which words tend to follow which. Give it some text, and it gives every possible next word a **chance**.
+- *Recap:* A **language model** learned from huge amounts of text which words tend to follow which. For the text so far, it gives every possible next **token** a chance, picks one, adds it, and repeats.
+
+**Best interactive cards**
+
+- Next word: A language model is choosing the next word. Which one is it **most likely** to pick?
+- Put in order: Put the steps a chatbot repeats for every token in order.
+- Next word: Remember: after "The cat sat on the", "mat" had the biggest chance. Now the text so far is longer. Which word is **most likely** next this time?
+
+**Surprising facts**
+
+- After "The cat sat on the", it might give "mat" 60%, "sofa" 20%, "floor" 15% and "moon" 5%.
+- A 60% chance means that if it carried on from here 100 times, it would pick "mat" about 60 of them.
+- A 70% chance means about 70 times in every 100, not every time.
+
+#### Temperature
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/temperature`
+
+**Key facts**
+
+- *Same question, different answers:* A setting called **temperature** decides how it picks between its options.
+- *Turning the dial:* **Low temperature:** the likeliest token gets even likelier. **Temperature 1:** the chances are used as the model learned them.
+- *Which temperature, when?:* Low temperatures suit jobs with **one right answer**: maths, facts, summaries, code. Higher temperatures suit jobs where you want **variety**: brainstorming, story ideas, silly poems.
+- *Recap:* **Temperature** changes how a model picks from its chances; the order of the tokens never changes.
+
+**Best interactive cards**
+
+- Next word: Move the temperature until **mat** has a chance of at least **80%**.
+- Next word: Now make the model more surprising: move the temperature until **no word** has more than a **45%** chance.
+- Next word: Can you get **sofa** up to at least **24%**?
+
+#### Made-Up Answers
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/made-up-answers`
+
+**Key facts**
+
+- *Fluent, confident, wrong:* When a chatbot writes something false but says it smoothly and confidently, it's called a **hallucination**. It happens because the model picks tokens that **sound** likely, not tokens it has checked are true.
+- *How to check:* **Find it in a trusted source**: a textbook, a library catalogue, an official website. **Ask for sources, then open them**: chatbots can invent sources too, so make sure each one really exists and says what the chatbot claims.
+- *A short memory:* This is called its **context window**.
+- *Recap:* A **hallucination** is a fluent, confident answer that's false, because the model picks likely tokens, not checked facts. The **context window** is how much of the chat it can see at once; in long chats it can forget the start.
+
+**Best interactive cards**
+
+- Next word: That small space-story model gets this text. Which word is it **most likely** to write next?
+- Choose what happens: You're writing a report on volcanoes.
+- Choose what happens: A chatbot tells you a famous ship sank in **1915**, and gives a link to a museum website.
+
+#### Module quiz (8 questions)
+
+Not exported, so the answers stay secret.
+
+### Module 4: Talking to AI (Pro)
+
+Write clear prompts, check the answers, and know today's tools.
+
+#### Writing Good Prompts
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/writing-good-prompts`
+
+**Key facts**
+
+- *What a good prompt says:* What you type to a chatbot is called a **prompt**. Remember, it writes the likely next words for **your** text, so the more your prompt says, the better it can aim.
+- *Give it what it needs:* Good prompts can include things you have: **paste in your notes** to summarise, or **your draft** for feedback. You can also ask it to **ask you questions first**, or to **say if it isn't sure**.
+- *Recap:* A **prompt** works best when it says the **goal**, the **context** and the **format**.
+
+**Best interactive cards**
+
+- Sort into groups: Is each prompt **vague**, or **clear** about what it wants and what shape?
+- Choose what happens: You're preparing a 1-minute talk about octopuses for class.
+- Choose what happens: You want a chatbot to quiz you on your history notes.
+
+**Surprising facts**
+
+- **The context:** who it's for and what you already know or have ("I'm 12", "here are my notes").
+
+#### Checking AI's Work
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/checking-ais-work`
+
+**Key facts**
+
+- *Four ways to check:* **Facts and dates:** find them in a trusted source, like a textbook or an official website. **Sources:** open each one and make sure it really says what the chatbot claims.
+- *Using AI honestly:* Using AI to **learn** is great: ask it to explain a step you don't get, quiz you, or give feedback on your draft. Using it to **do the work for you**, and handing that in as yours, is different.
+
+**Best interactive cards**
+
+- Choose what happens: The chatbot's paragraph says: "The Moon is about 38,000 km from Earth, and it takes about 3 days to get there by spacecraft."
+- Sort into groups: Is each one using AI to **learn**, or letting it **do your work** for you?
+- Choose what happens: Your friend shows you an essay a chatbot wrote for them, due tomorrow.
+
+#### AI Tools Today
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/ai-tools-today`
+
+**Key facts**
+
+- *Chat assistants:* Some widely used AI chat assistants (in A to Z order) are **ChatGPT** (made by OpenAI), **Claude** (Anthropic), **Copilot** (Microsoft) and **Gemini** (Google).
+- *AI you already use:* There are **voice assistants** you talk to that answer out loud, **image generators** that make pictures from a description, and **translation apps** that turn text into another language.
+- *Age rules and good habits:* Every AI app has its own rules, including **who can use it**, and they differ a lot. **Check the app's own rules**, and **ask a parent or carer** before signing up.
+
+**Best interactive cards**
+
+- Sort into groups: For schoolwork, is each use of an AI tool **usually fine**, or one to **check with your teacher first**?
+- Choose what happens: A new AI app promises to turn your selfie into a cartoon.
+- Choose what happens: Your friend says: "My AI app is the best one. It's never wrong."
+
+**Surprising facts**
+
+- One app's terms may say you must be 18 or older; another may allow 13-year-olds with a parent's OK; some let a parent switch on access for younger children (or turn it off).
+
+#### Module quiz (7 questions)
+
+Not exported, so the answers stay secret.
+
+### Module 5: AI Images, Video and Voices (Pro)
+
+How AI makes pictures and voices, deepfakes, and checking what's real.
+
+#### How AI Makes Pictures
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/how-ai-makes-pictures`
+
+**Key facts**
+
+- *Learning what words look like:* AI that makes new things (pictures, text, music, voices) is called **generative AI**.
+- *From static to picture:* Most image tools start with **random static**, like a fuzzy TV screen. Because each picture starts from **different random static**, the same prompt gives a different picture every time, a bit like temperature giving a chatbot different words.
+- *Mistakes AI pictures sometimes make:* AI pictures **sometimes** have give-aways: a hand with the wrong number of fingers, signs with jumbled letters, earrings that don't match, shadows or reflections pointing the wrong way. So spotting one is a clue, but **not** spotting one proves nothing.
+- *Recap:* **Generative AI** makes new things; image models learned from huge numbers of captioned pictures.
+
+**Best interactive cards**
+
+- Match pairs: Match each word in a picture prompt to what it changes in the picture.
+- Put in order: Put the steps of making an AI picture in order, from first to last.
+- Sort into groups: Is each one a **possible clue** that a picture was made by AI, or **not a clue**?
+
+#### Cloned Voices and Faces
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/cloned-voices-and-faces`
+
+**Key facts**
+
+- *Fake faces and voices:* Generative AI can learn how a real person looks and sounds from recordings of them, then make **new** video or audio of them saying things they never said. A fake video or picture like this is a **deepfake**.
+- *Permission matters:* Never make or share a deepfake or voice clone of a real person without their **permission**. If someone makes a fake of **you**, it's not your fault.
+- *Clues, and context:* Fake videos and audio **sometimes** have clues: lips slightly out of time with the words, odd blinking, a flat voice or strange breathing, the edge of a face flickering. But the strongest clues are usually in the **situation**: who posted it, whether it pushes you to act fast, whether anyone trustworthy is reporting it, whether it makes sense.
+- *Recap:* AI can learn a real person's face or voice from recordings and make new fakes: **deepfakes** and **voice clones**.
+
+**Best interactive cards**
+
+- Sort into groups: Is each use of voice or face AI **helpful**, or **harmful**?
+- Choose what happens: Your friend has found an app that makes funny face-swap videos.
+- Choose what happens: A video shows a famous singer saying: "I'm giving away 1,000 free concert tickets! Click the link in the next hour."
+
+**Surprising facts**
+
+- In Australia, sharing fake sexual images of a real person without their consent is a serious crime, and fake sexual images of anyone under 18 are always illegal.
+
+#### Who Made This?
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/who-made-this`
+
+**Key facts**
+
+- *Labels and watermarks:* Some AI tools add a **watermark**: a visible mark, or hidden information inside the file, saying AI made it. So a label saying AI made it is good evidence; **no label proves nothing**.
+- *How to check a picture:* **Find where it first appeared.** Many search tools let you search with the picture itself: older copies, or the original, often turn up. **Look for trusted news** reporting it, ideally with other photos from other angles.
+- *Recap:* A **watermark** or AI label is good evidence when it's there; no label proves nothing. Check where a picture **first appeared**, whether **trusted news** shows it, the account and the details.
+
+**Best interactive cards**
+
+- Choose what happens: Your friend sends you the shark-in-the-street picture: "OMG look at this!!"
+- Sort into groups: Does each one **help** you tell if a picture is real, or is it a **myth**?
+- Choose what happens: You made a funny AI picture of your dog wearing a crown, sitting on a throne.
+
+#### Module quiz (7 questions)
+
+Not exported, so the answers stay secret.
+
+### Module 6: Using AI Safely and Fairly (Pro)
+
+Spot AI-made fakes, keep your private stuff private, and use AI honestly.
+
+#### Spotting AI Fakes
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/spotting-ai-fakes`
+
+**Key facts**
+
+- *Fakes made in seconds:* With AI, anyone can make in seconds what used to take hours: **fake reviews**, **fake news articles** that look like a real news site, and **fake accounts** (called bots) that post and reply automatically, all day. False information that spreads, whether someone meant it or not, is called **misinformation**.
+- *Check outside the post:* When something surprises you, **stop** and notice how it makes you feel. Then check **outside** the post, not inside it:
+- *Recap:* AI makes fake reviews, articles and accounts (bots) cheap and fast: **misinformation** can come from anywhere. Strong feelings are the moment to stop: check **outside** the post, not inside it.
+
+**Best interactive cards**
+
+- Sort into groups: Is each one about a shop's reviews **suspicious**, or **normal**?
+- Choose what happens: Under a video about a new game, an account replies to dozens of comments within a minute.
+- Sort into groups: Is each one a check **outside** the post (useful), or just looking **inside** it again?
+
+**Surprising facts**
+
+- By the next morning it has 200 five-star reviews, all saying how "amazing" and "life-changing" the boards are.
+
+#### What Not to Share with AI
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/what-not-to-share`
+
+**Key facts**
+
+- *Where your chats go:* Depending on the app and its settings, your chats may be **saved**, **read by staff** checking for problems, or **used to train** future models. But the safest rule is simple: **don't type anything you wouldn't want someone else to read**, and remember that your friends' photos and secrets aren't yours to share.
+- *A program, not a person:* If something's worrying you, talk to a **trusted adult**, a friend, or, in Australia, **Kids Helpline (1800 55 1800)**, free, any time. If you're in danger right now, call **000**.
+
+**Best interactive cards**
+
+- Sort into groups: Is each one **fine to type** into an AI chatbot, or one to **keep private**?
+- Choose what happens: It's late, you're feeling really down, and you've been telling an AI chatbot about it for an hour.
+- Choose what happens: You install an AI homework app. As it opens, it asks for permission to see your **contacts** and your **location**.
+
+**Surprising facts**
+
+- For worries, talk to a trusted adult or Kids Helpline (1800 55 1800).
+
+#### Fair and Honest Use
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/fair-and-honest-use`
+
+**Key facts**
+
+- *Say how you used it:* **Say when and how** you used AI ("I used AI to check my spelling"). **Follow the rules** of your school, club or competition, and **ask** when you're not sure.
+- *The people behind it:* What you can do: **respect people's work**, credit artists you're inspired by, and keep making things in your own way.
+- *Fair to everyone:* So when AI makes decisions about people, like picking, sorting or scoring them, ask: **who might this be unfair to?** And keep a **person** checking decisions that matter.
+- *You know how AI really works:* AI learns **patterns from examples**, so it's only as good, and as fair, as its training data. Chatbots pick **likely tokens**, not checked facts: check anything that matters.
+
+**Best interactive cards**
+
+- Sort into groups: Is each one **honest**, or **not honest**?
+- Choose what happens: Your class wants to use an AI tool to pick team captains "fairly", based on who talks most in class discussions.
+- Choose what happens: Your friend's story wins the school writing prize. You know a chatbot wrote most of it.
+
+#### Module quiz (8 questions)
+
+Not exported, so the answers stay secret.

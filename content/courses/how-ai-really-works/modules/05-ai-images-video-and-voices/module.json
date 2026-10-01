@@ -1,0 +1,11 @@
+{
+  "id": "ai-images-video-and-voices",
+  "title": "AI Images, Video and Voices",
+  "description": "How AI makes pictures and voices, deepfakes, and checking what's real.",
+  "order": 5,
+  "access": "pro",
+  "teaserCard": {
+    "lesson": "how-ai-makes-pictures",
+    "card": "prompt-words"
+  }
+}

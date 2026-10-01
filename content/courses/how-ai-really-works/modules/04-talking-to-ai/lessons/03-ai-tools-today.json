@@ -1,0 +1,283 @@
+{
+  "id": "ai-tools-today",
+  "kind": "lesson",
+  "title": "AI Tools Today",
+  "order": 3,
+  "icon": "app-window",
+  "lastChecked": "2026-10-01",
+  "cards": [
+    {
+      "id": "changes-fast",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "This changes fast",
+      "body": "This is the only lesson in the course that names real AI products. They change quickly: new tools appear, names change, features come and go. That's why this lesson shows the date it was last checked.\n\nEverything else in the course (how models learn, tokens, temperature, checking) stays true however the tools change."
+    },
+    {
+      "id": "chat-assistants",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Chat assistants",
+      "body": "Some widely used AI chat assistants (in A to Z order) are **ChatGPT** (made by OpenAI), **Claude** (Anthropic), **Copilot** (Microsoft) and **Gemini** (Google).\n\nThey all work the way you've learned: you type or say a prompt, and a language model writes a reply, one token at a time. Many can also read files you share, search the web, or make pictures. Each one has its own rules, settings and mistakes, and none of them is always right."
+    },
+    {
+      "id": "ai-in-your-apps",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "AI you already use",
+      "body": "AI isn't only in chat apps. There are **voice assistants** you talk to that answer out loud, **image generators** that make pictures from a description, and **translation apps** that turn text into another language.\n\nIt's also in the photo app that finds pictures of your dog, the map that predicts traffic, the captions on videos, your keyboard's suggestions, and the \"you might like\" lists in shops and video apps.\n\nSome of these are switched on by default, and many can be turned off in settings."
+    },
+    {
+      "id": "kind-of-tool",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each kind of AI tool to what it does.",
+      "pairs": [
+        {
+          "id": "chat",
+          "left": "Chat assistant",
+          "right": "Writes replies to your messages"
+        },
+        {
+          "id": "image",
+          "left": "Image generator",
+          "right": "Makes a picture from a description"
+        },
+        {
+          "id": "voice",
+          "left": "Voice assistant",
+          "right": "Answers out loud when you speak to it"
+        },
+        {
+          "id": "translate",
+          "left": "Translation app",
+          "right": "Turns text into another language"
+        }
+      ],
+      "hint": "The name of each kind of tool tells you a lot. What does each one take in, and what does it give back?",
+      "nudge": "Think about what each one takes in (a message, a description, your voice, some text) and what it gives back.",
+      "explanation": "Chat assistants **reply** to messages, image generators make **pictures** from descriptions, voice assistants respond to **speech**, and translation apps change the **language**. Many apps now do several of these."
+    },
+    {
+      "id": "rules-and-ages",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Age rules and good habits",
+      "body": "Every AI app has its own rules, including **who can use it**, and they differ a lot. One app's terms may say you must be 18 or older; another may allow 13-year-olds with a parent's OK; some let a parent switch on access for younger children (or turn it off). Rules also change.\n\n- **Check the app's own rules**, and **ask a parent or carer** before signing up.\n- **Think twice before uploading photos** of yourself or friends: you may not be able to take them back.\n- **Follow your school's AI rules.**"
+    },
+    {
+      "id": "school-or-ask",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "For schoolwork, is each use of an AI tool **usually fine**, or one to **check with your teacher first**?",
+      "bins": [
+        {
+          "id": "fine",
+          "label": "Usually fine"
+        },
+        {
+          "id": "ask",
+          "label": "Check first"
+        }
+      ],
+      "items": [
+        {
+          "id": "explain",
+          "label": "Explaining a topic you're stuck on",
+          "bin": "fine"
+        },
+        {
+          "id": "quiz",
+          "label": "Quizzing you before a test",
+          "bin": "fine"
+        },
+        {
+          "id": "spelling",
+          "label": "Pointing out spelling mistakes",
+          "bin": "fine"
+        },
+        {
+          "id": "write",
+          "label": "Writing part of an assignment",
+          "bin": "ask"
+        },
+        {
+          "id": "art",
+          "label": "Making a picture for an art task",
+          "bin": "ask"
+        },
+        {
+          "id": "translate-hw",
+          "label": "Translating language homework for you",
+          "bin": "ask"
+        }
+      ],
+      "hint": "Does the AI help you learn, or does it make part of what you hand in?",
+      "nudge": "Does the AI make something that ends up in what you hand in?",
+      "explanation": "Help that lets you **learn** (explaining, quizzing, spotting spelling mistakes) is usually fine. Anything where AI **makes part of what you hand in** (writing, art, translation for a language task) is one to check with your teacher first."
+    },
+    {
+      "id": "selfie-app",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "A new AI app promises to turn your selfie into a cartoon.",
+      "start": "sign-up",
+      "steps": [
+        {
+          "id": "sign-up",
+          "text": "It asks you to upload a selfie and a photo of a friend, and to tick \"I am 18 or older\". You're 13. What do you do?",
+          "choices": [
+            {
+              "id": "tick",
+              "text": "Tick the box: nobody checks",
+              "consequence": "That's breaking the app's rules, and your friend never agreed to their photo being uploaded.",
+              "outcome": "fail"
+            },
+            {
+              "id": "stop",
+              "text": "Stop, and ask a parent or carer about it",
+              "consequence": "Good: the app says it's for adults, and photos of you and a friend are worth a second thought.",
+              "outcome": "success"
+            },
+            {
+              "id": "friend-only",
+              "text": "Just upload your friend's photo, not yours",
+              "consequence": "Your friend hasn't agreed, and the app still isn't for your age.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "hint": "Look back at the age rules and good habits.",
+      "explanation": "The app's rules say 18+, so it isn't for you yet, and photos of a friend need their OK. **Stop and ask a parent or carer.**"
+    },
+    {
+      "id": "why-dated",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Why does this lesson show the date it was last checked, when the other lessons don't?",
+      "options": [
+        {
+          "id": "newest",
+          "text": "So you can tell which AI app is the newest one",
+          "nudge": "The date is when the lesson was checked, not when the apps came out. Why would that matter?"
+        },
+        {
+          "id": "change-fast",
+          "text": "Facts about AI products go out of date quickly"
+        },
+        {
+          "id": "stop-working",
+          "text": "Because AI apps stop working after a set date",
+          "nudge": "Apps don't expire like that. What does change quickly about them?"
+        },
+        {
+          "id": "all-tech",
+          "text": "Because every lesson about technology needs a date",
+          "nudge": "The other lessons in this course are about technology too, and have no date. What's different here?"
+        }
+      ],
+      "correctOptionId": "change-fast",
+      "hint": "What's in this lesson that isn't in any other lesson of the course?",
+      "explanation": "This lesson names **real products**, and their names, features and rules change quickly. How models learn, tokens and temperature stay true, so the other lessons don't need a date."
+    },
+    {
+      "id": "always-true",
+      "type": "sort_bins",
+      "difficulty": "challenge",
+      "prompt": "Is each one true of **every** AI chat assistant, or only **some** of them (or none)?",
+      "bins": [
+        {
+          "id": "every",
+          "label": "Every one"
+        },
+        {
+          "id": "some",
+          "label": "Some or none"
+        }
+      ],
+      "items": [
+        {
+          "id": "wrong",
+          "label": "Can give a wrong answer",
+          "bin": "every"
+        },
+        {
+          "id": "tokens",
+          "label": "Writes its reply a token at a time",
+          "bin": "every"
+        },
+        {
+          "id": "learned",
+          "label": "Learned from lots of text",
+          "bin": "every"
+        },
+        {
+          "id": "search",
+          "label": "Can search the web",
+          "bin": "some"
+        },
+        {
+          "id": "pictures",
+          "label": "Can make pictures",
+          "bin": "some"
+        },
+        {
+          "id": "today",
+          "label": "Knows what happened today",
+          "bin": "some"
+        },
+        {
+          "id": "never-wrong",
+          "label": "Is never wrong",
+          "bin": "some"
+        }
+      ],
+      "hint": "What do all of them share because of how they're built? What are extra features some apps add?",
+      "nudge": "Look for the ones that come from being a language model, and the ones that are extra features (or impossible).",
+      "explanation": "Every chat assistant is a language model: it **learned from text**, writes **a token at a time**, and **can be wrong**. Searching the web, making pictures and knowing today's news are **extra features** only some have, and none is never wrong."
+    },
+    {
+      "id": "best-ai",
+      "type": "scenario",
+      "difficulty": "challenge",
+      "prompt": "Your friend says: \"My AI app is the best one. It's never wrong.\"",
+      "start": "claim",
+      "steps": [
+        {
+          "id": "claim",
+          "text": "What's the most accurate reply?",
+          "choices": [
+            {
+              "id": "agree",
+              "text": "\"If it's the best, you don't need to check it\"",
+              "consequence": "Even a very good model writes likely tokens, not checked facts. Every one of them can be wrong.",
+              "outcome": "fail"
+            },
+            {
+              "id": "all-can",
+              "text": "\"Every AI chatbot can be wrong, so check the things that matter\"",
+              "consequence": "Right: they're all language models, so they can all hallucinate, whichever one is best at the moment.",
+              "outcome": "success"
+            },
+            {
+              "id": "newest",
+              "text": "\"Use the newest version: new ones don't make mistakes\"",
+              "consequence": "Newer models can be better, but they still pick likely tokens, so they still make mistakes.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "hint": "Think about how every chat assistant writes its answers.",
+      "explanation": "Whatever the app, a chat assistant is a language model picking likely tokens, so **any** of them can hallucinate. Check the things that matter."
+    },
+    {
+      "id": "tools-recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- Chat assistants like ChatGPT, Claude, Copilot and Gemini all write replies one likely token at a time, and all can be wrong.\n- AI is also inside apps you already use, and much of it can be switched off.\n- Each app has its own age rules: check them, and ask a parent or carer.\n- Products change fast, which is why this lesson is dated.\n\nNext: the module quiz."
+    }
+  ]
+}

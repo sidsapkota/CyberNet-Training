@@ -1,5 +1,5 @@
 /** 32-bit FNV-1a hash, used to seed the shuffle from a card id. */
-function hashString(value: string): number {
+export function hashString(value: string): number {
   let hash = 0x811c9dc5;
   for (let i = 0; i < value.length; i++) {
     hash ^= value.charCodeAt(i);
@@ -9,7 +9,7 @@ function hashString(value: string): number {
 }
 
 /** Mulberry32 PRNG: tiny, deterministic, good enough for shuffling UI items. */
-function mulberry32(seed: number): () => number {
+export function mulberry32(seed: number): () => number {
   let a = seed;
   return () => {
     a = (a + 0x6d2b79f5) | 0;
