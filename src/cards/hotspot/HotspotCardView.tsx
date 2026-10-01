@@ -56,7 +56,18 @@ function TapMode({ card, answer, onAnswerChange, status, parts, hidden, locked, 
         selected
       </p>
       <div className="mt-4">
-        <SceneStage sceneId={card.scene} hidden={hidden}>
+        <SceneStage
+          sceneId={card.scene}
+          hidden={hidden}
+          pick={{
+            parts,
+            disabled: locked,
+            onPick: (id) => {
+              onAnswerChange(toggleTap(card, answer, id));
+              onTap();
+            },
+          }}
+        >
           {parts.map((part) => {
             const isSelected = selected.has(part.id);
             const isTarget = targets.has(part.id);

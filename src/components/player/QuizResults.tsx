@@ -79,7 +79,7 @@ export function QuizResults({
           }`}
         >
           {attempt.passed ? <CheckIcon className="size-4" /> : <XIcon className="size-4" />}
-          {attempt.passed ? "Passed · module complete" : "Not passed yet"}
+          {attempt.passed ? (nextModule ? "Passed · module complete" : "Passed · course complete") : "Not passed yet"}
         </p>
         <h1 className="mt-2 text-headline font-semibold">
           You scored <span className="font-mono">{correct}</span> out of <span className="font-mono">{total}</span>

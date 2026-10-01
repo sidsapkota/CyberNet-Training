@@ -8,6 +8,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { chromium } from "playwright-core";
+import { prepare } from "./lib/access.mjs";
 
 // Run with the dev server up (`npm run dev`), then `npm run e2e:mistake-review`. Needs .env.local
 // with the Supabase URL and SUPABASE_SECRET_KEY. Uses an installed Edge or Chrome (E2E_BROWSER=chrome).
@@ -64,6 +65,7 @@ try {
 
   const ctx = await browser.newContext({ viewport: PHONE, colorScheme: "dark", reducedMotion: "reduce" });
   const page = await ctx.newPage();
+  await prepare(page);
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto(`${BASE}/auth/callback?token_hash=${link.data.properties.hashed_token}&type=magiclink&next=/`);

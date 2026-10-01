@@ -49,6 +49,12 @@ export function overlayOrder<T extends { box: Box }>(parts: readonly T[]): T[] {
 
 /** The smallest a scene is drawn, even on a crowded card (a card that needs less must be split). */
 const MIN_HEIGHT = 180;
+/**
+ * Scenes that show their own text (an email, a text message, a web page, a file list): never shrunk
+ * to fit, or their words become unreadable and their parts too small to tap apart. A card using one
+ * that doesn't fit must be split (the fit audit lists it).
+ */
+const READABLE = new Set<SceneId>(["file-browser", "email", "text-message", "fake-website"]);
 /** Room kept under the scene for a line of controls (the hint, a status line). */
 const BELOW = 72;
 
@@ -75,6 +81,25 @@ function useFittedHeight(chip: boolean) {
   return { setNode, height };
 }
 
+/**
+ * Which part a tap at (x, y) in scene units means: the smallest part whose real box contains it,
+ * else the nearest within `tolerance` (scene units). Each part's button is at least 44px, so on a
+ * small scene the buttons overlap (a text line's button covering the next line); this picks by
+ * the drawn part instead. Pure.
+ */
+export function partAt(parts: readonly { id: string; box: Box }[], x: number, y: number, tolerance: number): string | null {
+  const inside = parts.filter((p) => x >= p.box.x && x <= p.box.x + p.box.w && y >= p.box.y && y <= p.box.y + p.box.h);
+  if (inside.length) return inside.reduce((a, b) => (a.box.w * a.box.h <= b.box.w * b.box.h ? a : b)).id;
+  let best: { id: string; d: number } | null = null;
+  for (const p of parts) {
+    const dx = Math.max(p.box.x - x, 0, x - (p.box.x + p.box.w));
+    const dy = Math.max(p.box.y - y, 0, y - (p.box.y + p.box.h));
+    const d = Math.hypot(dx, dy);
+    if (d <= tolerance && (!best || d < best.d)) best = { id: p.id, d };
+  }
+  return best?.id ?? null;
+}
+
 /** Which half of the scene a part's box is in (a callout goes in the other one). */
 export function partHalf(sceneId: SceneId, box: Box): "top" | "bottom" {
   const scene = getScene(sceneId)!;
@@ -96,8 +121,14 @@ export function SceneStage({
   children,
   callout,
   calloutAt = "bottom",
+  pick,
   ref,
 }: {
+  /**
+   * Taps go to the drawn part under the finger (`partAt`), not to whichever 44px button is on
+   * top. The parts' own buttons stay for keyboard and screen-reader users.
+   */
+  pick?: { parts: readonly { id: string; box: Box }[]; onPick: (id: string) => void; disabled?: boolean };
   sceneId: SceneId;
   hidden: ReadonlySet<string>;
   wrap?: (partId: string, node: ReactNode) => ReactNode;
@@ -110,6 +141,10 @@ export function SceneStage({
   const scene = getScene(sceneId)!;
   const ratio = scene.width / scene.height;
   const fitted = useFittedHeight(scene.simplified === true);
+  // Wide scenes (laptop, email, web page) are short, so the callout fits below them, in view,
+  // without covering the scene; tall ones (phones) pin it inside the panel instead.
+  const wide = ratio >= 1.2;
+  const shrink = !READABLE.has(sceneId);
   const { setNode } = fitted;
   const setRefs = useCallback(
     (node: HTMLDivElement | null) => {
@@ -133,15 +168,36 @@ export function SceneStage({
           // Measured: the room left between the scene's top and the player's footer. Before that
           // (server HTML), a CSS estimate.
           width:
-            fitted.height !== null
+            fitted.height !== null && shrink
               ? `min(100%, ${Math.round(fitted.height * ratio)}px)`
+              : !shrink
+                ? `min(100%, ${Math.round(MAX_HEIGHT * ratio)}px)`
               : `min(100%, ${Math.round(MAX_HEIGHT * ratio)}px, calc((100dvh - ${RESERVED}) * ${ratio.toFixed(4)}))`,
         }}
       >
         <SceneArt sceneId={sceneId} hidden={hidden} wrap={wrap} title={title} />
         {children}
+        {pick && !pick.disabled && (
+          <div
+            aria-hidden="true"
+            data-scene-pick
+            className="absolute inset-0 z-[5] cursor-pointer"
+            onClick={(event) => {
+              const rect = event.currentTarget.getBoundingClientRect();
+              const x = ((event.clientX - rect.left) / rect.width) * scene.width;
+              const y = ((event.clientY - rect.top) / rect.height) * scene.height;
+              const id = partAt(pick.parts, x, y, (22 / rect.width) * scene.width);
+              if (id) pick.onPick(id);
+            }}
+          />
+        )}
       </div>
-      {callout && (
+      {callout && wide && (
+        <div data-scene-callout className="mt-3 min-h-16 rounded-control border border-line-strong bg-surface p-3 text-left">
+          {callout}
+        </div>
+      )}
+      {callout && !wide && (
         <div
           data-scene-callout
           className={`pointer-events-none absolute inset-x-2 z-10 rounded-control border border-line-strong bg-surface p-3 text-left shadow-lift sm:inset-x-3 ${

@@ -5,6 +5,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { chromium } from "playwright-core";
+import { prepare } from "./lib/access.mjs";
 
 // Run with the dev server up (`npm run dev`), then `npm run e2e:quiz-pass`. Needs .env.local with
 // the Supabase URL and SUPABASE_SECRET_KEY (throwaway accounts are created and deleted). Uses an
@@ -35,6 +36,7 @@ try {
   await admin.from("quiz_attempts").insert({ user_id: userId, quiz_id: QUIZ, attempted_at: new Date(Date.now() - 86_400_000).toISOString(), score: 1, passed: true, xp: 50, answers: [] });
   const context = await browser.newContext({ viewport: { width: 360, height: 900 }, colorScheme: "dark", reducedMotion: "reduce" });
   const page = await context.newPage();
+  await prepare(page);
   const link = await admin.auth.admin.generateLink({ type: "magiclink", email });
   await page.goto(`${BASE}/auth/callback?token_hash=${link.data.properties.hashed_token}&type=magiclink&next=/lesson/${QUIZ}`);
   await page.waitForLoadState("networkidle");

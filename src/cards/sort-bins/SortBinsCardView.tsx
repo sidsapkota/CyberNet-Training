@@ -66,7 +66,7 @@ function ItemChip({
       disabled={locked}
       onClick={onTap}
       style={{ opacity: isDragging ? 0.35 : 1, touchAction: "none" }}
-      className={`inline-flex min-h-11 items-center gap-1.5 rounded-control border-2 px-3 py-1.5 text-left text-small font-semibold transition-colors disabled:cursor-default ${tone}`}
+      className={`inline-flex min-h-11 max-w-full items-center gap-1.5 rounded-control border-2 px-3 py-1.5 text-left text-small font-semibold [overflow-wrap:anywhere] transition-colors disabled:cursor-default ${tone}`}
     >
       {result === "correct" && <CheckIcon className="size-4 shrink-0 text-success" strokeWidth={2.5} />}
       {result === "incorrect" && <XIcon className="size-4 shrink-0 text-danger" strokeWidth={2.5} />}

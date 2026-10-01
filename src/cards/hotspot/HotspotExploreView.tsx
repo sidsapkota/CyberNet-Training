@@ -63,6 +63,7 @@ export function HotspotExploreView({ card, answer, onAnswerChange }: CardCompone
           sceneId={card.scene}
           hidden={hidden}
           calloutAt={activePart && partHalf(card.scene, activePart.box) === "bottom" ? "top" : "bottom"}
+          pick={{ parts, onPick: tap }}
           callout={
             activePart ? (
               <AnimatePresence mode="wait" initial={false}>

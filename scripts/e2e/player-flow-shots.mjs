@@ -28,7 +28,7 @@ try {
     await page.waitForTimeout(800);
     await shot(page, "hotspot-explore-open");
     const part = page.getByRole("button", { name: /battery|Battery/ }).first();
-    if (await part.count()) await part.click();
+    if (await part.count()) await part.click({ force: true });
     else await scene.click({ position: { x: 150, y: 150 } });
     await page.waitForTimeout(500);
     await shot(page, "hotspot-explore-tapped");
@@ -79,7 +79,7 @@ try {
     await small.waitForTimeout(800);
     await small.screenshot({ path: path.join(OUT, `${TAG}-explore-560-open.png`) });
     const firstPart = small.locator("[data-scene-stage] button").last();
-    await firstPart.click();
+    await firstPart.click({ force: true });
     await small.waitForTimeout(700);
     await small.screenshot({ path: path.join(OUT, `${TAG}-explore-560-tapped.png`) });
     await ig.close();

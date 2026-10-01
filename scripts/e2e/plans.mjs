@@ -8,6 +8,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { chromium } from "playwright-core";
+import { prepare } from "./lib/access.mjs";
 
 // Run with the dev server up (`npm run dev`), then `npm run e2e:plans`. Needs .env.local with the
 // Supabase URL and SUPABASE_SECRET_KEY. Uses an installed Edge or Chrome (E2E_BROWSER=chrome).
@@ -57,6 +58,7 @@ const events = async (page) => page.__sent ?? [];
 
 async function signIn(ctx, email) {
   const page = await ctx.newPage();
+  await prepare(page);
   const link = await admin.auth.admin.generateLink({ type: "magiclink", email });
   await page.goto(`${BASE}/auth/callback?token_hash=${link.data.properties.hashed_token}&type=magiclink&next=/`);
   await page.waitForURL((u) => !u.pathname.startsWith("/auth"), { timeout: 30000 });
@@ -89,6 +91,7 @@ try {
   {
     const ctx = await browser.newContext({ viewport: PHONE, colorScheme: "dark", reducedMotion: "reduce" });
     const page = await ctx.newPage();
+    await prepare(page);
     await watchEvents(page);
     await page.goto(`${BASE}/pro`);
     await page.getByRole("heading", { name: "Choose your plan" }).waitFor({ timeout: 30000 });
@@ -138,6 +141,7 @@ try {
     for (const scheme of ["dark", "light"]) {
       const wide = await browser.newContext({ viewport: { width: 1280, height: 900 }, colorScheme: scheme, reducedMotion: "reduce" });
       const desk = await wide.newPage();
+      await prepare(desk);
       await desk.goto(`${BASE}/pro`);
       await desk.getByRole("heading", { name: "Choose your plan" }).waitFor({ timeout: 30000 });
       await desk.getByRole("link", { name: /Start your free trial/ }).waitFor({ timeout: 30000 });
