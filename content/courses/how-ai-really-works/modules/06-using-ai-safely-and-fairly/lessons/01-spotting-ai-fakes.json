@@ -11,13 +11,13 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "200 five-star reviews",
-      "body": "A brand-new skateboard shop opens online. By the next morning it has 200 five-star reviews, all calling the boards \"amazing\".\n\nReal customers don't work that fast. With AI, anyone can make **fake reviews**, fake news articles and **bots** (accounts that post automatically) in seconds. False information that spreads is called misinformation."
+      "body": "A brand-new skateboard shop opens online. By morning it has 200 five-star reviews, all calling the boards \"amazing\".\n\nReal customers don't work that fast. With AI, anyone can make **fake reviews**, fake news and **bots** (accounts that post automatically) in seconds. False information that spreads is called misinformation."
     },
     {
       "id": "review-check",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Real customers buy at different times, have different opinions, and write in their own words. Fake reviews often look like **one source pretending to be many**.\n\nIs each sign about a shop's reviews **suspicious**, or **normal**?",
+      "prompt": "Fake reviews often look like **one source pretending to be many**. Is each sign **suspicious** or **normal**?",
       "bins": [
         {
           "id": "suspicious",
@@ -60,15 +60,15 @@
           "bin": "normal"
         }
       ],
-      "hint": "Picture lots of real customers. Do they all buy on one day, think the same thing, and use the same words?",
-      "nudge": "A few bad reviews can be a good sign. Which ones look like many accounts acting as one?",
-      "explanation": "Lots of reviews at once, the same unusual words, and reviewers with no history look like **one source pretending to be many**. Real reviews are mixed, specific and spread out, even if some are bad."
+      "hint": "Picture real customers: do they all buy on one day and use the same words?",
+      "nudge": "A few bad reviews can be a good sign. Which look like many accounts acting as one?",
+      "explanation": "Floods of reviews, the same unusual words and reviewers with no history look like **one source pretending to be many**. Real reviews are mixed, specific and spread out."
     },
     {
       "id": "real-or-suspicious-review",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Now look at single reviews. Real ones usually mention **specific details**, good and bad. Fakes tend to be **vague and over the top**.\n\nDoes each review **look real**, or is it **suspicious**?",
+      "prompt": "Real reviews mention **specific details**; fakes are **vague and over the top**. Does each **look real**, or **suspicious**?",
       "bins": [
         {
           "id": "real",
@@ -111,15 +111,15 @@
           "bin": "suspicious"
         }
       ],
-      "hint": "Could the review have been written without ever touching the product? Real buyers notice small details.",
-      "nudge": "A complaint doesn't make a review fake. Which ones say nothing you could only know by using the product?",
-      "explanation": "Real reviews mention **specific details**, like squeaky wheels, a slow delivery or the sizing, even when they're happy. Gushing words with no details, and brand-new accounts, are warning signs. Each one is a clue, not proof: look at the whole picture."
+      "hint": "Could the review be written without ever touching the product?",
+      "nudge": "A complaint doesn't make a review fake. Which say nothing only a real user would know?",
+      "explanation": "Real reviews mention **specific details**, even when happy. Gushing words with no details, and brand-new accounts, are warning signs: clues, not proof."
     },
     {
       "id": "inside-or-outside",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Fakes spread fastest when they shock or anger people, because people share before they check. So when a post stirs you up, **stop**.\n\nAI makes fakes look polished, so studying the post itself proves little. Is each one a check **outside** the post (useful), or just looking **inside** it again?",
+      "prompt": "Shocking posts get shared before they're checked, and fakes look polished. Is each check **outside** the post, or **inside**?",
       "bins": [
         {
           "id": "outside",
@@ -163,8 +163,8 @@
         }
       ],
       "hint": "Does the check need a new tab, or just the post in front of you?",
-      "nudge": "Fakes can be polished and sharp. Which checks find out about the post from somewhere else?",
-      "explanation": "Searching, trusted news and finding who's behind it all look **outside** the post. Re-reading, judging how professional it looks and photo quality only look **inside**, where good fakes pass easily."
+      "nudge": "Fakes can look polished and sharp. Which checks learn about it from somewhere else?",
+      "explanation": "Searching, trusted news and finding who's behind it look **outside** the post. Re-reading, polish and photo quality only look **inside**, where good fakes pass easily."
     },
     {
       "id": "why-feelings",
@@ -174,8 +174,8 @@
       "options": [
         {
           "id": "rainfall",
-          "text": "A made-up report about last year's rainfall in your area",
-          "nudge": "It's fake, but does it make anyone feel much? What makes people share without checking?"
+          "text": "A made-up report on last year's local rainfall",
+          "nudge": "It's fake, but does it make anyone feel much? What makes people share fast?"
         },
         {
           "id": "library",
@@ -184,7 +184,7 @@
         },
         {
           "id": "school-shut",
-          "text": "\"SHOCKING: the local park is being sold and bulldozed!\""
+          "text": "\"SHOCKING: our local park is being bulldozed!\""
         },
         {
           "id": "recipe",
@@ -194,37 +194,37 @@
       ],
       "correctOptionId": "school-shut",
       "hint": "Which one makes people feel the strongest thing, fast?",
-      "explanation": "The **shocking** one: strong feelings like shock and anger make people share first and check later. That's why fakes are so often designed to scare or anger you, and why a strong feeling is your cue to stop."
+      "explanation": "The **shocking** one: shock and anger make people share first and check later. So a strong feeling is your cue to stop."
     },
     {
       "id": "chocolate-cure",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A news site you've never heard of says chocolate cures colds, with quotes from \"Dr Sam Lee, a top scientist\". What's the **best** first move?",
+      "prompt": "A site you've never heard of says chocolate cures colds, quoting \"Dr Sam Lee, a top scientist\". Best first move?",
       "options": [
         {
           "id": "read-carefully",
           "text": "Read the whole article slowly to look for mistakes",
-          "nudge": "AI-written fakes often have no mistakes. Where should you check: inside the article, or outside it?"
+          "nudge": "AI-written fakes often have no mistakes. Check inside the article, or outside it?"
         },
         {
           "id": "expert-quotes",
-          "text": "Check that it quotes a scientist, so it's backed by an expert",
-          "nudge": "Quotes are easy to invent, and \"Dr Sam Lee\" might not exist. How could you check outside the article?"
+          "text": "Check it quotes a scientist, so an expert backs it",
+          "nudge": "Quotes are easy to invent, and \"Dr Sam Lee\" may not exist. How could you check outside?"
         },
         {
           "id": "search",
-          "text": "Search for the claim and the site's name in another tab"
+          "text": "Search the claim and the site's name in another tab"
         },
         {
           "id": "comments",
-          "text": "Read the comments to see if most people agree with it",
-          "nudge": "Comments can be fake too, and agreement isn't evidence. Where else could you look?"
+          "text": "Read the comments to see if most people agree",
+          "nudge": "Comments can be fake, and agreement isn't evidence. Where else could you look?"
         }
       ],
       "correctOptionId": "search",
       "hint": "Look back at where to check: inside the post, or outside it?",
-      "explanation": "**Search outside the article**: for the claim, the site and the \"expert\". AI-written fakes can be polished, quote invented people and fill the comments, so checking inside the article proves little."
+      "explanation": "**Search outside the article** for the claim, the site and the \"expert\". AI fakes can be polished, quote invented people and fill the comments."
     },
     {
       "id": "the-bot",
@@ -235,24 +235,24 @@
       "steps": [
         {
           "id": "replies",
-          "text": "Every reply says almost the same thing: \"This game is a SCAM, download SuperBlast instead!!\" with a link. What's most likely going on?",
+          "text": "Every reply says almost the same: \"This game is a SCAM, download SuperBlast instead!!\" with a link. What's going on?",
           "choices": [
             {
               "id": "angry-fan",
               "text": "A real fan of SuperBlast who wants others to try it",
-              "consequence": "One person can't post dozens of near-identical replies in a minute. That speed and sameness is automatic.",
+              "consequence": "One person can't post dozens of near-identical replies in a minute. That's automatic.",
               "outcome": "fail"
             },
             {
               "id": "bot",
-              "text": "A bot posting automatically to push people to that link",
-              "consequence": "Yes: speed, copy-paste replies and a link are classic bot signs. Don't click it, and report the account.",
+              "text": "A bot posting automatically to push that link",
+              "consequence": "Yes: speed, copy-paste replies and a link are classic bot signs. Don't click it, and report it.",
               "outcome": "success"
             },
             {
               "id": "real-warning",
-              "text": "A real warning that the game is a scam",
-              "consequence": "A real warning wouldn't be copied into dozens of replies with a link to another game. That's advertising, by a bot.",
+              "text": "A real, honest warning that the game is a scam",
+              "consequence": "A real warning wouldn't be copied into dozens of replies linking another game. That's a bot advertising.",
               "outcome": "fail"
             }
           ]

@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  AnimatePresence,
-  motion,
-  useAnimate,
-  useReducedMotion,
-} from "motion/react";
+import { AnimatePresence, motion, useAnimate, useReducedMotion } from "motion/react";
 import { type ReactNode, type RefObject, useCallback } from "react";
 import type { Card } from "@/cards/schema";
 import { ChallengeIcon } from "@/components/ui/icons";
@@ -20,11 +15,7 @@ export function useFeedbackAnimation() {
 
   const playIncorrect = useCallback(() => {
     if (reduceMotion || !scope.current) return;
-    void animate(
-      scope.current,
-      { x: [0, -6, 6, -4, 3, 0] },
-      { duration: 0.25, ease: "easeInOut" },
-    );
+    void animate(scope.current, { x: [0, -6, 6, -4, 3, 0] }, { duration: 0.25, ease: "easeInOut" });
   }, [animate, reduceMotion, scope]);
 
   return { scope, playIncorrect };
@@ -62,9 +53,7 @@ export function CardStage({
               <ChallengeIcon className="size-3.5" />
               Bonus
             </span>
-            <span className="text-small text-ink-muted">
-              Optional{challengeXp ? ` · +${challengeXp} XP` : ""}
-            </span>
+            <span className="text-small text-ink-muted">Optional{challengeXp ? ` · +${challengeXp} XP` : ""}</span>
           </div>
         )}
         <div ref={scope}>{children}</div>

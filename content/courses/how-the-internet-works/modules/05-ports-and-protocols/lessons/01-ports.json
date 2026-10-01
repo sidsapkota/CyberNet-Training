@@ -10,35 +10,35 @@
       "id": "pick-the-program",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "One [[server]] at `198.51.100.10` runs a website, an email service and a game, all at once, all on one [[IP address]].\n\nA [[packet]] arrives for `198.51.100.10`. The address got it to the right computer. What else does the packet need so it reaches the right **program**?",
+      "prompt": "One [[server]] runs a website, email and a game, all on one [[IP address]].\n\nWhat else does a [[packet]] need to reach the right **program**?",
       "options": [
-        { "id": "program-number", "text": "A number that says which program on that computer it's for" },
+        { "id": "program-number", "text": "A number saying which program it's for" },
         {
           "id": "everyone-copy",
-          "text": "Every program gets a copy and ignores whatever isn't meant for it",
-          "nudge": "Copying every packet to every program would be slow, and anyone could read anyone's data. There's a neater way to point it at one program."
+          "text": "Every program gets a copy and ignores the rest",
+          "nudge": "Copying every packet to every program would be slow, and anyone could read anything."
         },
         {
           "id": "own-ip",
-          "text": "Nothing: each program has its own IP address on that computer",
-          "nudge": "Here all three programs share the one IP address, `198.51.100.10`. So the address alone can't pick between them."
+          "text": "Nothing: each program has its own IP address",
+          "nudge": "Here all three share one IP address, so the address alone can't pick between them."
         },
         {
           "id": "least-busy",
-          "text": "The server hands it to whichever program is least busy right now",
-          "nudge": "A game can't make sense of an email. The packet has to say where it belongs, not land wherever there's room."
+          "text": "It goes to whichever program is least busy",
+          "nudge": "A game can't make sense of an email: the packet has to say where it belongs."
         }
       ],
       "correctOptionId": "program-number",
-      "explanation": "Every packet also carries a number that picks the program: a **port**. The IP address gets it to the right computer, and the port gets it to the right program. Programs don't each get their own address here, they don't share copies, and the server never guesses.",
-      "hint": "The IP address is the same for all three programs. So something else in the packet has to tell them apart."
+      "explanation": "Every packet also carries a number that picks the program: a **port**. The IP address finds the computer, and the port finds the program.",
+      "hint": "The IP address is the same for all three, so what could tell them apart?"
     },
     {
       "id": "meet-ports",
       "type": "explainer",
       "difficulty": "core",
       "title": "Ports are like apartment numbers",
-      "body": "Think of an apartment building. The street address gets a letter to the **building**, and the apartment number gets it to the right **door**.\n\nThe [[IP address]] is the building, and a **port** is the door. Each program **listens** on its own port. Websites use port `80`, and secure websites ([[HTTPS]]) use `443`. Together: `198.51.100.10:443`."
+      "body": "The street address gets a letter to the **building**; the apartment number gets it to the right **door**.\n\nThe [[IP address]] is the building and a **port** is the door: each program **listens** on its own. Websites use port `80`, secure ones ([[HTTPS]]) `443`, written `198.51.100.10:443`."
     },
     {
       "id": "colon-443",
@@ -49,29 +49,29 @@
         { "id": "port", "text": "Port 443: the door for the secure website program" },
         {
           "id": "fifth-octet",
-          "text": "A fifth octet, added to the IP address to make it longer",
-          "nudge": "An IPv4 address always has exactly four octets. The colon marks the start of something separate from the address."
+          "text": "A fifth octet, making the IP address longer",
+          "nudge": "IPv4 always has exactly four octets: the colon starts something separate."
         },
         {
           "id": "hops",
-          "text": "The packet is allowed to travel through up to 443 routers",
-          "nudge": "Routers get the packet to the right computer. The number after the colon is about what happens once it's there."
+          "text": "The packet may pass through up to 443 routers",
+          "nudge": "Routers get it to the computer: this number is about what happens once it's there."
         },
         {
           "id": "time",
-          "text": "The server promises to answer within 443 milliseconds",
-          "nudge": "Nothing in an address measures time. Think about which program on the server the packet should reach."
+          "text": "The server will answer within 443 milliseconds",
+          "nudge": "Nothing in an address measures time: which program should the packet reach?"
         }
       ],
       "correctOptionId": "port",
-      "explanation": "The part after the colon is the **port**. 443 is the standard port for secure websites ([[HTTPS]]), so this means \"the secure website program at 198.51.100.10\". It isn't part of the IP address, which always has exactly four octets, and it has nothing to do with routers or timing.",
-      "hint": "Think of the apartment building: the IP address is the building. What does the number after the colon pick out?"
+      "explanation": "After the colon comes the **port**: 443 is the standard one for secure websites ([[HTTPS]]). It isn't part of the IP address, which always has four octets.",
+      "hint": "The IP address is the building: what does the number after the colon pick out?"
     },
     {
       "id": "netstat",
       "type": "terminal",
       "difficulty": "core",
-      "prompt": "Your side of a conversation needs a [[port]] too, so replies reach the right app. Your laptop picks a temporary one, usually a high number like `51544`.\n\nOn Windows, `netstat -n` lists connections. **Local Address** is your laptop's end; **Foreign Address** is the other end. Run it and find which port on the [[server]] `198.51.100.10` this laptop is connected to.",
+      "prompt": "Your laptop's end uses a temporary [[port]], like `51544`. In `netstat -n`, **Local Address** is your end and **Foreign Address** is the other.\n\nRun it: which port on `198.51.100.10` is the laptop connected to?",
       "promptLabel": "C:\\Users\\learner>",
       "intro": "Microsoft Windows [simulated Command Prompt]\nType help to see the commands you can use here.",
       "commands": [
@@ -87,24 +87,24 @@
         "question": "Which port on 198.51.100.10 is the laptop connected to?",
         "accepted": ["443", "port 443"]
       },
-      "explanation": "The first line's **Foreign Address** is `198.51.100.10:443`, so it's port **443**: a secure website. `51544` is the laptop's own temporary port, under **Local Address**. The second line is a plain website on port 80, and it has a different temporary port (`51547`), so the two replies never get mixed up.",
-      "hint": "Run `netstat -n`, find the line with `198.51.100.10`, and look at the number after its colon under **Foreign Address**.",
-      "nudge": "**Local Address** is your laptop's own end. The server's port is in the **Foreign Address** column, after the colon."
+      "explanation": "Under **Foreign Address**, `198.51.100.10:443` means port **443**, a secure website; `51544` is the laptop's temporary port. The second line has its own temporary port, so replies never mix up.",
+      "hint": "Find the line with `198.51.100.10` and read the number after its colon under **Foreign Address**.",
+      "nudge": "**Local Address** is your laptop's end: the server's port is under **Foreign Address**."
     },
     {
       "id": "nat-port-steps",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "Your home [[router]] shares one [[public address]] using **NAT**. Ports are how it keeps replies apart: it swaps your laptop's private address and port for its public address and a port it picks, and writes the pair in its **NAT table**.\n\nPut the steps in order.",
+      "prompt": "Your [[router]]'s **NAT** swaps your private address and port for its public one and a port it picks, noting the pair in a **NAT table**.\n\nPut the steps in order.",
       "items": [
-        { "id": "send", "label": "The laptop sends from 192.168.1.20:51000 to 198.51.100.10:443" },
-        { "id": "rewrite", "label": "The router changes the sender to 203.0.113.7:40001 and adds it to its NAT table" },
-        { "id": "reply", "label": "The server replies to 203.0.113.7:40001" },
-        { "id": "lookup", "label": "The router finds port 40001 in its table and passes the reply to 192.168.1.20:51000" }
+        { "id": "send", "label": "Laptop sends from 192.168.1.20:51000" },
+        { "id": "rewrite", "label": "Router swaps in 203.0.113.7:40001" },
+        { "id": "reply", "label": "Server replies to 203.0.113.7:40001" },
+        { "id": "lookup", "label": "Router looks up 40001: it's the laptop" }
       ],
-      "explanation": "The router rewrites the sender on the way **out** and records it. The server only ever sees `203.0.113.7:40001`, so it replies there. The router then uses the port number to look up which device the reply belongs to.",
-      "hint": "Follow one [[packet]] out and its reply back in. The router has to write something in its table before it can look it up.",
-      "nudge": "The server only ever sees the router's public address and port. So what must happen before the server can reply there?"
+      "explanation": "The router rewrites the sender on the way **out** and records it, so the server replies to `203.0.113.7:40001`. The port then tells the router which device the reply is for.",
+      "hint": "Follow one [[packet]] out and its reply back: a table entry is written before it's read.",
+      "nudge": "The server only ever sees the router's public address and port: what must happen first?"
     },
     {
       "id": "nat-table-lookup",
@@ -113,36 +113,36 @@
       "prompt": "The [[router]]'s [[NAT]] table says:\n\n- `203.0.113.7:40001` → `192.168.1.20:51000`\n- `203.0.113.7:40002` → `192.168.1.21:51000`\n\nA reply arrives for `203.0.113.7:40002`. Which device gets it? Type the **last number** of its [[private address]].",
       "base": "decimal",
       "answer": 21,
-      "explanation": "Port **40002** maps to `192.168.1.21:51000`, so the device ending in **21** gets it. Both laptops happened to use port 51000, but the router gave them different public ports, so their replies never get mixed up.",
-      "hint": "Match the full public address and [[port]] of the reply to a line in the table, then read the private address on the right.",
-      "nudge": "Both laptops use port 51000, so that won't tell them apart. Look at the router's public port in the reply to pick the right line."
+      "explanation": "Port **40002** maps to `192.168.1.21:51000`, so the device ending in **21** gets it. Both used port 51000, but their different public ports keep the replies apart.",
+      "hint": "Find the line matching the reply's public address and [[port]], then read its private address.",
+      "nudge": "Both laptops use port 51000, so look at the router's public port in the reply."
     },
     {
       "id": "same-port-twice",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "Two laptops at home both happen to use port **51000** to reach the same website. How does the [[router]] keep their replies apart?",
+      "prompt": "Two laptops at home both use port **51000** for the same website. How does the [[router]] keep their replies apart?",
       "options": [
-        { "id": "different-public-ports", "text": "It gives each one a different public port, like 40001 and 40002" },
+        { "id": "different-public-ports", "text": "It gives each a different public port, like 40001" },
         {
           "id": "one-fails",
-          "text": "It can't, so one laptop's connection fails until the other finishes",
-          "nudge": "Lots of devices share one home router without problems. Think about what the router gets to choose when it rewrites the sender."
+          "text": "It can't, so one fails until the other finishes",
+          "nudge": "Many devices share one router fine: what does the router choose when it rewrites the sender?"
         },
         {
           "id": "send-both",
-          "text": "It sends every reply to both laptops and lets them sort it out",
-          "nudge": "The NAT table exists so each reply goes to exactly one device. What could make the two replies look different when they arrive?"
+          "text": "It sends every reply to both and lets them sort it",
+          "nudge": "The NAT table sends each reply to exactly one device: what could make the replies differ?"
         },
         {
           "id": "private-in-reply",
-          "text": "The server puts each laptop's private address in its reply",
-          "nudge": "The server never sees the private addresses: the router swaps them out on the way. The answer lies in the router's own table."
+          "text": "The server puts each private address in its reply",
+          "nudge": "The server never sees private addresses: the answer is in the router's own table."
         }
       ],
       "correctOptionId": "different-public-ports",
-      "explanation": "The router picks a **different public port** for each conversation, so the replies arrive on different ports and its NAT table says which laptop each one belongs to. Nothing fails, nothing is sent to both, and the server never even learns the private addresses.",
-      "hint": "Think about the [[NAT]] table. The router picks the public port for each conversation, so what could it do differently for each laptop?"
+      "explanation": "The router picks a **different public port** for each conversation, so replies arrive on different ports and its NAT table knows whose each one is. The server never learns the private addresses.",
+      "hint": "The router picks the public port for each conversation: what could it do differently for each laptop?"
     },
     {
       "id": "recap",

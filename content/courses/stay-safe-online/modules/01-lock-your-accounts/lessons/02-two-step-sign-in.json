@@ -10,7 +10,7 @@
       "id": "stranger-far-away",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Even a great password can be stolen, when a website gets hacked or when you type it into a fake one.\n\nCould a **stranger far away** get each of these?",
+      "prompt": "Even a great password can be stolen. Could a **stranger far away** get each of these?",
       "bins": [
         {
           "id": "yes",
@@ -48,27 +48,27 @@
           "bin": "no"
         }
       ],
-      "explanation": "Things you **know or type** (passwords, answers you've posted) can be stolen and used from anywhere. Your **phone** and your **fingerprint** stay with you. That's why asking for one of them as well makes an account much harder to break into.",
-      "hint": "Ask of each one: is it information that could be copied and sent anywhere, or a thing that is physically with you?",
-      "nudge": "Anything that's just information can be copied from far away. Things in your pocket, or part of your body, can't."
+      "explanation": "Things you **know or type** can be copied and used from anywhere. Your **phone** and **fingerprint** stay with you, so asking for one too makes an account much harder to break into.",
+      "hint": "Is it information that can be copied, or a thing that's physically with you?",
+      "nudge": "Information can be copied from far away; things in your pocket, or part of your body, can't."
     },
     {
       "id": "what-two-step-is",
       "type": "explainer",
       "difficulty": "core",
       "title": "Two-step sign-in",
-      "body": "**Two-step sign-in** (also called **two-factor**) asks for a password **plus** a second proof, like your phone or fingerprint. A stolen password alone can't get in.\n\nSign-in methods, strongest first:\n\n- A **[[passkey]]**: your device checks your fingerprint, face or PIN. Fake sites can't use it.\n- A code from an [[authenticator app]].\n- A **text code**: scammers can sometimes steal phone numbers."
+      "body": "**Two-step sign-in** (or **two-factor**) asks for your password **plus** a second proof, like your phone or fingerprint. A stolen password alone can't get in.\n\nStrongest first:\n\n- A **[[passkey]]**: your device checks your fingerprint, face or PIN. Fake sites can't use it.\n- A code from an [[authenticator app]].\n- A **text code**: scammers can sometimes steal phone numbers."
     },
     {
       "id": "the-code-text",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "A **sign-in code** is the second key to your account. A site sends one when someone types your password. **Nobody real ever asks you to send them a code**: not a company, a bank, a game or a friend.\n\nYou're watching a video when your phone buzzes.",
+      "prompt": "Sites send a **sign-in code** when someone types your password. **Nobody real ever asks you to send one.**",
       "start": "text",
       "steps": [
         {
           "id": "text",
-          "text": "A text arrives: **\"Your sign-in code is 481 902.\"** You weren't signing in to anything. What does it probably mean?",
+          "text": "Your phone buzzes: **\"Your sign-in code is 481 902.\"** You weren't signing in. What does it probably mean?",
           "choices": [
             {
               "id": "someone-trying",
@@ -86,7 +86,7 @@
         },
         {
           "id": "friend",
-          "text": "A minute later, a message from a friend's account: **\"Oops, I sent you my code by mistake! Can you send it back?\"**",
+          "text": "Then a friend's account messages: **\"Oops, I sent you my code by mistake! Can you send it back?\"**",
           "choices": [
             {
               "id": "send",
@@ -96,15 +96,15 @@
             },
             {
               "id": "dont-send",
-              "text": "Don't send it. Change your password, and warn your friend another way",
-              "consequence": "The attacker has no way in, and your friend learns their account was taken over.",
+              "text": "Don't send it. Change your password and warn your friend",
+              "consequence": "The attacker can't get in. Warn your friend another way: their account was taken over.",
               "outcome": "success"
             }
           ]
         }
       ],
-      "explanation": "A code you didn't ask for means someone has your password: **change it**. Never send a sign-in code to anyone, even a friend. Their account may have been taken over.",
-      "hint": "Codes arrive when someone tries to sign in. And remember the rule: nobody real ever asks you to send them a code."
+      "explanation": "A code you didn't ask for means someone has your password: **change it**. Never send a code to anyone, even a friend; their account may have been taken over.",
+      "hint": "Codes arrive when someone tries to sign in, and nobody real asks you for one."
     },
     {
       "id": "rank-proofs",
@@ -129,20 +129,20 @@
           "label": "Password on its own"
         }
       ],
-      "explanation": "A **passkey** is strongest, then a password with an **authenticator app**, then a password with a **text code**. A password alone is the weakest: one leak and it's open.",
-      "hint": "Sign-in methods were listed strongest first. And any second proof beats none.",
-      "nudge": "A password with any second proof beats a password on its own. Among the second proofs, think about which one scammers can sometimes steal."
+      "explanation": "A **passkey** is strongest, then an **authenticator app** code, then a **text code**. A password alone is weakest: one leak and it's open.",
+      "hint": "The ways to sign in were listed strongest first, and any second proof beats none.",
+      "nudge": "Any second proof beats a password alone. Which second proof can scammers sometimes steal?"
     },
     {
       "id": "text-codes-only",
       "type": "scenario",
       "difficulty": "challenge",
-      "prompt": "You're setting up a new music app. For two-step sign-in, it only offers one option: **codes by text message**.",
+      "prompt": "A new music app only offers **text message codes** for two-step sign-in.",
       "start": "choose",
       "steps": [
         {
           "id": "choose",
-          "text": "Text codes are the weakest kind. Do you turn two-step sign-in on, or skip it?",
+          "text": "Text codes are the weakest kind. Turn two-step sign-in on, or skip it?",
           "choices": [
             {
               "id": "turn-on",
@@ -165,33 +165,33 @@
           ]
         }
       ],
-      "explanation": "Any second proof beats none. Turn on the strongest one a site offers, even if that's text codes, and switch to a better one if it's added later.",
-      "hint": "Compare a password plus a text code with a password on its own. Which is harder to break into?"
+      "explanation": "Any second proof beats none. Turn on the best one a site offers, and switch if a better one comes later.",
+      "hint": "Which is harder to break into: a password plus a text code, or a password alone?"
     },
     {
       "id": "forty-accounts",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A **password manager** is an app that makes a long random password for every account, remembers them all and fills them in. You remember just **one main passphrase**. It only fills in on the **real** website, never on a fake one.\n\nSam has 40 accounts. Which plan keeps them safest?",
+      "prompt": "A **password manager** app remembers a strong, different password for every account. What's safest for Sam's 40 accounts?",
       "options": [
         {
           "id": "manager",
-          "text": "A password manager, locked with a strong passphrase and two-step"
+          "text": "A password manager, locked by a passphrase and two-step"
         },
         {
           "id": "one-passphrase",
-          "text": "One very strong passphrase, used for all 40 accounts to keep it simple",
-          "nudge": "A strong password used everywhere has the same problem as a weak one: one data breach opens all 40 accounts."
+          "text": "One very strong passphrase, used for all 40 accounts",
+          "nudge": "A strong password used everywhere has the same problem: one data breach opens all 40."
         },
         {
           "id": "pattern",
-          "text": "A different easy password for each one, like game1, game2, game3",
-          "nudge": "A pattern like this is quick to guess, and one leaked password shows the pattern for the rest."
+          "text": "A different easy password each, like game1, game2, game3",
+          "nudge": "A pattern is quick to guess, and one leaked password shows it for the rest."
         }
       ],
       "correctOptionId": "manager",
-      "explanation": "A **password manager** gives every account its own long random password, so one leak can't open the rest. Sam only has to remember one strong passphrase, and two-step sign-in guards the manager itself.",
-      "hint": "Think about what happens to the other 39 if one password leaks."
+      "explanation": "A **password manager** gives every account its own long password, and fills it in only on the **real** site, never a fake one. Sam remembers one passphrase, and two-step guards the manager.",
+      "hint": "What happens to the other 39 if one password leaks?"
     },
     {
       "id": "match-tools",
@@ -207,7 +207,7 @@
         {
           "id": "manager",
           "left": "Password manager",
-          "right": "Remembers a different password for each account"
+          "right": "Remembers a password for each account"
         },
         {
           "id": "two-step",
@@ -217,28 +217,28 @@
         {
           "id": "passkey",
           "left": "Passkey",
-          "right": "Signs you in with your device and fingerprint, face or PIN"
+          "right": "Signs in with face, fingerprint or PIN"
         },
         {
           "id": "code",
           "left": "Sign-in code",
-          "right": "A one-time number sent when someone signs in"
+          "right": "A one-time number sent at sign-in"
         }
       ],
-      "explanation": "A **passphrase** is long and memorable, a **password manager** keeps one password per account, **two-step sign-in** adds a second proof, a **passkey** signs in with your device, and a **sign-in code** is a one-time number sent when someone signs in. Never share it.",
-      "hint": "Start with the ones you're surest of. Two of them are about remembering passwords, and three are about signing in.",
-      "nudge": "A passphrase is something you make up; a password manager is an app. A code is sent to you, just for one sign-in."
+      "explanation": "A **passphrase** is long and memorable, a **password manager** remembers your passwords, and **two-step**, **passkeys** and **codes** prove it's you. Never share a code.",
+      "hint": "Two of them are about remembering passwords, and three are about signing in.",
+      "nudge": "Go through each one again: is it something you make up, an app, or a step when you sign in?"
     },
     {
       "id": "lost-phone",
       "type": "scenario",
       "difficulty": "challenge",
-      "prompt": "When you turn two-step sign-in on, the site gives you **backup codes** to save somewhere safe, in case you lose your phone.\n\nMonths later, your phone, with your authenticator app on it, falls in a lake.",
+      "prompt": "Two-step sign-in gives you **backup codes** to save, in case you lose your phone. Months later, it falls in a lake.",
       "start": "start",
       "steps": [
         {
           "id": "start",
-          "text": "You try to sign in on a laptop, and it asks for the code from the app. What can you use?",
+          "text": "On a laptop, the site asks for the code from your authenticator app. What can you use?",
           "choices": [
             {
               "id": "backup",
@@ -248,7 +248,7 @@
             },
             {
               "id": "turn-off",
-              "text": "Ask the website to switch two-step sign-in off for good",
+              "text": "Ask the website to switch two-step off for good",
               "consequence": "That leaves your account with one lock. Use the backup codes you saved.",
               "outcome": "fail"
             },
@@ -261,8 +261,8 @@
           ]
         }
       ],
-      "explanation": "That's why you save **backup codes** when you turn two-step sign-in on. Keep them somewhere safe, like in your password manager or printed at home.",
-      "hint": "When you turned two-step sign-in on, it gave you something to save for exactly this moment."
+      "explanation": "That's why you save **backup codes**. Keep them somewhere safe, like your password manager or printed at home.",
+      "hint": "Setting up two-step sign-in gave you something to save for exactly this."
     },
     {
       "id": "recap",

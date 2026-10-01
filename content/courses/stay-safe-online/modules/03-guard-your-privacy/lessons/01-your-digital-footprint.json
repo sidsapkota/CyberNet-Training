@@ -10,7 +10,7 @@
       "id": "share-or-private",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Some details help a stranger **find you**. For each one, ask: would I be OK with a stranger seeing it? Fine to share, or keep it private?",
+      "prompt": "Would you be OK with a stranger seeing it? **Fine to share**, or **keep it private**?",
       "bins": [
         {
           "id": "share",
@@ -60,7 +60,7 @@
       ],
       "explanation": "Interests and things you make are fine to share. Your **school**, **address**, **phone number** and **where you are right now** help strangers find you, so keep them private.",
       "hint": "Could a stranger use it to work out where you live, go to school or are right now?",
-      "nudge": "Details that show where you live, go to school or are right now are the ones to keep private."
+      "nudge": "Look at each one again: could it show where you live, go to school or are right now?"
     },
     {
       "id": "wet-cement",
@@ -111,7 +111,7 @@
         {
           "id": "quality",
           "text": "No: a photo only shows where she is if she tags it",
-          "nudge": "A tag isn't the only clue. Think about what any holiday photo says about where she is today."
+          "nudge": "A tag isn't the only clue. What does any holiday photo say about where she is today?"
         },
         {
           "id": "likes",
@@ -150,15 +150,15 @@
           "right": "You approve photos you're tagged in"
         }
       ],
-      "explanation": "A **private account** limits who sees posts, **friends-only messages** keep strangers out of your inbox, **location off** hides where you are, and **tag review** lets you choose which photos of you appear. Apps sometimes change settings in updates, so check them now and then.",
-      "hint": "Think about what each setting controls: your posts, your messages, your location or your photos.",
-      "nudge": "Two are about who can see things, one is about who can contact you, and one is about photos other people post."
+      "explanation": "Each setting controls one thing: who sees your posts, who can message you, your location, or photos of you. Apps sometimes change settings in updates, so check them now and then.",
+      "hint": "What does each one control: your posts, your messages, your location or your photos?",
+      "nudge": "Go through each setting again and ask who it keeps out, or what it hides."
     },
     {
       "id": "friendly-stranger",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "If someone online makes you uncomfortable, you can **block** and **report** them in the app, and tell a trusted adult. You won't be in trouble.\n\nSomeone you only know from a game has been messaging you. They're really friendly.",
+      "prompt": "Someone you only know from a game is really friendly. You can always **block**, **report** and tell a trusted adult.",
       "start": "start",
       "steps": [
         {
@@ -173,21 +173,21 @@
             },
             {
               "id": "safe",
-              "text": "Don't send anything, block and report them, and tell a trusted adult",
+              "text": "Send nothing, block and report, and tell a trusted adult",
               "consequence": "That's exactly right. You're not in trouble, and telling someone keeps you and others safe.",
               "outcome": "success"
             }
           ]
         }
       ],
-      "explanation": "Keep your school, photos and location away from people you only know online, however friendly they seem. **Block, report and tell a trusted adult**: you won't be in trouble.",
+      "explanation": "Keep your school, photos and location from people you only know online, however friendly they seem. **Block, report and tell a trusted adult**: you won't be in trouble.",
       "hint": "Is a school and a photo \"stuff that finds you\"? And what can you always do in the app?"
     },
     {
       "id": "username-check",
       "type": "sort_bins",
       "difficulty": "challenge",
-      "prompt": "A good username says nothing about who you are. Is each one **safe**, or does it **give too much away**?",
+      "prompt": "Is each username **safe**, or does it **give too much away**?",
       "bins": [
         {
           "id": "safe",
@@ -220,9 +220,9 @@
           "bin": "too-much"
         }
       ],
-      "explanation": "A good username says nothing about who you are. `Mia_Jones_Brisbane2013` gives a full name, a city and a birth year, and `Liam_at_Hillside_High` gives a name and a school.",
+      "explanation": "A good username says nothing about who you are. `Mia_Jones_Brisbane2013` gives a full name, city and birth year; `Liam_at_Hillside_High` gives a name and school.",
       "hint": "Look for a real name, a school, a place or a birth year inside each username.",
-      "nudge": "Fun made-up words are safe. A real name, school, town or birth year gives too much away."
+      "nudge": "Check each one again: could it point to who you really are?"
     },
     {
       "id": "recap",

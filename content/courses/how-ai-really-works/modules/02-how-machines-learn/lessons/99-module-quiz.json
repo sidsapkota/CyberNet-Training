@@ -8,33 +8,33 @@
       "id": "q-cold-drinks",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A café's review sorter learned that **\"cold\"** means unhappy, because it only ever saw it in reviews like \"Cold food, slow service\". Now it calls **\"Lovely cold drinks on a hot day\"** unhappy. What's the **best** fix?",
+      "prompt": "A review sorter only saw **\"cold\"** in unhappy reviews, so it calls **\"Lovely cold drinks\"** unhappy. Best fix?",
       "options": [
         {
           "id": "happy-cold",
-          "text": "Add happy reviews that use \"cold\", like \"Ice-cold lemonade, really lovely\""
+          "text": "Add happy reviews that use \"cold\" in a nice way"
         },
         {
           "id": "more-unhappy",
-          "text": "Add more unhappy reviews that use \"cold\", like \"Cold chips, cold tea\""
+          "text": "Add more unhappy reviews that use \"cold\" too"
         },
         {
           "id": "delete-cold",
-          "text": "Delete every training review with \"cold\" in it, happy or not"
+          "text": "Delete every training review with \"cold\" in it"
         },
         {
           "id": "copies",
-          "text": "Add 100 copies of \"Cold food, slow service\", labelled unhappy"
+          "text": "Add 100 copies of one unhappy \"cold\" review"
         }
       ],
       "correctOptionId": "happy-cold",
-      "explanation": "The sorter never saw \"cold\" used happily, so **add examples where it is**. More unhappy \"cold\" reviews, or copies of one, only make it surer that cold means unhappy. Deleting them might fix this one review, but then it can't spot real complaints about cold food."
+      "explanation": "It never saw \"cold\" used happily, so **add examples where it is**. More unhappy ones make it surer, and deleting them stops it spotting real cold-food complaints."
     },
     {
       "id": "q-rushed-labels",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A team labels 5,000 photos of cats and dogs in a big rush, and never checks them. About **1 in 10 dogs** ends up labelled \"cat\" by mistake. What will this most likely do to the model they train?",
+      "prompt": "A team rushes its labelling, and **1 in 10 dogs** is labelled \"cat\". What will this do to the model?",
       "options": [
         {
           "id": "wrong-lessons",
@@ -42,19 +42,19 @@
         },
         {
           "id": "cancel-out",
-          "text": "Nothing much: 9 in 10 labels are right, so it all evens out"
+          "text": "Nothing much: 9 in 10 labels are right, so it evens out"
         },
         {
           "id": "spots-them",
-          "text": "It notices the wrong labels by itself and skips over them"
+          "text": "It notices the wrong labels by itself and skips them"
         },
         {
           "id": "slower",
-          "text": "It just takes longer to train, then ends up just as good"
+          "text": "It takes longer to train, then ends up just as good"
         }
       ],
       "correctOptionId": "wrong-lessons",
-      "explanation": "A model learns from its labels exactly as they are. It can't tell a wrong label from a right one, so every dog labelled \"cat\" teaches it a **wrong lesson**, and it will mix up more dogs. That's why good training data has labels **checked**, not rushed."
+      "explanation": "A model can't tell a wrong label from a right one, so each mislabelled dog teaches a **wrong lesson**. That's why labels should be **checked**, not rushed."
     },
     {
       "id": "q-accuracy",
@@ -70,7 +70,7 @@
       "id": "q-own-photos",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A bird-spotting app's makers say it scored **100%**. They tested it on the same photos it trained on. Is that a good test?",
+      "prompt": "A bird app scored **100%**, tested on the same photos it trained on. Is that a good test?",
       "options": [
         {
           "id": "no-seen",
@@ -82,15 +82,15 @@
         },
         {
           "id": "yes-variety",
-          "text": "Yes, as long as the photos showed lots of different birds"
+          "text": "Yes, if the photos showed lots of different birds"
         },
         {
           "id": "no-hardest",
-          "text": "No: a good test should use only the hardest bird photos"
+          "text": "No: a good test uses only the hardest bird photos"
         }
       ],
       "correctOptionId": "no-seen",
-      "explanation": "Photos it trained on only test its **memory**: it may have **memorised them instead of learning** what birds look like. A fair test uses photos it has **never seen**, easy and hard, like the ones people will really take. Variety helps, but not if the model has seen them all before."
+      "explanation": "Training photos only test **memory**: it may have **memorised them instead of learning**. A fair test uses photos it has **never seen**, easy and hard."
     },
     {
       "id": "q-fair-test",
@@ -134,7 +134,7 @@
           "bin": "unfair"
         }
       ],
-      "explanation": "A fair test uses **unseen**, **realistic** examples with a **mix** of difficulty. Picking photos it already gets right, or swapping photos until the score looks good, makes it look better than it is."
+      "explanation": "Fair tests use **unseen**, **realistic** examples, easy and hard. Picking photos it gets right, or swapping photos until it scores 100%, flatters it."
     },
     {
       "id": "q-better-data",
@@ -152,26 +152,26 @@
         },
         {
           "id": "easier",
-          "text": "Make the app accept faces more easily"
+          "text": "Make the app accept every face much more easily"
         },
         {
           "id": "ignore",
-          "text": "Report only its overall accuracy"
+          "text": "Report only its overall accuracy to users"
         }
       ],
       "correctOptionId": "children",
-      "explanation": "The app is **biased** because children were missing from its training data. Add them, then **test on children** to check it worked. More adults add nothing about children; accepting faces more easily lets in the wrong people too; an overall score just hides the problem."
+      "explanation": "Children were missing from its training data, so it's **biased**: add them, then **test on children**. More adults, easier matching or one overall score don't fix that."
     },
     {
       "id": "q-bias-scenario",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "A game's chat filter keeps blocking messages written in one language that lots of players use.",
+      "prompt": "A game's chat filter keeps blocking messages in one language that lots of players use.",
       "start": "the-filter",
       "steps": [
         {
           "id": "the-filter",
-          "text": "Players who write in that language are getting blocked for normal messages. What should the game do?",
+          "text": "Those players get blocked even for normal messages. What should the game do?",
           "choices": [
             {
               "id": "ban",
@@ -181,20 +181,20 @@
             },
             {
               "id": "retrain",
-              "text": "Add normal messages in that language to its training data, and test again",
+              "text": "Train it on normal messages in that language, then test",
               "consequence": "Right: fill the gap in the data, then check it really works for those players.",
               "outcome": "success"
             },
             {
               "id": "block-less",
               "text": "Make the filter block fewer messages for everyone",
-              "consequence": "That lets more mean messages through for everyone, and the filter still doesn't understand that language.",
+              "consequence": "More mean messages get through, and it still doesn't understand that language.",
               "outcome": "fail"
             }
           ]
         }
       ],
-      "explanation": "The filter is biased because that language was missing from its training data. **Add the missing examples and test again**; never blame the people it gets wrong."
+      "explanation": "That language was missing from its training data. **Add the missing examples and test again**; never blame the people it gets wrong."
     },
     {
       "id": "q-words",
@@ -204,7 +204,7 @@
       "pairs": [
         {
           "id": "test",
-          "left": "Photos hidden from the model while it learns",
+          "left": "Photos hidden from it while it learns",
           "right": "Test examples"
         },
         {
@@ -214,16 +214,16 @@
         },
         {
           "id": "overfitting",
-          "left": "Perfect on its training photos, poor on new ones",
+          "left": "Perfect on training, poor on new photos",
           "right": "Memorising, not learning"
         },
         {
           "id": "bias",
-          "left": "Understands one accent well, others badly",
+          "left": "Understands one accent well, not others",
           "right": "Bias"
         }
       ],
-      "explanation": "**Test examples** are hidden while it learns; **accuracy** is the share it gets right; perfect on training but poor on new ones means it **memorised**; and working worse for some people is **bias**."
+      "explanation": "**Test examples** are hidden while it learns, **accuracy** is the share right, perfect-then-poor means it **memorised**, and working worse for some people is **bias**."
     }
   ]
 }

@@ -10,7 +10,7 @@
       "id": "make-it-predictable",
       "type": "next_word",
       "difficulty": "core",
-      "prompt": "Chatbots have a setting called **temperature**. Slide it and watch the chances change. Move it until **mat** has a chance of at least **80%**.",
+      "prompt": "Chatbots have a **temperature** setting. Slide it until **mat** has at least an **80%** chance.",
       "context": "The cat sat on the",
       "candidates": [
         {
@@ -35,9 +35,9 @@
         "word": "mat",
         "atLeast": 0.8
       },
-      "hint": "Try sliding both ways and watch the bar for \"mat\". Which way makes it grow?",
-      "nudge": "That way spreads the chances out. Try the other way.",
-      "explanation": "A **low** temperature makes the likeliest word even likelier. Turn it right down and it's \"mat\" almost every time: predictable."
+      "hint": "Slide both ways and watch the bar for \"mat\". Which way makes it grow?",
+      "nudge": "Watch \"mat\": if its bar shrinks, go the other way; if it grows, keep going.",
+      "explanation": "A **low** temperature makes the likeliest word even likelier. Turn it right down and it's \"mat\" almost every time."
     },
     {
       "id": "what-temperature-does",
@@ -50,7 +50,7 @@
       "id": "even-it-out",
       "type": "next_word",
       "difficulty": "core",
-      "prompt": "Now make the model more surprising: move the temperature until **no word** has more than a **45%** chance.",
+      "prompt": "Now make it more surprising: slide until **no word** has more than a **45%** chance.",
       "context": "The cat sat on the",
       "candidates": [
         {
@@ -75,14 +75,14 @@
         "atMost": 0.45
       },
       "hint": "The top word is the one to bring down. Which way evens the chances out?",
-      "nudge": "\"mat\" still has too big a share. Keep going in the same direction, further than feels normal.",
-      "explanation": "Only a **high** temperature brings \"mat\" below 45%. Press \"Generate 5\": at this setting the cat sometimes sits on the moon. Bold choice. More surprising, and more likely to be nonsense."
+      "nudge": "\"mat\" must drop below 45%, so go the way that shrinks its bar, and go far.",
+      "explanation": "Only a **high** temperature brings \"mat\" below 45%. Press \"Generate 5\": the cat sometimes sits on the moon. More surprising, and more nonsense."
     },
     {
       "id": "cold-ten-times",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "At temperature 1, \"mat\" has a 60% chance. You turn the temperature right **down** and the model carries on from \"The cat sat on the\" **10** times. What happens?",
+      "prompt": "\"mat\" has 60% at temperature 1. You turn it right **down** and run it **10** times. What happens?",
       "options": [
         {
           "id": "almost-always",
@@ -91,7 +91,7 @@
         {
           "id": "six",
           "text": "It picks \"mat\" about 6 times out of 10",
-          "nudge": "That's what happens at temperature 1. What does a very low temperature do to the top word?"
+          "nudge": "That's temperature 1. What does a very low one do to the top word?"
         },
         {
           "id": "different",
@@ -100,49 +100,49 @@
         },
         {
           "id": "never",
-          "text": "It never picks \"mat\"",
+          "text": "It never picks \"mat\" at all",
           "nudge": "Low temperature helps the top word, it doesn't hide it."
         }
       ],
       "correctOptionId": "almost-always",
       "hint": "What does a very low temperature do to the top word's chance?",
-      "explanation": "A very low temperature makes the top word's chance shoot up, so it picks \"mat\" **almost every time**. About 6 out of 10 is what you'd expect at temperature 1."
+      "explanation": "A very low temperature makes the top word's chance shoot up, so it's \"mat\" **almost every time**. About 6 in 10 is what temperature 1 gives."
     },
     {
       "id": "story-or-sum",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Same chatbot, same temperature. Ask it for a story idea twice and you get two different ideas. Ask it \"What's 2 + 2?\" twice and you get 4 both times. Why?",
+      "prompt": "Same temperature: two story ideas come out different, but \"2 + 2\" gives 4 both times. Why?",
       "options": [
         {
           "id": "sure-vs-unsure",
-          "text": "It's almost sure of \"4\", but many story ideas have similar chances"
+          "text": "It's sure of \"4\", but story ideas have similar chances"
         },
         {
           "id": "avoids-repeats",
-          "text": "It remembers its first story idea and tries not to repeat itself",
-          "nudge": "Each time, it just works out chances and picks. Think about how sure it is in each case."
+          "text": "It remembers its first idea and avoids repeating it",
+          "nudge": "Each time, it just works out chances and picks. How sure is it each time?"
         },
         {
           "id": "harder",
-          "text": "Stories are harder, so it keeps getting them wrong and trying again",
-          "nudge": "A story idea can't really be wrong. Compare how many good next words each question has."
+          "text": "Stories are harder, so it keeps getting them wrong",
+          "nudge": "A story idea can't really be wrong. How many good next words does each have?"
         },
         {
           "id": "maths-mode",
-          "text": "Sums use a different, stricter temperature than stories do",
-          "nudge": "The prompt says the temperature is the same. So the difference must be in the chances themselves."
+          "text": "Sums use a stricter temperature than stories do",
+          "nudge": "The temperature is the same, so the difference must be in the chances."
         }
       ],
       "correctOptionId": "sure-vs-unsure",
-      "hint": "Imagine the chances for each one. Is there one clear winner, or lots of close ones?",
-      "explanation": "When one word has nearly all the chance, like \"4\", it gets picked every time. When lots of words have similar chances, like story ideas, the picks vary. Temperature decides how much that variety shows."
+      "hint": "Picture the chances for each: one clear winner, or lots of close ones?",
+      "explanation": "When one word has nearly all the chance, like \"4\", it's picked every time. When many have similar chances, like story ideas, the picks vary."
     },
     {
       "id": "low-or-high",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Jobs with **one right answer** want the most likely word every time. Jobs where you want **variety** can use a higher temperature. Sort each job.",
+      "prompt": "**One right answer**? Use a low temperature. Want **variety**? Go higher. Sort each job.",
       "bins": [
         {
           "id": "low",
@@ -185,39 +185,39 @@
           "bin": "high"
         }
       ],
-      "hint": "For each job, ask: is there one right answer, or do you want lots of different ideas?",
-      "nudge": "Jobs with one right answer want the most likely answer every time. Which ones are like that?",
-      "explanation": "Maths, summaries and spelling have **one right answer**, so low is best. Band names, silly poems and story twists want **variety**, so a higher temperature helps. Most chatbot apps pick the temperature for you, but some tools let you change it."
+      "hint": "Is there one right answer, or do you want lots of different ideas?",
+      "nudge": "Which jobs have one right answer, so want the likeliest word every time?",
+      "explanation": "Maths, summaries and spelling have **one right answer**: low. Band names, poems and story twists want **variety**: higher. Most apps set the temperature for you."
     },
     {
       "id": "cold-but-wrong",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "A small model's top word after \"The capital of Australia is\" is **Sydney**. (The real capital is Canberra.) You turn the temperature right down. What happens?",
+      "prompt": "A model's top pick for Australia's capital is **Sydney** (really Canberra). You turn temperature right down. What happens?",
       "options": [
         {
           "id": "sydney",
-          "text": "It says \"Sydney\" almost every time"
+          "text": "It says \"Sydney\" almost every time, wrong or not"
         },
         {
           "id": "canberra",
-          "text": "It switches to \"Canberra\", because a low temperature makes it more careful",
-          "nudge": "Temperature never changes the order of the words. Which word is on top?"
+          "text": "It switches to \"Canberra\": low means more careful",
+          "nudge": "Temperature never changes the order of the words. Which is on top?"
         },
         {
           "id": "more-canberra",
-          "text": "It says \"Canberra\" more often, because low temperature favours true answers",
-          "nudge": "Low temperature favours the top word, whatever it is. Is the top word true here?"
+          "text": "It says \"Canberra\" more: low favours true answers",
+          "nudge": "Low temperature favours the top word, whatever it is. Is it true here?"
         },
         {
           "id": "mix",
-          "text": "It says each city about equally, because the chances even out",
+          "text": "It says each city about equally: the chances even out",
           "nudge": "Evening out is what a high temperature does. What does a low one do?"
         }
       ],
       "correctOptionId": "sydney",
-      "hint": "Low temperature makes the **top** word win. Which word is on top here, and is it true?",
-      "explanation": "A low temperature makes the top word win almost every time, and here the top word is wrong. Temperature changes **how** it picks, never **what it knows**: it can make a mistake more predictable, not fix it."
+      "hint": "Low temperature makes the **top** word win. Which is on top, and is it true?",
+      "explanation": "A low temperature makes the top word win, and here it's wrong. Temperature changes **how** it picks, never **what it knows**."
     },
     {
       "id": "temperature-recap",

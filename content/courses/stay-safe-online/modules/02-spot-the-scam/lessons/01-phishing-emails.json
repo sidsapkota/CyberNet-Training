@@ -46,7 +46,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Something fishy",
-      "body": "That was **phishing** (said \"fishing\"): a message pretending to be someone you trust, like your bank, school or a game, hoping you'll bite. A prize you never entered, that costs money to claim, is classic bait.\n\nMost phishing has the same few warning signs. Tap through the next email to meet them."
+      "body": "That was **phishing** (said \"fishing\"): a message pretending to be someone you trust, like your bank, school or a game. A prize you never entered, with a rush to claim it, is classic bait: **too good to be true**. Real prizes never cost money to claim either.\n\nTap through the next email to meet more warning signs."
     },
     {
       "id": "meet-the-signs",
@@ -66,7 +66,7 @@
         },
         {
           "part": "email-greeting",
-          "job": "\"Dear Customer\": a real company usually uses your name. But scammers can find names too, so a name proves nothing."
+          "job": "\"Dear Customer\": real companies usually use your name. But scammers can find names too, so a name proves nothing."
         },
         {
           "part": "email-secrets",
@@ -77,7 +77,7 @@
           "job": "Hidden link: it really goes to yourbank-verify.example. Hover over a link, or press and hold it, to see where it goes."
         }
       ],
-      "explanation": "Five warning signs: a **fake sender**, **rushing you**, **\"Dear Customer\"**, **asking for secrets** and a **hidden link**. Add **too good to be true** from the prize email, and you know the lot."
+      "explanation": "Five warning signs: a **fake sender**, **rushing you**, **\"Dear Customer\"**, **asking for secrets** and a **hidden link**. Plus **too good to be true** from the prize email."
     },
     {
       "id": "phish-or-fine",
@@ -126,15 +126,15 @@
           "bin": "fine"
         }
       ],
-      "explanation": "Rushing, asking for secrets, prizes you pay to claim and links that go somewhere else are all phishing signs. A message from the **real** address that sends you to the official app, or a normal note from your school, is probably fine. If you're ever unsure, check another way.",
-      "hint": "Run each one past the warning signs: fake sender, rushing, \"Dear Customer\", asking for secrets, hidden links, too good to be true.",
-      "nudge": "A message is suspicious if it rushes you, asks for secrets, or offers a prize you pay for. A real address sending you to the official app is fine."
+      "explanation": "Rushing, asking for secrets, prizes you pay for and links that go elsewhere are phishing signs. The **real** address sending you to the official app, or your school's usual email, is probably fine.",
+      "hint": "Check each against the signs: fake sender, rushing, \"Dear Customer\", secrets, hidden links, too good to be true.",
+      "nudge": "Check each one again: does it rush you, ask for secrets, hide a link or want money for a prize?"
     },
     {
       "id": "spot-the-signs",
       "type": "hotspot",
       "difficulty": "core",
-      "prompt": "Your Bank's real emails come from **@yourbank.example**. The time and the sign-off are normal. Now tap **every** warning sign in this email.",
+      "prompt": "Your Bank's emails come from **@yourbank.example**. Tap **every** warning sign here (the time and sign-off are fine).",
       "scene": "email",
       "mode": "tap",
       "targets": [
@@ -144,9 +144,9 @@
         "email-secrets",
         "email-link"
       ],
-      "explanation": "Five warning signs: the sender's address isn't `@yourbank.example`, the subject is **rushing you**, it says **\"Dear Customer\"**, it **asks for secrets** (your password and card number), and the button goes to `yourbank-verify.example`. The date and the sign-off are normal.",
+      "explanation": "The sender isn't `@yourbank.example`, the subject **rushes you**, it says **\"Dear Customer\"**, it **asks for secrets** and the button goes to `yourbank-verify.example`.",
       "hint": "Go back over the five signs you just met. Each one is on its own line.",
-      "nudge": "There are five warning signs here. Go through them one at a time, and look for each one in the email."
+      "nudge": "There are five. Look for each sign you just met, one at a time."
     },
     {
       "id": "knows-your-name",
@@ -167,7 +167,7 @@
             },
             {
               "id": "check",
-              "text": "Don't use the link: sign in the usual way, or ask your teacher",
+              "text": "Skip the link: sign in the usual way, or ask your teacher",
               "consequence": "Your account is fine, and your teacher reports the scam to the school.",
               "next": "already-clicked"
             }
@@ -175,7 +175,7 @@
         },
         {
           "id": "already-clicked",
-          "text": "Your friend Alex got the same email and **already typed in their password**. Alex feels silly. What should Alex do?",
+          "text": "Your friend Alex got it too and **already typed in their password**. Alex feels silly. What should Alex do?",
           "choices": [
             {
               "id": "hide",
@@ -198,8 +198,8 @@
           ]
         }
       ],
-      "explanation": "A personal touch doesn't prove a message is real: scammers can find names online. Check by going to the site **your usual way**. Already typed a password in? **Change it straight away** and tell a trusted adult. It's never your fault.",
-      "hint": "Can a name prove an email is real? Is there a way to reach your account without the email's link? And once a password is out, what makes it useless to a scammer?"
+      "explanation": "A name doesn't prove a message is real: go to the site **your usual way**. If a password slipped out, **change it straight away** and tell a trusted adult. It's never your fault.",
+      "hint": "Can a name prove an email is real? And what makes a stolen password useless?"
     },
     {
       "id": "real-sender",
@@ -223,7 +223,7 @@
         }
       ],
       "correctOptionId": "real",
-      "explanation": "Only `@yourbank.example` is Your Bank. `yourbank-alerts.example` is a lookalike, and in `yourbank@mail-alerts.example` the part after the @ belongs to someone else.",
+      "explanation": "Only `@yourbank.example` is Your Bank. `yourbank-alerts.example` is a lookalike, and in the last one the part after the @ belongs to someone else.",
       "hint": "Look only at the part after the @. Is it exactly `yourbank.example`?"
     },
     {

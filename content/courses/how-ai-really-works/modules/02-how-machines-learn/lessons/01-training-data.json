@@ -10,37 +10,37 @@
       "id": "free-pizza-guess",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A spam filter learns from messages people have already labelled **spam** or **not spam**. In this one's examples, **\"free\"** only ever appeared in spam: \"Win a free phone\", \"Free prize\", \"Claim your free gift card\".\n\nYour friend texts **\"Free pizza at footy training\"**. Will the filter call it spam?",
+      "prompt": "In this spam filter's examples, **\"free\"** only appeared in spam. Will it call **\"Free pizza at footy training\"** spam?",
       "options": [
         {
           "id": "yes-free",
-          "text": "Yes: in its examples, \"free\" has only ever meant spam"
+          "text": "Yes: in its examples, \"free\" only ever meant spam"
         },
         {
           "id": "no-friend",
           "text": "No: it can tell the message comes from a friend",
-          "nudge": "The filter only sees the words, and all it knows about them comes from its examples. What did those teach it about \"free\"?"
+          "nudge": "It only sees the words. What did its examples teach it about \"free\"?"
         },
         {
           "id": "no-common",
           "text": "No: it knows people say \"free pizza\" all the time",
-          "nudge": "It only knows what its examples showed it. Did any of them use \"free\" in a friendly way?"
+          "nudge": "It only knows its examples. Did any of them use \"free\" in a friendly way?"
         },
         {
           "id": "cant-guess",
           "text": "It can't guess: it has never seen this exact message",
-          "nudge": "Guessing about new things is a model's whole job. It uses the patterns in its examples. What pattern does \"free\" follow there?"
+          "nudge": "Guessing about new things is a model's job. What pattern does \"free\" follow?"
         }
       ],
       "correctOptionId": "yes-free",
-      "hint": "The filter knows nothing except its examples. Look at which kind of message \"free\" turned up in.",
-      "explanation": "To this filter, **\"free\" means spam**, because that's all its examples ever showed. Real friends say \"free\" too (free time, free tickets), but a model can't learn from examples it never saw. Next, watch it happen."
+      "hint": "Look at which kind of message \"free\" turned up in.",
+      "explanation": "To this filter, **\"free\" means spam**: that's all its examples showed. Friends say \"free\" too, but a model can't learn from examples it never saw."
     },
     {
       "id": "label-messages",
       "type": "train_model",
       "difficulty": "core",
-      "prompt": "A spam filter learns from messages people have labelled. Label each message as **spam** or **not spam**. Then press Check to train the [[model]] and see what it makes of two new messages.",
+      "prompt": "Label each message **spam** or **not spam**, then Check to train the [[model]] and test it.",
       "model": {
         "kind": "word-vote"
       },
@@ -119,22 +119,22 @@
       "task": {
         "goal": "label"
       },
-      "hint": "Spam tries to get you to win, claim, click or pay. Normal messages are about plans and everyday things.",
-      "nudge": "Look again at the messages about prizes, gift cards and paying a fee: who sends those?",
-      "explanation": "Your labels were right. The model caught the prize message, but it also called **\"Free pizza at footy training\"** spam. In its examples, \"free\" only ever appeared in spam."
+      "hint": "Spam tries to make you win, claim, click or pay; normal messages are everyday plans.",
+      "nudge": "Ask of each message: is it trying to make you claim, click or pay?",
+      "explanation": "Your labels were right. The model caught the prize message, but called **\"Free pizza at footy training\"** spam: in its examples, \"free\" only appeared in spam."
     },
     {
       "id": "words-that-vote",
       "type": "explainer",
       "difficulty": "core",
       "title": "Words that vote",
-      "body": "So how did it decide? In this model, words **vote**. Each word of 3 or more letters gets one vote for every training message it was in, for that message's label.\n\n\"Free\" was in three spam messages: 3 votes for spam. \"Pizza\" and \"training\" gave not spam just 2. Most votes wins; a tie means \"not sure\"."
+      "body": "In this model, words **vote**. Each word of 3 or more letters gets one vote per training message it was in, for that message's label.\n\n\"Free\" was in three spam messages: 3 votes for spam. \"Pizza\" and \"training\" gave not spam just 2. Most votes wins; a tie means \"not sure\"."
     },
     {
       "id": "fix-the-data",
       "type": "train_model",
       "difficulty": "core",
-      "prompt": "The model only went wrong because nobody friendly in its examples ever said \"free\". Choose which examples to train on, so it gets **both** test messages right.",
+      "prompt": "Choose which examples to train on, so the model gets **both** test messages right.",
       "model": {
         "kind": "word-vote"
       },
@@ -230,15 +230,15 @@
           "m8"
         ]
       },
-      "hint": "Which side needs more votes from \"free\"? Look for an example where a friend says it.",
-      "nudge": "Watch the guess for the pizza message as you tick and untick. A tie shows as \"Not sure\", which isn't right yet.",
-      "explanation": "Adding **\"Free footy training on Saturday\"** shows the model that friends say \"free\" too, so the pizza message gets more not-spam votes. Deleting spam examples can also flip it, but then the model learns less about real spam. \"Pizza, pizza, pizza!\" adds just one vote: a word counts once per message."
+      "hint": "Which side needs votes from \"free\"? Look for an example where a friend says it.",
+      "nudge": "Watch the pizza message's guess as you tick and untick. \"Not sure\" isn't right yet.",
+      "explanation": "**\"Free footy training on Saturday\"** shows friends say \"free\" too, so the pizza message gets more not-spam votes. \"Pizza, pizza, pizza!\" adds one vote: a word counts once per message."
     },
     {
       "id": "helpful-or-problem",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Good training data has **checked labels**, **lots of variety**, and examples like the ones the model will really meet. Does each one make training data **better**, or cause a **problem**?",
+      "prompt": "Good data has **checked labels**, **variety** and **realistic** examples. Does each one make data **better** or cause a **problem**?",
       "bins": [
         {
           "id": "better",
@@ -286,15 +286,15 @@
           "bin": "problem"
         }
       ],
-      "hint": "Ask of each one: does it teach the model something new and true?",
-      "nudge": "Look for the ones that teach the model something wrong, repeat one example over and over, or leave whole groups out.",
-      "explanation": "Variety, checked labels and realistic examples make data **better**. Rushed labels and spam marked \"not spam\" teach wrong lessons. A thousand copies add nothing new and tip the votes. One office leaves everyone else out."
+      "hint": "Ask: does it teach the model something new and true?",
+      "nudge": "Look for ones that teach something wrong, repeat one example, or leave people out.",
+      "explanation": "Variety, checked labels and realistic examples make data **better**. Wrong or rushed labels teach wrong lessons, copies add nothing new, and one office leaves everyone else out."
     },
     {
       "id": "noisy-label",
       "type": "train_model",
       "difficulty": "challenge",
-      "prompt": "Someone made a labelling mistake in this fruit data. Find it, and choose the examples to train on so the model gets **both** test fruits right. (This model picks the **nearest** example.)",
+      "prompt": "One fruit has the wrong label. Choose examples so this nearest-example model gets **both** tests right.",
       "model": {
         "kind": "nearest",
         "k": 1,
@@ -398,39 +398,39 @@
           "b3"
         ]
       },
-      "hint": "Read each example's name and the label beside it. Does every label match its name?",
-      "nudge": "Check that every example's label matches its name.",
-      "explanation": "\"Long banana\" was labelled **Apple**. It sat closest to the ripe banana, so the model copied its wrong label. Leaving that one example out fixes it: one wrong label can be enough to cause a mistake."
+      "hint": "Read each example's name and its label. Do they all match?",
+      "nudge": "See which test fruit is still wrong, and check the labels of the examples nearest it.",
+      "explanation": "\"Long banana\" was labelled **Apple**, and it sat closest to the ripe banana. Leaving it out fixes it: one wrong label can cause a mistake."
     },
     {
       "id": "more-or-better",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "A spam filter learned only from **English** messages. It lets lots of **Spanish** spam through. Which **one** addition helps most?",
+      "prompt": "A spam filter learned only from **English** and misses **Spanish** spam. Which **one** addition helps most?",
       "options": [
         {
           "id": "english",
-          "text": "10,000 more English spam messages",
-          "nudge": "That's a lot more data, but does any of it show the model Spanish spam?"
+          "text": "10,000 more English spam messages, labelled",
+          "nudge": "That's lots more data, but does any of it show Spanish spam?"
         },
         {
           "id": "spanish",
-          "text": "200 Spanish messages, spam and normal, labelled"
+          "text": "200 labelled Spanish messages, spam and normal"
         },
         {
           "id": "spanish-spam-only",
           "text": "200 Spanish spam messages, all labelled spam",
-          "nudge": "Close! But if every Spanish message it sees is spam, what will it think of a friend writing in Spanish?"
+          "nudge": "Close! But if every Spanish message is spam, what will it think of a friend?"
         },
         {
           "id": "twice",
-          "text": "The same English messages, twice",
+          "text": "The same English messages again, twice over",
           "nudge": "Copies add nothing new. What's missing from its examples?"
         }
       ],
       "correctOptionId": "spanish",
-      "hint": "Think about what's missing from its examples, and what would happen to normal messages written in Spanish.",
-      "explanation": "The filter has never seen Spanish, so it needs **Spanish examples**, and **both kinds**: spam only would teach it that Spanish means spam, so friends writing in Spanish would get flagged (like \"free\" in the pizza message). More English data adds nothing about Spanish."
+      "hint": "What's missing from its examples, and what happens to normal Spanish messages?",
+      "explanation": "It needs **Spanish examples** of **both kinds**: spam only would teach it that Spanish means spam, so friends get flagged. More English adds nothing about Spanish."
     },
     {
       "id": "training-data-recap",

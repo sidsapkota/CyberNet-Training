@@ -47,7 +47,8 @@ npm run e2e:latency       # time a lesson save, a lesson fetch and the dashboard
 npm run e2e:plans         # plans at 360px and desktop (guest, free, Pro), plan events, nav, Pro identity
 npm run e2e:account-speed # how fast /account opens from the profile icon (PHONE=1 for throttled 4G)
 npm run e2e:mascot-motion # mascot reactions timed in the browser, the scan filmstrip, reduced motion
-npm run e2e:fit-audit     # every card at 360x640 and 360x560: does it fit without scrolling? (COURSE=<id>, LESSONS=<id,id>)
+npm run e2e:fit-audit     # every card at 360x640 and 360x560: does it fit without scrolling? (COURSE=<id>, LESSONS=<id,id>;
+                          # E2E_SHARE_URL for a protected preview)
 npm run e2e:player-flow   # before/after screenshots: a hotspot card and the wrong-answer flow (SHOTS_TAG=)
 ```
 
@@ -312,7 +313,7 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
     exist with the right kind.
   - The `device` output is a phone or laptop mockup that stutters as `smooth` drops, with its state
     always in text too. On phones it sits beside the other outputs (drawn a little smaller), and two
-    or more meters without a device sit side by side, so the controls stay on a 360×640 screen.
+    or more meters without a device sit side by side, so the controls stay on a phone screen.
   - Answers are ready once a control changes. The server re-grades by running the same model.
 - **`scenario`:** steps tell the story as you go; a picked **ending** is just selected (it can be
   changed) and its consequence and outcome show **after Check**. Try again takes the failed ending
@@ -670,6 +671,13 @@ src/dev/                 dev-only card samples + playground (served at /dev/card
   mount, so avoid hydration mismatches: no `Math.random`/`Date` during render. The drag shuffle is
   seeded from the card id.
 - **Mobile-first:** design at 360–390px wide first. Keep tap targets ≥ 44px.
+- **Fit target: 360×560.** Every card must fit a 360×560 screen (the Instagram in-app browser,
+  the smallest real one we see) without scrolling: prompt, interactive area, labels, header and
+  footer on one screen, before Check. `npm run e2e:fit-audit` measures it (`COURSE=` / `LESSONS=`;
+  `E2E_SHARE_URL` for a preview). When a card doesn't fit, split it (one idea per card) or shrink
+  the diagram, whichever keeps it clear; never make a learner scroll to the controls. New and
+  rewritten content must pass at 560; older courses move over in the "learn before you do"
+  rollout. After Check, the footer's feedback may cover part of the card (it scrolls).
 - **Accessibility:** radio/pressed semantics on choices and bits, `aria-live` for feedback, visible
   focus rings, keyboard paths for everything including drag (Space, arrows, Space). **Right/wrong
   is never colour alone:** always a check or cross icon *and* text (`CardStatusNote`, footer
@@ -1473,10 +1481,18 @@ from ~2.8s to ~0.4s (`npm run e2e:latency`).
 ### Feedback
 - `/feedback` (from the footer, and "Send feedback about this lesson" on the lesson-complete
   screen): a message (1,000 characters max, with "Please don't include personal details"), an
-  optional lesson and an optional 1–5 rating (native radio inputs). It inserts straight into the
-  `feedback` table with the publishable key; RLS makes it insert-only, and the database
-  rate-limits it (see Row Level Security rules). Without Supabase env vars it shows the contact
-  email instead.
+  optional lesson and an optional 1–5 rating (native radio inputs). It posts to `/api/feedback`,
+  which inserts into the `feedback` table with the visitor's own session (RLS makes it insert-only,
+  and the database rate-limits it: see Row Level Security rules). Without Supabase env vars it
+  shows the contact email instead.
+- **Emailed to the owner:** after storing it, the route emails a plain-text copy via Resend
+  (`src/lib/feedback/`, sent with `after()`, so a failed email never fails the form) to
+  `FEEDBACK_INBOX` in `src/lib/site.ts` (cybernettraining10@gmail.com for now; switch it to
+  `CONTACT_EMAIL` once hello@ forwarding works). It holds the message, the lesson, the page the
+  sender came from (same-site path only, no query string), the rating, the time, and only
+  **whether** they were signed in, never who. At most `FEEDBACK_EMAILS_PER_HOUR` (12) emails an
+  hour, counted from the table; the first message over the cap sends one "more are waiting" note,
+  the rest stay in the table only. Without `RESEND_API_KEY` (previews, local) nothing is emailed.
 
 ## Minimalism guardrail (Brilliant-level clean)
 
@@ -1509,6 +1525,7 @@ this list and fix anything busy.**
   (predict, drag, try) set up by its own prompt, then name the idea in a short explainer.
 - **Explain before naming.** Introduce an idea with an everyday analogy first, then give the technical
   term in **bold** (e.g. light switch → **bit**; 8 bits → **byte** → **octet**).
+- **Fits a phone:** every card fits 360×560 without scrolling (see Conventions → Fit target).
 - **Keep it small.** One idea per explainer, at most 60 words. Lessons run 5–7 core cards (about
   3–5 minutes) and mostly teach by doing; a card's own prompt can teach the idea it asks about.
 - **Explanations teach.** Say *why* the answer is right and address likely wrong answers. Wrong

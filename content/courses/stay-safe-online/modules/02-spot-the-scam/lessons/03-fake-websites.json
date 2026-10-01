@@ -11,13 +11,13 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Read the address",
-      "body": "A fake site can copy a logo. It can't copy the real address. The owner is the name just before the **very last ending** (like `.example`, `.com` or `.com.au`).\n\n- `login.yourbank.example` is Your Bank's: only the owner can add things in front.\n- `yourbank.example.login-check.example` belongs to **login-check.example**.\n- `yourbank-secure.example` is a [[lookalike|lookalike-domain]]. So is `yourbnak.example`: one swapped letter, zero honesty."
+      "body": "A fake site can copy a logo, but not the real address. The owner is the name just before the **very last ending** (like `.example`, `.com` or `.com.au`). Anything after a `/` is just a page.\n\n- `login.yourbank.example` is Your Bank's: only the owner can add things in front.\n- `yourbank.example.login-check.example` belongs to **login-check.example**.\n- `yourbank-secure.example` and `yourbnak.example` are [[lookalikes|lookalike-domain]]."
     },
     {
       "id": "bank-or-not",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Your Bank's site is `yourbank.example`. Find the **very last ending**, then the name just before it. Anything after a `/` is just a page. Which addresses really belong to Your Bank?",
+      "prompt": "Which addresses really belong to Your Bank (`yourbank.example`)?",
       "bins": [
         {
           "id": "real",
@@ -50,15 +50,15 @@
           "bin": "fake"
         }
       ],
-      "explanation": "`yourbank.example/signin` and `login.yourbank.example` both end in `yourbank.example`, so they're Your Bank's. `yourbank-secure.example` and `yourbnak.example` are lookalikes: the name before the ending isn't exactly `yourbank`.",
+      "explanation": "`yourbank.example/signin` and `login.yourbank.example` end in `yourbank.example`, so they're Your Bank's. The other two are lookalikes: the name isn't exactly `yourbank`.",
       "hint": "For each one, find the very last ending and read the name just before it. Is that name exactly `yourbank`?",
-      "nudge": "Only the name just before the very last ending counts. A different word, extra letters or swapped letters means a different owner."
+      "nudge": "Only the name just before the very last ending counts, and it must be exactly `yourbank`."
     },
     {
       "id": "padlock-means",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "The padlock next to an address means your connection is **encrypted**: nobody can read what you send on the way. This page has a padlock, and it asks for your card PIN. What does the padlock tell you?",
+      "prompt": "A padlock means **encrypted**: no one can read data on the way. This page has one and wants your PIN. What does it prove?",
       "options": [
         {
           "id": "encrypted",
@@ -66,24 +66,24 @@
         },
         {
           "id": "checked",
-          "text": "That the site has been checked, so asking for a PIN is fine",
+          "text": "That the site was checked, so a PIN request is fine",
           "nudge": "Nobody checks a site's honesty before it gets a padlock. It's about the trip, not who's at the other end."
         },
         {
           "id": "bank",
-          "text": "That it's really your bank's page, since scam sites can't get one",
-          "nudge": "Scam sites can get a padlock too. Think about what encryption protects, and what it doesn't."
+          "text": "That it's your bank's page: scam sites can't get one",
+          "nudge": "Scam sites can get a padlock too. Think about what encryption protects."
         }
       ],
       "correctOptionId": "encrypted",
-      "explanation": "The padlock means the connection is **encrypted**, so nobody can read it on the way. It says nothing about who runs the site: scam sites can have one too. And a bank never asks for your PIN on a website.",
-      "hint": "Encryption protects your data on the trip. Does it tell you who is waiting at the other end?"
+      "explanation": "A padlock only means nobody can read your data on the way. Scam sites can have one too, and a bank never asks for your PIN on a website.",
+      "hint": "Encryption protects your data on the trip. Does it tell you who's at the other end?"
     },
     {
       "id": "spot-the-site",
       "type": "hotspot",
       "difficulty": "core",
-      "prompt": "You opened this page from a link in a text. Your Bank's real site is `yourbank.example`. A sign-in page asks for your username and password, but a bank **never** asks for your card PIN. Tap **every** warning sign.",
+      "prompt": "This came from a link in a text. Your Bank is `yourbank.example` and **never** asks for your PIN. Tap **every** warning sign.",
       "scene": "fake-website",
       "mode": "tap",
       "targets": [
@@ -91,15 +91,15 @@
         "site-banner",
         "site-pin"
       ],
-      "explanation": "Three warning signs: the address belongs to `login-check.example` (the **wrong owner**), the banner is **rushing you**, and it **asks for your card PIN**. The padlock and the logo look real, but they don't prove anything.",
-      "hint": "Read the address to find its owner. Then look for pressure, and for a secret a bank would never ask for.",
-      "nudge": "Three things on this page match warning signs you know: who owns the address, pressure, and a secret. Look for each in turn."
+      "explanation": "The address belongs to `login-check.example` (the **wrong owner**), the banner is **rushing you**, and it **asks for your card PIN**. The padlock and logo prove nothing.",
+      "hint": "Read the address to find its owner, then look for pressure and a secret.",
+      "nudge": "Look for who owns the address, pressure, and a secret, one at a time."
     },
     {
       "id": "manager-stays-quiet",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "A **password manager** only fills in your password on the real site. You tap a link in an email to sign in to your game account.",
+      "prompt": "A **password manager** only fills in on the real site. You tap a link in an email to sign in to your game.",
       "start": "start",
       "steps": [
         {
@@ -126,7 +126,7 @@
           "choices": [
             {
               "id": "close",
-              "text": "Close the page, then open the game's app or type the address yourself",
+              "text": "Close it, then use the game's app or type the address",
               "consequence": "Safe. If there was really something to sign in for, you'll see it there.",
               "outcome": "success"
             },
@@ -139,7 +139,7 @@
           ]
         }
       ],
-      "explanation": "A quiet password manager is a clue that the address isn't the real one. Don't sign in from a link: use the **app, a bookmark or the typed address**.",
+      "explanation": "A quiet password manager is a clue the address isn't the real one. Sign in through the **app, a bookmark or the typed address**.",
       "hint": "Where does a password manager fill in passwords? What's the safe way to reach an account?"
     },
     {
@@ -186,7 +186,7 @@
           ]
         }
       ],
-      "explanation": "Typed details into a fake site? **Change that password straight away** and tell a trusted adult. For a bank card, call the bank on the number **on the card or its official website**, never one from the fake page.",
+      "explanation": "**Change the password straight away** and tell a trusted adult. For a card, call the number **on the card or the bank's official website**, never one from the fake page.",
       "hint": "What makes a stolen password useless? And where can you find a bank's number that a scammer didn't give you?"
     },
     {
@@ -216,7 +216,7 @@
         }
       ],
       "correctOptionId": "sub",
-      "explanation": "`help.yourbank.example` ends in `yourbank.example`, so it's Your Bank's: only the owner can add `help.` in front. The others belong to someone else.",
+      "explanation": "`help.yourbank.example` ends in `yourbank.example`: only the owner can add `help.` in front. The others belong to someone else.",
       "hint": "For each address, find the very last ending, then the name just before it."
     },
     {

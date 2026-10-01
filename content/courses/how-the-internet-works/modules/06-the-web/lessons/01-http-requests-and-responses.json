@@ -10,20 +10,20 @@
       "id": "requests-per-page",
       "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "Websites never push pages at you. Your [[browser]] has to **ask** for every file a page needs, one request per file.\n\nA page is made of its text (one file) and 3 photos. Your browser has none of them saved yet. How many files does it ask for?",
+      "prompt": "Your [[browser]] has to **ask** for every file a page needs, one request per file.\n\nA page has its text (one file) and 3 photos, none saved yet. How many requests?",
       "base": "decimal",
       "answer": 4,
       "unit": "requests",
-      "explanation": "One request for the text file, plus one for each photo: 1 + 3 = **4**. In fact the browser asks for the text first, reads it, and only then finds out it needs 3 photos. Big websites can need over a hundred requests for a single page.",
-      "hint": "Count every file the page is made of. Don't forget the text itself is a file too.",
-      "nudge": "The photos aren't the only files. The browser has to fetch the page's text as well, before it even knows about the photos."
+      "explanation": "One for the text plus one per photo: 1 + 3 = **4**. The browser gets the text first, and only then learns it needs the photos.",
+      "hint": "Count every file, including the text itself.",
+      "nudge": "The photos aren't the only files: the page's text is a file too."
     },
     {
       "id": "request-and-response",
       "type": "explainer",
       "difficulty": "core",
       "title": "Ask and answer",
-      "body": "That asking follows a [[protocol]] called **HTTP**. Your [[browser]] sends a **request**, like `GET /news`: a **method** (what to do) and a **path** (which page).\n\nThe [[server]] sends back a **response**: a **status code** saying how it went, then the **body**, the content itself. Web pages are written in **HTML**, the code that describes a page."
+      "body": "That asking follows a [[protocol]] called **HTTP**. Your [[browser]] sends a **request**, like `GET /news`: a **method** (what to do) and a **path** (which page).\n\nThe [[server]] replies with a **response**: a **status code** (how it went), then the **body**, the content itself. Web pages are written in **HTML**."
     },
     {
       "id": "request-parts",
@@ -36,15 +36,15 @@
         { "id": "status", "left": "The status code (`200`)", "right": "How the request went" },
         { "id": "body", "left": "The response body", "right": "The content itself, like the page's HTML" }
       ],
-      "explanation": "The **method** is the action and the **path** is which item: those two travel in the request. The **status code** and the **body** come back in the response: first how it went, then the content.",
-      "hint": "Think of ordering at a café: what you want done, which item, whether they could do it, and what you actually get handed.",
-      "nudge": "Two of these go out in the request and two come back in the response. The status code is the short \"how did it go\" part."
+      "explanation": "The **method** (the action) and the **path** (which item) go out in the request. The **status code** and the **body** come back: first how it went, then the content.",
+      "hint": "Like ordering at a café: what to do, which item, whether they could, and what you get handed.",
+      "nudge": "Two go out in the request and two come back; the status code is the short \"how did it go\" part."
     },
     {
       "id": "get-or-post",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "The two methods you'll meet most: **GET** means \"please give me this\", and **POST** means \"please take this data\". Which does your [[browser]] use for each?",
+      "prompt": "**GET** means \"please give me this\"; **POST** means \"please take this data\".\n\nWhich does your [[browser]] use for each?",
       "bins": [
         { "id": "get", "label": "GET: give me this" },
         { "id": "post", "label": "POST: take this data" }
@@ -57,15 +57,15 @@
         { "id": "log-in", "label": "Log in with your password", "bin": "post" },
         { "id": "upload-photo", "label": "Upload a photo", "bin": "post" }
       ],
-      "explanation": "Watching, viewing and opening are all **fetching**, so they're **GET**. Commenting, logging in and uploading all **send your data** to the server, so they're **POST**. Most of your browsing is GETs; a POST happens whenever you press something like Send, Log in or Upload.",
-      "hint": "For each one, ask: is data coming **to** me, or am I sending something of mine **to** the server?",
-      "nudge": "Logging in may feel like \"getting into\" a site, but your password travels to the server. Which method carries data that way?"
+      "explanation": "Watching, viewing and opening all **fetch**, so they're **GET**. Commenting, logging in and uploading **send your data**, so they're **POST**.",
+      "hint": "Is data coming **to** you, or are you sending something of yours **to** the server?",
+      "nudge": "Logging in feels like \"getting in\", but your password travels to the server: which method sends data?"
     },
     {
       "id": "whose-problem",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Every response starts with a three-digit **status code**, and its **first digit** says how it went:\n\n- **2**: all fine, here it is\n- **4**: a problem with the request, like asking for a page that isn't there\n- **5**: a problem on the server\n\nSort these responses.",
+      "prompt": "A response's **status code** starts with a digit that says how it went: **2** all fine, **4** a problem with the request (like a missing page), **5** a problem on the server.\n\nSort these responses.",
       "bins": [
         { "id": "fine", "label": "All fine" },
         { "id": "mine", "label": "Problem with the request" },
@@ -79,15 +79,15 @@
         { "id": "s500", "label": "`500 Internal Server Error`", "bin": "server" },
         { "id": "s503", "label": "`503 Service Unavailable`", "bin": "server" }
       ],
-      "explanation": "Codes starting with **2** worked. **4** means the request was the problem: 404, the server looked everywhere and found nothing; 403, that page isn't yours to see. **5** means the server tripped over its own feet: 500 is an error inside it, and 503 means it's too busy or down for now.",
+      "explanation": "**2** worked. **4** means the request was the problem (404: nothing there; 403: not yours to see), and **5** means the server failed (500: an error inside it; 503: busy or down).",
       "hint": "Ignore the words for a moment and read only the first digit of each code.",
-      "nudge": "Some of the words sound alarming, but only the first digit decides. A 4 points at the request; a 5 points at the server."
+      "nudge": "Some words sound alarming, but only the first digit decides."
     },
     {
       "id": "curl-headers",
       "type": "terminal",
       "difficulty": "core",
-      "prompt": "`curl -I` (a capital **I**) asks a server for just the top of a response: the status code and some labelled lines called **headers**. A code starting with **3** means \"this has moved\", and a `Location` line gives the new address.\n\nRun `curl -I http://example.com/old-news`. Where has that page moved to?",
+      "prompt": "`curl -I` (a capital **I**) shows just the status code and labelled lines called **headers**. A **3** code means \"moved\", and `Location` gives the new address.\n\nRun `curl -I http://example.com/old-news`. Where has it moved?",
       "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
       "commands": [
         {
@@ -114,35 +114,35 @@
         "question": "Where has /old-news moved to?",
         "accepted": ["http://example.com/news", "example.com/news", "/news"]
       },
-      "explanation": "`/old-news` answered **301 Moved Permanently**, and its `Location` line gives the new address: `http://example.com/news`. A [[browser]] follows that by itself, so you'd just land on the new page. (The home page gave **200 OK**, and `/missing` gave **404 Not Found**, if you tried them.)",
-      "hint": "Run the command on `/old-news`, then look for the line that starts with `Location`.",
-      "nudge": "The first line only says the page moved. The new address is on a line of its own further down."
+      "explanation": "`/old-news` gave **301 Moved Permanently**, and its `Location` line says `http://example.com/news`. A [[browser]] follows that by itself.",
+      "hint": "Run it on `/old-news`, then find the line starting with `Location`.",
+      "nudge": "The first line only says it moved: the new address is on its own line further down."
     },
     {
       "id": "error-500",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "A page shows **500 Internal Server Error**. What does that tell you about your own connection?",
+      "prompt": "A page shows **500 Internal Server Error**. What does that say about your own connection?",
       "options": [
-        { "id": "server-problem", "text": "It works: a response arrived, so the fault is on the server" },
+        { "id": "server-problem", "text": "It works: a reply came, so the server's at fault" },
         {
           "id": "wifi",
-          "text": "It's broken: your Wi-Fi probably dropped out mid-request",
-          "nudge": "If your Wi-Fi were down, no response would arrive at all. Here a status code came back. What does that prove?"
+          "text": "It's broken: your Wi-Fi dropped out mid-request",
+          "nudge": "With no Wi-Fi, no response would arrive at all: what does a status code prove?"
         },
         {
           "id": "typo",
-          "text": "It works, but you probably typed the page's address wrong",
-          "nudge": "A wrong address is a problem with the request. Which first digit did that kind of problem have?"
+          "text": "It works, but you typed the address wrong",
+          "nudge": "A wrong address is a problem with the request: which first digit did that have?"
         },
         {
           "id": "unknown",
-          "text": "Nothing: a 500 could mean your connection is working or broken",
-          "nudge": "If your connection were broken, could any status code reach you at all? Think about how this one got to you."
+          "text": "Nothing: a 500 could mean working or broken",
+          "nudge": "Could any status code reach you over a broken connection?"
         }
       ],
       "correctOptionId": "server-problem",
-      "explanation": "A **5** means the **server** had a problem. And the fact that any response arrived at all proves your connection, the address lookup and the route to the server all worked. A typo in the path would give a **4** code, like 404, instead.",
+      "explanation": "A **5** means the **server** had a problem, and any response arriving proves your connection worked. A typo would give a **4** code, like 404.",
       "hint": "Two clues: the first digit of the code, and the fact that a response arrived at all."
     },
     {

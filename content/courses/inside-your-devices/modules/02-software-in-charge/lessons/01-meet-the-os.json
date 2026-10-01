@@ -10,7 +10,7 @@
       "id": "speaker-turns",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "Your music is playing, a game wants its sound effects, and a message has just arrived with a ping. All three apps want the **speaker**, right now.",
+      "prompt": "Music, a game and a message ping all want the **speaker** at once.",
       "start": "who-decides",
       "steps": [
         {
@@ -19,34 +19,34 @@
           "choices": [
             {
               "id": "first-grabs",
-              "text": "The app that grabbed the speaker first keeps it until it closes",
-              "consequence": "Then the music would hog the speaker, and you'd never hear the ping. Apps can't just grab shared things and keep them.",
+              "text": "The first app to grab it keeps it",
+              "consequence": "Then the music would hog the speaker, and you'd never hear the ping.",
               "outcome": "fail"
             },
             {
               "id": "all-at-once",
-              "text": "Each app drives the speaker itself, whenever it likes",
-              "consequence": "Three apps all driving one speaker at once would crash into each other. Something has to share it out.",
+              "text": "Each app uses it whenever it likes",
+              "consequence": "Three apps driving one speaker at once would clash. Something has to share it out.",
               "outcome": "fail"
             },
             {
               "id": "one-in-charge",
-              "text": "One main program shares it out, so you hear all three",
-              "consequence": "Yes. The ping plays over the music, and the game's sounds too. Every app gets heard.",
+              "text": "One main program shares it out fairly",
+              "consequence": "Yes. The ping plays over the music, and the game's sounds too.",
               "outcome": "success"
             }
           ]
         }
       ],
-      "explanation": "Apps share the [[CPU]], [[RAM]], the screen and the speaker. If each one grabbed what it wanted, they'd crash into each other. So one main program is in charge of sharing: the **operating system**.",
-      "hint": "Think of a referee in a game. Should players grab the ball and keep it, or should someone share out turns?"
+      "explanation": "Apps share the [[CPU]], [[RAM]], screen and speaker, so one main program shares them out: the **operating system**.",
+      "hint": "Think of a referee: should players grab the ball, or should someone share out turns?"
     },
     {
       "id": "the-operating-system",
       "type": "explainer",
       "difficulty": "core",
       "title": "The operating system",
-      "body": "That main program is the **operating system**, or **OS**. It's the referee:\n\n- It gives each app quick turns on the [[CPU]], so they all seem to run at once.\n- It shares out [[RAM]] and stops apps reading each other's data.\n- It talks to the **hardware** (screen, keyboard, speaker, Wi-Fi), so apps don't have to."
+      "body": "That main program is the **operating system** (**OS**), the referee:\n\n- It gives apps quick turns on the [[CPU]], so they seem to run at once.\n- It shares out [[RAM]] and keeps apps out of each other's data.\n- It talks to the **hardware** (screen, keyboard, Wi-Fi) for them."
     },
     {
       "id": "os-or-app",
@@ -62,15 +62,15 @@
         { "id": "filter", "label": "Add a funny filter to a selfie", "bin": "app" },
         { "id": "score", "label": "Keep score in a game", "bin": "app" }
       ],
-      "explanation": "The **OS** manages the shared things every app needs: CPU time, RAM, the hardware and safety. **Apps** do one particular job for you, and ask the OS for what they need.",
-      "hint": "Think of the OS as the referee. Is this job about sharing something every app needs, or one particular thing an app does for you?",
-      "nudge": "The OS handles the shared things: CPU turns, RAM, [[hardware]] and keeping apps apart. Apps do one particular job for you."
+      "explanation": "The **OS** manages what every app shares: CPU time, RAM, hardware and safety. **Apps** each do one job for you.",
+      "hint": "Is it about sharing something every app needs, or one job an app does for you?",
+      "nudge": "The OS handles shared things like CPU turns, RAM and [[hardware]]; apps do one job for you."
     },
     {
       "id": "end-the-frozen-app",
       "type": "simulator",
       "difficulty": "core",
-      "prompt": "Your laptop has frozen. This is its **task manager**: it lists every running program (each one is a **process**) and how much of the [[CPU]] it's using. **System** is the OS itself: end it and the laptop crashes. End whatever is hogging the CPU, but **keep your music and your [[browser]] open**.",
+      "prompt": "This **task manager** lists each **process** (a running program). End the one hogging the [[CPU]]; keep music and [[browser]] open, and never end **System** (the OS).",
       "model": "task-manager",
       "params": {
         "ramGb": 8,
@@ -102,15 +102,15 @@
           { "target": "control", "id": "end-browser", "op": "==", "value": false }
         ]
       },
-      "explanation": "The **drawing app** was stuck using 85% of the CPU. Ending its process freed the CPU, and everything else carried on. You'd lose anything unsaved in the drawing app, but nothing else. Ending **System** would have crashed the whole laptop.",
-      "hint": "Look at the CPU number for each process. Which one is taking far more than the rest?",
-      "nudge": "End only the process hogging the CPU. Never end **System**, and keep your music and browser running."
+      "explanation": "The **drawing app** was hogging 85% of the CPU, so ending it fixed the freeze. Ending **System** would have crashed the laptop.",
+      "hint": "Compare the CPU numbers: which process takes far more than the rest?",
+      "nudge": "End only the CPU hog; keep the music, the browser and **System** running."
     },
     {
       "id": "memory-leak",
       "type": "simulator",
       "difficulty": "challenge",
-      "prompt": "This laptop gets slower the longer it's on. One app keeps grabbing [[RAM]] and never gives it back (a **memory leak**). Move time forward to **40 minutes or more**, find that app and end it. Keep the music on.",
+      "prompt": "One app keeps grabbing [[RAM]] (a **memory leak**). Slide time to **40 min or more**, then end it. Keep the music on.",
       "model": "task-manager",
       "params": {
         "ramGb": 8,
@@ -132,7 +132,7 @@
       ],
       "outputs": [
         { "id": "smooth", "kind": "device", "label": "Laptop", "frame": "laptop" },
-        { "id": "ramUsed", "kind": "meter", "label": "RAM in use (of 8 GB)", "unit": "GB" },
+        { "id": "ramUsed", "kind": "meter", "label": "RAM apps want (laptop has 8 GB)", "unit": "GB" },
         { "id": "processes", "kind": "list", "label": "Running" }
       ],
       "goal": {
@@ -143,25 +143,25 @@
           { "target": "control", "id": "end-music", "op": "==", "value": false }
         ]
       },
-      "explanation": "The **chat app** grew by 0.15 GB every minute. After 40 minutes it was using 6.5 GB and filled the 8 GB of RAM almost on its own. Ending it gives the memory back. Restarting the app (or the laptop) is the everyday fix for a leak, until the app's makers fix it.",
-      "hint": "Slide time forward first, then watch the RAM each app uses. Which one keeps growing when the others stay the same?",
-      "nudge": "A leaky app's RAM keeps climbing over time. Move time to 40 minutes or more, and don't end the music or **System**."
+      "explanation": "The **chat app** grew by 0.15 GB a minute, to 6.5 GB after 40 minutes. Ending or restarting it gives the RAM back.",
+      "hint": "Slide time forward, then find the app whose RAM keeps growing.",
+      "nudge": "A leaky app's RAM keeps climbing; don't end the music or **System**."
     },
     {
       "id": "update-time",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "You're halfway through an essay on your laptop. **Updates** are new versions of the OS. They fix **bugs** (mistakes in a program) and close **security holes** (weak spots attackers could use).",
+      "prompt": "**Updates** fix mistakes (**bugs**) and weak spots attackers use (**security holes**). You're mid-essay.",
       "start": "prompt",
       "steps": [
         {
           "id": "prompt",
-          "text": "A message pops up: **\"Updates are ready. Restart now?\"**",
+          "text": "A pop-up says **\"Updates are ready. Restart now?\"**",
           "choices": [
             {
               "id": "restart-now",
               "text": "Restart straight away",
-              "consequence": "The unsaved essay was only in [[RAM]]. Restarting cleared it, and your work is gone.",
+              "consequence": "The unsaved essay was only in [[RAM]], so restarting wiped it.",
               "outcome": "fail"
             },
             {
@@ -173,7 +173,7 @@
             {
               "id": "never",
               "text": "Turn updates off for good",
-              "consequence": "Then the security holes stay open, and attackers know about them. Your laptop gets less safe over time.",
+              "consequence": "Then the security holes stay open, and your laptop gets less safe.",
               "outcome": "fail"
             }
           ]
@@ -185,26 +185,26 @@
             {
               "id": "hold-power",
               "text": "Hold the power button to stop it",
-              "consequence": "Cutting an update off halfway can leave the OS broken and unable to start.",
+              "consequence": "Cutting an update off halfway can leave the OS unable to start.",
               "outcome": "fail"
             },
             {
               "id": "plug-in-wait",
               "text": "Plug in the charger and let it finish",
-              "consequence": "Big updates can take a while. Keeping it powered lets it finish safely.",
+              "consequence": "Big updates take a while. Staying powered lets it finish safely.",
               "outcome": "success"
             }
           ]
         }
       ],
-      "explanation": "**Save your work**, then let updates install. Keep the device plugged in, and never switch it off halfway: that can leave the OS broken. Updates fix bugs and close security holes.",
-      "hint": "Think about where unsaved work lives, and what happens to it when a device restarts. Then think about what switching off halfway would do."
+      "explanation": "**Save your work**, then let updates finish with the charger in. Switching off halfway can break the OS.",
+      "hint": "Where does unsaved work live, and what happens to it on a restart?"
     },
     {
       "id": "fake-virus-popup",
       "type": "scenario",
       "difficulty": "challenge",
-      "prompt": "You're browsing, and the screen suddenly flashes red. Good to know: a web page can't see what's on your laptop.",
+      "prompt": "Your screen flashes red. Good to know: a web page can't see what's on your laptop.",
       "start": "popup",
       "steps": [
         {
@@ -213,20 +213,20 @@
           "choices": [
             {
               "id": "download",
-              "text": "Download CleanerPro",
+              "text": "Download CleanerPro to remove them",
               "consequence": "Pop-ups like this are fakes. The \"cleaner\" is usually the harmful program itself.",
               "outcome": "fail"
             },
             {
               "id": "call",
-              "text": "Call the number",
+              "text": "Call the number on the screen",
               "consequence": "It's a scam. The caller will ask for money or for control of your laptop.",
               "outcome": "fail"
             },
             {
               "id": "close-tab",
-              "text": "Don't click anything in it. Close the tab",
-              "consequence": "A web page knowing what's on your laptop is like a billboard knowing what's in your fridge. This warning is fake.",
+              "text": "Don't click anything; close the tab",
+              "consequence": "A web page knowing what's on your laptop is like a billboard knowing what's in your fridge. It's fake.",
               "next": "wont-close"
             }
           ]
@@ -237,21 +237,21 @@
           "choices": [
             {
               "id": "task-manager",
-              "text": "End the browser in the task manager, then tell a parent or teacher",
+              "text": "End the browser in task manager; tell an adult",
               "consequence": "The page is gone, and they can help you check everything is fine.",
               "outcome": "success"
             },
             {
               "id": "click-cancel",
-              "text": "Click the pop-up's \"Cancel\" button",
+              "text": "Click the pop-up's \"Cancel\" to close it",
               "consequence": "Buttons on a fake pop-up can do anything, including start a download.",
               "outcome": "fail"
             }
           ]
         }
       ],
-      "explanation": "A web page can't see what's on your laptop, so a pop-up claiming to have found viruses is **fake**. Don't click anything inside it. Close the browser (with the task manager if you need to) and tell a parent, teacher or someone you trust.",
-      "hint": "Can a web page really see what's on your laptop? Think about who can, and whether you should click anything it shows you."
+      "explanation": "A web page can't see your files, so the warning is **fake**. Close the browser (with the task manager if needed) and tell a parent, teacher or someone you trust.",
+      "hint": "Can a web page really see what's on your laptop?"
     },
     {
       "id": "recap",

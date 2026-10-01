@@ -11,7 +11,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Scams in your pocket",
-      "body": "The same tricks as [[phishing]] emails come by **text** and **phone call**. Callers may say they're your bank, tech support, even the police.\n\nHang up if a caller wants a **sign-in code** or **password**, wants to **control your computer**, asks for **gift cards**, or says to **keep it secret**."
+      "body": "The same tricks as [[phishing]] emails come by **text** and **phone call**. Scam texts often ask for a **small fee**, set a **deadline** and add an **unfamiliar link**.\n\nCallers may say they're your bank or even the police. Hang up if they ask for a **sign-in code**, a **password**, **gift cards** or **secrecy**, or to **control your computer**."
     },
     {
       "id": "sounds-like-cousin",
@@ -46,7 +46,7 @@
         },
         {
           "id": "next-time",
-          "text": "Some families agree a secret **family safe word** for emergencies. Your family wants an easy way to check a call like that next time. What's best?",
+          "text": "Some families agree a secret **family safe word** for emergencies. What's the best way to check a call like that next time?",
           "choices": [
             {
               "id": "birthday",
@@ -69,8 +69,8 @@
           ]
         }
       ],
-      "explanation": "A familiar voice can be faked. **Hang up and call back** on a number you already know, and agree a **family safe word** to ask for. Secrecy and gift cards are warning signs.",
-      "hint": "What did the last card say about gift cards and secrets? How can you reach your cousin in a way a scammer can't fake? And what could only your family know?"
+      "explanation": "A familiar voice can be faked: **hang up and call back** on a number you know, and agree a **family safe word**. Secrecy and gift cards are warning signs.",
+      "hint": "How can you reach your cousin in a way a scammer can't fake? And what could only your family know?"
     },
     {
       "id": "hang-up-or-ok",
@@ -119,15 +119,15 @@
           "bin": "ok"
         }
       ],
-      "explanation": "Asking for codes, remote control of your computer, gift-card payments and secrecy are all scam signs: **hang up**. Calling a number you found yourself, or a friend on their saved number, is fine.",
-      "hint": "Check each against the warning signs for calls: codes, controlling your computer, gift cards, secrecy. Who made the call, and with what number?",
-      "nudge": "Check each against the warning signs for calls. It also matters who made the call, and to what number."
+      "explanation": "Codes, controlling your computer, gift cards and secrecy are scam signs: **hang up**. Calling a number you found yourself is fine.",
+      "hint": "Check each against the warning signs for calls, and ask who chose the number.",
+      "nudge": "Look at each one again: does it match a warning sign, and who chose the number?"
     },
     {
       "id": "spot-the-text",
       "type": "hotspot",
       "difficulty": "core",
-      "prompt": "You really are waiting for a parcel, and then this arrives. Scam texts often ask for a **small fee**, set a **deadline** and add an **unfamiliar link**. The sender name can be faked, so they can even land next to real messages. Tap all **three** signs in the **new** message.",
+      "prompt": "You're expecting a parcel, then this arrives. Tap the **three** scam-text signs in the **new** message.",
       "scene": "text-message",
       "mode": "tap",
       "targets": [
@@ -135,15 +135,15 @@
         "sms-deadline",
         "sms-link"
       ],
-      "explanation": "The new message asks for a **small fee**, sets a **deadline**, and links to `parcels-redelivery.example`, an **unfamiliar link**. The older message and the sender name look normal, which is how these scams blend in. Check in the company's **official app** instead of tapping the link.",
-      "hint": "Ignore the older message. In the new one, find what it wants you to pay, how long it gives you, and where it sends you.",
-      "nudge": "Three parts of the new message match the warning signs for texts. Look for a fee, a deadline and a link, one at a time."
+      "explanation": "It asks for a **small fee**, sets a **deadline** and links to `parcels-redelivery.example`. The sender name can be faked, so it blends in: check in the company's **official app** instead.",
+      "hint": "In the new message, find what it wants you to pay, how long it gives you, and where it sends you.",
+      "nudge": "Look for a fee, a deadline and a link in the new message, one at a time."
     },
     {
       "id": "always-a-sign",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Some scams offer something **too good to be true**: free game coins, a prize, a job paying lots for little work. Which of these is **always** a warning sign?",
+      "prompt": "Some scams are **too good to be true**: free coins, a prize, an easy job paying lots. Which is **always** a warning sign?",
       "options": [
         {
           "id": "fee-gift-cards",
@@ -152,17 +152,17 @@
         {
           "id": "unsaved-number",
           "text": "A text from a number that isn't saved in your phone",
-          "nudge": "New numbers can be fine: the dentist, a new classmate. Look for a request that a real prize would never make."
+          "nudge": "New numbers can be fine: the dentist, a new classmate."
         },
         {
           "id": "receipt",
           "text": "A receipt email for an order you placed this morning",
-          "nudge": "A receipt for something you really bought is normal. Look for a request that a real prize would never make."
+          "nudge": "A receipt for something you really bought is normal."
         }
       ],
       "correctOptionId": "fee-gift-cards",
-      "explanation": "Real prizes never cost money to claim, and gift cards are a favourite way for scammers to be paid. A new number or a receipt can be perfectly normal.",
-      "hint": "Think about what a real prize costs to claim, and which way of paying you were told to hang up on."
+      "explanation": "Real prizes never cost money to claim, and gift cards are a favourite scam payment. A new number or a real receipt can be normal.",
+      "hint": "What does a real prize cost to claim, and which payment were you told to hang up on?"
     },
     {
       "id": "free-coins",
@@ -178,7 +178,7 @@
             {
               "id": "enter",
               "text": "Type them in: lots of comments say it really works",
-              "consequence": "Scammers write those comments too. The site keeps your password and takes over your account. There were never any coins.",
+              "consequence": "Scammers write those comments too. The site keeps your password and takes your account. There were never any coins.",
               "outcome": "fail"
             },
             {
@@ -202,7 +202,7 @@
       "steps": [
         {
           "id": "start",
-          "text": "**\"Hi, it's your boss on my new number. Stuck in a meeting! Buy three $100 gift cards for a customer and text me the codes. Keep it quiet for now.\"** What do you do?",
+          "text": "**\"Hi, it's your boss on my new number. Buy three $100 gift cards for a customer and text me the codes. Keep it quiet!\"** What do you do?",
           "choices": [
             {
               "id": "buy",
@@ -225,8 +225,8 @@
           ]
         }
       ],
-      "explanation": "\"New number\" texts work the same way as calls: check by contacting the person on the **number you already have**. Gift cards and secrecy are warning signs, whoever the message claims to be from.",
-      "hint": "Is there a way to reach your boss that a scammer can't fake? And what does the text ask for?"
+      "explanation": "Check \"new number\" texts by contacting the person on the **number you already have**. Gift cards and secrecy are warning signs, whoever it claims to be.",
+      "hint": "How can you reach your boss in a way a scammer can't fake?"
     },
     {
       "id": "recap",

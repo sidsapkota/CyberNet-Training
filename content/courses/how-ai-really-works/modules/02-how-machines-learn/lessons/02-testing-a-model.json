@@ -10,38 +10,38 @@
       "id": "seen-before",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A dog-spotting model scores **100%** on a test. But every test photo was one it had trained on, answer included. Does that prove it's good?",
+      "prompt": "A dog spotter scores **100%** on photos it trained on, answers included. Does that prove it's good?",
       "options": [
         {
           "id": "no-memory",
-          "text": "No: it may just remember those photos"
+          "text": "No: it may just remember those exact photos"
         },
         {
           "id": "yes-perfect",
           "text": "Yes: 100% means it got every single photo right",
-          "nudge": "It did, on photos it had already seen with the answers. Would a quiz you'd seen the answers to prove you'd learned?"
+          "nudge": "It did, on photos it had seen. Would a quiz you'd seen the answers to prove you learned?"
         },
         {
           "id": "yes-lots",
           "text": "Yes, as long as the test used lots of photos",
-          "nudge": "More photos it has already seen still only test its memory. What kind of photo would show what it really learned?"
+          "nudge": "More photos it has seen still only test memory. What photos show what it learned?"
         },
         {
           "id": "no-impossible",
-          "text": "No: a model can never really score 100% on anything",
-          "nudge": "It can, on photos it has seen before. The real question is which photos it was tested on."
+          "text": "No: a model can never really score 100%",
+          "nudge": "It can, on photos it has seen. What matters is which photos it was tested on."
         }
       ],
       "correctOptionId": "no-memory",
-      "hint": "Imagine a school test where you'd seen every question, with the answers, the day before.",
-      "explanation": "A test it has already seen only checks its **memory**. To find out what a model really learned, you test it on photos it has **never seen**. More of the same photos, or a perfect score on them, proves nothing new."
+      "hint": "Imagine a school test where you'd seen every question and answer the day before.",
+      "explanation": "A test it has already seen only checks its **memory**. To see what it really learned, test it on photos it has **never seen**."
     },
     {
       "id": "train-and-test",
       "type": "explainer",
       "difficulty": "core",
       "title": "Keep some examples aside",
-      "body": "So people split their examples in two. **Training examples** are for learning. **Test examples** are kept aside, and the model never sees them while it learns.\n\nThen you count how many test examples it gets right. **Accuracy** is that as a share: 8 right out of 10 is 80%.\n\nA **fair test** uses new, realistic examples, easy and hard."
+      "body": "So people split their examples. **Training examples** are for learning. **Test examples** are kept aside: the model never sees them while it learns.\n\n**Accuracy** is the share of test examples it gets right: 8 out of 10 is 80%. A **fair test** uses new, realistic examples, easy and hard."
     },
     {
       "id": "forty-photos",
@@ -59,37 +59,37 @@
       "id": "too-good",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Memorising isn't learning. A model can learn every detail of its training photos (this dog, this angle, this light) instead of what dogs look like.\n\nA model scores **100%** on its training examples but only **60%** on new test examples. What's the most likely reason?",
+      "prompt": "Models can memorise training photos instead of learning. One scores **100%** on training, **60%** on new photos. Why?",
       "options": [
         {
           "id": "bad-tests",
-          "text": "Its test examples were much harder than the ones it trained on",
-          "nudge": "Harder tests can lower a score a bit, but a 40-point gap is the classic sign of something else. What does 100% on training suggest?"
+          "text": "The test photos were much harder than the training ones",
+          "nudge": "Harder tests lower scores a bit, but a 40-point gap means something else."
         },
         {
           "id": "more-data",
-          "text": "It needs more training examples of exactly the same kind",
-          "nudge": "More of the same would make it even better at memorising. What does the gap between the scores tell you?"
+          "text": "It needs more training photos of exactly the same kind",
+          "nudge": "More of the same makes it better at memorising. What does the gap show?"
         },
         {
           "id": "perfect",
-          "text": "It's a good model: 100% on its training data is what counts",
-          "nudge": "Which score shows how it does on examples it has never seen?"
+          "text": "It's good: the 100% on training photos is what counts",
+          "nudge": "Which score shows how it does on photos it has never seen?"
         },
         {
           "id": "memorised",
-          "text": "It memorised its training examples instead of the real pattern"
+          "text": "It memorised its training photos, not the real pattern"
         }
       ],
       "correctOptionId": "memorised",
-      "hint": "Which score shows how it does on examples it has never seen? Why might the two be so different?",
-      "explanation": "A big gap between training and test scores is the classic sign of **memorising instead of learning**, also called [[overfitting]]. The **test** score (60%) is the one that tells you how it will really do."
+      "hint": "Which score shows how it does on new photos? Why might the two differ?",
+      "explanation": "A big gap between training and test scores is the classic sign of **memorising instead of learning** ([[overfitting]]). The **test** score shows how it will really do."
     },
     {
       "id": "fair-or-unfair",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "A fair test shows how a model will really do. Is each one a **fair** test, or an **unfair** one?",
+      "prompt": "Is each one a **fair** test of how the model will really do, or an **unfair** one?",
       "bins": [
         {
           "id": "fair",
@@ -132,45 +132,45 @@
           "bin": "unfair"
         }
       ],
-      "hint": "A fair test shows how the model will do in real life. Which ones would make it look better than it really is?",
-      "nudge": "Look for the tests that make the score look good without showing how it does on new, realistic examples.",
-      "explanation": "Fair tests use **unseen**, **realistic** examples with a **mix** of easy and hard. Testing on its own training examples, only easy ones, or changing the test until it scores 100% all make a model look better than it is."
+      "hint": "Which ones would make it look better than it really is?",
+      "nudge": "Look for tests that make the score look good without new, realistic examples.",
+      "explanation": "Fair tests use **unseen**, **realistic** examples, easy and hard. Its own training examples, only easy ones, or changing the test all make it look better than it is."
     },
     {
       "id": "pick-the-test",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "A plant model will check photos that gardeners take on their phones, in sun, shade and rain. Which test is the **fairest**?",
+      "prompt": "A plant model will check gardeners' phone photos in sun, shade and rain. Which test is **fairest**?",
       "options": [
         {
           "id": "mixed-phones",
-          "text": "200 new phone photos from different gardens, in all kinds of weather"
+          "text": "200 new phone photos from many gardens, in all weather"
         },
         {
           "id": "pro-photos",
           "text": "200 new photos taken by an expert, all in perfect light",
-          "nudge": "They're new, which is good. But are they like the photos it will really meet?"
+          "nudge": "They're new, but are they like the photos it will really meet?"
         },
         {
           "id": "training",
-          "text": "200 of its training photos, so the answers are known for sure",
-          "nudge": "Test photos need known answers too. What's wrong with photos it has already learned from?"
+          "text": "200 of its training photos, so the answers are known",
+          "nudge": "Test photos need known answers too. What's wrong with ones it learned from?"
         },
         {
           "id": "already-right",
-          "text": "200 new phone photos, picked from ones it already gets right",
-          "nudge": "Picking photos it gets right decides the score before the test starts."
+          "text": "200 new phone photos it's already known to get right",
+          "nudge": "Picking photos it gets right decides the score before the test."
         }
       ],
       "correctOptionId": "mixed-phones",
-      "hint": "A fair test is new to the model, and like what it will meet for real. Check each option for both.",
-      "explanation": "Only the **new phone photos in all kinds of weather** are both unseen and realistic. Perfect-light photos make it look better than it will do in a rainy garden, and the other two make the score meaningless."
+      "hint": "A fair test is new and like real use. Check each option for both.",
+      "explanation": "Only the **new phone photos in all weather** are both unseen and realistic. Perfect-light photos flatter it, and the other two make the score meaningless."
     },
     {
       "id": "weather-model",
       "type": "train_model",
       "difficulty": "core",
-      "prompt": "A weather model guesses whether it will rain from the clouds and the air. Each training day says what really happened: label them, then see how the model does on **4 test days** it has never seen.",
+      "prompt": "Label each training day from what really happened, then see how the model does on **4 new test days**.",
       "model": {
         "kind": "nearest",
         "k": 1,
@@ -294,15 +294,15 @@
       "task": {
         "goal": "label"
       },
-      "hint": "Each training day ends by saying what really happened. Use that, not your own guess about the weather.",
+      "hint": "Each training day says what really happened: use that, not your own guess.",
       "nudge": "Read the end of each training day again: it says whether it rained.",
-      "explanation": "Your labels were right. The model got **3 of the 4** test days right. It called the **cloudy but dry day** rain, because every cloudy day it learned from was also rainy."
+      "explanation": "Your labels were right. It got **3 of 4** test days right, but called the **cloudy but dry day** rain: every cloudy day it learned from was rainy."
     },
     {
       "id": "cloudy-dry",
       "type": "train_model",
       "difficulty": "challenge",
-      "prompt": "Now add training days so the model gets **all 4** test days right. Three new days are available.",
+      "prompt": "Add training days so the model gets **all 4** test days right.",
       "model": {
         "kind": "nearest",
         "k": 1,
@@ -450,8 +450,8 @@
         ]
       },
       "hint": "Which test day did it get wrong? Look for a new training day that's like it.",
-      "nudge": "Which test day did it get wrong? Find a new training day like it, and check the other test days still pass.",
-      "explanation": "The model had never seen a **cloudy but dry** day, so it guessed rain. Adding \"Overcast, dry evening\" fills that gap. Another sunny day doesn't help: the model already knew those. And the cloudy, damp night (no rain) sits right next to a rainy test day, so adding it breaks that one."
+      "nudge": "Find a new day like the test it gets wrong, and check the others still pass.",
+      "explanation": "It had never seen a **cloudy but dry** day, so \"Overcast, dry evening\" fills that gap. The cloudy, damp night sits next to a rainy test day, so it breaks that one."
     },
     {
       "id": "testing-recap",

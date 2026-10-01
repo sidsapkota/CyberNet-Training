@@ -10,52 +10,52 @@
       "id": "fastest-place",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "You opened `example.com` a minute ago. Now you open it again, and your device needs its [[IP address]] once more. Where's the **fastest** place to find it?",
+      "prompt": "You opened `example.com` a minute ago and need its [[IP address]] again. Where's the **fastest** place to find it?",
       "options": [
-        { "id": "own-memory", "text": "In your own device's memory of answers it got recently" },
+        { "id": "own-memory", "text": "In your device's memory of recent answers" },
         {
           "id": "website-server",
-          "text": "By asking the server that runs example.com's website",
-          "nudge": "That server could be on the other side of the world. Is there somewhere closer that saw this answer a minute ago?"
+          "text": "By asking the server that runs example.com",
+          "nudge": "That server could be across the world: is anywhere closer that saw this answer a minute ago?"
         },
         {
           "id": "search-all",
-          "text": "By searching one big list of every name on the internet",
-          "nudge": "No single list of every name exists, and searching one would be slow. Where did a minute-old answer go?"
+          "text": "By searching one big list of every name online",
+          "nudge": "No single list of every name exists: where did a minute-old answer go?"
         },
         {
           "id": "router-routes",
           "text": "In your home router's list of where to send packets",
-          "nudge": "Routers work with addresses, not names. Think about what your own device did a minute ago."
+          "nudge": "Routers work with addresses, not names: what did your own device do a minute ago?"
         }
       ],
       "correctOptionId": "own-memory",
-      "explanation": "Your device keeps recent answers in a short-term memory called a **cache**. If you looked up example.com a minute ago, the address is probably still there, so no question needs to leave your device at all. That's why many lookups take almost no time.",
-      "hint": "You already asked this exact question a minute ago. Where might that answer still be?"
+      "explanation": "Your device keeps recent answers in a short-term memory called a **cache**, so a minute-old address is probably still there. No question needs to leave your device.",
+      "hint": "You asked this exact question a minute ago: where might the answer still be?"
     },
     {
       "id": "resolver-trip",
       "type": "explainer",
       "difficulty": "core",
       "title": "The resolver's trip",
-      "body": "First, your device checks its **cache**. If the answer isn't there, it asks a **resolver**: a [[server]] that hunts for answers for you. The resolver asks from general to specific:\n\n1. A **root server** points to the `.com` servers.\n2. A **[[TLD]] server** points to example.com's own server.\n3. That **authoritative server** holds the real answer."
+      "body": "If the answer isn't in your **cache**, your device asks a **resolver**: a [[server]] that hunts for answers for you. It asks from general to specific:\n\n1. A **root server** points to the `.com` servers.\n2. A **[[TLD]] server** points to example.com's server.\n3. That **authoritative server** holds the real answer."
     },
     {
       "id": "lookup-steps",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "Nobody has looked up example.com recently. Put the steps of the lookup in order.",
+      "prompt": "Nobody has looked up example.com lately. Put the lookup steps in order.",
       "items": [
         { "id": "cache", "label": "Your device checks its own cache" },
         { "id": "ask-resolver", "label": "Your device asks a resolver" },
-        { "id": "root", "label": "The resolver asks a root server who handles .com" },
-        { "id": "tld", "label": "The resolver asks a .com server who's in charge of example.com" },
-        { "id": "authoritative", "label": "The resolver asks example.com's authoritative server for the address" },
-        { "id": "answer", "label": "The answer comes back, and copies are kept in the caches" }
+        { "id": "root", "label": "Resolver asks a root server about .com" },
+        { "id": "tld", "label": "Resolver asks a .com server where to go" },
+        { "id": "authoritative", "label": "Resolver asks the authoritative server" },
+        { "id": "answer", "label": "Answer comes back; caches keep copies" }
       ],
-      "explanation": "Your device always checks its **cache** first. Then the resolver goes from general to specific: **root**, then **TLD**, then the **authoritative** server, which is the only one that actually holds example.com's address. Finally, copies are saved so the next lookup is instant.",
-      "hint": "Start with the quickest check that never leaves your device. Then the resolver goes from the most general server to the most specific.",
-      "nudge": "Your device always looks in its own memory before asking anyone. After that, think country, then town, then street."
+      "explanation": "Your device checks its **cache** first. Then the resolver goes general to specific: **root**, **TLD**, then the **authoritative** server, which holds the real address; copies are saved for next time.",
+      "hint": "Start with the check that never leaves your device, then go from general to specific.",
+      "nudge": "Your device checks its own memory before asking anyone; after that, think country, then town, then street."
     },
     {
       "id": "server-roles",
@@ -63,32 +63,32 @@
       "difficulty": "core",
       "prompt": "Match each [[DNS]] server to its job.",
       "pairs": [
-        { "id": "resolver", "left": "Resolver", "right": "Does the asking for you and caches answers" },
+        { "id": "resolver", "left": "Resolver", "right": "Asks for you and caches the answers" },
         { "id": "root", "left": "Root server", "right": "Knows where to find each TLD's servers" },
         { "id": "tld", "left": "TLD server", "right": "Knows who's in charge of each domain" },
         { "id": "authoritative", "left": "Authoritative server", "right": "Holds a domain's real records" }
       ],
-      "explanation": "The **resolver** works for you. **Root** servers point to the TLD servers, **TLD** servers point to each domain's authoritative server, and the **authoritative** server holds the real answer. Your device and the resolver only keep *copies* in their caches, and those copies came from the authoritative server in the first place.",
-      "hint": "Only one server holds the real records. The others either ask for you or point the way to the next server.",
-      "nudge": "Picture the trip: one server works for you, one points to TLDs, one points to domains, and one holds the actual answer."
+      "explanation": "The **resolver** works for you; **root** points to TLD servers, **TLD** servers point to each domain's authoritative server, and that holds the real answer. Caches only keep *copies*.",
+      "hint": "Only one server holds the real records; the others ask for you or point the way.",
+      "nudge": "One works for you, one points to TLDs, one points to domains, and one holds the answer."
     },
     {
       "id": "ttl-minutes",
       "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "A cached answer can't be kept forever: the website might move to a new address. So every [[DNS]] answer comes with a **TTL** (time to live): how many **seconds** it may stay in a [[cache]] before it must be looked up again.\n\nAn answer has a TTL of **3,600**. How many **minutes** can it be cached for?",
+      "prompt": "Every [[DNS]] answer has a **TTL** (time to live): how many **seconds** it may stay in a [[cache]] before it's looked up again.\n\nHow many **minutes** is a TTL of **3,600**?",
       "base": "decimal",
       "answer": 60,
       "unit": "minutes",
-      "explanation": "DNS TTLs are in seconds, and there are 60 seconds in a minute, so 3,600 ÷ 60 = **60 minutes**: one hour. After that, the answer is thrown away and looked up fresh. If you typed 3,600, that's the number of seconds.",
-      "hint": "The TTL is in seconds. How many seconds are in a minute? Divide by that.",
-      "nudge": "The TTL is in seconds, but the question asks for minutes. Make sure you converted, rather than typing the seconds."
+      "explanation": "3,600 seconds ÷ 60 = **60 minutes**, one hour; then the answer is looked up fresh. 3,600 is the number of seconds, not minutes.",
+      "hint": "The TTL is in seconds: how many seconds make a minute?",
+      "nudge": "The question asks for minutes, not seconds: convert first."
     },
     {
       "id": "read-dig-ttl",
       "type": "terminal",
       "difficulty": "core",
-      "prompt": "`dig` is another tool for [[DNS]] lookups. Run `dig example.com`, then find the **TTL**: it's the number just after the name in the answer.",
+      "prompt": "`dig` is another [[DNS]] tool. Run `dig example.com` and find the **TTL**: the number just after the name.",
       "intro": "Simulated Linux terminal, with dig's output shortened to just the answer. Type help to see the commands you can use here.",
       "commands": [
         {
@@ -103,28 +103,28 @@
         "question": "What is the TTL of this answer, in seconds?",
         "accepted": ["1800", "1,800", "1800 seconds", "1,800 seconds"]
       },
-      "explanation": "The answer line reads `example.com. 1800 IN A 198.51.100.10`. That's the name, the **TTL** (1,800 seconds, which is 30 minutes), `IN A` (a kind of answer that holds an internet address), and the [[IP address]] itself. The dot after `example.com.` is just how dig writes a full name.",
-      "hint": "Find the line under `;; ANSWER SECTION:` and look at the number right after the name.",
-      "nudge": "Don't type the address. The TTL comes straight after `example.com.`, before `IN`."
+      "explanation": "The line reads: the name, the **TTL** (1,800 seconds, or 30 minutes), `IN A` (an internet address answer), then the [[IP address]]. The dot in `example.com.` is how dig writes a full name.",
+      "hint": "Under `;; ANSWER SECTION:`, look at the number right after the name.",
+      "nudge": "Don't type the address: the TTL comes straight after `example.com.`, before `IN`."
     },
     {
       "id": "when-new-address",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "At **11:50** you look up a website, and the answer has a TTL of **3,600**. At **12:00** the website moves to a new [[IP address]]. By what time can you be sure your device will use the new address?",
+      "prompt": "At **11:50** you look up a site (TTL **3,600**). At **12:00** it moves to a new [[IP address]].\n\nWhen can you be sure you'll use the new one?",
       "options": [
         { "id": "1250", "text": "By 12:50" },
-        { "id": "1200", "text": "Straight away at 12:00", "nudge": "Nothing tells your cache that the site moved. It keeps the old answer until its TTL runs out." },
-        { "id": "1300", "text": "By 13:00", "nudge": "The TTL started when you looked the name up, not when the website moved. Count from your lookup." },
+        { "id": "1200", "text": "Straight away at 12:00", "nudge": "Nothing tells your cache the site moved: it keeps the old answer until the TTL runs out." },
+        { "id": "1300", "text": "By 13:00", "nudge": "The TTL started at your lookup, not when the site moved." },
         {
           "id": "never",
           "text": "Never: the old address is cached forever",
-          "nudge": "Cached answers can't be kept forever. The TTL says exactly how long they may be kept."
+          "nudge": "Cached answers can't stay forever: the TTL says how long they may be kept."
         }
       ],
       "correctOptionId": "1250",
-      "explanation": "Your device may keep the old answer for 3,600 seconds (one hour) from when it got it: **11:50 + 1 hour = 12:50**. After that it must look the name up again and gets the new address. It won't happen at 12:00, because nothing tells your cache the site moved. It's also not 13:00, because the hour started when you looked it up, not when the site moved.\n\nTTL is the rule, but in practice some apps and [[resolvers|resolver]] cache a little differently (for example, a [[browser]] may keep its own copy for a short time), so real changes can take slightly longer to reach everyone. That's why website owners often lower the TTL before a move.",
-      "hint": "The TTL clock starts when your device got the answer. Work out how long 3,600 seconds is, then add it to that time."
+      "explanation": "The old answer may stay 3,600 seconds (one hour) from your lookup: **11:50 + 1 hour = 12:50**. In practice some apps and [[resolvers|resolver]] cache a little differently, so owners often lower the TTL before a move.",
+      "hint": "The TTL clock starts at your lookup: how long is 3,600 seconds?"
     },
     {
       "id": "recap",

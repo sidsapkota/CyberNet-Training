@@ -10,7 +10,7 @@
       "id": "help-or-harm",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "AI can now make a **fake voice** or a **fake video** of a real person, saying things they never said. Is each use **helpful**, or **harmful**?",
+      "prompt": "AI can fake a real person's **voice** or **video**. Is each use **helpful** or **harmful**?",
       "bins": [
         {
           "id": "helpful",
@@ -54,8 +54,8 @@
         }
       ],
       "hint": "Ask: does everyone in it know and agree, and is anyone being tricked?",
-      "nudge": "The same technology can help or harm. Look for whether people agreed, and whether someone is fooled.",
-      "explanation": "Dubbing with consent, restoring a lost voice and a museum guide **help**, and nobody's fooled. A fake Grandma call, a video to embarrass someone and a fake celebrity advert **trick or hurt** people."
+      "nudge": "Look for whether everyone agreed, and whether someone is fooled.",
+      "explanation": "Dubbing with consent, restoring a lost voice and the museum guide **help**, and nobody's fooled. A fake Grandma call, an embarrassing video and a fake advert **trick or hurt** people."
     },
     {
       "id": "deepfakes-and-clones",
@@ -77,38 +77,38 @@
         },
         {
           "id": "already-learned",
-          "text": "It already learned voices from many people"
+          "text": "It already learned how voices work from many people"
         },
         {
           "id": "stitches",
-          "text": "It cuts words out of the clip and stitches them into new sentences",
-          "nudge": "That would only work for words in the clip, but clones say any words at all. What does the model already know?"
+          "text": "It stitches words from the clip into new sentences",
+          "nudge": "Clones can say words that aren't in the clip. What does the model already know?"
         },
         {
           "id": "short-better",
-          "text": "Short clips hold more detail about a voice than long ones",
-          "nudge": "Longer recordings usually help, not hurt. Why might a short one still be enough?"
+          "text": "Short clips hold more voice detail than long ones",
+          "nudge": "Longer recordings usually help. Why might a short one still be enough?"
         }
       ],
       "correctOptionId": "already-learned",
       "hint": "Before it ever hears this person, what has the model already learned from?",
-      "explanation": "The model was trained on **many voices**, so it already knows how voices work. A short clip only has to show what's special about **this** voice. That's why posting your voice publicly is worth thinking about."
+      "explanation": "Trained on **many voices**, it already knows how voices work, so a short clip only shows what's special about **this** voice. Worth remembering before you post your voice publicly."
     },
     {
       "id": "teacher-video",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "Your friend has found an app that makes face-swap videos. Making a fake of a real person without their **permission** can hurt them, and it can spread further than you meant.",
+      "prompt": "Your friend found a face-swap app. Faking a real person without **permission** can hurt them and spread far.",
       "start": "the-idea",
       "steps": [
         {
           "id": "the-idea",
-          "text": "\"Let's make a video of our sports coach dancing badly and saying silly things. It's just a joke!\" What do you say?",
+          "text": "\"Let's make a video of our coach dancing badly and saying silly things. It's just a joke!\" What do you say?",
           "choices": [
             {
               "id": "tiny-label",
               "text": "\"Only if we put 'FAKE' in tiny letters at the end\"",
-              "consequence": "Your coach still never agreed, and a tiny label is easy to miss or crop off. It can still spread and hurt them.",
+              "consequence": "Your coach never agreed, and a tiny label is easy to miss or crop off. It can still spread and hurt them.",
               "outcome": "fail"
             },
             {
@@ -119,21 +119,21 @@
             },
             {
               "id": "no",
-              "text": "\"No: they haven't agreed, and it could really hurt them\"",
+              "text": "\"No: they haven't agreed, and it could hurt them\"",
               "consequence": "Right. Without permission, it isn't a joke, it's a fake of a real person.",
               "outcome": "success"
             }
           ]
         }
       ],
-      "hint": "Think about who has to agree before you make a fake of a real person. Does a label or a small audience change that?",
-      "explanation": "Without the coach's **permission**, it's a deepfake of a real person, even as a joke and even with a tiny label. And there's no such thing as \"just two friends\": anything sent can spread. In Australia, sharing fake sexual images of a real person without their consent is a serious crime, and fake sexual images of anyone under 18 are always illegal."
+      "hint": "Who has to agree first? Does a label or a small audience change that?",
+      "explanation": "Without the coach's **permission**, it's a deepfake of a real person, label or not, and anything sent can spread. In Australia, sharing fake sexual images of a real person without their consent is a serious crime, and fake sexual images of anyone under 18 are always illegal."
     },
     {
       "id": "video-or-situation",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Fake videos **sometimes** have clues in the video itself, like odd blinking, but good fakes can have none. The **situation** around a video often tells you more, like whether the story makes sense. The best check: ask the real person, or a trusted source, another way.\n\nIs each one a clue **in the video**, or **in the situation**?",
+      "prompt": "Clues can be **in the video** or **in the situation**, which often tells more. Best check: the real person, another way.",
       "bins": [
         {
           "id": "video",
@@ -177,49 +177,49 @@
         }
       ],
       "hint": "Could you spot it by watching closely, or by asking where it came from?",
-      "nudge": "Which ones could you only spot by watching the face and listening to the voice closely?",
-      "explanation": "Lip-sync, odd voices and flickering edges are **in the video**. Who posted it, pressure to act fast and whether anyone trustworthy is reporting it are **in the situation**, and they're often the stronger clues."
+      "nudge": "Which could you only spot by watching the face and listening closely?",
+      "explanation": "Lip-sync, odd voices and flickering edges are **in the video**. Who posted it, a rush and whether anyone else reports it are **in the situation**, and often the stronger clues."
     },
     {
       "id": "concert-tickets",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "A video shows a famous singer saying: \"I'm giving away 1,000 free concert tickets! Click the link in the next hour.\"",
+      "prompt": "A video shows a famous singer: \"1,000 free concert tickets! Click the link in the next hour.\"",
       "start": "the-video",
       "steps": [
         {
           "id": "the-video",
-          "text": "It looks and sounds exactly like them, and it's on a page you've never seen. What do you do?",
+          "text": "It looks and sounds just like them, on a page you've never seen. What do you do?",
           "choices": [
             {
               "id": "click",
               "text": "Click the link quickly before the tickets go",
-              "consequence": "The rush is the trick. The link asks for your card details. It was a deepfake advert.",
+              "consequence": "The rush is the trick: the link asks for your card details. It was a deepfake advert.",
               "outcome": "fail"
             },
             {
               "id": "lips",
               "text": "Watch closely to check the lips match the words",
-              "consequence": "The lips match perfectly. Good fakes pass that test. The situation (an unknown page, a rush, free tickets) is the stronger clue.",
+              "consequence": "The lips match perfectly: good fakes pass that test. The situation is the stronger clue.",
               "outcome": "fail"
             },
             {
               "id": "check",
-              "text": "Check the singer's official account for the same news",
-              "consequence": "Their official account says nothing about it, and warns about fake giveaway videos. It was a deepfake.",
+              "text": "Check the singer's official account for the news",
+              "consequence": "Their official account says nothing about it, and warns of fake giveaway videos. It was a deepfake.",
               "outcome": "success"
             }
           ]
         }
       ],
-      "hint": "Spot the situation clues first: who posted it, and what is it pushing you to do? Then think about the best check.",
-      "explanation": "An unknown page, a rush and \"free\" are **situation clues**. The face and voice can be faked, so check the **real person's official account** or trusted news, another way."
+      "hint": "Spot the situation clues first, then think about the best check.",
+      "explanation": "An unknown page, a rush and \"free\" are **situation clues**. Faces and voices can be faked, so check the **real person's official account** or trusted news."
     },
     {
       "id": "voice-call-check",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "Your uncle gets a call. It sounds exactly like you, upset: \"I've lost my phone and wallet. Please send money to this account, quick!\" What's the **best** thing for him to do?",
+      "prompt": "Your uncle gets an upset call that sounds just like you, asking for money fast. What's **best** for him to do?",
       "options": [
         {
           "id": "call-back",
@@ -227,23 +227,23 @@
         },
         {
           "id": "listen",
-          "text": "Listen closely for a flat or robotic voice before deciding",
-          "nudge": "A good clone can sound perfect. Is there a check that doesn't rely on this call at all?"
+          "text": "Listen closely for a flat or robotic voice first",
+          "nudge": "A good clone can sound perfect. Which check doesn't rely on this call?"
         },
         {
           "id": "small-amount",
           "text": "Send a small amount first, to see if it's really you",
-          "nudge": "Any money sent to a faker is gone, small or not. How could he check without paying anything?"
+          "nudge": "Money sent to a faker is gone. How could he check without paying?"
         },
         {
           "id": "say-name",
-          "text": "Ask the caller to say his name, to prove they know him",
-          "nudge": "Whoever chose to call him will know his name. What check goes another way, outside this call?"
+          "text": "Ask the caller to say his name, to prove it's you",
+          "nudge": "Whoever called knows his name. Which check goes outside this call?"
         }
       ],
       "correctOptionId": "call-back",
       "hint": "The voice can be faked. Which check doesn't go through this call?",
-      "explanation": "Hang up and **call back on a number he already has**. That check goes another way, so a faker can't answer it. A good clone can sound perfect, anyone calling him knows his name, and money sent to a scammer is usually gone for good."
+      "explanation": "**Call back on a number he already has**: that check goes another way, so a faker can't answer it. Clones can sound perfect, and money sent to a scammer is usually gone."
     },
     {
       "id": "voices-recap",

@@ -3,15 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useId, useState } from "react";
 import { Button, type ButtonVariant } from "@/components/ui/Button";
-import {
-  BackIcon,
-  CheckIcon,
-  ChevronDownIcon,
-  GoalIcon,
-  HintIcon,
-  XIcon,
-  XpIcon,
-} from "@/components/ui/icons";
+import { BackIcon, CheckIcon, ChevronDownIcon, GoalIcon, HintIcon, XIcon, XpIcon } from "@/components/ui/icons";
 import { Markdown } from "@/components/ui/Markdown";
 import { Mascot } from "@/components/mascot/Mascot";
 import { type WrongTheme, WrongBurst } from "./WrongBurst";
@@ -59,25 +51,10 @@ interface FeedbackFooterProps {
   hint?: FooterHint;
 }
 
-const toneStyles: Record<
-  FeedbackTone,
-  { panel: string; text: string; button: ButtonVariant }
-> = {
-  neutral: {
-    panel: "border-line bg-canvas",
-    text: "text-ink",
-    button: "primary",
-  },
-  correct: {
-    panel: "border-success bg-success-soft",
-    text: "text-success",
-    button: "success",
-  },
-  incorrect: {
-    panel: "border-danger bg-danger-soft",
-    text: "text-danger",
-    button: "danger",
-  },
+const toneStyles: Record<FeedbackTone, { panel: string; text: string; button: ButtonVariant }> = {
+  neutral: { panel: "border-line bg-canvas", text: "text-ink", button: "primary" },
+  correct: { panel: "border-success bg-success-soft", text: "text-success", button: "success" },
+  incorrect: { panel: "border-danger bg-danger-soft", text: "text-danger", button: "danger" },
 };
 
 /**
@@ -101,16 +78,10 @@ function StatusNode({ correct }: { correct: boolean }) {
         animate={{ scale: 1 }}
         transition={{ type: "spring", stiffness: 600, damping: 24 }}
         className={`grid size-9 place-items-center rounded-node border-2 ${
-          correct
-            ? "border-success bg-success text-on-success"
-            : "border-danger bg-surface text-danger"
+          correct ? "border-success bg-success text-on-success" : "border-danger bg-surface text-danger"
         }`}
       >
-        {correct ? (
-          <CheckIcon className="size-5" strokeWidth={2.5} />
-        ) : (
-          <XIcon className="size-5" strokeWidth={2.5} />
-        )}
+        {correct ? <CheckIcon className="size-5" strokeWidth={2.5} /> : <XIcon className="size-5" strokeWidth={2.5} />}
       </motion.span>
     </span>
   );
@@ -173,30 +144,12 @@ export function FeedbackFooter({
                   )}
                 </span>
                 <div className="flex-1">
-                  <p className={`text-lead font-semibold ${style.text}`}>
-                    {heading}
-                  </p>
-                  {subheading && (
-                    <Markdown className="text-small text-ink">
-                      {subheading}
-                    </Markdown>
-                  )}
+                  <p className={`text-lead font-semibold ${style.text}`}>{heading}</p>
+                  {subheading && <Markdown className="text-small text-ink">{subheading}</Markdown>}
                 </div>
                 {mascot && (
                   // Blinks while shown; hops on a right answer, tilts its head (with a gentle bob) on a wrong one.
-                  <Mascot
-                    expression={mascot}
-                    size={60}
-                    className="-my-3"
-                    idle
-                    reaction={
-                      tone === "correct"
-                        ? "hop"
-                        : tone === "incorrect"
-                          ? "tilt"
-                          : "bob"
-                    }
-                  />
+                  <Mascot expression={mascot} size={60} className="-my-3" idle reaction={tone === "correct" ? "hop" : tone === "incorrect" ? "tilt" : "bob"} />
                 )}
                 {xpAwarded > 0 && (
                   <motion.span
@@ -216,14 +169,8 @@ export function FeedbackFooter({
                     className="inline-flex items-center gap-1 rounded-control border border-line bg-surface px-2.5 py-1 font-mono text-small font-semibold text-accent-ink"
                   >
                     <GoalIcon className="size-4" />+{practiceXp}
-                    <span className="sr-only">
-                      {" "}
-                      XP toward today&apos;s goal
-                    </span>
-                    <span
-                      aria-hidden="true"
-                      className="font-sans text-caption font-medium text-ink-faint"
-                    >
+                    <span className="sr-only"> XP toward today&apos;s goal</span>
+                    <span aria-hidden="true" className="font-sans text-caption font-medium text-ink-faint">
                       today
                     </span>
                   </motion.span>
@@ -326,11 +273,7 @@ export function FeedbackFooter({
                 data-keyboard-passthrough
                 aria-expanded={hintOpen}
                 aria-controls={hintId}
-                aria-label={
-                  hintOpen
-                    ? "Hide hint"
-                    : `Hint${!hint.used && hint.cost ? `, ${hint.cost}` : ""}`
-                }
+                aria-label={hintOpen ? "Hide hint" : `Hint${!hint.used && hint.cost ? `, ${hint.cost}` : ""}`}
                 onClick={() => {
                   if (!hint.used) hint.onUse();
                   setHintOpen((v) => !v);
@@ -339,14 +282,8 @@ export function FeedbackFooter({
               >
                 <HintIcon className="size-4 shrink-0" />
                 <span className="flex flex-col leading-tight">
-                  <span className="text-small font-semibold text-ink">
-                    {hintOpen ? "Hide hint" : "Hint"}
-                  </span>
-                  {!hint.used && hint.cost && (
-                    <span className="text-caption text-ink-faint">
-                      {hint.cost}
-                    </span>
-                  )}
+                  <span className="text-small font-semibold text-ink">{hintOpen ? "Hide hint" : "Hint"}</span>
+                  {!hint.used && hint.cost && <span className="text-caption text-ink-faint">{hint.cost}</span>}
                 </span>
               </button>
             )}

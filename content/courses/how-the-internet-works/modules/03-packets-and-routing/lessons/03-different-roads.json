@@ -11,13 +11,13 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "The internet makes no promises",
-      "body": "[[Routers|router]] keep updating their [[routing tables|routing-table]]. If a cable breaks or a road gets busy, they find another way round. So packets from one message can take different roads and arrive in a **different order**. Some never arrive at all. Yet your photos always turn up perfectly. How?"
+      "body": "[[Routers|router]] keep updating their [[routing tables|routing-table]]: if a cable breaks or a road gets busy, they find another way round. So packets from one message can arrive in a **different order**, and some never arrive. Yet your photos turn up perfectly. How?"
     },
     {
       "id": "cut-cable",
       "type": "packet_path",
       "difficulty": "core",
-      "prompt": "The cable from **Router A** straight to the web [[server]] has been cut, so it's no longer on the map. Get the [[packet]] to the **web server** another way.",
+      "prompt": "The cable from **Router A** straight to the web [[server]] is cut, so it's gone from the map.\n\nGet the [[packet]] there another way.",
       "nodes": [
         { "id": "laptop", "kind": "device", "label": "Laptop", "address": "192.168.1.20", "col": 0, "row": 1 },
         { "id": "home", "kind": "router", "label": "Home router", "address": "192.168.1.1", "col": 1, "row": 1 },
@@ -40,36 +40,36 @@
         ["laptop", "home", "ra", "rc", "server"],
         ["laptop", "home", "rb", "server"]
       ],
-      "explanation": "Either detour works: through **Router B**, or through **Router A** and on to **Router C**. A broken cable doesn't stop the whole internet, because routers simply send packets another way. But if some packets take one road and some take the other, they may arrive in a different order.",
-      "hint": "The cut cable is gone from the map, so only follow the links you can see. There's more than one way round.",
-      "nudge": "Check that every step follows a line on the map. The link from [[Router]] A straight to the server has been removed."
+      "explanation": "Either detour works: via **Router B**, or via Router A and **Router C**. But packets on different roads may arrive in a different order.",
+      "hint": "Only follow the links you can see; there's more than one way round.",
+      "nudge": "Every step must follow a line on the map: [[Router]] A's direct link to the server is gone."
     },
     {
       "id": "rebuild-message",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "These [[packets|packet]] took different roads and arrived jumbled up. Use their **sequence numbers** to put them back in order.",
+      "prompt": "These [[packets|packet]] took different roads and arrived jumbled. Put them back in order by **sequence number**.",
       "items": [
         { "id": "p1", "label": "#1 YOUR" },
         { "id": "p2", "label": "#2 PIZZA" },
         { "id": "p3", "label": "#3 IS" },
         { "id": "p4", "label": "#4 ARRIVING" }
       ],
-      "explanation": "Sorting by sequence number gives **#1, #2, #3, #4**: *YOUR PIZZA IS ARRIVING*. The receiver doesn't care what order packets turn up in. The sequence numbers say where each piece belongs.",
-      "hint": "The order they arrived in is no help. What did the sender put on every packet so the receiver could do this job?",
-      "nudge": "Sort by the number after the #, from smallest to largest. The order they arrived in doesn't matter."
+      "explanation": "By sequence number they read *YOUR PIZZA IS ARRIVING*. The order they arrive in doesn't matter: the numbers say where each piece belongs.",
+      "hint": "The arrival order is no help: what did the sender put on every packet?",
+      "nudge": "Sort by the number after the #, smallest first: the arrival order doesn't matter."
     },
     {
       "id": "which-is-missing",
       "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "For web pages, photos and downloads, computers follow a set of rules called **TCP** (Transmission Control [[Protocol]]). TCP numbers the packets, and the receiver keeps telling the sender which ones have arrived. Any gap gets sent again.\n\nA message was sent as packets 1 to 7. Packets **1, 2, 4, 6 and 7** arrived. **How many** packets will TCP send again?",
+      "prompt": "With **TCP** rules, the receiver reports which numbered packets arrived, and gaps are resent. Of packets 1 to 7, **1, 2, 4, 6 and 7** arrived: how many will TCP resend?",
       "base": "decimal",
       "answer": 2,
       "unit": "packets",
-      "explanation": "The [[sequence numbers|sequence-number]] jump from 2 to 4 and from 4 to 6, so **packets 3 and 5** are missing: **2** packets. Only those two are sent again. The receiver keeps the other five and slots 3 and 5 in when they arrive. Put together: IP gets packets across the internet, and TCP makes sure they all arrive, in the right order.",
-      "hint": "Write out 1 to 7, then cross off each number that arrived. Count what's left.",
-      "nudge": "There may be more than one gap. Check every number from 1 to 7, and count the ones that never arrived."
+      "explanation": "Packets **3 and 5** are missing, so **2** are resent and slotted in. IP gets packets across the internet; TCP makes sure they all arrive, in order.",
+      "hint": "Write out 1 to 7, cross off each one that arrived, and count what's left.",
+      "nudge": "There may be more than one gap: check every number from 1 to 7."
     },
     {
       "id": "problems-and-fixes",
@@ -81,42 +81,42 @@
         { "id": "missing", "left": "A packet goes missing", "right": "Send that packet again" },
         { "id": "broken", "left": "A cable on the route breaks", "right": "Routers find another route" }
       ],
-      "explanation": "Out-of-order packets are **sorted** using their sequence numbers. A missing packet is **sent again**, thanks to [[TCP]]. And when a cable on the route breaks, routers [[update]] their tables and **send packets another way**.",
-      "hint": "Think about which fix uses sequence numbers, which one sends a piece again, and which one is a job for routers.",
-      "nudge": "Sequence numbers fix order, resending fixes a missing piece, and routers deal with problems along the road."
+      "explanation": "Sequence numbers **sort** jumbled packets, [[TCP]] **resends** a missing one, and routers [[update]] their tables to **go another way** round a break.",
+      "hint": "Which fix uses sequence numbers, which one resends, and which is a job for routers?",
+      "nudge": "Only one fix happens out on the road, between routers: start with that one."
     },
     {
       "id": "video-call-glitch",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "On a video call, a lost packet makes the picture glitch for a moment. The call doesn't pause to wait for the packet to be sent again. Why not?",
+      "prompt": "On a video call, a lost packet makes the picture glitch, but the call doesn't wait for a resend. Why not?",
       "options": [
-        { "id": "live", "text": "Waiting would make the call lag. For live video, fresh data is more useful than late data" },
+        { "id": "live", "text": "Waiting would lag the call; fresh data beats late data" },
         {
           "id": "no-packets",
-          "text": "Video calls send one continuous stream instead of packets, so there's nothing to resend",
-          "nudge": "Everything on the internet travels in packets, video calls included."
+          "text": "Calls use one unbroken stream, not packets at all",
+          "nudge": "Everything online travels in packets, video calls included."
         },
         {
           "id": "never-lost",
-          "text": "Video packets have extra protection, so they can never actually be lost",
-          "nudge": "Any packet can go missing, video ones too. The question says a lost packet caused the glitch."
+          "text": "Video packets are protected, so they're never lost",
+          "nudge": "Any packet can go missing: the question says one did."
         },
         {
           "id": "too-big",
-          "text": "Video packets are far too big to be sent a second time",
-          "nudge": "Packet size isn't the reason. Think about timing: what happens to a live call while it waits?"
+          "text": "Video packets are too big to send a second time",
+          "nudge": "Size isn't the reason: what happens to a live call while it waits?"
         }
       ],
       "correctOptionId": "live",
-      "explanation": "In a live call, a packet that arrives half a second late is useless: that moment has already passed. So live apps usually skip lost packets and keep going, often using simpler rules called **UDP**, which don't resend anything. A face frozen mid-sneeze for a split second beats the whole call stopping to wait. For a download, it's the other way round: every [[byte]] has to be perfect, so [[TCP]] waits and resends.",
-      "hint": "In a live call, what's the use of a picture from half a second ago that turns up late?"
+      "explanation": "In a live call, late data is useless because that moment has passed, so apps skip lost packets, often using simpler rules called **UDP**. A download needs every [[byte]] perfect, so [[TCP]] waits and resends.",
+      "hint": "What use is a picture from half a second ago that turns up late?"
     },
     {
       "id": "route-changed",
       "type": "terminal",
       "difficulty": "challenge",
-      "prompt": "Yesterday's [[traceroute]] to example.com is saved at the top of the [[terminal]]. Run `traceroute example.com` now and compare the two, [[hop]] by hop (the numbered lines). One hop has changed.",
+      "prompt": "Yesterday's [[traceroute]] is saved at the top.\n\nRun `traceroute example.com` and compare each numbered [[hop]]. Which one changed?",
       "intro": "Saved from yesterday:\n\n$ traceroute example.com\ntraceroute to example.com (198.51.100.10), 30 hops max, 60 byte packets\n 1  192.168.1.1 (192.168.1.1)  1.912 ms  1.804 ms  1.765 ms\n 2  203.0.113.1 (203.0.113.1)  9.483 ms  9.412 ms  9.377 ms\n 3  203.0.113.65 (203.0.113.65)  11.207 ms  11.164 ms  11.122 ms\n 4  198.51.100.1 (198.51.100.1)  18.930 ms  18.842 ms  19.004 ms\n 5  example.com (198.51.100.10)  19.315 ms  19.271 ms  19.233 ms\n\nType help to see the commands you can use here.",
       "commands": [
         {
@@ -131,9 +131,9 @@
         "question": "What is the address of the router that's on today's route but wasn't on yesterday's?",
         "accepted": ["203.0.113.129"]
       },
-      "explanation": "Hop 3 was `203.0.113.65` yesterday and is `203.0.113.129` today. Every other hop is the same. Maybe the old [[router]] was busy or being repaired, so traffic was sent another way. The detour is a little slower (about 22 ms to the end instead of 19 ms), but your [[packets|packet]] still get there.",
-      "hint": "Run `traceroute example.com`, then compare the address on each numbered line with yesterday's, one line at a time.",
-      "nudge": "The times change a little on every line, so compare only the addresses. Give the address that appears today, not yesterday's."
+      "explanation": "Hop 3 changed from `203.0.113.65` to `203.0.113.129`: maybe the old [[router]] was busy or being repaired. The detour is a bit slower (22 ms to the end instead of 19), but your [[packets|packet]] still arrive.",
+      "hint": "Compare the address on each numbered line with yesterday's, one line at a time.",
+      "nudge": "The times always change a little, so compare only the addresses, and give today's new one."
     },
     {
       "id": "recap",

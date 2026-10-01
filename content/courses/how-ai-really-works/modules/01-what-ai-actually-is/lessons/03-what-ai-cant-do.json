@@ -10,84 +10,84 @@
       "id": "homework-helper",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "AI helpers answer fast and sound sure. But every answer is a **prediction**: the model's best guess from the patterns it learned. Sounding sure isn't the same as being right, so check important things with a source you trust.\n\nYou're using an AI helper to write a short piece about your town's old bridge.",
+      "prompt": "AI answers are **predictions**: best guesses, not checked facts. You're using one to write about your town's bridge.",
       "start": "the-date",
       "steps": [
         {
           "id": "the-date",
-          "text": "The AI says the bridge opened in **1952**. It sounds very sure. What do you do?",
+          "text": "The AI says the bridge opened in **1952**, and sounds very sure. What do you do?",
           "choices": [
             {
               "id": "write-it",
-              "text": "Write it down: it sounds certain",
-              "consequence": "A reader writes in: the bridge opened years later. Confident isn't the same as correct.",
+              "text": "Write it down: it sounds completely certain",
+              "consequence": "A reader writes in: it opened years later. Confident isn't the same as correct.",
               "outcome": "fail"
             },
             {
               "id": "check",
-              "text": "Check a trusted source, like a local history book",
+              "text": "Check a trusted source, like a history book",
               "consequence": "Good thinking. Let's see what it says.",
               "next": "the-textbook"
             },
             {
               "id": "ask-ai",
-              "text": "Ask the AI if it's sure",
-              "consequence": "It says \"Yes, I'm sure!\" An AI can say it's sure and still be wrong, because it can't be sure its own answer is right.",
+              "text": "Ask the AI if it's really sure it's right",
+              "consequence": "It says \"Yes, I'm sure!\" But an AI can't be sure its own answer is right.",
               "outcome": "fail"
             }
           ]
         },
         {
           "id": "the-textbook",
-          "text": "The local history book says the bridge opened in **1958**. What now?",
+          "text": "The local history book says **1958**. What now?",
           "choices": [
             {
               "id": "use-book",
-              "text": "Use 1958, from the history book",
-              "consequence": "Right: you checked a source you trust and caught the AI's mistake.",
+              "text": "Use 1958: the date from the history book",
+              "consequence": "Right: you checked a trusted source and caught the AI's mistake.",
               "outcome": "success"
             },
             {
               "id": "use-ai",
-              "text": "Use 1952: the AI has read far more than one book",
-              "consequence": "Reading a lot doesn't make each answer checked. The AI made a guess; the book's date was checked by people.",
+              "text": "Use 1952: the AI has read far more books",
+              "consequence": "Reading a lot doesn't check each answer. The book's date was checked by people.",
               "outcome": "fail"
             }
           ]
         }
       ],
       "hint": "The AI's answer is a guess. How could you find out whether it's right?",
-      "explanation": "An AI's answer is a **prediction**, so even a confident one can be wrong. Asking the AI again doesn't help: it can't be sure its own answer is right. Check important facts with a **trusted source**, and go with the source."
+      "explanation": "Even a confident AI answer is a **prediction** and can be wrong, and asking it again doesn't help. Check important facts with a **trusted source**."
     },
     {
       "id": "why-confidently-wrong",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A chatbot tells you, calm and certain, that a film came out in 2009. It actually came out in 2011.\n\nWhy can an AI sound so sure and still be wrong?",
+      "prompt": "A chatbot calmly says a film came out in 2009, but it was 2011. Why can AI sound sure yet be wrong?",
       "options": [
         {
           "id": "predicts",
-          "text": "It predicts from patterns, and can't check if it's true"
+          "text": "It predicts from patterns and can't check the truth"
         },
         {
           "id": "lying",
           "text": "It's trying to fool you on purpose, to seem clever",
-          "nudge": "AI doesn't have plans or feelings. Think about how it makes an answer."
+          "nudge": "AI doesn't have plans or feelings. How does it make an answer?"
         },
         {
           "id": "misread",
-          "text": "It only sounds sure when it's right, so it misread you",
-          "nudge": "Sounding sure doesn't come from being right. What is every answer an AI gives?"
+          "text": "It only sounds sure when right, so it misread you",
+          "nudge": "Sounding sure doesn't come from being right. What is every AI answer?"
         },
         {
           "id": "fact-list",
-          "text": "It looked the date up in its list of facts, which was old",
-          "nudge": "A model doesn't keep a list of facts to look up: it learned patterns from examples. So what is each answer?"
+          "text": "It used its list of facts, which was out of date",
+          "nudge": "A model has no list of facts: it learned patterns. So what is each answer?"
         }
       ],
       "correctOptionId": "predicts",
       "hint": "What is every answer an AI gives you: a fact, or something else?",
-      "explanation": "Every answer is a **prediction** from the patterns it learned. It doesn't check whether the answer is true, so it can sound just as sure when it's wrong as when it's right. It isn't lying, and it isn't reading from a list of facts."
+      "explanation": "Every answer is a **prediction** from patterns, never checked for truth, so it sounds just as sure when wrong. It isn't lying or reading a fact list."
     },
     {
       "id": "if-a-chat-upsets-you",
@@ -105,37 +105,37 @@
       "steps": [
         {
           "id": "the-tag",
-          "text": "It labels a picture of your friend as someone else, and suggests sharing it with that person. What do you do?",
+          "text": "It labels your friend as someone else, and suggests sharing the photo with them. What do you do?",
           "choices": [
             {
               "id": "share",
-              "text": "Share it: the app knows best",
-              "consequence": "Now someone else has your friend's photo. Apps can mislabel faces, so check before you share.",
+              "text": "Share it: the app is usually right about faces",
+              "consequence": "Now someone else has your friend's photo. Apps can mislabel faces, so check first.",
               "outcome": "fail"
             },
             {
               "id": "fix",
-              "text": "Fix the label, and don't share it",
-              "consequence": "Good: you caught the app's mistake before it spread. Matching a face is a prediction, so it can be wrong.",
+              "text": "Fix the label, and don't share the photo",
+              "consequence": "Good: you caught the mistake before it spread. Face matching is a prediction.",
               "outcome": "success"
             },
             {
               "id": "keep-label",
-              "text": "Keep the label: the app has seen your friend's face lots of times",
-              "consequence": "Seeing a face many times doesn't make every match right. Matching a face is a prediction, and this one is wrong.",
+              "text": "Keep the label: the app knows your friend's face",
+              "consequence": "Seeing a face often doesn't make every match right. This prediction is wrong.",
               "outcome": "fail"
             }
           ]
         }
       ],
-      "hint": "The app's label is a prediction. What do you do with a prediction before acting on it?",
-      "explanation": "Face matching is a **prediction**, so it can mislabel people. Check before acting on it: fix the label and don't share. The app is still useful; just don't trust its guesses blindly."
+      "hint": "The label is a prediction. What do you do with one before acting on it?",
+      "explanation": "Face matching is a **prediction**, so it can mislabel people. Check before acting: fix the label and don't share. The app is still useful, just not always right."
     },
     {
       "id": "ai-or-person",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "AI is handy for quick, low-stakes jobs, where a mistake is easy to spot and fix. Big decisions about people need a **person** to decide and be responsible.\n\nIs each job **fine for AI to help with**, or does it **need a person** to decide?",
+      "prompt": "Small jobs are fine for AI; big decisions about people need a **person**. Sort each job.",
       "bins": [
         {
           "id": "ai",
@@ -179,8 +179,8 @@
         }
       ],
       "hint": "Ask: if the AI got it wrong, would someone be hurt or treated unfairly?",
-      "nudge": "Look again at the jobs where a mistake would really affect someone's life.",
-      "explanation": "Spelling, photos and songs are low-stakes: a mistake is easy to spot and fix. Punishments, medical treatment and jobs are **big decisions about people**, so a person must decide and be responsible, even if AI helps."
+      "nudge": "Look again at jobs where a mistake would really affect someone's life.",
+      "explanation": "Spelling, photos and songs are low-stakes: mistakes are easy to fix. Punishments, treatment and jobs are **big decisions about people**, so a person must decide."
     },
     {
       "id": "limits",
@@ -209,9 +209,9 @@
           "right": "An AI decides a student's punishment"
         }
       ],
-      "hint": "Each example comes from this module. Which limit explains what went wrong in each one?",
-      "nudge": "Think about each example's story: was the problem missing examples, false confidence, a mislabelled face, or a big decision?",
-      "explanation": "The yellow apple shows a model **only knows its examples**; the wrong year shows it can **sound sure when wrong**; the photo app shows it can **mislabel people**; and an AI deciding a punishment is a problem because it **can't be responsible**: a person must decide."
+      "hint": "Each example is from this module. Which limit explains what went wrong?",
+      "nudge": "Was each problem missing examples, false confidence, a wrong face match, or a big decision?",
+      "explanation": "Yellow apple: it **only knows its examples**. Wrong year: it **sounds sure when wrong**. Photo tag: it **can mislabel people**. Punishment: it **can't be responsible**."
     },
     {
       "id": "cant-do-recap",
