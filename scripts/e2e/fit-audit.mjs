@@ -36,6 +36,9 @@ try {
         const card = lesson.cards[i];
         await page.goto(`${BASE}/dev/fit?lesson=${lesson.id}&card=${i}`, { waitUntil: "domcontentloaded" });
         await page.locator("[data-card-stage]").first().waitFor({ timeout: 60000 }).catch(() => {});
+        // /dev/fit marks every panel as seen, but progress loads after the first paint: wait for
+        // a "How to play" panel to go, or it's counted as overflow.
+        await page.getByText("How to play", { exact: true }).waitFor({ state: "hidden", timeout: 3000 }).catch(() => {});
         await page.waitForTimeout(250);
         const over = await page.evaluate(() => Math.max(0, document.documentElement.scrollHeight - window.innerHeight));
         const row = { viewport: vp.name, course, lesson: lesson.id, kind: lesson.kind, card: i + 1, id: card.id, type: card.type + (card.mode ? `:${card.mode}` : ""), over };
