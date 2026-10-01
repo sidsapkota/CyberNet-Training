@@ -394,13 +394,6 @@
       ],
       "tests": [
         {
-          "id": "t1",
-          "text": "Dark clouds, damp air",
-          "x": 8.5,
-          "y": 8,
-          "truth": "rain"
-        },
-        {
           "id": "t3",
           "text": "Cloudy but dry day",
           "x": 8.5,

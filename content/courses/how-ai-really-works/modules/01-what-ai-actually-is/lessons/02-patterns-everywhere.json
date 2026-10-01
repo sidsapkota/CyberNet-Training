@@ -10,7 +10,7 @@
       "id": "label-the-fruit",
       "type": "train_model",
       "difficulty": "core",
-      "prompt": "Teach the model: tap **Apple** or **Banana** for each fruit.",
+      "prompt": "Teach the computer (the **model**): tap **Apple** or **Banana** for each fruit.",
       "model": {
         "kind": "nearest",
         "k": 1,
@@ -378,7 +378,7 @@
           "x": 1.5,
           "y": 7.5,
           "label": "banana",
-          "given": false
+          "given": true
         },
         {
           "id": "l2",

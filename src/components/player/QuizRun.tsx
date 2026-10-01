@@ -23,6 +23,7 @@ import { MilestoneScreen } from "@/components/streak/MilestoneScreen";
 import { speechText } from "@/cards/speech";
 import { useCardNavigationKeys } from "@/lib/keyboard";
 import { CardStage, useFeedbackAnimation } from "./CardStage";
+import { PlayModeContext } from "@/cards/playMode";
 import { FeedbackFooter, type FooterAction } from "./FeedbackFooter";
 import { LessonMenu } from "./LessonMenu";
 import { wrongThemeFor } from "./WrongBurst";
@@ -317,6 +318,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
         Question {index + 1} / {total}
       </p>
       {showCoach && <CoachPanel key={showCoach} coachKey={showCoach} onDone={coach.dismiss} />}
+      <PlayModeContext.Provider value="quiz">
       <CardStage cardKey={`${quiz.id}-${index}`} card={card} scope={scope}>
         {definition.interactive && (
           <definition.Component
@@ -327,6 +329,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
           />
         )}
       </CardStage>
+      </PlayModeContext.Provider>
     </PlayerShell>
   );
 }

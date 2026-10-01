@@ -233,7 +233,7 @@
         "action": "add"
       },
       "hint": "Which message shows friends use \"free\" too?",
-      "nudge": "Watch the pizza message's guess as you try each one. \"Not sure\" isn't right yet.",
+      "nudge": "Which message shows friends use \"free\" in normal plans? That is what the filter is missing.",
       "explanation": "**\"Free footy training on Saturday\"** shows friends say \"free\" too, so the pizza message gets more not-spam votes. \"Pizza, pizza, pizza!\" adds one vote: a word counts once per message."
     },
     {

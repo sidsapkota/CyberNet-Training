@@ -47,6 +47,27 @@ fall in IETF-reserved space.
 
 ---
 
+## train_model redesign (2 Oct 2026, zero-confusion rule)
+
+All 11 `train_model` cards: real pictures instead of a chart (fruit, balls, sky, day/night scenes,
+chat bubbles), problem first ("Model's guess: Banana ✗"), one change from 2–4 tiles with nothing
+pre-selected (`fix` goal: add one example, or take one out for the mislabelled-banana card), at most
+4 items to label, at most 3 tests, and everything fits 360×560. Learning goals are unchanged.
+- **Same lessons, simpler shapes:** label-the-fruit, three-fruits (2 to label), label-messages and
+  weather-model (4 to label each) keep the "labels were right, the model still slipped" lesson;
+  choose-the-data, q-sports-balls, fix-the-data, cloudy-dry, slang-checker and f-day-night became
+  "add one example to fix it" with 1 fixing tile and 1–2 that don't; noisy-label is "take one out".
+- **Tests trimmed to 3 or fewer:** weather-model dropped "Some cloud, quite damp" (now "2 of 3"
+  right); cloudy-dry kept "Cloudy but dry day" and "Some cloud, quite damp".
+- **Pictures are drawn from each item's own data** (colour from y, size from x, kind from the
+  name), so a picture never gives away a label it shouldn't; the mislabelled "Long banana" still
+  looks like a banana.
+- **Quizzes don't flip live:** in the module quiz and the course final the guess shows "?" after a
+  pick until Check (one try can't be won by tapping round). Lessons flip at once.
+- **Beginner audit (2 Oct):** found live flips in quizzes, word-vote cards showing counts instead of
+  messages, shape-only buttons, unclear "Also:" / "It learned from:" rows, orange-looking red apples,
+  same-size basketballs and a night-looking "sunny day indoors". All fixed (see above).
+
 ## Right-level rewrite (October 2026)
 
 The whole course was rewritten for curious beginners aged 13+ (level **Hard**: think harder, but

@@ -389,7 +389,7 @@ What counts as AI, how it learns from examples, and where it goes wrong.
 
 **Best interactive cards**
 
-- Train a model: Teach the model: tap **Apple** or **Banana** for each fruit.
+- Train a model: Teach the computer (the **model**): tap **Apple** or **Banana** for each fruit.
 - Train a model: Fix the model's mistake.
 - Train a model: It copies its **3 closest** examples. Label the fruit.
 
@@ -469,7 +469,7 @@ Training data, fair tests, and how bias sneaks in.
 
 **Best interactive cards**
 
-- Train a model: Fix the kind-or-mean checker's mistake.
+- Train a model: Fix the checker's mistake.
 - Choose what happens: A sports club wants to sort new sign-ups with a model.
 - Choose what happens: A company is choosing a voice assistant to answer its phone line.
 

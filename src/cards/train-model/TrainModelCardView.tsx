@@ -1,7 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useId } from "react";
+import { useId, useState } from "react";
+import { usePlayMode } from "../playMode";
 import { CheckIcon, XIcon } from "@/components/ui/icons";
 import { useFeedback } from "@/lib/feedback";
 import { CardPrompt } from "../CardPrompt";
@@ -33,13 +34,13 @@ function Picture({ card, item, className }: { card: TrainModelCard; item: Item; 
 const GRID_COLS: Record<number, string> = { 2: "grid-cols-2", 3: "grid-cols-3", 4: "grid-cols-2" };
 
 /** The model's guess as a label chip; it flips when the guess changes (instant, visible feedback). */
-function GuessChip({ card, guess }: { card: TrainModelCard; guess: Guess }) {
+function GuessChip({ card, guess, hidden = false }: { card: TrainModelCard; guess: Guess; hidden?: boolean }) {
   const reduce = useReducedMotion();
-  const index = card.labels.findIndex((l) => l.id === guess);
+  const index = hidden ? -1 : card.labels.findIndex((l) => l.id === guess);
   return (
     <AnimatePresence mode="popLayout" initial={false}>
       <motion.strong
-        key={guess ?? "unsure"}
+        key={hidden ? "hidden" : (guess ?? "unsure")}
         initial={reduce ? false : { rotateX: 90, opacity: 0 }}
         animate={{ rotateX: 0, opacity: 1 }}
         exit={reduce ? { opacity: 0 } : { rotateX: -90, opacity: 0 }}
@@ -47,7 +48,7 @@ function GuessChip({ card, guess }: { card: TrainModelCard; guess: Guess }) {
         className="inline-flex items-center gap-1 font-semibold text-ink"
       >
         {index >= 0 && <LabelShape index={index} />}
-        {index >= 0 ? card.labels[index]!.text : "Not sure"}
+        {hidden ? "?" : index >= 0 ? card.labels[index]!.text : "Not sure"}
       </motion.strong>
     </AnimatePresence>
   );
@@ -55,11 +56,34 @@ function GuessChip({ card, guess }: { card: TrainModelCard; guess: Guess }) {
 
 /** What the model has already learned from: small pictures (or messages) grouped by label. */
 function Learned({ card }: { card: TrainModelCard }) {
+  const [open, setOpen] = useState(false);
   const items = given(card);
   if (items.length === 0) return null;
+  const heading = card.task.goal === "label" ? "Already labelled:" : card.task.action === "remove" ? "It also learned from:" : "It learned from:";
+  if (card.model.kind !== "nearest") {
+    // Messages can't be shrunk to pictures: they open on demand, so the card still fits.
+    return (
+      <div className="mt-2 rounded-control bg-surface px-2.5 py-1">
+        <button type="button" aria-expanded={open} onClick={() => setOpen((v) => !v)} className="min-h-11 text-caption font-semibold text-accent-ink">
+          {open ? "Hide what it learned from" : `See what it learned from (${items.length} messages)`}
+        </button>
+        {open && (
+          <ul className="space-y-1 pb-1.5">
+            {items.map((e) => (
+              <li key={e.id} className="flex items-center gap-1.5 text-caption">
+                <LabelShape index={card.labels.findIndex((l) => l.id === e.label)} className="size-3" />
+                <span className="font-semibold">{card.labels.find((l) => l.id === e.label)?.text}:</span>
+                <span className="truncate text-ink-muted">“{e.text}”</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    );
+  }
   return (
     <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-control bg-surface px-2.5 py-1.5">
-      <p className="text-caption text-ink-muted">It learned from:</p>
+      <p className="text-caption text-ink-muted">{heading}</p>
       <div className="contents">
         {card.labels.map((label, i) => {
           const ofLabel = items.filter((e) => e.label === label.id);
@@ -70,11 +94,9 @@ function Learned({ card }: { card: TrainModelCard }) {
                 <LabelShape index={i} className="size-3" />
                 {label.text}
               </span>
-              {card.model.kind === "nearest" ? (
-                ofLabel.map((e) => <Picture key={e.id} card={card} item={e} className="size-5" />)
-              ) : (
-                <span className="text-caption text-ink-muted">({ofLabel.length})</span>
-              )}
+              {ofLabel.map((e) => (
+                <Picture key={e.id} card={card} item={e} className="size-5" />
+              ))}
               <span className="sr-only">: {ofLabel.map((e) => e.text).join(", ")}</span>
             </div>
           );
@@ -94,6 +116,8 @@ function FixCard({ card, answer, onAnswerChange, status }: CardComponentProps<Tr
   const remove = card.task.goal === "fix" && card.task.action === "remove";
   const others = card.tests.filter((t) => t.id !== problem.id);
   const guess = guesses[problem.id] ?? null;
+  // One-try quizzes: after a pick the guess shows "?" until Check (no tapping round to find it).
+  const hideLive = usePlayMode() === "quiz" && Boolean(picked) && !locked;
   // The problem is marked wrong to start with; after a pick, right or wrong shows only after Check.
   const mark = !picked ? "wrong" : locked ? (guess === problem.truth ? "right" : "wrong") : null;
 
@@ -102,19 +126,19 @@ function FixCard({ card, answer, onAnswerChange, status }: CardComponentProps<Tr
       <CardPrompt>{card.prompt}</CardPrompt>
 
       {/* Problem first: the item the model gets wrong, and its wrong guess. */}
-      <div aria-live="polite" className="mt-2 flex items-center gap-3 rounded-card border-2 border-line-strong bg-surface p-2.5">
+      <div aria-live="polite" className="relative mt-2 flex items-center gap-3 rounded-card border-2 border-line-strong bg-surface p-2.5">
         {card.model.kind === "nearest" ? <Picture card={card} item={problem} className="size-12" /> : null}
         <div className="min-w-0 flex-1">
-          {card.model.kind === "nearest" ? <p className="truncate font-semibold">{problem.text}</p> : <MessageBubble text={problem.text} />}
+          {card.model.kind === "nearest" ? <p className="truncate pr-7 font-semibold">{problem.text}</p> : <MessageBubble text={problem.text} className="mr-7" />}
           <p className="mt-0.5 flex flex-wrap items-center gap-x-1.5 text-small text-ink-muted [perspective:400px]">
-            Model&apos;s guess: <GuessChip card={card} guess={guess} />
+            Model&apos;s guess: <GuessChip card={card} guess={guess} hidden={hideLive} />
           </p>
         {others.length > 0 && (
           <p className="mt-1 flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-caption text-ink-muted">
-            <span>Also:</span>
+            <span>Other guesses:</span>
             {others.map((t) => (
               <span key={t.id} className="inline-flex items-center gap-1">
-                {card.model.kind === "nearest" ? <Picture card={card} item={t} className="size-5" /> : <span className="text-ink">“{t.text}”</span>}
+                {card.model.kind === "nearest" ? <Picture card={card} item={t} className="size-5" /> : <span className="max-w-[9rem] truncate text-ink">“{t.text}”</span>}
                 <span className="sr-only">{t.text}, model&apos;s guess</span>
                 <GuessChip card={card} guess={guesses[t.id] ?? null} />
               </span>
@@ -124,13 +148,13 @@ function FixCard({ card, answer, onAnswerChange, status }: CardComponentProps<Tr
 
         </div>
         {mark === "wrong" && (
-          <span className="inline-flex items-center gap-1 text-small font-semibold text-danger">
+          <span className="absolute top-2.5 right-2.5 inline-flex items-center gap-1 text-small font-semibold text-danger">
             <XIcon className="size-5" strokeWidth={2.5} />
             <span className="sr-only">wrong</span>
           </span>
         )}
         {mark === "right" && (
-          <span className="inline-flex items-center gap-1 text-small font-semibold text-success">
+          <span className="absolute top-2.5 right-2.5 inline-flex items-center gap-1 text-small font-semibold text-success">
             <CheckIcon className="size-5" strokeWidth={2.5} />
             <span className="sr-only">right</span>
           </span>
@@ -165,12 +189,7 @@ function FixCard({ card, answer, onAnswerChange, status }: CardComponentProps<Tr
               <span className="relative">
                 {card.model.kind === "nearest" ? <Picture card={card} item={e} className="size-9" /> : null}
                 {/* Its label as a shape badge (the key is in "It learned from"); spelled out when taking one out, where a wrong label is the point. */}
-                {!remove && card.model.kind === "nearest" && (
-                  <span className="absolute -right-1.5 -bottom-1 grid size-4 place-items-center rounded-node bg-surface text-ink">
-                    <LabelShape index={labelIndex} className="size-2.5" />
-                  </span>
-                )}
-                {remove && card.model.kind === "nearest" && (
+                {card.model.kind === "nearest" && (
                   <span className="absolute -bottom-1.5 left-1/2 inline-flex -translate-x-1/2 items-center gap-0.5 rounded-sm bg-surface px-1 text-[0.7rem] leading-4 font-semibold whitespace-nowrap text-ink">
                     <LabelShape index={labelIndex} className="size-2" />
                     {card.labels[labelIndex]?.text}
@@ -229,16 +248,16 @@ function LabelCard({ card, answer, onAnswerChange, status }: CardComponentProps<
         {choices(card).map((e) => {
           const chosen = answer.labels[e.id];
           const wrong = status === "incorrect" && chosen !== e.label;
-          const words = card.labels.length === 2;
           return (
-            <li key={e.id} className={`flex items-center gap-1.5 rounded-control border-2 p-1.5 text-center ${card.labels.length === 3 ? "flex-row" : "flex-col"} ${wrong ? "border-danger" : chosen ? "border-accent-ink" : "border-line"} bg-surface`}>
+            <li key={e.id} className={`flex items-center gap-1.5 rounded-control border-2 p-1.5 ${card.labels.length === 3 ? "flex-row text-left" : "flex-col text-center"} ${wrong ? "border-danger" : chosen ? "border-accent-ink" : "border-line"} bg-surface`}>
               {card.model.kind === "nearest" ? <Picture card={card} item={e} className="size-8" /> : null}
+              <div className={card.labels.length === 3 ? "flex min-w-0 flex-1 flex-col gap-1" : "contents"}>
               <p id={`${id}-${e.id}`} className="flex items-center gap-1 text-caption leading-tight text-ink">
                 {wrong && <XIcon className="size-3.5 shrink-0 text-danger" strokeWidth={2.5} />}
                 <span>{e.text}</span>
                 {wrong && <span className="sr-only">, wrong label</span>}
               </p>
-              <div role="radiogroup" aria-labelledby={`${id}-${e.id}`} className={`flex justify-center gap-1 ${card.labels.length === 3 ? "ml-auto shrink-0" : "w-full"}`}>
+              <div role="radiogroup" aria-labelledby={`${id}-${e.id}`} className={`flex gap-1 ${card.labels.length === 3 ? "" : "w-full justify-center"}`}>
                 {card.labels.map((label, i) => {
                   const selected = chosen === label.id;
                   return (
@@ -259,10 +278,11 @@ function LabelCard({ card, answer, onAnswerChange, status }: CardComponentProps<
                       } ${locked ? "" : "hover:border-accent-ink hover:text-ink"}`}
                     >
                       <LabelShape index={i} className="size-3" />
-                      {words && <span aria-hidden="true">{label.text}</span>}
+                      <span aria-hidden="true">{label.text}</span>
                     </button>
                   );
                 })}
+              </div>
               </div>
             </li>
           );

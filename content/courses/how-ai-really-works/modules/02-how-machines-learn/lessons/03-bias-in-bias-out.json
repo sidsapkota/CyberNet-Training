@@ -10,7 +10,7 @@
       "id": "slang-checker",
       "type": "train_model",
       "difficulty": "core",
-      "prompt": "Fix the kind-or-mean checker's mistake.",
+      "prompt": "Fix the checker's mistake.",
       "model": {
         "kind": "word-vote"
       },

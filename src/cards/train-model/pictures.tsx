@@ -10,7 +10,8 @@ const mix = (from: string, to: string, t: number) => `color-mix(in oklab, var(${
 const has = (text: string, ...words: string[]) => words.some((w) => text.toLowerCase().includes(w));
 
 function Fruit({ text, y }: { text: string; y: number }) {
-  const colour = mix("--color-pic-red", "--color-pic-yellow", y / 10);
+  // Red stays red until it's really yellow (a straight mix makes red apples look orange).
+  const colour = mix("--color-pic-red", "--color-pic-yellow", (y / 10) ** 1.8);
   const scale = has(text, "small", "mini") ? 0.82 : has(text, "big", "large") ? 1.1 : 1;
   const t = `translate(32 34) scale(${scale}) translate(-32 -34)`;
   if (has(text, "banana")) {
@@ -48,7 +49,7 @@ function Fruit({ text, y }: { text: string; y: number }) {
 }
 
 function Ball({ text, x }: { text: string; x: number }) {
-  const r = 9 + x * 1.9;
+  const r = 6 + x * 2.4;
   if (has(text, "tennis")) {
     return (
       <g>
@@ -120,12 +121,9 @@ function DayNight({ x, y }: { x: number; y: number }) {
           <circle cx={34} cy={9} r={1} />
         </g>
       )}
-      {indoors && (
-        <g>
-          <path d="M32 30v6" stroke="var(--color-pic-stem)" strokeWidth={1.5} />
-          <circle cx={32} cy={40} r={4} fill={x >= 5 ? "var(--color-pic-sun)" : "var(--color-pic-cloud-dark)"} />
-        </g>
-      )}
+      {/* Indoors: a window (sunny when it's bright) and a floor. */}
+      {indoors && x >= 6 && <circle cx={40} cy={17} r={4} fill="var(--color-pic-sun)" />}
+      {indoors && <rect x={4} y={48} width={56} height={12} rx={0} fill="var(--color-pic-stem)" opacity={0.6} />}
     </g>
   );
 }
