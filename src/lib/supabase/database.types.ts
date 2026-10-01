@@ -63,6 +63,36 @@ export type Database = {
         }
         Relationships: []
       }
+      certificates: {
+        Row: {
+          completed_on: string
+          course_id: string
+          id: string
+          issued_at: string
+          name: string
+          revoked_at: string | null
+          user_id: string
+        }
+        Insert: {
+          completed_on: string
+          course_id: string
+          id: string
+          issued_at?: string
+          name: string
+          revoked_at?: string | null
+          user_id: string
+        }
+        Update: {
+          completed_on?: string
+          course_id?: string
+          id?: string
+          issued_at?: string
+          name?: string
+          revoked_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       feedback: {
         Row: {
           created_at: string
@@ -567,6 +597,14 @@ export type Database = {
       }
       league_week: { Args: { t?: string }; Returns: string }
       leagues_open: { Args: never; Returns: boolean }
+      verify_certificate: {
+        Args: { p_id: string }
+        Returns: {
+          completed_on: string
+          course_id: string
+          name: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
