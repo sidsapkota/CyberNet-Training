@@ -1,0 +1,474 @@
+{
+  "id": "training-data",
+  "kind": "lesson",
+  "title": "Training Data",
+  "order": 1,
+  "icon": "tags",
+  "cards": [
+    {
+      "id": "spam-folder",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "How does a spam folder know?",
+      "body": "Your email app quietly moves junk into a spam folder. Nobody wrote a rule for every scam email ever sent. Instead, a [[model]] learned from emails that people had already marked as spam or not spam.\n\nThat's [[training data]] at work. In this lesson you'll build some, and find out how easily it goes wrong."
+    },
+    {
+      "id": "words-that-vote",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Words that vote",
+      "body": "This model reads short messages. It remembers which words were in the spam examples and which were in the normal ones.\n\nWhen a new message arrives, each word in it **votes**. A word gets **one vote for each training message** it appeared in, for that message's label. So if \"free\" was in three spam messages, it gives spam three votes. A word counts once per message, however many times it's repeated. Words shorter than 3 letters (like \"a\", \"at\", \"is\" and \"go\") are skipped. Only the **exact same word** counts: to this model, \"game\" and \"games\" are different words.\n\nThe label with the most votes wins. A tie means \"not sure\"."
+    },
+    {
+      "id": "count-the-votes",
+      "type": "numeric_input",
+      "difficulty": "core",
+      "prompt": "Be the model. These are its **not spam** training messages:\n\n- See you at training tonight\n- Pizza for dinner tonight?\n- Can you send me the homework\n- Your sister's parcel came today\n\nHow many **not spam** votes does **\"Free pizza at footy training\"** get?",
+      "base": "decimal",
+      "answer": 2,
+      "hint": "Take the new message one word at a time. For each word, count how many of the four messages contain it. Remember which words are skipped.",
+      "nudge": "\"at\" has only 2 letters, so it's skipped. Count only the words of 3 or more letters that appear in the messages.",
+      "explanation": "\"Pizza\" is in one message and \"training\" is in one: **2 votes**. \"Free\" and \"footy\" aren't in any of them, and \"at\" is skipped. The spam messages give \"free\" 3 votes, so spam will win 3 to 2. Let's see."
+    },
+    {
+      "id": "label-messages",
+      "type": "train_model",
+      "difficulty": "core",
+      "prompt": "Label each message as **spam** or **not spam**. Then press Check to train the model and see what it makes of two new messages.",
+      "model": {
+        "kind": "word-vote"
+      },
+      "labels": [
+        {
+          "id": "spam",
+          "text": "Spam"
+        },
+        {
+          "id": "ok",
+          "text": "Not spam"
+        }
+      ],
+      "examples": [
+        {
+          "id": "m1",
+          "text": "Win a free phone now",
+          "label": "spam",
+          "given": false
+        },
+        {
+          "id": "m2",
+          "text": "Free prize, click this link",
+          "label": "spam",
+          "given": false
+        },
+        {
+          "id": "m3",
+          "text": "Claim your free gift card",
+          "label": "spam",
+          "given": true
+        },
+        {
+          "id": "m4",
+          "text": "Your parcel is held, pay the fee here",
+          "label": "spam",
+          "given": false
+        },
+        {
+          "id": "m5",
+          "text": "See you at training tonight",
+          "label": "ok",
+          "given": false
+        },
+        {
+          "id": "m6",
+          "text": "Pizza for dinner tonight?",
+          "label": "ok",
+          "given": false
+        },
+        {
+          "id": "m7",
+          "text": "Can you send me the homework",
+          "label": "ok",
+          "given": true
+        },
+        {
+          "id": "m8",
+          "text": "Your sister's parcel came today",
+          "label": "ok",
+          "given": false
+        }
+      ],
+      "tests": [
+        {
+          "id": "t1",
+          "text": "Click to claim a free prize",
+          "truth": "spam"
+        },
+        {
+          "id": "t2",
+          "text": "Free pizza at footy training",
+          "truth": "ok"
+        }
+      ],
+      "task": {
+        "goal": "label"
+      },
+      "hint": "Spam tries to get you to win, claim, click or pay. Normal messages are about plans and everyday things.",
+      "nudge": "Look again at the messages about prizes, gift cards and paying a fee: who sends those?",
+      "explanation": "Your labels were right, and the model called **\"Free pizza at footy training\"** spam, just as you counted: \"free\" gave spam 3 votes, and \"pizza\" and \"training\" gave not spam only 2."
+    },
+    {
+      "id": "why-free-pizza",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "One word, three votes",
+      "body": "The model isn't being silly: it did exactly what its training data taught it. In those examples, **\"free\" only ever appeared in spam**, so to the model, \"free\" means spam.\n\nReal messages from friends say \"free\" too: free time, free pizza, free tickets. The training data just didn't show any. A model can't learn from examples it never saw."
+    },
+    {
+      "id": "which-example-fixes-it",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Which **one** new training example would fix the free-pizza mistake, without breaking the spam guess?",
+      "options": [
+        {
+          "id": "free-footy",
+          "text": "\"Free footy training on Saturday\", labelled not spam"
+        },
+        {
+          "id": "pizza-x3",
+          "text": "\"Pizza, pizza, pizza!\", labelled not spam",
+          "nudge": "Count the votes again: a word only counts once per message, however often it's repeated."
+        },
+        {
+          "id": "win-free",
+          "text": "\"Win free stuff today\", labelled spam",
+          "nudge": "That gives \"free\" even more spam votes. Which side needs more votes?"
+        },
+        {
+          "id": "delete-spam",
+          "text": "Delete all the spam examples",
+          "nudge": "Then the model couldn't recognise spam at all, and the first test would fail."
+        }
+      ],
+      "correctOptionId": "free-footy",
+      "hint": "Count each side's votes for the pizza message, then count again with each new example added.",
+      "explanation": "\"Free footy training on Saturday\" adds a not-spam vote for **\"free\"**, **\"footy\"** and **\"training\"**: 5 not-spam votes against 3. \"Pizza, pizza, pizza!\" only adds **one** vote, because a word counts once per message: that makes a 3-3 tie, \"not sure\"."
+    },
+    {
+      "id": "fix-the-data",
+      "type": "train_model",
+      "difficulty": "core",
+      "prompt": "Try it. Choose which examples to train on, so the model gets **both** test messages right.",
+      "model": {
+        "kind": "word-vote"
+      },
+      "labels": [
+        {
+          "id": "spam",
+          "text": "Spam"
+        },
+        {
+          "id": "ok",
+          "text": "Not spam"
+        }
+      ],
+      "examples": [
+        {
+          "id": "m1",
+          "text": "Win a free phone now",
+          "label": "spam"
+        },
+        {
+          "id": "m2",
+          "text": "Free prize, click this link",
+          "label": "spam"
+        },
+        {
+          "id": "m3",
+          "text": "Claim your free gift card",
+          "label": "spam"
+        },
+        {
+          "id": "m4",
+          "text": "Your parcel is held, pay the fee here",
+          "label": "spam"
+        },
+        {
+          "id": "m5",
+          "text": "See you at training tonight",
+          "label": "ok"
+        },
+        {
+          "id": "m6",
+          "text": "Pizza for dinner tonight?",
+          "label": "ok"
+        },
+        {
+          "id": "m7",
+          "text": "Can you send me the homework",
+          "label": "ok"
+        },
+        {
+          "id": "m8",
+          "text": "Your sister's parcel came today",
+          "label": "ok"
+        },
+        {
+          "id": "x1",
+          "text": "Free footy training on Saturday",
+          "label": "ok"
+        },
+        {
+          "id": "x2",
+          "text": "Win free stuff today",
+          "label": "spam"
+        },
+        {
+          "id": "x3",
+          "text": "Pizza, pizza, pizza!",
+          "label": "ok"
+        }
+      ],
+      "tests": [
+        {
+          "id": "t1",
+          "text": "Click to claim a free prize",
+          "truth": "spam"
+        },
+        {
+          "id": "t2",
+          "text": "Free pizza at footy training",
+          "truth": "ok"
+        }
+      ],
+      "task": {
+        "goal": "include",
+        "start": [
+          "m1",
+          "m2",
+          "m3",
+          "m4",
+          "m5",
+          "m6",
+          "m7",
+          "m8"
+        ]
+      },
+      "hint": "Which side needs more votes from \"free\"?",
+      "nudge": "Watch the guess for the pizza message as you tick and untick. A tie shows as \"Not sure\".",
+      "explanation": "Adding **\"Free footy training on Saturday\"** teaches the model that friends say \"free\" too, so the pizza message gets more not-spam votes. Deleting spam examples can also flip it, but then the model learns less about real spam."
+    },
+    {
+      "id": "good-data-bad-data",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Good data, bad data",
+      "body": "Training data can go wrong in other ways too:\n\n- **Wrong labels:** a spam message labelled \"not spam\" teaches the model the wrong lesson.\n- **Copies:** a thousand copies of one example add nothing new, and make that one example count far too much.\n- **Missing kinds:** examples from only one place, or one kind of person, leave everything else out.\n\nGood training data has **checked labels**, **lots of variety**, and examples like the ones the model will really meet."
+    },
+    {
+      "id": "helpful-or-problem",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Does each one make training data **better**, or cause a **problem**?",
+      "bins": [
+        {
+          "id": "better",
+          "label": "Better"
+        },
+        {
+          "id": "problem",
+          "label": "Problem"
+        }
+      ],
+      "items": [
+        {
+          "id": "variety",
+          "label": "Messages from lots of different people",
+          "bin": "better"
+        },
+        {
+          "id": "checked",
+          "label": "Labels checked by a second person",
+          "bin": "better"
+        },
+        {
+          "id": "real",
+          "label": "Examples like the ones it will meet",
+          "bin": "better"
+        },
+        {
+          "id": "wrong-labels",
+          "label": "Some spam labelled \"not spam\"",
+          "bin": "problem"
+        },
+        {
+          "id": "copies",
+          "label": "1,000 copies of one message",
+          "bin": "problem"
+        },
+        {
+          "id": "one-school",
+          "label": "Messages from just one school class",
+          "bin": "problem"
+        },
+        {
+          "id": "rushed",
+          "label": "Labels done in a rush, never checked",
+          "bin": "problem"
+        }
+      ],
+      "hint": "Ask of each one: does it teach the model something new and true?",
+      "nudge": "Look for the ones that teach the model something wrong, repeat one example over and over, or leave whole groups out.",
+      "explanation": "Variety, checked labels and realistic examples make data **better**. Rushed, unchecked labels and spam labelled \"not spam\" teach wrong lessons; copies add nothing new and tip the votes; one class leaves everyone else out."
+    },
+    {
+      "id": "noisy-label",
+      "type": "train_model",
+      "difficulty": "challenge",
+      "prompt": "Someone made a labelling mistake in this fruit data. Find it, and choose the examples to train on so the model gets **both** test fruits right. (This model picks the **nearest** example.)",
+      "model": {
+        "kind": "nearest",
+        "k": 1,
+        "x": {
+          "label": "Shape",
+          "low": "Long",
+          "high": "Round"
+        },
+        "y": {
+          "label": "Colour",
+          "low": "Red",
+          "high": "Yellow"
+        }
+      },
+      "labels": [
+        {
+          "id": "apple",
+          "text": "Apple"
+        },
+        {
+          "id": "banana",
+          "text": "Banana"
+        }
+      ],
+      "examples": [
+        {
+          "id": "a1",
+          "text": "Red apple",
+          "x": 9.5,
+          "y": 0.5,
+          "label": "apple"
+        },
+        {
+          "id": "a2",
+          "text": "Small red apple",
+          "x": 7.5,
+          "y": 2,
+          "label": "apple"
+        },
+        {
+          "id": "a3",
+          "text": "Big red apple",
+          "x": 9.5,
+          "y": 3.5,
+          "label": "apple"
+        },
+        {
+          "id": "b1",
+          "text": "Banana",
+          "x": 0.5,
+          "y": 9.5,
+          "label": "banana"
+        },
+        {
+          "id": "b2",
+          "text": "Spotty banana",
+          "x": 2.5,
+          "y": 9.5,
+          "label": "banana"
+        },
+        {
+          "id": "bad",
+          "text": "Long banana",
+          "x": 1.2,
+          "y": 8.3,
+          "label": "apple"
+        },
+        {
+          "id": "b3",
+          "text": "Short banana",
+          "x": 1.5,
+          "y": 7,
+          "label": "banana"
+        }
+      ],
+      "tests": [
+        {
+          "id": "t1",
+          "text": "Shiny red apple",
+          "x": 8.5,
+          "y": 1.5,
+          "truth": "apple"
+        },
+        {
+          "id": "t2",
+          "text": "Ripe banana",
+          "x": 1,
+          "y": 8.2,
+          "truth": "banana"
+        }
+      ],
+      "task": {
+        "goal": "include",
+        "start": [
+          "a1",
+          "a2",
+          "a3",
+          "b1",
+          "b2",
+          "bad",
+          "b3"
+        ]
+      },
+      "hint": "Read each example's name and the label beside it. Does every label match its name?",
+      "nudge": "Check that every example's label matches its name.",
+      "explanation": "\"Long banana\" was labelled **Apple**. It sat closest to the ripe banana, so the model copied its wrong label. Leaving that one example out fixes it: one wrong label can be enough to cause a mistake."
+    },
+    {
+      "id": "more-or-better",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "prompt": "A spam filter learned only from **English** messages. It lets lots of **Spanish** spam through. Which **one** addition helps most?",
+      "options": [
+        {
+          "id": "spanish",
+          "text": "200 Spanish messages, spam and normal, labelled"
+        },
+        {
+          "id": "english",
+          "text": "10,000 more English spam messages",
+          "nudge": "That's a lot more data, but does any of it show the model Spanish spam?"
+        },
+        {
+          "id": "spanish-spam-only",
+          "text": "200 Spanish spam messages, all labelled spam",
+          "nudge": "Close! But if every Spanish message it sees is spam, what will it think of a friend writing in Spanish?"
+        },
+        {
+          "id": "twice",
+          "text": "The same English messages, twice",
+          "nudge": "Copies add nothing new. What's missing from its examples?"
+        }
+      ],
+      "correctOptionId": "spanish",
+      "hint": "Think about what's missing from its examples, and what would happen to normal messages written in Spanish.",
+      "explanation": "The filter has never seen Spanish, so it needs **Spanish examples**, and **both kinds**: spam only would teach it that Spanish means spam, so friends writing in Spanish would get flagged (like \"free\" in the pizza message). More English data adds nothing about Spanish."
+    },
+    {
+      "id": "training-data-recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- A model learns only from its **training data**, so it repeats that data's patterns, including its gaps.\n- One word, or one example, can tip a model the wrong way.\n- Wrong labels, copies and missing kinds of examples all cause mistakes.\n- Fix it with **better** data (checked, varied, realistic), not just more of it.\n\nNext: how to tell if a model is any good."
+    }
+  ]
+}

@@ -189,6 +189,7 @@ describe("real content in /content", () => {
     const course = loadContent().courses.find((c) => c.id === "how-ai-really-works");
     expect(course?.modules.map((m) => [m.access, ...m.lessons.map((l) => l.id)])).toEqual([
       ["free", "spot-the-ai", "patterns-everywhere", "what-ai-cant-do", "what-ai-actually-is-quiz"],
+      ["pro", "training-data", "testing-a-model", "bias-in-bias-out", "how-machines-learn-quiz"],
     ]);
   });
 

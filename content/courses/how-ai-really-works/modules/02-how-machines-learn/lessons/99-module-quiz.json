@@ -1,0 +1,224 @@
+{
+  "id": "how-machines-learn-quiz",
+  "kind": "quiz",
+  "title": "How Machines Learn: Module Quiz",
+  "order": 99,
+  "cards": [
+    {
+      "id": "q-homework",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "A word-vote model sorts messages into **homework** or **games**. \"Maths\" has only ever appeared in its homework examples, so it calls **\"Is the maths game fun?\"** homework (1 vote to 0). Which **one** new example makes it guess games?",
+      "options": [
+        {
+          "id": "maths-game",
+          "text": "\"That maths game is fun\", labelled games"
+        },
+        {
+          "id": "fun-games",
+          "text": "\"Fun games online\", labelled games"
+        },
+        {
+          "id": "maths-homework",
+          "text": "\"Maths homework is due\", labelled homework"
+        },
+        {
+          "id": "delete",
+          "text": "Delete the homework example with \"maths\" in it"
+        }
+      ],
+      "correctOptionId": "maths-game",
+      "explanation": "\"That maths game is fun\" adds games votes for **maths**, **game** and **fun**: 3 to 1. \"Fun games online\" only matches **fun** (\"games\" isn't the same word as \"game\"), so it's a 1 to 1 tie: not sure. Another homework example makes it worse, and deleting one leaves no votes at all: not sure."
+    },
+    {
+      "id": "q-accuracy",
+      "type": "numeric_input",
+      "difficulty": "core",
+      "prompt": "A model gets **28 of 35** test examples right. What is its accuracy?",
+      "base": "decimal",
+      "answer": 80,
+      "unit": "%",
+      "explanation": "28 ÷ 35 = 0.8, and 0.8 × 100 = **80%**."
+    },
+    {
+      "id": "q-compare",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Model A gets **18 of 24** test examples right. Model B gets **15 of 20** right. Which is more accurate?",
+      "options": [
+        {
+          "id": "same",
+          "text": "They're the same"
+        },
+        {
+          "id": "a",
+          "text": "Model A"
+        },
+        {
+          "id": "b",
+          "text": "Model B"
+        },
+        {
+          "id": "cant",
+          "text": "You can't compare them"
+        }
+      ],
+      "correctOptionId": "same",
+      "explanation": "A: 18 ÷ 24 = **75%**. B: 15 ÷ 20 = **75%**. A got more right, but out of more examples: as percentages they're exactly the same."
+    },
+    {
+      "id": "q-overfitting",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "A model scores **99%** on its training examples and **55%** on new ones. What does that suggest?",
+      "options": [
+        {
+          "id": "overfit",
+          "text": "It memorised its examples (overfitting)"
+        },
+        {
+          "id": "great",
+          "text": "It's a great model: look at the 99%"
+        },
+        {
+          "id": "need-more-tests",
+          "text": "It should be tested on its training examples again"
+        },
+        {
+          "id": "fine",
+          "text": "Nothing: scores always drop a lot"
+        }
+      ],
+      "correctOptionId": "overfit",
+      "explanation": "A big gap between training and test scores means **overfitting**: it memorised instead of learning the pattern. The 55% on new examples is the score that matters."
+    },
+    {
+      "id": "q-fair-test",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Is each one a **fair** test of a model, or an **unfair** one?",
+      "bins": [
+        {
+          "id": "fair",
+          "label": "Fair test"
+        },
+        {
+          "id": "unfair",
+          "label": "Unfair test"
+        }
+      ],
+      "items": [
+        {
+          "id": "unseen",
+          "label": "Photos it never saw while training",
+          "bin": "fair"
+        },
+        {
+          "id": "hard-too",
+          "label": "Hard examples as well as easy ones",
+          "bin": "fair"
+        },
+        {
+          "id": "picked",
+          "label": "Only the photos it already gets right",
+          "bin": "unfair"
+        },
+        {
+          "id": "reused",
+          "label": "Its own training photos",
+          "bin": "unfair"
+        }
+      ],
+      "explanation": "A fair test uses **unseen** examples with a **mix** of difficulty. Re-using training photos, or picking ones it already gets right, makes it look better than it is."
+    },
+    {
+      "id": "q-better-data",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "A face-matching app works well for adults but often fails on children. What is the **best** fix?",
+      "options": [
+        {
+          "id": "children",
+          "text": "Add many photos of children, then test on children"
+        },
+        {
+          "id": "adults",
+          "text": "Add many more photos of adults, then test again"
+        },
+        {
+          "id": "easier",
+          "text": "Make the app accept faces more easily"
+        },
+        {
+          "id": "ignore",
+          "text": "Report only its overall accuracy"
+        }
+      ],
+      "correctOptionId": "children",
+      "explanation": "The app is **biased** because children were missing from its training data. Add them, then **test on children** to check it worked. More adults add nothing about children; accepting faces more easily lets in the wrong people too; an overall score just hides the problem."
+    },
+    {
+      "id": "q-bias-scenario",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "A game's chat filter keeps blocking messages written in one language that lots of players use.",
+      "start": "the-filter",
+      "steps": [
+        {
+          "id": "the-filter",
+          "text": "Players who write in that language are getting blocked for normal messages. What should the game do?",
+          "choices": [
+            {
+              "id": "ban",
+              "text": "Ask those players to only write in English",
+              "consequence": "That blames the players. The problem is what the filter learned from.",
+              "outcome": "fail"
+            },
+            {
+              "id": "retrain",
+              "text": "Add normal messages in that language to its training data, and test again",
+              "consequence": "Right: fill the gap in the data, then check it really works for those players.",
+              "outcome": "success"
+            },
+            {
+              "id": "block-less",
+              "text": "Make the filter block fewer messages for everyone",
+              "consequence": "That lets more mean messages through for everyone, and the filter still doesn't understand that language.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "explanation": "The filter is biased because that language was missing from its training data. **Add the missing examples and test again**; never blame the people it gets wrong."
+    },
+    {
+      "id": "q-words",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each word to what it means.",
+      "pairs": [
+        {
+          "id": "test",
+          "left": "Test examples",
+          "right": "Kept aside to check the model"
+        },
+        {
+          "id": "accuracy",
+          "left": "Accuracy",
+          "right": "Right ÷ tested, as a percentage"
+        },
+        {
+          "id": "overfitting",
+          "left": "Overfitting",
+          "right": "Memorising instead of learning"
+        },
+        {
+          "id": "bias",
+          "left": "Bias",
+          "right": "Working worse for some people"
+        }
+      ],
+      "explanation": "**Test examples** are kept aside; **accuracy** is right ÷ tested as a percentage; **overfitting** is memorising instead of learning; **bias** is when a model works worse for some people."
+    }
+  ]
+}

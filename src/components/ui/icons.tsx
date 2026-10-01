@@ -83,6 +83,8 @@ import {
   ScanEye,
   Brain,
   AudioLines,
+  Tags,
+  Scale,
   Link,
   MailWarning,
   MapPin,
@@ -272,6 +274,9 @@ export const LESSON_ICON_COMPONENTS = {
   "scan-eye": ScanEye,
   brain: Brain,
   "audio-lines": AudioLines,
+  tags: Tags,
+  target: Target,
+  scale: Scale,
 } satisfies Record<LessonIconName, LucideIcon>;
 
 /** A lesson's icon, with the brand stroke. Decorative: the lesson title always carries the meaning. */

@@ -1458,6 +1458,92 @@ model's confidence isn't a reliable sign of being right.
 Six core questions: rules or learning, a labelling card (a mini basketball the model gets wrong),
 missing training examples, the steps, checking a fact, and the four words.
 
+## Module 2: How Machines Learn (Pro; teaser: 2.1 `label-messages`)
+Harder than module 1 on purpose: vote counting, comparing percentages, and "choose the data"
+cards where only one change fixes every test (checked by trying every subset).
+
+### 2.1 Training Data (`training-data`)
+**Goals:** how a word-vote model decides; one word or one example can tip it; wrong labels,
+copies and missing kinds of examples; better data beats more data.
+
+**Key claims:** in the spam example, "free" appears only in spam, so "Free pizza at footy
+training" gets 3 spam votes to 2 (pizza, training) and is called spam; adding "Free footy training
+on Saturday" (not spam) makes it 5 to 3. "Pizza, pizza, pizza!" adds only one vote (words count once
+per message), making a 3 to 3 tie. One mislabelled example next to a test item flips its guess.
+
+**Simplifications:** the word-vote model is a cut-down version of a naive Bayes spam filter (real
+ones weigh words by how often they appear, and use far more messages). Words of 1 or 2 letters are
+skipped, standing in for real "stop word" lists.
+
+### 2.2 Testing a Model (`testing-a-model`)
+**Goals:** training vs test examples; accuracy as right ÷ tested × 100; overfitting; fair and
+unfair tests; comparing accuracies as percentages.
+
+**Key claims:** 34 of 40 = 85%; 45 of 60 = 75% and 38 of 50 = 76%. The weather model gets 3 of
+4 test days right (it calls the cloudy but dry day rain, because every cloudy training day was
+rainy). The "grass means dog" story is the classic shortcut-learning example, told generically.
+
+**Simplifications:** weather is reduced to two features (cloud and damp air); real forecasts use
+physics models and far more data. Overfitting is explained as memorising; the technical idea (fitting
+noise in the training data) is left out. Test examples are described as "kept aside"; validation
+sets aren't mentioned.
+
+### 2.3 Bias In, Bias Out (`bias-in-bias-out`)
+**Goals:** bias as a model working better for some people than others, usually from gaps in the
+data; nobody has to mean it, and it's never the fault of the people it gets wrong; finding it
+(test with many groups, accuracy per group) and fixing it (missing examples, a person checking).
+
+**Key claims:** a checker that only saw "sick" meaning bad misreads slang praise; adding one
+example of the other use fixes it while the mean tests still pass. Voice assistants have been
+found to be less accurate for some accents (described generally; no companies or studies named).
+
+**Simplifications:** bias is shown as missing training examples; other sources (labels that
+reflect people's opinions, how a problem is framed) are left for later or out. The club, school
+and game stories are fictional.
+
+### Module 2 quiz (`how-machines-learn-quiz`)
+Eight core questions: which one example fixes a word-vote mistake (a tie for "Fun games online"),
+accuracy (28 of 35 = 80%), comparing 18 of 24 with 15 of 20 (both 75%), overfitting, fair tests, fixing a face-matching gap for children,
+a biased chat filter, and the four words.
+
+## Beginner audits: Module 2 (1 October 2026)
+
+Module 2 is meant to be harder than module 1. Two fresh agents played it as a 12-year-old who had
+finished module 1, committing to answers before reading the key; every vote count and distance
+was checked against the model code.
+
+**First audit:** 24 of 25 right first try, so too easy. Its causes, and the fixes:
+
+| Where | Issue | Fix |
+|---|---|---|
+| Module | No card made the learner predict the model; live guesses carried the include cards | New core card `count-the-votes`: count the not-spam votes before the model shows its guess (2; counting "at" gives 3) |
+| 2.1 `more-or-better` | A near copy of module 1's yellow apples | Spanish spam vs English data, with a tempting "Spanish spam only" option |
+| 2.3 `club-filter`, `where-bias-comes-from`, `fixes-that-help`; quiz `q-bias-scenario`, `q-better-data` | Joke wrong options; the right answer was the longest | Tempting wrong options ("not enough data overall", "accept everyone more easily", "block fewer messages", "more data from the same group"), similar lengths |
+| Quiz `q-homework` | A one-try include card could be solved by ticking boxes and watching | Now a multiple choice: which one example fixes it ("Fun games online" makes a tie) |
+| 2.2 `weather-model` | Labels were guesses ("muggy") rather than what happened; the hint pushed "a bit humid" towards rain | Each day says what really happened ("…: it rained"); hint points at that |
+| 2.2 `overfitting` | "Grass means dog" is shortcut learning, not memorising | A memorising example: the exact photos, so a dog from a new angle fools it |
+| 2.1 `helpful-or-problem` | "Lots more of the same spam" was debatable | Replaced with unchecked, rushed labels |
+| 2.1 `words-that-vote` | "Very short words" was vague | "Words shorter than 3 letters (a, at, is, go)"; and only the exact same word counts ("game" isn't "games") |
+| 2.2 `forty-photos` | `accuracy` glossary mark on a card whose answer is the accuracy | Removed |
+| 2.1 `which-example-fixes-it`, `fix-the-data` | Hints nearly gave the answer | Point at the method |
+| 2.2 `cloudy-dry` | Watching the test while changing data contradicts the fair-test rule | Explanation and recap: real teams then check on fresh test days |
+
+**Second audit (after those fixes):** 26 of 26 for an expert-ish player, but it named the likely
+slips for a 12-year-old: `count-the-votes` (counting "at"), `which-is-better` (75% vs 76%),
+`more-or-better` (Spanish spam only) and the quiz's `q-homework`, each with a nudge or hint that
+recovers (the quiz has none, by design). Further fixes:
+
+| Where | Issue | Fix |
+|---|---|---|
+| Quiz `q-homework` | Relied on "game" ≠ "games", which wasn't taught | Now taught in `words-that-vote` |
+| 2.3 `slang-checker` | A second solution (drop r3, add x2) contradicted the nudge | x2 is now "Go away, you are rude", which can't rescue the third test |
+| 2.2 `cloudy-dry` | Only one real choice; the nudge named the answer | A tempting third day ("Cloudy, damp night: no rain") that breaks another test; nudge points at the method |
+| 2.3 `accents` | "Check each group's score" came only after this card | Taught in `finding-and-fixing` |
+| 2.2 `fair-or-unfair` | "Changing it until it scores 100%" was ambiguous | "Changing the test…" |
+| 2.3 `problem-and-fix` | Checking a score finds a problem, it doesn't fix it | "best next step" |
+| 2.1 `noisy-label` | The nudge said where to look | Points at the method |
+| Quiz | Mostly recall | New `q-compare`: 18 of 24 vs 15 of 20 (both 75%) |
+
 ## AI Tools Today (lesson 4.3, not built yet)
 The only lesson that names real products. It carries `lastChecked` (shown to learners), and
 `validate-content` warns once a recheck is due. **Recheck by 1 January 2027, then every 3 months:**

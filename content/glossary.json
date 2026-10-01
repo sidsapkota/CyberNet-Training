@@ -1,5 +1,6 @@
 {
   "terms": [
+    { "id": "accuracy", "term": "accuracy", "definition": "How often a model is right on test examples it has never seen: the number right divided by the number tested, as a percentage." },
     { "id": "antivirus", "term": "antivirus", "definition": "A security app that looks for harmful programs, like viruses, and stops them." },
     { "id": "app", "term": "app", "definition": "A program you use for one job, like a game, a browser or a music player." },
     {
@@ -24,6 +25,7 @@
       "definition": "A program running without a window, doing a job for you, like checking for updates or syncing files."
     },
     { "id": "backup", "term": "backed up", "definition": "Copied somewhere else (like the cloud or another drive), so it isn't lost if the original is deleted or broken." },
+    { "id": "bias", "term": "bias", "definition": "When a model works better for some people or situations than others, usually because of gaps in its training data." },
     { "id": "binary", "term": "binary", "definition": "Counting with only two digits, 0 and 1. Computers store everything this way." },
     { "id": "bit", "term": "bit", "definition": "The smallest piece of data: a single 0 or 1, like a switch that's off or on." },
     { "id": "browser", "term": "browser", "definition": "The app you use to visit websites." },
@@ -127,6 +129,7 @@
       "term": "operating system (OS)",
       "definition": "The main software that runs a device: it shares out the CPU and RAM, runs apps and looks after files."
     },
+    { "id": "overfitting", "term": "overfitting", "definition": "When a model memorises its training examples, quirks and all, instead of the real pattern, so it does much worse on new examples." },
     { "id": "packet", "term": "packet", "definition": "A small piece of data sent across a network, with addresses added so it can find its way." },
     {
       "id": "passkey",

@@ -1,0 +1,447 @@
+{
+  "id": "testing-a-model",
+  "kind": "lesson",
+  "title": "Testing a Model",
+  "order": 2,
+  "icon": "target",
+  "cards": [
+    {
+      "id": "seen-the-answers",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "A test you've seen before",
+      "body": "Imagine a test where you'd already seen every question, with the answers. You'd score 100%. But would it prove you'd learned anything?\n\nModels have the same problem. This lesson is about testing them fairly."
+    },
+    {
+      "id": "train-and-test",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Keep some examples aside",
+      "body": "Before training, people split their examples in two. **Training examples** are for learning. **Test examples** are kept aside, and the model never sees them while it learns.\n\nThen the model guesses each test example, and you count how many it got right. **Accuracy** is that as a percentage: right ÷ tested × 100.\n\nA **fair test** uses examples the model has never seen, a mix of easy and hard ones like those it will meet for real, and you don't keep changing the test until the score looks good."
+    },
+    {
+      "id": "forty-photos",
+      "type": "numeric_input",
+      "difficulty": "core",
+      "prompt": "A model is tested on **40** new photos and gets **34** right. What is its accuracy?",
+      "base": "decimal",
+      "answer": 85,
+      "unit": "%",
+      "hint": "Divide the number right by the number tested, then multiply by 100.",
+      "nudge": "34 ÷ 40 first. Then turn that into a percentage.",
+      "explanation": "34 ÷ 40 = 0.85, and 0.85 × 100 = **85%**. It got 6 photos wrong, which is 15%."
+    },
+    {
+      "id": "overfitting",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Memorising isn't learning",
+      "body": "A model can learn its training examples **too** well: every detail, instead of the general pattern. This is called **overfitting**.\n\nSay a model memorises its training photos exactly: this dog, from this angle, in this light. On those photos it's nearly perfect. Show it a new photo of a dog from a different angle, and it may not recognise it at all: it learned the photos, not what dogs look like.\n\nThat's why the test examples must be new: they show whether the model learned the real pattern, or just memorised."
+    },
+    {
+      "id": "too-good",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "A model scores **100%** on its training examples but only **60%** on new test examples. What's the most likely reason?",
+      "options": [
+        {
+          "id": "memorised",
+          "text": "It memorised its training examples instead of the real pattern"
+        },
+        {
+          "id": "perfect",
+          "text": "It's perfect: 100% is what counts",
+          "nudge": "Which score shows how it does on examples it hasn't seen?"
+        },
+        {
+          "id": "bad-tests",
+          "text": "The test examples must all be labelled wrong",
+          "nudge": "That's possible, but it isn't the usual reason. What does a big gap between the two scores suggest?"
+        },
+        {
+          "id": "slow",
+          "text": "It needs a faster computer",
+          "nudge": "Speed doesn't change which answers it gives. Think about how it learned."
+        }
+      ],
+      "correctOptionId": "memorised",
+      "hint": "Which score shows how it does on examples it has never seen? Why might the two be so different?",
+      "explanation": "A big gap between training and test scores is the classic sign of [[overfitting]]: the model memorised its examples, quirks and all, instead of the pattern. The **test** score (60%) is the one that tells you how it will really do."
+    },
+    {
+      "id": "fair-or-unfair",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Is each one a **fair** test of a model, or an **unfair** one?",
+      "bins": [
+        {
+          "id": "fair",
+          "label": "Fair test"
+        },
+        {
+          "id": "unfair",
+          "label": "Unfair test"
+        }
+      ],
+      "items": [
+        {
+          "id": "kept-aside",
+          "label": "Examples kept aside from the start",
+          "bin": "fair"
+        },
+        {
+          "id": "mix",
+          "label": "A mix of easy and hard examples",
+          "bin": "fair"
+        },
+        {
+          "id": "real-use",
+          "label": "New examples like real ones",
+          "bin": "fair"
+        },
+        {
+          "id": "training-again",
+          "label": "The examples it trained on",
+          "bin": "unfair"
+        },
+        {
+          "id": "easy-only",
+          "label": "Only the easiest examples",
+          "bin": "unfair"
+        },
+        {
+          "id": "retry",
+          "label": "Changing the test until it scores 100%",
+          "bin": "unfair"
+        }
+      ],
+      "hint": "A fair test shows how the model will do in real life. Which ones would make it look better than it really is?",
+      "nudge": "Look for the tests that make the score look good without showing how it does on new, realistic examples.",
+      "explanation": "Fair tests use **unseen**, **realistic** examples with a **mix** of easy and hard. Testing on its own training examples, only easy ones, or changing the test until it scores 100% all make a model look better than it is."
+    },
+    {
+      "id": "weather-model",
+      "type": "train_model",
+      "difficulty": "core",
+      "prompt": "A weather model guesses whether it will rain from the clouds and the air. Each training day says what really happened: label them, then see how the model does on **4 test days** it has never seen.",
+      "model": {
+        "kind": "nearest",
+        "k": 1,
+        "x": {
+          "label": "Cloud",
+          "low": "Clear",
+          "high": "Cloudy"
+        },
+        "y": {
+          "label": "Air",
+          "low": "Dry",
+          "high": "Damp"
+        }
+      },
+      "labels": [
+        {
+          "id": "rain",
+          "text": "Rain"
+        },
+        {
+          "id": "dry",
+          "text": "No rain"
+        }
+      ],
+      "examples": [
+        {
+          "id": "w1",
+          "text": "Stormy, damp morning: it rained",
+          "x": 9,
+          "y": 9,
+          "label": "rain",
+          "given": true
+        },
+        {
+          "id": "w2",
+          "text": "Grey, drizzly afternoon: it rained",
+          "x": 8,
+          "y": 8.5,
+          "label": "rain",
+          "given": false
+        },
+        {
+          "id": "w3",
+          "text": "Thick cloud, wet air: it rained",
+          "x": 9.5,
+          "y": 7.5,
+          "label": "rain",
+          "given": false
+        },
+        {
+          "id": "w4",
+          "text": "Heavy cloud, damp evening: it rained",
+          "x": 7.5,
+          "y": 9,
+          "label": "rain",
+          "given": false
+        },
+        {
+          "id": "d1",
+          "text": "Clear, dry morning: no rain",
+          "x": 1,
+          "y": 1,
+          "label": "dry",
+          "given": true
+        },
+        {
+          "id": "d2",
+          "text": "Sunny, crisp afternoon: no rain",
+          "x": 2,
+          "y": 2.5,
+          "label": "dry",
+          "given": false
+        },
+        {
+          "id": "d3",
+          "text": "A few clouds, dry air: no rain",
+          "x": 3,
+          "y": 1.5,
+          "label": "dry",
+          "given": false
+        },
+        {
+          "id": "d4",
+          "text": "Blue sky, slightly damp air: no rain",
+          "x": 1.5,
+          "y": 3.5,
+          "label": "dry",
+          "given": false
+        }
+      ],
+      "tests": [
+        {
+          "id": "t1",
+          "text": "Dark clouds, damp air",
+          "x": 8.5,
+          "y": 8,
+          "truth": "rain"
+        },
+        {
+          "id": "t2",
+          "text": "Bright, dry day",
+          "x": 2,
+          "y": 2,
+          "truth": "dry"
+        },
+        {
+          "id": "t3",
+          "text": "Cloudy but dry day",
+          "x": 8.5,
+          "y": 3.5,
+          "truth": "dry"
+        },
+        {
+          "id": "t4",
+          "text": "Some cloud, quite damp",
+          "x": 6,
+          "y": 7,
+          "truth": "rain"
+        }
+      ],
+      "task": {
+        "goal": "label"
+      },
+      "hint": "Each training day ends by saying what really happened. Use that, not your own guess about the weather.",
+      "nudge": "Read the end of each training day again: it says whether it rained.",
+      "explanation": "Your labels were right. The model got 3 of the 4 test days right: **75%** accuracy. It called the **cloudy but dry day** rain, because every cloudy day it learned from was also rainy."
+    },
+    {
+      "id": "which-is-better",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "prompt": "Model A gets **45 of 60** test days right. Model B gets **38 of 50** right. Which is more accurate?",
+      "options": [
+        {
+          "id": "b",
+          "text": "Model B"
+        },
+        {
+          "id": "a",
+          "text": "Model A",
+          "nudge": "A got more right, but it was also tested on more days. Work out each one as a percentage."
+        },
+        {
+          "id": "same",
+          "text": "They're the same",
+          "nudge": "Close, but not the same. Work out each percentage carefully."
+        },
+        {
+          "id": "cant-tell",
+          "text": "You can't compare them",
+          "nudge": "You can, using accuracy: right ÷ tested × 100 for each."
+        }
+      ],
+      "correctOptionId": "b",
+      "hint": "Compare percentages, not the number right: they were tested on different numbers of days.",
+      "explanation": "A: 45 ÷ 60 = **75%**. B: 38 ÷ 50 = **76%**. B got fewer right, but out of fewer days, so it's slightly more accurate. Percentages let you compare fairly."
+    },
+    {
+      "id": "cloudy-dry",
+      "type": "train_model",
+      "difficulty": "challenge",
+      "prompt": "Now add training days so the model gets **all 4** test days right. Three new days are available.",
+      "model": {
+        "kind": "nearest",
+        "k": 1,
+        "x": {
+          "label": "Cloud",
+          "low": "Clear",
+          "high": "Cloudy"
+        },
+        "y": {
+          "label": "Air",
+          "low": "Dry",
+          "high": "Damp"
+        }
+      },
+      "labels": [
+        {
+          "id": "rain",
+          "text": "Rain"
+        },
+        {
+          "id": "dry",
+          "text": "No rain"
+        }
+      ],
+      "examples": [
+        {
+          "id": "w1",
+          "text": "Stormy, damp morning: it rained",
+          "x": 9,
+          "y": 9,
+          "label": "rain"
+        },
+        {
+          "id": "w2",
+          "text": "Grey, drizzly afternoon: it rained",
+          "x": 8,
+          "y": 8.5,
+          "label": "rain"
+        },
+        {
+          "id": "w3",
+          "text": "Thick cloud, wet air: it rained",
+          "x": 9.5,
+          "y": 7.5,
+          "label": "rain"
+        },
+        {
+          "id": "w4",
+          "text": "Heavy cloud, damp evening: it rained",
+          "x": 7.5,
+          "y": 9,
+          "label": "rain"
+        },
+        {
+          "id": "d1",
+          "text": "Clear, dry morning: no rain",
+          "x": 1,
+          "y": 1,
+          "label": "dry"
+        },
+        {
+          "id": "d2",
+          "text": "Sunny, crisp afternoon: no rain",
+          "x": 2,
+          "y": 2.5,
+          "label": "dry"
+        },
+        {
+          "id": "d3",
+          "text": "A few clouds, dry air: no rain",
+          "x": 3,
+          "y": 1.5,
+          "label": "dry"
+        },
+        {
+          "id": "d4",
+          "text": "Blue sky, slightly damp air: no rain",
+          "x": 1.5,
+          "y": 3.5,
+          "label": "dry"
+        },
+        {
+          "id": "x1",
+          "text": "Overcast, dry evening: no rain",
+          "x": 8.5,
+          "y": 2,
+          "label": "dry"
+        },
+        {
+          "id": "x2",
+          "text": "Sunny, dry noon: no rain",
+          "x": 1,
+          "y": 0.5,
+          "label": "dry"
+        },
+        {
+          "id": "x3",
+          "text": "Cloudy, damp night: no rain",
+          "x": 6.5,
+          "y": 8.5,
+          "label": "dry"
+        }
+      ],
+      "tests": [
+        {
+          "id": "t1",
+          "text": "Dark clouds, damp air",
+          "x": 8.5,
+          "y": 8,
+          "truth": "rain"
+        },
+        {
+          "id": "t2",
+          "text": "Bright, dry day",
+          "x": 2,
+          "y": 2,
+          "truth": "dry"
+        },
+        {
+          "id": "t3",
+          "text": "Cloudy but dry day",
+          "x": 8.5,
+          "y": 3.5,
+          "truth": "dry"
+        },
+        {
+          "id": "t4",
+          "text": "Some cloud, quite damp",
+          "x": 6,
+          "y": 7,
+          "truth": "rain"
+        }
+      ],
+      "task": {
+        "goal": "include",
+        "start": [
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "d1",
+          "d2",
+          "d3",
+          "d4"
+        ]
+      },
+      "hint": "Which test day did it get wrong? Look for a new training day that's like it.",
+      "nudge": "Which test day did it get wrong? Find a new training day like it, and check the other test days still pass.",
+      "explanation": "The model had never seen a **cloudy but dry** day, so it guessed rain. Adding \"Overcast, dry evening\" fills that gap. Another sunny day doesn't help: the model already knew those. And the cloudy, damp night (no rain) sits right next to a rainy test day, so adding it breaks that one.\n\nNotice you could watch the test days while you chose. That's like peeking at the test, so real teams then check the model on **fresh** test days nobody has looked at."
+    },
+    {
+      "id": "testing-recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- Keep **test examples** aside: the model never sees them while it learns.\n- **Accuracy** = right ÷ tested × 100. Compare percentages, not counts.\n- 100% on training examples but much less on new ones means **overfitting**: memorising instead of learning.\n- A fair test is unseen, realistic and mixed, and isn't changed until it looks good. After changing a model while watching a test, check it again on fresh examples.\n\nNext: when a model is unfair to some people."
+    }
+  ]
+}

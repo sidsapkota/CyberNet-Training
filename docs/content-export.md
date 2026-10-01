@@ -929,3 +929,68 @@ What counts as AI, how it learns from examples, and where it goes wrong.
 #### Module quiz (6 questions)
 
 Not exported, so the answers stay secret.
+
+### Module 2: How Machines Learn (Pro)
+
+Training data, fair tests, and how bias sneaks in.
+
+#### Training Data
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/training-data`
+
+**Key facts**
+
+- *Words that vote:* When a new message arrives, each word in it **votes**. A word gets **one vote for each training message** it appeared in, for that message's label.
+- *One word, three votes:* In those examples, **"free" only ever appeared in spam**, so to the model, "free" means spam.
+- *Good data, bad data:* **Wrong labels:** a spam message labelled "not spam" teaches the model the wrong lesson. **Copies:** a thousand copies of one example add nothing new, and make that one example count far too much.
+- *Recap:* A model learns only from its **training data**, so it repeats that data's patterns, including its gaps. Fix it with **better** data (checked, varied, realistic), not just more of it.
+
+**Best interactive cards**
+
+- Train a model: Label each message as **spam** or **not spam**. Then press Check to train the model and see what it makes of two new messages.
+- Train a model: Try it. Choose which examples to train on, so the model gets **both** test messages right.
+- Train a model: Someone made a labelling mistake in this fruit data. Find it, and choose the examples to train on so the model gets **both** test fruits right. (This model picks the **nearest** example.)
+
+#### Testing a Model
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/testing-a-model`
+
+**Key facts**
+
+- *Keep some examples aside:* **Training examples** are for learning. **Test examples** are kept aside, and the model never sees them while it learns.
+- *Memorising isn't learning:* A model can learn its training examples **too** well: every detail, instead of the general pattern. This is called **overfitting**.
+- *Recap:* Keep **test examples** aside: the model never sees them while it learns. **Accuracy** = right ÷ tested × 100.
+
+**Best interactive cards**
+
+- Sort into groups: Is each one a **fair** test of a model, or an **unfair** one?
+- Train a model: A weather model guesses whether it will rain from the clouds and the air. Each training day says what really happened: label them, then see how the model does on **4 test days** it has never seen.
+- Train a model: Now add training days so the model gets **all 4** test days right. Three new days are available.
+
+**Surprising facts**
+
+- **Accuracy** is that as a percentage: right ÷ tested × 100.
+- 100% on training examples but much less on new ones means **overfitting**: memorising instead of learning.
+
+#### Bias In, Bias Out
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/bias-in-bias-out`
+
+**Key facts**
+
+- *Bias in, bias out:* This is called **bias**.
+- *Finding and fixing bias:* **Ask who it might work worse for**, before and after it's built. **Test it with lots of different people** and situations, not just one group.
+- *Recap:* **Bias**: a model works better for some people than others, usually because of gaps in its training data.
+
+**Best interactive cards**
+
+- Train a model: This checker learned only from formal messages, so it calls **"That game was sick!"** mean. Choose the examples to train on, so it gets **all 3** test messages right. (It uses word votes, like the spam model.)
+- Choose what happens: Your club wants to sort new sign-ups with a model.
+- Choose what happens: A school is choosing a voice assistant to help in class.
+
+#### Module quiz (8 questions)
+
+Not exported, so the answers stay secret.
