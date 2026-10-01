@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Mascot } from "@/components/mascot/Mascot";
 import { MASCOT_EXPRESSIONS, type MascotExpression } from "@/components/mascot/poses";
+import type { MascotReaction } from "@/components/mascot/reactions";
 import { Button } from "@/components/ui/Button";
 
 const SIZES = [48, 96, 200] as const;
@@ -19,6 +20,12 @@ const PANELS = [
 export function MascotPlayground() {
   const [idle, setIdle] = useState(true);
   const [live, setLive] = useState<MascotExpression>("happy");
+  // Each press remounts the mascot with the reaction, so it plays again.
+  const [reaction, setReaction] = useState<{ name: MascotReaction; n: number } | null>(null);
+  const playReaction = (name: MascotReaction, expression: MascotExpression) => {
+    setLive(expression);
+    setReaction((r) => ({ name, n: (r?.n ?? 0) + 1 }));
+  };
 
   const next = () => setLive(MASCOT_EXPRESSIONS[(MASCOT_EXPRESSIONS.indexOf(live) + 1) % MASCOT_EXPRESSIONS.length]!);
 
@@ -34,9 +41,15 @@ export function MascotPlayground() {
           Next expression (bounce): {live}
         </Button>
       </div>
+      <div className="mt-3 flex flex-wrap gap-2" aria-label="Reactions">
+        <Button variant="secondary" onClick={() => playReaction("bob", "happy")}>Bob (appear)</Button>
+        <Button variant="secondary" onClick={() => playReaction("hop", "happy")}>Hop (right)</Button>
+        <Button variant="secondary" onClick={() => playReaction("tilt", "confused")}>Tilt (wrong)</Button>
+        <Button variant="secondary" onClick={() => playReaction("scan", "celebrating")}>Security scan</Button>
+      </div>
 
       <section className="mt-6 flex items-end gap-6 rounded-card border border-line bg-surface p-6">
-        <Mascot expression={live} size={220} idle={idle} label />
+        <Mascot key={reaction?.n ?? 0} expression={live} size={220} idle={idle} reaction={reaction?.name} label />
         <p className="font-mono text-small text-ink-muted">{live}</p>
       </section>
 

@@ -41,6 +41,10 @@ export interface MascotSlots {
   antennaLight?: (children: ReactNode) => ReactNode;
   /** Wraps an arm, 0 = left, 1 = right (for the wave). */
   arm?: (index: 0 | 1, children: ReactNode) => ReactNode;
+  /** Wraps the whole head, in viewBox units (for the tilt). */
+  head?: (children: ReactNode) => ReactNode;
+  /** Drawn on top of the face, in the head's 64-unit coordinates (for the security scan). */
+  headOverlay?: (pose: MascotPose) => ReactNode;
 }
 
 interface PartProps {
@@ -196,7 +200,7 @@ export function Antenna({ pose, palette, glow, slot }: PartProps & { slot: (c: R
 export function Head(props: PartProps & { slots: MascotSlots }) {
   const { pose, palette, glow, slots } = props;
   const face = tone(props);
-  return (
+  return (slots.head ?? identity)(
     <g transform={`translate(${HEAD.x} ${HEAD.y}) rotate(${pose.tilt}) scale(${HEAD.scale}) translate(-32 -32)`}>
       <Antenna {...props} slot={slots.antennaLight ?? identity} />
       <path d={HEAD_SHIELD_PATH} fill={palette.body} stroke={palette.line} strokeWidth={2.6} strokeLinejoin="round" />
@@ -207,7 +211,8 @@ export function Head(props: PartProps & { slots: MascotSlots }) {
       ))}
       {(slots.eyes ?? identity)(<Eyes pose={pose} palette={palette} glow={glow} />)}
       <path d={MOUTH_PATH} fill="none" stroke={palette.line} strokeWidth={1.3} strokeLinecap="round" />
-    </g>
+      {slots.headOverlay?.(pose)}
+    </g>,
   );
 }
 

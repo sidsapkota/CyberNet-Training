@@ -31,7 +31,7 @@ interface FeedbackFooterProps {
   collapseExplanation?: boolean;
   primary: FooterAction;
   secondary?: FooterAction;
-  /** A small mascot beside the feedback (lessons use it for wrong answers only). */
+  /** A small mascot beside the feedback (lessons, every answer), with a one-shot reaction. */
   mascot?: MascotExpression;
 }
 
@@ -117,7 +117,10 @@ export function FeedbackFooter({
                   <p className={`text-lead font-semibold ${style.text}`}>{heading}</p>
                   {subheading && <Markdown className="text-small text-ink">{subheading}</Markdown>}
                 </div>
-                {mascot && <Mascot expression={mascot} size={60} className="-my-3" />}
+                {mascot && (
+                  // Blinks while shown; hops on a right answer, tilts its head (with a gentle bob) on a wrong one.
+                  <Mascot expression={mascot} size={60} className="-my-3" idle reaction={tone === "correct" ? "hop" : tone === "incorrect" ? "tilt" : "bob"} />
+                )}
                 {xpAwarded > 0 && (
                   <motion.span
                     initial={{ opacity: 0, y: 6 }}

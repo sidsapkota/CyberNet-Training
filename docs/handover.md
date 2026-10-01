@@ -24,11 +24,11 @@ Last updated: 1 October 2026.
 
 ## 2. Open branches
 
-- `mascot-motion`: mascot reactions and the "security scan" (below). **Don't merge until the owner has checked it** (they'll look on 2 Oct). Preview URLs follow `https://cyber-net-training-git-<branch>-sidsapkotas-projects.vercel.app`.
+- `mascot-motion`: mascot reactions and the "security scan", built and pushed (preview: https://cyber-net-training-git-mascot-motion-sidsapkotas-projects.vercel.app/dev/mascot). **Don't merge until the owner has checked it** (they'll look on 2 Oct). `npm run e2e:mascot-motion` passes 14/14; the filmstrip is `.e2e-shots/mascot/scan-filmstrip.png` after a run. Preview URLs follow `https://cyber-net-training-git-<branch>-sidsapkotas-projects.vercel.app`.
 
 ## 3. In progress
 
-**Mascot animation** on `mascot-motion` (owner's decisions, 1 Oct): motion only on the feedback mascot (never in cards); one bob each time it appears (no idle loop); hop on right, head tilt on wrong, each under 600 ms and never blocking; the wave under 600 ms; a "security scan" (shield glows, scan line, eyes light, check pops; under 1.2 s) at lesson complete, /pro/welcome and the welcome moment. Reduced motion: static expressions.
+**Mascot animation** on `mascot-motion`, built, waiting for the owner's check on 2 Oct (owner's decisions, 1 Oct): motion only on the feedback mascot (never in cards); one bob each time it appears (no idle loop); hop on right, head tilt on wrong, each under 600 ms and never blocking; the wave under 600 ms; a "security scan" (shield glows, scan line, eyes light, check pops; under 1.2 s) at lesson complete, /pro/welcome and the welcome moment. Reduced motion: static expressions.
 
 Otherwise the queue stays paused.
 

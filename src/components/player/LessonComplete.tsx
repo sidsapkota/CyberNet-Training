@@ -61,7 +61,7 @@ export function LessonComplete({
 
   return (
     <div className="flex min-h-[60dvh] flex-col items-center justify-center text-center">
-      <Mascot expression="celebrating" size={170} idle />
+      <Mascot expression="celebrating" size={170} idle reaction="scan" />
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
