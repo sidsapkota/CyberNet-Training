@@ -14,7 +14,20 @@ import { usePro } from "@/lib/pro/ProProvider";
  * subscription manage it instead. Otherwise it opens Stripe's hosted Checkout: card details go to
  * Stripe, never to this site.
  */
-export function PlanButton({ plan, label, primary, big = false }: { plan: Plan; label: string; primary: boolean; big?: boolean }) {
+export function PlanButton({
+  plan,
+  label,
+  primary,
+  big = false,
+  onSelect,
+}: {
+  plan: Plan;
+  label: string;
+  primary: boolean;
+  big?: boolean;
+  /** Called when the learner picks this plan (before Checkout opens). */
+  onSelect?: () => void;
+}) {
   const { auth, available } = useAuth();
   const { pro } = usePro();
   const [busy, setBusy] = useState(false);
@@ -24,8 +37,8 @@ export function PlanButton({ plan, label, primary, big = false }: { plan: Plan; 
 
   if (!available || auth.status === "guest") {
     return (
-      <ButtonLink href="/login?next=/pro" variant={primary ? "primary" : "secondary"} className={size}>
-        <SignInIcon className="size-5" /> Sign in to start your free trial
+      <ButtonLink href="/login?next=/pro" variant={primary ? "primary" : "secondary"} className={size} onClick={onSelect}>
+        <SignInIcon className="size-5" /> Start your free trial
       </ButtonLink>
     );
   }
@@ -66,6 +79,7 @@ export function PlanButton({ plan, label, primary, big = false }: { plan: Plan; 
         onClick={async () => {
           setBusy(true);
           setError(null);
+          onSelect?.();
           try {
             const result = await startCheckoutAction(plan);
             if ("url" in result) {

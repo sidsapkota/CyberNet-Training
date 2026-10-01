@@ -29,6 +29,10 @@ export type AnalyticsEvent =
   // After "Not now" on a Pro screen: the one-tap answer to "What's stopping you?" and the screen
   // (`declinedEventData` in src/lib/pro/declined.ts), without the visitor's source.
   | "pro_declined"
+  // The plans section: opened (with the screen it came from) and a plan picked (free or pro, and
+  // monthly or annual). Their data comes from src/lib/pro/plans.ts, without the visitor's source.
+  | "plans_viewed"
+  | "plan_selected"
   | "teaser_played"
   | "checkout_started"
   | "trial_started"
@@ -112,6 +116,23 @@ export function currentSource(): string | null {
   }
 }
 
+type VaWindow = { va?: (...params: unknown[]) => void; vaq?: unknown[][] };
+
+/**
+ * Makes sure events sent before Vercel's script starts are queued, not lost. `track()` only calls
+ * `window.va`, which `<Analytics>` creates in its effect, and that runs after the page's own effects:
+ * so `lesson_start`, `paywall_viewed` and the like, sent as a page first loads, were silently
+ * dropped. This is the same queue Vercel's own `initQueue` makes; its script reads `vaq` on load.
+ */
+export function ensureAnalyticsQueue(): void {
+  if (typeof window === "undefined") return;
+  const w = window as unknown as VaWindow;
+  if (w.va) return;
+  w.va = (...params: unknown[]) => {
+    (w.vaq ??= []).push(params);
+  };
+}
+
 /**
  * `lesson_quit`'s properties: the lesson id and the card number (1–99), nothing else (Vercel keeps
  * 2 properties an event on our plan, so this one leaves out `source`). Pure.
@@ -126,6 +147,7 @@ export function quitEventData(lessonId: string, cardNumber: number): Record<stri
 /** Someone left a lesson unfinished on this card. Never throws. */
 export function trackLessonQuit(lessonId: string, cardNumber: number): void {
   try {
+    ensureAnalyticsQueue();
     track("lesson_quit", quitEventData(lessonId, cardNumber));
   } catch {
     // analytics must never break the app
@@ -134,8 +156,14 @@ export function trackLessonQuit(lessonId: string, cardNumber: number): void {
 
 /** "What's stopping you?" was answered (or skipped) on this Pro screen. Never throws. */
 export function trackProDeclined(data: Record<string, string>): void {
+  trackWith("pro_declined", data);
+}
+
+/** An event whose data was already checked by its own pure function. Never throws. */
+export function trackWith(name: "pro_declined" | "plans_viewed" | "plan_selected", data: Record<string, string>): void {
   try {
-    track("pro_declined", data);
+    ensureAnalyticsQueue();
+    track(name, data);
   } catch {
     // analytics must never break the app
   }
@@ -144,6 +172,7 @@ export function trackProDeclined(data: Record<string, string>): void {
 /** Sends a custom event with at most `lesson` (or `course`) and `source`. Never throws. */
 export function trackEvent(name: AnalyticsEvent, target?: EventTarget): void {
   try {
+    ensureAnalyticsQueue();
     track(name, eventData(target, currentSource()));
   } catch {
     // analytics must never break the app

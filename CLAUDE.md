@@ -44,6 +44,7 @@ npm run e2e:player-back   # Back/forward (read-only), Listen and lesson_quit in 
 npm run e2e:pro-declined  # "What's stopping you?" after Not now on /pro (360px, event data, once a week)
 npm run e2e:mistake-review # Mistake review: a wrong answer saved, the free count + pitch, the Pro review (360px)
 npm run e2e:latency       # time a lesson save, a lesson fetch and the dashboard (E2E_BASE_URL=production)
+npm run e2e:plans         # plans at 360px (guest, free, Pro), plan events, Pro identity, no prompts for Pro
 ```
 
 Tap targets are at least **44px** everywhere (inline text links and glossary terms excepted); the
@@ -901,10 +902,10 @@ Sandbox setup: `docs/stripe-checklist.md`. `PRO_LAUNCH_AT` in Production marks t
   `STRIPE_PRICE_MONTHLY`, `STRIPE_PRICE_ANNUAL`, optional `PRO_LAUNCH_AT`; server-only. **Live keys
   are refused everywhere except the production deployment** (`VERCEL_ENV=production`). Amounts
   live in Stripe, never in code (`/pro` reads them and works out the annual saving).
-- **UI:** every Pro screen is `ProPitch` (below); `/pro` (the pitch on top, then what's included,
-  prices and FAQ below the fold; prices from Stripe, `/api/pro/prices` for in-app screens);
-  `/pro/welcome`; the Pro panel on `/account` (plan in one line from
-  `proLine()`, "Manage subscription" → the portal). Deleting an account deletes the Stripe customer
+- **UI:** every in-app Pro screen is `ProPitch` (below); `/pro` is the plans section (see
+  [Plans and Pro identity](#plans-and-pro-identity); prices from Stripe, `/api/pro/prices` for
+  in-app screens); `/pro/welcome`; "Your plan" on `/account` (one line from `proLine()`) and its page
+  `/account/plan` ("Manage subscription" → the portal). Deleting an account deletes the Stripe customer
   first, which cancels any subscription.
 - **Tables** (`20260930180000_pro_subscriptions.sql`): `stripe_customers`, `subscriptions`,
   `stripe_events`, `pro_grants`. Learners read only their own subscription and grant; nobody but
@@ -921,7 +922,7 @@ Honest conversion: no timers, no fake urgency, no guilt; "Not now" is always the
 parent or guardian before subscribing" is shown to everyone.
 
 - **`ProPitch`** (`src/components/pro/ProPitch.tsx`) is every Pro screen: the daily-limit screen,
-  "What's next", the Pro sheet and the top of `/pro`. **One screen, no scrolling on a 360×640
+  "What's next", the Pro sheet and the `/review` paywall. **One screen, no scrolling on a 360×640
   phone, the button in view:** the mascot (`happy`), one headline, 3 benefits with icons (one line
   each: unlimited lessons, "Review your mistakes", certificates; the extra streak freeze is listed on
   `/pro` only), the price with **annual preselected** ("A$59.99 a year, just A$5 a month"; monthly is a
@@ -929,7 +930,8 @@ parent or guardian before subscribing" is shown to everyone.
   `checkout_started`), "Not now", and the parent line. A gentle staggered entrance (none under
   reduced motion). It sends `paywall_viewed`.
 - **"What's stopping you?"** (`DeclinedQuestion`, rules in `src/lib/pro/declined.ts`): "Not now"
-  on the paywall, the daily-limit screen or `/pro` (`declineSource`) first swaps the pitch for one
+  on the paywall or the daily-limit screen (`declineSource`; `/pro` is the plans section and has no
+  "Not now", so `pro_page` no longer occurs) first swaps the pitch for one
   optional question with four one-tap answers and Skip, then carries on where "Not now" was going.
   It sends `pro_declined` with only `reason` and `source` (the screen: `paywall`, `limit`,
   `pro_page`; not the visitor's source). At most once a week per device (localStorage; never if
@@ -942,6 +944,31 @@ parent or guardian before subscribing" is shown to everyone.
   (`StartFreeFirst`: one button into the course's first lesson, "Not now", and a quiet link to
   `/pro`) instead of "What's next", and no `paywall_viewed` is sent. Learners with no progress in a
   course see **"Start here"** on its first lesson's bubble.
+- **Plans and Pro identity**<a id="plans-and-pro-identity"></a> (`PlansCards`, `YourPlan`,
+  `ProCelebration`; pure rules in `src/lib/pro/plans.ts`, tested). **Never list a benefit that isn't
+  live** (`PRO_BENEFITS`; a test bans "new course", since free accounts get every course).
+  - **Plans** (`/pro`, `/account/plan` for free learners; linked as "Free plan · See plans" at the
+    top of the dashboard and "See plans" on `/account`): Free (A$0, three lines; "Start free" for
+    guests, "Your plan" disabled when signed in) and Pro (Stripe's prices, annual preselected with a
+    Yearly/Monthly switch, "Best value" only when the annual plan really saves, the 4 benefits,
+    "Start 7-day free trial", the parent line). Pro first in the page and on phones (its button in
+    view at 360×640), on the right from `sm`. The Pro card is raised, with a cyan border and
+    `shadow-pro-card`; a gentle staggered entrance (none under reduced motion). Below: the trial
+    terms and a 3-question FAQ (cancel, after the trial, ask a parent).
+  - **Events:** `plans_viewed` (`source`: `pro_page`, `account` or `dashboard`, from `?from=`) and
+    `plan_selected` (`plan`: free or pro; `interval`: monthly or annual for Pro), data only from
+    `plansViewedData` / `planSelectedData`.
+  - **Pro identity:** the member's node wears the Pro frame (an outer cyan ring and glow) in the
+    header and tab bar, with a lit `ProBadge` beside their name on desktop and at the top of the
+    dashboard (opens Your plan). `/pro` says "You're on Pro" and shows "See your plan", never a
+    trial button. **No upgrade prompt for Pro members anywhere**, and none while their status is
+    still loading (`e2e:plans` checks the main pages for upgrade wording).
+  - **Your plan** (`/account/plan`): the plan, renewal or trial end (`proLine`), what's included
+    (ticks) and "Manage subscription".
+  - **Welcome moment** (`ProCelebration`, in the main layout): the first time a new subscriber
+    (started in the last 14 days; not the early-user grant) opens the app on a device: the
+    mascot celebrating, one confetti burst, the benefits, "Let's go". Remembered per device
+    (`cybernet.proCelebrated.<userId>`); `/pro/welcome` marks it too.
 - **Unlock celebration:** `/pro/welcome` (the mascot celebrating, one confetti burst), then "Keep
   learning" returns to the course the learner was upgrading from (`?unlocked=1`), where the Pro
   nodes light up one by one (120ms apart; the final state at once under reduced motion).
@@ -1136,8 +1163,9 @@ text pairing meets WCAG AA (≥ 4.5:1), and UI outlines meet 3:1.
 - **Fills vs strokes:** use `accent` for fills and `accent-ink` for text, strokes and rings. Bright
   cyan on white is only 2:1.
 - **Correct is mint (`success`), not cyan,** so "right" and "interactive" are never confused.
-- **Glow (`shadow-glow`)** is only for lit cyan nodes and the primary button. **One exception:** the
-  Pro player card's frame (`drop-shadow-pro`).
+- **Glow (`shadow-glow`)** is only for lit cyan nodes and the primary button. **One exception:** Pro
+  identity: the Pro player card's frame (`drop-shadow-pro`), a member's node ring and lit
+  `ProBadge`, and the Pro plan card (`shadow-pro-card`). Nowhere else.
 - **Purple belongs to the Quantum tier badge alone** (`--color-quantum`, `drop-shadow-quantum`;
   7.3:1 on the badge's navy tile, which is navy in both themes). Never use it anywhere else.
 - **Never raw hex in components.** If you need a new colour, add a token (both themes) and check
@@ -1324,12 +1352,17 @@ from ~2.8s to ~0.4s (`npm run e2e:latency`).
   `beforeSend` runs `redactUrl`: query strings are dropped except `utm_*`, and `/dev` isn't
   tracked, so a sign-in token or email can never be sent.
 - **Custom events** (`trackEvent` in `src/lib/analytics.ts`): `landing_cta`, `lesson_start`,
-  `lesson_complete`, `lesson_quit` (lesson id and card number only, without `source`: `quitEventData`), `pro_declined` (reason and screen only: `declinedEventData`), `quiz_pass`, the sign-up gate's `signup_prompt_viewed` and `signed_up`, and the
+  `lesson_complete`, `lesson_quit` (lesson id and card number only, without `source`: `quitEventData`), `pro_declined` (reason and screen only: `declinedEventData`), `plans_viewed` and `plan_selected` (see Plans and Pro identity), `quiz_pass`, the sign-up gate's `signup_prompt_viewed` and `signed_up`, and the
   Pro funnel: `paywall_viewed`, `limit_reached` (a free account hit today's limit, with the lesson),
   `teaser_played`, `checkout_started`, `trial_started`, `subscribed`, `certificate_issued`. Each
   has at most two properties: `lesson` (or `course`) and `source`; `eventData` only lets a content
   id through, so nothing personal can be sent. **Only Pro collects custom events** (2 properties; Web Analytics Plus allows 8 and
   shows UTM parameters). On Hobby, page views still work, and the event calls are harmless.
+- **Events sent as a page first loads are queued** (`ensureAnalyticsQueue`): Vercel's `track()`
+  only calls `window.va`, which `<Analytics>` creates after the page's own effects, so until
+  1 Oct 2026 `lesson_start`, `paywall_viewed`, `limit_reached` and `signup_prompt_viewed` were lost
+  on a first load (not after client-side navigation). Every `track*` helper creates the same queue
+  first.
 - **Where visitors came from:** the first `utm_source` or `/from/<platform>` path seen in a tab is
   kept in sessionStorage (never a cookie) and attached to that tab's events as `source`.
 - **Tagging video links** (works on every plan, because it's a page path):

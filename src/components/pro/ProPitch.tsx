@@ -27,7 +27,7 @@ const BENEFITS = [
 ] as const;
 
 /** Prices for the in-app screens (the /pro page passes its own, read on the server). */
-function usePitchPrices(given: PitchPrices | null | undefined): PitchPrices | null | undefined {
+export function usePitchPrices(given: PitchPrices | null | undefined): PitchPrices | null | undefined {
   const [fetched, setFetched] = useState<PitchPrices | null | undefined>(undefined);
   useEffect(() => {
     if (given !== undefined) return;

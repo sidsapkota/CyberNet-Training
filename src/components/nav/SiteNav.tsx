@@ -11,7 +11,10 @@ import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { StreakPill } from "@/components/streak/StreakPill";
 import { XpPill } from "@/components/XpPill";
 import { useAuth } from "@/lib/auth/AuthProvider";
-import { FALLBACK_DISPLAY_NAME, initialOf } from "@/lib/auth/profile";
+import { FALLBACK_DISPLAY_NAME } from "@/lib/auth/profile";
+import { UserNode } from "@/components/account/UserNode";
+import { ProBadge } from "@/components/pro/ProBadge";
+import { usePro } from "@/lib/pro/ProProvider";
 import { useLeaguesOpen } from "@/lib/leagues/useLeaguesOpen";
 
 interface NavItem {
@@ -86,21 +89,10 @@ export function SiteHeader() {
   );
 }
 
-/** The learner as a node: their initial, in the network style. */
-function UserNode({ name, className = "" }: { name: string | null; className?: string }) {
-  return (
-    <span
-      aria-hidden="true"
-      className={`grid shrink-0 place-items-center rounded-node border-2 border-accent-ink bg-accent-soft font-mono font-semibold text-accent-ink ${className}`}
-    >
-      {initialOf(name)}
-    </span>
-  );
-}
-
 /** Desktop header (from `sm`): "Sign in" for guests, the learner's node and name when signed in. */
 function HeaderAccount() {
   const { auth, available } = useAuth();
+  const { hasPro } = usePro();
   if (!available) return null;
   if (auth.status === "loading") return <span className="hidden w-24 sm:block" aria-hidden="true" />;
   if (auth.status === "guest") {
@@ -117,11 +109,12 @@ function HeaderAccount() {
   return (
     <Link
       href="/account"
-      aria-label={`Account: ${name}`}
+      aria-label={`Account: ${name}${hasPro ? ", Pro" : ""}`}
       className="hidden items-center gap-2 rounded-control px-1.5 py-1 text-small font-semibold text-ink transition-colors hover:bg-surface-raised sm:flex"
     >
-      <UserNode name={auth.displayName} className="size-8 text-small" />
+      <UserNode name={auth.displayName} pro={hasPro} className="size-8 text-small" />
       <span className="hidden max-w-32 truncate md:inline">{name}</span>
+      {hasPro && <ProBadge size="sm" lit className="hidden md:inline-flex" />}
     </Link>
   );
 }
@@ -169,6 +162,7 @@ export function BottomNav() {
 /** Last phone tab: "Sign in" for guests, "Account" with the learner's node when signed in. */
 function AccountTab({ pathname }: { pathname: string }) {
   const { auth, available } = useAuth();
+  const { hasPro } = usePro();
   if (!available) return null;
   const signedIn = auth.status === "signed-in";
   const href = signedIn ? "/account" : "/login";
@@ -189,7 +183,7 @@ function AccountTab({ pathname }: { pathname: string }) {
             className="absolute inset-x-8 top-0 h-0.5 rounded-sm bg-accent"
           />
         )}
-        {signedIn ? <UserNode name={auth.displayName} className="size-6 text-[0.7rem]" /> : <SignInIcon className="size-6" />}
+        {signedIn ? <UserNode name={auth.displayName} pro={hasPro} className="size-6 text-[0.7rem]" /> : <SignInIcon className="size-6" />}
         {signedIn ? "Account" : "Sign in"}
       </Link>
     </li>

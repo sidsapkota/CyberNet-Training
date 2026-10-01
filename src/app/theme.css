@@ -52,6 +52,8 @@
   /* The Pro card frame (a Brand exception): its glow and travelling light. */
   --drop-shadow-pro: 0 0 6px rgb(0 194 255 / 0.55);
   --color-pro-light: light-dark(#006e9e, #e6f9ff);
+  /* Pro identity (the same Brand exception): the Pro plan card's lift and soft cyan glow. */
+  --shadow-pro-card: 0 14px 30px -12px rgb(4 25 55 / 0.45), 0 0 14px rgb(0 194 255 / 0.3);
 
   /* "Continue with Google" button: Google's own light and dark themes, exactly as its sign-in
      branding guidelines specify (a third-party brand, so not our palette). Hover is Material's
