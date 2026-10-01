@@ -28,6 +28,9 @@ Last updated: 1 October 2026.
 
 ## 2. Open branches
 
+- `hero-prototypes` (**don't merge into lessons yet: owner reviews `/dev/hero` first**): 3D phone (React Three Fiber), packet race (Matter.js), train the model (gestures), with juice (Howler sprite of synthesised sounds, haptics), fallbacks and `npm run e2e:hero-perf`. Results and the recommendation (3D behind a "See it in 3D" button) are in `docs/plans/juice-and-heroes.md`.
+- `ldyd-pilot` now also has the **train_model redesign** (real pictures, problem first, one change, live flip in lessons, "?" until Check in quizzes; all 11 AI cards fit 360×560; beginner audit done and fixed) and `docs/plans/zero-confusion-audit.md` (all courses vs the zero-confusion rule and playbook: worst 25 cards, 26 lessons needing a real-life opener, "Try this" endings for every lesson). Before/after screenshots: `docs/plans/train-model/`. Follow-up: the train_model how-to-play demo still shows abstract dots.
+
 - **Usernames live (2 Oct):** one public username replaced the display name and league handle (server-checked word filters with disguise handling, suggestion + Shuffle at sign-up, first change free then every 30 days). Both migrations applied; the scan gave 6 accounts generated names and replaced 1 failing name (counts only). `check:rls` 92/92; production checks passed (usernames 11/11, mascot, plans, mistake review, guest gate, feedback). `display_name` and `league_players.handle*` are unused: drop them in a later migration.
 
 - **Live 2 Oct:** the wording pass, the player layout (Listen in the header, Hint in the footer, teardown and simulator layout) and fit-560 (every card fits 360×560: tighter chrome on phones, Skip in the bonus row, one-line instructions, smaller minimum scenes). Production checks passed on cybernettraining.com each time; the earlier rollback is resolved (the deploy was promoted and auto-promotion works again).
