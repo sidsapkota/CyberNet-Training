@@ -43,6 +43,7 @@ npm run e2e:design-qa     # every card type and main page at 360px/desktop, ligh
 npm run e2e:player-back   # Back/forward (read-only), Listen and lesson_quit in the lesson player
 npm run e2e:pro-declined  # "What's stopping you?" after Not now on /pro (360px, event data, once a week)
 npm run e2e:mistake-review # Mistake review: a wrong answer saved, the free count + pitch, the Pro review (360px)
+npm run e2e:latency       # time a lesson save, a lesson fetch and the dashboard (E2E_BASE_URL=production)
 ```
 
 Tap targets are at least **44px** everywhere (inline text links and glossary terms excepted); the
@@ -1292,6 +1293,12 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   Start learning.
 
 ## Launch: domain, SEO, analytics, legal, feedback
+
+### Hosting region
+Vercel functions run in **`syd1`** (`"regions"` in `vercel.json`), next to Supabase
+(`ap-southeast-2`, Sydney). Every server action and API route talks to the database, so keep them
+together: `x-vercel-id` reads `syd1::syd1::…` (edge::function). Moving from `iad1` cut a lesson save
+from ~2.8s to ~0.4s (`npm run e2e:latency`).
 
 ### Domain and SEO
 - **`src/lib/site.ts`**: `siteUrl()` (production origin, `NEXT_PUBLIC_SITE_URL` or

@@ -15,16 +15,19 @@ Last updated: 1 October 2026.
 - "Start here" lesson (`strong-passwords`): a one-drag win first and a one-tap card second; no how-to-play panel on a newcomer's very first card in any lesson.
 - AI lesson 4.3 age rules checked 1 October 2026 (ChatGPT, Copilot, Claude, Gemini), recorded in REVIEW.md.
 - Mistake review (Pro, merged 1 Oct): wrong lesson answers and wrong quiz answers are saved for every signed-in learner (server re-grades, content ids only); free learners see the count on the dashboard with a Pro button; Pro reviews at /review with hints and practice XP. "Review your mistakes" replaced the streak freeze in `ProPitch`. Confirmed on production with `E2E_BASE_URL=https://cybernettraining.com npm run e2e:mistake-review` (14/14), including the dashboard sideways-scroll fix.
+- Functions run in **syd1** next to Supabase (moved from iad1 on 1 Oct). Production medians (`npm run e2e:latency`, 7 samples): lesson save 2,757 → 392 ms, lesson fetch 842 → 196 ms, dashboard drawn 1,434 → 397 ms.
 - Daily goals and streaks; leagues (hidden until 20 learners earn XP in one week); certificates.
 - Help lines: Kids Helpline and Lifeline (verified), eSafety, ACCCE, Scamwatch, IDCARE, ReportCyber, 000.
 
 ## 2. Open branches
 
-- `review-finish-wait`: the review's finish screen keeps "Back to dashboard" disabled until the last answers have saved (on production, server actions queue and take a few seconds, so leaving at once could drop the last cleared card), plus the e2e script waiting for saves. Waiting for the owner to say merge. Preview URLs follow `https://cyber-net-training-git-<branch>-sidsapkotas-projects.vercel.app`.
+None. (`review-finish-wait` merged 1 Oct.) Preview URLs follow `https://cyber-net-training-git-<branch>-sidsapkotas-projects.vercel.app`.
 
 ## 3. In progress
 
-Nothing half-done. **The queue is paused** (owner, 1 Oct): don't start anything new until the owner says so.
+**Plans and Pro identity** (owner, 1 Oct): new branch `plans-pro-identity`. Plan and 360px mockups (Free/Pro cards, Pro dashboard) go to the owner **before** building. Spec: a Free/Pro plans section (on /pro, from the account menu and dashboard), Pro badge and a subtle premium accent (no purple), a "Your plan" page, no upgrade prompts for Pro members, a first-open celebration after upgrading, and `plans_viewed` / `plan_selected` events.
+
+Otherwise the queue stays paused.
 
 ## 4. Queue (paused)
 
@@ -49,7 +52,7 @@ Nothing half-done. **The queue is paused** (owner, 1 Oct): don't start anything 
 - **Live Stripe keys are in Vercel Production only.** Local and previews use the sandbox; never test against live mode. Stripe's own trial-reminder email is off (ours replaces it).
 - **Windows editing:** PowerShell `Get-Content`/`Set-Content` can mangle UTF-8 (`→` becomes `â†’`). Edit files with the editor tools, Python (`encoding="utf8"`) or Node. In bash heredocs, backslashes in Python strings break (`\U…`).
 - **Absolute positioning escapes scrollers that aren't positioned:** an `sr-only` span inside the dashboard's course carousel made the whole page scroll 623px sideways at 360px (fixed with `relative` on the carousel). Element-rect checks miss it; the e2e scripts now bisect by hiding elements.
-- **Server actions run one at a time per page and are slow on production (cold starts):** a full page load cancels any still queued. E2E scripts must wait for the database write, not a fixed delay.
+- **Server actions run one at a time per page:** a full page load cancels any still queued. E2E scripts must wait for the database write, not a fixed delay. Keep functions in `syd1` (`vercel.json`); in iad1 each save took ~3 s.
 - **Dev server:** if pages show a Next.js "Jest worker" error, the dev server on port 3000 has gone stale; stop its process and run `npm run dev` again.
 - **Committing one course while others are mid-edit:** build a worktree at a short path (e.g. `C:\cnwt`; long paths fail), link `node_modules` with a junction, and remove that junction with `cmd /c rmdir`, never `Remove-Item -Recurse` (it would delete the real `node_modules`).
 - **Content:** never rename a published lesson or card id, and never reuse a removed id. Run `npm run export:content` after any content change (a test checks it). Multiple-choice option text is plain text (no backticks). Help information must be in core cards.
