@@ -134,7 +134,7 @@ export function MatchPairsCardView({
     <div>
       <CardPrompt>{card.prompt}</CardPrompt>
       <p className="mt-2 text-small text-ink-muted">
-        Tap an item on the left, then its match on the right. Tap both again to undo.
+        Tap a left item, then its match.
       </p>
 
       <div ref={containerRef} className="relative mt-6 grid grid-cols-2 gap-x-9 sm:gap-x-14">

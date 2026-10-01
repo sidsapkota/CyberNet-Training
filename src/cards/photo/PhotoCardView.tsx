@@ -12,14 +12,14 @@ export function PhotoCardView({ card }: { card: PhotoCard }) {
   return (
     <article>
       <h2 className="text-title font-semibold text-balance sm:text-headline">{card.title}</h2>
-      <figure className="mt-6 overflow-hidden rounded-card border border-line bg-surface">
+      <figure className="mt-4 overflow-hidden sm:mt-6 rounded-card border border-line bg-surface">
         <Image
           src={photo.src}
           alt={photo.alt}
           width={photo.width}
           height={photo.height}
           sizes="(min-width: 768px) 640px, 100vw"
-          className="mx-auto h-auto max-h-[60dvh] w-auto max-w-full object-contain"
+          className="mx-auto h-auto max-h-[min(60dvh,calc(100dvh-24rem))] w-auto max-w-full object-contain"
           priority
         />
         <figcaption className="border-t border-line px-4 py-3">

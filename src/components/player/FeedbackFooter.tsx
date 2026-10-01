@@ -121,7 +121,7 @@ export function FeedbackFooter({
       className={`sticky bottom-0 z-20 border-t-2 ${style.panel}`}
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
-      <div className="mx-auto max-w-lesson px-gutter py-4">
+      <div className="mx-auto max-w-lesson px-gutter py-3 sm:py-4">
         <AnimatePresence initial={false}>
           {hasFeedback && heading && (
             <motion.div

@@ -50,7 +50,7 @@ function DeviceMockup({ smooth, frame, label }: { smooth: number; frame: "phone"
     <figure className="flex flex-col items-center gap-2">
       <div className="rounded-card bg-screen p-2.5 sm:p-3">
         {frame === "phone" ? (
-          <div className="relative h-28 w-16 overflow-hidden rounded-[14px] border-2 border-scene-edge bg-scene-shell p-1.5 sm:h-36 sm:w-20">
+          <div className="relative h-28 w-16 overflow-hidden rounded-[14px] border-2 border-scene-edge bg-scene-shell p-1.5 sm:h-36 sm:w-20 [@media(max-height:600px)]:h-22">
             {feed}
           </div>
         ) : (
