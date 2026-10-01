@@ -15,7 +15,7 @@ import { useProgress } from "@/lib/progress/ProgressProvider";
 import { trackEvent, trackLessonQuit } from "@/lib/analytics";
 import { speechText } from "@/cards/speech";
 import { reactionExpression, reactionLine } from "@/lib/reactions";
-import { hintXpNote, visibleHint } from "@/lib/hints";
+import { hintCost, visibleHint } from "@/lib/hints";
 import { getNextLesson, hasAnyProgress, lessonFinishState } from "@/lib/progress/state";
 import { coachAllowedOn } from "@/lib/coach";
 import { emptySnapshot, isCardCompleted } from "@/lib/progress/types";
@@ -28,7 +28,6 @@ import { type ProgressNode } from "@/components/network/NodeProgress";
 import { CardReview, type ReviewState } from "./CardReview";
 import { CardStage, useFeedbackAnimation } from "./CardStage";
 import { FeedbackFooter, type FeedbackTone, type FooterAction } from "./FeedbackFooter";
-import { HintReveal } from "./HintReveal";
 import { CoachPanel } from "./coach/CoachPanel";
 import { useCoach } from "./coach/useCoach";
 import { LessonComplete } from "./LessonComplete";
@@ -368,6 +367,7 @@ export function LessonRun({
         onJump={result === null ? jumpTo : undefined}
         viewing={viewing}
         menu={<LessonMenu course={course} lessonId={lesson.id} />}
+        listen={speechText(reviewCard, answered ? "correct" : "answering")}
         footer={
           <FeedbackFooter
             key={`review-${viewing}`}
@@ -390,7 +390,6 @@ export function LessonRun({
           cardKey={`${lesson.id}-review-${viewing}`}
           card={reviewCard}
           scope={scope}
-          listen={speechText(reviewCard, answered ? "correct" : "answering")}
         >
           <CardReview card={reviewCard} state={state} />
         </CardStage>
@@ -412,9 +411,15 @@ export function LessonRun({
       onJump={result === null ? jumpTo : undefined}
       viewing={viewing}
       menu={<LessonMenu course={course} lessonId={lesson.id} />}
+      listen={speechText(card, run.status)}
       footer={
         <FeedbackFooter
           key={`${index}-${run.status}`}
+          hint={
+            hint
+              ? { text: hint, used: run.hintUsed, onUse: () => setRun((current) => ({ ...current, hintUsed: true })), cost: hintCost(card, isDone(card)) }
+              : undefined
+          }
           tone={tone}
           // The mascot reacts to every answer with a short, varied line (src/lib/reactions.ts).
           mascot={run.status === "answering" ? undefined : reactionExpression(run.status === "correct", card.difficulty === "challenge", run.attempts)}
@@ -450,7 +455,6 @@ export function LessonRun({
         card={card}
         scope={scope}
         challengeXp={challengeXp}
-        listen={speechText(card, run.status)}
       >
         {definition.interactive || isGuidedDefinition(definition) ? (
           <definition.Component
@@ -461,15 +465,6 @@ export function LessonRun({
           />
         ) : (
           <definition.Component card={card} />
-        )}
-        {hint && (
-          <HintReveal
-            key={`${lesson.id}-${index}-hint`}
-            hint={hint}
-            used={run.hintUsed}
-            onUse={() => setRun((current) => ({ ...current, hintUsed: true }))}
-            xpNote={hintXpNote(card, isDone(card))}
-          />
         )}
       </CardStage>
       {unchangedAfterWrong && (

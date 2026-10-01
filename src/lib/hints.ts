@@ -15,9 +15,10 @@ export function visibleHint(card: Card, mode: PlayerMode, status: CardStatus): s
   return status === "correct" ? null : card.hint;
 }
 
-/** "+5 XP instead of +10", or undefined when the card has already paid its XP. */
-export function hintXpNote(card: Card, alreadyCompleted: boolean): string | undefined {
+/** "costs 5 XP" (what using the hint takes off), or undefined when the card has already paid its XP. */
+export function hintCost(card: Card, alreadyCompleted: boolean): string | undefined {
   if (alreadyCompleted) return undefined;
   const table = XP.card[card.difficulty];
-  return `+${table.retry} XP instead of +${table.firstTry}`;
+  return `costs ${table.firstTry - table.retry} XP`;
 }
+

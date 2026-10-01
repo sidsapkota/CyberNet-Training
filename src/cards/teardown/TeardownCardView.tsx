@@ -132,30 +132,27 @@ export function TeardownCardView({ card, answer, onAnswerChange, status }: CardC
   return (
     <div>
       <CardPrompt>{card.prompt}</CardPrompt>
+      {/* Always shown: "This is a simulation", then the card's own safety line, or the general one. */}
       <div className="mt-3 flex items-start gap-2 rounded-control border border-line bg-surface-raised px-3 py-2 text-small text-ink-muted">
         <WarningIcon className="mt-0.5 size-4 shrink-0 text-warning" />
-        <div>
-          <p>
-            <strong className="font-semibold text-ink">This is a simulation.</strong> Real phones and laptops should only be
-            opened by an adult or a repair shop.
-          </p>
-          {card.safety && <Markdown className="mt-1 text-small text-ink-muted">{card.safety}</Markdown>}
+        <div className="[&_p]:inline">
+          <strong className="font-semibold text-ink">This is a simulation.</strong>{" "}
+          {card.safety ? (
+            <Markdown className="inline text-small text-ink-muted">{card.safety}</Markdown>
+          ) : (
+            <span>Real phones and laptops should only be opened by an adult or a repair shop.</span>
+          )}
         </div>
       </div>
-
-      <div className="mt-4 flex items-center gap-3" aria-live="polite">
-        <div className="h-1.5 flex-1 overflow-hidden rounded-sm bg-line">
-          <div className="h-full rounded-sm bg-accent transition-[width] duration-300" style={{ width: `${(doneCount / card.actions.length) * 100}%` }} />
-        </div>
-        <span className="font-mono text-caption text-ink-muted tabular-nums">
-          {doneCount}/{card.actions.length} steps
-        </span>
-      </div>
-      {!locked && doneCount < card.actions.length && <p className="mt-2 text-small text-ink-muted">Tap the glowing parts in a safe order.</p>}
 
       <div className="mt-3">
         <SceneStage
           ref={stageRef}
+          status={
+            <span aria-live="polite" className="font-mono text-caption text-on-screen-muted tabular-nums">
+              {doneCount}/{card.actions.length} steps
+            </span>
+          }
           sceneId={card.scene}
           hidden={hiddenAtStart}
           wrap={wrap}

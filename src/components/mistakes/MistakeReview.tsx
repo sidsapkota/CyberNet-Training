@@ -12,12 +12,11 @@ import type { ProgressNode } from "@/components/network/NodeProgress";
 import { NetworkMark } from "@/components/network/NetworkMark";
 import { CardStage, useFeedbackAnimation } from "@/components/player/CardStage";
 import { FeedbackFooter, type FeedbackTone, type FooterAction } from "@/components/player/FeedbackFooter";
-import { HintReveal } from "@/components/player/HintReveal";
 import { PlayerShell, uniformNodes } from "@/components/player/PlayerShell";
 import { ProPitch } from "@/components/pro/ProPitch";
 import { ButtonLink, Button } from "@/components/ui/Button";
 import { useFeedback } from "@/lib/feedback";
-import { hintXpNote, visibleHint } from "@/lib/hints";
+import { hintCost, visibleHint } from "@/lib/hints";
 import { useGlobalKeyDown } from "@/lib/keyboard";
 import { practicedOn } from "@/lib/progress/daily";
 import { useProgress } from "@/lib/progress/ProgressProvider";
@@ -239,9 +238,15 @@ function ReviewRun({ mistakes, more, onMore }: { mistakes: MistakeToReview[]; mo
       nodes={nodes}
       progressLabel={`Mistake review: card ${index + 1} of ${total}`}
       exitHref="/"
+      listen={speechText(card, run.status)}
       footer={
         <FeedbackFooter
           key={`${index}-${run.status}`}
+          hint={
+            hint
+              ? { text: hint, used: run.hintUsed, onUse: () => setRun((current) => ({ ...current, hintUsed: true })), cost: unfinished ? hintCost(card, false) : undefined }
+              : undefined
+          }
           tone={tone}
           heading={run.status === "correct" ? "Got it this time." : run.status === "incorrect" ? "Not quite yet." : undefined}
           subheading={run.status === "incorrect" ? (nudgeFor(card, run.answer) ?? "Have another go, or skip it for now.") : undefined}
@@ -258,22 +263,13 @@ function ReviewRun({ mistakes, more, onMore }: { mistakes: MistakeToReview[]; mo
         Mistake {index + 1} of {total} · {mistake.lessonTitle}
       </p>
       {/* Shown as core: "Bonus · Optional: skip it any time" means nothing here (Skip for now is always there). */}
-      <CardStage cardKey={`review-${index}`} card={{ ...card, difficulty: "core" }} scope={scope} listen={speechText(card, run.status)}>
+      <CardStage cardKey={`review-${index}`} card={{ ...card, difficulty: "core" }} scope={scope}>
         {definition.interactive && (
           <definition.Component
             card={card}
             answer={run.answer}
             onAnswerChange={(answer) => setRun((current) => ({ ...current, answer }))}
             status={run.status}
-          />
-        )}
-        {hint && (
-          <HintReveal
-            key={`review-${index}-hint`}
-            hint={hint}
-            used={run.hintUsed}
-            onUse={() => setRun((current) => ({ ...current, hintUsed: true }))}
-            xpNote={unfinished ? hintXpNote(card, false) : undefined}
           />
         )}
       </CardStage>
