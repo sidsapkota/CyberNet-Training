@@ -40,6 +40,7 @@ function buildRun(mode: Mode, cardIds: string[]) {
   const course: CourseOutline = {
     id: "dev",
     title: "Dev",
+    level: "easy",
     description: "Dev playground",
     order: 0,
     modules: [

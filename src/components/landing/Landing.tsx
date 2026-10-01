@@ -3,6 +3,7 @@ import { CourseCard } from "@/components/course/CourseCard";
 import { Mascot } from "@/components/mascot/Mascot";
 import { ChevronDownIcon, HandsOnIcon, HintIcon, LessonTimeIcon, SafeIcon } from "@/components/ui/icons";
 import type { CourseOutline } from "@/lib/content/schema";
+import { AUDIENCE } from "@/lib/site";
 import { LandingCta } from "./LandingCta";
 
 const COUNT_WORDS: Record<number, string> = { 2: "Two", 3: "Three", 4: "Four", 5: "Five" };
@@ -21,8 +22,8 @@ const FAQ: { q: string; a: string }[] = [
     a: "Yes. There are no ads, no chat and no public profiles, and everything you take apart is a simulation.",
   },
   {
-    q: "What ages is it for?",
-    a: "Anyone from about 12 up. Accounts are for ages 13 and older; younger learners can play each course's first lesson and the help lessons as guests.",
+    q: "Who is it for?",
+    a: `${AUDIENCE} Every course starts from zero and teaches each idea before it asks about it. Each course shows its level (Easy, Medium or Hard), so you can pick where to start.`,
   },
   {
     q: "Can I use it in class?",
@@ -57,8 +58,9 @@ export function Landing({
         <Mascot expression="happy" size={140} idle label="The CyberNet mascot, waving hello" />
         <h1 className="mt-4 text-headline font-semibold text-balance sm:text-display">How tech really works</h1>
         <p className="mt-3 max-w-md text-lead text-balance text-ink-muted">
-          Short, hands-on lessons on devices, the internet and staying safe online.
+          Short, hands-on lessons on devices, the internet, AI and staying safe online.
         </p>
+        <p className="mt-2 text-body font-semibold">{AUDIENCE}</p>
         <div className="mt-8 flex w-full max-w-sm flex-col items-center gap-2 sm:max-w-none">
           <LandingCta lessonId={firstLessonId} />
           <p className="text-small text-ink-muted">No sign-up for your first lesson</p>
@@ -71,9 +73,9 @@ export function Landing({
           {COUNT_WORDS[courses.length] ?? courses.length} courses
         </h2>
         <ul className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {courses.map((course) => (
+          {courses.map((course, i) => (
             <li key={course.id}>
-              <CourseCard course={course} />
+              <CourseCard course={course} startHere={i === 0} />
             </li>
           ))}
         </ul>

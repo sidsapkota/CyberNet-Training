@@ -14,7 +14,11 @@ const orderedMeta = {
 };
 
 /** content/courses/<course>/course.json */
-export const CourseFileSchema = z.object(orderedMeta);
+/** How hard a course is, shown as 1–3 filled dots and a word (`CourseLevel`). Required. */
+export const CourseLevelSchema = z.enum(["easy", "medium", "hard"]);
+export type CourseLevel = z.infer<typeof CourseLevelSchema>;
+
+export const CourseFileSchema = z.object({ ...orderedMeta, level: CourseLevelSchema });
 export type CourseFile = z.infer<typeof CourseFileSchema>;
 
 /**

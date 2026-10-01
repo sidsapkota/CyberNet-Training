@@ -157,7 +157,7 @@ export function FeedbackFooter({
                   aria-expanded={showExplanation}
                   aria-controls={explanationId}
                   onClick={() => setShowExplanation((v) => !v)}
-                  className="mt-3 inline-flex items-center gap-1 text-small font-semibold text-ink underline-offset-2 hover:underline"
+                  className="mt-1 inline-flex min-h-11 items-center gap-1 text-small font-semibold text-ink underline-offset-2 hover:underline"
                 >
                   {showExplanation ? "Hide explanation" : "Show explanation"}
                   <ChevronDownIcon

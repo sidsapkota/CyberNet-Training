@@ -398,6 +398,7 @@ export function twoModuleCourse(): CourseOutline {
     id: "course",
     title: "Course",
     description: "A course",
+    level: "easy",
     order: 1,
     modules: [moduleOutline("m1", 1, ["l1", "l2"], "quiz1"), moduleOutline("m2", 2, ["l3"], "quiz2")],
   };

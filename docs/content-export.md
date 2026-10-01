@@ -10,6 +10,251 @@ so Vercel Analytics shows where visitors came from. Visitors without an account 
 and the help lessons; other free lessons ask them to make a free account, and Pro lessons to upgrade. Link to lessons marked
 "no account needed" where you can.
 
+## Stay Safe Online
+
+Lock your accounts, spot scams and keep your private stuff private.
+
+### Module 1: Lock Your Accounts (Free)
+
+Strong passwords, passphrases and two-step sign-in.
+
+#### Strong Passwords
+
+- **Access:** Free, no account needed (best for video links)
+- **Link:** `cybernettraining.com/from/<platform>/strong-passwords`
+
+**Key facts**
+
+- *Your digital keys:* Every account you have, from games to school to email, is locked with a **password**.
+- *How passwords get guessed:* So attackers use computers to **guess** them, billions of times a second. They start with the **most common passwords** (like `password123` and `qwerty`), real words, names, birthdays and patterns like swapping `a` for `@`.
+- *Length wins:* Making a password **longer** helps a lot more. The easiest way to get length you can remember is a **passphrase**: **four or more random words**, at least **15 characters** long, like `violet cactus harbour pepper`.
+- *One password per account:* Attackers then try that same email and password on **other** websites. So every account needs its **own** password.
+- *Recap:* Guessers try **common passwords, words, names and patterns** first. **Length** matters most: each extra lowercase letter makes it 26 times harder.
+
+**Best interactive cards**
+
+- Simulator: This password uses only **lowercase letters**. Make it long enough that trying every combination would take **at least 100 years**.
+- Simulator: Now the password can be **10 characters at most**. Reach **100 years** anyway, by choosing which kinds of characters it can use.
+- Choose what happens: You get an email from a game website: it was hacked, and passwords were stolen.
+
+**Surprising facts**
+
+- In this lesson you'll learn what makes a password strong, and how to make one you can actually remember.
+- For lowercase letters, each position could be any of 26 letters, so every extra letter makes the job **26 times bigger**.
+- A **passphrase** is four or more **random** words, at least 15 characters.
+
+#### Two-Step Sign-In
+
+- **Access:** Free with a free account
+- **Link:** `cybernettraining.com/from/<platform>/two-step-sign-in`
+
+**Key facts**
+
+- *Two locks on the door:* So many accounts let you add a **second lock**.
+- *What two-step sign-in is:* **Two-step sign-in** means proving it's you in two different ways. You'll also see it called **two-factor** or **multi-factor authentication (MFA)**.
+- *Which second proof is strongest?:* A **passkey**: your device signs you in with your fingerprint, face or PIN, and it won't work on a fake website. A code from an **authenticator app** on your phone.
+- *Never share a sign-in code:* **No real company, bank, game or friend will ever ask you to read it out or send it to them.**
+- *Password managers:* A **password manager** is an app that creates a **long random password** for every account, remembers them all, and fills them in for you. You only remember **one main password**: make it a strong passphrase, and protect the manager with two-step sign-in.
+- *Recap:* **Two-step sign-in** adds a second proof: something you know, have or are. Strongest: a **passkey**, then an authenticator app, then a text code.
+
+**Best interactive cards**
+
+- Sort into groups: Sort each proof: something you **know**, **have** or **are**.
+- Choose what happens: You're watching a video when your phone buzzes.
+- Choose what happens: Your phone, with your authenticator app on it, falls in a lake.
+
+#### Module quiz (6 questions)
+
+Not exported, so the answers stay secret.
+
+### Module 2: Spot the Scam (Pro)
+
+Phishing emails, scam texts and calls, and fake websites.
+
+#### Phishing Emails
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/phishing-emails`
+
+**Key facts**
+
+- *Something fishy:* **Phishing** (said "fishing") is when a scammer sends a message pretending to be someone you trust, like your bank, your school or a game, hoping you'll bite: click a link, open a file or hand over your details.
+- *The warning signs:* **Fake sender:** the name looks right, but the email address isn't the real company's. **Rushing you:** "Act now!", "Your account closes in 24 hours!" Pressure stops you thinking.
+- *Who really sent it?:* Anyone can type any **name** into the From line. What counts is the **address after the @**.
+- *What to do instead:* **Don't click** links or open attachments in a message you're unsure about, and don't reply. **Go there yourself:** open the official app, or type the address you know.
+- *Recap:* **Phishing** pretends to be someone you trust. Warning signs: **fake sender**, **rushing you**, **"Dear Customer"**, **asks for secrets**, **hidden links**, **too good to be true**.
+
+**Best interactive cards**
+
+- Tap the picture: Your Bank's real emails come from **@yourbank.example**. Tap **every** warning sign in this email.
+- Choose what happens: An email pops up while you're doing homework.
+- Choose what happens: An email arrives that seems personal.
+
+#### Scam Texts and Calls
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/scam-texts-and-calls`
+
+**Key facts**
+
+- *Scams in your pocket:* The same tricks as phishing emails also arrive as **text messages** and **phone calls**.
+- *Scam texts:* Common scam texts say you owe a **parcel fee** or a **road toll**, that you've won something, or "Hi Mum, this is my new number". Sender names can be faked, so a scam text can even land **in the same thread** as real messages from that company.
+- *Scam calls and cloned voices:* They may ask for a **sign-in code**, your **password**, to **control your computer**, or for payment in **gift cards**. Computers can now **copy a voice** from a short clip, so a call can sound just like someone you know.
+- *Too good to be true:* Some scams offer something amazing: a prize you never entered, a free phone, "double your money", **free game coins or skins**, or a job paying lots for very little work. Watch for **paying a fee to get a prize**, and for payment by **gift cards**, crypto or a money-transfer app.
+- *Recap:* Scam texts use a **small fee**, a **deadline** and an **unfamiliar link**. Scam calls can use a **copied voice**.
+
+**Best interactive cards**
+
+- Tap the picture: Tap the **three** warning signs in the **new** message.
+- Choose what happens: Your phone rings. It sounds exactly like your cousin.
+- Choose what happens: A website promises **10,000 free coins** for your favourite game.
+
+#### Fake Websites
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/fake-websites`
+
+**Key facts**
+
+- *A perfect copy:* Copying how a website **looks** takes minutes: the logo, the colours, the sign-in box. What a fake site can't copy is the real **address**.
+- *Read the address:* The owner of a website is the name **just before the ending** (the ending is like `.example`, `.com` or `.com.au`). `yourbank.example.login-check.example` belongs to **login-check.example**: the name just before the final ending.
+- *What the padlock means:* The padlock next to an address means your connection is **encrypted** (HTTPS): nobody can read what you send on the way. It **doesn't** mean the site is honest.
+- *Safer ways in:* Sign in through the **official app**, a **bookmark**, or by **typing the address** yourself. **Don't sign in from a link** in an email or text.
+- *Recap:* A website's owner is the name **just before the ending** of its address. The **padlock only means encrypted**.
+
+**Best interactive cards**
+
+- Tap the picture: You opened this page from a link in a text. Your Bank's real site is `yourbank.example`. Tap **every** warning sign.
+- Choose what happens: You tap a link in an email to sign in to your game account.
+- Tap the picture: Label four things on this page.
+
+#### Module quiz (7 questions)
+
+Not exported, so the answers stay secret.
+
+### Module 3: Guard Your Privacy (Pro)
+
+Your digital footprint, app permissions and public Wi-Fi.
+
+#### Your Digital Footprint
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/your-digital-footprint`
+
+**Key facts**
+
+- *Footprints in wet cement:* Everything you post, like, comment on or get tagged in adds to your **digital footprint**: the trail you leave online. That's not a reason to stop posting: it's a reason to **choose what you share**.
+- *What to keep private:* your **home address** and **phone number** your **school**, including a uniform or badge in photos
+- *Privacy settings:* Every app has **privacy settings**. **Private account:** only people you approve see your posts.
+- *Recap:* Your **digital footprint** is everything about you online, and it can last. Keep your **address, phone number, school, location right now** and passwords private.
+
+**Best interactive cards**
+
+- Sort into groups: Fine to share, or keep it private?
+- Choose what happens: A fun quiz is going around on social media.
+- Choose what happens: Someone you don't know in real life has been messaging you in a game. They're really friendly.
+
+**Surprising facts**
+
+- That goes for **usernames** too: `SkyDiver_77` is safer than your real name, school or birth year.
+
+#### Apps and Public Wi-Fi
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/apps-and-wi-fi`
+
+**Key facts**
+
+- *Why does a torch app want your contacts?:* When you install an app, it may ask to use parts of your phone: the **camera**, **microphone**, **location**, **contacts** or **photos**.
+- *Only what it needs:* Allow what the app needs for **its job**: a map needs location; a video call needs the camera and microphone. Pick **"Only while using the app"** when it's offered, instead of "Always".
+- *Public Wi-Fi:* **Public Wi-Fi** at a café, library or airport is shared with strangers. Most websites use HTTPS, so what you send to them is **encrypted** even on shared Wi-Fi.
+- *Recap:* Give apps only the **permissions they need** for their job. Choose **"Only while using the app"**.
+
+**Best interactive cards**
+
+- Sort into groups: Does the app **need** that permission for its job?
+- Choose what happens: You install a new drawing game.
+- Choose what happens: You're reading on your phone, and a **microphone dot** appears at the top of the screen.
+
+#### Module quiz (6 questions)
+
+Not exported, so the answers stay secret.
+
+### Module 4: When Things Go Wrong (Free)
+
+Signs of a hack, what to do step by step, and where to get help.
+
+#### Signs of a Hack
+
+- **Access:** Free, no account needed (best for video links)
+- **Link:** `cybernettraining.com/from/<platform>/signs-of-a-hack`
+
+**Key facts**
+
+- *Something's off:* Sometimes an account gets **taken over**: someone else gets in, usually with a stolen or guessed password.
+- *Signs someone else got in:* Your password **suddenly doesn't work**. Emails about a **sign-in** or **password change** you didn't make.
+- *What to do, step by step:* **Tell a trusted adult.** You're not in trouble, and two heads are better than one. **Change the password**, on a device you trust, in the real app or website.
+- *How accounts get taken:* a password **reused** from a site that had a data breach a password typed into a **fake website** from a phishing message
+- *Recap:* Signs: a password that stops working, **alerts you didn't cause**, messages you didn't send, unknown devices. Steps: **tell an adult**, **change the password**, **check recovery details**, **sign out other devices**, **turn on two-step sign-in**.
+
+**Best interactive cards**
+
+- Sort into groups: A sign of a hack, or normal?
+- Choose what happens: Your friends say you've been sending them strange links. You haven't.
+- Choose what happens: You check your account's security settings.
+
+#### Deepfake Scams and Fakes
+
+- **Access:** Free, no account needed (best for video links)
+- **Link:** `cybernettraining.com/from/<platform>/deepfake-scams`
+
+**Key facts**
+
+- *Fake voices and faces:* Then it can make **new** audio or video of them saying things they never said. A fake video or picture made like this is called a **deepfake**.
+- *The same old tricks:* **Hurry:** you must act right now, so you don't stop to check. **Keep it secret:** don't tell anyone, so nobody can warn you.
+- *Ask something only they'd know:* Some families agree a **code word** together, just for emergencies, and never post it online.
+- *If someone makes a fake of you:* It's **not your fault**, and you won't be in trouble for asking for help. **Don't share it** any further, even to show someone.
+- *Recap:* AI can copy voices and faces: **deepfakes** and **voice clones**. The red flags still work: **hurry**, **secrets**, **money or codes**, a **new number**.
+
+**Best interactive cards**
+
+- Sort into groups: Sort each message: **red flag**, or **normal**?
+- Choose what happens: Your phone rings from a number you don't know.
+- Choose what happens: A video message arrives from an account with your coach's name and face.
+
+**Surprising facts**
+
+- If you're under 18 and someone is threatening to share it, or asking you for sexual images or money, report it to the **ACCCE** too (accce.gov.au/report).
+
+#### Getting Help
+
+- **Access:** Free, no account needed (best for video links)
+- **Link:** `cybernettraining.com/from/<platform>/getting-help`
+
+**Key facts**
+
+- *You're not alone:* Scammers **count on people feeling embarrassed** and staying quiet. **It's never your fault**, and telling someone is the brave and smart thing to do.
+- *Who to tell:* A **trusted adult** is someone you feel safe talking to: a parent or carer, a teacher, a school counsellor, or an older relative. If you'd rather talk to someone outside your family, **Kids Helpline** is free, private and open any time, for ages 5 to 25: call **1800 55 1800**.
+- *Where to report in Australia:* **The app or website first:** use its report button. **eSafety Commissioner** (esafety.gov.au): serious cyberbullying of anyone under 18 that the app hasn't dealt with, adult cyber abuse, and someone sharing or threatening to share a **private or nude image** of you (report that straight away).
+- *Save the evidence:* Before you block someone, **take screenshots** of the messages, their username, the web address and the date. One exception: if it's a **private or nude image**, **don't copy, save or share the image itself**.
+- *Recap:* It's **never your fault**. Tell a **trusted adult**, or call **Kids Helpline** on 1800 55 1800.
+
+**Best interactive cards**
+
+- Choose what happens: In a group chat, some people start posting mean messages about you.
+- Sort into groups: Does it help, or make things worse?
+- Choose what happens: Someone you met online says they'll share a private photo of you unless you pay them. If this ever happens: **it is never your fault**, and you won't be in trouble.
+
+**Surprising facts**
+
+- **ACCCE**, the Australian Centre to Counter Child Exploitation (accce.gov.au/report), run by the Australian Federal Police: if you're **under 18** and someone is pressuring or threatening you with a private image.
+- **IDCARE** (idcare.org or 1800 595 160): free help to make a plan if your personal details were stolen.
+- Then: **eSafety** for serious abuse and private images (and the **ACCCE** if you're under 18), **Scamwatch** for scams, your **bank** for money, **IDCARE** for stolen details, **000** for danger.
+
+#### Module quiz (8 questions)
+
+Not exported, so the answers stay secret.
+
 ## Inside Your Devices
 
 Take a phone and laptop apart, overload them, and fix them.
@@ -171,6 +416,403 @@ Troubleshoot slow, full and flat devices like a technician.
 - Choose what happens: You plug your phone in before bed, but the charging symbol doesn't appear.
 - Simulator: You've got a long coach trip. Make the battery last **at least 8 hours**, and keep your **music** playing. (**Low power mode** is a setting that makes the phone save energy.)
 - Choose what happens: You're gaming on your bed with the phone plugged in.
+
+#### Module quiz (8 questions)
+
+Not exported, so the answers stay secret.
+
+## How AI Really Works
+
+Teach a model, watch a chatbot pick its words, and use AI safely.
+
+### Module 1: What AI Actually Is (Free)
+
+What counts as AI, how it learns from examples, and where it goes wrong.
+
+#### Spot the AI
+
+- **Access:** Free, no account needed (best for video links)
+- **Link:** `cybernettraining.com/from/<platform>/spot-the-ai`
+
+**Key facts**
+
+- *AI is already in your pocket:* All of these use **artificial intelligence**, or **AI**.
+- *Rules or examples?:* Most programs follow **rules** that a person wrote, step by step. Try writing rules for "what does my friend's face look like?" So instead, people give the computer lots of **examples** and let it work out what they have in common.
+- *Learning by example:* It's called **machine learning**: the computer is shown many examples and finds the patterns in them itself.
+- *Recap:* Ordinary programs follow **rules** a person wrote. **AI** learns from **examples** instead, finding patterns in them.
+
+**Best interactive cards**
+
+- Sort into groups: Does each one **follow rules** someone wrote, or **learn from examples**?
+- Match pairs: Match each kind of AI to the examples it learns from.
+- Sort into groups: Trickier: does each one **follow rules**, or **learn from examples**?
+
+**Surprising facts**
+
+- An alarm clock's rule is simple: at 7:00, ring.
+
+#### Patterns Everywhere
+
+- **Access:** Free with a free account
+- **Link:** `cybernettraining.com/from/<platform>/patterns-everywhere`
+
+**Key facts**
+
+- *Examples, labels and models:* A **pattern** is something that shows up again and again, like apples being round and bananas being long. To teach a computer, you give it **training data**: lots of examples, each with a **label** that says what it really is ("apple" or "banana").
+- *Why did it get one wrong?:* Every apple in its training data was **red**.
+- *Recap:* **Training data** is lots of examples, each with a **label** saying what it really is. The computer finds **patterns** in them and builds a **model** that guesses labels for new things.
+
+**Best interactive cards**
+
+- Train a model: Label each fruit as an **apple** or a **banana**. Then press Check to train the model and see what it guesses about 3 new fruits.
+- Train a model: Here's the same model, plus a **golden apple** it isn't using yet. Choose which examples to train on, so it gets **every** test fruit right.
+- Train a model: Now there are three kinds of fruit. This model looks at the **3 nearest** examples and goes with the most common label. Label the fruit, then see its guesses.
+
+#### What AI Can't Do
+
+- **Access:** Free with a free account
+- **Link:** `cybernettraining.com/from/<platform>/what-ai-cant-do`
+
+**Key facts**
+
+- *A guess, not a fact:* Everything a model gives you is a **prediction**: its best guess, based on patterns in its training data.
+- *People are responsible:* Big decisions about people, like a punishment at school, a medical treatment or who gets a job, need a **person** to decide and to be responsible.
+- *Recap:* Everything AI gives you is a **prediction**, not a fact.
+
+**Best interactive cards**
+
+- Choose what happens: You're using an AI helper for history homework.
+- Sort into groups: Is each job **fine for AI to help with**, or does it **need a person** to decide?
+- Choose what happens: Your photo app sorts pictures by who's in them.
+
+#### Module quiz (6 questions)
+
+Not exported, so the answers stay secret.
+
+### Module 2: How Machines Learn (Pro)
+
+Training data, fair tests, and how bias sneaks in.
+
+#### Training Data
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/training-data`
+
+**Key facts**
+
+- *Words that vote:* When a new message arrives, each word in it **votes**. A word gets **one vote for each training message** it appeared in, for that message's label.
+- *One word, three votes:* In those examples, **"free" only ever appeared in spam**, so to the model, "free" means spam.
+- *Good data, bad data:* **Wrong labels:** a spam message labelled "not spam" teaches the model the wrong lesson. **Copies:** a thousand copies of one example add nothing new, and make that one example count far too much.
+- *Recap:* A model learns only from its **training data**, so it repeats that data's patterns, including its gaps. Fix it with **better** data (checked, varied, realistic), not just more of it.
+
+**Best interactive cards**
+
+- Train a model: Label each message as **spam** or **not spam**. Then press Check to train the model and see what it makes of two new messages.
+- Train a model: Try it. Choose which examples to train on, so the model gets **both** test messages right.
+- Train a model: Someone made a labelling mistake in this fruit data. Find it, and choose the examples to train on so the model gets **both** test fruits right. (This model picks the **nearest** example.)
+
+#### Testing a Model
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/testing-a-model`
+
+**Key facts**
+
+- *Keep some examples aside:* **Training examples** are for learning. **Test examples** are kept aside, and the model never sees them while it learns.
+- *Memorising isn't learning:* A model can learn its training examples **too** well: every detail, instead of the general pattern. This is called **overfitting**.
+- *Recap:* Keep **test examples** aside: the model never sees them while it learns. **Accuracy** = right ÷ tested × 100.
+
+**Best interactive cards**
+
+- Sort into groups: Is each one a **fair** test of a model, or an **unfair** one?
+- Train a model: A weather model guesses whether it will rain from the clouds and the air. Each training day says what really happened: label them, then see how the model does on **4 test days** it has never seen.
+- Train a model: Now add training days so the model gets **all 4** test days right. Three new days are available.
+
+**Surprising facts**
+
+- **Accuracy** is that as a percentage: right ÷ tested × 100.
+- 100% on training examples but much less on new ones means **overfitting**: memorising instead of learning.
+
+#### Bias In, Bias Out
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/bias-in-bias-out`
+
+**Key facts**
+
+- *Bias in, bias out:* This is called **bias**.
+- *Finding and fixing bias:* **Ask who it might work worse for**, before and after it's built. **Test it with lots of different people** and situations, not just one group.
+- *Recap:* **Bias**: a model works better for some people than others, usually because of gaps in its training data.
+
+**Best interactive cards**
+
+- Train a model: This checker learned only from formal messages, so it calls **"That game was sick!"** mean. Choose the examples to train on, so it gets **all 3** test messages right. (It uses word votes, like the spam model.)
+- Choose what happens: Your club wants to sort new sign-ups with a model.
+- Choose what happens: A school is choosing a voice assistant to help in class.
+
+#### Module quiz (8 questions)
+
+Not exported, so the answers stay secret.
+
+### Module 3: How Chatbots Think (Pro)
+
+Next-word guessing, temperature, and why chatbots make things up.
+
+#### Next-Word Machines
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/next-word-machines`
+
+**Key facts**
+
+- *Guessing the next word:* A chatbot is built on a **language model**: a model trained on a huge amount of text, so it learns which words tend to follow which. Give it some text, and it gives every possible next word a **chance**.
+- *Recap:* A **language model** learned from huge amounts of text which words tend to follow which. For the text so far, it gives every possible next **token** a chance, picks one, adds it, and repeats.
+
+**Best interactive cards**
+
+- Next word: A language model is choosing the next word. Which one is it **most likely** to pick?
+- Put in order: Put the steps a chatbot repeats for every token in order.
+- Next word: Remember: after "The cat sat on the", "mat" had the biggest chance. Now the text so far is longer. Which word is **most likely** next this time?
+
+**Surprising facts**
+
+- After "The cat sat on the", it might give "mat" 60%, "sofa" 20%, "floor" 15% and "moon" 5%.
+- A 60% chance means that if it carried on from here 100 times, it would pick "mat" about 60 of them.
+- A 70% chance means about 70 times in every 100, not every time.
+
+#### Temperature
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/temperature`
+
+**Key facts**
+
+- *Same question, different answers:* A setting called **temperature** decides how it picks between its options.
+- *Turning the dial:* **Low temperature:** the likeliest token gets even likelier. **Temperature 1:** the chances are used as the model learned them.
+- *Which temperature, when?:* Low temperatures suit jobs with **one right answer**: maths, facts, summaries, code. Higher temperatures suit jobs where you want **variety**: brainstorming, story ideas, silly poems.
+- *Recap:* **Temperature** changes how a model picks from its chances; the order of the tokens never changes.
+
+**Best interactive cards**
+
+- Next word: Move the temperature until **mat** has a chance of at least **80%**.
+- Next word: Now make the model more surprising: move the temperature until **no word** has more than a **45%** chance.
+- Next word: Can you get **sofa** up to at least **24%**?
+
+#### Made-Up Answers
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/made-up-answers`
+
+**Key facts**
+
+- *Fluent, confident, wrong:* When a chatbot writes something false but says it smoothly and confidently, it's called a **hallucination**. It happens because the model picks tokens that **sound** likely, not tokens it has checked are true.
+- *How to check:* **Find it in a trusted source**: a textbook, a library catalogue, an official website. **Ask for sources, then open them**: chatbots can invent sources too, so make sure each one really exists and says what the chatbot claims.
+- *A short memory:* This is called its **context window**.
+- *Recap:* A **hallucination** is a fluent, confident answer that's false, because the model picks likely tokens, not checked facts. The **context window** is how much of the chat it can see at once; in long chats it can forget the start.
+
+**Best interactive cards**
+
+- Next word: That small space-story model gets this text. Which word is it **most likely** to write next?
+- Choose what happens: You're writing a report on volcanoes.
+- Choose what happens: A chatbot tells you a famous ship sank in **1915**, and gives a link to a museum website.
+
+#### Module quiz (8 questions)
+
+Not exported, so the answers stay secret.
+
+### Module 4: Talking to AI (Pro)
+
+Write clear prompts, check the answers, and know today's tools.
+
+#### Writing Good Prompts
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/writing-good-prompts`
+
+**Key facts**
+
+- *What a good prompt says:* What you type to a chatbot is called a **prompt**. Remember, it writes the likely next words for **your** text, so the more your prompt says, the better it can aim.
+- *Give it what it needs:* Good prompts can include things you have: **paste in your notes** to summarise, or **your draft** for feedback. You can also ask it to **ask you questions first**, or to **say if it isn't sure**.
+- *Recap:* A **prompt** works best when it says the **goal**, the **context** and the **format**.
+
+**Best interactive cards**
+
+- Sort into groups: Is each prompt **vague**, or **clear** about what it wants and what shape?
+- Choose what happens: You're preparing a 1-minute talk about octopuses for class.
+- Choose what happens: You want a chatbot to quiz you on your history notes.
+
+**Surprising facts**
+
+- **The context:** who it's for and what you already know or have ("I'm 12", "here are my notes").
+
+#### Checking AI's Work
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/checking-ais-work`
+
+**Key facts**
+
+- *Four ways to check:* **Facts and dates:** find them in a trusted source, like a textbook or an official website. **Sources:** open each one and make sure it really says what the chatbot claims.
+- *Using AI honestly:* Using AI to **learn** is great: ask it to explain a step you don't get, quiz you, or give feedback on your draft. Using it to **do the work for you**, and handing that in as yours, is different.
+
+**Best interactive cards**
+
+- Choose what happens: The chatbot's paragraph says: "The Moon is about 38,000 km from Earth, and it takes about 3 days to get there by spacecraft."
+- Sort into groups: Is each one using AI to **learn**, or letting it **do your work** for you?
+- Choose what happens: Your friend shows you an essay a chatbot wrote for them, due tomorrow.
+
+#### AI Tools Today
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/ai-tools-today`
+
+**Key facts**
+
+- *Chat assistants:* Some widely used AI chat assistants (in A to Z order) are **ChatGPT** (made by OpenAI), **Claude** (Anthropic), **Copilot** (Microsoft) and **Gemini** (Google).
+- *AI you already use:* There are **voice assistants** you talk to that answer out loud, **image generators** that make pictures from a description, and **translation apps** that turn text into another language.
+- *Age rules and good habits:* Every AI app has its own rules, including **who can use it**, and they differ a lot. **Check the app's own rules**, and **ask a parent or carer** before signing up.
+
+**Best interactive cards**
+
+- Sort into groups: For schoolwork, is each use of an AI tool **usually fine**, or one to **check with your teacher first**?
+- Choose what happens: A new AI app promises to turn your selfie into a cartoon.
+- Choose what happens: Your friend says: "My AI app is the best one. It's never wrong."
+
+**Surprising facts**
+
+- One app's terms may say you must be 18 or older; another may allow 13-year-olds with a parent's OK; some let a parent switch on access for younger children (or turn it off).
+
+#### Module quiz (7 questions)
+
+Not exported, so the answers stay secret.
+
+### Module 5: AI Images, Video and Voices (Pro)
+
+How AI makes pictures and voices, deepfakes, and checking what's real.
+
+#### How AI Makes Pictures
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/how-ai-makes-pictures`
+
+**Key facts**
+
+- *Learning what words look like:* AI that makes new things (pictures, text, music, voices) is called **generative AI**.
+- *From static to picture:* Most image tools start with **random static**, like a fuzzy TV screen. Because each picture starts from **different random static**, the same prompt gives a different picture every time, a bit like temperature giving a chatbot different words.
+- *Mistakes AI pictures sometimes make:* AI pictures **sometimes** have give-aways: a hand with the wrong number of fingers, signs with jumbled letters, earrings that don't match, shadows or reflections pointing the wrong way. So spotting one is a clue, but **not** spotting one proves nothing.
+- *Recap:* **Generative AI** makes new things; image models learned from huge numbers of captioned pictures.
+
+**Best interactive cards**
+
+- Match pairs: Match each word in a picture prompt to what it changes in the picture.
+- Put in order: Put the steps of making an AI picture in order, from first to last.
+- Sort into groups: Is each one a **possible clue** that a picture was made by AI, or **not a clue**?
+
+#### Cloned Voices and Faces
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/cloned-voices-and-faces`
+
+**Key facts**
+
+- *Fake faces and voices:* Generative AI can learn how a real person looks and sounds from recordings of them, then make **new** video or audio of them saying things they never said. A fake video or picture like this is a **deepfake**.
+- *Permission matters:* Never make or share a deepfake or voice clone of a real person without their **permission**. If someone makes a fake of **you**, it's not your fault.
+- *Clues, and context:* Fake videos and audio **sometimes** have clues: lips slightly out of time with the words, odd blinking, a flat voice or strange breathing, the edge of a face flickering. But the strongest clues are usually in the **situation**: who posted it, whether it pushes you to act fast, whether anyone trustworthy is reporting it, whether it makes sense.
+- *Recap:* AI can learn a real person's face or voice from recordings and make new fakes: **deepfakes** and **voice clones**.
+
+**Best interactive cards**
+
+- Sort into groups: Is each use of voice or face AI **helpful**, or **harmful**?
+- Choose what happens: Your friend has found an app that makes funny face-swap videos.
+- Choose what happens: A video shows a famous singer saying: "I'm giving away 1,000 free concert tickets! Click the link in the next hour."
+
+**Surprising facts**
+
+- In Australia, sharing fake sexual images of a real person without their consent is a serious crime, and fake sexual images of anyone under 18 are always illegal.
+
+#### Who Made This?
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/who-made-this`
+
+**Key facts**
+
+- *Labels and watermarks:* Some AI tools add a **watermark**: a visible mark, or hidden information inside the file, saying AI made it. So a label saying AI made it is good evidence; **no label proves nothing**.
+- *How to check a picture:* **Find where it first appeared.** Many search tools let you search with the picture itself: older copies, or the original, often turn up. **Look for trusted news** reporting it, ideally with other photos from other angles.
+- *Recap:* A **watermark** or AI label is good evidence when it's there; no label proves nothing. Check where a picture **first appeared**, whether **trusted news** shows it, the account and the details.
+
+**Best interactive cards**
+
+- Choose what happens: Your friend sends you the shark-in-the-street picture: "OMG look at this!!"
+- Sort into groups: Does each one **help** you tell if a picture is real, or is it a **myth**?
+- Choose what happens: You made a funny AI picture of your dog wearing a crown, sitting on a throne.
+
+#### Module quiz (7 questions)
+
+Not exported, so the answers stay secret.
+
+### Module 6: Using AI Safely and Fairly (Pro)
+
+Spot AI-made fakes, keep your private stuff private, and use AI honestly.
+
+#### Spotting AI Fakes
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/spotting-ai-fakes`
+
+**Key facts**
+
+- *Fakes made in seconds:* With AI, anyone can make in seconds what used to take hours: **fake reviews**, **fake news articles** that look like a real news site, and **fake accounts** (called bots) that post and reply automatically, all day. False information that spreads, whether someone meant it or not, is called **misinformation**.
+- *Check outside the post:* When something surprises you, **stop** and notice how it makes you feel. Then check **outside** the post, not inside it:
+- *Recap:* AI makes fake reviews, articles and accounts (bots) cheap and fast: **misinformation** can come from anywhere. Strong feelings are the moment to stop: check **outside** the post, not inside it.
+
+**Best interactive cards**
+
+- Sort into groups: Is each one about a shop's reviews **suspicious**, or **normal**?
+- Choose what happens: Under a video about a new game, an account replies to dozens of comments within a minute.
+- Sort into groups: Is each one a check **outside** the post (useful), or just looking **inside** it again?
+
+**Surprising facts**
+
+- By the next morning it has 200 five-star reviews, all saying how "amazing" and "life-changing" the boards are.
+
+#### What Not to Share with AI
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/what-not-to-share`
+
+**Key facts**
+
+- *Where your chats go:* Depending on the app and its settings, your chats may be **saved**, **read by staff** checking for problems, or **used to train** future models. But the safest rule is simple: **don't type anything you wouldn't want someone else to read**, and remember that your friends' photos and secrets aren't yours to share.
+- *A program, not a person:* If something's worrying you, talk to a **trusted adult**, a friend, or, in Australia, **Kids Helpline (1800 55 1800)**, free, any time. If you're in danger right now, call **000**.
+
+**Best interactive cards**
+
+- Sort into groups: Is each one **fine to type** into an AI chatbot, or one to **keep private**?
+- Choose what happens: It's late, you're feeling really down, and you've been telling an AI chatbot about it for an hour.
+- Choose what happens: You install an AI homework app. As it opens, it asks for permission to see your **contacts** and your **location**.
+
+**Surprising facts**
+
+- For worries, talk to a trusted adult or Kids Helpline (1800 55 1800).
+
+#### Fair and Honest Use
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/fair-and-honest-use`
+
+**Key facts**
+
+- *Say how you used it:* **Say when and how** you used AI ("I used AI to check my spelling"). **Follow the rules** of your school, club or competition, and **ask** when you're not sure.
+- *The people behind it:* What you can do: **respect people's work**, credit artists you're inspired by, and keep making things in your own way.
+- *Fair to everyone:* So when AI makes decisions about people, like picking, sorting or scoring them, ask: **who might this be unfair to?** And keep a **person** checking decisions that matter.
+- *You know how AI really works:* AI learns **patterns from examples**, so it's only as good, and as fair, as its training data. Chatbots pick **likely tokens**, not checked facts: check anything that matters.
+
+**Best interactive cards**
+
+- Sort into groups: Is each one **honest**, or **not honest**?
+- Choose what happens: Your class wants to use an AI tool to pick team captains "fairly", based on who talks most in class discussions.
+- Choose what happens: Your friend's story wins the school writing prize. You know a chatbot wrote most of it.
 
 #### Module quiz (8 questions)
 
@@ -612,648 +1254,6 @@ Put it all together: follow one web page from the moment you press Enter to the 
 **Surprising facts**
 
 - HTTPS means HTTP inside TLS, on port 443 unless the URL says otherwise.
-
-#### Module quiz (8 questions)
-
-Not exported, so the answers stay secret.
-
-## Stay Safe Online
-
-Lock your accounts, spot scams and keep your private stuff private.
-
-### Module 1: Lock Your Accounts (Free)
-
-Strong passwords, passphrases and two-step sign-in.
-
-#### Strong Passwords
-
-- **Access:** Free, no account needed (best for video links)
-- **Link:** `cybernettraining.com/from/<platform>/strong-passwords`
-
-**Key facts**
-
-- *Your digital keys:* Every account you have, from games to school to email, is locked with a **password**.
-- *How passwords get guessed:* So attackers use computers to **guess** them, billions of times a second. They start with the **most common passwords** (like `password123` and `qwerty`), real words, names, birthdays and patterns like swapping `a` for `@`.
-- *Length wins:* Making a password **longer** helps a lot more. The easiest way to get length you can remember is a **passphrase**: **four or more random words**, at least **15 characters** long, like `violet cactus harbour pepper`.
-- *One password per account:* Attackers then try that same email and password on **other** websites. So every account needs its **own** password.
-- *Recap:* Guessers try **common passwords, words, names and patterns** first. **Length** matters most: each extra lowercase letter makes it 26 times harder.
-
-**Best interactive cards**
-
-- Simulator: This password uses only **lowercase letters**. Make it long enough that trying every combination would take **at least 100 years**.
-- Simulator: Now the password can be **10 characters at most**. Reach **100 years** anyway, by choosing which kinds of characters it can use.
-- Choose what happens: You get an email from a game website: it was hacked, and passwords were stolen.
-
-**Surprising facts**
-
-- In this lesson you'll learn what makes a password strong, and how to make one you can actually remember.
-- For lowercase letters, each position could be any of 26 letters, so every extra letter makes the job **26 times bigger**.
-- A **passphrase** is four or more **random** words, at least 15 characters.
-
-#### Two-Step Sign-In
-
-- **Access:** Free with a free account
-- **Link:** `cybernettraining.com/from/<platform>/two-step-sign-in`
-
-**Key facts**
-
-- *Two locks on the door:* So many accounts let you add a **second lock**.
-- *What two-step sign-in is:* **Two-step sign-in** means proving it's you in two different ways. You'll also see it called **two-factor** or **multi-factor authentication (MFA)**.
-- *Which second proof is strongest?:* A **passkey**: your device signs you in with your fingerprint, face or PIN, and it won't work on a fake website. A code from an **authenticator app** on your phone.
-- *Never share a sign-in code:* **No real company, bank, game or friend will ever ask you to read it out or send it to them.**
-- *Password managers:* A **password manager** is an app that creates a **long random password** for every account, remembers them all, and fills them in for you. You only remember **one main password**: make it a strong passphrase, and protect the manager with two-step sign-in.
-- *Recap:* **Two-step sign-in** adds a second proof: something you know, have or are. Strongest: a **passkey**, then an authenticator app, then a text code.
-
-**Best interactive cards**
-
-- Sort into groups: Sort each proof: something you **know**, **have** or **are**.
-- Choose what happens: You're watching a video when your phone buzzes.
-- Choose what happens: Your phone, with your authenticator app on it, falls in a lake.
-
-#### Module quiz (6 questions)
-
-Not exported, so the answers stay secret.
-
-### Module 2: Spot the Scam (Pro)
-
-Phishing emails, scam texts and calls, and fake websites.
-
-#### Phishing Emails
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/phishing-emails`
-
-**Key facts**
-
-- *Something fishy:* **Phishing** (said "fishing") is when a scammer sends a message pretending to be someone you trust, like your bank, your school or a game, hoping you'll bite: click a link, open a file or hand over your details.
-- *The warning signs:* **Fake sender:** the name looks right, but the email address isn't the real company's. **Rushing you:** "Act now!", "Your account closes in 24 hours!" Pressure stops you thinking.
-- *Who really sent it?:* Anyone can type any **name** into the From line. What counts is the **address after the @**.
-- *What to do instead:* **Don't click** links or open attachments in a message you're unsure about, and don't reply. **Go there yourself:** open the official app, or type the address you know.
-- *Recap:* **Phishing** pretends to be someone you trust. Warning signs: **fake sender**, **rushing you**, **"Dear Customer"**, **asks for secrets**, **hidden links**, **too good to be true**.
-
-**Best interactive cards**
-
-- Tap the picture: Your Bank's real emails come from **@yourbank.example**. Tap **every** warning sign in this email.
-- Choose what happens: An email pops up while you're doing homework.
-- Choose what happens: An email arrives that seems personal.
-
-#### Scam Texts and Calls
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/scam-texts-and-calls`
-
-**Key facts**
-
-- *Scams in your pocket:* The same tricks as phishing emails also arrive as **text messages** and **phone calls**.
-- *Scam texts:* Common scam texts say you owe a **parcel fee** or a **road toll**, that you've won something, or "Hi Mum, this is my new number". Sender names can be faked, so a scam text can even land **in the same thread** as real messages from that company.
-- *Scam calls and cloned voices:* They may ask for a **sign-in code**, your **password**, to **control your computer**, or for payment in **gift cards**. Computers can now **copy a voice** from a short clip, so a call can sound just like someone you know.
-- *Too good to be true:* Some scams offer something amazing: a prize you never entered, a free phone, "double your money", **free game coins or skins**, or a job paying lots for very little work. Watch for **paying a fee to get a prize**, and for payment by **gift cards**, crypto or a money-transfer app.
-- *Recap:* Scam texts use a **small fee**, a **deadline** and an **unfamiliar link**. Scam calls can use a **copied voice**.
-
-**Best interactive cards**
-
-- Tap the picture: Tap the **three** warning signs in the **new** message.
-- Choose what happens: Your phone rings. It sounds exactly like your cousin.
-- Choose what happens: A website promises **10,000 free coins** for your favourite game.
-
-#### Fake Websites
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/fake-websites`
-
-**Key facts**
-
-- *A perfect copy:* Copying how a website **looks** takes minutes: the logo, the colours, the sign-in box. What a fake site can't copy is the real **address**.
-- *Read the address:* The owner of a website is the name **just before the ending** (the ending is like `.example`, `.com` or `.com.au`). `yourbank.example.login-check.example` belongs to **login-check.example**: the name just before the final ending.
-- *What the padlock means:* The padlock next to an address means your connection is **encrypted** (HTTPS): nobody can read what you send on the way. It **doesn't** mean the site is honest.
-- *Safer ways in:* Sign in through the **official app**, a **bookmark**, or by **typing the address** yourself. **Don't sign in from a link** in an email or text.
-- *Recap:* A website's owner is the name **just before the ending** of its address. The **padlock only means encrypted**.
-
-**Best interactive cards**
-
-- Tap the picture: You opened this page from a link in a text. Your Bank's real site is `yourbank.example`. Tap **every** warning sign.
-- Choose what happens: You tap a link in an email to sign in to your game account.
-- Tap the picture: Label four things on this page.
-
-#### Module quiz (7 questions)
-
-Not exported, so the answers stay secret.
-
-### Module 3: Guard Your Privacy (Pro)
-
-Your digital footprint, app permissions and public Wi-Fi.
-
-#### Your Digital Footprint
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/your-digital-footprint`
-
-**Key facts**
-
-- *Footprints in wet cement:* Everything you post, like, comment on or get tagged in adds to your **digital footprint**: the trail you leave online. That's not a reason to stop posting: it's a reason to **choose what you share**.
-- *What to keep private:* your **home address** and **phone number** your **school**, including a uniform or badge in photos
-- *Privacy settings:* Every app has **privacy settings**. **Private account:** only people you approve see your posts.
-- *Recap:* Your **digital footprint** is everything about you online, and it can last. Keep your **address, phone number, school, location right now** and passwords private.
-
-**Best interactive cards**
-
-- Sort into groups: Fine to share, or keep it private?
-- Choose what happens: A fun quiz is going around on social media.
-- Choose what happens: Someone you don't know in real life has been messaging you in a game. They're really friendly.
-
-**Surprising facts**
-
-- That goes for **usernames** too: `SkyDiver_77` is safer than your real name, school or birth year.
-
-#### Apps and Public Wi-Fi
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/apps-and-wi-fi`
-
-**Key facts**
-
-- *Why does a torch app want your contacts?:* When you install an app, it may ask to use parts of your phone: the **camera**, **microphone**, **location**, **contacts** or **photos**.
-- *Only what it needs:* Allow what the app needs for **its job**: a map needs location; a video call needs the camera and microphone. Pick **"Only while using the app"** when it's offered, instead of "Always".
-- *Public Wi-Fi:* **Public Wi-Fi** at a café, library or airport is shared with strangers. Most websites use HTTPS, so what you send to them is **encrypted** even on shared Wi-Fi.
-- *Recap:* Give apps only the **permissions they need** for their job. Choose **"Only while using the app"**.
-
-**Best interactive cards**
-
-- Sort into groups: Does the app **need** that permission for its job?
-- Choose what happens: You install a new drawing game.
-- Choose what happens: You're reading on your phone, and a **microphone dot** appears at the top of the screen.
-
-#### Module quiz (6 questions)
-
-Not exported, so the answers stay secret.
-
-### Module 4: When Things Go Wrong (Free)
-
-Signs of a hack, what to do step by step, and where to get help.
-
-#### Signs of a Hack
-
-- **Access:** Free, no account needed (best for video links)
-- **Link:** `cybernettraining.com/from/<platform>/signs-of-a-hack`
-
-**Key facts**
-
-- *Something's off:* Sometimes an account gets **taken over**: someone else gets in, usually with a stolen or guessed password.
-- *Signs someone else got in:* Your password **suddenly doesn't work**. Emails about a **sign-in** or **password change** you didn't make.
-- *What to do, step by step:* **Tell a trusted adult.** You're not in trouble, and two heads are better than one. **Change the password**, on a device you trust, in the real app or website.
-- *How accounts get taken:* a password **reused** from a site that had a data breach a password typed into a **fake website** from a phishing message
-- *Recap:* Signs: a password that stops working, **alerts you didn't cause**, messages you didn't send, unknown devices. Steps: **tell an adult**, **change the password**, **check recovery details**, **sign out other devices**, **turn on two-step sign-in**.
-
-**Best interactive cards**
-
-- Sort into groups: A sign of a hack, or normal?
-- Choose what happens: Your friends say you've been sending them strange links. You haven't.
-- Choose what happens: You check your account's security settings.
-
-#### Deepfake Scams and Fakes
-
-- **Access:** Free, no account needed (best for video links)
-- **Link:** `cybernettraining.com/from/<platform>/deepfake-scams`
-
-**Key facts**
-
-- *Fake voices and faces:* Then it can make **new** audio or video of them saying things they never said. A fake video or picture made like this is called a **deepfake**.
-- *The same old tricks:* **Hurry:** you must act right now, so you don't stop to check. **Keep it secret:** don't tell anyone, so nobody can warn you.
-- *Ask something only they'd know:* Some families agree a **code word** together, just for emergencies, and never post it online.
-- *If someone makes a fake of you:* It's **not your fault**, and you won't be in trouble for asking for help. **Don't share it** any further, even to show someone.
-- *Recap:* AI can copy voices and faces: **deepfakes** and **voice clones**. The red flags still work: **hurry**, **secrets**, **money or codes**, a **new number**.
-
-**Best interactive cards**
-
-- Sort into groups: Sort each message: **red flag**, or **normal**?
-- Choose what happens: Your phone rings from a number you don't know.
-- Choose what happens: A video message arrives from an account with your coach's name and face.
-
-**Surprising facts**
-
-- If you're under 18 and someone is threatening to share it, or asking you for sexual images or money, report it to the **ACCCE** too (accce.gov.au/report).
-
-#### Getting Help
-
-- **Access:** Free, no account needed (best for video links)
-- **Link:** `cybernettraining.com/from/<platform>/getting-help`
-
-**Key facts**
-
-- *You're not alone:* Scammers **count on people feeling embarrassed** and staying quiet. **It's never your fault**, and telling someone is the brave and smart thing to do.
-- *Who to tell:* A **trusted adult** is someone you feel safe talking to: a parent or carer, a teacher, a school counsellor, or an older relative. If you'd rather talk to someone outside your family, **Kids Helpline** is free, private and open any time, for ages 5 to 25: call **1800 55 1800**.
-- *Where to report in Australia:* **The app or website first:** use its report button. **eSafety Commissioner** (esafety.gov.au): serious cyberbullying of anyone under 18 that the app hasn't dealt with, adult cyber abuse, and someone sharing or threatening to share a **private or nude image** of you (report that straight away).
-- *Save the evidence:* Before you block someone, **take screenshots** of the messages, their username, the web address and the date. One exception: if it's a **private or nude image**, **don't copy, save or share the image itself**.
-- *Recap:* It's **never your fault**. Tell a **trusted adult**, or call **Kids Helpline** on 1800 55 1800.
-
-**Best interactive cards**
-
-- Choose what happens: In a group chat, some people start posting mean messages about you.
-- Sort into groups: Does it help, or make things worse?
-- Choose what happens: Someone you met online says they'll share a private photo of you unless you pay them. If this ever happens: **it is never your fault**, and you won't be in trouble.
-
-**Surprising facts**
-
-- **ACCCE**, the Australian Centre to Counter Child Exploitation (accce.gov.au/report), run by the Australian Federal Police: if you're **under 18** and someone is pressuring or threatening you with a private image.
-- **IDCARE** (idcare.org or 1800 595 160): free help to make a plan if your personal details were stolen.
-- Then: **eSafety** for serious abuse and private images (and the **ACCCE** if you're under 18), **Scamwatch** for scams, your **bank** for money, **IDCARE** for stolen details, **000** for danger.
-
-#### Module quiz (8 questions)
-
-Not exported, so the answers stay secret.
-
-## How AI Really Works
-
-Teach a model, watch a chatbot pick its words, and use AI safely.
-
-### Module 1: What AI Actually Is (Free)
-
-What counts as AI, how it learns from examples, and where it goes wrong.
-
-#### Spot the AI
-
-- **Access:** Free, no account needed (best for video links)
-- **Link:** `cybernettraining.com/from/<platform>/spot-the-ai`
-
-**Key facts**
-
-- *AI is already in your pocket:* All of these use **artificial intelligence**, or **AI**.
-- *Rules or examples?:* Most programs follow **rules** that a person wrote, step by step. Try writing rules for "what does my friend's face look like?" So instead, people give the computer lots of **examples** and let it work out what they have in common.
-- *Learning by example:* It's called **machine learning**: the computer is shown many examples and finds the patterns in them itself.
-- *Recap:* Ordinary programs follow **rules** a person wrote. **AI** learns from **examples** instead, finding patterns in them.
-
-**Best interactive cards**
-
-- Sort into groups: Does each one **follow rules** someone wrote, or **learn from examples**?
-- Match pairs: Match each kind of AI to the examples it learns from.
-- Sort into groups: Trickier: does each one **follow rules**, or **learn from examples**?
-
-**Surprising facts**
-
-- An alarm clock's rule is simple: at 7:00, ring.
-
-#### Patterns Everywhere
-
-- **Access:** Free with a free account
-- **Link:** `cybernettraining.com/from/<platform>/patterns-everywhere`
-
-**Key facts**
-
-- *Examples, labels and models:* A **pattern** is something that shows up again and again, like apples being round and bananas being long. To teach a computer, you give it **training data**: lots of examples, each with a **label** that says what it really is ("apple" or "banana").
-- *Why did it get one wrong?:* Every apple in its training data was **red**.
-- *Recap:* **Training data** is lots of examples, each with a **label** saying what it really is. The computer finds **patterns** in them and builds a **model** that guesses labels for new things.
-
-**Best interactive cards**
-
-- Train a model: Label each fruit as an **apple** or a **banana**. Then press Check to train the model and see what it guesses about 3 new fruits.
-- Train a model: Here's the same model, plus a **golden apple** it isn't using yet. Choose which examples to train on, so it gets **every** test fruit right.
-- Train a model: Now there are three kinds of fruit. This model looks at the **3 nearest** examples and goes with the most common label. Label the fruit, then see its guesses.
-
-#### What AI Can't Do
-
-- **Access:** Free with a free account
-- **Link:** `cybernettraining.com/from/<platform>/what-ai-cant-do`
-
-**Key facts**
-
-- *A guess, not a fact:* Everything a model gives you is a **prediction**: its best guess, based on patterns in its training data.
-- *People are responsible:* Big decisions about people, like a punishment at school, a medical treatment or who gets a job, need a **person** to decide and to be responsible.
-- *Recap:* Everything AI gives you is a **prediction**, not a fact.
-
-**Best interactive cards**
-
-- Choose what happens: You're using an AI helper for history homework.
-- Sort into groups: Is each job **fine for AI to help with**, or does it **need a person** to decide?
-- Choose what happens: Your photo app sorts pictures by who's in them.
-
-#### Module quiz (6 questions)
-
-Not exported, so the answers stay secret.
-
-### Module 2: How Machines Learn (Pro)
-
-Training data, fair tests, and how bias sneaks in.
-
-#### Training Data
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/training-data`
-
-**Key facts**
-
-- *Words that vote:* When a new message arrives, each word in it **votes**. A word gets **one vote for each training message** it appeared in, for that message's label.
-- *One word, three votes:* In those examples, **"free" only ever appeared in spam**, so to the model, "free" means spam.
-- *Good data, bad data:* **Wrong labels:** a spam message labelled "not spam" teaches the model the wrong lesson. **Copies:** a thousand copies of one example add nothing new, and make that one example count far too much.
-- *Recap:* A model learns only from its **training data**, so it repeats that data's patterns, including its gaps. Fix it with **better** data (checked, varied, realistic), not just more of it.
-
-**Best interactive cards**
-
-- Train a model: Label each message as **spam** or **not spam**. Then press Check to train the model and see what it makes of two new messages.
-- Train a model: Try it. Choose which examples to train on, so the model gets **both** test messages right.
-- Train a model: Someone made a labelling mistake in this fruit data. Find it, and choose the examples to train on so the model gets **both** test fruits right. (This model picks the **nearest** example.)
-
-#### Testing a Model
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/testing-a-model`
-
-**Key facts**
-
-- *Keep some examples aside:* **Training examples** are for learning. **Test examples** are kept aside, and the model never sees them while it learns.
-- *Memorising isn't learning:* A model can learn its training examples **too** well: every detail, instead of the general pattern. This is called **overfitting**.
-- *Recap:* Keep **test examples** aside: the model never sees them while it learns. **Accuracy** = right ÷ tested × 100.
-
-**Best interactive cards**
-
-- Sort into groups: Is each one a **fair** test of a model, or an **unfair** one?
-- Train a model: A weather model guesses whether it will rain from the clouds and the air. Each training day says what really happened: label them, then see how the model does on **4 test days** it has never seen.
-- Train a model: Now add training days so the model gets **all 4** test days right. Three new days are available.
-
-**Surprising facts**
-
-- **Accuracy** is that as a percentage: right ÷ tested × 100.
-- 100% on training examples but much less on new ones means **overfitting**: memorising instead of learning.
-
-#### Bias In, Bias Out
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/bias-in-bias-out`
-
-**Key facts**
-
-- *Bias in, bias out:* This is called **bias**.
-- *Finding and fixing bias:* **Ask who it might work worse for**, before and after it's built. **Test it with lots of different people** and situations, not just one group.
-- *Recap:* **Bias**: a model works better for some people than others, usually because of gaps in its training data.
-
-**Best interactive cards**
-
-- Train a model: This checker learned only from formal messages, so it calls **"That game was sick!"** mean. Choose the examples to train on, so it gets **all 3** test messages right. (It uses word votes, like the spam model.)
-- Choose what happens: Your club wants to sort new sign-ups with a model.
-- Choose what happens: A school is choosing a voice assistant to help in class.
-
-#### Module quiz (8 questions)
-
-Not exported, so the answers stay secret.
-
-### Module 3: How Chatbots Think (Pro)
-
-Next-word guessing, temperature, and why chatbots make things up.
-
-#### Next-Word Machines
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/next-word-machines`
-
-**Key facts**
-
-- *Guessing the next word:* A chatbot is built on a **language model**: a model trained on a huge amount of text, so it learns which words tend to follow which. Give it some text, and it gives every possible next word a **chance**.
-- *Recap:* A **language model** learned from huge amounts of text which words tend to follow which. For the text so far, it gives every possible next **token** a chance, picks one, adds it, and repeats.
-
-**Best interactive cards**
-
-- Next word: A language model is choosing the next word. Which one is it **most likely** to pick?
-- Put in order: Put the steps a chatbot repeats for every token in order.
-- Next word: Remember: after "The cat sat on the", "mat" had the biggest chance. Now the text so far is longer. Which word is **most likely** next this time?
-
-**Surprising facts**
-
-- After "The cat sat on the", it might give "mat" 60%, "sofa" 20%, "floor" 15% and "moon" 5%.
-- A 60% chance means that if it carried on from here 100 times, it would pick "mat" about 60 of them.
-- A 70% chance means about 70 times in every 100, not every time.
-
-#### Temperature
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/temperature`
-
-**Key facts**
-
-- *Same question, different answers:* A setting called **temperature** decides how it picks between its options.
-- *Turning the dial:* **Low temperature:** the likeliest token gets even likelier. **Temperature 1:** the chances are used as the model learned them.
-- *Which temperature, when?:* Low temperatures suit jobs with **one right answer**: maths, facts, summaries, code. Higher temperatures suit jobs where you want **variety**: brainstorming, story ideas, silly poems.
-- *Recap:* **Temperature** changes how a model picks from its chances; the order of the tokens never changes.
-
-**Best interactive cards**
-
-- Next word: Move the temperature until **mat** has a chance of at least **80%**.
-- Next word: Now make the model more surprising: move the temperature until **no word** has more than a **45%** chance.
-- Next word: Can you get **sofa** up to at least **24%**?
-
-#### Made-Up Answers
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/made-up-answers`
-
-**Key facts**
-
-- *Fluent, confident, wrong:* When a chatbot writes something false but says it smoothly and confidently, it's called a **hallucination**. It happens because the model picks tokens that **sound** likely, not tokens it has checked are true.
-- *How to check:* **Find it in a trusted source**: a textbook, a library catalogue, an official website. **Ask for sources, then open them**: chatbots can invent sources too, so make sure each one really exists and says what the chatbot claims.
-- *A short memory:* This is called its **context window**.
-- *Recap:* A **hallucination** is a fluent, confident answer that's false, because the model picks likely tokens, not checked facts. The **context window** is how much of the chat it can see at once; in long chats it can forget the start.
-
-**Best interactive cards**
-
-- Next word: That small space-story model gets this text. Which word is it **most likely** to write next?
-- Choose what happens: You're writing a report on volcanoes.
-- Choose what happens: A chatbot tells you a famous ship sank in **1915**, and gives a link to a museum website.
-
-#### Module quiz (8 questions)
-
-Not exported, so the answers stay secret.
-
-### Module 4: Talking to AI (Pro)
-
-Write clear prompts, check the answers, and know today's tools.
-
-#### Writing Good Prompts
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/writing-good-prompts`
-
-**Key facts**
-
-- *What a good prompt says:* What you type to a chatbot is called a **prompt**. Remember, it writes the likely next words for **your** text, so the more your prompt says, the better it can aim.
-- *Give it what it needs:* Good prompts can include things you have: **paste in your notes** to summarise, or **your draft** for feedback. You can also ask it to **ask you questions first**, or to **say if it isn't sure**.
-- *Recap:* A **prompt** works best when it says the **goal**, the **context** and the **format**.
-
-**Best interactive cards**
-
-- Sort into groups: Is each prompt **vague**, or **clear** about what it wants and what shape?
-- Choose what happens: You're preparing a 1-minute talk about octopuses for class.
-- Choose what happens: You want a chatbot to quiz you on your history notes.
-
-**Surprising facts**
-
-- **The context:** who it's for and what you already know or have ("I'm 12", "here are my notes").
-
-#### Checking AI's Work
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/checking-ais-work`
-
-**Key facts**
-
-- *Four ways to check:* **Facts and dates:** find them in a trusted source, like a textbook or an official website. **Sources:** open each one and make sure it really says what the chatbot claims.
-- *Using AI honestly:* Using AI to **learn** is great: ask it to explain a step you don't get, quiz you, or give feedback on your draft. Using it to **do the work for you**, and handing that in as yours, is different.
-
-**Best interactive cards**
-
-- Choose what happens: The chatbot's paragraph says: "The Moon is about 38,000 km from Earth, and it takes about 3 days to get there by spacecraft."
-- Sort into groups: Is each one using AI to **learn**, or letting it **do your work** for you?
-- Choose what happens: Your friend shows you an essay a chatbot wrote for them, due tomorrow.
-
-#### AI Tools Today
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/ai-tools-today`
-
-**Key facts**
-
-- *Chat assistants:* Some widely used AI chat assistants (in A to Z order) are **ChatGPT** (made by OpenAI), **Claude** (Anthropic), **Copilot** (Microsoft) and **Gemini** (Google).
-- *AI you already use:* There are **voice assistants** you talk to that answer out loud, **image generators** that make pictures from a description, and **translation apps** that turn text into another language.
-- *Age rules and good habits:* Every AI app has its own rules, including **who can use it**, and they differ a lot. **Check the app's own rules**, and **ask a parent or carer** before signing up.
-
-**Best interactive cards**
-
-- Sort into groups: For schoolwork, is each use of an AI tool **usually fine**, or one to **check with your teacher first**?
-- Choose what happens: A new AI app promises to turn your selfie into a cartoon.
-- Choose what happens: Your friend says: "My AI app is the best one. It's never wrong."
-
-**Surprising facts**
-
-- One app's terms may say you must be 18 or older; another may allow 13-year-olds with a parent's OK; some let a parent switch on access for younger children (or turn it off).
-
-#### Module quiz (7 questions)
-
-Not exported, so the answers stay secret.
-
-### Module 5: AI Images, Video and Voices (Pro)
-
-How AI makes pictures and voices, deepfakes, and checking what's real.
-
-#### How AI Makes Pictures
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/how-ai-makes-pictures`
-
-**Key facts**
-
-- *Learning what words look like:* AI that makes new things (pictures, text, music, voices) is called **generative AI**.
-- *From static to picture:* Most image tools start with **random static**, like a fuzzy TV screen. Because each picture starts from **different random static**, the same prompt gives a different picture every time, a bit like temperature giving a chatbot different words.
-- *Mistakes AI pictures sometimes make:* AI pictures **sometimes** have give-aways: a hand with the wrong number of fingers, signs with jumbled letters, earrings that don't match, shadows or reflections pointing the wrong way. So spotting one is a clue, but **not** spotting one proves nothing.
-- *Recap:* **Generative AI** makes new things; image models learned from huge numbers of captioned pictures.
-
-**Best interactive cards**
-
-- Match pairs: Match each word in a picture prompt to what it changes in the picture.
-- Put in order: Put the steps of making an AI picture in order, from first to last.
-- Sort into groups: Is each one a **possible clue** that a picture was made by AI, or **not a clue**?
-
-#### Cloned Voices and Faces
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/cloned-voices-and-faces`
-
-**Key facts**
-
-- *Fake faces and voices:* Generative AI can learn how a real person looks and sounds from recordings of them, then make **new** video or audio of them saying things they never said. A fake video or picture like this is a **deepfake**.
-- *Permission matters:* Never make or share a deepfake or voice clone of a real person without their **permission**. If someone makes a fake of **you**, it's not your fault.
-- *Clues, and context:* Fake videos and audio **sometimes** have clues: lips slightly out of time with the words, odd blinking, a flat voice or strange breathing, the edge of a face flickering. But the strongest clues are usually in the **situation**: who posted it, whether it pushes you to act fast, whether anyone trustworthy is reporting it, whether it makes sense.
-- *Recap:* AI can learn a real person's face or voice from recordings and make new fakes: **deepfakes** and **voice clones**.
-
-**Best interactive cards**
-
-- Sort into groups: Is each use of voice or face AI **helpful**, or **harmful**?
-- Choose what happens: Your friend has found an app that makes funny face-swap videos.
-- Choose what happens: A video shows a famous singer saying: "I'm giving away 1,000 free concert tickets! Click the link in the next hour."
-
-**Surprising facts**
-
-- In Australia, sharing fake sexual images of a real person without their consent is a serious crime, and fake sexual images of anyone under 18 are always illegal.
-
-#### Who Made This?
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/who-made-this`
-
-**Key facts**
-
-- *Labels and watermarks:* Some AI tools add a **watermark**: a visible mark, or hidden information inside the file, saying AI made it. So a label saying AI made it is good evidence; **no label proves nothing**.
-- *How to check a picture:* **Find where it first appeared.** Many search tools let you search with the picture itself: older copies, or the original, often turn up. **Look for trusted news** reporting it, ideally with other photos from other angles.
-- *Recap:* A **watermark** or AI label is good evidence when it's there; no label proves nothing. Check where a picture **first appeared**, whether **trusted news** shows it, the account and the details.
-
-**Best interactive cards**
-
-- Choose what happens: Your friend sends you the shark-in-the-street picture: "OMG look at this!!"
-- Sort into groups: Does each one **help** you tell if a picture is real, or is it a **myth**?
-- Choose what happens: You made a funny AI picture of your dog wearing a crown, sitting on a throne.
-
-#### Module quiz (7 questions)
-
-Not exported, so the answers stay secret.
-
-### Module 6: Using AI Safely and Fairly (Pro)
-
-Spot AI-made fakes, keep your private stuff private, and use AI honestly.
-
-#### Spotting AI Fakes
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/spotting-ai-fakes`
-
-**Key facts**
-
-- *Fakes made in seconds:* With AI, anyone can make in seconds what used to take hours: **fake reviews**, **fake news articles** that look like a real news site, and **fake accounts** (called bots) that post and reply automatically, all day. False information that spreads, whether someone meant it or not, is called **misinformation**.
-- *Check outside the post:* When something surprises you, **stop** and notice how it makes you feel. Then check **outside** the post, not inside it:
-- *Recap:* AI makes fake reviews, articles and accounts (bots) cheap and fast: **misinformation** can come from anywhere. Strong feelings are the moment to stop: check **outside** the post, not inside it.
-
-**Best interactive cards**
-
-- Sort into groups: Is each one about a shop's reviews **suspicious**, or **normal**?
-- Choose what happens: Under a video about a new game, an account replies to dozens of comments within a minute.
-- Sort into groups: Is each one a check **outside** the post (useful), or just looking **inside** it again?
-
-**Surprising facts**
-
-- By the next morning it has 200 five-star reviews, all saying how "amazing" and "life-changing" the boards are.
-
-#### What Not to Share with AI
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/what-not-to-share`
-
-**Key facts**
-
-- *Where your chats go:* Depending on the app and its settings, your chats may be **saved**, **read by staff** checking for problems, or **used to train** future models. But the safest rule is simple: **don't type anything you wouldn't want someone else to read**, and remember that your friends' photos and secrets aren't yours to share.
-- *A program, not a person:* If something's worrying you, talk to a **trusted adult**, a friend, or, in Australia, **Kids Helpline (1800 55 1800)**, free, any time. If you're in danger right now, call **000**.
-
-**Best interactive cards**
-
-- Sort into groups: Is each one **fine to type** into an AI chatbot, or one to **keep private**?
-- Choose what happens: It's late, you're feeling really down, and you've been telling an AI chatbot about it for an hour.
-- Choose what happens: You install an AI homework app. As it opens, it asks for permission to see your **contacts** and your **location**.
-
-**Surprising facts**
-
-- For worries, talk to a trusted adult or Kids Helpline (1800 55 1800).
-
-#### Fair and Honest Use
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/fair-and-honest-use`
-
-**Key facts**
-
-- *Say how you used it:* **Say when and how** you used AI ("I used AI to check my spelling"). **Follow the rules** of your school, club or competition, and **ask** when you're not sure.
-- *The people behind it:* What you can do: **respect people's work**, credit artists you're inspired by, and keep making things in your own way.
-- *Fair to everyone:* So when AI makes decisions about people, like picking, sorting or scoring them, ask: **who might this be unfair to?** And keep a **person** checking decisions that matter.
-- *You know how AI really works:* AI learns **patterns from examples**, so it's only as good, and as fair, as its training data. Chatbots pick **likely tokens**, not checked facts: check anything that matters.
-
-**Best interactive cards**
-
-- Sort into groups: Is each one **honest**, or **not honest**?
-- Choose what happens: Your class wants to use an AI tool to pick team captains "fairly", based on who talks most in class discussions.
-- Choose what happens: Your friend's story wins the school writing prize. You know a chatbot wrote most of it.
 
 #### Module quiz (8 questions)
 

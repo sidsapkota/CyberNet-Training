@@ -243,7 +243,7 @@ export function PacketPathCardView({
               data-keyboard-passthrough
               disabled={answer.length <= 1}
               onClick={() => onAnswerChange(answer.slice(0, -1))}
-              className="inline-flex min-h-10 items-center gap-1 rounded-control px-2.5 text-small font-semibold text-ink-muted hover:bg-surface-raised hover:text-ink disabled:opacity-40"
+              className="inline-flex min-h-11 items-center gap-1 rounded-control px-2.5 text-small font-semibold text-ink-muted hover:bg-surface-raised hover:text-ink disabled:opacity-40"
             >
               <UndoIcon className="size-4" /> Undo
             </button>
@@ -252,7 +252,7 @@ export function PacketPathCardView({
               data-keyboard-passthrough
               disabled={answer.length <= 1}
               onClick={() => onAnswerChange([card.source])}
-              className="inline-flex min-h-10 items-center gap-1 rounded-control px-2.5 text-small font-semibold text-ink-muted hover:bg-surface-raised hover:text-ink disabled:opacity-40"
+              className="inline-flex min-h-11 items-center gap-1 rounded-control px-2.5 text-small font-semibold text-ink-muted hover:bg-surface-raised hover:text-ink disabled:opacity-40"
             >
               <RetryIcon className="size-4" /> Reset
             </button>

@@ -9,9 +9,11 @@ import { LessonTimeIcon } from "@/components/ui/icons";
 import { formatChecked } from "@/lib/content/lastChecked";
 import type { CourseOutline, RegularLesson } from "@/lib/content/schema";
 import { useFeedback } from "@/lib/feedback";
-import { useGlobalKeyDown } from "@/lib/keyboard";
+import { useCardNavigationKeys, useGlobalKeyDown } from "@/lib/keyboard";
 import { useProgress } from "@/lib/progress/ProgressProvider";
-import { trackEvent } from "@/lib/analytics";
+import { trackEvent, trackLessonQuit } from "@/lib/analytics";
+import { speechText } from "@/cards/speech";
+import { reactionExpression, reactionLine } from "@/lib/reactions";
 import { hintXpNote, visibleHint } from "@/lib/hints";
 import { getNextLesson, lessonFinishState } from "@/lib/progress/state";
 import { emptySnapshot, isCardCompleted } from "@/lib/progress/types";
@@ -21,6 +23,7 @@ import { useDaily } from "@/lib/progress/useDaily";
 import { cardXpToAward, exploreXpToAward, lessonBonusToAward, practiceXp, XP } from "@/lib/progress/xp";
 import { MilestoneScreen } from "@/components/streak/MilestoneScreen";
 import { type ProgressNode } from "@/components/network/NodeProgress";
+import { CardReview, type ReviewState } from "./CardReview";
 import { CardStage, useFeedbackAnimation } from "./CardStage";
 import { FeedbackFooter, type FeedbackTone, type FooterAction } from "./FeedbackFooter";
 import { HintReveal } from "./HintReveal";
@@ -54,8 +57,6 @@ function freshRun(card: Card): CardRun {
   };
 }
 
-const PRAISE = ["Correct!", "Nice work!", "Spot on!", "You got it!", "Exactly right!"];
-
 interface LessonResult {
   xpEarned: number;
   alreadyCompleted: boolean;
@@ -82,6 +83,12 @@ export function LessonRun({
   const [completedThisVisit, setCompletedThisVisit] = useState<ReadonlySet<string>>(() => new Set());
   /** Drives the pulse along the progress trace after a correct answer. */
   const [pulse, setPulse] = useState<{ key: number; from: number; to: number } | null>(null);
+  /** How each card was left in this visit (answered, or skipped), for going back. */
+  const [history, setHistory] = useState<ReadonlyMap<number, CardRun>>(() => new Map());
+  /** An earlier card being looked at (read-only), or null for the live card. */
+  const [viewing, setViewing] = useState<number | null>(null);
+  /** Read out to screen readers when the learner moves between cards. */
+  const [announcement, setAnnouncement] = useState("");
   const { scope, playIncorrect } = useFeedbackAnimation();
   const feedback = useFeedback();
 
@@ -130,6 +137,7 @@ export function LessonRun({
   }
 
   function goTo(nextIndex: number) {
+    setViewing(null);
     setIndex(nextIndex);
     setRun(freshRun(lesson.cards[nextIndex] as Card));
     window.scrollTo({ top: 0 });
@@ -168,6 +176,7 @@ export function LessonRun({
       markComplete(card, xp);
       if (xp > 0) setSessionXp((current) => current + xp);
     }
+    setHistory((current) => new Map(current).set(index, run));
     if (index + 1 < total) goTo(index + 1);
     else void finish(completedByContinue ? card.id : undefined, xp);
   }
@@ -215,8 +224,44 @@ export function LessonRun({
 
   const secondary: FooterAction | undefined =
     card.difficulty === "challenge" && run.status !== "correct"
-      ? { label: "Skip challenge", onClick: advance }
+      ? { label: "Skip bonus", onClick: advance }
       : undefined;
+
+  // ── Back and forward: earlier cards, read-only ──────────────────────────────
+  const shownIndex = viewing ?? index;
+  const canGoBack = result === null && shownIndex > 0;
+
+  function show(target: number | null) {
+    setViewing(target);
+    const at = target ?? index;
+    const c = lesson.cards[at] as Card;
+    setAnnouncement(
+      target === null ? `Card ${at + 1} of ${total}, where you were` : `Card ${at + 1} of ${total}, ${reviewWord(c, at)}. Read only.`,
+    );
+    window.scrollTo({ top: 0 });
+    // Focus the card, so keyboard and screen-reader users start reading from its top.
+    window.requestAnimationFrame(() => document.querySelector<HTMLElement>("[data-card-stage]")?.focus());
+  }
+  function goBack() {
+    if (shownIndex > 0) show(shownIndex - 1);
+  }
+  function goForward() {
+    if (viewing === null) return;
+    show(viewing + 1 >= index ? null : viewing + 1);
+  }
+  function reviewState(c: Card, at: number): ReviewState {
+    const past = history.get(at);
+    const definition = getCardDefinition(c);
+    if (!definition.interactive) return { kind: "read", answer: past?.answer };
+    if (past?.status === "correct") return { kind: "answered", answer: past.answer };
+    return isDone(c) ? { kind: "done-before" } : { kind: "skipped" };
+  }
+  function reviewWord(c: Card, at: number): string {
+    const kind = reviewState(c, at).kind;
+    return kind === "skipped" ? "skipped" : kind === "read" ? "read" : "answered";
+  }
+  const reviewPrimary: FooterAction =
+    viewing !== null && viewing + 1 < index ? { label: "Next", onClick: goForward } : { label: `Back to card ${index + 1}`, onClick: () => show(null) };
 
   const progressNodes: ProgressNode[] = lesson.cards.map((c, i) => {
     const challenge = c.difficulty === "challenge";
@@ -232,9 +277,33 @@ export function LessonRun({
     // With the how-to-play panel open, Enter means "Got it", unless it came from an answer box
     // (the learner has clearly started; Check dismisses the panel too).
     const fromAnswerBox = event.target instanceof Element && event.target.closest("[data-enter-submits]");
-    if (showCoach && !fromAnswerBox) coach.dismiss();
+    if (viewing !== null) reviewPrimary.onClick();
+    else if (showCoach && !fromAnswerBox) coach.dismiss();
     else if (!primary.disabled) primary.onClick();
   }, result === null);
+  useCardNavigationKeys(canGoBack ? goBack : null, viewing !== null ? goForward : null, result === null);
+
+  // Leaving before the end (✕, the browser's back, closing the tab): note the card, once.
+  const quitState = useRef({ finished: false, sent: false, card: index + 1, pending: 0 });
+  useEffect(() => {
+    quitState.current.finished = result !== null;
+    quitState.current.card = index + 1;
+  }, [result, index]);
+  useEffect(() => {
+    const state = quitState.current;
+    // A remount straight after an unmount (React's dev double-mount) cancels the pending send.
+    window.clearTimeout(state.pending);
+    const send = () => {
+      if (state.finished || state.sent) return;
+      state.sent = true;
+      trackLessonQuit(lesson.id, state.card);
+    };
+    window.addEventListener("pagehide", send);
+    return () => {
+      window.removeEventListener("pagehide", send);
+      state.pending = window.setTimeout(send, 0);
+    };
+  }, [lesson.id]);
 
   if (result) {
     const next = getNextLesson(course, lesson.id);
@@ -265,6 +334,45 @@ export function LessonRun({
     );
   }
 
+  if (viewing !== null) {
+    const reviewCard = lesson.cards[viewing] as Card;
+    const state = reviewState(reviewCard, viewing);
+    const answered = state.kind === "answered" || state.kind === "done-before";
+    return (
+      <PlayerShell
+        exitHref={`/course/${course.id}`}
+        nodes={progressNodes}
+        progressLabel={`Lesson progress: looking back at card ${viewing + 1} of ${total}`}
+        onBack={canGoBack ? goBack : undefined}
+        footer={
+          <FeedbackFooter
+            key={`review-${viewing}`}
+            tone={answered ? "correct" : "neutral"}
+            heading={answered ? "You got this one" : undefined}
+            explanation={answered && isInteractiveCard(reviewCard) ? reviewCard.explanation : undefined}
+            primary={reviewPrimary}
+            secondary={viewing + 1 < index ? { label: `Back to card ${index + 1}`, onClick: () => show(null) } : undefined}
+          />
+        }
+      >
+        <p className="sr-only" aria-live="polite">
+          {announcement}
+        </p>
+        <p className="mb-3 font-mono text-caption tracking-widest text-ink-faint uppercase">
+          Card {viewing + 1} of {total} · looking back
+        </p>
+        <CardStage
+          cardKey={`${lesson.id}-review-${viewing}`}
+          card={reviewCard}
+          scope={scope}
+          listen={speechText(reviewCard, answered ? "correct" : "answering")}
+        >
+          <CardReview card={reviewCard} state={state} />
+        </CardStage>
+      </PlayerShell>
+    );
+  }
+
   const hint = visibleHint(card, "lesson", run.status);
   const tone: FeedbackTone =
     run.status === "correct" ? "correct" : run.status === "incorrect" ? "incorrect" : "neutral";
@@ -276,19 +384,14 @@ export function LessonRun({
       nodes={progressNodes}
       pulse={pulse}
       progressLabel={`Lesson progress: card ${index + 1} of ${total}`}
+      onBack={canGoBack ? goBack : undefined}
       footer={
         <FeedbackFooter
           key={`${index}-${run.status}`}
           tone={tone}
-          // Wrong answers get a small confused mascot; correct ones keep the usual feedback only.
-          mascot={run.status === "incorrect" ? "confused" : undefined}
-          heading={
-            run.status === "correct"
-              ? PRAISE[index % PRAISE.length]
-              : run.status === "incorrect"
-                ? "Not quite"
-                : undefined
-          }
+          // The mascot reacts to every answer with a short, varied line (src/lib/reactions.ts).
+          mascot={run.status === "answering" ? undefined : reactionExpression(run.status === "correct", card.difficulty === "challenge", run.attempts)}
+          heading={run.status === "answering" ? undefined : reactionLine(lesson.id, index, run.attempts, run.status === "correct")}
           subheading={
             run.status === "incorrect"
               ? ((isInteractiveCard(card) ? nudgeFor(card, run.answer) : undefined) ?? "Have another go. You've got this.")
@@ -304,13 +407,22 @@ export function LessonRun({
         />
       }
     >
+      <p className="sr-only" aria-live="polite">
+        {announcement}
+      </p>
       {showCoach && <CoachPanel key={showCoach} coachKey={showCoach} onDone={coach.dismiss} />}
       {lesson.lastChecked && index === 0 && (
         <p className="mb-4 inline-flex items-center gap-1.5 rounded-sm border border-line bg-surface px-2.5 py-1 text-caption text-ink-muted">
           <LessonTimeIcon className="size-3.5" /> Last checked {formatChecked(lesson.lastChecked)}. These change fast.
         </p>
       )}
-      <CardStage cardKey={`${lesson.id}-${index}`} card={card} scope={scope} challengeXp={challengeXp}>
+      <CardStage
+        cardKey={`${lesson.id}-${index}`}
+        card={card}
+        scope={scope}
+        challengeXp={challengeXp}
+        listen={speechText(card, run.status)}
+      >
         {definition.interactive || isGuidedDefinition(definition) ? (
           <definition.Component
             card={card}

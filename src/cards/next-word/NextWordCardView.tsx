@@ -113,7 +113,7 @@ export function NextWordCardView({ card, answer, onAnswerChange, status }: CardC
                 const snapped = stops.reduce((best, s) => (Math.abs(s - value) < Math.abs(best - value) ? s : best), stops[0]!);
                 onAnswerChange({ ...answer, temperature: snapped });
               }}
-              className="mt-2 h-8 w-full accent-[var(--color-accent)]"
+              className="mt-1 h-11 w-full accent-[var(--color-accent)]"
             />
             <div className="flex justify-between text-caption text-ink-faint" aria-hidden="true">
               <span>Predictable</span>

@@ -25,6 +25,7 @@ import {
   snapshotBefore,
 } from "@/lib/progress/state";
 import type { ProgressSnapshot } from "@/lib/progress/types";
+import { CourseLevel } from "./CourseLevel";
 import { ModeToggle } from "./ModeToggle";
 import { nodeLook, PathNode } from "./PathNode";
 
@@ -142,6 +143,7 @@ export function CoursePath({ course }: { course: CourseOutline }) {
       <div>
         <MobileHeader state={state} />
         <h1 className="sr-only lg:not-sr-only lg:text-headline lg:font-semibold">{course.title}</h1>
+        <CourseLevel level={course.level} className="mt-1 hidden lg:inline-flex" />
         <div className="mt-4 space-y-10 lg:mt-8">
           {state.modules.map((mod, m) => (
             <ModulePath
@@ -174,9 +176,12 @@ function MobileHeader({ state }: { state: CourseState }) {
         <ProgressRing value={fraction} size={48} stroke={5} label={`${Math.round(fraction * 100)}% complete`}>
           <span className="font-mono text-[0.7rem] font-semibold tabular-nums">{Math.round(fraction * 100)}%</span>
         </ProgressRing>
-        <p className="min-w-0 truncate text-title font-semibold" aria-hidden="true">
-          {state.course.title}
-        </p>
+        <div className="min-w-0">
+          <p className="truncate text-title font-semibold" aria-hidden="true">
+            {state.course.title}
+          </p>
+          <CourseLevel level={state.course.level} />
+        </div>
       </div>
       <ModeToggle className="mt-4" />
     </div>

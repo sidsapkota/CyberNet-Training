@@ -71,3 +71,26 @@ export function digitKeyIndex(key: string, count: number): number | null {
   const index = Number(key) - 1;
   return index < count ? index : null;
 }
+
+/**
+ * Alt + Left / Alt + Right: back and forward between cards. The browser's own "history back" on
+ * Alt + Left is cancelled while a lesson is open, so the learner never leaves by accident. Ignored
+ * in text boxes, where Alt + arrows can mean something else.
+ */
+export function useCardNavigationKeys(onBack: (() => void) | null, onForward: (() => void) | null, enabled = true) {
+  const onKeyDown = useEffectEvent((event: KeyboardEvent) => {
+    if (!event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    const target = event.target;
+    if (target instanceof HTMLElement && (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName))) return;
+    event.preventDefault();
+    if (event.key === "ArrowLeft") onBack?.();
+    else onForward?.();
+  });
+
+  useEffect(() => {
+    if (!enabled) return;
+    window.addEventListener("keydown", onKeyDown, true);
+    return () => window.removeEventListener("keydown", onKeyDown, true);
+  }, [enabled]);
+}

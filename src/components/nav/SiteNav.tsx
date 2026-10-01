@@ -45,7 +45,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-30 border-b border-line bg-canvas">
       <div className="mx-auto flex h-16 max-w-wide items-center gap-2 px-gutter sm:gap-6">
-        <Link href="/" aria-label="CyberNet Training, dashboard" className="rounded-control">
+        <Link href="/" aria-label="CyberNet Training, dashboard" className="inline-flex min-h-11 min-w-11 items-center rounded-control">
           <LogoLockup />
         </Link>
         <nav aria-label="Main" className="hidden h-full items-stretch gap-1 sm:flex">
@@ -107,7 +107,7 @@ function HeaderAccount() {
     return (
       <Link
         href="/login"
-        className="hidden min-h-9 items-center gap-1.5 rounded-control border border-line-strong px-3 text-small font-semibold text-ink transition-colors hover:border-accent-ink hover:text-accent-ink sm:inline-flex"
+        className="hidden min-h-11 items-center gap-1.5 rounded-control border border-line-strong px-3 text-small font-semibold text-ink transition-colors hover:border-accent-ink hover:text-accent-ink sm:inline-flex"
       >
         <SignInIcon className="size-4" /> Sign in
       </Link>

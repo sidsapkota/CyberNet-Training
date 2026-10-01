@@ -20,6 +20,8 @@ import { quizXpToAward, scoreQuiz } from "@/lib/progress/xp";
 import { milestoneReached } from "@/lib/progress/streak";
 import { useDaily } from "@/lib/progress/useDaily";
 import { MilestoneScreen } from "@/components/streak/MilestoneScreen";
+import { speechText } from "@/cards/speech";
+import { useCardNavigationKeys } from "@/lib/keyboard";
 import { CardStage, useFeedbackAnimation } from "./CardStage";
 import { FeedbackFooter, type FooterAction } from "./FeedbackFooter";
 import { PlayerShell, uniformNodes } from "./PlayerShell";
@@ -61,6 +63,8 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
     freezes: daily?.streak.freezes ?? 0,
   }));
   const [milestoneSeen, setMilestoneSeen] = useState(false);
+  /** An earlier question being looked at (read-only: no explanation, no second try), or null. */
+  const [viewing, setViewing] = useState<number | null>(null);
 
   const card = quiz.cards[index] as Card;
   const definition = getCardDefinition(card);
@@ -70,6 +74,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
   const isLast = index + 1 >= total;
 
   function start() {
+    setViewing(null);
     setPhase("playing");
     setIndex(0);
     setRun(freshRun(quiz.cards[0] as Card));
@@ -113,6 +118,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
 
   function next() {
     if (!isLast) {
+      setViewing(null);
       setIndex(index + 1);
       setRun(freshRun(quiz.cards[index + 1] as Card));
       window.scrollTo({ top: 0 });
@@ -134,9 +140,27 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
           : { label: isLast ? "See results" : "Next question", onClick: next }
         : null;
 
+  // Back and forward: answered questions only, read-only (right or wrong, no explanation yet).
+  const shownIndex = viewing ?? index;
+  const canGoBack = phase === "playing" && shownIndex > 0;
+  function show(target: number | null) {
+    setViewing(target);
+    window.scrollTo({ top: 0 });
+    window.requestAnimationFrame(() => document.querySelector<HTMLElement>("[data-card-stage]")?.focus());
+  }
+  const goBack = () => shownIndex > 0 && show(shownIndex - 1);
+  const goForward = () => viewing !== null && show(viewing + 1 >= index ? null : viewing + 1);
+  const reviewPrimary: FooterAction =
+    viewing !== null && viewing + 1 < index ? { label: "Next", onClick: goForward } : { label: `Back to question ${index + 1}`, onClick: () => show(null) };
+  useCardNavigationKeys(canGoBack ? goBack : null, viewing !== null ? goForward : null, phase === "playing");
+
   useGlobalKeyDown((event) => {
     if (event.key !== "Enter" || event.repeat || !primary) return;
     event.preventDefault();
+    if (viewing !== null) {
+      reviewPrimary.onClick();
+      return;
+    }
     // With the how-to-play panel open, Enter means "Got it", unless it came from an answer box
     // (the learner has clearly started; Check dismisses the panel too).
     const fromAnswerBox = event.target instanceof Element && event.target.closest("[data-enter-submits]");
@@ -215,6 +239,44 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
     );
   }
 
+  if (viewing !== null) {
+    const reviewCard = quiz.cards[viewing] as Card;
+    const reviewDefinition = getCardDefinition(reviewCard);
+    const past = answers.find((a) => a.cardId === reviewCard.id);
+    const reviewNodes: ProgressNode[] = quiz.cards.map((_, i) => ({ state: i < index || (i === index && run.status !== "answering") ? "done" : i === index ? "current" : "upcoming" }));
+    return (
+      <PlayerShell
+        exitHref={`/course/${course.id}`}
+        nodes={reviewNodes}
+        progressLabel={`Quiz progress: looking back at question ${viewing + 1} of ${total}`}
+        onBack={canGoBack ? goBack : undefined}
+        footer={
+          <FeedbackFooter
+            key={`review-${viewing}`}
+            tone={past?.correct ? "correct" : "incorrect"}
+            heading={past?.correct ? "Correct" : "Incorrect"}
+            subheading="You'll see the full explanation at the end."
+            primary={reviewPrimary}
+          />
+        }
+      >
+        <p className="mb-4 font-mono text-caption font-semibold tracking-wider text-ink-faint uppercase">
+          Question {viewing + 1} / {total} · looking back
+        </p>
+        <CardStage cardKey={`${quiz.id}-review-${viewing}`} card={reviewCard} scope={scope} listen={speechText(reviewCard, "answering")}>
+          {reviewDefinition.interactive && past && (
+            <reviewDefinition.Component
+              card={reviewCard}
+              answer={past.answer}
+              onAnswerChange={() => {}}
+              status={past.correct ? "correct" : "incorrect"}
+            />
+          )}
+        </CardStage>
+      </PlayerShell>
+    );
+  }
+
   const progressNodes: ProgressNode[] = quiz.cards.map((_, i) =>
     i < index || (i === index && run.status !== "answering")
       ? { state: "done" }
@@ -229,6 +291,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
       nodes={progressNodes}
       pulse={pulse}
       progressLabel={`Quiz progress: question ${index + 1} of ${total}`}
+      onBack={canGoBack ? goBack : undefined}
       footer={
         primary && (
           <FeedbackFooter
@@ -245,7 +308,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
         Question {index + 1} / {total}
       </p>
       {showCoach && <CoachPanel key={showCoach} coachKey={showCoach} onDone={coach.dismiss} />}
-      <CardStage cardKey={`${quiz.id}-${index}`} card={card} scope={scope}>
+      <CardStage cardKey={`${quiz.id}-${index}`} card={card} scope={scope} listen={speechText(card, "answering")}>
         {definition.interactive && (
           <definition.Component
             card={card}

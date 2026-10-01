@@ -80,7 +80,7 @@ export function BinaryToggleCardView({
       <div
         role="group"
         aria-label="Bits, from the 128s place down to the 1s place"
-        className="mt-6 grid grid-cols-8 gap-1.5 sm:gap-2"
+        className="mt-6 grid grid-cols-4 gap-2 min-[430px]:grid-cols-8 min-[430px]:gap-1.5 sm:gap-2"
       >
         {answer.map((on, i) => {
           const place = PLACE_VALUES[i] ?? 0;

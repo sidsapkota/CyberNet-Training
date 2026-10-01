@@ -5,7 +5,8 @@ import {
   DndContext,
   type DragEndEvent,
   KeyboardSensor,
-  PointerSensor,
+  MouseSensor,
+  TouchSensor,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
@@ -58,8 +59,9 @@ function SortableItem({
   return (
     <li
       ref={setNodeRef}
+      data-drag-item
       style={{ transform: CSS.Translate.toString(transform), transition }}
-      className={`relative flex touch-none items-center gap-3 rounded-control border-2 px-3 py-3 select-none ${tone} ${
+      className={`relative flex touch-manipulation items-center gap-3 rounded-control border-2 px-3 py-3 select-none ${tone} ${
         isDragging ? "z-10 scale-[1.02]" : ""
       } ${locked ? "" : "cursor-grab active:cursor-grabbing"} transition-[border-color,background-color,box-shadow]`}
       {...attributes}
@@ -94,7 +96,10 @@ export function DragToOrderCardView({
   const labels = new Map(card.items.map((item) => [item.id, item.label]));
   const [dragging, setDragging] = useState(false);
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
+    useSensor(MouseSensor, { activationConstraint: { distance: 4 } }),
+    // On touch, press and hold briefly to pick an item up, so a swipe over the list still scrolls
+    // the page (a long list can fill a phone screen).
+    useSensor(TouchSensor, { activationConstraint: { delay: 150, tolerance: 8 } }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
       // Only Space picks items up, so Enter stays free to check the answer.

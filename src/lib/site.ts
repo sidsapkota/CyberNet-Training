@@ -6,7 +6,9 @@
  */
 
 export const SITE_NAME = "CyberNet Training";
-export const SITE_TAGLINE = "Short, hands-on lessons on how devices and the internet really work, and how to stay safe online.";
+export const SITE_TAGLINE = "Short, hands-on lessons on how devices, the internet and AI really work, and how to stay safe online. For ages 13+. No experience needed.";
+/** Who the site is for, worded the same everywhere (landing, /courses, /pro, metadata). */
+export const AUDIENCE = "For ages 13+. No experience needed.";
 export const CONTACT_EMAIL = "hello@cybernettraining.com";
 export const DEFAULT_SITE_URL = "https://cybernettraining.com";
 

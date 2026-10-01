@@ -6,14 +6,19 @@ import { CourseCover } from "@/components/illustrations/CourseCover";
 import type { CourseOutline } from "@/lib/content/schema";
 import { EASE_OUT_QUICK, PRESS_SPRING } from "@/lib/motion";
 import { useProgress } from "@/lib/progress/ProgressProvider";
-import { computeCourseState, courseProgress } from "@/lib/progress/state";
+import { computeCourseState, courseProgress, hasAnyProgress } from "@/lib/progress/state";
+import { CourseLevel } from "./CourseLevel";
 
-/** Cover, title, a one-line description and a progress bar. The whole card opens the course path. */
-export function CourseCard({ course }: { course: CourseOutline }) {
+/**
+ * Cover, title, level, a one-line description and a progress bar. The whole card opens the course
+ * path. `startHere` (the first, easiest course) shows "Start here" to visitors with no progress yet.
+ */
+export function CourseCard({ course, startHere = false }: { course: CourseOutline; startHere?: boolean }) {
   const { snapshot } = useProgress();
   const reduceMotion = useReducedMotion();
   const progress = snapshot ? courseProgress(computeCourseState(snapshot, course)) : null;
   const percent = progress ? Math.round(progress.fraction * 100) : 0;
+  const newcomer = startHere && snapshot !== null && !hasAnyProgress(snapshot);
 
   return (
     // Gestures stay the same on server and client (the card is server-rendered on the landing
@@ -26,7 +31,15 @@ export function CourseCard({ course }: { course: CourseOutline }) {
         <CourseCover courseId={course.id} title={course.title} className="aspect-[16/9]" />
         <div className="flex flex-1 flex-col gap-3 p-4">
           <div>
-            <h3 className="text-lead font-semibold">{course.title}</h3>
+            <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+              <CourseLevel level={course.level} />
+              {newcomer && (
+                <span className="rounded-sm border border-accent-ink px-2 py-0.5 font-mono text-caption font-semibold tracking-widest text-accent-ink uppercase">
+                  Start here
+                </span>
+              )}
+            </div>
+            <h3 className="mt-1 text-lead font-semibold">{course.title}</h3>
             <p className="mt-0.5 truncate text-small text-ink-muted">{course.description}</p>
           </div>
           <div className="mt-auto flex items-center gap-3" aria-label={`${percent}% complete`}>

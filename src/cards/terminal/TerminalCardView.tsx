@@ -119,7 +119,7 @@ export function TerminalCardView({
           {locked ? (
             <p className="mt-1 text-on-screen-muted">[session ended]</p>
           ) : (
-            <form onSubmit={submit} className="flex items-baseline gap-2">
+            <form onSubmit={submit} className="flex items-center gap-2">
               <label htmlFor={inputId} className="shrink-0">
                 {prompt}
                 <span className="sr-only">Type a command and press Enter</span>
@@ -139,7 +139,7 @@ export function TerminalCardView({
                 spellCheck={false}
                 enterKeyHint="send"
                 // 17px keeps iOS from zooming into the field.
-                className="min-w-0 flex-1 bg-transparent font-mono text-body text-on-screen caret-screen-accent outline-none"
+                className="min-h-11 min-w-0 flex-1 bg-transparent font-mono text-body text-on-screen caret-screen-accent outline-none"
               />
             </form>
           )}

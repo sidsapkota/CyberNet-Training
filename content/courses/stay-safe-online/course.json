@@ -2,5 +2,6 @@
   "id": "stay-safe-online",
   "title": "Stay Safe Online",
   "description": "Lock your accounts, spot scams and keep your private stuff private.",
-  "order": 3
+  "order": 1,
+  "level": "easy"
 }
