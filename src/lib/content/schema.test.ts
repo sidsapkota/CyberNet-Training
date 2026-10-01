@@ -5,6 +5,7 @@ import { DEFAULT_PASS_THRESHOLD, LessonFileSchema, toLessonOutline } from "./sch
 const lesson = (over: Record<string, unknown> = {}) => ({
   id: "bits",
   kind: "lesson",
+  about: "A sample lesson for the checks.",
   title: "Bits",
   order: 1,
   icon: "binary",
@@ -96,6 +97,7 @@ describe("toLessonOutline", () => {
     expect(outline).toEqual({
       id: "bits",
       kind: "lesson",
+      about: "A sample lesson for the checks.",
       title: "Bits",
       order: 1,
       access: "pro",

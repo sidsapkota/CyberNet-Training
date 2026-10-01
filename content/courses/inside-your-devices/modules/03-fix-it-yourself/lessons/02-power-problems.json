@@ -2,6 +2,7 @@
   "id": "power-problems",
   "kind": "lesson",
   "title": "Power Problems",
+  "about": "Make a battery last longer, and fix charging problems safely.",
   "order": 2,
   "icon": "battery-warning",
   "cards": [

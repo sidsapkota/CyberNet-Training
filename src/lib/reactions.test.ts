@@ -29,3 +29,9 @@ describe("mascot reactions", () => {
     expect(["confused", "thinking"]).toContain(reactionExpression(false, false, 2));
   });
 });
+
+describe("right lines after a retry", () => {
+  it("never say 'Right first time.' after a wrong attempt", () => {
+    for (let i = 0; i < 40; i++) for (const attempt of [2, 3, 4]) expect(reactionLine(`lesson-${i}`, i, attempt, true)).not.toBe("Right first time.");
+  });
+});

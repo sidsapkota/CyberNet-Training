@@ -50,7 +50,8 @@ export function BinaryToggleCardView({
         </div>
         <div
           className={`rounded-card border px-4 py-3 transition-colors ${
-            matches && status !== "incorrect" ? "border-success bg-success-soft" : "border-line bg-surface"
+            // Right or wrong only after Check.
+            matches && status === "correct" ? "border-success bg-success-soft" : "border-line bg-surface"
           }`}
         >
           <div className="text-caption font-semibold uppercase tracking-wider text-ink-faint">Your number</div>
@@ -67,7 +68,7 @@ export function BinaryToggleCardView({
                 {total}
               </motion.span>
             </AnimatePresence>
-            {matches && status !== "incorrect" && (
+            {matches && status === "correct" && (
               <span className="inline-flex items-center gap-0.5 font-sans text-small font-semibold text-success">
                 <CheckIcon className="size-4" />
                 match

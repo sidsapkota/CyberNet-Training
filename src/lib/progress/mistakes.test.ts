@@ -9,6 +9,7 @@ const lessons: Lesson[] = [
   {
     id: "l1",
     kind: "lesson",
+    about: "A test lesson for the checks.",
     icon: "binary",
     title: "L1",
     order: 1,

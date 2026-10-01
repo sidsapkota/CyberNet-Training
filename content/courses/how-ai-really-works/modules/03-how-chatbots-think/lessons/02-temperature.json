@@ -2,6 +2,7 @@
   "id": "temperature",
   "kind": "lesson",
   "title": "Temperature",
+  "about": "Turn one setting to make a chatbot more predictable or more surprising.",
   "order": 2,
   "icon": "thermometer-sun",
   "cards": [

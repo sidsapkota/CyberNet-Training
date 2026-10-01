@@ -2,6 +2,7 @@
   "id": "protocols-as-shared-rules",
   "kind": "lesson",
   "title": "Protocols: Shared Rules",
+  "about": "Why devices need shared rules to talk, and how those rules stack.",
   "order": 3,
   "icon": "scroll-text",
   "cards": [
@@ -98,7 +99,7 @@
       "difficulty": "challenge",
       "prompt": "A developer runs a website at `http://example.com:8080`, not on the usual port 80. How can that work?",
       "options": [
-        { "id": "convention", "text": "Port 80 is a custom, not a law: the `:8080` says which door" },
+        { "id": "convention", "text": "Port 80 is a custom, not a law: the :8080 says which door" },
         {
           "id": "hex",
           "text": "8080 is how 80 is written in hex, so it's really the same port",

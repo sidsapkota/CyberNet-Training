@@ -2,6 +2,7 @@
   "id": "two-step-sign-in",
   "kind": "lesson",
   "title": "Two-Step Sign-In",
+  "about": "Add a second lock to your accounts so a password alone isn't enough.",
   "order": 2,
   "icon": "smartphone",
   "cards": [

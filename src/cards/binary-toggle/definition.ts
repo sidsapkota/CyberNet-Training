@@ -12,8 +12,8 @@ export const binaryToggleDefinition: InteractiveCardDefinition<BinaryToggleCard,
   type: "binary_toggle",
   interactive: true,
   initialAnswer: () => Array.from({ length: BIT_COUNT }, () => false),
-  // Any combination can be checked, including all bits off.
-  isAnswerReady: () => true,
+  // Check waits for at least one switch (all off is only a real answer when the target is 0).
+  isAnswerReady: (answer, card) => answer.some(Boolean) || card.target === 0,
   grade: gradeBinaryToggle,
   describeAnswer: describeBinaryToggleAnswer,
   describeCorrectAnswer: describeBinaryToggleCorrect,

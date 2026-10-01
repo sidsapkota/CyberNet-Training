@@ -41,7 +41,8 @@ const seeds = lessons
   .flatMap((l) => l.cards.filter((c) => c.type === "multiple_choice").map((c) => ({ lessonId: l.id, card: c })))
   .slice(0, 2);
 const right = (card) => card.options.find((o) => o.id === card.correctOptionId).text;
-const wrong = (card) => card.options.find((o) => o.id !== card.correctOptionId).text;
+const wrongs = (card) => card.options.filter((o) => o.id !== card.correctOptionId).map((o) => o.text);
+const wrong = (card) => wrongs(card)[0];
 
 const open = async () =>
   (await admin.from("card_mistakes").select("lesson_id, card_id, misses").eq("user_id", userId).is("cleared_at", null)).data ?? [];
@@ -73,7 +74,7 @@ try {
   await page.getByRole("radio", { name: wrong(liveCard) }).waitFor({ timeout: 30000 });
   await answer(page, wrong(liveCard));
   await page.getByRole("button", { name: "Try again" }).click();
-  await answer(page, wrong(liveCard));
+  await answer(page, wrongs(liveCard)[1] ?? wrong(liveCard)); // a different wrong pick: Check waits for a changed answer
   await page.getByRole("button", { name: "Try again" }).click();
   await answer(page, right(liveCard));
   await page.getByRole("button", { name: "Continue" }).waitFor();

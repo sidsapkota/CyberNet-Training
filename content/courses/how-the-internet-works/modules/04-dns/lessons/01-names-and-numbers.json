@@ -2,6 +2,7 @@
   "id": "names-and-numbers",
   "kind": "lesson",
   "title": "Names and Numbers",
+  "about": "How website names get turned into the numbers computers use.",
   "order": 1,
   "icon": "book-user",
   "cards": [

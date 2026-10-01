@@ -2,6 +2,7 @@
   "id": "scam-texts-and-calls",
   "kind": "lesson",
   "title": "Scam Texts and Calls",
+  "about": "Spot the signs of a scam text or call before you reply.",
   "order": 2,
   "icon": "message-square-warning",
   "cards": [

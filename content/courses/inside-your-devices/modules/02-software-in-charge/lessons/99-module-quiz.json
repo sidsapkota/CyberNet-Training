@@ -120,9 +120,9 @@
       "difficulty": "core",
       "prompt": "A friend sends you three files. Which one is really a **program**?",
       "options": [
-        { "id": "mp3-exe", "text": "`song.mp3.exe`" },
-        { "id": "exe-mp3", "text": "`song.exe.mp3`" },
-        { "id": "exe-name", "text": "`exe-song.mp3`" }
+        { "id": "mp3-exe", "text": "song.mp3.exe" },
+        { "id": "exe-mp3", "text": "song.exe.mp3" },
+        { "id": "exe-name", "text": "exe-song.mp3" }
       ],
       "correctOptionId": "mp3-exe",
       "explanation": "Only the part after the **last** dot counts. `song.mp3.exe` ends in `.exe`, so it's a program dressed up as a song. The other two end in `.mp3`, so they're songs, whatever else is in their names."

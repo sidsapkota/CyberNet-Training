@@ -2,14 +2,15 @@
 
 import Link from "next/link";
 import { motion } from "motion/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SaveProgressPrompt } from "@/components/account/SaveProgressPrompt";
 import { SignUpGate } from "@/components/account/SignUpGate";
 import { DailyGoalSummary } from "@/components/streak/DailyGoalSummary";
 import { Mascot } from "@/components/mascot/Mascot";
-import { ButtonLink } from "@/components/ui/Button";
+import { ButtonLink, buttonClasses } from "@/components/ui/Button";
 import { CountUp } from "@/components/ui/CountUp";
-import { ArrowRightIcon, ChallengeIcon, FeedbackIcon, LessonIcon, XpIcon } from "@/components/ui/icons";
+import { ArrowRightIcon, BackIcon, ChallengeIcon, FeedbackIcon, LessonIcon, XpIcon } from "@/components/ui/icons";
+import { NetworkMark } from "@/components/network/NetworkMark";
 import type { LessonIconName } from "@/lib/content/lessonIcons";
 import type { LessonOutline } from "@/lib/content/schema";
 import { useAuth } from "@/lib/auth/AuthProvider";
@@ -27,6 +28,8 @@ export function LessonComplete({
   challengesCompleted,
   challengesTotal,
   next,
+  previous = null,
+  courseHref,
   pathHref,
   lessonId,
   goalMetNow = false,
@@ -48,7 +51,13 @@ export function LessonComplete({
   challengesCompleted: number;
   challengesTotal: number;
   next: LessonOutline | null;
+  /** The lesson before this one in its module, for "Previous lesson". */
+  previous?: LessonOutline | null;
+  /** The course path (no `?completed=`), for "Back to course" on the Up next step. */
+  courseHref?: string;
 }) {
+  // Two steps on a phone-sized screen: the celebration, then "Up next".
+  const [step, setStep] = useState<"done" | "next">("done");
   const feedback = useFeedback();
   const { auth, available } = useAuth();
   // A guest whose next lesson needs a free account (after each course's first lesson).
@@ -58,6 +67,10 @@ export function LessonComplete({
   useEffect(() => {
     play("lessonComplete");
   }, [play]);
+
+  if (step === "next" && next) {
+    return <UpNext next={next} previous={previous} courseHref={courseHref ?? pathHref} lessonId={lessonId} />;
+  }
 
   return (
     <div className="flex min-h-[60dvh] flex-col items-center justify-center text-center">
@@ -112,18 +125,18 @@ export function LessonComplete({
         ) : (
           <>
             <SaveProgressPrompt />
-            <div className="mx-auto mt-10 flex max-w-sm flex-col gap-2">
+            <div className="mx-auto mt-8 flex max-w-sm flex-col gap-2">
               {next ? (
                 <>
-                  <ButtonLink href={`/lesson/${next.id}`}>
-                    {nextLessonLabel(next)} <ArrowRightIcon className="size-5" />
-                  </ButtonLink>
+                  <button type="button" onClick={() => setStep("next")} className={buttonClasses("primary")}>
+                    Continue <ArrowRightIcon className="size-5" />
+                  </button>
                   <ButtonLink href={pathHref} variant="ghost">
-                    Back to path
+                    Back to course
                   </ButtonLink>
                 </>
               ) : (
-                <ButtonLink href={pathHref}>Back to path</ButtonLink>
+                <ButtonLink href={pathHref}>Back to course</ButtonLink>
               )}
             </div>
           </>
@@ -135,6 +148,59 @@ export function LessonComplete({
           <FeedbackIcon className="size-4" /> Send feedback about this lesson
         </Link>
       </motion.div>
+    </div>
+  );
+}
+
+/**
+ * "Up next": the next lesson's icon, title and one line of what you'll learn, before it starts.
+ * Start, Back to course, and (quietly) the previous lesson. The lesson's own page applies the guest
+ * gate, the daily limit and Pro as usual.
+ */
+function UpNext({
+  next,
+  previous,
+  courseHref,
+  lessonId,
+}: {
+  next: LessonOutline;
+  previous: LessonOutline | null;
+  courseHref: string;
+  lessonId: string;
+}) {
+  const quiz = next.kind === "quiz";
+  return (
+    <div className="flex min-h-[60dvh] flex-col items-center justify-center text-center">
+      <p className="font-mono text-caption font-semibold tracking-widest text-ink-faint uppercase">Up next</p>
+      <span className="mt-4 grid size-20 place-items-center rounded-node border-2 border-accent-ink bg-accent-soft text-accent-ink shadow-node-lit">
+        {quiz ? <NetworkMark mode="lit" className="size-10" /> : next.icon ? <LessonIcon name={next.icon} className="size-9" /> : null}
+      </span>
+      <h1 className="mt-5 text-headline font-semibold text-balance">{next.title}</h1>
+      <p className="mx-auto mt-2 max-w-sm text-body text-ink-muted">
+        {quiz ? "Show what you've learned in this module. Pass to unlock the next one." : next.about}
+      </p>
+      <div className="mx-auto mt-8 flex w-full max-w-sm flex-col gap-2">
+        <ButtonLink href={`/lesson/${next.id}`}>
+          {quiz ? "Start the quiz" : "Start"} <ArrowRightIcon className="size-5" />
+        </ButtonLink>
+        <ButtonLink href={courseHref} variant="ghost">
+          Back to course
+        </ButtonLink>
+        {previous && (
+          <Link
+            href={`/lesson/${previous.id}`}
+            className="mt-2 inline-flex min-h-11 items-center justify-center gap-1.5 text-small text-ink-muted underline-offset-2 hover:text-ink hover:underline"
+          >
+            <BackIcon className="size-4" /> Previous lesson: {previous.title}
+          </Link>
+        )}
+        <Link
+          href={`/feedback?lesson=${lessonId}`}
+          className="inline-flex min-h-11 items-center justify-center gap-1.5 text-small text-ink-muted underline-offset-2 hover:text-ink hover:underline"
+        >
+          <FeedbackIcon className="size-4" /> Send feedback about the last lesson
+        </Link>
+      </div>
     </div>
   );
 }

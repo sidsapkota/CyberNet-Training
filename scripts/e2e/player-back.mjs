@@ -42,6 +42,14 @@ try {
     Object.defineProperty(window, "va", { get: () => va, set: () => {}, configurable: true });
   });
   const page = await ctx.newPage();
+  // The Next.js dev badge sits over the footer's Back button in development (never in production).
+  await page.addInitScript(() => {
+    document.addEventListener("DOMContentLoaded", () => {
+      const style = document.createElement("style");
+      style.textContent = "nextjs-portal { display: none !important; }";
+      document.head.append(style);
+    });
+  });
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
 

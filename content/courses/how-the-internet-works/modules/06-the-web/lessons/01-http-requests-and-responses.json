@@ -2,6 +2,7 @@
   "id": "http-requests-and-responses",
   "kind": "lesson",
   "title": "HTTP Requests and Responses",
+  "about": "What your browser asks a website for, and what comes back.",
   "order": 1,
   "icon": "arrow-right-left",
   "cards": [

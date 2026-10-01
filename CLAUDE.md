@@ -47,11 +47,16 @@ npm run e2e:latency       # time a lesson save, a lesson fetch and the dashboard
 npm run e2e:plans         # plans at 360px and desktop (guest, free, Pro), plan events, nav, Pro identity
 npm run e2e:account-speed # how fast /account opens from the profile icon (PHONE=1 for throttled 4G)
 npm run e2e:mascot-motion # mascot reactions timed in the browser, the scan filmstrip, reduced motion
+npm run e2e:fit-audit     # every card at 360x640 and 360x560: does it fit without scrolling? (COURSE=<id>)
+npm run e2e:player-flow   # before/after screenshots: a hotspot card and the wrong-answer flow (SHOTS_TAG=)
 ```
 
 Tap targets are at least **44px** everywhere (inline text links and glossary terms excepted); the
 design QA script checks it. On phones, the binary bits wrap to two rows of four below 430px, and
-drag to order picks items up with a short press and hold, so a swipe over the list still scrolls.
+drag to order picks items up with a short press and hold, so a swipe over the list still scrolls. Its
+first-time tip ("Press and hold an item, then drag it.", or "Drag an item to move it." with a
+mouse) shows until the learner's first drag (per device). Sort bins with three bins stack on
+phones, so item names never squeeze into narrow columns.
 
 All of `build`, `lint`, `test` and `typecheck` must pass with zero errors and warnings.
 
@@ -105,8 +110,9 @@ content/courses/<course-dir>/modules/<module-dir>/module.json   { id, title, des
 content/courses/<course-dir>/modules/<module-dir>/lessons/*.json
 ```
 
-- A lesson file holds `{ id, kind: "lesson" | "quiz", title, order, cards[] }` (plus `icon` for
-  lessons). A lesson about fast-changing things (real products) also has `lastChecked`
+- A lesson file holds `{ id, kind: "lesson" | "quiz", title, order, cards[] }` (plus `icon` and
+  `about` for lessons: `about` is "what you'll learn" in one line, 10–90 characters, shown on the
+  "Up next" screen). A lesson about fast-changing things (real products) also has `lastChecked`
   (`YYYY-MM-DD`): learners see "Last checked …" on its first card and in its path popover, and
   `validate-content` warns (never fails) 3 months later (`src/lib/content/lastChecked.ts`; the
   recheck list is in `content/REVIEW.md`). Access comes from its module. Quizzes also
@@ -263,11 +269,21 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
     gold terminal; fan = blades in a housing; heat pipe = a copper tube to metal fins. The bolt and
     stacked layers are teaching marks, not real markings. Gold details use `--color-scene-contact`.
     No text on parts: labels would give answers away.
-- **`hotspot`:** tap mode selects exactly `targets` (tap again to unselect). Label mode places label
-  chips on numbered spots (spots don't name the part, or the answer would be given away).
-  **Explore mode** (not graded, core only) teaches a scene: each tap highlights a part and shows its
-  name and one-line `job`; hollow nodes turn into checked ones as parts are explored, and Continue
-  unlocks once every listed part has been tapped. Put one before a scene's parts are first tested.
+- **`hotspot`:** tap mode selects exactly `targets` (tap again to unselect); every tappable part
+  carries a faint hollow ring (all parts, so it never hints which are right), and a selected part a
+  plain dot (a tick only ever means "right", after Check). Label mode places label chips on
+  numbered spots (spots don't name the part, or the answer would be given away); the label tray sits
+  **above** the scene, so labels and spots are on screen together. **Explore mode** (not graded,
+  core only) teaches a scene: "Tap the glowing parts…"; unexplored parts have a hollow node that
+  pulses twice as the card appears (no loop); each tap shows the part's name and one-line `job` in
+  a callout **pinned inside the scene panel** (on the half away from the part), so it's in view
+  without scrolling; Continue unlocks once every listed part has been tapped. Put one before a
+  scene's parts are first tested.
+- **Scenes fit the screen:** `SceneStage` caps a scene's height by 400px *and* by the visible
+  screen (`100dvh` minus room for the player), so the whole scene fits at 360×640 and in the
+  Instagram browser (~560px). A tap scrolls the panel fully into view (`useSceneReveal`).
+  Feedback about a part (explore's name and job, teardown's "not yet" nudge) uses the panel's
+  pinned `callout`, never a box below the scene.
 - **`teardown`:**
   - Verbs: `unscrew`, `lift`, `slide-out`, `unplug` (remove), `insert`, `fasten`, `plug-in`
     (refit), and `heat` (prep: "Soften the glue on", for a phone's glued back). A heated part stays
@@ -292,8 +308,10 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - The `device` output is a phone or laptop mockup that stutters as `smooth` drops, with its state
     always in text too.
   - Answers are ready once a control changes. The server re-grades by running the same model.
-- **`scenario`:** a wrong ending shows its consequence (that's the teaching). After Check → Try
-  again, the failed choice is crossed out and the learner picks again at that step. The schema
+- **`scenario`:** steps tell the story as you go; a picked **ending** is just selected (it can be
+  changed) and its consequence and outcome show **after Check**. Try again takes the failed ending
+  off (`retryScenario`), the tried endings stay crossed out, and the learner picks again at that
+  step. The schema
   requires every step to be reachable, no loops, and at least one success.
 - **`photo`** (static, like an explainer): a real photo that backs up a simplified scene. Rules:
   - **Wikimedia Commons only,** under **CC0, public domain, CC BY or CC BY-SA** (no NC or ND). The
@@ -323,7 +341,8 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - **`label` goal:** label every example that isn't `given`; graded on the labels only. After
     Check the model trains on them and shows its guesses. The schema requires that, trained on the
     true labels, it gets at least one test **wrong** (the lesson) and one right.
-  - **`include` goal:** tick which examples to train on; guesses update live; correct when **every**
+  - **`include` goal:** tick which examples to train on; the model's guesses update live, but
+    whether each is right (and the truth) shows only after Check; correct when **every**
     test is guessed right (one target alone could be "solved" by training on a single example).
     The schema checks it starts unsolved and that some choice works (every subset is tried).
   - The chart is display only; learners act on the 44px rows under it. Labels have a shape each
@@ -363,7 +382,8 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
    `grade.test.ts`.
 2. Add the schema to the union in `src/cards/schema.ts`.
 3. Add the definition to `definitions` in `src/cards/registry.ts`.
-   Also add its pure grade function to `src/cards/grading.ts` (the server re-grades quiz answers with it).
+   Also add its pure grade function to `src/cards/grading.ts` (the server re-grades quiz answers with it),
+   and its Try again rule to `src/cards/retry.ts` (what's kept and what's cleared).
 4. Add schema cases to `src/cards/schema.test.ts`, a fixture to `src/test/fixtures.ts` and a sample to
    `src/dev/card-samples.ts`, then try it on `/dev/cards`.
 
@@ -377,7 +397,20 @@ interactive, update `isInteractiveCard` / `InteractiveCard` in `schema.ts`.
   renders `LessonRun` or `QuizRun`.
 - **`LessonRun`**:
   - Resumes at the first incomplete core card (`resumeIndex`).
-  - Wrong answer: a cross, a short soft shake, the explanation collapsed, and Try again.
+  - **One flow for every card type:** select → Check → result → Continue (or Try again). Nothing
+    shows right or wrong before Check: no ticks on a selection, no "match", no outcome panel, no
+    live Right/Wrong (live instruments that *are* the activity, like a bit total, a probability bar
+    or a simulator's meters, stay, unmarked).
+  - Wrong answer: a cross, a short soft shake, the course's little wrong-answer animation over the
+    cross (`WrongBurst`, under 700ms, never blocks anything, none under reduced motion: Inside Your
+    Devices a spark and smoke puff, How AI Really Works a glitch, How the Internet Works a packet
+    bouncing back, Stay Safe Online a shield wobble), the explanation collapsed, and **Try again**.
+  - **Try again** (`src/cards/retry.ts`, tested per type): the wrong part is cleared and anything
+    right stays where the card type allows it (wrong pick cleared, right pairs/bits/labels/bins
+    kept, a route kept up to its first wrong hop, a failed scenario ending taken off, a teardown
+    started again); and Check stays off until the answer differs from the one just marked wrong
+    (`canCheckAgain`, with "Change your answer, then press Check."), so "wrong" can never loop. The
+    same in Mistake review and the teaser card.
   - Right answer: a cyan pulse travels along the progress trace to this card's node, which
     ripples. The footer status node fills with a check, and the explanation and XP earned show.
   - **Mascot reactions** (`src/lib/reactions.ts`): every answer in a lesson gets a small mascot
@@ -388,7 +421,18 @@ interactive, update `isInteractiveCard` / `InteractiveCard` in `schema.ts`.
     the plain "Correct" / "Incorrect".
   - Continue unlocks only after a correct answer. **Bonus cards** (challenge) show a "Bonus ·
     Optional: skip it any time" chip and a **Skip bonus** button.
-  - **Back and forward:** a Back button in the header (and Alt + Left / Alt + Right) shows earlier
+  - **Where you are:** the current card's node on the trace is larger and filled with a soft ring.
+    Tapping the trace opens the lesson's cards as 44px numbered nodes (answered ones open read-only,
+    the current one returns you, upcoming ones are disabled).
+  - **The lesson menu** (`LessonMenu`, a header button): the module's lessons with their state
+    (done, you're here, locked with what to finish first, needs a free account, Pro) from
+    `moduleNav` (`src/lib/progress/lessonNav.ts`, pure, tested), each linking to its page, which
+    applies the guest gate, the daily limit and Pro as usual; free accounts see "N new lessons left
+    today". XP sits in the menu below 400px wide (the header has no room).
+  - **Lesson complete, then "Up next":** the celebration step, then Continue to "Up next": the next
+    lesson's icon, title and `about` line, Start, Back to course, and a quiet "Previous lesson"
+    (within the module: `moduleNeighbours`).
+  - **Back and forward:** a Back button in the footer, beside the main button (and Alt + Left / Alt + Right) shows earlier
     cards **read-only** (`CardReview`): an answer from this visit exactly as it was, a card finished
     on an earlier visit as its prompt plus "You got this one" and the right answer, a skipped bonus
     card as its prompt only. Nothing is re-graded, no XP changes, no sound plays; "Next" and "Back to
@@ -1222,7 +1266,7 @@ text pairing meets WCAG AA (≥ 4.5:1), and UI outlines meet 3:1.
   when the value changes.
 - **Module complete:** one short confetti burst in brand colours on the quiz pass screen
   (`celebrate()`).
-- **The only loops** are the current-node pulse (2.4s), the loading sequence, the slow moving
+- **The only loops** are the course path's current-node pulse (2.4s), the loading sequence, the slow moving
   part on course covers (the packet, the sliding RAM stick), and the light travelling round the Pro
   player card's frame (`animate-pro-trace`, 7s). Mainframe's lights are static dots.
 - **`prefers-reduced-motion`:** every animation must render its final state instantly. Use
@@ -1426,6 +1470,17 @@ from ~2.8s to ~0.4s (`npm run e2e:latency`).
   rate-limits it (see Row Level Security rules). Without Supabase env vars it shows the contact
   email instead.
 
+## Minimalism guardrail (Brilliant-level clean)
+
+Applies to every screen, and to all new work. **Before each preview, compare the screens against
+this list and fix anything busy.**
+- **One idea and one action per screen.** At most one sentence of instruction.
+- **Generous spacing.** No new borders, badges or colours unless they carry meaning.
+- **Animations are short and purposeful** (feedback, celebration, a first-time pointer that runs
+  once or twice), **never decorative loops.**
+- **Rewards and avatars** live on the lesson-complete screen and the profile, never in the lesson
+  itself.
+
 ## Content style guide
 
 - **Plain, jargon-light language** for curious beginners aged 13+: a reading age of about 12. Short
@@ -1449,7 +1504,9 @@ from ~2.8s to ~0.4s (`npm run e2e:latency`).
   automatically (screws, `*-cover` parts and the laptop `panel` explain themselves, so teardowns
   can use them unexplored); check the rest by reading the lesson in order.
 - **Glossary (tap to define):** `content/glossary.json` is shared by every course: `{ id, term,
-  definition }`, one or two plain sentences (≤220). In markdown text (explainer body, prompt, hint,
+  full?, definition }`. The definition is **one plain sentence** (≤180; `isOneSentence`).
+  Abbreviations carry `full` (`needsFullName`, tested): the popup shows "CPU = Central Processing
+  Unit", or "Stands for: Internet Protocol address" for a longer term. In markdown text (explainer body, prompt, hint,
   nudge, explanation, scenario step text and consequences) mark a term as `[[router]]` or
   `[[routers|router]]`; it renders as a dotted, tappable term with a Radix popover. Mark only the
   **first use per card**, never in button labels (options, items, choices), and not where the card

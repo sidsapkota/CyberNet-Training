@@ -2,7 +2,8 @@
 
 import { useRef, useState } from "react";
 import { type AnyInteractiveDefinition, getCardDefinition, isGuidedDefinition } from "@/cards/registry";
-import type { Card } from "@/cards/schema";
+import { canCheckAgain, retryAnswer } from "@/cards/retry";
+import { type Card, isInteractiveCard } from "@/cards/schema";
 import type { CardStatus } from "@/cards/types";
 import { Button } from "@/components/ui/Button";
 import { CheckIcon, HintIcon, XIcon } from "@/components/ui/icons";
@@ -24,6 +25,7 @@ function Teaser({ card, definition, courseId }: { card: Card; definition: AnyInt
   const [answer, setAnswer] = useState<unknown>(() => definition.initialAnswer(card));
   const [status, setStatus] = useState<CardStatus>("answering");
   const [hintOpen, setHintOpen] = useState(false);
+  const [lastWrong, setLastWrong] = useState<unknown>(undefined);
   const tracked = useRef(false);
   const { play } = useFeedback();
   const { Component } = definition;
@@ -82,12 +84,21 @@ function Teaser({ card, definition, courseId }: { card: Card; definition: AnyInt
 
       <div className="mt-4 flex gap-2">
         {status === "answering" && (
-          <Button onClick={check} disabled={!definition.isAnswerReady(answer, card)} className="w-full sm:w-auto">
+          <Button onClick={check} disabled={!definition.isAnswerReady(answer, card) || !canCheckAgain(answer, lastWrong)} className="w-full sm:w-auto">
             Check
           </Button>
         )}
         {status === "incorrect" && (
-          <Button variant="secondary" onClick={() => setStatus("answering")} className="w-full sm:w-auto">
+          <Button
+            variant="secondary"
+            onClick={() => {
+              // The wrong part is cleared, anything right stays (src/cards/retry.ts).
+              setLastWrong(answer);
+              if (isInteractiveCard(card)) setAnswer(retryAnswer(card, answer, definition.initialAnswer(card)));
+              setStatus("answering");
+            }}
+            className="w-full sm:w-auto"
+          >
             Try again
           </Button>
         )}

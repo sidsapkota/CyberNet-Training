@@ -2,6 +2,7 @@
   "id": "what-happens-when-you-type-a-url",
   "kind": "lesson",
   "title": "What Happens When You Type a URL",
+  "about": "Follow one web page load from start to finish.",
   "order": 3,
   "icon": "keyboard",
   "cards": [

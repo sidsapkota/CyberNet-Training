@@ -2,6 +2,7 @@
   "id": "the-lookup-journey",
   "kind": "lesson",
   "title": "The Lookup Journey",
+  "about": "Follow a website name from your device to the server that knows it.",
   "order": 2,
   "icon": "search",
   "cards": [

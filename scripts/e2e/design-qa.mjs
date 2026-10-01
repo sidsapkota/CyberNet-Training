@@ -16,7 +16,7 @@ fs.mkdirSync(SHOTS, { recursive: true });
 const ONLY = process.env.QA_ONLY ? new Set(process.env.QA_ONLY.split(",")) : null;
 
 const VIEWPORTS = [
-  { name: "360", width: 360, height: 740, touch: true },
+  { name: "360", width: 360, height: 640, touch: true },
   { name: "desktop", width: 1280, height: 800, touch: false },
 ];
 const THEMES = ["dark", "light"];

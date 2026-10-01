@@ -2,6 +2,7 @@
   "id": "https-and-the-padlock",
   "kind": "lesson",
   "title": "HTTPS and the Padlock",
+  "about": "How your connection to a website is kept secret, and what the padlock means.",
   "order": 2,
   "icon": "shield-check",
   "cards": [

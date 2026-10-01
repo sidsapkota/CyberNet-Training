@@ -2,6 +2,7 @@
   "id": "tcp-and-udp",
   "kind": "lesson",
   "title": "TCP and UDP",
+  "about": "Two ways to send data: careful and in order, or fast with no promises.",
   "order": 2,
   "icon": "handshake",
   "cards": [

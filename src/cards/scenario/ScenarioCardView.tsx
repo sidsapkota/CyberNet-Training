@@ -18,24 +18,24 @@ export function ScenarioCardView({ card, answer, onAnswerChange, status }: CardC
   const walk = walkScenario(card, answer);
   const promptId = useId();
 
-  // After Check → Try again on a wrong ending, the learner re-picks at that same step. Before
-  // Check, a wrong ending shows its consequence (that's where the teaching is).
-  const [retryAfterWrong, setRetryAfterWrong] = useState(false);
+  // Right or wrong only shows after Check. Before it, a picked ending is just the selected choice
+  // (the learner can still change it). Try again takes the failed ending back off the answer
+  // (`retryScenario`), and every ending already tried stays crossed out at its step.
+  const [failed, setFailed] = useState<ReadonlySet<string>>(() => new Set());
   const [previousStatus, setPreviousStatus] = useState(status);
   if (status !== previousStatus) {
     setPreviousStatus(status);
-    if (previousStatus === "incorrect" && status === "answering") setRetryAfterWrong(true);
+    const lastChoice = walk.history.at(-1)?.choice.id;
+    if (status === "incorrect" && lastChoice) setFailed((current) => new Set(current).add(lastChoice));
   }
   const ended = walk.outcome !== null;
   const last = walk.history.at(-1);
-  const retrying = retryAfterWrong && !locked && ended && walk.outcome === "fail" && last !== undefined;
-  const activeStep = retrying ? last.step : walk.current;
-  const failedChoice = retrying ? last.choice.id : null;
+  const activeStep = ended ? (last?.step ?? null) : walk.current;
+  const selected = ended && last ? last.choice.id : null;
   const pastSteps = ended ? walk.history.slice(0, -1) : walk.history;
-  const choices = !locked && activeStep && (!ended || retrying) ? activeStep.choices : null;
+  const choices = !locked && activeStep ? activeStep.choices : null;
 
   function pick(choiceId: string) {
-    setRetryAfterWrong(false);
     onAnswerChange(chooseScenario(card, answer, choiceId));
   }
 
@@ -43,7 +43,7 @@ export function ScenarioCardView({ card, answer, onAnswerChange, status }: CardC
     if (!choices) return;
     const index = digitKeyIndex(event.key, choices.length);
     const choice = index === null ? undefined : choices[index];
-    if (choice && choice.id !== failedChoice) {
+    if (choice && !failed.has(choice.id)) {
       event.preventDefault();
       pick(choice.id);
     }
@@ -83,22 +83,30 @@ export function ScenarioCardView({ card, answer, onAnswerChange, status }: CardC
             {choices && (
               <div className="mt-4 grid gap-2.5">
                 {choices.map((choice, i) => {
-                  const failed = choice.id === failedChoice;
+                  const tried = failed.has(choice.id);
+                  const isSelected = choice.id === selected;
                   return (
                     <button
                       key={choice.id}
                       type="button"
-                      disabled={failed}
+                      disabled={tried}
+                      aria-pressed={isSelected}
                       onClick={() => pick(choice.id)}
-                      aria-label={`${choice.text}${failed ? ", already tried: didn't work" : ""}`}
+                      aria-label={`${choice.text}${tried ? ", already tried: didn't work" : ""}`}
                       className={`flex min-h-12 items-center gap-3 rounded-control border-2 px-4 py-2.5 text-left text-body transition-colors ${
-                        failed
+                        tried
                           ? "cursor-not-allowed border-line bg-surface text-ink-faint line-through"
-                          : "border-line bg-surface text-ink hover:border-accent-ink hover:bg-accent-soft"
+                          : isSelected
+                            ? "border-accent-ink bg-accent-soft text-ink"
+                            : "border-line bg-surface text-ink hover:border-accent-ink hover:bg-accent-soft"
                       }`}
                     >
-                      <span className="grid size-7 shrink-0 place-items-center rounded-sm border border-line-strong font-mono text-caption text-ink-muted">
-                        {failed ? <XIcon className="size-4 text-danger" /> : i + 1}
+                      <span
+                        className={`grid size-7 shrink-0 place-items-center rounded-sm border font-mono text-caption ${
+                          isSelected ? "border-accent-ink bg-accent text-on-accent" : "border-line-strong text-ink-muted"
+                        }`}
+                      >
+                        {tried ? <XIcon className="size-4 text-danger" /> : i + 1}
                       </span>
                       <InlineText>{choice.text}</InlineText>
                     </button>
@@ -111,7 +119,8 @@ export function ScenarioCardView({ card, answer, onAnswerChange, status }: CardC
       </AnimatePresence>
 
       <AnimatePresence initial={false}>
-        {ended && last && !retrying && (
+        {/* The ending's consequence and outcome: only after Check. */}
+        {ended && last && locked && (
           <motion.div
             key={last.choice.id}
             initial={enter}

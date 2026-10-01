@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, type PanInfo, useReducedMotion } from "motion/react";
+import { motion, type PanInfo, useReducedMotion } from "motion/react";
 import { type ReactNode, useState } from "react";
 import { HintIcon, WarningIcon } from "@/components/ui/icons";
 import { Markdown } from "@/components/ui/Markdown";
@@ -8,7 +8,8 @@ import { useFeedback } from "@/lib/feedback";
 import { CardPrompt } from "../CardPrompt";
 import { CardStatusNote } from "../CardStatusNote";
 import { getScene, hiddenInView, type ScenePart } from "../shared/scenes/manifests";
-import { overlayOrder, partTargetStyle, SceneStage } from "../shared/scenes/SceneStage";
+import { overlayOrder, partHalf, partTargetStyle, SceneStage } from "../shared/scenes/SceneStage";
+import { useSceneReveal } from "../shared/scenes/useSceneReveal";
 import type { CardComponentProps } from "../types";
 import { describeAction, nextActionFor, partStates, type PartState, tryPart } from "./grade";
 import { REMOVE_VERBS, type TeardownAction, type TeardownAnswer, type TeardownCard } from "./schema";
@@ -68,8 +69,11 @@ export function TeardownCardView({ card, answer, onAnswerChange, status }: CardC
   }
   const isOff = (partId: string) => hiddenAtStart.has(partId) || states.get(partId) === "out";
 
+  const { ref: stageRef, reveal } = useSceneReveal();
+
   function attempt(partId: string) {
     if (locked) return;
+    reveal();
     const result = tryPart(card, answer, partId);
     if (result.kind === "nothing") return;
     onAnswerChange(result.answer);
@@ -124,6 +128,7 @@ export function TeardownCardView({ card, answer, onAnswerChange, status }: CardC
   };
 
   const doneCount = answer.done.length;
+  const nudgePart = nudge ? scene.parts.find((p) => p.id === nudge.part) : undefined;
   return (
     <div>
       <CardPrompt>{card.prompt}</CardPrompt>
@@ -146,9 +151,30 @@ export function TeardownCardView({ card, answer, onAnswerChange, status }: CardC
           {doneCount}/{card.actions.length} steps
         </span>
       </div>
+      {!locked && doneCount < card.actions.length && <p className="mt-2 text-small text-ink-muted">Tap the glowing parts in a safe order.</p>}
 
       <div className="mt-3">
-        <SceneStage sceneId={card.scene} hidden={hiddenAtStart} wrap={wrap}>
+        <SceneStage
+          ref={stageRef}
+          sceneId={card.scene}
+          hidden={hiddenAtStart}
+          wrap={wrap}
+          // A "not yet" nudge shows on the scene itself, on the half away from the part.
+          calloutAt={nudgePart && partHalf(card.scene, nudgePart.box) === "bottom" ? "top" : "bottom"}
+          callout={
+            nudge && !locked ? (
+              <motion.p
+                key={nudge.key}
+                initial={reduceMotion ? false : { opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-start gap-2 text-small text-ink"
+              >
+                <HintIcon className="mt-0.5 size-4 shrink-0 text-warning" />
+                {nudge.text}
+              </motion.p>
+            ) : null
+          }
+        >
           {!locked &&
             actionable.map((part) => {
               const action = nextActionFor(card, answer, part.id)!;
@@ -171,27 +197,21 @@ export function TeardownCardView({ card, answer, onAnswerChange, status }: CardC
                   transition={{ duration: 0.25 }}
                   style={{ ...partTargetStyle(card.scene, part.box), touchAction: draggable ? "none" : "manipulation" }}
                   className="rounded-control border-2 border-transparent transition-colors hover:border-screen-accent focus-visible:border-screen-accent"
-                />
+                >
+                  {/* The glowing parts: something left to do here. */}
+                  {/* Centred on the part itself, so it never reads as a neighbour's. */}
+                  <span aria-hidden="true" className="pointer-events-none absolute top-1/2 left-1/2 size-3.5 -translate-x-1/2 -translate-y-1/2 rounded-node border-2 border-screen-accent bg-screen">
+                    <span className="absolute -inset-0.5 animate-node-pulse rounded-node [animation-iteration-count:2] border-2 border-screen-accent" />
+                  </span>
+                </motion.button>
               );
             })}
         </SceneStage>
       </div>
 
-      <AnimatePresence initial={false}>
-        {nudge && !locked && (
-          <motion.p
-            key={nudge.key}
-            role="status"
-            initial={reduceMotion ? false : { opacity: 0, y: -4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            className="mt-3 flex items-start gap-2 rounded-control bg-warning-soft px-3 py-2 text-small text-ink"
-          >
-            <HintIcon className="mt-0.5 size-4 shrink-0 text-warning" />
-            {nudge.text}
-          </motion.p>
-        )}
-      </AnimatePresence>
+      <p role="status" className="sr-only">
+        {nudge && !locked ? nudge.text : ""}
+      </p>
 
       {tray.length > 0 && (
         <div className="mt-3">

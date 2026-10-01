@@ -2,6 +2,7 @@
   "id": "writing-good-prompts",
   "kind": "lesson",
   "title": "Writing Good Prompts",
+  "about": "Ask AI for what you want with a clear goal, context and format.",
   "order": 1,
   "icon": "wand-sparkles",
   "cards": [

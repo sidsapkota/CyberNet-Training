@@ -11,9 +11,36 @@ export const GlossaryEntrySchema = z.object({
   id: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, "must be kebab-case"),
   /** How the term is written in the popover heading, e.g. "IP address". */
   term: z.string().trim().min(1).max(40),
-  /** One or two short sentences. Plain text. */
-  definition: z.string().trim().min(10).max(220),
+  /**
+   * For abbreviations: the full name, shown as "CPU = Central Processing Unit". Required when the
+   * term is (or contains) an abbreviation that it doesn't already spell out (`needsFullName`).
+   */
+  full: z.string().trim().min(3).max(60).optional(),
+  /** One plain sentence (a single full stop, at the end). */
+  definition: z
+    .string()
+    .trim()
+    .min(10)
+    .max(180)
+    .refine(isOneSentence, "must be one sentence (one full stop, at the end)"),
 });
+
+/** One sentence: it ends with . ! or ?, and no sentence ends before that. Pure. */
+export function isOneSentence(text: string): boolean {
+  const trimmed = text.trim();
+  if (!/[.!?]$/.test(trimmed)) return false;
+  // A sentence break: . ! or ? followed by a space and a capital letter (so "e.g." stays fine).
+  return !/[.!?]\s+[A-Z]/.test(trimmed.slice(0, -1));
+}
+
+/**
+ * Whether a term needs `full`: it has an abbreviation (2+ capital letters, like "CPU" or "IP")
+ * that isn't already spelled out in brackets ("random-access memory (RAM)" is fine). Pure.
+ */
+export function needsFullName(term: string): boolean {
+  const outsideBrackets = term.replace(/\([^)]*\)/g, "");
+  return /\b[A-Z][A-Z0-9]+s?\b/.test(outsideBrackets);
+}
 export type GlossaryEntry = z.infer<typeof GlossaryEntrySchema>;
 
 export const GlossarySchema = z

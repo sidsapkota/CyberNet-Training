@@ -12,7 +12,7 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { LayoutGroup, motion, useReducedMotion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { CheckIcon, XIcon } from "@/components/ui/icons";
 import { useFeedback } from "@/lib/feedback";
 import { PRESS_SPRING } from "@/lib/motion";
@@ -20,7 +20,7 @@ import { CardPrompt } from "../CardPrompt";
 import { CardStatusNote } from "../CardStatusNote";
 import { InlineText } from "../shared/InlineText";
 import type { CardComponentProps } from "../types";
-import { keepCorrect, placeItem, trayOrder, unplaceItem } from "./grade";
+import { placeItem, trayOrder, unplaceItem } from "./grade";
 import type { SortBinsAnswer, SortBinsCard } from "./schema";
 
 const TRAY = "__tray__";
@@ -124,12 +124,7 @@ export function SortBinsCardView({ card, answer, onAnswerChange, status }: CardC
   const items = trayOrder(card);
   const byId = new Map(card.items.map((i) => [i.id, i]));
 
-  // After a wrong answer, Try again sends the wrong items back to the tray.
-  const previous = useRef(status);
-  useEffect(() => {
-    if (previous.current === "incorrect" && status === "answering") onAnswerChange(keepCorrect(card, answer));
-    previous.current = status;
-  }, [status, card, answer, onAnswerChange]);
+  // Try again sending wrong items back to the tray is the card's `retryAnswer` (keepCorrect).
 
   function place(itemId: string, binId: string) {
     if (binId === TRAY) onAnswerChange(unplaceItem(answer, itemId));
@@ -173,14 +168,15 @@ export function SortBinsCardView({ card, answer, onAnswerChange, status }: CardC
   return (
     <div>
       <CardPrompt>{card.prompt}</CardPrompt>
-      <p className="mt-2 text-small text-ink-muted">Tap an item, then tap a bin. Or drag it.</p>
+      <p className="mt-2 text-small text-ink-muted">Tap an item, then tap its box. Or drag it there.</p>
 
-      <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd} onDragCancel={() => setDragging(null)}>
+      <DndContext id={`dnd-${card.id}`} sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd} onDragCancel={() => setDragging(null)}>
         <LayoutGroup id={card.id}>
           <TrayZone empty={tray.length === 0} locked={locked}>
             {tray.map(chip)}
           </TrayZone>
-          <div className={`mt-4 grid gap-2 ${card.bins.length === 3 ? "grid-cols-3" : "grid-cols-2"}`}>
+          {/* Three bins stack on phones, so item names never squeeze into ~100px columns. */}
+          <div className={`mt-4 grid gap-2 ${card.bins.length === 3 ? "grid-cols-1 sm:grid-cols-3" : "grid-cols-2"}`}>
             {card.bins.map((bin) => (
               <Bin
                 key={bin.id}

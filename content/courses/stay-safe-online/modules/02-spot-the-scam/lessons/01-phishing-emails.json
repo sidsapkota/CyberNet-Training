@@ -2,6 +2,7 @@
   "id": "phishing-emails",
   "kind": "lesson",
   "title": "Phishing Emails",
+  "about": "Spot the warning signs of a fake email before you click.",
   "order": 1,
   "icon": "mail-warning",
   "cards": [

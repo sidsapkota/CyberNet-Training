@@ -2,6 +2,7 @@
   "id": "meet-the-cpu",
   "kind": "lesson",
   "title": "Meet the CPU",
+  "about": "What the processor does, and what speed and cores really mean.",
   "order": 3,
   "icon": "cpu",
   "cards": [
@@ -121,7 +122,7 @@
           { "target": "output", "id": "ghz", "op": ">=", "value": 3 }
         ]
       },
-      "explanation": "When a CPU gets too hot, it **slows itself down** to stay safe. This is called **throttling**. The blanket blocked the vents, and dust clogged the fan and its fins. With both fixed, the heat can escape and the CPU runs at full speed. (Laptop fans switch on by themselves; dust is what stops them cooling well.)",
+      "explanation": "When a CPU gets too hot, it **slows itself down** to stay safe. This is called **throttling**. The blanket blocked the vents, and dust clogged the fan and its fins. With both fixed, the heat can escape and the CPU runs at full speed. (Laptop fans switch on by themselves; dust is what stops them cooling well.) Cleaning a fan means opening the laptop, so ask an adult or a repair shop to do it.",
       "hint": "Keep the load at full. What's trapping the heat, and what's stopping the fan from moving air?",
       "nudge": "Lowering the load isn't allowed here. A hot [[CPU]] slows itself down, so fix everything that traps heat or stops the fan cooling."
     },
@@ -144,7 +145,7 @@
         { "id": "same", "text": "They take the same time, since one core does the job" }
       ],
       "correctOptionId": "same",
-      "explanation": "A job that can't be split runs on **one core**, whichever laptop it's on. Both cores tick at 3 GHz, so they finish together. Laptop B's extra cores only help with jobs that split.",
+      "explanation": "A job that can't be split runs on **one core**, whichever laptop it's on. Each laptop runs it on one core at 3 GHz, so they finish together. Laptop B's extra cores only help with jobs that split.",
       "hint": "Think of the cooks: can extra cooks help with a job that can't be split? Then compare the clock speeds."
     },
     {

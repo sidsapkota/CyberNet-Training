@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { getCardDefinition, isGuidedDefinition } from "@/cards/registry";
+import { canCheckAgain, retryAnswer } from "@/cards/retry";
 import { nudgeFor } from "@/cards/nudge";
 import { type Card, isInteractiveCard } from "@/cards/schema";
 import type { CardStatus } from "@/cards/types";
@@ -31,6 +32,9 @@ import { HintReveal } from "./HintReveal";
 import { CoachPanel } from "./coach/CoachPanel";
 import { useCoach } from "./coach/useCoach";
 import { LessonComplete } from "./LessonComplete";
+import { LessonMenu } from "./LessonMenu";
+import { moduleNeighbours } from "@/lib/progress/lessonNav";
+import { wrongThemeFor } from "./WrongBurst";
 import { PlayerShell } from "./PlayerShell";
 
 interface CardRun {
@@ -43,6 +47,8 @@ interface CardRun {
   practiceAwarded: number;
   /** The learner opened the hint (the card then pays retry XP). */
   hintUsed: boolean;
+  /** The answer just marked wrong: Check comes back only once the answer differs from it. */
+  lastWrong?: unknown;
 }
 
 function freshRun(card: Card): CardRun {
@@ -186,7 +192,7 @@ export function LessonRun({
 
   function check() {
     if (!definition.interactive || run.status !== "answering") return;
-    if (!definition.isAnswerReady(run.answer, card)) return;
+    if (!definition.isAnswerReady(run.answer, card) || !canCheckAgain(run.answer, run.lastWrong)) return;
     if (showCoach) coach.dismiss();
 
     const attempts = run.attempts + 1;
@@ -210,9 +216,14 @@ export function LessonRun({
     }
   }
 
+  /** Try again: the wrong part is cleared, anything right stays (src/cards/retry.ts). */
   function tryAgain() {
-    setRun({ ...run, status: "answering" });
+    if (!definition.interactive || !isInteractiveCard(card)) return setRun({ ...run, status: "answering" });
+    setRun({ ...run, status: "answering", answer: retryAnswer(card, run.answer, definition.initialAnswer(card)), lastWrong: run.answer });
   }
+  // The answer is the one just marked wrong: Check waits for a change (no "wrong" loop).
+  const unchangedAfterWrong =
+    definition.interactive && run.status === "answering" && definition.isAnswerReady(run.answer, card) && !canCheckAgain(run.answer, run.lastWrong);
 
   let primary: FooterAction;
   if (isGuidedDefinition(definition)) {
@@ -220,7 +231,7 @@ export function LessonRun({
   } else if (!definition.interactive) {
     primary = { label: "Continue", onClick: advance };
   } else if (run.status === "answering") {
-    primary = { label: "Check", onClick: check, disabled: !definition.isAnswerReady(run.answer, card) };
+    primary = { label: "Check", onClick: check, disabled: !definition.isAnswerReady(run.answer, card) || unchangedAfterWrong };
   } else if (run.status === "incorrect") {
     primary = { label: "Try again", onClick: tryAgain };
   } else {
@@ -246,6 +257,11 @@ export function LessonRun({
     window.scrollTo({ top: 0 });
     // Focus the card, so keyboard and screen-reader users start reading from its top.
     window.requestAnimationFrame(() => document.querySelector<HTMLElement>("[data-card-stage]")?.focus());
+  }
+  /** From the progress trace: an answered card (read-only), or back to the current one. */
+  function jumpTo(target: number) {
+    if (target === index) show(null);
+    else if (target < index) show(target);
   }
   function goBack() {
     if (shownIndex > 0) show(shownIndex - 1);
@@ -333,6 +349,7 @@ export function LessonRun({
           challengesCompleted={result.challengesCompleted}
           challengesTotal={lesson.cards.filter((c) => c.difficulty === "challenge").length}
           next={next}
+          previous={moduleNeighbours(course, lesson.id).previous}
           lessonId={lesson.id}
         />
       </PlayerShell>
@@ -348,7 +365,9 @@ export function LessonRun({
         exitHref={`/course/${course.id}`}
         nodes={progressNodes}
         progressLabel={`Lesson progress: looking back at card ${viewing + 1} of ${total}`}
-        onBack={canGoBack ? goBack : undefined}
+        onJump={result === null ? jumpTo : undefined}
+        viewing={viewing}
+        menu={<LessonMenu course={course} lessonId={lesson.id} />}
         footer={
           <FeedbackFooter
             key={`review-${viewing}`}
@@ -356,6 +375,7 @@ export function LessonRun({
             heading={answered ? "You got this one" : undefined}
             explanation={answered && isInteractiveCard(reviewCard) ? reviewCard.explanation : undefined}
             primary={reviewPrimary}
+            back={canGoBack ? { label: "Back to the previous card", onClick: goBack } : undefined}
             secondary={viewing + 1 < index ? { label: `Back to card ${index + 1}`, onClick: () => show(null) } : undefined}
           />
         }
@@ -389,7 +409,9 @@ export function LessonRun({
       nodes={progressNodes}
       pulse={pulse}
       progressLabel={`Lesson progress: card ${index + 1} of ${total}`}
-      onBack={canGoBack ? goBack : undefined}
+      onJump={result === null ? jumpTo : undefined}
+      viewing={viewing}
+      menu={<LessonMenu course={course} lessonId={lesson.id} />}
       footer={
         <FeedbackFooter
           key={`${index}-${run.status}`}
@@ -409,6 +431,8 @@ export function LessonRun({
           collapseExplanation={run.status === "incorrect"}
           primary={primary}
           secondary={secondary}
+          back={canGoBack ? { label: "Back to the previous card", onClick: goBack } : undefined}
+          wrongTheme={wrongThemeFor(course.id)}
         />
       }
     >
@@ -448,6 +472,11 @@ export function LessonRun({
           />
         )}
       </CardStage>
+      {unchangedAfterWrong && (
+        <p role="status" className="mt-4 text-center text-small text-ink-muted">
+          Change your answer, then press Check.
+        </p>
+      )}
     </PlayerShell>
   );
 }

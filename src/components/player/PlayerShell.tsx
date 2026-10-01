@@ -2,10 +2,13 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { NetworkMark } from "@/components/network/NetworkMark";
 import { NodeProgress, type ProgressNode } from "@/components/network/NodeProgress";
-import { BackIcon, XIcon } from "@/components/ui/icons";
+import { XIcon } from "@/components/ui/icons";
 import { XpPill } from "@/components/XpPill";
 
-/** Full-height lesson layout: top bar with the node progress trace, card area, sticky footer. */
+/**
+ * Full-height lesson layout: top bar (exit, the node progress trace, the lesson menu, XP), card
+ * area, sticky footer. Back to the previous card lives in the footer, beside the main button.
+ */
 export function PlayerShell({
   nodes,
   pulse,
@@ -13,11 +16,17 @@ export function PlayerShell({
   children,
   footer,
   exitHref = "/",
-  onBack,
   onExit,
+  onJump,
+  viewing,
+  menu,
 }: {
-  /** Back to the previous card (lessons and quizzes); no button without it. */
-  onBack?: () => void;
+  /** Tap the trace to jump to an answered card (read-only) or back to the current one. */
+  onJump?: (index: number) => void;
+  /** The card being looked back at, if any. */
+  viewing?: number | null;
+  /** The lesson menu (the module's lessons), shown as a button in the header. */
+  menu?: ReactNode;
   /** Called as the learner leaves with ✕ (e.g. to note where they stopped). */
   onExit?: () => void;
   /** Where ✕ goes: the lesson's course path. */
@@ -31,7 +40,7 @@ export function PlayerShell({
   return (
     <div className="flex min-h-dvh flex-col">
       <header className="sticky top-0 z-20 border-b border-line bg-canvas">
-        <div className="mx-auto flex max-w-lesson items-center gap-3 px-gutter py-3">
+        <div className="mx-auto flex max-w-lesson items-center gap-2 px-gutter py-3 sm:gap-3">
           <Link
             href={exitHref}
             aria-label="Exit to the course path"
@@ -41,19 +50,12 @@ export function PlayerShell({
           >
             <XIcon className="size-5" />
           </Link>
-          {onBack && (
-            <button
-              type="button"
-              onClick={onBack}
-              aria-label="Back to the previous card"
-              title="Back (Alt + Left arrow)"
-              className="grid size-11 shrink-0 place-items-center rounded-control text-ink-muted transition-colors hover:bg-surface-raised hover:text-ink"
-            >
-              <BackIcon className="size-5" />
-            </button>
-          )}
-          <NodeProgress nodes={nodes} pulse={pulse} label={progressLabel} />
-          <XpPill />
+          <NodeProgress nodes={nodes} pulse={pulse} label={progressLabel} onJump={onJump} viewing={viewing} />
+          {menu}
+          {/* With the menu there, XP shows from 400px up (it's in each answer's feedback too). */}
+          <span className={menu ? "hidden min-[400px]:contents" : "contents"}>
+            <XpPill />
+          </span>
         </div>
       </header>
       <main className="mx-auto w-full max-w-lesson flex-1 px-gutter pt-6 pb-10 sm:pt-10">{children}</main>

@@ -2,6 +2,7 @@
   "id": "ports",
   "kind": "lesson",
   "title": "Ports: Many Doors, One Address",
+  "about": "How one address can run many services at once.",
   "order": 1,
   "icon": "door-open",
   "cards": [

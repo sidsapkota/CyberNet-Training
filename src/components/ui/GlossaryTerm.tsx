@@ -44,6 +44,18 @@ export function GlossaryTerm({ id, children }: { id: string; children: ReactNode
             className="rounded-card border-2 border-accent-ink bg-surface p-3 shadow-lift"
           >
             <p className="text-small font-semibold text-ink">{entry.term}</p>
+            {/* Abbreviations show their full name: "CPU = Central Processing Unit". */}
+            {entry.full && (
+              <p className="text-small text-ink">
+                {entry.term.includes(" ") ? (
+                  <>Stands for: {entry.full}</>
+                ) : (
+                  <>
+                    <span className="font-mono">{entry.term}</span> = {entry.full}
+                  </>
+                )}
+              </p>
+            )}
             <p className="mt-1 text-small text-ink-muted">{entry.definition}</p>
           </motion.div>
           <Popover.Arrow width={14} height={7} className="fill-accent-ink" />

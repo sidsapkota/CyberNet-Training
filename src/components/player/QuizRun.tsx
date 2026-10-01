@@ -24,6 +24,8 @@ import { speechText } from "@/cards/speech";
 import { useCardNavigationKeys } from "@/lib/keyboard";
 import { CardStage, useFeedbackAnimation } from "./CardStage";
 import { FeedbackFooter, type FooterAction } from "./FeedbackFooter";
+import { LessonMenu } from "./LessonMenu";
+import { wrongThemeFor } from "./WrongBurst";
 import { PlayerShell, uniformNodes } from "./PlayerShell";
 import { QuizResults } from "./QuizResults";
 
@@ -249,7 +251,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
         exitHref={`/course/${course.id}`}
         nodes={reviewNodes}
         progressLabel={`Quiz progress: looking back at question ${viewing + 1} of ${total}`}
-        onBack={canGoBack ? goBack : undefined}
+        menu={<LessonMenu course={course} lessonId={quiz.id} />}
         footer={
           <FeedbackFooter
             key={`review-${viewing}`}
@@ -257,6 +259,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
             heading={past?.correct ? "Correct" : "Incorrect"}
             subheading="You'll see the full explanation at the end."
             primary={reviewPrimary}
+            back={canGoBack ? { label: "Back to the previous question", onClick: goBack } : undefined}
           />
         }
       >
@@ -291,7 +294,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
       nodes={progressNodes}
       pulse={pulse}
       progressLabel={`Quiz progress: question ${index + 1} of ${total}`}
-      onBack={canGoBack ? goBack : undefined}
+      menu={<LessonMenu course={course} lessonId={quiz.id} />}
       footer={
         primary && (
           <FeedbackFooter
@@ -300,6 +303,8 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
             heading={run.status === "correct" ? "Correct" : run.status === "incorrect" ? "Incorrect" : undefined}
             subheading={run.status === "answering" ? undefined : "You'll see the full explanation at the end."}
             primary={primary}
+            back={canGoBack ? { label: "Back to the previous question", onClick: goBack } : undefined}
+            wrongTheme={wrongThemeFor(course.id)}
           />
         )
       }

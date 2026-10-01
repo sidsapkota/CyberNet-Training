@@ -2,6 +2,7 @@
   "id": "routers-and-hops",
   "kind": "lesson",
   "title": "Routers and Hops",
+  "about": "How routers pass your data along, one step at a time.",
   "order": 2,
   "icon": "router",
   "cards": [

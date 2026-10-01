@@ -2,6 +2,7 @@
   "id": "signs-of-a-hack",
   "kind": "lesson",
   "title": "Signs of a Hack",
+  "about": "Know when an account has been taken over, and the steps to get it back.",
   "order": 1,
   "icon": "shield-alert",
   "cards": [

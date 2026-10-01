@@ -2,6 +2,7 @@
   "id": "training-data",
   "kind": "lesson",
   "title": "Training Data",
+  "about": "See how one word or one bad example can tip a model's choice.",
   "order": 1,
   "icon": "tags",
   "cards": [

@@ -2,6 +2,7 @@
   "id": "apps-and-wi-fi",
   "kind": "lesson",
   "title": "Apps and Public Wi-Fi",
+  "about": "Choose what apps can use, and stay safe on public Wi-Fi.",
   "order": 2,
   "icon": "wifi",
   "cards": [

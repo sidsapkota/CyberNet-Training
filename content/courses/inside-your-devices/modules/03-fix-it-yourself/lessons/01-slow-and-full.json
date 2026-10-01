@@ -2,6 +2,7 @@
   "id": "slow-and-full",
   "kind": "lesson",
   "title": "Slow and Full",
+  "about": "Find what is slowing a device down, and free up space safely.",
   "order": 1,
   "icon": "gauge",
   "cards": [

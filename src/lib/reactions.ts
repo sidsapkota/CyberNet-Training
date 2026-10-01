@@ -47,7 +47,8 @@ function hash(text: string): number {
  * randomness during render), and the next card or the next attempt always gets a different one.
  */
 export function reactionLine(lessonId: string, cardIndex: number, attempt: number, correct: boolean): string {
-  const lines = correct ? RIGHT_LINES : WRONG_LINES;
+  // "Right first time." only ever on a first try.
+  const lines: readonly string[] = correct ? (attempt > 1 ? RIGHT_LINES.filter((l) => l !== "Right first time.") : RIGHT_LINES) : WRONG_LINES;
   // Stepping by 1 per card and per attempt never lands on the same line twice in a row.
   const i = (hash(lessonId) + cardIndex + (correct ? 0 : attempt)) % lines.length;
   return lines[i]!;

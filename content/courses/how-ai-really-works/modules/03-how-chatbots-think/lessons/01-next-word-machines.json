@@ -2,6 +2,7 @@
   "id": "next-word-machines",
   "kind": "lesson",
   "title": "Next-Word Machines",
+  "about": "How a chatbot builds an answer one likely word at a time.",
   "order": 1,
   "icon": "message-square",
   "cards": [
