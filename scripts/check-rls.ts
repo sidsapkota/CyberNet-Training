@@ -407,6 +407,37 @@ async function main() {
     await admin.from("profiles").update({ time_zone: "Asia/Tokyo" }).eq("id", c.id);
     record("After 7 days the time zone can change again", (await zoneOf())?.time_zone === "Asia/Tokyo");
 
+    // Mistake review: only the server records mistakes (record_mistake, secret key only); a repeat
+    // miss counts up and reopens a cleared one; learners read only their own and can't change them.
+    const miss = (user: string, card: string) => admin.rpc("record_mistake", { p_user: user, p_lesson: "rls-lesson-one", p_card: card });
+    const misses = [await miss(b.id, "card-a"), await miss(b.id, "card-b"), await miss(b.id, "card-a")];
+    const countA = async () =>
+      (await admin.from("card_mistakes").select("misses, cleared_at").match({ user_id: b.id, card_id: "card-a" }).single()).data;
+    const twice = await countA();
+    await admin.from("card_mistakes").update({ cleared_at: new Date().toISOString() }).match({ user_id: b.id, card_id: "card-a" });
+    await miss(b.id, "card-a");
+    const reopened = await countA();
+    record(
+      "record_mistake counts repeat misses and reopens a cleared mistake",
+      misses.every((m) => !m.error) && twice?.misses === 2 && twice.cleared_at === null && reopened?.misses === 3 && reopened.cleared_at === null,
+      misses.find((m) => m.error)?.error?.message ?? JSON.stringify({ twice, reopened }),
+    );
+    const badMiss = await admin.rpc("record_mistake", { p_user: b.id, p_lesson: "Not A Lesson!", p_card: "card-a" });
+    record("Mistakes reject ids that aren't kebab-case", Boolean(badMiss.error));
+    const ownMistakes = await b.client.from("card_mistakes").select("user_id, card_id");
+    const theirMistakes = await a.client.from("card_mistakes").select("user_id").eq("user_id", b.id);
+    record("Learners read only their own mistakes", !ownMistakes.error && (ownMistakes.data ?? []).length === 2 && (theirMistakes.data ?? []).length === 0);
+    record(
+      "Learners can't add, change or remove mistakes",
+      blocked(await a.client.from("card_mistakes").insert({ user_id: a.id, lesson_id: "rls-lesson-one", card_id: "card-a" }).select()) &&
+        blocked(await b.client.from("card_mistakes").update({ cleared_at: new Date().toISOString() }).eq("user_id", b.id).select()) &&
+        blocked(await b.client.from("card_mistakes").delete().eq("user_id", b.id).select()),
+    );
+    const anonMistakes = createClient<Database>(env.url, env.publishableKey, noSession);
+    const userMiss = await a.client.rpc("record_mistake", { p_user: a.id, p_lesson: "rls-lesson-one", p_card: "card-a" });
+    const anonMiss = await anonMistakes.rpc("record_mistake", { p_user: a.id, p_lesson: "rls-lesson-one", p_card: "card-a" });
+    record("Only the server can call record_mistake", Boolean(userMiss.error && anonMiss.error));
+
     // Signed-out visitors see nothing.
     const anon = createClient<Database>(env.url, env.publishableKey, noSession);
     let anonClean = true;
@@ -414,7 +445,7 @@ async function main() {
       "profiles", "card_completions", "lesson_completions", "quiz_attempts", "xp_events", "goal_days",
       "subscriptions", "pro_grants", "stripe_customers", "stripe_events",
       "league_players", "leagues", "league_members", "league_results", "league_weeks", "league_state", "handle_reports",
-      "certificates", "lesson_opens",
+      "certificates", "lesson_opens", "card_mistakes",
     ] as const) {
       const r = await anon.from(table).select("*");
       if (!r.error && (r.data ?? []).length > 0) anonClean = false;
@@ -456,7 +487,7 @@ async function main() {
     let leftovers = 0;
     for (const table of [
       "card_completions", "lesson_completions", "quiz_attempts", "xp_events", "goal_days",
-      "subscriptions", "pro_grants", "stripe_customers", "league_players", "league_members", "league_results", "certificates", "lesson_opens",
+      "subscriptions", "pro_grants", "stripe_customers", "league_players", "league_members", "league_results", "certificates", "lesson_opens", "card_mistakes",
     ] as const) {
       const r = await admin.from(table).select("user_id").in("user_id", [a.id, b.id, c.id]);
       leftovers += (r.data ?? []).length;

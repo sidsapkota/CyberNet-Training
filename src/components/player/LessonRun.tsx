@@ -202,6 +202,8 @@ export function LessonRun({
       feedback.haptic("success");
     } else {
       setRun({ ...run, status: "incorrect", attempts });
+      // Mistake review: the first wrong try on this card in this visit (the server re-grades it).
+      if (attempts === 1) void store.recordMistake(lesson.id, card.id, run.answer);
       playIncorrect();
       feedback.play("wrong");
       feedback.haptic("error");

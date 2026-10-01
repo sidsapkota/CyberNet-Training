@@ -8,7 +8,7 @@ import { Markdown } from "@/components/ui/Markdown";
 /**
  * The "Hint" button under a lesson card. Opening it once counts as using the hint (the card then
  * pays retry XP, which `xpNote` says up front); after that it can be hidden and shown freely.
- * Lessons only: quizzes never render it.
+ * Lessons and Mistake review only: quizzes never render it.
  */
 export function HintReveal({
   hint,

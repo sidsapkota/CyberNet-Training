@@ -2,6 +2,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import {
   completeCardAction,
   completeLessonAction,
+  recordMistakeAction,
   recordQuizAttemptAction,
   resetAllAction,
   resetLessonAction,
@@ -185,6 +186,15 @@ export class SupabaseProgressStore implements ProgressStore {
       const quizzes = withAttempt(saved.attempt ? [...others, saved.attempt] : others);
       this.set(this.settle({ ...this.snapshot!, quizzes }, pending, saved.xp));
     });
+  }
+
+  /** Not part of the snapshot: the server re-grades it and keeps it for Mistake review. */
+  async recordMistake(lessonId: string, cardId: string, answer: unknown): Promise<void> {
+    try {
+      await recordMistakeAction(lessonId, cardId, answer);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async setPreferences(preferences: Partial<Preferences>): Promise<void> {

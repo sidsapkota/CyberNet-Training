@@ -19,15 +19,15 @@ Last updated: 2 October 2026.
 
 ## 2. Open branches
 
-- `mistake-review`: queue item 2 (below). Preview URLs follow `https://cyber-net-training-git-<branch>-sidsapkotas-projects.vercel.app`.
+- `mistake-review`: Mistake review (queue item 1), built and pushed; waiting for the owner to try the preview and say merge. Its migration (`card_mistakes`, `record_mistake()`) is **already applied** to the shared database (approved 1 Oct), so production has the table before the code; harmless (nothing writes it until merge). Preview URLs follow `https://cyber-net-training-git-<branch>-sidsapkotas-projects.vercel.app`.
 
 ## 3. In progress
 
-Mistake review (item 2): migration written, SQL shown to the owner, **not applied** until they approve.
+Nothing half-done. Mistake review waits on the owner's merge; next up after it is Streak freeze.
 
 ## 4. Queue (in order)
 
-1. **B: Mistake review** (Pro). Show the SQL before applying. When it ships, add "Review your mistakes" to the Pro benefits (`ProPitch`).
+1. ~~Mistake review~~ on `mistake-review`, awaiting merge (see CLAUDE.md → Mistake review). Mistakes are saved for every signed-in learner, only Pro reviews; review pays practice XP; "Review your mistakes" replaced the streak freeze in `ProPitch` (the freeze stays on /pro).
 2. **C: Streak freeze** (Pro). Show the SQL before applying. (Pro already allows holding 3 freezes instead of 2.)
 3. Family plan: **on hold**, don't build.
 
@@ -48,6 +48,7 @@ Mistake review (item 2): migration written, SQL shown to the owner, **not applie
 - **Previews share the production Supabase database.** `check:rls` cleans up after itself; never leave test leagues or `league_state` open.
 - **Live Stripe keys are in Vercel Production only.** Local and previews use the sandbox; never test against live mode. Stripe's own trial-reminder email is off (ours replaces it).
 - **Windows editing:** PowerShell `Get-Content`/`Set-Content` can mangle UTF-8 (`→` becomes `â†’`). Edit files with the editor tools, Python (`encoding="utf8"`) or Node. In bash heredocs, backslashes in Python strings break (`\U…`).
+- **Absolute positioning escapes scrollers that aren't positioned:** an `sr-only` span inside the dashboard's course carousel made the whole page scroll 623px sideways at 360px (fixed with `relative` on the carousel). Element-rect checks miss it; the e2e scripts now bisect by hiding elements.
 - **Dev server:** if pages show a Next.js "Jest worker" error, the dev server on port 3000 has gone stale; stop its process and run `npm run dev` again.
 - **Committing one course while others are mid-edit:** build a worktree at a short path (e.g. `C:\cnwt`; long paths fail), link `node_modules` with a junction, and remove that junction with `cmd /c rmdir`, never `Remove-Item -Recurse` (it would delete the real `node_modules`).
 - **Content:** never rename a published lesson or card id, and never reuse a removed id. Run `npm run export:content` after any content change (a test checks it). Multiple-choice option text is plain text (no backticks). Help information must be in core cards.

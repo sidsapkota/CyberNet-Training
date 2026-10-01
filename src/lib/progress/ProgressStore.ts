@@ -23,6 +23,12 @@ export interface ProgressStore {
   /** Appends an attempt; updates best score and first pass time. */
   recordQuizAttempt(quizId: string, attempt: QuizAttempt): Promise<void>;
 
+  /**
+   * Notes a card's first wrong try in a lesson, for Mistake review. Signed-in learners only (the
+   * server re-grades it); guests keep nothing. Never throws: a lost mistake never breaks a lesson.
+   */
+  recordMistake(lessonId: string, cardId: string, answer: unknown): Promise<void>;
+
   /** Merges learner settings (e.g. Path or Explore mode). Stored with progress so it syncs later. */
   setPreferences(preferences: Partial<Preferences>): Promise<void>;
 

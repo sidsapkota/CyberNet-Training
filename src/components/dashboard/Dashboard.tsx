@@ -24,6 +24,7 @@ import {
 } from "@/lib/progress/state";
 import { TodayPanel } from "@/components/streak/TodayPanel";
 import { LeaguesCard } from "@/components/leagues/LeaguesCard";
+import { MistakesCard } from "@/components/mistakes/MistakesCard";
 import { DailyLimitNotice } from "@/components/pro/DailyLimitNotice";
 import { EarlyUserThanks } from "@/components/pro/EarlyUserThanks";
 import { useAuth } from "@/lib/auth/AuthProvider";
@@ -102,6 +103,9 @@ export function Dashboard({ courses }: { courses: CourseOutline[] }) {
         <Rise index={3}>
           <CourseRings states={states} />
         </Rise>
+        <Rise index={4} className="empty:hidden lg:col-span-3">
+          <MistakesCard className={panel} />
+        </Rise>
         <Rise index={4} className="lg:col-span-3">
           <LeaguesCard className={panel} />
         </Rise>
@@ -112,7 +116,7 @@ export function Dashboard({ courses }: { courses: CourseOutline[] }) {
 
       <Rise index={6} className="mt-10">
         <h2 className="text-title font-semibold">Your courses</h2>
-        <div className="-mx-gutter mt-4 flex snap-x gap-4 overflow-x-auto px-gutter pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-3">
+        <div className="relative -mx-gutter mt-4 flex snap-x gap-4 overflow-x-auto px-gutter pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-3">
           {courses.map((course) => (
             <div key={course.id} className="w-72 shrink-0 snap-start sm:w-auto">
               <CourseCard course={course} />

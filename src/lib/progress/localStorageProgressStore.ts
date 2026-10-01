@@ -116,6 +116,9 @@ export class LocalStorageProgressStore implements ProgressStore {
     this.write(this.withXp(next, { kind: "quiz", lessonId: quizId, xp: attempt.xp }));
   }
 
+  /** Guests keep no mistakes (Mistake review is for accounts). */
+  async recordMistake(): Promise<void> {}
+
   async setPreferences(preferences: Partial<Preferences>): Promise<void> {
     const current = this.read();
     let next: Record_ = { ...current, preferences: { ...current.preferences, ...preferences } };

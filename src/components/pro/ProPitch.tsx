@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Mascot } from "@/components/mascot/Mascot";
 import { Button, ButtonLink } from "@/components/ui/Button";
-import { CertificateIcon, FreezeIcon, UnlimitedIcon } from "@/components/ui/icons";
+import { CertificateIcon, MistakesIcon, UnlimitedIcon } from "@/components/ui/icons";
 import { type EventTarget as AnalyticsTarget, trackEvent, trackProDeclined } from "@/lib/analytics";
 import {
   type DeclineReason,
@@ -19,11 +19,11 @@ import type { PitchPrices } from "@/lib/pro/pricing";
 import { DeclinedQuestion } from "./DeclinedQuestion";
 import { PlanButton } from "./PlanButton";
 
-/** What Pro adds, one line each. Mistake review joins this list when it ships. */
+/** What Pro adds, one line each (the extra streak freeze is listed on /pro). */
 const BENEFITS = [
   { Icon: UnlimitedIcon, text: "Unlimited lessons every day" },
+  { Icon: MistakesIcon, text: "Review your mistakes" },
   { Icon: CertificateIcon, text: "Certificates for every course" },
-  { Icon: FreezeIcon, text: "An extra streak freeze" },
 ] as const;
 
 /** Prices for the in-app screens (the /pro page passes its own, read on the server). */

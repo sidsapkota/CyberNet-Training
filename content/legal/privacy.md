@@ -29,7 +29,7 @@ Points to check:
 
 # Privacy policy
 
-_Last updated: 30 September 2026_
+_Last updated: 1 October 2026_
 
 CyberNet Training ("we", "us") is a free website for learning how devices and the internet work. We're based in Australia. This page explains, in plain words, what we collect, why, and what you can do about it.
 
@@ -53,6 +53,7 @@ Accounts are for people **aged 13 or older**. When you sign in we keep:
 - **Your email address**, so you can sign in.
 - **Your display name**, a nickname you choose. Please don't use your real full name.
 - **Your learning progress**: which cards, lessons and quizzes you've finished, your quiz answers and scores, and your XP.
+- **Cards you got wrong**, for "Review your mistakes": which card, how many times you've missed it, when, and when you got it right in a review. We never keep the wrong answer you gave in a lesson. We keep this for every account, so it's ready if you get CyberNet Pro; only Pro can review the cards. Resetting your progress clears it.
 - **When your learning happens, and your time zone**: the time of each moment you earn XP, and your device's time zone (for example "Australia/Sydney": it shows roughly which part of the world you're in, never your address or exact location). We use these **only** to work out your daily goal, your streak and your weekly league XP, so a day counts on your own calendar.
 - **Your settings**: Path or Explore mode, sound on or off, your daily goal, which "how to play" tips you've seen, and whether you show on leaderboards.
 - **Your league details**: your public handle, your tier, which league you're in each week and how you finished.

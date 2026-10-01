@@ -25,7 +25,8 @@
     "e2e:daily-limit": "node scripts/e2e/daily-limit.mjs",
     "e2e:design-qa": "node scripts/e2e/design-qa.mjs",
     "e2e:player-back": "node scripts/e2e/player-back.mjs",
-    "e2e:pro-declined": "node scripts/e2e/pro-declined.mjs"
+    "e2e:pro-declined": "node scripts/e2e/pro-declined.mjs",
+    "e2e:mistake-review": "node scripts/e2e/mistake-review.mjs"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
