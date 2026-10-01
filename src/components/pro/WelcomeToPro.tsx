@@ -85,7 +85,7 @@ export function WelcomeToPro({ confirmed }: { confirmed: boolean }) {
 
   return (
     <div className="mx-auto flex min-h-[60dvh] max-w-md flex-col items-center justify-center px-gutter text-center">
-      <Mascot expression="celebrating" size={170} idle label="The mascot, celebrating your Pro" />
+      <Mascot expression="celebrating" size={170} idle reaction="scan" label="The mascot, celebrating your Pro" />
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}

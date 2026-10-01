@@ -19,19 +19,18 @@ Last updated: 1 October 2026.
 - Plans and Pro identity (merged 1 Oct): /pro is the Free/Pro plans section, /account/plan "Your plan", Pro node frame and lit badge, a once-per-device welcome after upgrading, no upgrade prompts for members, `plans_viewed` / `plan_selected`. Confirmed on production with `E2E_BASE_URL=https://cybernettraining.com npm run e2e:plans` (29/29; the Pro pick is skipped there because it would open a live checkout).
 - **Analytics fix (1 Oct):** events sent as a page first loads (`lesson_start` on deep links and reloads, `paywall_viewed`, `limit_reached`, `signup_prompt_viewed`) were dropped before; numbers before 1 Oct undercount them.
 - The extra streak freeze is live: Pro holds 3, free 2 (checked on production 1 Oct with 21-day streaks). Queue item C, the Pro streak-freeze feature, is separate and on hold.
+- Plans polish (merged 1 Oct): equal-height plan cards side by side, "Pricing" / "Your plan" in the header nav and tab bar (`plans_viewed` source `nav`), loading screens for server-rendered routes, pressed nav states, and the profile icon prefetches the whole account page.
+- Mascot motion (merged 1 Oct): reactions on SVG parts (feedback mascot blinks, hops on right, head tilt on wrong; each under 600 ms; no idle loop), and the "security scan" (under 1.2 s) at lesson complete, /pro/welcome and the Pro welcome moment. Reduced motion: still expressions. Try them at /dev/mascot on a preview.
 - Daily goals and streaks; leagues (hidden until 20 learners earn XP in one week); certificates.
 - Help lines: Kids Helpline and Lifeline (verified), eSafety, ACCCE, Scamwatch, IDCARE, ReportCyber, 000.
 
 ## 2. Open branches
 
-- `plans-polish-nav`: equal-height plan cards on desktop, "Pricing" / "Your plan" in the nav (`plans_viewed` source `nav`), faster /account and loading screens + pressed nav states. Measured (`e2e:account-speed`, median of 6): production before, tap → account content 322 ms desktop / 536 ms throttled-4G phone; this branch's preview, 63 ms / 66 ms (full prefetch of the account link, loading screen as fallback). Server alone ~170 ms either way. Re-measure production after merge. **Don't merge until the owner has seen it.**
-- `mascot-motion`: mascot reactions and the "security scan" (below). **Don't merge until the owner has checked it** (they'll look on 2 Oct). Preview URLs follow `https://cyber-net-training-git-<branch>-sidsapkotas-projects.vercel.app`.
+None (`plans-polish-nav` and `mascot-motion` merged 1 Oct). Preview URLs follow `https://cyber-net-training-git-<branch>-sidsapkotas-projects.vercel.app`; previews are behind Vercel login, so scripts open a share link first (`E2E_SHARE_URL`, from the Vercel tool's "access to URL"; one per deployment).
 
 ## 3. In progress
 
-**Mascot animation** on `mascot-motion` (owner's decisions, 1 Oct): motion only on the feedback mascot (never in cards); one bob each time it appears (no idle loop); hop on right, head tilt on wrong, each under 600 ms and never blocking; the wave under 600 ms; a "security scan" (shield glows, scan line, eyes light, check pops; under 1.2 s) at lesson complete, /pro/welcome and the welcome moment. Reduced motion: static expressions.
-
-Otherwise the queue stays paused.
+Nothing. **The queue is paused** (owner, 1 Oct): don't start anything until the owner says so.
 
 ## 4. Queue (paused)
 

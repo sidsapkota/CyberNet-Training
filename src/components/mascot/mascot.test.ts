@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { createElement } from "react";
+import { createElement, type ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { NODES } from "@/components/brand/geometry";
@@ -15,6 +15,7 @@ import {
 } from "./geometry";
 import { MascotFigure } from "./parts";
 import { MASCOT_EXPRESSIONS, MASCOT_POSES, type MascotExpression } from "./poses";
+import { REACTION_MS, SCAN } from "./reactions";
 
 const render = (expression: MascotExpression) =>
   renderToStaticMarkup(
@@ -83,5 +84,38 @@ describe("mascot colours", () => {
         render(expression).replace(/^<svg>|<\/svg>$/g, "").replaceAll('"url(#g)"', '"url(#mascot-glow)"'),
       );
     }
+  });
+});
+
+describe("mascot reactions (subtle and quick)", () => {
+  it("keeps every one-shot reaction under 600 ms", () => {
+    for (const ms of Object.values(REACTION_MS)) expect(ms).toBeLessThan(600);
+  });
+
+  it("keeps the security scan under 1.2 s, its phases in order and inside it", () => {
+    expect(SCAN.total).toBeLessThan(1200);
+    const phases = [SCAN.glowIn, SCAN.sweep, SCAN.eyes, SCAN.check, SCAN.glowOut];
+    for (const [from, to] of phases) {
+      expect(from).toBeLessThan(to);
+      expect(to).toBeLessThanOrEqual(SCAN.total);
+    }
+    expect(SCAN.sweep[0]).toBeLessThan(SCAN.eyes[0]);
+    expect(SCAN.eyes[0]).toBeLessThan(SCAN.check[0]);
+  });
+
+  it("adds no parts to the drawing unless a slot asks for them (static exports unchanged)", () => {
+    const withSlots = renderToStaticMarkup(
+      createElement(
+        "svg",
+        null,
+        createElement(MascotFigure, {
+          pose: MASCOT_POSES.happy,
+          palette: MASCOT_HEX,
+          glow: "g",
+          slots: { head: (c: ReactNode) => c, headOverlay: () => null },
+        }),
+      ),
+    );
+    expect(withSlots).toBe(render("happy"));
   });
 });

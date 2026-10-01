@@ -46,6 +46,7 @@ npm run e2e:mistake-review # Mistake review: a wrong answer saved, the free coun
 npm run e2e:latency       # time a lesson save, a lesson fetch and the dashboard (E2E_BASE_URL=production)
 npm run e2e:plans         # plans at 360px and desktop (guest, free, Pro), plan events, nav, Pro identity
 npm run e2e:account-speed # how fast /account opens from the profile icon (PHONE=1 for throttled 4G)
+npm run e2e:mascot-motion # mascot reactions timed in the browser, the scan filmstrip, reduced motion
 ```
 
 Tap targets are at least **44px** everywhere (inline text links and glossary terms excepted); the
@@ -1213,7 +1214,8 @@ text pairing meets WCAG AA (≥ 4.5:1), and UI outlines meet 3:1.
 - **Correct:** a pulse along the trace plus a node ripple. **Wrong:** a small shake. Feedback never
   bounces.
 - **Springs:** presses, hovers and popovers may use a spring with a small overshoot
-  (`PRESS_SPRING`, `POPOVER_SPRING` in `src/lib/motion.ts`, about 7%). Nothing else bounces.
+  (`PRESS_SPRING`, `POPOVER_SPRING` in `src/lib/motion.ts`, about 7%). Nothing else bounces, apart
+  from the mascot's own one-shot reactions (a hop, the scan's check: see Mascot → Motion).
 - **Entrances:** dashboard blocks rise in with a 60ms stagger, and path nodes pop in with a 30ms
   stagger, capped so long lists don't drag (`staggerDelay`).
 - **Numbers and rings** animate up to their value (`CountUp`, `ProgressRing`) and animate again
@@ -1265,16 +1267,31 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   The navy fill keeps the silhouette readable on both canvases. `MASCOT_HEX` mirrors the tokens
   for static exports, and a test keeps them in sync.
 - **Motion:**
-  - `idle` adds an occasional blink, the antenna's mood pulse, and a short wave when happy.
-  - Changing `expression` plays a small spring bounce (`PRESS_SPRING`).
+  - `idle` adds an occasional blink, the antenna's mood pulse, and a short wave when happy (560ms).
+  - Changing `expression` plays a small spring bounce (`PRESS_SPRING`), unless a reaction plays.
+  - **Reactions** (`reaction`, `src/components/mascot/reactions.ts`, timings tested): one-shot
+    motions on parts of the SVG (never swapped images), played when the mascot mounts (a new `key`
+    replays), each under 600ms, and nothing ever waits for them. No idle loop.
+    - The feedback mascot in lessons (never inside cards): blinks while shown, **hops** (7px) on a
+      right answer, **tilts its head** 8° around the neck, with a 3px bob, on a wrong one.
+    - `bob` (3px) is the plain "appear" reaction.
+  - **Security scan** (`reaction="scan"`, under 1.2s, the signature move): the shield's outline
+    glows cyan, a scan line (a solid line and a faint band, clipped to the shield; no gradients)
+    sweeps top to bottom, the eyes light up, then a check pops on the shield's lower corner with a
+    tiny spring and stays. Used at lesson complete, on `/pro/welcome` and in the Pro welcome moment.
+    Under reduced motion it shows only the check.
+  - The parts file draws the head through a `head` slot (the tilt) and a `headOverlay` slot (the
+    scan); without them the drawing is unchanged (tested), so the static exports never change.
+  - A reaction resets motion's `PresenceContext`, so it plays even inside
+    `<AnimatePresence initial={false}>` (the feedback footer), which skips first-mount animations.
   - Motion wrappers are always rendered, so server HTML never depends on the reduced-motion
     setting.
-  - Under reduced motion it's static.
+  - Under reduced motion it's static (still expressions; no reactions).
 - **Accessibility:** decorative by default (`aria-hidden`). Pass `label` (or `label` alone for the
   default description) when it carries meaning.
 - **Where it appears** (restrained, to delight, not distract):
   - the landing page hero and the dashboard's welcome (`happy`, waving)
-  - lesson complete (`celebrating`)
+  - lesson complete (`celebrating`, with the security scan)
   - module quiz pass (`celebrating`, with the confetti)
   - streak milestones (`celebrating`, on their own screen before lesson or quiz complete; confetti
     from 30 days)

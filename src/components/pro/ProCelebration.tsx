@@ -79,7 +79,7 @@ export function ProCelebration() {
         transition={{ duration: 0.3, ease: EASE_OUT_QUICK }}
         className="flex flex-col items-center p-6 text-center"
       >
-        <Mascot expression="celebrating" size={96} idle />
+        <Mascot expression="celebrating" size={96} idle reaction="scan" />
         <h2 id="pro-celebration-title" className="mt-3 text-title font-semibold">
           You&apos;re Pro now
         </h2>
