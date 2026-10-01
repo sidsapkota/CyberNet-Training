@@ -158,7 +158,7 @@ src/cards/<type>/
   - `base.ts`: every card has `id` and `difficulty` (`"core" | "challenge"`, required).
   - Every interactive card also has `prompt` and `explanation` (markdown). This is what lets the quiz
     review screen treat every card type the same way.
-  - Every interactive card may have a `hint` (≤300, markdown; lessons only, behind a "Hint" button)
+  - Every interactive card may have a `hint` (≤300, markdown; lessons and Mistake review only, behind a "Hint" button)
     and a `nudge` (≤220, markdown; shown after a wrong attempt in place of "Have another go").
     Multiple-choice options may have their own `nudge` (never the correct option); `nudgeFor()`
     in `src/cards/nudge.ts` picks the picked option's nudge, then the card's.
@@ -976,8 +976,9 @@ Pro learners try the cards they got wrong again. Pure rules in `src/lib/progress
   (`reviewableMistakes`). Reset progress (one lesson or all) clears them.
 - **`/review`** (`MistakeReview`, not indexed; guests sign in first): newest first, at most
   `REVIEW_BATCH` (30) at a time ("Review more" for the rest), in the player shell with the same
-  card components, Check / Try again, nudges and explanations, but no hints, no bonus chip and
-  "Skip for now" on every card (a skipped mistake stays). A right answer is re-graded on the server
+  card components, Check / Try again, nudges, explanations and the card's hint (as in lessons:
+  opening it makes a never-finished card pay retry XP; practice XP is the retry amount anyway, so
+  nothing to game), but no bonus chip, and "Skip for now" on every card (a skipped mistake stays). A right answer is re-graded on the server
   (`checkMistakeAction`, Pro only), which clears it, and pays like a replay through
   `store.completeCard`: practice XP toward today's goal, or the card's XP if it was never finished;
   quiz cards pay nothing. The finish screen counts what was fixed (mascot `celebrating`, or

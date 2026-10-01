@@ -11,10 +11,12 @@ import type { ProgressNode } from "@/components/network/NodeProgress";
 import { NetworkMark } from "@/components/network/NetworkMark";
 import { CardStage, useFeedbackAnimation } from "@/components/player/CardStage";
 import { FeedbackFooter, type FeedbackTone, type FooterAction } from "@/components/player/FeedbackFooter";
+import { HintReveal } from "@/components/player/HintReveal";
 import { PlayerShell, uniformNodes } from "@/components/player/PlayerShell";
 import { ProPitch } from "@/components/pro/ProPitch";
 import { ButtonLink, Button } from "@/components/ui/Button";
 import { useFeedback } from "@/lib/feedback";
+import { hintXpNote, visibleHint } from "@/lib/hints";
 import { useGlobalKeyDown } from "@/lib/keyboard";
 import { practicedOn } from "@/lib/progress/daily";
 import { useProgress } from "@/lib/progress/ProgressProvider";
@@ -27,7 +29,8 @@ import { usePro } from "@/lib/pro/ProProvider";
  * Mistake review (Pro): the cards a learner got wrong, one at a time, newest first. A right answer
  * (re-graded on the server) clears the mistake and pays like a replay: practice toward today's goal,
  * or the card's XP if it was never finished. Quiz cards pay nothing, as in quizzes. "Skip for now"
- * keeps a mistake for next time. Free learners see the Pro pitch instead.
+ * keeps a mistake for next time. The card's hint is there as in lessons: opening it makes a card that
+ * was never finished pay retry XP, and practice XP is the retry amount anyway, so it can't be gamed. Free learners see the Pro pitch instead.
  */
 export function MistakeReview() {
   const { pro, hasPro } = usePro();
@@ -113,11 +116,13 @@ interface Run {
   attempts: number;
   xp: number;
   practice: number;
+  /** The learner opened the hint. */
+  hintUsed: boolean;
 }
 
 function freshRun(m: MistakeToReview): Run {
   const definition = getCardDefinition(m.card);
-  return { answer: definition.interactive ? definition.initialAnswer(m.card) : null, status: "answering", attempts: 0, xp: 0, practice: 0 };
+  return { answer: definition.interactive ? definition.initialAnswer(m.card) : null, status: "answering", attempts: 0, xp: 0, practice: 0, hintUsed: false };
 }
 
 function ReviewRun({ mistakes, more, onMore }: { mistakes: MistakeToReview[]; more: boolean; onMore: () => void }) {
@@ -167,7 +172,7 @@ function ReviewRun({ mistakes, more, onMore }: { mistakes: MistakeToReview[]; mo
       if (isCardCompleted(snapshot, mistake.lessonId, card.id)) {
         practice = daily && !practicedOn(snapshot.xpEvents, daily.today.day, mistake.lessonId, card.id) ? practiceXp(card.difficulty) : 0;
       } else {
-        xp = cardXpToAward(false, card.difficulty, attempts);
+        xp = cardXpToAward(false, card.difficulty, attempts, run.hintUsed);
       }
       pending.current.push(store.completeCard(mistake.lessonId, card.id, xp, practice));
     }
@@ -205,6 +210,9 @@ function ReviewRun({ mistakes, more, onMore }: { mistakes: MistakeToReview[]; mo
     );
   }
 
+  const hint = visibleHint(card, "lesson", run.status);
+  // Only a lesson card never finished has XP to lose (quiz cards pay nothing; replays pay practice).
+  const unfinished = mistake.kind === "lesson" && snapshot !== null && !isCardCompleted(snapshot, mistake.lessonId, card.id);
   const tone: FeedbackTone = run.status === "correct" ? "correct" : run.status === "incorrect" ? "incorrect" : "neutral";
   return (
     <PlayerShell
@@ -237,6 +245,15 @@ function ReviewRun({ mistakes, more, onMore }: { mistakes: MistakeToReview[]; mo
             answer={run.answer}
             onAnswerChange={(answer) => setRun((current) => ({ ...current, answer }))}
             status={run.status}
+          />
+        )}
+        {hint && (
+          <HintReveal
+            key={`review-${index}-hint`}
+            hint={hint}
+            used={run.hintUsed}
+            onUse={() => setRun((current) => ({ ...current, hintUsed: true }))}
+            xpNote={unfinished ? hintXpNote(card, false) : undefined}
           />
         )}
       </CardStage>

@@ -115,11 +115,19 @@ try {
     expires_at: new Date(now + 86_400_000).toISOString(),
     thanked_at: new Date(now).toISOString(),
   });
+  // Newest first: the seeds were recorded after the live card, the second seed last.
+  const queue = [seeds[1], seeds[0], { lessonId: LIVE, card: liveCard }];
+  const queue0Hint = () => queue[0].card.hint ?? "";
   await page.goto(`${BASE}/review`);
   await page.getByText(/Mistake 1 of 3/).waitFor({ timeout: 30000 });
   await page.screenshot({ path: path.join(SHOTS, "mistake-review-360.png") });
-  // Newest first: the seeds were recorded after the live card, the second seed last.
-  const queue = [seeds[1], seeds[0], { lessonId: LIVE, card: liveCard }];
+  const hintButton = page.locator("button[aria-controls][data-keyboard-passthrough]").filter({ hasText: /hint/i });
+  record("Review cards offer the hint, as lessons do", (await hintButton.count()) === 1 && Boolean(queue0Hint()));
+  await hintButton.click();
+  const panelId = await hintButton.getAttribute("aria-controls");
+  const panelText = await page.locator(`[id="${panelId}"]`).innerText({ timeout: 5000 }).catch(() => "");
+  record("…and opening it shows the hint", (await hintButton.getAttribute("aria-expanded")) === "true" && panelText.trim().length > 10, panelText.trim().slice(0, 50));
+
   await answer(page, right(queue[0].card));
   record("A right answer says so", await page.getByText("Got it this time.").waitFor({ timeout: 10000 }).then(() => true, () => false));
   await page.getByRole("button", { name: "Next", exact: true }).click();
