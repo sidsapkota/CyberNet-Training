@@ -93,7 +93,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "A program, not a person",
-      "body": "A chatbot can sound caring, but it can't notice if you're not OK.\n\nIf something's worrying you, talk to a **trusted adult**, a friend, or, in Australia, **Kids Helpline (1800 55 1800)**, free, any time. If you're in danger right now, call **000**. A chatbot can be somewhere to start your thoughts, never instead of real people."
+      "body": "A chatbot can sound caring, but can't notice if you're not OK.\n\nIf something's worrying you, talk to a **trusted adult** or a friend. In Australia, call **Kids Helpline (1800 55 1800)**, free, any time, up to age 25, or **Lifeline (13 11 14)**, any time, for anyone. In danger right now? Call **000**."
     },
     {
       "id": "photo-tag",
@@ -217,7 +217,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- AI gives **predictions**, not facts. Check important things.\n- Big decisions about people need a person.\n- Worried? Talk to a trusted adult or Kids Helpline (1800 55 1800).\n\nNext: the module quiz."
+      "body": "- AI gives **predictions**, not facts. Check important things.\n- Big decisions about people need a person.\n- Worried? Talk to a trusted adult, Kids Helpline (1800 55 1800) or Lifeline (13 11 14).\n\nNext: the module quiz."
     }
   ]
 }

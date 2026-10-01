@@ -178,7 +178,7 @@ Signs of a hack, what to do step by step, and where to get help.
 **Key facts**
 
 - *Fake voices and faces:* That's a **voice clone**. A faked video or picture is a **deepfake**.
-- *Recap:* **Kids Helpline** (in Australia): 1800 55 1800, free, any time.
+- *Recap:* In Australia: **Kids Helpline** 1800 55 1800 (up to 25) or **Lifeline** 13 11 14, any time.
 
 **Best interactive cards**
 
@@ -194,7 +194,7 @@ Signs of a hack, what to do step by step, and where to get help.
 **Key facts**
 
 - *Where to report in Australia:* **eSafety Commissioner** (esafety.gov.au): serious cyberbullying of anyone under 18 that the app hasn't dealt with, adult cyber abuse, and a **private or nude image** of you shared or threatened (report that straight away). **ACCCE**, the Australian Centre to Counter Child Exploitation (accce.gov.au/report): if you're **under 18** and someone pressures or threatens you with a private image.
-- *Recap:* **Never your fault:** tell an adult or Kids Helpline, 1800 55 1800. **Save evidence** first, but never a private image itself.
+- *Recap:* **Never your fault:** tell an adult, Kids Helpline (1800 55 1800) or Lifeline (13 11 14). **Save evidence** first, but never a private image itself.
 
 **Best interactive cards**
 
@@ -401,7 +401,7 @@ What counts as AI, how it learns from examples, and where it goes wrong.
 
 **Key facts**
 
-- *A program, not a person:* If something's worrying you, talk to a **trusted adult**, a friend, or, in Australia, **Kids Helpline (1800 55 1800)**, free, any time. If you're in danger right now, call **000**.
+- *A program, not a person:* If something's worrying you, talk to a **trusted adult** or a friend. In Australia, call **Kids Helpline (1800 55 1800)**, free, any time, up to age 25, or **Lifeline (13 11 14)**, any time, for anyone.
 - *Recap:* AI gives **predictions**, not facts.
 
 **Best interactive cards**
@@ -412,7 +412,7 @@ What counts as AI, how it learns from examples, and where it goes wrong.
 
 **Surprising facts**
 
-- Talk to a trusted adult or Kids Helpline (1800 55 1800).
+- Talk to a trusted adult, Kids Helpline (1800 55 1800) or Lifeline (13 11 14).
 
 #### Module quiz (7 questions)
 
@@ -686,7 +686,7 @@ Spot AI-made fakes, keep your private stuff private, and use AI honestly.
 
 **Key facts**
 
-- *A program, not a person:* If something's worrying you, talk to a **trusted adult**, a friend, or, in Australia, **Kids Helpline (1800 55 1800)**, free, any time. If you're in danger right now, call **000**.
+- *A program, not a person:* If something's worrying you, talk to a **trusted adult** or a friend. In Australia, call **Kids Helpline (1800 55 1800)**, free, any time, up to age 25, or **Lifeline (13 11 14)**, any time, for anyone.
 
 **Best interactive cards**
 
@@ -696,7 +696,7 @@ Spot AI-made fakes, keep your private stuff private, and use AI honestly.
 
 **Surprising facts**
 
-- Talk to a trusted adult or Kids Helpline (1800 55 1800).
+- Talk to a trusted adult, Kids Helpline (1800 55 1800) or Lifeline (13 11 14).
 
 #### Fair and Honest Use
 

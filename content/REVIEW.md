@@ -1280,6 +1280,12 @@ No real people, brands or logos appear. The three new scenes (`email`, `text-mes
 - ReportCyber at cyber.gov.au: report cybercrime to police. ASD's 24/7 hotline (1300 CYBER1) isn't
   mentioned, to keep the list short.
 - Kids Helpline, 1800 55 1800: free, private, 24/7, ages 5 to 25.
+- Lifeline, 13 11 14 (lifeline.org.au): 24/7, confidential, one-to-one short-term support from a
+  trained crisis supporter for anyone in Australia who is overwhelmed or having difficulty coping
+  ("all Australians experiencing emotional distress"; crisis support and suicide prevention). Text
+  0477 13 11 14 and 24/7 chat also exist (not mentioned, to keep it short). The site doesn't state
+  the call cost, so the course never says "free" for Lifeline. Shown next to Kids Helpline wherever
+  the audience may be over 25. Verified 2 October 2026 at lifeline.org.au and lifeline.org.au/131114.
 - ACCCE, the Australian Centre to Counter Child Exploitation (accce.gov.au, AFP-led): under-18s
   report sexual extortion ("sextortion") and other online child exploitation at
   **accce.gov.au/report** (the "Report abuse" button). Its advice for young people
@@ -1323,8 +1329,8 @@ section and the per-lesson notes below disagree, this section wins.**
 - 3.1 Posts can last; keep private what finds you (address, phone, school, where you are) or unlocks you (passwords, ID, security answers); quizzes that collect security answers; the four privacy settings; block, report and tell a trusted adult.
 - 3.2 Allow only the permissions an app needs; "Only while using" for location; change permissions in Settings; on public Wi-Fi check the network name with staff; mobile data for banking.
 - 4.1 (help) Signs of a take-over (things that weren't you; a **recovery email** is the backup that can reset your password); the first three steps with reasons, then sign out of other devices, turn on two-step (explained here for guests), change reused passwords and warn friends; never pay.
-- 4.2 (help) Copied voices and faces; four red flags; check with the real person another way; family safe word (bonus); if someone fakes you: not your fault, don't share or pay, save evidence but never the image, tell a trusted adult, report to the app, the government's eSafety Commissioner (esafety.gov.au/report) and, if you're under 18 and being threatened, the ACCCE (Australian Centre to Counter Child Exploitation, accce.gov.au/report); Kids Helpline in the recap.
-- 4.3 (help) Telling someone helps and it's never your fault; who to tell (trusted adults; Kids Helpline (in Australia) 1800 55 1800, free, private, any time, ages 5–25); where to report (the app's report button, eSafety, ACCCE, Scamwatch, your bank straight away, IDCARE idcare.org or 1800 595 160, ReportCyber cyber.gov.au, 000 for danger right now); save evidence.
+- 4.2 (help) Copied voices and faces; four red flags; check with the real person another way; family safe word (core; the video-call check `best-check` is now the bonus); if someone fakes you: not your fault, don't share or pay, save evidence but never the image, tell a trusted adult, report to the app, the government's eSafety Commissioner (esafety.gov.au/report) and, if you're under 18 and being threatened, the ACCCE (Australian Centre to Counter Child Exploitation, accce.gov.au/report); Kids Helpline and Lifeline in the recap.
+- 4.3 (help) Telling someone helps and it's never your fault; who to tell (trusted adults; Kids Helpline (in Australia) 1800 55 1800, free, private, any time, ages 5–25; over 25 or anyone, Lifeline 13 11 14, any time); where to report (the app's report button, eSafety, ACCCE, Scamwatch, your bank straight away, IDCARE idcare.org or 1800 595 160, ReportCyber cyber.gov.au, 000 for danger right now); save evidence.
 
 **Help content check (after the rewrite):** every service, number and URL above matches the verified
 list in this section (30 September and 1 October 2026), and all of it is in core cards of free
@@ -1576,11 +1582,12 @@ quizzes and quiz cards copied from lessons. "Token" is now "word" (once: "really
 - 5.1 Image models learned from captioned pictures and clear random speckles colour first, then shapes, then detail; the same prompt gives different pictures; finding no give-aways proves nothing. 5.2 Deepfakes and voice clones; permission; situation clues beat video clues; check with the real person another way; the Australian law line and "report it at esafety.gov.au, and tell a trusted adult" are shown in the explainer and recap. 5.3 A label or watermark is evidence, but no label proves nothing; the 4 checks; correct a share kindly; say when your own pictures are AI.
 - 6.1 Fake reviews and bots; strong feeling → stop and check outside. 6.2 Chats may be saved, read by staff or used for training; keep personal details private; only the permissions an app needs; get help from people. 6.3 Be open about AI use; credit artists who inspire you; when AI decides about people, ask who it's unfair to and keep a person deciding.
 
-**Help content:** the Kids Helpline (1800 55 1800, free, any time, in Australia) and 000 card is now in
-free lesson 1.3 (`if-a-chat-upsets-you`) as well as 6.2 (`not-a-person`), with the service sentences
-word for word the same in both. The 5.2 recap points to Stay Safe Online's free "Deepfake Scams and
-Fakes" lesson. (Kids Helpline serves ages 5–25; the owner may want to add an adult service, verified
-first.)
+**Help content:** the help card (Kids Helpline 1800 55 1800, free, any time, up to age 25; Lifeline
+13 11 14, any time, for anyone; 000 in danger) is in free lesson 1.3 (`if-a-chat-upsets-you`) as well
+as 6.2 (`not-a-person`), with the service sentences word for word the same in both. Lifeline also
+appears next to Kids Helpline in both recaps and in `feeling-down` (verified 2 October 2026; see the
+Stay Safe Online verified list). The 5.2 recap points to Stay Safe Online's free "Deepfake Scams and
+Fakes" lesson.
 
 **Simplifications added in the rewrite**
 - "AI = software that learns from examples" (working definition); every answer is "a prediction that can't check if it's true"; a model can only output the labels it was trained on; a language model on its own doesn't look things up (some apps add search).

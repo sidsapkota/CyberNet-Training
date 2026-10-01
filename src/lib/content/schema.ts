@@ -119,6 +119,8 @@ export interface LessonOutline {
   moduleId: string;
   cardCount: number;
   coreCardIds: string[];
+  /** Photo cards: a quick look, so the time estimate leaves them out. */
+  photoCount: number;
   /** Only set for regular lessons (quizzes use the network hub). */
   icon?: LessonIconName;
   /** Only set for quizzes. */
@@ -152,6 +154,7 @@ export function toLessonOutline(lesson: Lesson): LessonOutline {
     moduleId: lesson.moduleId,
     cardCount: lesson.cards.length,
     coreCardIds: lesson.cards.filter((c) => c.difficulty === "core").map((c) => c.id),
+    photoCount: lesson.cards.filter((c) => c.type === "photo").length,
     ...(lesson.kind === "quiz" ? { passThreshold: lesson.passThreshold } : { icon: lesson.icon }),
     ...(lesson.kind === "lesson" && lesson.lastChecked ? { lastChecked: lesson.lastChecked } : {}),
   };

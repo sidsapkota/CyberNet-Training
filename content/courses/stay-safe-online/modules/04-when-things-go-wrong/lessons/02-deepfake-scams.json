@@ -130,7 +130,7 @@
     {
       "id": "best-check",
       "type": "multiple_choice",
-      "difficulty": "core",
+      "difficulty": "challenge",
       "prompt": "A video call from your friend's account asks you to send a code that just arrived by text. Their face and voice look right. What's the **best** thing to do?",
       "options": [
         {
@@ -241,7 +241,7 @@
     {
       "id": "safe-word-check",
       "type": "multiple_choice",
-      "difficulty": "challenge",
+      "difficulty": "core",
       "prompt": "Some families agree a **family safe word**: a secret word just for emergencies, never posted online.\n\nA caller sounds just like your brother. He can't say the family safe word, and he keeps rushing you. What now?",
       "options": [
         {
@@ -303,7 +303,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- AI can fake voices and faces. The red flags still work.\n- Hang up, then check on the number you already have.\n- A fake of you: not your fault. Tell, save evidence, report.\n\nWant to talk? **Kids Helpline** (in Australia): 1800 55 1800, free, any time."
+      "body": "- AI can fake voices and faces. The red flags still work.\n- Hang up, then check on the number you already have.\n- A fake of you: not your fault. Tell, save evidence, report.\n\nWant to talk? In Australia: **Kids Helpline** 1800 55 1800 (up to 25) or **Lifeline** 13 11 14, any time."
     }
   ]
 }

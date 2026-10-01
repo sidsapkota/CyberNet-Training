@@ -530,7 +530,8 @@ keep their focused player shell.
   progress loads, then draw. This also keeps reduced-motion entrances from mismatching the
   server HTML.
 - **Time estimates:** `src/lib/content/estimate.ts` uses a conservative 45 seconds per **core** card,
-  rounded to whole minutes; bonus cards are named apart ("about 4 min + 2 bonus cards"). Keep estimates honest; don't hand-write durations.
+  rounded to whole minutes; bonus cards are named apart ("about 4 min + 2 bonus cards"), and photo
+  cards (a quick look) aren't counted (`photoCount` on the outline). Keep estimates honest; don't hand-write durations.
 
 ## Folder structure
 
@@ -1381,7 +1382,9 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   information must never be behind a paywall. `load.test.ts` checks the modules this covers
   (currently Stay Safe Online's "When Things Go Wrong"); add new ones to its `alwaysFree` list.
   Help lines inside other courses also sit in a free lesson: How AI Really Works has its Kids
-  Helpline / 000 card in free lesson 1.3 as well as 6.2 (word for word the same). Help information
+  Helpline / Lifeline / 000 card in free lesson 1.3 as well as 6.2 (word for word the same). Wherever
+  Kids Helpline (ages 5–25) appears for a general audience, Lifeline (13 11 14, any time, anyone in
+  Australia; never called "free", since its site doesn't say) appears next to it. Help information
   is always in core cards (a prompt, explainer or recap), never only in a bonus card or an
   after-answer explanation.
 - **Safe examples only:** IPv4 documentation ranges (`192.0.2.0/24`, `198.51.100.0/24`,

@@ -1,9 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { bonusCards, estimateMinutes, SECONDS_PER_CARD, timeLine } from "./estimate";
 
-const lesson = (core: number, bonus = 0) => ({
-  cardCount: core + bonus,
-  coreCardIds: Array.from({ length: core }, (_, i) => `c${i}`),
+const lesson = (core: number, bonus = 0, photos = 0) => ({
+  cardCount: core + bonus + photos,
+  coreCardIds: Array.from({ length: core + photos }, (_, i) => `c${i}`),
+  photoCount: photos,
 });
 
 describe("estimateMinutes", () => {
@@ -16,6 +17,11 @@ describe("estimateMinutes", () => {
     expect(estimateMinutes(lesson(10, 2))).toBe(8); // 450 s = 7.5, rounds up; bonus cards don't count
     expect(estimateMinutes(lesson(7))).toBe(5); // 315 s = 5.25
     expect(estimateMinutes(lesson(6, 2))).toBe(5); // 270 s = 4.5
+  });
+
+  it("leaves photos out (they're a quick look)", () => {
+    expect(estimateMinutes(lesson(7, 0, 1))).toBe(5); // 7 cards, not 8
+    expect(timeLine(lesson(7, 2, 1))).toBe("about 5 min + 2 bonus cards");
   });
 
   it("never says less than a minute", () => {

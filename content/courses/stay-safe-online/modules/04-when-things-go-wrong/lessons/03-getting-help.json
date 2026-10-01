@@ -60,7 +60,7 @@
       "id": "who-to-tell",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A **trusted adult** is someone you feel safe talking to: a parent or carer, a teacher, a school counsellor, or an older relative.\n\nIf you'd rather talk to someone outside your family, **Kids Helpline** (in Australia) is free, private and open any time, for ages 5 to 25: call **1800 55 1800**.\n\nSomething online is worrying Ali, and he doesn't want to tell his family yet. What could he do?",
+      "prompt": "A **trusted adult** is someone you feel safe talking to: a parent or carer, a teacher, a school counsellor, or an older relative.\n\nIf you'd rather talk to someone outside your family, **Kids Helpline** (in Australia) is free, private and open any time, for ages 5 to 25: call **1800 55 1800**. Over 25, or anyone: **Lifeline** on **13 11 14**, any time.\n\nSomething online is worrying Ali, and he doesn't want to tell his family yet. What could he do?",
       "options": [
         {
           "id": "helpline",
@@ -267,7 +267,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- **Never your fault:** tell an adult or Kids Helpline, 1800 55 1800.\n- Report in the app, then eSafety, Scamwatch, your bank or 000.\n- **Save evidence** first, but never a private image itself.\n\nThat's the course. You know the signs, the steps and where to get help."
+      "body": "- **Never your fault:** tell an adult, Kids Helpline (1800 55 1800) or Lifeline (13 11 14).\n- Report in the app, then eSafety, Scamwatch, your bank or 000.\n- **Save evidence** first, but never a private image itself.\n\nThat's the course. You know the signs, the steps and where to get help."
     }
   ]
 }

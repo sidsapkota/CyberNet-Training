@@ -7,11 +7,12 @@ import type { LessonOutline } from "./schema";
 export const SECONDS_PER_CARD = 45;
 
 /**
- * Whole minutes for a lesson's core cards (bonus cards are optional, so they're counted apart),
- * rounded, never less than 1. Quizzes are all core.
+ * Whole minutes for a lesson's core cards, rounded, never less than 1. Bonus cards are optional, so
+ * they're counted apart, and photos (a quick look) aren't counted. Quizzes are all core.
  */
-export function estimateMinutes(lesson: Pick<LessonOutline, "coreCardIds">): number {
-  return Math.max(1, Math.round((lesson.coreCardIds.length * SECONDS_PER_CARD) / 60));
+export function estimateMinutes(lesson: Pick<LessonOutline, "coreCardIds" | "photoCount">): number {
+  const cards = lesson.coreCardIds.length - lesson.photoCount;
+  return Math.max(1, Math.round((cards * SECONDS_PER_CARD) / 60));
 }
 
 /** How many optional bonus (challenge) cards a lesson has. */
@@ -20,7 +21,7 @@ export function bonusCards(lesson: Pick<LessonOutline, "cardCount" | "coreCardId
 }
 
 /** "about 4 min" or "about 4 min + 2 bonus cards". */
-export function timeLine(lesson: Pick<LessonOutline, "cardCount" | "coreCardIds">): string {
+export function timeLine(lesson: Pick<LessonOutline, "cardCount" | "coreCardIds" | "photoCount">): string {
   const bonus = bonusCards(lesson);
   return `about ${estimateMinutes(lesson)} min${bonus > 0 ? ` + ${bonus} bonus ${bonus === 1 ? "card" : "cards"}` : ""}`;
 }

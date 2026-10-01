@@ -357,6 +357,7 @@ export const lessonOutline = (over: Partial<LessonOutline> = {}): LessonOutline 
   moduleId: "module",
   cardCount: 3,
   coreCardIds: ["c1", "c2"],
+  photoCount: 0,
   ...over,
 });
 
