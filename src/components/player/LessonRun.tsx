@@ -15,7 +15,8 @@ import { trackEvent, trackLessonQuit } from "@/lib/analytics";
 import { speechText } from "@/cards/speech";
 import { reactionExpression, reactionLine } from "@/lib/reactions";
 import { hintXpNote, visibleHint } from "@/lib/hints";
-import { getNextLesson, lessonFinishState } from "@/lib/progress/state";
+import { getNextLesson, hasAnyProgress, lessonFinishState } from "@/lib/progress/state";
+import { coachAllowedOn } from "@/lib/coach";
 import { emptySnapshot, isCardCompleted } from "@/lib/progress/types";
 import { practicedOn } from "@/lib/progress/daily";
 import { milestoneReached } from "@/lib/progress/streak";
@@ -117,8 +118,10 @@ export function LessonRun({
   const definition = getCardDefinition(card);
   const total = lesson.cards.length;
   const coach = useCoach(card);
+  // Read once when the lesson opens: someone with no progress at all is brand new here.
+  const [newcomer] = useState(() => !hasAnyProgress(snapshot));
   useEffect(() => trackEvent("lesson_start", lesson.id), [lesson.id]);
-  const showCoach = result === null && run.status === "answering" ? coach.coachKey : null;
+  const showCoach = result === null && run.status === "answering" && coachAllowedOn(index, newcomer) ? coach.coachKey : null;
 
   const isDone = (c: Pick<Card, "id">) => completedThisVisit.has(c.id) || isCardCompleted(snapshot, lesson.id, c.id);
 

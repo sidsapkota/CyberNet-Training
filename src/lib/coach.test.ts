@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { explainer, hotspot, multipleChoice } from "@/test/fixtures";
-import { cleanCoachSeen, COACH_KEYS, coachKeyFor, markCoachSeen, shouldShowCoach } from "./coach";
+import { cleanCoachSeen, COACH_KEYS, coachAllowedOn, coachKeyFor, markCoachSeen, shouldShowCoach } from "./coach";
 
 describe("first-time how-to-play panels", () => {
   it("gives each interaction style its own panel, and none to explainers or multiple choice", () => {
@@ -26,5 +26,13 @@ describe("first-time how-to-play panels", () => {
     expect(cleanCoachSeen(["x", 3, "sort_bins", "sort_bins", null])).toEqual(["sort_bins"]);
     expect(cleanCoachSeen(null)).toEqual([]);
     expect(COACH_KEYS.length).toBeLessThanOrEqual(32); // the database caps coach_seen at 32
+  });
+});
+
+describe("coachAllowedOn", () => {
+  it("skips the panel only on a newcomer's very first card", () => {
+    expect(coachAllowedOn(0, true)).toBe(false);
+    expect(coachAllowedOn(1, true)).toBe(true);
+    expect(coachAllowedOn(0, false)).toBe(true);
   });
 });
