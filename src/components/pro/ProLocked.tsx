@@ -29,8 +29,8 @@ export function ProLockedMessage({
       <Heading className={`mt-3 font-semibold text-balance ${compact ? "text-lead" : "text-title"}`}>{title}</Heading>
       <p className="mt-2 max-w-sm text-ink-muted">
         {reason === "sign-in"
-          ? "This lesson is part of CyberNet Pro. Sign in to see your options. The first module of every course is free."
-          : "This lesson is part of CyberNet Pro. The first module of every course stays free, and your progress is always kept."}
+          ? "This lesson is part of CyberNet Pro. Sign in to see your options."
+          : "This lesson is part of CyberNet Pro. Your progress is always kept."}
       </p>
       <div className="mt-6 flex w-full max-w-sm flex-col gap-2">
         {reason === "sign-in" ? (

@@ -352,6 +352,27 @@ export type Database = {
         }
         Relationships: []
       }
+      lesson_opens: {
+        Row: {
+          day: string
+          lesson_id: string
+          opened_at: string
+          user_id: string
+        }
+        Insert: {
+          day: string
+          lesson_id: string
+          opened_at?: string
+          user_id: string
+        }
+        Update: {
+          day?: string
+          lesson_id?: string
+          opened_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       pro_grants: {
         Row: {
           expires_at: string
@@ -388,6 +409,7 @@ export type Database = {
           learning_mode: string
           sound_enabled: boolean
           time_zone: string | null
+          time_zone_changed_at: string | null
         }
         Insert: {
           age_confirmed?: boolean
@@ -400,6 +422,7 @@ export type Database = {
           learning_mode?: string
           sound_enabled?: boolean
           time_zone?: string | null
+          time_zone_changed_at?: string | null
         }
         Update: {
           age_confirmed?: boolean
@@ -412,6 +435,7 @@ export type Database = {
           learning_mode?: string
           sound_enabled?: boolean
           time_zone?: string | null
+          time_zone_changed_at?: string | null
         }
         Relationships: []
       }
@@ -597,6 +621,19 @@ export type Database = {
       }
       league_week: { Args: { t?: string }; Returns: string }
       leagues_open: { Args: never; Returns: boolean }
+      open_lesson: {
+        Args: {
+          p_lesson: string
+          p_limit: number
+          p_time_zone?: string
+          p_user: string
+        }
+        Returns: {
+          allowed: boolean
+          day: string
+          used: number
+        }[]
+      }
       verify_certificate: {
         Args: { p_id: string }
         Returns: {

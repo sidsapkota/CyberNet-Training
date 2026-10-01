@@ -29,8 +29,9 @@ These terms are the rules for using CyberNet Training ("we", "us"). By using the
 
 ## Using CyberNet Training
 
-- The first module of every course is **free**, and so is everything about getting help after something goes wrong online. You can play free lessons without an account.
-- The other modules are part of **CyberNet Pro**, a paid subscription (see below).
+- Without an account, you can play the first lesson of every course, and everything about getting help after something goes wrong online.
+- A **free account** opens any lesson in any course, up to **3 new lessons a day** (quizzes count). Replaying a lesson you've finished, and the help lessons, never count. The day starts at midnight in your time zone, which can change once a week.
+- **CyberNet Pro**, a paid subscription (see below), makes lessons unlimited and adds certificates.
 - Use the site for learning. Please don't try to break it, overload it, or get into other people's accounts.
 
 ## Accounts

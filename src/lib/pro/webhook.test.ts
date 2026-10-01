@@ -35,6 +35,7 @@ function fakes(stripe: Record<string, StripeSubscriptionLike> = {}) {
   const processed = new Map<string, string>();
   const rows = new Map<string, SubscriptionRow>();
   const customers = new Map<string, string>(); // customer → user
+  const reminders: string[] = []; // "user:subscription"
   const deps: WebhookDeps = {
     isProcessed: async (id) => processed.has(id),
     markProcessed: async (id, type) => void processed.set(id, type),
@@ -42,9 +43,10 @@ function fakes(stripe: Record<string, StripeSubscriptionLike> = {}) {
     saveSubscription: async (row) => void rows.set(row.id, row),
     linkCustomer: async (user, customer) => void customers.set(customer, user),
     userForCustomer: async (customer) => customers.get(customer) ?? null,
+    sendTrialReminder: async (user, sub) => void reminders.push(`${user}:${sub.id}`),
     now: () => NOW,
   };
-  return { deps, processed, rows, customers, stripe };
+  return { deps, processed, rows, customers, stripe, reminders };
 }
 
 const event = (id: string, type: string, object: Record<string, unknown>): StripeEventLike => ({ id, type, data: { object } });
@@ -93,10 +95,28 @@ describe("handleStripeEvent", () => {
     expect(f.rows.get("sub_A")?.status).toBe("past_due");
   });
 
-  it("trial ending: refreshes the subscription (Stripe emails the reminder)", async () => {
+  it("trial ending: refreshes the subscription and sends our reminder once", async () => {
     const f = fakes({ sub_A: stripeSub() });
     expect(await handleStripeEvent(event("evt_5", "customer.subscription.trial_will_end", { id: "sub_A" }), f.deps)).toBe("processed");
     expect(f.rows.get("sub_A")?.trial_end).toBe("2026-10-17T00:00:00.000Z");
+    expect(f.reminders).toEqual([`${USER}:sub_A`]);
+    // Stripe delivers the same event again: no second email.
+    expect(await handleStripeEvent(event("evt_5", "customer.subscription.trial_will_end", { id: "sub_A" }), f.deps)).toBe("duplicate");
+    expect(f.reminders).toHaveLength(1);
+  });
+
+  it("trial ending: no reminder when the trial is already cancelling or over", async () => {
+    for (const sub of [stripeSub({ cancel_at_period_end: true }), stripeSub({ cancel_at: unix("2026-10-17T00:00:00Z") }), stripeSub({ status: "active" })]) {
+      const f = fakes({ sub_A: sub });
+      await handleStripeEvent(event("evt_7", "customer.subscription.trial_will_end", { id: "sub_A" }), f.deps);
+      expect(f.reminders).toEqual([]);
+    }
+  });
+
+  it("only the trial-ending event sends a reminder", async () => {
+    const f = fakes({ sub_A: stripeSub() });
+    await handleStripeEvent(event("evt_8", "customer.subscription.updated", { id: "sub_A" }), f.deps);
+    expect(f.reminders).toEqual([]);
   });
 
   it("finds the account from the customer when the subscription has no user id", async () => {

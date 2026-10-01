@@ -4,22 +4,24 @@ import { SupabaseEnvError } from "@/lib/supabase/env";
 
 vi.mock("server-only", () => ({}));
 const auth = vi.hoisted(() => ({ requireUser: vi.fn() }));
-const pro = vi.hoisted(() => ({ getEntitlement: vi.fn() }));
+const pro = vi.hoisted(() => ({ getEntitlement: vi.fn(), hasFinishedLesson: vi.fn(), openLessonToday: vi.fn() }));
 vi.mock("@/lib/auth/server", () => auth);
 vi.mock("@/lib/pro/server", () => pro);
 
 const { GET } = await import("./route");
 
-async function get(id: string) {
-  const response = await GET(new Request(`http://localhost/api/lessons/${id}`), { params: Promise.resolve({ id }) } as never);
-  const body = (await response.json()) as { lesson?: { id: string; cards: unknown[] }; reason?: string };
+async function get(id: string, query = "") {
+  const response = await GET(new Request(`http://localhost/api/lessons/${id}${query}`), { params: Promise.resolve({ id }) } as never);
+  const body = (await response.json()) as { lesson?: { id: string; cards: unknown[] }; reason?: string; used?: number; limit?: number };
   return { status: response.status, body, cache: response.headers.get("cache-control") };
 }
 
 const guest = () => auth.requireUser.mockRejectedValue(new NotSignedInError());
-const signedIn = (hasPro = false) => {
+const signedIn = (hasPro = false, { finished = false, room = true } = {}) => {
   auth.requireUser.mockResolvedValue({ id: "u1", createdAt: null });
   pro.getEntitlement.mockResolvedValue({ hasPro });
+  pro.hasFinishedLesson.mockResolvedValue(finished);
+  pro.openLessonToday.mockResolvedValue({ allowed: room, used: room ? 1 : 3, day: "2026-10-02" });
 };
 
 describe("/api/lessons/[id]: who gets a lesson's cards", () => {
@@ -49,19 +51,39 @@ describe("/api/lessons/[id]: who gets a lesson's cards", () => {
     }
   });
 
-  it("serves account lessons to anyone signed in, without checking Pro", async () => {
-    signedIn(false);
-    expect((await get("memory-vs-storage")).status).toBe(200);
-    expect(pro.getEntitlement).not.toHaveBeenCalled();
+  it("asks guests to make a free account for Pro lessons too", async () => {
+    guest();
+    expect(await get("meet-the-os")).toMatchObject({ status: 401, body: { reason: "account" } });
   });
 
-  it("keeps Pro lessons for Pro learners", async () => {
-    guest();
-    expect(await get("meet-the-os")).toMatchObject({ status: 401, body: { reason: "sign-in" } });
+  it("lets free accounts open any lesson, Pro modules included, while there's room today", async () => {
     signedIn(false);
-    expect(await get("meet-the-os")).toMatchObject({ status: 403, body: { reason: "pro" } });
-    signedIn(true);
+    for (const id of ["memory-vs-storage", "meet-the-os"]) expect((await get(id, "?tz=Australia%2FPerth")).status, id).toBe(200);
+    expect(pro.openLessonToday).toHaveBeenCalledWith("u1", "meet-the-os", 3, "Australia/Perth");
+  });
+
+  it("refuses a new lesson once today's limit is used, with the reason", async () => {
+    signedIn(false, { room: false });
+    expect(await get("meet-the-os")).toEqual({ status: 403, body: { reason: "limit", used: 3, limit: 3 }, cache: "private, no-store" });
+  });
+
+  it("never counts replays, Pro learners or guest lessons", async () => {
+    signedIn(false, { finished: true, room: false });
     expect((await get("meet-the-os")).status).toBe(200);
+    vi.clearAllMocks();
+    signedIn(true, { room: false });
+    expect((await get("meet-the-os")).status).toBe(200);
+    expect(pro.hasFinishedLesson).not.toHaveBeenCalled();
+    vi.clearAllMocks();
+    signedIn(false, { room: false });
+    expect((await get("getting-help")).status).toBe(200);
+    expect(pro.openLessonToday).not.toHaveBeenCalled();
+  });
+
+  it("ignores a time zone the runtime doesn't know", async () => {
+    signedIn(false);
+    await get("meet-the-os", "?tz=Mars%2FOlympus");
+    expect(pro.openLessonToday).toHaveBeenCalledWith("u1", "meet-the-os", 3, null);
   });
 
   it("without accounts set up, free lessons stay open (nobody could sign up) and Pro stays locked", async () => {

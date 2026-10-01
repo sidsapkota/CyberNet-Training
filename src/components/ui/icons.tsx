@@ -1,5 +1,7 @@
 import {
   ArrowRight,
+  Award,
+  Infinity as InfinityLucide,
   BookCheck,
   Check,
   ChevronDown,
@@ -208,6 +210,8 @@ export const FreezeIcon = brandIcon(Snowflake, "FreezeIcon");
 
 // CyberNet Pro.
 export const ProIcon = brandIcon(Gem, "ProIcon");
+export const UnlimitedIcon = brandIcon(InfinityLucide, "UnlimitedIcon");
+export const CertificateIcon = brandIcon(Award, "CertificateIcon");
 
 /**
  * Lesson icons (the `icon` field of every lesson, from `LESSON_ICONS`), shown on course path

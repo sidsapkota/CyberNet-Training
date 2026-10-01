@@ -38,3 +38,26 @@ export function annualSaving(monthly: StripePrice, annual: StripePrice): AnnualS
     percent: Math.floor((saved / twelve) * 100),
   };
 }
+
+/** "A$5" for a whole amount, "A$5.50" otherwise: for short lines like "just A$5 a month". */
+export function shortPrice(cents: number, currency: string): string {
+  return formatPrice(cents, currency).replace(/\.00(?=$| )/, "");
+}
+
+/** What the Pro screens show: the annual price with its monthly equivalent, and the monthly price. */
+export interface PitchPrices {
+  annual: { price: string; perMonth: string | null; percent: number | null };
+  monthly: { price: string };
+}
+
+export function pitchPrices(monthly: StripePrice, annual: StripePrice): PitchPrices {
+  const saving = annualSaving(monthly, annual);
+  return {
+    annual: {
+      price: formatPrice(annual.unitAmount, annual.currency),
+      perMonth: saving ? shortPrice(Math.round(annual.unitAmount / 12), annual.currency) : null,
+      percent: saving?.percent ?? null,
+    },
+    monthly: { price: formatPrice(monthly.unitAmount, monthly.currency) },
+  };
+}

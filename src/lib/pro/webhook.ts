@@ -10,6 +10,7 @@
  * - Only subscriptions (mode "subscription") are handled; nothing else is ever charged.
  */
 import type { SubscriptionStatus } from "./entitlement";
+import { shouldRemindTrial } from "./trialReminder";
 
 /** The fields of a Stripe Subscription we use (API 2026-08-26: the period lives on the item). */
 export interface StripeSubscriptionLike {
@@ -25,7 +26,7 @@ export interface StripeSubscriptionLike {
   items: {
     data: {
       current_period_end?: number | null;
-      price: { id: string; recurring?: { interval?: string } | null };
+      price: { id: string; recurring?: { interval?: string } | null; unit_amount?: number | null; currency?: string };
     }[];
   };
 }
@@ -59,6 +60,11 @@ export interface WebhookDeps {
   saveSubscription(row: SubscriptionRow): Promise<void>;
   linkCustomer(userId: string, customerId: string): Promise<void>;
   userForCustomer(customerId: string): Promise<string | null>;
+  /**
+   * Emails the learner that their trial ends soon (once per subscription; the sender uses an
+   * idempotency key, so a retried event never sends twice).
+   */
+  sendTrialReminder(userId: string, sub: StripeSubscriptionLike): Promise<void>;
   now(): Date;
 }
 
@@ -152,7 +158,13 @@ export async function handleStripeEvent(event: StripeEventLike, deps: WebhookDep
       const metaUser = sub.metadata?.user_id && UUID.test(sub.metadata.user_id) ? sub.metadata.user_id : null;
       const userId = metaUser ?? userHint ?? (customer ? await deps.userForCustomer(customer) : null);
       // No account for it (e.g. deleted since): nothing to save.
-      if (userId) await deps.saveSubscription(toSubscriptionRow(sub, userId, deps.now()));
+      if (userId) {
+        await deps.saveSubscription(toSubscriptionRow(sub, userId, deps.now()));
+        // Stripe says the trial ends in 3 days: a friendly reminder, unless it's already cancelling.
+        if (event.type === "customer.subscription.trial_will_end" && shouldRemindTrial(sub, deps.now())) {
+          await deps.sendTrialReminder(userId, sub);
+        }
+      }
     }
   }
   await deps.markProcessed(event.id, event.type);

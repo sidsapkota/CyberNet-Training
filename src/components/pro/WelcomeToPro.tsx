@@ -84,7 +84,7 @@ export function WelcomeToPro({ confirmed }: { confirmed: boolean }) {
       >
         <ProBadge />
         <h1 className="mt-3 text-headline font-semibold text-balance">Welcome to Pro</h1>
-        <p className="mt-2 text-ink-muted">Every module of every course is open, and you can hold an extra streak freeze.</p>
+        <p className="mt-2 text-ink-muted">Lessons are unlimited every day, certificates are yours to earn, and you can hold an extra streak freeze.</p>
         {trialEnd && (
           <p className="mt-3 text-small text-ink-muted">
             Your free trial ends on {dateFormat.format(new Date(trialEnd))}. You can cancel any time before then from your account page.

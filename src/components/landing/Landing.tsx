@@ -10,11 +10,11 @@ const COUNT_WORDS: Record<number, string> = { 2: "Two", 3: "Three", 4: "Four", 5
 const FAQ: { q: string; a: string }[] = [
   {
     q: "Is it free?",
-    a: "The first module of every course is free: play its first lesson straight away, then make a free account to keep going. The rest is CyberNet Pro, which starts with a 7-day free trial. Help after something goes wrong online is always free, with no account needed.",
+    a: "Yes. Play the first lesson of any course straight away. A free account opens every lesson in every course, up to 3 new lessons a day. CyberNet Pro makes it unlimited and starts with a 7-day free trial. Help after something goes wrong online is always free, with no account needed.",
   },
   {
     q: "Do I need an account?",
-    a: "Not to start. The first lesson of every course, and help after something goes wrong online, work without one. A free account (age 13 or older) opens the rest of each first module and keeps your progress on every device.",
+    a: "Not to start. The first lesson of every course, and help after something goes wrong online, work without one. A free account (age 13 or older) opens every other lesson, up to 3 new ones a day, and keeps your progress on every device.",
   },
   {
     q: "Is it safe for kids?",

@@ -22,6 +22,8 @@ export type AnalyticsEvent =
   | "signed_up"
   // The Pro funnel (lesson or course id and source only).
   | "paywall_viewed"
+  // A free account reached today's lesson limit (with the lesson they tried to open).
+  | "limit_reached"
   | "teaser_played"
   | "checkout_started"
   | "trial_started"

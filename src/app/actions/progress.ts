@@ -41,7 +41,7 @@ import {
   type XpEvent,
 } from "@/lib/progress/types";
 import { XP } from "@/lib/progress/xp";
-import { getEntitlement, proLaunchAt, ProRequiredError } from "@/lib/pro/server";
+import { getEntitlement, hasFinishedLesson, hasOpenedLesson, proLaunchAt, ProRequiredError } from "@/lib/pro/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { after } from "next/server";
 import { onXpEarned } from "@/lib/leagues/server";
@@ -49,12 +49,17 @@ import { onXpEarned } from "@/lib/leagues/server";
 const Id = z.string().min(1).max(120);
 
 /**
- * Pro lessons need Pro before anything is recorded or graded (the content is never sent without
- * it either). Free lessons, and unknown ids (which the XP rules reject anyway), pass through.
+ * Pro lessons are recorded and graded only for learners who could open them: with Pro, or a free
+ * account the lesson API let in (a `lesson_opens` row, from the daily limit), or a replay of one
+ * finished before. Free lessons, and unknown ids (which the XP rules reject anyway), pass through.
  */
 async function assertCanUse(userId: string, lessonId: string): Promise<void> {
-  if (getContentIndex().get(lessonId)?.access !== "pro") return;
-  if (!(await getEntitlement({ id: userId, createdAt: null })).hasPro) throw new ProRequiredError();
+  const lesson = getContentIndex().get(lessonId);
+  if (lesson?.access !== "pro") return;
+  if (await hasOpenedLesson(userId, lessonId)) return;
+  if ((await getEntitlement({ id: userId, createdAt: null })).hasPro) return;
+  if (await hasFinishedLesson(userId, lessonId, lesson.kind)) return;
+  throw new ProRequiredError();
 }
 
 function fail(message: string, error?: { message: string } | null): never {

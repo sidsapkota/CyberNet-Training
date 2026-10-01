@@ -10,6 +10,7 @@ import { z } from "zod";
 import { requireUser, requireUserId } from "@/lib/auth/server";
 import type { Plan } from "@/lib/pro/env";
 import { type ProInterval, proIntervals, type ProStatus, trialEligible } from "@/lib/pro/entitlement";
+import { DAILY_LESSON_LIMIT, type DailyLessons, limitDay } from "@/lib/pro/dailyLimit";
 import { ensureStripeCustomer, getEntitlement, stripeCustomerFor } from "@/lib/pro/server";
 import { getStripe, getStripeEnv } from "@/lib/pro/stripe";
 import { returnOrigin } from "@/lib/pro/urls";
@@ -47,6 +48,28 @@ export async function getMyProAction(): Promise<MyPro> {
     trialEligible: trialEligible(entitlement.subscriptions),
     available: getStripeEnv() !== null,
   };
+}
+
+const LessonId = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/).max(120);
+
+/**
+ * Today's new lessons, for the course path's "N left today" line (display only: the lesson API
+ * decides). `openedToday`: this lesson already counted today, so opening it again is free.
+ */
+export async function getDailyLessonsAction(lessonId: string): Promise<DailyLessons & { openedToday: boolean }> {
+  const user = await requireUser();
+  const id = LessonId.parse(lessonId);
+  if ((await getEntitlement(user)).hasPro) return { limited: false, used: 0, limit: DAILY_LESSON_LIMIT, openedToday: false };
+  const admin = createSupabaseAdminClient();
+  const { data: profile, error } = await admin.from("profiles").select("time_zone").eq("id", user.id).maybeSingle();
+  if (error) throw new Error(`Couldn't read the profile: ${error.message}`);
+  const { data: opens, error: opensError } = await admin
+    .from("lesson_opens")
+    .select("lesson_id")
+    .match({ user_id: user.id, day: limitDay(profile?.time_zone, new Date()) });
+  if (opensError) throw new Error(`Couldn't count lessons: ${opensError.message}`);
+  const rows = opens ?? [];
+  return { limited: true, used: rows.length, limit: DAILY_LESSON_LIMIT, openedToday: rows.some((r) => r.lesson_id === id) };
 }
 
 /** Starts Stripe Checkout for a plan. First-time subscribers get the 7-day trial. */

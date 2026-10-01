@@ -6,7 +6,7 @@ const base = { kind: "subscription" as const, status: "active" as const, interva
 
 describe("proLine", () => {
   it("describes each state in one plain line", () => {
-    expect(proLine({ kind: "none", hadSubscription: false }, tz)).toBe("Every module of every course.");
+    expect(proLine({ kind: "none", hadSubscription: false }, tz)).toBe("Unlimited lessons every day.");
     expect(proLine({ kind: "none", hadSubscription: true }, tz)).toMatch(/ended.*progress is all still here/);
     expect(proLine({ kind: "grant", expiresAt: "2026-10-31T00:00:00Z", thanked: true }, tz)).toBe("Free for early users until 31 October 2026. Thank you!");
     expect(proLine(base, tz)).toBe("Monthly plan. Renews on 1 November 2026.");

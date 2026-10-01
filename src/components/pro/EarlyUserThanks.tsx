@@ -28,7 +28,7 @@ export function EarlyUserThanks() {
         </h2>
       </div>
       <p className="mt-2 text-ink-muted">
-        You were one of our first learners, so you have CyberNet Pro free until {until}: every module in every course. Nothing to
+        You were one of our first learners, so you have CyberNet Pro free until {until}: unlimited lessons every day. Nothing to
         set up, and nothing is charged.
       </p>
       <Button
