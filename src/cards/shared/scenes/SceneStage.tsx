@@ -48,7 +48,7 @@ export function overlayOrder<T extends { box: Box }>(parts: readonly T[]): T[] {
 }
 
 /** The smallest a scene is drawn, even on a crowded card (a card that needs less must be split). */
-const MIN_HEIGHT = 180;
+const MIN_HEIGHT = 150;
 /**
  * Scenes that show their own text (an email, a text message, a web page, a file list): never shrunk
  * to fit, or their words become unreadable and their parts too small to tap apart. A card using one
@@ -158,9 +158,9 @@ export function SceneStage({
     [ref, setNode],
   );
   return (
-    <div ref={setRefs} data-scene-stage className="relative scroll-mt-20 scroll-mb-28 rounded-card bg-screen p-3 sm:p-4">
+    <div ref={setRefs} data-scene-stage className="relative scroll-mt-20 scroll-mb-28 rounded-card bg-screen p-2 sm:p-4">
       {(scene.simplified || status) && (
-        <div className="mb-2 flex items-center justify-between gap-2">
+        <div className="mb-1 flex items-center justify-between gap-2 sm:mb-2">
           {scene.simplified ? (
             <p className="w-fit rounded-sm border border-screen-line px-1.5 py-0.5 font-mono text-caption text-on-screen-muted">
               Simplified diagram

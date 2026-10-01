@@ -237,10 +237,8 @@ export function LessonRun({
     primary = { label: "Continue", onClick: advance };
   }
 
-  const secondary: FooterAction | undefined =
-    card.difficulty === "challenge" && run.status !== "correct"
-      ? { label: "Skip bonus", onClick: advance }
-      : undefined;
+  // "Skip" sits in the bonus card's own Bonus row (CardStage), not in a second footer row.
+  const skip = card.difficulty === "challenge" && run.status !== "correct" ? advance : undefined;
 
   // ── Back and forward: earlier cards, read-only ──────────────────────────────
   const shownIndex = viewing ?? index;
@@ -435,7 +433,6 @@ export function LessonRun({
           explanation={isInteractiveCard(card) && run.status !== "answering" ? card.explanation : undefined}
           collapseExplanation={run.status === "incorrect"}
           primary={primary}
-          secondary={secondary}
           back={canGoBack ? { label: "Back to the previous card", onClick: goBack } : undefined}
           wrongTheme={wrongThemeFor(course.id)}
         />
@@ -455,6 +452,7 @@ export function LessonRun({
         card={card}
         scope={scope}
         challengeXp={challengeXp}
+        onSkip={skip}
       >
         {definition.interactive || isGuidedDefinition(definition) ? (
           <definition.Component
