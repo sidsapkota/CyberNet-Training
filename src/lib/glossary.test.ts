@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { findGlossaryMarks, glossaryEntries, glossaryMarksToLinks, markId, stripGlossaryMarks } from "./glossary";
+import { findGlossaryMarks, glossaryEntries, glossaryMarksToLinks, isOneSentence, markId, needsFullName, stripGlossaryMarks } from "./glossary";
 
 describe("glossary marks", () => {
   it("reads [[term]] and [[label|id]], deriving kebab-case ids from labels", () => {
@@ -24,5 +24,26 @@ describe("glossary marks", () => {
       expect(t.definition.length, t.id).toBeLessThanOrEqual(220);
       expect(t.definition, t.id).not.toMatch(/\[\[/); // definitions don't nest marks
     }
+  });
+});
+
+describe("glossary entries are quick to read", () => {
+  it("knows one sentence from two", () => {
+    expect(isOneSentence("A tiny switch that is on or off.")).toBe(true);
+    expect(isOneSentence("A tiny switch. It is on or off.")).toBe(false);
+    expect(isOneSentence("A part, e.g. the battery.")).toBe(true);
+    expect(isOneSentence("No full stop")).toBe(false);
+  });
+
+  it("knows which terms are abbreviations still to spell out", () => {
+    expect(needsFullName("CPU")).toBe(true);
+    expect(needsFullName("IP address")).toBe(true);
+    expect(needsFullName("random-access memory (RAM)")).toBe(false);
+    expect(needsFullName("router")).toBe(false);
+  });
+
+  it.each(glossaryEntries().map((e) => [e.id, e] as const))("%s: one sentence, and a full name for abbreviations", (_id, entry) => {
+    expect(isOneSentence(entry.definition)).toBe(true);
+    if (needsFullName(entry.term)) expect(entry.full, `${entry.term} needs "full"`).toBeTruthy();
   });
 });

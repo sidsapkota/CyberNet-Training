@@ -29,7 +29,7 @@ export function HotspotCardView({ card, answer, onAnswerChange, status }: CardCo
       )}
       <CardStatusNote
         status={status}
-        correctText={card.mode === "tap" ? "You found them all" : "Every label is in the right place"}
+        correctText={card.mode === "tap" ? ((card.targets?.length ?? 0) === 1 ? "You found it" : "You found them all") : "Every label is in the right place"}
         incorrectText={card.mode === "tap" ? "Not quite the right parts" : "Some labels are on the wrong parts"}
       />
     </div>
@@ -56,7 +56,18 @@ function TapMode({ card, answer, onAnswerChange, status, parts, hidden, locked, 
         selected
       </p>
       <div className="mt-4">
-        <SceneStage sceneId={card.scene} hidden={hidden}>
+        <SceneStage
+          sceneId={card.scene}
+          hidden={hidden}
+          pick={{
+            parts,
+            disabled: locked,
+            onPick: (id) => {
+              onAnswerChange(toggleTap(card, answer, id));
+              onTap();
+            },
+          }}
+        >
           {parts.map((part) => {
             const isSelected = selected.has(part.id);
             const isTarget = targets.has(part.id);
@@ -92,7 +103,14 @@ function TapMode({ card, answer, onAnswerChange, status, parts, hidden, locked, 
                       result === "wrong" ? "border-screen-danger text-screen-danger" : result ? "border-screen-success text-screen-success" : "border-screen-accent text-screen-accent"
                     }`}
                   >
-                    {result === "wrong" ? <XIcon className="size-3" strokeWidth={3} /> : <CheckIcon className="size-3" strokeWidth={3} />}
+                    {/* Selected is a plain dot: a tick only ever means "right", after Check. */}
+                    {result === "wrong" ? (
+                      <XIcon className="size-3" strokeWidth={3} />
+                    ) : result ? (
+                      <CheckIcon className="size-3" strokeWidth={3} />
+                    ) : (
+                      <span className="size-2 rounded-node bg-screen-accent" />
+                    )}
                   </span>
                 )}
               </button>
@@ -122,7 +140,32 @@ function LabelMode({ card, answer, onAnswerChange, parts, hidden, locked, onPlac
 
   return (
     <>
-      <p className="mt-2 text-small text-ink-muted">Pick a label, then tap its spot. Tap a placed label to take it off.</p>
+      <p className="mt-2 text-small text-ink-muted">Pick a label, then tap its glowing spot. Tap a placed label to take it off.</p>
+      {/* The labels sit above the scene, so labels and spots are on screen together. */}
+      {!locked && (
+        <div role="group" aria-label="Labels" className="mt-3 flex min-h-11 flex-wrap gap-2">
+          {tray.map((i) => (
+            <motion.button
+              key={i}
+              type="button"
+              data-keyboard-passthrough
+              layoutId={reduceMotion ? undefined : `${card.id}-label-${i}`}
+              transition={PRESS_SPRING}
+              aria-pressed={pickedLabel === i}
+              onClick={() => {
+                if (pickedPart) place(pickedPart, i);
+                else setPickedLabel(pickedLabel === i ? null : i);
+              }}
+              className={`min-h-11 rounded-control border-2 px-3 text-small font-semibold transition-colors ${
+                pickedLabel === i ? "border-accent-ink bg-accent-soft text-ink shadow-glow" : "border-line-strong bg-surface text-ink hover:border-accent-ink"
+              }`}
+            >
+              {labels[i]!.label}
+            </motion.button>
+          ))}
+          {tray.length === 0 && <span className="self-center text-small text-ink-faint">All labels placed. Press Check.</span>}
+        </div>
+      )}
       <div className="mt-4">
         <SceneStage sceneId={card.scene} hidden={hidden}>
           {markers.map((part, n) => {
@@ -163,11 +206,12 @@ function LabelMode({ card, answer, onAnswerChange, parts, hidden, locked, onPlac
                   </motion.span>
                 ) : (
                   <span
-                    className={`grid size-7 place-items-center rounded-node border-2 font-mono text-caption font-semibold ${
+                    className={`relative grid size-7 place-items-center rounded-node border-2 font-mono text-caption font-semibold ${
                       pickedPart === part.id ? "border-screen-accent bg-screen-accent text-screen" : "border-screen-accent bg-screen text-screen-accent"
                     }`}
                   >
                     {n + 1}
+                    {!locked && <span aria-hidden="true" className="absolute inset-0 animate-node-pulse rounded-node [animation-iteration-count:2] border-2 border-screen-accent" />}
                   </span>
                 )}
               </button>
@@ -175,30 +219,7 @@ function LabelMode({ card, answer, onAnswerChange, parts, hidden, locked, onPlac
           })}
         </SceneStage>
       </div>
-      {!locked && (
-        <div role="group" aria-label="Labels" className="mt-4 flex min-h-11 flex-wrap gap-2">
-          {tray.map((i) => (
-            <motion.button
-              key={i}
-              type="button"
-              data-keyboard-passthrough
-              layoutId={reduceMotion ? undefined : `${card.id}-label-${i}`}
-              transition={PRESS_SPRING}
-              aria-pressed={pickedLabel === i}
-              onClick={() => {
-                if (pickedPart) place(pickedPart, i);
-                else setPickedLabel(pickedLabel === i ? null : i);
-              }}
-              className={`min-h-11 rounded-control border-2 px-3 text-small font-semibold transition-colors ${
-                pickedLabel === i ? "border-accent-ink bg-accent-soft text-ink shadow-glow" : "border-line-strong bg-surface text-ink hover:border-accent-ink"
-              }`}
-            >
-              {labels[i]!.label}
-            </motion.button>
-          ))}
-          {tray.length === 0 && <span className="self-center text-small text-ink-faint">All labels placed. Press Check.</span>}
-        </div>
-      )}
+
     </>
   );
 }

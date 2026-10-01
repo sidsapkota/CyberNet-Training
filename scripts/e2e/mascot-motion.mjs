@@ -5,6 +5,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { chromium } from "playwright-core";
+import { prepare } from "./lib/access.mjs";
 
 // Run with the dev server up (`npm run dev`), then `npm run e2e:mascot-motion`. /dev/mascot is
 // dev and preview only. Uses an installed Edge or Chrome (E2E_BROWSER=chrome).
@@ -54,6 +55,7 @@ const browser = await chromium.launch({ channel: process.env.E2E_BROWSER ?? "mse
 try {
   const ctx = await browser.newContext({ viewport: { width: 360, height: 800 }, colorScheme: "dark" });
   const page = await ctx.newPage();
+  await prepare(page);
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto(`${BASE}/dev/mascot`);
@@ -102,6 +104,7 @@ try {
   // 4. Reduced motion: still expressions; the scan shows only its check.
   const calm = await browser.newContext({ viewport: { width: 360, height: 800 }, colorScheme: "dark", reducedMotion: "reduce" });
   const still = await calm.newPage();
+  await prepare(still);
   await still.goto(`${BASE}/dev/mascot`);
   await still.getByRole("button", { name: "Security scan" }).waitFor({ timeout: 60000 });
   await still.waitForTimeout(800);
@@ -120,6 +123,7 @@ try {
   // 5. In a real lesson: a wrong answer, the mascot tilts, and Try again works at once.
   const lessonCtx = await browser.newContext({ viewport: { width: 360, height: 640 }, colorScheme: "dark" });
   const lesson = await lessonCtx.newPage();
+  await prepare(lesson);
   // The real lesson player, with a multiple-choice sample and throwaway progress (/dev/cards).
   await lesson.goto(`${BASE}/dev/cards`);
   await lesson.locator("li", { hasText: "multiple_choice" }).first().getByRole("button", { name: "Lesson" }).click({ timeout: 60000 });

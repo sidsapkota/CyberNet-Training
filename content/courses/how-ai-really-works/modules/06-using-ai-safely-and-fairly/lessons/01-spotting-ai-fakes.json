@@ -2,6 +2,7 @@
   "id": "spotting-ai-fakes",
   "kind": "lesson",
   "title": "Spotting AI Fakes",
+  "about": "Spot fake reviews and bot accounts, and check claims outside the post.",
   "order": 1,
   "icon": "scan-face",
   "cards": [

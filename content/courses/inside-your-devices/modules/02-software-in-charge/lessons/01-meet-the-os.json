@@ -2,6 +2,7 @@
   "id": "meet-the-os",
   "kind": "lesson",
   "title": "Meet the OS",
+  "about": "What the operating system manages, ending frozen apps, and safe updates.",
   "order": 1,
   "icon": "app-window",
   "cards": [

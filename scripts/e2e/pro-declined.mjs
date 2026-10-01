@@ -6,6 +6,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { chromium } from "playwright-core";
+import { prepare } from "./lib/access.mjs";
 
 // Run with the dev server up (`npm run dev`), then `npm run e2e:pro-declined`. Needs .env.local with
 // the Supabase URL and SUPABASE_SECRET_KEY. Uses an installed Edge or Chrome (E2E_BROWSER=chrome).
@@ -32,13 +33,19 @@ try {
   await admin.from("profiles").update({ display_name: "Declined Tester", age_confirmed: true }).eq("id", userId);
   const link = await admin.auth.admin.generateLink({ type: "magiclink", email });
   const page = await browser.newPage({ viewport: { width: 360, height: 640 } });
-  // Events as Vercel's script sends them (logged in development): the payload's `en` and `ed`.
+  await prepare(page);
+  // Events recorded in the page from every call to Vercel's queue, with Vercel's script blocked so
+  // nothing is sent (works locally, on previews and on production).
   const events = [];
-  page.on("console", async (m) => {
-    if (!m.text().includes("[event]")) return;
-    const args = await Promise.all(m.args().map((a) => a.jsonValue().catch(() => null)));
-    const sent = args.find((a) => a && typeof a === "object" && typeof a.en === "string");
-    if (sent) events.push([sent.en, sent.ed ?? {}]);
+  await page.exposeFunction("__onEvent", (name, data) => events.push([name, data]));
+  await page.route(/\/script\.js$|\/_vercel\/insights\//, (route) => route.abort());
+  await page.addInitScript(() => {
+    let current;
+    const record = (fn) => (...args) => {
+      if (args[0] === "event") void window.__onEvent?.(args[1]?.name, args[1]?.data ?? {});
+      return fn(...args);
+    };
+    Object.defineProperty(window, "va", { configurable: true, get: () => current, set: (fn) => (current = record(fn)) });
   });
   await page.goto(`${BASE}/auth/callback?token_hash=${link.data.properties.hashed_token}&type=magiclink&next=/review`);
   await page.waitForURL((u) => u.pathname === "/review", { timeout: 30000 });

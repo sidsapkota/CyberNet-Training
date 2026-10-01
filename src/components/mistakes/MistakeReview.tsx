@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { checkMistakeAction, getMistakeCountAction, getMistakesToReviewAction, type MistakeToReview } from "@/app/actions/mistakes";
 import { nudgeFor } from "@/cards/nudge";
 import { getCardDefinition } from "@/cards/registry";
+import { canCheckAgain, retryAnswer } from "@/cards/retry";
 import { speechText } from "@/cards/speech";
 import type { CardStatus } from "@/cards/types";
 import { Mascot } from "@/components/mascot/Mascot";
@@ -118,6 +119,8 @@ interface Run {
   practice: number;
   /** The learner opened the hint. */
   hintUsed: boolean;
+  /** The answer just marked wrong: Check waits for a change. */
+  lastWrong?: unknown;
 }
 
 function freshRun(m: MistakeToReview): Run {
@@ -157,6 +160,7 @@ function ReviewRun({ mistakes, more, onMore }: { mistakes: MistakeToReview[]; mo
 
   function check() {
     if (!definition.interactive || run.status !== "answering" || !definition.isAnswerReady(run.answer, card)) return;
+    if (!canCheckAgain(run.answer, run.lastWrong)) return;
     const attempts = run.attempts + 1;
     if (!definition.grade(card, run.answer).correct) {
       setRun({ ...run, status: "incorrect", attempts });
@@ -183,8 +187,24 @@ function ReviewRun({ mistakes, more, onMore }: { mistakes: MistakeToReview[]; mo
   }
 
   let primary: FooterAction;
-  if (run.status === "answering") primary = { label: "Check", onClick: check, disabled: !definition.interactive || !definition.isAnswerReady(run.answer, card) };
-  else if (run.status === "incorrect") primary = { label: "Try again", onClick: () => setRun({ ...run, status: "answering" }) };
+  if (run.status === "answering")
+    primary = {
+      label: "Check",
+      onClick: check,
+      disabled: !definition.interactive || !definition.isAnswerReady(run.answer, card) || !canCheckAgain(run.answer, run.lastWrong),
+    };
+  else if (run.status === "incorrect")
+    primary = {
+      label: "Try again",
+      // The wrong part is cleared, anything right stays (src/cards/retry.ts).
+      onClick: () =>
+        setRun({
+          ...run,
+          status: "answering",
+          answer: definition.interactive ? retryAnswer(card, run.answer, definition.initialAnswer(card)) : run.answer,
+          lastWrong: run.answer,
+        }),
+    };
   else primary = { label: index + 1 < total ? "Next" : "Finish", onClick: () => next("cleared") };
   const secondary: FooterAction | undefined = run.status !== "correct" ? { label: "Skip for now", onClick: () => next("skipped") } : undefined;
 

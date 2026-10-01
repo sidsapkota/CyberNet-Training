@@ -2,6 +2,7 @@
   "id": "bias-in-bias-out",
   "kind": "lesson",
   "title": "Bias In, Bias Out",
+  "about": "How gaps in the data make AI work better for some people than others.",
   "order": 3,
   "icon": "scale",
   "cards": [

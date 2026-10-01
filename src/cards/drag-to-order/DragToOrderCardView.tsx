@@ -87,6 +87,33 @@ function SortableItem({
   );
 }
 
+const TIP_KEY = "cybernet.tip.dragHold";
+
+/**
+ * The one-line "press and hold" tip, until the learner's first drag (remembered per device).
+ */
+function useFirstDragTip() {
+  // Cards render only in the browser (after progress loads), so storage and the pointer type can
+  // be read straight away.
+  const [state] = useState<{ show: boolean; touch: boolean }>(() => {
+    let seen = false;
+    try {
+      seen = localStorage.getItem(TIP_KEY) === "1";
+    } catch {
+      // storage blocked: show it
+    }
+    return { show: !seen, touch: typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches };
+  });
+  const done = () => {
+    try {
+      localStorage.setItem(TIP_KEY, "1");
+    } catch {
+      // ignore
+    }
+  };
+  return { ...state, done };
+}
+
 export function DragToOrderCardView({
   card,
   answer,
@@ -107,8 +134,12 @@ export function DragToOrderCardView({
     }),
   );
 
+  const tip = useFirstDragTip();
+  const say = (id: string | number) => plainText(labels.get(String(id)) ?? "the item");
+
   function handleDragEnd({ active, over }: DragEndEvent) {
     setDragging(false);
+    tip.done();
     if (!over || active.id === over.id) return;
     const from = answer.indexOf(String(active.id));
     const to = answer.indexOf(String(over.id));
@@ -118,6 +149,12 @@ export function DragToOrderCardView({
   return (
     <div>
       <CardPrompt>{card.prompt}</CardPrompt>
+      {tip.show && status === "answering" && (
+        <p className="mt-3 flex items-center gap-2 text-small font-semibold text-ink">
+          <GripIcon className="size-4 shrink-0 text-ink-muted" />
+          {tip.touch ? "Press and hold an item, then drag it." : "Drag an item to move it."}
+        </p>
+      )}
       <DndContext
         id={`dnd-${card.id}`}
         sensors={sensors}
@@ -126,6 +163,16 @@ export function DragToOrderCardView({
         onDragStart={() => setDragging(true)}
         onDragCancel={() => setDragging(false)}
         onDragEnd={handleDragEnd}
+        // Announce items by their label and position, never their ids (an id like "sixteen" could
+        // give the answer away on a binary card).
+        accessibility={{
+          announcements: {
+            onDragStart: ({ active }) => `Picked up ${say(active.id)}, position ${answer.indexOf(String(active.id)) + 1} of ${answer.length}.`,
+            onDragOver: ({ active, over }) => (over ? `${say(active.id)} is over position ${answer.indexOf(String(over.id)) + 1}.` : `${say(active.id)} is no longer over a position.`),
+            onDragEnd: ({ active, over }) => (over ? `${say(active.id)} dropped at position ${answer.indexOf(String(over.id)) + 1}.` : `${say(active.id)} dropped.`),
+            onDragCancel: ({ active }) => `Moving ${say(active.id)} cancelled.`,
+          },
+        }}
       >
         <SortableContext items={answer} strategy={verticalListSortingStrategy}>
           {/* While an item is held, Enter drops it instead of checking the answer. */}
@@ -151,7 +198,7 @@ export function DragToOrderCardView({
         correctText="Correct order"
         incorrectText="Not the right order"
       />
-      <p className="mt-4 text-caption text-ink-faint">
+      <p className="mt-4 text-caption text-ink-faint pointer-coarse:hidden">
         Drag to reorder. With a keyboard: focus an item, press Space to pick it up, move it with the
         arrow keys, then press Space to drop it.
       </p>

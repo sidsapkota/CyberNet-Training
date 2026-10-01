@@ -2,6 +2,7 @@
   "id": "bytes-file-sizes-and-hex",
   "kind": "lesson",
   "title": "Bytes, File Sizes and Hex",
+  "about": "What KB, MB and GB really mean, and why drives look smaller.",
   "order": 2,
   "icon": "file-digit",
   "cards": [
@@ -111,7 +112,7 @@
       "difficulty": "challenge",
       "prompt": "Why is `FF` the biggest number you can write with two hex digits?",
       "options": [
-        { "id": "all-bits-on", "text": "F is the top hex digit, so `FF` is all 8 bits on: `11111111`, or 255" },
+        { "id": "all-bits-on", "text": "F is the top hex digit, so FF is all 8 bits on: 11111111, or 255" },
         {
           "id": "f-for-full",
           "text": "F stands for \"full\", a special code that marks the end of a byte",

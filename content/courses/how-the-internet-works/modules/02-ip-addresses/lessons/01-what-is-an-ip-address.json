@@ -2,6 +2,7 @@
   "id": "what-is-an-ip-address",
   "kind": "lesson",
   "title": "What Is an IP Address?",
+  "about": "Why every device online needs an address, and how it's written.",
   "order": 1,
   "icon": "map-pin",
   "cards": [

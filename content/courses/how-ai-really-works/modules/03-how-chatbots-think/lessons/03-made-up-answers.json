@@ -2,6 +2,7 @@
   "id": "made-up-answers",
   "kind": "lesson",
   "title": "Made-Up Answers",
+  "about": "Why chatbots sometimes invent facts, and how to catch them.",
   "order": 3,
   "icon": "sparkles",
   "cards": [

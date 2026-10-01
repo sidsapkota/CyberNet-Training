@@ -2,7 +2,6 @@
 
 import { useId, useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { CheckIcon } from "@/components/ui/icons";
 import { useFeedback } from "@/lib/feedback";
 import { CardPrompt } from "../CardPrompt";
 import { CardStatusNote } from "../CardStatusNote";
@@ -74,14 +73,16 @@ export function NextWordCardView({ card, answer, onAnswerChange, status }: CardC
                     selected ? "border-accent-ink bg-accent-soft text-ink" : "border-line-strong bg-surface text-ink-muted"
                   } ${locked ? "" : "hover:border-accent-ink hover:text-ink"}`}
                 >
-                  {selected && <CheckIcon className="size-4" strokeWidth={2.5} />}
+                  {/* Selected is a plain dot: right or wrong only shows after Check. */}
+                  {selected && <span aria-hidden="true" className="size-2 rounded-node bg-accent-ink" />}
                   {c.word}
                 </button>
               );
             })}
           </div>
-          {/* The chances stay hidden until Check: the question is which one you think wins. */}
-          {locked && (
+          {/* The chances stay hidden until the right word is found: the question is which one you
+              think wins, and showing them after a wrong pick would give the answer away. */}
+          {status === "correct" && (
             <div aria-live="polite">
               <p className="mt-5 font-mono text-caption font-semibold tracking-widest text-ink-faint uppercase">The model&apos;s chances</p>
               <Bars card={card} temperature={card.temperature.start} highlight={goalWord} />

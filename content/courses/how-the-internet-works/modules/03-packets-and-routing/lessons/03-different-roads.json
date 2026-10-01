@@ -2,6 +2,7 @@
   "id": "different-roads-same-destination",
   "kind": "lesson",
   "title": "Different Roads, Same Destination",
+  "about": "What happens when pieces take different routes or get lost.",
   "order": 3,
   "icon": "split",
   "cards": [

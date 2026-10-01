@@ -24,6 +24,8 @@ import { speechText } from "@/cards/speech";
 import { useCardNavigationKeys } from "@/lib/keyboard";
 import { CardStage, useFeedbackAnimation } from "./CardStage";
 import { FeedbackFooter, type FooterAction } from "./FeedbackFooter";
+import { LessonMenu } from "./LessonMenu";
+import { wrongThemeFor } from "./WrongBurst";
 import { PlayerShell, uniformNodes } from "./PlayerShell";
 import { QuizResults } from "./QuizResults";
 
@@ -195,13 +197,15 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
 
   if (phase === "intro") {
     const needed = Math.ceil(quiz.passThreshold * total - 1e-9);
+    // The last module's quiz is the course final (it earns the certificate).
+    const final = course.modules.at(-1)?.id === quiz.moduleId;
     const previous = snapshot.quizzes[quiz.id];
     return (
       <PlayerShell nodes={uniformNodes(total, "upcoming")} progressLabel="Quiz progress: not started" exitHref={`/course/${course.id}`}>
         <div className="flex min-h-[60dvh] flex-col items-center justify-center text-center">
           <NetworkMark mode="lit" className="size-24" />
           <p className="mt-6 font-mono text-caption font-semibold tracking-widest text-ink-faint uppercase">
-            Module quiz
+            {final ? "Course final" : "Module quiz"}
           </p>
           <h1 className="mt-2 text-headline font-semibold text-balance">{quiz.title}</h1>
           <ul className="mx-auto mt-6 max-w-sm space-y-2 text-left text-ink-muted">
@@ -217,7 +221,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
                 Get <span className="font-mono text-ink">{needed}</span> of{" "}
                 <span className="font-mono text-ink">{total}</span> right (
                 <span className="font-mono text-ink">{Math.round(quiz.passThreshold * 100)}%</span>) to pass and
-                finish the module
+                {final ? "finish the course" : "finish the module"}
               </span>
             </li>
             <li className="flex gap-2">
@@ -249,7 +253,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
         exitHref={`/course/${course.id}`}
         nodes={reviewNodes}
         progressLabel={`Quiz progress: looking back at question ${viewing + 1} of ${total}`}
-        onBack={canGoBack ? goBack : undefined}
+        menu={<LessonMenu course={course} lessonId={quiz.id} />}
         footer={
           <FeedbackFooter
             key={`review-${viewing}`}
@@ -257,6 +261,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
             heading={past?.correct ? "Correct" : "Incorrect"}
             subheading="You'll see the full explanation at the end."
             primary={reviewPrimary}
+            back={canGoBack ? { label: "Back to the previous question", onClick: goBack } : undefined}
           />
         }
       >
@@ -291,7 +296,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
       nodes={progressNodes}
       pulse={pulse}
       progressLabel={`Quiz progress: question ${index + 1} of ${total}`}
-      onBack={canGoBack ? goBack : undefined}
+      menu={<LessonMenu course={course} lessonId={quiz.id} />}
       footer={
         primary && (
           <FeedbackFooter
@@ -300,6 +305,8 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
             heading={run.status === "correct" ? "Correct" : run.status === "incorrect" ? "Incorrect" : undefined}
             subheading={run.status === "answering" ? undefined : "You'll see the full explanation at the end."}
             primary={primary}
+            back={canGoBack ? { label: "Back to the previous question", onClick: goBack } : undefined}
+            wrongTheme={wrongThemeFor(course.id)}
           />
         )
       }

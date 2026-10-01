@@ -59,9 +59,7 @@ export function CardStage({
                   <ChallengeIcon className="size-3.5" />
                   Bonus
                 </span>
-                <span className="text-small text-ink-muted">
-                  Optional: skip it any time{challengeXp ? ` · +${challengeXp} XP` : ""}
-                </span>
+                <span className="text-small text-ink-muted">Optional{challengeXp ? ` · +${challengeXp} XP` : ""}</span>
               </>
             )}
             {listen && (

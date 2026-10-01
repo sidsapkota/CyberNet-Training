@@ -6,6 +6,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { chromium } from "playwright-core";
+import { prepare } from "./lib/access.mjs";
 
 // Run with the dev server up (`npm run dev`), then `npm run e2e:guest-gate`. Needs .env.local with
 // the Supabase URL and SUPABASE_SECRET_KEY. Uses an installed Edge or Chrome (E2E_BROWSER=chrome).
@@ -46,15 +47,21 @@ const email = `gate-e2e-${Date.now()}@example.com`;
 let userId = null;
 const browser = await chromium.launch({ channel: process.env.E2E_BROWSER ?? "msedge", headless: true });
 try {
-  // 1. The page HTML: lesson 1's cards are there; lesson 2's never are.
-  const html1 = await (await fetch(`${BASE}/lesson/${lesson1.id}`)).text();
-  const html2 = await (await fetch(`${BASE}/lesson/${lesson2.id}`)).text();
+  // 1. The page HTML: lesson 1's cards are there; lesson 2's never are. (Fetched through a browser
+  // context, so a protected preview's share cookie goes with it.)
+  const htmlContext = await browser.newContext();
+  const htmlPage = await htmlContext.newPage();
+  await prepare(htmlPage);
+  const html1 = await (await htmlPage.request.get(`${BASE}/lesson/${lesson1.id}`)).text();
+  const html2 = await (await htmlPage.request.get(`${BASE}/lesson/${lesson2.id}`)).text();
+  await htmlContext.close();
   const secret = lesson2.cards.find((c) => c.prompt)?.prompt.slice(0, 30);
   record("A course's first lesson has its cards in the page", html1.includes(lesson1.cards[1].title ?? lesson1.cards[1].prompt.slice(0, 30)));
   record("A lesson that needs an account never ships its cards in the page", Boolean(secret) && !html2.includes(secret));
 
   const context = await browser.newContext({ viewport: { width: 360, height: 900 }, colorScheme: "dark", reducedMotion: "reduce" });
   const page = await context.newPage();
+  await prepare(page);
   await page.goto(BASE);
   await page.evaluate((p) => localStorage.setItem("cybernet.progress.v1", JSON.stringify(p)), guestProgress);
 
@@ -105,7 +112,10 @@ try {
   await page.waitForURL(/\/lesson\/two-step-sign-in/, { timeout: 15_000 });
   const plays = await page.getByRole("heading", { name: GATE }).isVisible().catch(() => false);
   await page.waitForTimeout(2500);
-  const cardShown = await page.getByText(lesson2.cards[0].title).first().isVisible().catch(() => false);
+  const first = lesson2.cards[0];
+  // The first card's title, or a plain bit of its prompt (markdown and glossary marks removed).
+  const firstText = (first.title ?? first.prompt.replace(/\[\[([^\]|]+)(\|[^\]]+)?\]\]/g, "$1").replace(/[*`_]/g, "")).slice(0, 24);
+  const cardShown = await page.getByText(firstText).first().isVisible().catch(() => false);
   record("…then lesson 2 opens and plays", !plays && cardShown);
   await page.screenshot({ path: path.join(SHOTS, "360-gate-after-signup.png"), fullPage: true });
 

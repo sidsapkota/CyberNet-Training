@@ -2,6 +2,7 @@
   "id": "public-and-private-addresses",
   "kind": "lesson",
   "title": "Public and Private Addresses",
+  "about": "How your home devices share one address on the internet.",
   "order": 2,
   "icon": "house",
   "cards": [

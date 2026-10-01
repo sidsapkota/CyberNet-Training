@@ -2,6 +2,7 @@
   "id": "meet-ipv6",
   "kind": "lesson",
   "title": "Running Out: Meet IPv6",
+  "about": "Why we ran short of addresses, and the longer kind that fixes it.",
   "order": 3,
   "icon": "expand",
   "cards": [

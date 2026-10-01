@@ -2,6 +2,7 @@
   "id": "spot-the-ai",
   "kind": "lesson",
   "title": "Spot the AI",
+  "about": "Tell apps that follow written rules from AI that learns from examples.",
   "order": 1,
   "icon": "bot",
   "cards": [

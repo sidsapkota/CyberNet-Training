@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useId, useState } from "react";
 import { CheckIcon, XIcon } from "@/components/ui/icons";
 import { useFeedback } from "@/lib/feedback";
 import { CardPrompt } from "../CardPrompt";
 import { CardStatusNote } from "../CardStatusNote";
 import { InlineText } from "../shared/InlineText";
 import type { CardComponentProps } from "../types";
-import { keepCorrectLabels, setLabel, toggleIncluded, trainingSet, trainModelGuesses } from "./grade";
+import { setLabel, toggleIncluded, trainingSet, trainModelGuesses } from "./grade";
 import type { TrainModelAnswer, TrainModelCard } from "./schema";
 
 /**
@@ -117,15 +117,11 @@ export function TrainModelCardView({ card, answer, onAnswerChange, status }: Car
   const labelGoal = card.task.goal === "label";
   const labelIndex = (id: string | undefined) => card.labels.findIndex((l) => l.id === id);
 
-  // After a wrong answer, Try again clears only the wrong labels.
-  const previous = useRef(status);
-  useEffect(() => {
-    if (labelGoal && previous.current === "incorrect" && status === "answering") onAnswerChange(keepCorrectLabels(card, answer));
-    previous.current = status;
-  }, [status, card, answer, onAnswerChange, labelGoal]);
-
-  // Label goal: the model trains once you Check. Include goal: it retrains as you choose.
+  // Label goal: the model trains once you Check. Include goal: it retrains as you choose, but
+  // whether each guess is right only shows after Check. (Try again's clearing of wrong labels is
+  // the card's `retryAnswer`.)
   const showGuesses = labelGoal ? locked : true;
+  const judged = locked;
   const guesses = trainModelGuesses(card, answer);
   const rowHover = (id: string) => ({ onMouseEnter: () => setActive(id), onMouseLeave: () => setActive(null), onFocus: () => setActive(id), onBlur: () => setActive(null) });
 
@@ -237,7 +233,9 @@ export function TrainModelCardView({ card, answer, onAnswerChange, status }: Car
                 <li
                   key={t.id}
                   {...rowHover(t.id)}
-                  className={`flex items-start gap-3 rounded-control border px-3 py-2.5 ${right ? "border-success bg-success-soft" : "border-danger bg-danger-soft"}`}
+                  className={`flex items-start gap-3 rounded-control border px-3 py-2.5 ${
+                    !judged ? "border-line bg-surface" : right ? "border-success bg-success-soft" : "border-danger bg-danger-soft"
+                  }`}
                 >
                   <span className="mt-0.5 font-mono text-caption text-ink-muted">{i + 1}</span>
                   <div className="flex-1">
@@ -254,10 +252,10 @@ export function TrainModelCardView({ card, answer, onAnswerChange, status }: Car
                       ) : (
                         <strong className="text-ink">Not sure</strong>
                       )}
-                      {!right && <span>· really: {truth}</span>}
+                      {judged && !right && <span>· really: {truth}</span>}
                     </p>
                   </div>
-                  {right ? (
+                  {!judged ? null : right ? (
                     <span className="inline-flex items-center gap-1 text-small font-semibold text-success">
                       <CheckIcon className="size-4" strokeWidth={2.5} /> Right
                     </span>

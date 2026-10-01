@@ -964,6 +964,8 @@ show relationships clearly.
 
 ## Safety
 
+- `meet-the-cpu/too-hot` (bonus, 1 Oct 2026): the explanation now ends "Cleaning a fan means opening the laptop, so ask an adult or a repair shop to do it." (found by the beginner audit: the "Clean the dusty fan" toggle had no adult line).
+
 Every statement that suggests or discusses a physical action on a real device. Each keeps to gentle
 actions, names an adult or repair shop where it matters, and never gives instructions for opening
 a real device.

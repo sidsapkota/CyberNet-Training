@@ -3,9 +3,10 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useId, useState } from "react";
 import { Button, type ButtonVariant } from "@/components/ui/Button";
-import { CheckIcon, ChevronDownIcon, GoalIcon, XIcon, XpIcon } from "@/components/ui/icons";
+import { BackIcon, CheckIcon, ChevronDownIcon, GoalIcon, XIcon, XpIcon } from "@/components/ui/icons";
 import { Markdown } from "@/components/ui/Markdown";
 import { Mascot } from "@/components/mascot/Mascot";
+import { type WrongTheme, WrongBurst } from "./WrongBurst";
 import { StreakIcon } from "@/components/streak/StreakIcon";
 import type { MascotExpression } from "@/components/mascot/poses";
 
@@ -31,6 +32,10 @@ interface FeedbackFooterProps {
   collapseExplanation?: boolean;
   primary: FooterAction;
   secondary?: FooterAction;
+  /** Back to the previous card (read-only), beside the main button. */
+  back?: FooterAction;
+  /** The course's wrong-answer animation, played over the cross on a wrong answer. */
+  wrongTheme?: WrongTheme;
   /** A small mascot beside the feedback (lessons, every answer), with a one-shot reaction. */
   mascot?: MascotExpression;
 }
@@ -86,7 +91,9 @@ export function FeedbackFooter({
   collapseExplanation = false,
   primary,
   secondary,
+  back,
   mascot,
+  wrongTheme,
 }: FeedbackFooterProps) {
   const [showExplanation, setShowExplanation] = useState(!collapseExplanation);
   const explanationId = useId();
@@ -96,6 +103,7 @@ export function FeedbackFooter({
   return (
     <motion.footer
       layout
+      data-player-footer
       className={`sticky bottom-0 z-20 border-t-2 ${style.panel}`}
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
@@ -112,7 +120,15 @@ export function FeedbackFooter({
               aria-live="polite"
             >
               <div className="flex items-center gap-3">
-                <StatusNode correct={tone === "correct"} />
+                <span className="relative grid shrink-0 place-items-center">
+                  <StatusNode correct={tone === "correct"} />
+                  {/* The course's little wrong-answer moment, over the cross (never in the way). */}
+                  {tone === "incorrect" && wrongTheme && (
+                    <span className="pointer-events-none absolute -inset-2 grid place-items-center">
+                      <WrongBurst theme={wrongTheme} />
+                    </span>
+                  )}
+                </span>
                 <div className="flex-1">
                   <p className={`text-lead font-semibold ${style.text}`}>{heading}</p>
                   {subheading && <Markdown className="text-small text-ink">{subheading}</Markdown>}
@@ -202,14 +218,31 @@ export function FeedbackFooter({
               {secondary.label}
             </Button>
           )}
-          <Button
-            variant={style.button}
-            onClick={primary.onClick}
-            disabled={primary.disabled}
-            className="w-full sm:w-auto sm:min-w-40"
-          >
-            {primary.label}
-          </Button>
+          {/* Back sits right beside the main button, so going back is always one tap away. */}
+          <div className="flex gap-2">
+            {back && (
+              <Button
+                variant="secondary"
+                data-keyboard-passthrough
+                onClick={back.onClick}
+                disabled={back.disabled}
+                aria-label={back.label}
+                title="Back (Alt + Left arrow)"
+                className="shrink-0 px-4"
+              >
+                <BackIcon className="size-5" />
+                <span className="hidden min-[400px]:inline">Back</span>
+              </Button>
+            )}
+            <Button
+              variant={style.button}
+              onClick={primary.onClick}
+              disabled={primary.disabled}
+              className="min-w-0 flex-1 sm:w-auto sm:min-w-40 sm:flex-none"
+            >
+              {primary.label}
+            </Button>
+          </div>
         </div>
       </div>
     </motion.footer>

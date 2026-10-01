@@ -2,6 +2,7 @@
   "id": "memory-vs-storage",
   "kind": "lesson",
   "title": "Memory vs Storage",
+  "about": "Tell the desk from the cupboard, and spot when each one is full.",
   "order": 2,
   "icon": "memory-stick",
   "cards": [

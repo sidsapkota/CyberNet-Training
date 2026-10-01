@@ -2,6 +2,7 @@
   "id": "bits-and-binary",
   "kind": "lesson",
   "title": "Bits and Binary: How Computers Count",
+  "about": "How a computer counts with only 0s and 1s.",
   "order": 1,
   "icon": "binary",
   "cards": [

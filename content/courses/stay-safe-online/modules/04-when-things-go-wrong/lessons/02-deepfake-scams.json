@@ -2,6 +2,7 @@
   "id": "deepfake-scams",
   "kind": "lesson",
   "title": "Deepfake Scams and Fakes",
+  "about": "Spot the red flags of a faked voice or video, and check who is really there.",
   "order": 2,
   "icon": "audio-lines",
   "cards": [

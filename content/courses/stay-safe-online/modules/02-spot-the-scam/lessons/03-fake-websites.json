@@ -2,6 +2,7 @@
   "id": "fake-websites",
   "kind": "lesson",
   "title": "Fake Websites",
+  "about": "Check a website's real name before you type anything in.",
   "order": 3,
   "icon": "globe",
   "cards": [

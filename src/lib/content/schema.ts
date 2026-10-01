@@ -65,6 +65,11 @@ export const RegularLessonSchema = z
      * (YYYY-MM-DD). Shown to learners; validate-content warns when a recheck is due (lastChecked.ts).
      */
     lastChecked: z.iso.date().optional(),
+    /**
+     * "What you'll learn", in one short line, for the "Up next" screen (e.g. "How a computer counts
+     * with only 0s and 1s."). Plain words, no full stop needed beyond one.
+     */
+    about: z.string().min(10).max(90),
   })
   .refine(uniqueCardIds, { message: "card ids must be unique within a lesson", path: ["cards"] })
   .refine((l) => l.cards.some((c) => c.difficulty === "core"), {
@@ -127,6 +132,8 @@ export interface LessonOutline {
   passThreshold?: number;
   /** Only set for lessons whose facts are dated (see `lastChecked` on the lesson). */
   lastChecked?: string;
+  /** Regular lessons: "what you'll learn" in one line (the "Up next" screen). */
+  about?: string;
 }
 
 export interface ModuleOutline extends ModuleFile {
@@ -157,5 +164,6 @@ export function toLessonOutline(lesson: Lesson): LessonOutline {
     photoCount: lesson.cards.filter((c) => c.type === "photo").length,
     ...(lesson.kind === "quiz" ? { passThreshold: lesson.passThreshold } : { icon: lesson.icon }),
     ...(lesson.kind === "lesson" && lesson.lastChecked ? { lastChecked: lesson.lastChecked } : {}),
+    ...(lesson.kind === "lesson" ? { about: lesson.about } : {}),
   };
 }

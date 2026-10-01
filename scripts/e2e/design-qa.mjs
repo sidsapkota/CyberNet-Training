@@ -8,6 +8,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { chromium } from "playwright-core";
+import { prepare } from "./lib/access.mjs";
 
 const APP = path.resolve(import.meta.dirname, "../..");
 const BASE = process.env.E2E_BASE_URL ?? "http://localhost:3000";
@@ -16,7 +17,7 @@ fs.mkdirSync(SHOTS, { recursive: true });
 const ONLY = process.env.QA_ONLY ? new Set(process.env.QA_ONLY.split(",")) : null;
 
 const VIEWPORTS = [
-  { name: "360", width: 360, height: 740, touch: true },
+  { name: "360", width: 360, height: 640, touch: true },
   { name: "desktop", width: 1280, height: 800, touch: false },
 ];
 const THEMES = ["dark", "light"];
@@ -73,6 +74,7 @@ try {
         const combo = `${vp.name}/${theme}/${motion === "reduce" ? "reduced" : "motion"}`;
         const ctx = await browser.newContext({ viewport: { width: vp.width, height: vp.height }, hasTouch: vp.touch, isMobile: vp.touch, colorScheme: theme, reducedMotion: motion });
         const page = await ctx.newPage();
+        await prepare(page);
         const errors = [];
         page.on("pageerror", (e) => errors.push(e.message));
         await page.goto(`${BASE}/dev/cards`, { waitUntil: "networkidle" });
@@ -117,6 +119,7 @@ try {
         const combo = `${vp.name}/${theme}`;
         const ctx = await browser.newContext({ viewport: { width: vp.width, height: vp.height }, hasTouch: vp.touch, isMobile: vp.touch, colorScheme: theme });
         const page = await ctx.newPage();
+        await prepare(page);
         for (const url of PAGES) {
           await page.goto(`${BASE}${url}`, { waitUntil: "networkidle" });
           await page.waitForTimeout(800);
@@ -150,6 +153,7 @@ try {
   {
     const ctx = await browser.newContext({ viewport: { width: 360, height: 740 }, hasTouch: true, isMobile: true, colorScheme: "dark" });
     const page = await ctx.newPage();
+    await prepare(page);
     const cdp = await ctx.newCDPSession(page);
     const touch = async (type, x, y) => cdp.send("Input.dispatchTouchEvent", { type, touchPoints: type === "touchEnd" ? [] : [{ x, y }] });
     const drag = async (from, to, hold = 350) => {

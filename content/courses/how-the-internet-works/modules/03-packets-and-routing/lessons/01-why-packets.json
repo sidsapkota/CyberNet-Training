@@ -2,6 +2,7 @@
   "id": "why-data-travels-in-packets",
   "kind": "lesson",
   "title": "Why Data Travels in Packets",
+  "about": "Why your data is cut into small pieces before it travels.",
   "order": 1,
   "icon": "package",
   "cards": [

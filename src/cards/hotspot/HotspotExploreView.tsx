@@ -7,15 +7,18 @@ import { Markdown } from "@/components/ui/Markdown";
 import { useFeedback } from "@/lib/feedback";
 import { CardPrompt } from "../CardPrompt";
 import { hiddenInView, type ScenePart } from "../shared/scenes/manifests";
-import { overlayOrder, partTargetStyle, SceneStage } from "../shared/scenes/SceneStage";
+import { overlayOrder, partHalf, partTargetStyle, SceneStage } from "../shared/scenes/SceneStage";
+import { useSceneReveal } from "../shared/scenes/useSceneReveal";
 import type { CardComponentProps } from "../types";
 import { isExploreComplete, markSeen, tappableParts } from "./grade";
 import type { HotspotCard, HotspotExploreState } from "./schema";
 
 /**
  * Explore mode: tap each part to see its name and job. Nothing is graded; the player unlocks
- * Continue once every part has been tapped. Unexplored parts carry a hollow node, explored ones a
- * filled node with a check, so progress never relies on colour alone.
+ * Continue once every part has been tapped. Unexplored parts carry a hollow node with a gentle
+ * pulse ("the glowing parts"), explored ones a filled node with a check, so progress never relies
+ * on colour alone. The tapped part's name and job show in a callout pinned inside the scene panel
+ * (on the half away from the part), so they're in view without scrolling.
  */
 export function HotspotExploreView({ card, answer, onAnswerChange }: CardComponentProps<HotspotCard, HotspotExploreState>) {
   const reduceMotion = useReducedMotion();
@@ -31,9 +34,11 @@ export function HotspotExploreView({ card, answer, onAnswerChange }: CardCompone
   // A board that other parts sit on gets its node at the bottom-left, clear of theirs.
   const inside = (a: ScenePart["box"], b: ScenePart["box"]) => a.x >= b.x && a.y >= b.y && a.x + a.w <= b.x + b.w && a.y + a.h <= b.y + b.h;
   const isContainer = (part: ScenePart) => parts.some((o) => o.id !== part.id && inside(o.box, part.box));
+  const { ref: stageRef, reveal } = useSceneReveal();
 
   function tap(id: string) {
     setActive(id);
+    reveal();
     feedback.haptic("tap");
     if (!seen.has(id)) {
       feedback.play("snap");
@@ -45,7 +50,7 @@ export function HotspotExploreView({ card, answer, onAnswerChange }: CardCompone
     <div>
       <CardPrompt>{card.prompt}</CardPrompt>
       <p className="mt-2 text-small text-ink-muted">
-        Tap each part to find out what it does.{" "}
+        {done ? "Every part explored." : "Tap the glowing parts to find out what each one does."}{" "}
         <span className="font-mono text-ink">
           {seen.size}/{total}
         </span>{" "}
@@ -53,7 +58,28 @@ export function HotspotExploreView({ card, answer, onAnswerChange }: CardCompone
       </p>
 
       <div className="mt-4">
-        <SceneStage sceneId={card.scene} hidden={hidden}>
+        <SceneStage
+          ref={stageRef}
+          sceneId={card.scene}
+          hidden={hidden}
+          calloutAt={activePart && partHalf(card.scene, activePart.box) === "bottom" ? "top" : "bottom"}
+          pick={{ parts, onPick: tap }}
+          callout={
+            activePart ? (
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={activePart.id}
+                  initial={reduceMotion ? false : { opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  <p className="text-body font-semibold text-ink">{activePart.name}</p>
+                  <p className="mt-0.5 text-small text-ink-muted">{jobs.get(activePart.id)}</p>
+                </motion.div>
+              </AnimatePresence>
+            ) : null
+          }
+        >
           {parts.map((part) => {
             const isActive = part.id === active;
             const isSeen = seen.has(part.id);
@@ -77,6 +103,8 @@ export function HotspotExploreView({ card, answer, onAnswerChange }: CardCompone
                   }`}
                 >
                   {isSeen && <CheckIcon className="size-3" strokeWidth={3} />}
+                  {/* Parts not explored yet glow: a static ring that pulses twice as the card appears. */}
+                  {!isSeen && <span className="absolute -inset-0.5 animate-node-pulse rounded-node [animation-iteration-count:2] border-2 border-screen-accent" />}
                 </span>
               </button>
             );
@@ -84,30 +112,10 @@ export function HotspotExploreView({ card, answer, onAnswerChange }: CardCompone
         </SceneStage>
       </div>
 
-      {/* What the tapped part is and does. Announced politely on each tap. */}
-      <div aria-live="polite" className="mt-4 min-h-24 rounded-card border border-line bg-surface p-4">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={activePart?.id ?? "none"}
-            initial={reduceMotion ? false : { opacity: 0, y: 4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reduceMotion ? undefined : { opacity: 0, y: -4 }}
-            transition={{ duration: 0.15 }}
-          >
-            {activePart ? (
-              <>
-                <p className="text-body font-semibold text-ink">{activePart.name}</p>
-                <p className="mt-1 text-body text-ink-muted">{jobs.get(activePart.id)}</p>
-                <p className="sr-only">
-                  {seen.size} of {total} explored.
-                </p>
-              </>
-            ) : (
-              <p className="text-body text-ink-muted">Tap a part on the {card.scene === "phone" ? "phone" : card.scene === "laptop" ? "laptop" : "screen"}.</p>
-            )}
-          </motion.div>
-        </AnimatePresence>
-      </div>
+      {/* Screen readers hear the tapped part (the callout above is the visual). */}
+      <p aria-live="polite" className="sr-only">
+        {activePart ? `${activePart.name}. ${jobs.get(activePart.id) ?? ""} ${seen.size} of ${total} explored.` : ""}
+      </p>
 
       {done && (
         <div className="mt-4">

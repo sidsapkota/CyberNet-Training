@@ -30,7 +30,9 @@
     "e2e:latency": "node scripts/e2e/latency.mjs",
     "e2e:plans": "node scripts/e2e/plans.mjs",
     "e2e:account-speed": "node scripts/e2e/account-speed.mjs",
-    "e2e:mascot-motion": "node scripts/e2e/mascot-motion.mjs"
+    "e2e:mascot-motion": "node scripts/e2e/mascot-motion.mjs",
+    "e2e:fit-audit": "node scripts/e2e/fit-audit.mjs",
+    "e2e:player-flow": "node scripts/e2e/player-flow-shots.mjs"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

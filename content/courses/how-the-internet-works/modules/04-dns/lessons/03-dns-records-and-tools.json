@@ -2,6 +2,7 @@
   "id": "dns-records-and-tools",
   "kind": "lesson",
   "title": "DNS Records and Tools",
+  "about": "Read the answers a name lookup gives back, and spot lookalike names.",
   "order": 3,
   "icon": "square-terminal",
   "cards": [

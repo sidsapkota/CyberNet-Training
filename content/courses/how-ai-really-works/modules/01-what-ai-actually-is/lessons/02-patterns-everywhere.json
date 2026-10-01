@@ -2,6 +2,7 @@
   "id": "patterns-everywhere",
   "kind": "lesson",
   "title": "Patterns Everywhere",
+  "about": "Train a tiny model on labelled examples and watch it guess.",
   "order": 2,
   "icon": "scan-eye",
   "cards": [

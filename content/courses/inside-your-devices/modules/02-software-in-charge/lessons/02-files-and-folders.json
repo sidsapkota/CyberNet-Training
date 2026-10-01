@@ -2,6 +2,7 @@
   "id": "files-and-folders",
   "kind": "lesson",
   "title": "Files and Folders",
+  "about": "Find files, read their types, and tell local files from cloud ones.",
   "order": 2,
   "icon": "folder-open",
   "cards": [

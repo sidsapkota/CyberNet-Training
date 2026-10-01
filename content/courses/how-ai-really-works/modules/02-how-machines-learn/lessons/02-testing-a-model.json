@@ -2,6 +2,7 @@
   "id": "testing-a-model",
   "kind": "lesson",
   "title": "Testing a Model",
+  "about": "Find out how well a model really works by testing it fairly.",
   "order": 2,
   "icon": "target",
   "cards": [

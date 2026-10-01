@@ -36,6 +36,13 @@ export function chooseScenario(card: ScenarioCard, answer: ScenarioAnswer, choic
   return walk.outcome ? [...answer.slice(0, -1), choiceId] : [...answer, choiceId];
 }
 
+/** Try again: a failed ending comes off the answer, so the learner picks again at that step. */
+export function retryScenario(card: ScenarioCard, answer: ScenarioAnswer): ScenarioAnswer {
+  const walk = walkScenario(card, answer);
+  if (!walk.valid) return [];
+  return walk.outcome === "fail" ? answer.slice(0, -1) : answer;
+}
+
 export function isScenarioReady(answer: ScenarioAnswer, card: ScenarioCard): boolean {
   const walk = walkScenario(card, answer);
   return walk.valid && walk.outcome !== null;

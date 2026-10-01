@@ -340,6 +340,7 @@ describe("loadContent validation", () => {
   const lesson = (id: string, order: number) => ({
     id,
     kind: "lesson",
+    about: "A sample lesson for the checks.",
     title: id,
     order,
     icon: "binary",
@@ -491,5 +492,15 @@ describe("loadContent validation", () => {
     files[`${M}/lessons/01.json`] = { ...lesson("l1", 1), order: "first" };
     files[`${M}/lessons/02.json`] = { ...lesson("l2", 2), cards: [] };
     expect(problemsFor(files).length).toBeGreaterThanOrEqual(2);
+  });
+});
+
+describe("multiple-choice options are plain text", () => {
+  it("never use backticks (they'd show as raw characters)", () => {
+    const offenders: string[] = [];
+    for (const lesson of loadContent().lessons.values())
+      for (const card of lesson.cards)
+        if (card.type === "multiple_choice") for (const o of card.options) if (o.text.includes("`")) offenders.push(`${lesson.id}/${card.id}/${o.id}`);
+    expect(offenders).toEqual([]);
   });
 });
