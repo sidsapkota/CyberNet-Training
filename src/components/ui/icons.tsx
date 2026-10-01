@@ -90,6 +90,7 @@ import {
   Sparkles,
   WandSparkles,
   ImagePlay,
+  ScanFace,
   Link,
   MailWarning,
   MapPin,
@@ -287,6 +288,7 @@ export const LESSON_ICON_COMPONENTS = {
   sparkles: Sparkles,
   "wand-sparkles": WandSparkles,
   "image-play": ImagePlay,
+  "scan-face": ScanFace,
 } satisfies Record<LessonIconName, LucideIcon>;
 
 /** A lesson's icon, with the brand stroke. Decorative: the lesson title always carries the meaning. */

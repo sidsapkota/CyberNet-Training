@@ -1,0 +1,11 @@
+{
+  "id": "using-ai-safely-and-fairly",
+  "title": "Using AI Safely and Fairly",
+  "description": "Spot AI-made fakes, keep your private stuff private, and use AI honestly.",
+  "order": 6,
+  "access": "pro",
+  "teaserCard": {
+    "lesson": "spotting-ai-fakes",
+    "card": "review-check"
+  }
+}

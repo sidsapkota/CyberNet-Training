@@ -1191,3 +1191,70 @@ How AI makes pictures and voices, deepfakes, and checking what's real.
 #### Module quiz (7 questions)
 
 Not exported, so the answers stay secret.
+
+### Module 6: Using AI Safely and Fairly (Pro)
+
+Spot AI-made fakes, keep your private stuff private, and use AI honestly.
+
+#### Spotting AI Fakes
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/spotting-ai-fakes`
+
+**Key facts**
+
+- *Fakes made in seconds:* With AI, anyone can make in seconds what used to take hours: **fake reviews**, **fake news articles** that look like a real news site, and **fake accounts** (called bots) that post and reply automatically, all day. False information that spreads, whether someone meant it or not, is called **misinformation**.
+- *Check outside the post:* When something surprises you, **stop** and notice how it makes you feel. Then check **outside** the post, not inside it:
+- *Recap:* AI makes fake reviews, articles and accounts (bots) cheap and fast: **misinformation** can come from anywhere. Strong feelings are the moment to stop: check **outside** the post, not inside it.
+
+**Best interactive cards**
+
+- Sort into groups: Is each one about a shop's reviews **suspicious**, or **normal**?
+- Choose what happens: Under a video about a new game, an account replies to dozens of comments within a minute.
+- Sort into groups: Is each one a check **outside** the post (useful), or just looking **inside** it again?
+
+**Surprising facts**
+
+- By the next morning it has 200 five-star reviews, all saying how "amazing" and "life-changing" the boards are.
+
+#### What Not to Share with AI
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/what-not-to-share`
+
+**Key facts**
+
+- *Where your chats go:* Depending on the app and its settings, your chats may be **saved**, **read by staff** checking for problems, or **used to train** future models. But the safest rule is simple: **don't type anything you wouldn't want someone else to read**, and remember that your friends' photos and secrets aren't yours to share.
+- *A program, not a person:* If something's worrying you, talk to a **trusted adult**, a friend, or, in Australia, **Kids Helpline (1800 55 1800)**, free, any time. If you're in danger right now, call **000**.
+
+**Best interactive cards**
+
+- Sort into groups: Is each one **fine to type** into an AI chatbot, or one to **keep private**?
+- Choose what happens: It's late, you're feeling really down, and you've been telling an AI chatbot about it for an hour.
+- Choose what happens: You install an AI homework app. As it opens, it asks for permission to see your **contacts** and your **location**.
+
+**Surprising facts**
+
+- For worries, talk to a trusted adult or Kids Helpline (1800 55 1800).
+
+#### Fair and Honest Use
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/fair-and-honest-use`
+
+**Key facts**
+
+- *Say how you used it:* **Say when and how** you used AI ("I used AI to check my spelling"). **Follow the rules** of your school, club or competition, and **ask** when you're not sure.
+- *The people behind it:* What you can do: **respect people's work**, credit artists you're inspired by, and keep making things in your own way.
+- *Fair to everyone:* So when AI makes decisions about people, like picking, sorting or scoring them, ask: **who might this be unfair to?** And keep a **person** checking decisions that matter.
+- *You know how AI really works:* AI learns **patterns from examples**, so it's only as good, and as fair, as its training data. Chatbots pick **likely tokens**, not checked facts: check anything that matters.
+
+**Best interactive cards**
+
+- Sort into groups: Is each one **honest**, or **not honest**?
+- Choose what happens: Your class wants to use an AI tool to pick team captains "fairly", based on who talks most in class discussions.
+- Choose what happens: Your friend's story wins the school writing prize. You know a chatbot wrote most of it.
+
+#### Module quiz (8 questions)
+
+Not exported, so the answers stay secret.

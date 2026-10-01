@@ -1799,3 +1799,62 @@ a strong AI model, so this overstates a beginner). Near-misses: "act fast" (vide
 | Quiz `q-clues` | "Zoomed in" wasn't taught | "A blurry photo of a dog running" |
 | Glossary `prompt` | Said chatbots only | "An AI tool, like a chatbot or an image maker" |
 | Free points: 5.1 `where-it-learned`, 5.2 `teacher-video`, `concert-tickets`, 5.3 `the-shark`, quiz `q-principal` | Joke wrong options | Tempting ones: "cuts up saved watercolours and mixes the pieces", "only if we put 'FAKE' in tiny letters", "check the lips match the words" (good fakes pass), "say nothing, it's their problem" |
+
+## Module 6: Using AI Safely and Fairly (Pro; teaser: 6.1 `review-check`; ends with the course final)
+
+### 6.1 Spotting AI Fakes (`spotting-ai-fakes`)
+**Goals:** AI makes fake reviews, articles and bot accounts cheap; misinformation spreads through
+strong feelings; signs of fake reviews; check outside the post (search the claim and site, trusted
+news, who runs it), not inside it; bots and what to do (don't click, report).
+
+**Key claims:** 180 of 240 = 75%. "Checking outside the post" is the lateral-reading approach
+recommended by media-literacy educators, described without naming any organisation.
+
+### 6.2 What Not to Share with AI (`what-not-to-share`)
+**Goals:** chats may be saved, read by staff or used for training, depending on the app and its
+settings; many apps let you turn off history or training (check settings with a parent or carer);
+keep names, schools, passwords, addresses and friends' things private; a chatbot is a program, not
+a friend; app permissions.
+
+**Key claims (checked):** Kids Helpline, 1800 55 1800, free, any time (as verified for Stay Safe
+Online on 30 September 2026). A chat "forgetting" in its context window doesn't delete a stored
+chat. "Many apps" offer history/training settings (true of the four apps named in 4.3 as of
+1 October 2026; stated generally so it doesn't date).
+
+**Tone:** the feeling-down scenario is calm, never alarming, and the right answer is a real person
+or Kids Helpline; the chatbot is "somewhere to start your thoughts, never instead of real people".
+This isn't a help lesson (help stays free in Stay Safe Online); it only points to help.
+
+### 6.3 Fair and Honest Use (`fair-and-honest-use`)
+**Goals:** say when and how you used AI, follow rules and ask when unsure, don't claim AI's work;
+AI learned from people's work and the fairness of that is debated; ask "who might this be unfair
+to?" and keep a person deciding; handling a friend's AI-written prize entry kindly and fairly.
+
+**Simplifications:** the debate about training on creators' work is described neutrally, without
+taking a side or naming lawsuits.
+
+### Course final (`how-ai-really-works-final`)
+Eight core questions, one or more from every module: rules or learning, a "choose the data" card
+(only adding "Bright classroom, no sky" fixes the sunny-indoors photo; checked over every subset),
+36 of 45 = 80%, "sleep tight", a quoted scientist (hallucination), goal/context/format, a viral
+deepfake (official account or trusted news), and a friend's secret (a trusted adult).
+
+### Beginner audit: Module 6 and the course final (1 October 2026)
+Answers stripped and options shuffled first: 25 of 25 (a strong AI auditor; see the note under
+Module 4). Facts, help details and tone checked correct; the final only tests what was taught.
+
+| Where | Issue | Fix |
+|---|---|---|
+| 6.1 `review-check` | New accounts and specific reviews weren't taught first | In `cheap-fakes` |
+| 6.2 `app-permissions`, `needs-it`, `type-or-keep` | Permissions and friends' things only appeared in the recap | In `where-chats-go` |
+| 6.2 `not-a-person` | Kids Helpline is Australian; no emergency line | "In Australia" and "if you're in danger right now, call 000" |
+| 6.1 `fake-share-rate` | Nudge gave 3/4 away | "Try simplifying the fraction first" |
+| 6.1 `why-feelings` | The explainer stated the answer | Now applied: which of four fakes spreads before anyone checks (the shocking one) |
+| 6.2 `best-friend-app` | Absurd distractors; blunt right answer | Tempting ("it remembers you", "turn off history", "made for teens"); "it can't care about you like people do" |
+| 6.3 `captain-picker` | Weak distractor | "It's fair: everyone's judged by the same rule" |
+| Final `f-viral-video`, `f-confident` | "Must be real" distractors | "Check for an AI watermark", "watch frame by frame", "ask the chatbot which book" |
+| Final `f-private` | Read like a trick | "What's the best thing to do?" |
+
+**Smoke test:** a throwaway account with Pro opened every lesson and quiz in the course (24) at
+360px: every first card rendered, no page errors, no sideways scrolling. The account and its grant
+were deleted.

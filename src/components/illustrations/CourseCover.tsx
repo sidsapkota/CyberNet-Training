@@ -161,6 +161,70 @@ function InternetCover() {
   );
 }
 
+/* ── How AI Really Works: examples flow into a model, which writes the next token ────────── */
+
+const AI_ROUTE: Point[] = [
+  [40, 90],
+  [110, 90],
+  [150, 90],
+  [170, 70],
+  [206, 70],
+];
+
+function AiCover() {
+  const lines = "var(--color-on-screen-muted)";
+  const lit = "var(--color-screen-accent)";
+  // Three example nodes feed a model hub along 45° and level traces.
+  const inputs: Point[] = [
+    [40, 50],
+    [40, 90],
+    [40, 130],
+  ];
+  return (
+    <>
+      <DotGrid />
+      <g fill="none" stroke={lines} strokeWidth={1.5} strokeLinejoin="round" strokeLinecap="round" opacity={0.7}>
+        <path d="M40 50H70L110 90M40 130H70L110 90" />
+        {/* The model's inside: a small grid of connections */}
+        <path d="M110 90L130 70H150L170 90M110 90L130 110H150L170 90M130 70V110M150 70V110" />
+      </g>
+      {/* The lit path: one example through the model to the next token */}
+      <polyline points={poly(AI_ROUTE)} fill="none" stroke={lit} strokeWidth={2.5} strokeLinejoin="round" strokeLinecap="round" />
+      {inputs.map(([x, y]) => (
+        <circle key={`${x}-${y}`} cx={x} cy={y} r={y === 90 ? 5 : 4} fill={y === 90 ? lit : "var(--color-screen)"} stroke={y === 90 ? lit : lines} strokeWidth={1.5} />
+      ))}
+      {[
+        [130, 70],
+        [150, 70],
+        [130, 110],
+        [150, 110],
+      ].map(([x, y]) => (
+        <circle key={`${x}-${y}`} cx={x} cy={y} r={3.5} fill="var(--color-screen)" stroke={lines} strokeWidth={1.5} />
+      ))}
+      {/* The model hub */}
+      <circle cx={110} cy={90} r={9} fill="var(--color-screen)" stroke={lit} strokeWidth={2.5} />
+      <circle cx={110} cy={90} r={3} fill={lit} />
+      {/* Speech bubble: tokens written so far, and the next one being picked */}
+      <path
+        d="M200 44H282A10 10 0 0 1 292 54V112A10 10 0 0 1 282 122H222L208 136V122H200A10 10 0 0 1 190 112V54A10 10 0 0 1 200 44Z"
+        fill="var(--color-screen)"
+        stroke={lines}
+        strokeWidth={1.5}
+        strokeLinejoin="round"
+      />
+      <g fill="var(--color-on-screen-muted)" opacity={0.85}>
+        <rect x={204} y={64} width={26} height={12} rx={3} />
+        <rect x={236} y={64} width={18} height={12} rx={3} />
+        <rect x={204} y={84} width={34} height={12} rx={3} />
+        <rect x={244} y={84} width={22} height={12} rx={3} />
+      </g>
+      {/* The next token: an outline, still being chosen */}
+      <rect x={204} y={104} width={28} height={10} rx={3} fill="none" stroke={lit} strokeWidth={2} strokeDasharray="4 3" />
+      <Packet route={AI_ROUTE} duration={3.6} />
+    </>
+  );
+}
+
 /* ── Registry ─────────────────────────────────────────────────────────────────────────── */
 
 /* ── Inside Your Devices: an exploded view, layers pulled apart along 45° guides ─────────── */
@@ -290,6 +354,7 @@ const COVERS: Record<string, ComponentType> = {
   "how-the-internet-works": InternetCover,
   "inside-your-devices": DevicesCover,
   "stay-safe-online": SafeOnlineCover,
+  "how-ai-really-works": AiCover,
 };
 
 /** Cover for a course. Courses without a custom cover get the logo network on the grid. */

@@ -1,0 +1,246 @@
+{
+  "id": "spotting-ai-fakes",
+  "kind": "lesson",
+  "title": "Spotting AI Fakes",
+  "order": 1,
+  "icon": "scan-face",
+  "cards": [
+    {
+      "id": "two-hundred-reviews",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "200 five-star reviews",
+      "body": "A brand-new skateboard shop opens online. By the next morning it has 200 five-star reviews, all saying how \"amazing\" and \"life-changing\" the boards are.\n\nReal customers don't work that fast. AI makes fakes like this cheap and quick, and not just pictures."
+    },
+    {
+      "id": "cheap-fakes",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Fakes made in seconds",
+      "body": "With AI, anyone can make in seconds what used to take hours: **fake reviews**, **fake news articles** that look like a real news site, and **fake accounts** (called bots) that post and reply automatically, all day. Fake reviews often come from brand-new accounts with no other reviews, all at once; real reviews are spread out, mixed, and mention specific good and bad points.\n\nFalse information that spreads, whether someone meant it or not, is called **misinformation**. It spreads fastest when it makes people feel something strong, like shock, anger or fear, because people share before they check."
+    },
+    {
+      "id": "review-check",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Is each one about a shop's reviews **suspicious**, or **normal**?",
+      "bins": [
+        {
+          "id": "suspicious",
+          "label": "Suspicious"
+        },
+        {
+          "id": "normal",
+          "label": "Normal"
+        }
+      ],
+      "items": [
+        {
+          "id": "same-day",
+          "label": "50 reviews posted on the same day",
+          "bin": "suspicious"
+        },
+        {
+          "id": "same-words",
+          "label": "Lots use the same unusual words",
+          "bin": "suspicious"
+        },
+        {
+          "id": "no-history",
+          "label": "Reviewers with no other reviews",
+          "bin": "suspicious"
+        },
+        {
+          "id": "mixed",
+          "label": "A mix of good and bad reviews",
+          "bin": "normal"
+        },
+        {
+          "id": "specific",
+          "label": "Reviews that mention specific problems",
+          "bin": "normal"
+        },
+        {
+          "id": "spread-out",
+          "label": "Reviews spread over many months",
+          "bin": "normal"
+        }
+      ],
+      "hint": "Real customers buy at different times, have different opinions, and write in their own words.",
+      "nudge": "A few bad reviews can be a good sign. Which ones look like many accounts acting as one?",
+      "explanation": "Lots of reviews at once, the same unusual words, and reviewers with no history look like **one source pretending to be many**. Real reviews are mixed, specific and spread out, even if some are bad."
+    },
+    {
+      "id": "check-outside",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Check outside the post",
+      "body": "When something surprises you, **stop** and notice how it makes you feel. Then check **outside** the post, not inside it:\n\n- Open a new tab and **search for the claim** and the site's name.\n- See if **trusted news** is reporting it.\n- Find out **who runs** the site or account.\n\nReading the post again more slowly, or judging how professional it looks, doesn't help much: AI makes fakes look polished."
+    },
+    {
+      "id": "chocolate-cure",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "A news site you've never heard of says chocolate cures colds, with quotes from \"Dr Sam Lee, a top scientist\". What's the **best** first move?",
+      "options": [
+        {
+          "id": "read-carefully",
+          "text": "Read the whole article slowly to look for mistakes",
+          "nudge": "AI-written fakes often have no mistakes. Where should you check: inside the article, or outside it?"
+        },
+        {
+          "id": "expert-quotes",
+          "text": "Check that it quotes a scientist, so it's backed by an expert",
+          "nudge": "Quotes are easy to invent, and \"Dr Sam Lee\" might not exist. How could you check outside the article?"
+        },
+        {
+          "id": "search",
+          "text": "Search for the claim and the site's name in another tab"
+        },
+        {
+          "id": "comments",
+          "text": "Read the comments to see if most people agree with it",
+          "nudge": "Comments can be fake too, and agreement isn't evidence. Where else could you look?"
+        }
+      ],
+      "correctOptionId": "search",
+      "hint": "Look back at where to check: inside the post, or outside it?",
+      "explanation": "**Search outside the article**: for the claim, the site and the \"expert\". AI-written fakes can be polished, quote invented people and fill the comments, so checking inside the article proves little."
+    },
+    {
+      "id": "fake-share-rate",
+      "type": "numeric_input",
+      "difficulty": "core",
+      "prompt": "A shop has **240** reviews. **180** of them were posted in one week, by brand-new accounts. What **percentage** of the reviews is that?",
+      "base": "decimal",
+      "answer": 75,
+      "unit": "%",
+      "hint": "Divide the number from that one week by the total, then multiply by 100.",
+      "nudge": "180 out of 240: try simplifying the fraction first.",
+      "explanation": "180 ÷ 240 = 0.75, so **75%** of the reviews came in one week from brand-new accounts: a strong sign many are fake."
+    },
+    {
+      "id": "the-bot",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "Under a video about a new game, an account replies to dozens of comments within a minute.",
+      "start": "replies",
+      "steps": [
+        {
+          "id": "replies",
+          "text": "Every reply says almost the same thing: \"This game is a SCAM, download SuperBlast instead!!\" with a link. What's most likely going on?",
+          "choices": [
+            {
+              "id": "angry-fan",
+              "text": "A really angry fan who types very fast",
+              "consequence": "Nobody types dozens of near-identical replies in a minute. This is automatic.",
+              "outcome": "fail"
+            },
+            {
+              "id": "bot",
+              "text": "A bot posting automatically to push people to that link",
+              "consequence": "Yes: speed, copy-paste replies and a link are classic bot signs. Don't click it, and report the account.",
+              "outcome": "success"
+            },
+            {
+              "id": "real-warning",
+              "text": "A real warning that the game is a scam",
+              "consequence": "A real warning wouldn't be copied into dozens of replies with a link to another game. That's advertising, by a bot.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "hint": "Think about the speed, the sameness, and what it wants you to do.",
+      "explanation": "Dozens of near-identical replies in a minute, all with the same link, is a **bot**. Don't click, and use the report button."
+    },
+    {
+      "id": "why-feelings",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "prompt": "All four of these are fake. Which one is **most likely** to be shared before anyone checks it?",
+      "options": [
+        {
+          "id": "rainfall",
+          "text": "A made-up report about last year's rainfall",
+          "nudge": "It's fake, but does it make anyone feel much? What makes people share without checking?"
+        },
+        {
+          "id": "library",
+          "text": "A wrong list of the library's opening hours",
+          "nudge": "That's annoying, but would people rush to share it? Think about strong feelings."
+        },
+        {
+          "id": "school-shut",
+          "text": "\"SHOCKING: your school is being shut down forever!\""
+        },
+        {
+          "id": "recipe",
+          "text": "A fake recipe for banana bread with a secret ingredient",
+          "nudge": "Mildly interesting, but it doesn't make people feel much. Which one would?"
+        }
+      ],
+      "correctOptionId": "school-shut",
+      "hint": "Which one makes people feel the strongest thing, fast?",
+      "explanation": "The **shocking** one: strong feelings like shock and fear make people share first and check later. That's why fakes are so often designed to scare or anger you, and why a strong feeling is your cue to stop."
+    },
+    {
+      "id": "inside-or-outside",
+      "type": "sort_bins",
+      "difficulty": "challenge",
+      "prompt": "Is each one a check **outside** the post (useful), or just looking **inside** it again?",
+      "bins": [
+        {
+          "id": "outside",
+          "label": "Outside the post"
+        },
+        {
+          "id": "inside",
+          "label": "Inside the post"
+        }
+      ],
+      "items": [
+        {
+          "id": "search-site",
+          "label": "Search the site's name",
+          "bin": "outside"
+        },
+        {
+          "id": "trusted-news",
+          "label": "Look for it on trusted news",
+          "bin": "outside"
+        },
+        {
+          "id": "who-runs",
+          "label": "Find out who runs the account",
+          "bin": "outside"
+        },
+        {
+          "id": "reread",
+          "label": "Read it again, more slowly",
+          "bin": "inside"
+        },
+        {
+          "id": "professional",
+          "label": "Judge how professional it looks",
+          "bin": "inside"
+        },
+        {
+          "id": "photo-quality",
+          "label": "Check how sharp the photos are",
+          "bin": "inside"
+        }
+      ],
+      "hint": "Does the check need a new tab, or just the post in front of you?",
+      "nudge": "Fakes can be polished and sharp. Which checks find out about the post from somewhere else?",
+      "explanation": "Searching, trusted news and finding who's behind it all look **outside** the post. Re-reading, judging how professional it looks and photo quality only look **inside**, where good fakes pass easily."
+    },
+    {
+      "id": "fakes-recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- AI makes fake reviews, articles and accounts (bots) cheap and fast: **misinformation** can come from anywhere.\n- Many reviews at once, copied words and new accounts are warning signs.\n- Strong feelings are the moment to stop: check **outside** the post, not inside it.\n- Don't click bot links; report them.\n\nNext: keeping your private stuff private."
+    }
+  ]
+}

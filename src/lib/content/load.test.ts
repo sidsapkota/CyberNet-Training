@@ -207,6 +207,7 @@ describe("real content in /content", () => {
       ["pro", "next-word-machines", "temperature", "made-up-answers", "how-chatbots-think-quiz"],
       ["pro", "writing-good-prompts", "checking-ais-work", "ai-tools-today", "talking-to-ai-quiz"],
       ["pro", "how-ai-makes-pictures", "cloned-voices-and-faces", "who-made-this", "ai-images-video-and-voices-quiz"],
+      ["pro", "spotting-ai-fakes", "what-not-to-share", "fair-and-honest-use", "how-ai-really-works-final"],
     ]);
   });
 

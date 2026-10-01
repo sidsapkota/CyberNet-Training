@@ -1,0 +1,346 @@
+{
+  "id": "how-ai-really-works-final",
+  "kind": "quiz",
+  "title": "How AI Really Works: Course Final",
+  "order": 99,
+  "cards": [
+    {
+      "id": "f-rules-or-learns",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Follows rules someone wrote, or learns from examples?",
+      "bins": [
+        {
+          "id": "rules",
+          "label": "Follows rules"
+        },
+        {
+          "id": "learns",
+          "label": "Learns"
+        }
+      ],
+      "items": [
+        {
+          "id": "sprinkler",
+          "label": "Garden sprinklers on a timer",
+          "bin": "rules"
+        },
+        {
+          "id": "convert",
+          "label": "Converting kilometres to miles",
+          "bin": "rules"
+        },
+        {
+          "id": "plants",
+          "label": "An app that names plants from photos",
+          "bin": "learns"
+        },
+        {
+          "id": "captions",
+          "label": "Automatic captions on videos",
+          "bin": "learns"
+        }
+      ],
+      "explanation": "Timers and unit conversions follow exact rules. Naming plants from photos and turning speech into captions **learn from examples**."
+    },
+    {
+      "id": "f-day-night",
+      "type": "train_model",
+      "difficulty": "core",
+      "prompt": "This model guesses whether a photo was taken by day or by night, from its brightness and how much sky it shows. It calls a sunny day **indoors** night. Choose the examples to train on, so it gets **every** test photo right.",
+      "model": {
+        "kind": "nearest",
+        "k": 1,
+        "x": {
+          "label": "Brightness",
+          "low": "Dark",
+          "high": "Bright"
+        },
+        "y": {
+          "label": "Sky",
+          "low": "None",
+          "high": "Lots"
+        }
+      },
+      "labels": [
+        {
+          "id": "day",
+          "text": "Day"
+        },
+        {
+          "id": "night",
+          "text": "Night"
+        }
+      ],
+      "examples": [
+        {
+          "id": "d1",
+          "text": "Sunny park: day",
+          "x": 9,
+          "y": 9,
+          "label": "day"
+        },
+        {
+          "id": "d2",
+          "text": "Bright street: day",
+          "x": 8,
+          "y": 7,
+          "label": "day"
+        },
+        {
+          "id": "d3",
+          "text": "Blue sky at the beach: day",
+          "x": 9.5,
+          "y": 6,
+          "label": "day"
+        },
+        {
+          "id": "n1",
+          "text": "Dark street: night",
+          "x": 1,
+          "y": 1,
+          "label": "night"
+        },
+        {
+          "id": "n2",
+          "text": "Starry sky: night",
+          "x": 2,
+          "y": 0.5,
+          "label": "night"
+        },
+        {
+          "id": "n3",
+          "text": "Moonlit garden: night",
+          "x": 1.5,
+          "y": 2,
+          "label": "night"
+        },
+        {
+          "id": "x1",
+          "text": "Bright classroom, no sky: day",
+          "x": 8,
+          "y": 1,
+          "label": "day"
+        },
+        {
+          "id": "x2",
+          "text": "Dark evening, deep blue sky: night",
+          "x": 3,
+          "y": 6,
+          "label": "night"
+        },
+        {
+          "id": "x3",
+          "text": "Midday at the pool: day",
+          "x": 9.5,
+          "y": 9,
+          "label": "day"
+        }
+      ],
+      "tests": [
+        {
+          "id": "t1",
+          "text": "Picnic in the sun",
+          "x": 8.5,
+          "y": 8,
+          "truth": "day"
+        },
+        {
+          "id": "t2",
+          "text": "Street lights at midnight",
+          "x": 1,
+          "y": 1.5,
+          "truth": "night"
+        },
+        {
+          "id": "t3",
+          "text": "Sunny day, indoors",
+          "x": 7,
+          "y": 0.5,
+          "truth": "day"
+        }
+      ],
+      "task": {
+        "goal": "include",
+        "start": [
+          "d1",
+          "d2",
+          "d3",
+          "n1",
+          "n2",
+          "n3"
+        ]
+      },
+      "explanation": "The model had only seen day photos with lots of sky, so a bright room with no sky sat nearest the night photos. Adding **\"Bright classroom, no sky\"** fills that gap. More sunny outdoor photos don't help."
+    },
+    {
+      "id": "f-accuracy",
+      "type": "numeric_input",
+      "difficulty": "core",
+      "prompt": "A model gets **36 of 45** test examples right. What is its accuracy?",
+      "base": "decimal",
+      "answer": 80,
+      "unit": "%",
+      "explanation": "36 ÷ 45 = 0.8, so **80%**."
+    },
+    {
+      "id": "f-next-word",
+      "type": "next_word",
+      "difficulty": "core",
+      "prompt": "Which word is this model **most likely** to pick next?",
+      "context": "Good night, sleep",
+      "candidates": [
+        {
+          "word": "tight",
+          "p": 0.6
+        },
+        {
+          "word": "well",
+          "p": 0.25
+        },
+        {
+          "word": "soon",
+          "p": 0.1
+        },
+        {
+          "word": "late",
+          "p": 0.05
+        }
+      ],
+      "goal": {
+        "type": "pick",
+        "word": "tight"
+      },
+      "explanation": "\"Good night, sleep **tight**\" is a common saying, so \"tight\" has the biggest chance, even though \"well\" makes just as much sense."
+    },
+    {
+      "id": "f-confident",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "A chatbot gives you a quote from a famous scientist, word for word, sounding completely sure. What's the most accurate thing to say?",
+      "options": [
+        {
+          "id": "low-temp",
+          "text": "It's right if the chatbot's temperature was set low"
+        },
+        {
+          "id": "which-book",
+          "text": "Ask the chatbot which book the quote comes from"
+        },
+        {
+          "id": "check",
+          "text": "It might be invented: find the quote in a trusted source"
+        },
+        {
+          "id": "sure",
+          "text": "It's right, because it sounded completely sure of it"
+        }
+      ],
+      "correctOptionId": "check",
+      "explanation": "Quotes are classic **hallucinations**: likely-sounding words, not checked ones. Asking the chatbot for the book can just produce another invented answer, and low temperature makes it predictable, not true. Check a trusted source."
+    },
+    {
+      "id": "f-prompt-parts",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Sort these bits of prompts: **goal**, **context** or **format**?",
+      "bins": [
+        {
+          "id": "goal",
+          "label": "Goal"
+        },
+        {
+          "id": "context",
+          "label": "Context"
+        },
+        {
+          "id": "format",
+          "label": "Format"
+        }
+      ],
+      "items": [
+        {
+          "id": "explain",
+          "label": "Explain how bees make honey",
+          "bin": "goal"
+        },
+        {
+          "id": "seven",
+          "label": "It's for my 7-year-old cousin",
+          "bin": "context"
+        },
+        {
+          "id": "comic",
+          "label": "As a 4-panel comic",
+          "bin": "format"
+        },
+        {
+          "id": "short",
+          "label": "Under 50 words",
+          "bin": "format"
+        }
+      ],
+      "explanation": "The **goal** says what to do, the **context** who it's for, and the **format** its shape and length."
+    },
+    {
+      "id": "f-viral-video",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "A video of a famous athlete announcing a surprise retirement is going viral. No AI label, lips match perfectly. What's the **best** check?",
+      "options": [
+        {
+          "id": "watermark",
+          "text": "Check whether it has an AI watermark anywhere"
+        },
+        {
+          "id": "frames",
+          "text": "Watch it frame by frame, looking for glitches"
+        },
+        {
+          "id": "official",
+          "text": "See if their official account or trusted news says so"
+        },
+        {
+          "id": "shares",
+          "text": "See how many people have already shared it"
+        }
+      ],
+      "correctOptionId": "official",
+      "explanation": "A missing watermark proves nothing, good deepfakes have no glitches to find, and shares aren't evidence. Check the **real person's official account** or trusted news."
+    },
+    {
+      "id": "f-private",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "A friend tells you a secret, and you want advice about it. You're thinking of asking an AI chatbot.",
+      "start": "advice",
+      "steps": [
+        {
+          "id": "advice",
+          "text": "What's the best thing to do?",
+          "choices": [
+            {
+              "id": "full",
+              "text": "Type the whole secret, with your friend's name",
+              "consequence": "It isn't your secret to share, and the chat may be stored.",
+              "outcome": "fail"
+            },
+            {
+              "id": "trusted-adult",
+              "text": "Talk it through with a trusted adult, without naming your friend",
+              "consequence": "A person you trust can really help, and your friend's secret stays safe.",
+              "outcome": "success"
+            },
+            {
+              "id": "screenshot",
+              "text": "Send the chatbot a screenshot of your friend's message",
+              "consequence": "That shares your friend's private message, and maybe their name and number too.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "explanation": "A friend's secret isn't yours to type into an app. A **trusted adult** can help without it leaving your hands."
+    }
+  ]
+}
