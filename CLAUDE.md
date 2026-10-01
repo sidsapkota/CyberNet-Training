@@ -444,7 +444,7 @@ interactive, update `isInteractiveCard` / `InteractiveCard` in `schema.ts`.
     reads the title, body, prompt and the choices, never the answer or explanation before Check
     (lessons read the explanation after Check; quizzes never do). Glossary marks read as their word,
     and technical values are made speakable (`192.0.2.1` → "192 dot 0 dot 2 dot 1", bits digit by
-    digit). It stops on any change of card, Back or Check. "Slower / Normal speed" is saved per
+    digit). It stops on any change of card, Back or Check. The voice (`pickVoice` in `src/lib/voices.ts`, tested) is never a novelty voice (macOS's Albert, Bad News, Zarvox…); it prefers the learner's locale (en-AU, then en-GB, then any English), then higher-quality voices (Premium/Enhanced/Natural/Neural, the well-known system voices, Google's and Microsoft's), then on-device ones; with nothing suitable the browser's en-AU default is used. "Slower / Normal speed" is saved per
     device (localStorage).
   - **Where people quit:** leaving an unfinished lesson (✕, the browser's back, closing the tab)
     sends `lesson_quit` once, with the lesson id and the card number only.
