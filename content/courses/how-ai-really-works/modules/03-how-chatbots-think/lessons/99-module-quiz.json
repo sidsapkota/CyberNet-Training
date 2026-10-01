@@ -8,7 +8,7 @@
       "id": "q-coldest",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "After \"Ready, set,\" a model gives these chances at temperature 1: **go 70%**, now 15%, then 10%, slow 5%. At which temperature is it **most likely** to pick \"go\"?",
+      "prompt": "At temperature 1, \"go\" has a **70%** chance after \"Ready, set,\". At which temperature is \"go\" **most likely**?",
       "options": [
         {
           "id": "one",
@@ -28,16 +28,16 @@
         }
       ],
       "correctOptionId": "low",
-      "explanation": "A **low** temperature makes the top word even likelier, so at 0.2 it picks \"go\" almost every time. At 2, the chances even out and \"go\" is picked less often."
+      "explanation": "A **low** temperature makes the top word even likelier, so at 0.2 it's \"go\" almost every time. At 2, the chances even out."
     },
     {
       "id": "q-two-hundred",
       "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "A model gives the next word a **40%** chance. If it carries on from the same text **20** times, about how many times will it pick that word?",
+      "prompt": "A word has a **40%** chance. In **20** tries from the same text, how many times would you expect it?",
       "base": "decimal",
       "answer": 8,
-      "explanation": "40% means about 4 times in every 10, so in 20 tries it's about **8** times. A chance is \"how often\", not \"always\"."
+      "explanation": "40% is 4 in every 10, so in 20 tries you'd expect **8**. A chance is \"how often\", not \"always\"."
     },
     {
       "id": "q-pick",
@@ -67,33 +67,33 @@
         "type": "pick",
         "word": "dogs"
       },
-      "explanation": "\"Raining cats and **dogs**\" is a common saying, so it's by far the most likely next word, even though it isn't what rain is made of. The model picks what usually comes next."
+      "explanation": "\"Raining cats and **dogs**\" is a common saying, so it's by far the likeliest next word. The model picks what usually comes next."
     },
     {
       "id": "q-no-going-back",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A chatbot is writing a story about a dog. Early on, it happens to pick an unlikely word, and the dog is now **purple**. What happens to the rest of the story?",
+      "prompt": "In a story, the model happens to pick an unlikely word: the dog is now **purple**. What happens next?",
       "options": [
         {
           "id": "carries-on",
-          "text": "It carries on from \"purple\", so later words may follow on from it"
+          "text": "It carries on, and later words may follow \"purple\""
         },
         {
           "id": "swaps",
-          "text": "It notices \"purple\" was unlikely and swaps it for a likelier word"
+          "text": "It spots \"purple\" was unlikely and swaps it out"
         },
         {
           "id": "ignores",
-          "text": "It writes the rest as if \"purple\" had never been added"
+          "text": "It writes on as if \"purple\" had never been added"
         },
         {
           "id": "restarts",
-          "text": "It throws the story away and starts again from the first word"
+          "text": "It throws the story away and starts it again"
         }
       ],
       "correctOptionId": "carries-on",
-      "explanation": "Once a word is added, it stays. The model reads **all** the text so far, \"purple\" included, and works out each next word from there, so one odd pick can steer the rest of the story. It never goes back to change a word."
+      "explanation": "Once added, a word stays. The model reads **all** the text, \"purple\" included, so one odd pick can steer the rest of the story."
     },
     {
       "id": "q-temperature",
@@ -142,23 +142,23 @@
       "options": [
         {
           "id": "temperature",
-          "text": "Its temperature was set too low, so it couldn't pick the real book"
+          "text": "Its temperature was too low to pick the real book"
         },
         {
           "id": "likely",
-          "text": "It picks words that sound likely, not ones it has checked are true"
+          "text": "It picks words that sound likely, not checked facts"
         },
         {
           "id": "window",
-          "text": "It looked the book up online, but the page it found was out of date"
+          "text": "It looked the book up online, on an out-of-date page"
         },
         {
           "id": "lying",
-          "text": "It's trained to sound clever, so it makes things up on purpose"
+          "text": "It's trained to sound clever, so it lies on purpose"
         }
       ],
       "correctOptionId": "likely",
-      "explanation": "A title, an author and a summary all **sound** likely, so the model writes them without checking they're true: a hallucination. A low temperature makes it more predictable, not more inventive, and a language model on its own doesn't look things up: it writes one likely word at a time."
+      "explanation": "A title, author and summary all **sound** likely, so it writes them without checking: a hallucination. Low temperature makes it predictable, not inventive, and it doesn't look things up."
     },
     {
       "id": "q-check",
@@ -169,30 +169,30 @@
       "steps": [
         {
           "id": "the-hours",
-          "text": "It says the museum opens on Mondays, and names the museum's website as its source. What do you do?",
+          "text": "It says the museum opens on Mondays, naming the museum's website as its source. What do you do?",
           "choices": [
             {
               "id": "trust",
               "text": "Plan a Monday visit: it named a source",
-              "consequence": "Chatbots can invent sources, or name a real one and get the detail wrong. A source only helps if you open it.",
+              "consequence": "Chatbots can invent sources, or get the detail wrong. A source only helps if you open it.",
               "outcome": "fail"
             },
             {
               "id": "open",
-              "text": "Open the museum's website and check the opening days",
+              "text": "Open the museum's website and check the days",
               "consequence": "Right: what the source really says is what counts.",
               "outcome": "success"
             },
             {
               "id": "again",
-              "text": "Ask the chatbot again, to see if it says Monday twice",
+              "text": "Ask again, to see if it says Monday twice",
               "consequence": "It can repeat the same mistake. Check outside the chatbot.",
               "outcome": "fail"
             }
           ]
         }
       ],
-      "explanation": "Days, dates and sources are where hallucinations hide. **Open the source** (or find a trusted one) and check it really says what the chatbot claims."
+      "explanation": "Days, dates and sources are where hallucinations hide. **Open the source** and check it really says what the chatbot claims."
     },
     {
       "id": "q-words",
@@ -202,17 +202,17 @@
       "pairs": [
         {
           "id": "lm",
-          "left": "It learned from huge amounts of text which words come next",
+          "left": "Learned which words come next from text",
           "right": "Language model"
         },
         {
           "id": "temperature",
-          "left": "You turn a setting up to get wilder story ideas",
+          "left": "A setting turned up for wilder ideas",
           "right": "Temperature"
         },
         {
           "id": "hallucination",
-          "left": "It confidently names an author who never existed",
+          "left": "Names an author who never existed",
           "right": "Hallucination"
         },
         {
@@ -221,7 +221,7 @@
           "right": "Chances for the next word"
         }
       ],
-      "explanation": "A **language model** learned from text which words come next; each possible next word gets a **chance**; **temperature** sets how adventurous its picks are; a **hallucination** is a confident false answer."
+      "explanation": "A **language model** learned which words come next; each next word gets a **chance**; **temperature** sets how adventurous its picks are; a **hallucination** is a confident false answer."
     }
   ]
 }

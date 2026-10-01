@@ -10,7 +10,7 @@
       "id": "slang-checker",
       "type": "train_model",
       "difficulty": "core",
-      "prompt": "A kind-or-mean message checker learned only from formal messages, so it calls **\"That game was sick!\"** mean. Choose the examples to train on, so it gets **all 3** test messages right. (It uses word votes, like the spam model.)",
+      "prompt": "This kind-or-mean checker calls **\"That game was sick!\"** mean. Choose examples so it gets **all 3** tests right.",
       "model": {
         "kind": "word-vote"
       },
@@ -94,16 +94,16 @@
           "r3"
         ]
       },
-      "hint": "\"Sick\" can mean \"great\". The model has only ever seen it used one way. What would show it the other?",
-      "nudge": "Leaving out mean examples breaks the other tests. What could you add instead?",
-      "explanation": "To this checker, \"sick\" only ever meant something bad. It had never seen \"sick\" meaning **great**, so it misread the people who say it that way. Adding one example of that use fixes it, and the mean messages are still caught. Missing examples from some people is how unfairness usually starts."
+      "hint": "\"Sick\" can mean \"great\", but the model has only seen it used one way. What shows the other?",
+      "nudge": "See which test is still wrong, and find an example that uses its words that way.",
+      "explanation": "It had only seen \"sick\" used badly, never meaning **great**. Adding one example of that use fixes it; missing examples from some people is how unfairness usually starts."
     },
     {
       "id": "what-bias-is",
       "type": "explainer",
       "difficulty": "core",
       "title": "Bias in, bias out",
-      "body": "When training data leaves some people out, or has far more of some than others, the model works better for some people than others. This is called **bias**.\n\nUsually nobody means it: the model just copies the gaps in its data. A voice assistant trained mostly on one accent understands that accent best."
+      "body": "When training data leaves some people out, or has far more of some, the model works better for some people than others. That's **bias**.\n\nUsually nobody means it: a voice assistant trained mostly on one accent understands that accent best."
     },
     {
       "id": "club-filter",
@@ -114,31 +114,31 @@
       "steps": [
         {
           "id": "the-plan",
-          "text": "It was trained on last year's members, who all lived in the same suburb. Now it's turning down most people from other suburbs. What do you suggest?",
+          "text": "It was trained on members from one suburb, and now rejects most people from other suburbs. What do you suggest?",
           "choices": [
             {
               "id": "keep",
-              "text": "Keep it: it learned from real members",
-              "consequence": "It learned from one suburb only, so it treats everyone else as unusual. That's bias, and it's unfair to them.",
+              "text": "Keep it: it learned from real club members",
+              "consequence": "It treats everyone outside one suburb as unusual. That's bias, and it's unfair.",
               "outcome": "fail"
             },
             {
               "id": "fix",
-              "text": "Retrain it on sign-ups from many suburbs, and have a person check",
-              "consequence": "That fills the gap in its training data, and a person catches anything it still gets wrong.",
+              "text": "Retrain on many suburbs, and have a person check",
+              "consequence": "That fills the gap in its data, and a person catches what it still gets wrong.",
               "outcome": "success"
             },
             {
               "id": "lower-bar",
-              "text": "Make it accept everyone more easily",
-              "consequence": "More people get in, but the model still doesn't understand anyone outside that one suburb, and it may now let in sign-ups it shouldn't. The gap in its data is still there.",
+              "text": "Make it accept everybody much more easily",
+              "consequence": "More people get in, but the gap in its data is still there, and it may let in sign-ups it shouldn't.",
               "outcome": "fail"
             }
           ]
         }
       ],
-      "hint": "Where did the model's unfairness come from? Fix that, and think about who should check.",
-      "explanation": "The model only knew one suburb, so it was **biased** against everyone else. The fix is **better training data** from many suburbs, plus **a person checking** its decisions."
+      "hint": "Where did the unfairness come from? Fix that, and think about who checks.",
+      "explanation": "It only knew one suburb, so it was **biased** against everyone else. Fix it with **better training data** and **a person checking**."
     },
     {
       "id": "where-bias-comes-from",
@@ -149,17 +149,17 @@
         {
           "id": "not-enough",
           "text": "Not having enough training data overall",
-          "nudge": "A huge pile of data can still leave whole groups out. What matters more: how much, or who's in it?"
+          "nudge": "Lots of data can still leave groups out. Which matters more: how much, or who's in it?"
         },
         {
           "id": "on-purpose",
           "text": "Someone making it unfair on purpose",
-          "nudge": "That can happen, but usually nobody means it. What does the model learn everything from?"
+          "nudge": "That can happen, but usually nobody means it. What does a model learn from?"
         },
         {
           "id": "code-bug",
           "text": "A mistake somewhere in the computer code",
-          "nudge": "The code can be perfect and the model still unfair. Where does a model's behaviour come from?"
+          "nudge": "Perfect code can still make an unfair model. Where does its behaviour come from?"
         },
         {
           "id": "data",
@@ -168,13 +168,13 @@
       ],
       "correctOptionId": "data",
       "hint": "A model repeats the patterns in what it learned from, and the gaps.",
-      "explanation": "Bias usually comes from **gaps and imbalances in the training data**: missing people, missing situations, or far more of one kind of example. Nobody has to mean it for a model to be unfair."
+      "explanation": "Bias usually comes from **gaps and imbalances in the training data**, like missing people or situations. Nobody has to mean it."
     },
     {
       "id": "fixes-that-help",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "One more way to catch bias: **test the model with lots of different kinds of people**, not just one group.\n\nA model works worse for some people. Does each idea **help**, or **not help**?",
+      "prompt": "Testing with **many kinds of people** catches bias. A model works worse for some: does each idea help?",
       "bins": [
         {
           "id": "helps",
@@ -218,8 +218,8 @@
         }
       ],
       "hint": "Think back to the sports club: what filled the gap, and who checked?",
-      "nudge": "More data only helps if it includes the people the model missed. And the problem is never the people it gets wrong.",
-      "explanation": "Adding the missing examples, testing with many kinds of people and keeping a person checking all **help**. More data from the **same** group, a faster computer, or asking people to change how they talk don't fill the gap. And it's never the fault of the people the model gets wrong."
+      "nudge": "More data only helps if it includes the people missed, and it's never their fault.",
+      "explanation": "Adding missing examples, testing with many people and a person checking all **help**. More of the **same** data, a faster computer or blaming people don't fill the gap."
     },
     {
       "id": "accents",
@@ -230,31 +230,31 @@
       "steps": [
         {
           "id": "the-trial",
-          "text": "In a trial, it understands some callers perfectly, but often gets callers with certain accents wrong. The seller says it's 95% accurate. What's the best question to ask?",
+          "text": "In a trial it often misunderstands callers with certain accents, but the seller says it's 95% accurate. What do you ask?",
           "choices": [
             {
               "id": "overall",
               "text": "\"95% is great, when can we start?\"",
-              "consequence": "An overall score can hide that it works much worse for some people. Those callers would keep being misunderstood.",
+              "consequence": "An overall score can hide that it works much worse for some callers.",
               "outcome": "fail"
             },
             {
               "id": "who",
               "text": "\"How accurate is it for each group of speakers?\"",
-              "consequence": "Exactly. Breaking the score down shows who it works worse for, so it can be fixed, or a different tool chosen.",
+              "consequence": "Exactly: a score per group shows who it fails, so it can be fixed or swapped.",
               "outcome": "success"
             },
             {
               "id": "speak",
               "text": "\"Can those callers speak differently?\"",
-              "consequence": "That puts the problem on the callers. The model needs better training data, not different callers.",
+              "consequence": "That blames the callers. The model needs better data, not different callers.",
               "outcome": "fail"
             }
           ]
         }
       ],
       "hint": "An average can hide a lot. Who might be inside the missing 5%?",
-      "explanation": "An overall accuracy can look great while a model works badly for **some groups**. Asking for the accuracy **for each group** reveals bias. The fix is in the model's data, never in asking people to change."
+      "explanation": "An overall score can hide that a model fails **some groups**, so ask for accuracy **for each group**. The fix is in the data, never in asking people to change."
     },
     {
       "id": "problem-and-fix",
@@ -284,8 +284,8 @@
         }
       ],
       "hint": "Each problem comes from this lesson. Remember how each one was fixed.",
-      "nudge": "For each problem, ask: is it missing data, a hidden gap in the score, or a decision that needs a person?",
-      "explanation": "Missing examples get **added** (slang, other suburbs); a hidden gap in the score gets found by checking **each group**; and decisions about people need **a person checking**."
+      "nudge": "Is each one missing data, a gap hidden in the score, or a decision for a person?",
+      "explanation": "Missing examples get **added**, a gap hidden in the score is found by checking **each group**, and decisions about people need **a person checking**."
     },
     {
       "id": "bias-recap",

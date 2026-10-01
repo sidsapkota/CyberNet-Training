@@ -23,14 +23,14 @@
       "id": "q-cpu-turns",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A CPU core can only do one thing at a time. Three apps are open on a laptop with one core. How do they all keep running?",
+      "prompt": "One CPU core does one thing at a time. How do three open apps all run?",
       "options": [
-        { "id": "turns", "text": "The OS switches between them, giving each one very quick turns" },
-        { "id": "storage", "text": "Two of them run from storage while one uses the CPU" },
-        { "id": "wait", "text": "Each app runs to the end before the next one can start" }
+        { "id": "turns", "text": "The OS gives each one very quick turns" },
+        { "id": "storage", "text": "Two run from storage while one uses the CPU" },
+        { "id": "wait", "text": "Each app finishes before the next one starts" }
       ],
       "correctOptionId": "turns",
-      "explanation": "The **operating system** switches between apps so quickly that they all seem to run at the same time. Apps are loaded into RAM to run, not run from storage, and nobody would wait for a game to finish before their music played."
+      "explanation": "The **OS** switches between apps so fast they seem to run at once. Apps run from RAM, not storage, and nobody waits for a game to end before music plays."
     },
     {
       "id": "q-end-frozen",
@@ -65,13 +65,13 @@
           { "target": "control", "id": "end-updater", "op": "==", "value": false }
         ]
       },
-      "explanation": "The **puzzle game** was using 90% of the CPU. Ending it fixes the freeze. The **Updater** was only using 3%, so it wasn't the problem, and ending **System** would crash the laptop."
+      "explanation": "The **puzzle game** was using 90% of the CPU. The **Updater** (3%) wasn't the problem, and ending **System** crashes the laptop."
     },
     {
       "id": "q-update",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "Your laptop is in the middle of an update. Its battery is down to **10%**.",
+      "prompt": "Your laptop is mid-update, with its battery at **10%**.",
       "start": "prompt",
       "steps": [
         {
@@ -86,13 +86,13 @@
             },
             {
               "id": "hold-power",
-              "text": "Hold the power button and finish it tomorrow",
+              "text": "Hold the power button, finish tomorrow",
               "consequence": "Switching off halfway through an update can leave the OS broken and unable to start.",
               "outcome": "fail"
             },
             {
               "id": "leave-it",
-              "text": "Leave it on battery, as updates are quick",
+              "text": "Leave it on battery; updates are quick",
               "consequence": "Big updates can take a while. If the battery runs out halfway, that's just like switching off halfway.",
               "outcome": "fail"
             }
@@ -125,7 +125,7 @@
         { "id": "exe-name", "text": "exe-song.mp3" }
       ],
       "correctOptionId": "mp3-exe",
-      "explanation": "Only the part after the **last** dot counts. `song.mp3.exe` ends in `.exe`, so it's a program dressed up as a song. The other two end in `.mp3`, so they're songs, whatever else is in their names."
+      "explanation": "Only the part after the **last** dot counts: `song.mp3.exe` ends in `.exe`, so it's a program. The other two end in `.mp3`."
     },
     {
       "id": "q-cloud",
@@ -133,12 +133,12 @@
       "difficulty": "core",
       "prompt": "You save a file \"to the cloud\". Where is it actually stored?",
       "options": [
-        { "id": "server", "text": "On a company's servers, reached over the internet" },
-        { "id": "ram", "text": "In your device's RAM, until you switch it off" },
-        { "id": "air", "text": "On your device, in a hidden folder" }
+        { "id": "server", "text": "On a company's servers, over the internet" },
+        { "id": "ram", "text": "In your device's RAM, until you turn it off" },
+        { "id": "air", "text": "On your device, in a hidden cloud folder" }
       ],
       "correctOptionId": "server",
-      "explanation": "The cloud is **someone else's computer**: servers in data centres that you reach over the internet. That's why you need the internet to open a cloud-only file."
+      "explanation": "The cloud is **someone else's computer**: servers you reach over the internet. That's why cloud-only files need the internet."
     }
   ]
 }

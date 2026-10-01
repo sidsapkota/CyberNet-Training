@@ -10,7 +10,7 @@
       "id": "parcel-or-postcard",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Apps send data in one of two ways. **TCP** is like a tracked parcel: the sender finds out whether it arrived, lost pieces are sent again, and everything is put back in order. **UDP** is like a postcard: quick, but nobody checks that it arrived, and a lost one is never sent again.\n\nWhich way suits each job?",
+      "prompt": "**TCP** is a tracked parcel: lost pieces are resent and put back in order. **UDP** is a postcard: quick, but nothing is checked or resent.\n\nWhich suits each job?",
       "bins": [
         { "id": "tcp", "label": "Tracked parcel (TCP)" },
         { "id": "udp", "label": "Postcard (UDP)" }
@@ -24,58 +24,58 @@
         { "id": "race", "label": "Your car's position in a racing game", "bin": "udp" },
         { "id": "voice-chat", "label": "Voice chat while gaming", "bin": "udp" }
       ],
-      "explanation": "A download, an email, a photo or a saved document is broken if a single piece is missing, so they use **TCP**. Live calls, voice chat and game positions are about **right now**: a lost moment is soon replaced by a newer one, so waiting for it would only cause lag. They usually use **UDP**.",
-      "hint": "For each job, ask: would one missing piece ruin it? Or is it live, so old data is useless by the time it could be sent again?",
-      "nudge": "Look at the live jobs again. By the time a lost piece of a call or a game could be sent again, a newer one has already replaced it."
+      "explanation": "Downloads, email, photos and saved files break if one piece is missing, so they use **TCP**. Calls, voice chat and game positions are about **right now**, so they usually use **UDP**: waiting would only cause lag.",
+      "hint": "Would one missing piece ruin it, or is it live, so old data is useless?",
+      "nudge": "By the time a lost bit of a call or game could be resent, a newer one has replaced it."
     },
     {
       "id": "tcp-vs-udp",
       "type": "explainer",
       "difficulty": "core",
       "title": "Reliable or fast",
-      "body": "**TCP** (Transmission Control [[Protocol]]) is the tracked parcel. It sets up a connection first, numbers the pieces so they go back in order, and resends anything lost.\n\n**UDP** (User Datagram Protocol) is the postcard: no setup, no checking that it arrived. Quick, but lost data stays lost.\n\nBoth travel inside IP [[packets|packet]], and both use **ports**."
+      "body": "**TCP** (Transmission Control [[Protocol]]) is the parcel: it sets up a connection, numbers the pieces so they go back in order, and resends anything lost.\n\n**UDP** (User Datagram Protocol) is the postcard: no setup, no checks. Quick, but lost data stays lost.\n\nBoth travel inside IP [[packets|packet]] and use **ports**."
     },
     {
       "id": "order-handshake",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "Before TCP sends any data, both sides check they can hear each other, using three short messages. This is the **three-way handshake**. Put the start of a connection in order.",
+      "prompt": "Before sending data, TCP checks both sides can hear each other with three messages: the **three-way handshake**.\n\nPut them in order.",
       "items": [
         { "id": "syn", "label": "Browser: \"Can we talk?\" (SYN)" },
-        { "id": "syn-ack", "label": "Server: \"Yes! Can you hear me too?\" (SYN-ACK)" },
+        { "id": "syn-ack", "label": "Server: \"Yes! Hear me too?\" (SYN-ACK)" },
         { "id": "ack", "label": "Browser: \"Yes!\" (ACK)" },
-        { "id": "request", "label": "Browser sends its request for the web page" }
+        { "id": "request", "label": "Browser asks for the web page" }
       ],
-      "explanation": "The browser asks (**SYN**, short for *synchronise*), the server agrees and checks back (**SYN-ACK**), and the browser confirms (**ACK**, *acknowledge*). Only then is the connection open, so the request comes last.",
-      "hint": "Each message answers the one before it. And no data is sent until all three handshake messages are done.",
-      "nudge": "The request can't go until the handshake is finished. Which message starts a conversation, and which one replies to a question?"
+      "explanation": "The browser asks (**SYN**, *synchronise*), the server agrees and checks back (**SYN-ACK**), and the browser confirms (**ACK**, *acknowledge*). Only then does the request go.",
+      "hint": "Each message answers the one before, and no data goes until all three are done.",
+      "nudge": "The request waits for the handshake: which message starts it, and which replies to a question?"
     },
     {
       "id": "frozen-call",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "You're on a video call and one [[packet]] of video goes missing. Imagine the call used **TCP**. What would happen?",
+      "prompt": "On a video call, one [[packet]] goes missing. If the call used **TCP**, what would happen?",
       "options": [
-        { "id": "freeze", "text": "The picture freezes until the lost piece is resent, then jumps ahead" },
+        { "id": "freeze", "text": "The picture freezes until it's resent, then jumps" },
         {
           "id": "skip",
-          "text": "The call skips the lost piece straight away and carries on smoothly",
-          "nudge": "Skipping lost data is what a postcard does. TCP is the tracked parcel: what does it insist on before moving on?"
+          "text": "The call skips the lost piece and carries on",
+          "nudge": "Skipping is what a postcard does: what does the tracked parcel insist on?"
         },
         {
           "id": "end-call",
-          "text": "The call ends, because TCP can't carry on with a missing piece",
-          "nudge": "TCP doesn't give up after one lost piece. Think about what it does with anything that goes missing."
+          "text": "The call ends, since TCP can't cope with a gap",
+          "nudge": "TCP doesn't give up after one lost piece: what does it do with missing data?"
         },
         {
           "id": "switch",
-          "text": "The call quietly switches to UDP for the rest of the conversation",
-          "nudge": "TCP never turns itself into a different protocol. It has its own way of dealing with a lost piece."
+          "text": "The call quietly switches to UDP instead",
+          "nudge": "TCP never turns into another protocol: it has its own way to handle a lost piece."
         }
       ],
       "correctOptionId": "freeze",
-      "explanation": "TCP waits for the lost piece to be **sent again** and keeps everything in order, so the picture would freeze, then rush to catch up. That's why calls usually use **UDP**: a face frozen mid-sneeze for a split second beats the whole call stopping to wait.",
-      "hint": "TCP resends anything lost and keeps the pieces in order. What does the video have to do while it waits for the missing piece?"
+      "explanation": "TCP waits for the lost piece to be **resent** and keeps everything in order, so the picture freezes, then catches up. That's why calls usually use **UDP**.",
+      "hint": "TCP resends and keeps order: what must the video do while it waits?"
     },
     {
       "id": "which-and-why",
@@ -85,11 +85,11 @@
       "pairs": [
         { "id": "download", "left": "Downloading a file (TCP)", "right": "Every piece must arrive, in order" },
         { "id": "call", "left": "Voice chat in a game (usually UDP)", "right": "Fresh sound matters more than late sound" },
-        { "id": "dns", "left": "A DNS lookup (usually UDP)", "right": "One tiny question and answer, so skip the setup" }
+        { "id": "dns", "left": "A DNS lookup (usually UDP)", "right": "One tiny question, not worth a setup" }
       ],
-      "explanation": "A download is useless with a single piece missing, so it uses **TCP**. Voice chat would rather skip a lost moment than stall waiting for it, so it usually uses **UDP**. A DNS lookup is one small question, so a handshake would take longer than the question itself: it usually uses **UDP**, and switches to TCP for large answers.",
-      "hint": "Ask of each one: would it be ruined by one missing piece, would it rather skip old data, or is it too small to be worth a setup?",
-      "nudge": "Think tracked parcel vs postcard. A file needs every piece; live sound can't wait for late data; a tiny question isn't worth a [[handshake]]."
+      "explanation": "A download needs every piece (**TCP**), and voice chat would rather skip a lost moment (**UDP**). A DNS lookup is so small a handshake would take longer, so it usually uses **UDP**, switching to TCP for large answers.",
+      "hint": "Ruined by one missing piece, better off skipping old data, or too small for a setup?",
+      "nudge": "Think tracked parcel versus postcard, and how small a DNS question is next to a [[handshake]]."
     },
     {
       "id": "udp-true",
@@ -97,53 +97,53 @@
       "difficulty": "core",
       "prompt": "Which statement about **UDP** is true?",
       "options": [
-        { "id": "no-handshake", "text": "It sends without a handshake and doesn't resend lost data" },
+        { "id": "no-handshake", "text": "It sends with no handshake and never resends" },
         {
           "id": "orders",
-          "text": "It doesn't resend lost data, but it always delivers in order",
-          "nudge": "Putting data back in order is one of TCP's jobs. UDP makes no promises, so data can arrive jumbled."
+          "text": "No resending, but it always delivers in order",
+          "nudge": "Putting data back in order is TCP's job: UDP makes no promises."
         },
         {
           "id": "no-ip",
-          "text": "Its data travels on its own, without going inside IP packets",
-          "nudge": "Both TCP and UDP travel inside IP packets. IP gets the data to the right computer either way."
+          "text": "It travels on its own, outside IP packets",
+          "nudge": "Both TCP and UDP travel inside IP packets."
         },
         {
           "id": "no-ports",
-          "text": "It skips port numbers, so it only works for one program at a time",
-          "nudge": "Both TCP and UDP need to reach the right program on a computer. What does that job?"
+          "text": "It skips ports, so it serves one program at a time",
+          "nudge": "Both need to reach the right program on a computer: what does that job?"
         }
       ],
       "correctOptionId": "no-handshake",
-      "explanation": "UDP has **no handshake** and **no resending**. It doesn't guarantee order either: data can arrive jumbled. Like [[TCP]], it travels inside IP packets and uses ports. A [[DNS]] lookup is a common UDP example.",
-      "hint": "UDP is the postcard: no setup, no checking that it arrived, it just sends. Which statement fits that and nothing more?"
+      "explanation": "UDP has **no handshake**, **no resending** and no promise of order. Like [[TCP]], it travels inside IP packets and uses ports; [[DNS]] lookups are a common example.",
+      "hint": "UDP is the postcard: which statement fits that and nothing more?"
     },
     {
       "id": "lost-syn-ack",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "Your browser sends a SYN (\"Can we talk?\") and the server replies with a SYN-ACK, but the SYN-ACK is **lost** on the way. What happens?",
+      "prompt": "Your browser sends a SYN, but the server's SYN-ACK reply is **lost** on the way. What happens?",
       "options": [
         { "id": "both-retry", "text": "Both sides wait, then resend their message" },
         {
           "id": "opens-anyway",
-          "text": "The connection opens anyway, because the server received the SYN",
-          "nudge": "The connection needs all three steps, not just the first one. The browser never heard back, so it isn't finished yet."
+          "text": "It opens anyway, since the server got the SYN",
+          "nudge": "The connection needs all three steps, and the browser never heard back."
         },
         {
           "id": "no-handshake",
-          "text": "The browser starts sending data without finishing the handshake",
-          "nudge": "TCP never sends data before the handshake is complete. Think about what a side does when a reply doesn't come."
+          "text": "The browser sends data without finishing",
+          "nudge": "TCP never sends data before the handshake: what does a side do when no reply comes?"
         },
         {
           "id": "switch-udp",
-          "text": "The browser automatically switches to UDP instead",
-          "nudge": "TCP doesn't change into a different protocol on its own. It has its own way of dealing with lost messages."
+          "text": "The browser automatically switches to UDP",
+          "nudge": "TCP doesn't turn into another protocol: it has its own way to handle lost messages."
         }
       ],
       "correctOptionId": "both-retry",
-      "explanation": "Both sides are waiting. The browser never got a SYN-ACK, so after a short wait it **sends its SYN again**. The server never got an ACK, so it **sends its SYN-ACK again**. Once a SYN-ACK gets through and the ACK comes back, the connection opens. If nothing gets through after several tries, the browser gives up and shows an error.\n\nThe connection can't open without all three steps, [[TCP]] never sends data before the handshake finishes, and it doesn't switch to UDP.",
-      "hint": "The connection only opens after all three messages arrive. If one goes missing, what is each side still waiting for?"
+      "explanation": "The browser never got a SYN-ACK, so it **resends its SYN**; the server never got an ACK, so it **resends its SYN-ACK**. Once all three get through the connection opens, and after several failures the browser shows an error.",
+      "hint": "The connection opens only after all three arrive: what is each side still waiting for?"
     },
     {
       "id": "recap",

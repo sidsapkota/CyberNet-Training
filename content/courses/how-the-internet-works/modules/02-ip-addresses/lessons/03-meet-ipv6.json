@@ -10,30 +10,30 @@
       "id": "why-ipv6",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "In the 2010s, the groups that hand out [[IPv4]] addresses gave away their last big blocks. Sharing with [[NAT]] helps, but it's a workaround. What would **really** fix the shortage?",
+      "prompt": "The free supply of [[IPv4]] addresses ran out in the 2010s, and [[NAT]] is only a workaround.\n\nWhat would **really** fix the shortage?",
       "options": [
-        { "id": "running-out", "text": "A new kind of address with far more bits, so far more patterns" },
+        { "id": "running-out", "text": "A new kind of address with far more bits" },
         {
           "id": "too-slow",
-          "text": "Switching devices off at night so others can borrow their addresses",
-          "nudge": "Billions of devices stay online all day and night, and people in other time zones are awake. What limits how many addresses exist at all?"
+          "text": "Switching devices off at night to share addresses",
+          "nudge": "Billions of devices stay on day and night: what limits how many addresses exist at all?"
         },
         {
           "id": "easier",
-          "text": "Making addresses shorter, so each one takes up less room",
-          "nudge": "Fewer bits means fewer patterns, so shorter addresses would give fewer addresses, not more. Which way should the length go?"
+          "text": "Shorter addresses, so each takes up less room",
+          "nudge": "Fewer bits mean fewer patterns, so shorter addresses would give fewer, not more."
         }
       ],
       "correctOptionId": "running-out",
-      "explanation": "The number of addresses depends on how many bits they have: each extra bit doubles the patterns. So the real fix is a new version of the Internet [[Protocol]] with far longer addresses: **IPv6**, version 6. Shorter addresses would give fewer patterns, and switching devices off can't free up enough.",
-      "hint": "IPv4 addresses are 32 bits. What decides how many different addresses a set of bits can make?"
+      "explanation": "Each extra bit doubles the patterns, so the fix is far longer addresses: **IPv6**, version 6 of the Internet [[Protocol]]. Shorter addresses give fewer, and switching off can't free enough.",
+      "hint": "IPv4 is 32 bits: what decides how many addresses a set of bits can make?"
     },
     {
       "id": "ipv6-format",
       "type": "explainer",
       "difficulty": "core",
       "title": "128 bits, written in hex",
-      "body": "That fix is **IPv6**. Its addresses are **128 [[bits|bit]]**, four times as long as [[IPv4]]: far more than we'll ever need. Most devices have an IPv4 and an IPv6 address at once.\n\nIPv6 is written in [[hex]]: 8 groups of 4 hex digits, split by colons. `2001:0db8:0000:0000:0000:0000:0000:0001` is shortened to `2001:db8::1`. `::` means a run of zero groups was left out."
+      "body": "That fix is **IPv6**: **128-[[bit]]** addresses, four times as long as [[IPv4]]. Most devices have both.\n\nIt's written in [[hex]]: 8 groups of 4 digits, split by colons. `2001:0db8:0000:0000:0000:0000:0000:0001` shortens to `2001:db8::1`, where `::` stands for a run of zero groups."
     },
     {
       "id": "bits-per-group",
@@ -44,20 +44,20 @@
       "answer": 16,
       "unit": "bits",
       "hint": "Each hex digit stands for 4 bits.",
-      "explanation": "Each hex digit is 4 bits, so 4 digits make 4 × 4 = **16 bits**. And 8 groups of 16 bits make 8 × 16 = 128 bits, the whole address.",
-      "nudge": "A group has 4 hex digits, and each hex digit stands for 4 bits. Multiply those together."
+      "explanation": "Each hex digit is 4 bits, so a group is 4 × 4 = **16 bits**, and 8 groups make the whole 128.",
+      "nudge": "A group has 4 hex digits of 4 bits each: multiply."
     },
     {
       "id": "hex-digits-total",
       "type": "numeric_input",
       "difficulty": "challenge",
-      "prompt": "Written out in full with no shortening, how many [[hex]] digits does an [[IPv6]] address have?",
+      "prompt": "Written out in full, how many [[hex]] digits does an [[IPv6]] address have?",
       "base": "decimal",
       "answer": 32,
       "unit": "hex digits",
-      "hint": "Count the groups and the digits in each group. Or start from the 128 bits: how many bits does each hex digit stand for?",
-      "explanation": "8 groups of 4 hex digits make 8 × 4 = **32** hex digits. You can check it from the other side too: 128 bits ÷ 4 bits per hex digit = 32. In binary, the same address would need all 128 digits, which is why IPv6 is written in hex.",
-      "nudge": "Count every digit in every group, not just one group. Or divide the 128 bits by the number of bits one hex digit stands for."
+      "hint": "Count the groups and the digits in each, or start from the 128 bits.",
+      "explanation": "8 groups × 4 digits = **32**, the same as 128 bits ÷ 4. In binary it would take all 128 digits, which is why IPv6 is written in hex.",
+      "nudge": "Count every group, not just one, or divide 128 bits by the bits in one hex digit."
     },
     {
       "id": "spot-the-type",
@@ -71,53 +71,53 @@
         { "id": "binary", "left": "`11000000`", "right": "8 bits in binary" },
         { "id": "hex", "left": "`C8`", "right": "A number in hex" }
       ],
-      "explanation": "IPv4 uses four decimal numbers with **dots**. IPv6 uses hex groups with **colons**. `example.com` is a name for people, not an address. `11000000` is 8 bits in binary, and `C8` uses a hex letter, so it's a number in hex.",
-      "hint": "Look closely at each value: is it split by dots or colons, and which digits or letters does it use?",
-      "nudge": "IPv4 is four decimal numbers separated by dots, and IPv6 is hex groups separated by colons. The rest here aren't addresses."
+      "explanation": "IPv4 uses decimal numbers with **dots**, IPv6 hex groups with **colons**. `example.com` is a name, `11000000` is 8 bits, and `C8` has a hex letter.",
+      "hint": "Is each value split by dots or colons, and which digits or letters does it use?",
+      "nudge": "IPv4 is decimal with dots and IPv6 is hex with colons; the rest aren't addresses."
     },
     {
       "id": "both-at-once",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A laptop's network settings list two addresses: `192.168.1.42` and `2001:db8:1:2::42`. What's going on?",
+      "prompt": "A laptop lists two addresses: `192.168.1.42` and `2001:db8:1:2::42`. What's going on?",
       "options": [
-        { "id": "both", "text": "It has an IPv4 and an IPv6 address, and can use either one" },
+        { "id": "both", "text": "It has an IPv4 and an IPv6 address, and uses either" },
         {
           "id": "hex-copy",
-          "text": "The second one is just the first one rewritten in hex",
-          "nudge": "An IPv6 address is 128 bits, and an IPv4 address only 32, so one can't be a copy of the other. Check what the dots and colons tell you."
+          "text": "The second is just the first rewritten in hex",
+          "nudge": "IPv6 is 128 bits and IPv4 only 32, so one can't be a copy: check the dots and colons."
         },
         {
           "id": "router",
-          "text": "One is the laptop's address, and the other is the router's",
-          "nudge": "Both are listed as this laptop's own addresses. Look at the punctuation: what kind of address uses dots, and what kind uses colons?"
+          "text": "One is the laptop's, and the other is the router's",
+          "nudge": "Both are the laptop's own: which kind uses dots, and which uses colons?"
         }
       ],
       "correctOptionId": "both",
-      "explanation": "Dots mean [[IPv4]], and colons with hex mean [[IPv6]]. Most devices today have **both** and use them side by side, because much of the internet still only speaks IPv4. The two addresses are separate: IPv6 isn't IPv4 rewritten in hex.",
+      "explanation": "Dots mean [[IPv4]] and colons mean [[IPv6]]. Most devices have **both**, since much of the internet still only speaks IPv4; they're separate addresses, not one rewritten.",
       "hint": "Are these two ways of writing one address, or two different addresses?"
     },
     {
       "id": "no-more-sharing",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "[[IPv6]] has about 340 trillion trillion trillion addresses: enough for every device on Earth, many times over. With that many, which [[IPv4]] workaround isn't needed any more?",
+      "prompt": "[[IPv6]] has enough addresses for every device on Earth, many times over. Which [[IPv4]] workaround isn't needed now?",
       "options": [
         { "id": "nat", "text": "A whole home sharing one public address" },
         {
           "id": "routers",
           "text": "Home routers linking homes to the internet",
-          "nudge": "A home still needs a doorway to the internet, however many addresses there are. Which trick was only there because addresses were scarce?"
+          "nudge": "A home still needs a doorway to the internet: which trick existed only because addresses were scarce?"
         },
         {
           "id": "names",
           "text": "Names like example.com instead of numbers",
-          "nudge": "Names are there because people find them easier to remember, and IPv6 addresses are even harder to remember. What was IPv4 short of?"
+          "nudge": "People find names easier, and IPv6 is even harder to remember: what was IPv4 short of?"
         }
       ],
       "correctOptionId": "nat",
-      "explanation": "Homes shared one public address with [[NAT]] only because IPv4 addresses ran short. With IPv6, every device can have its **own** address that works across the internet. Routers are still needed to link networks, and names are still easier for people than long hex addresses.",
-      "hint": "Think back to why NAT was invented in the first place. Which problem does IPv6 solve?"
+      "explanation": "Homes shared one address with [[NAT]] only because IPv4 ran short; with IPv6 every device can have its **own**. Routers still link networks, and names are still easier than hex.",
+      "hint": "Why was NAT invented in the first place?"
     },
     {
       "id": "recap",

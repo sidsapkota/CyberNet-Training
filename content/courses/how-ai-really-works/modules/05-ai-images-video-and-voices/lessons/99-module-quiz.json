@@ -8,7 +8,7 @@
       "id": "q-halfway",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "You could pause an AI image tool halfway through making \"a lighthouse in a storm\". What would you most likely see?",
+      "prompt": "You pause an AI image tool halfway through \"a lighthouse in a storm\". What would you most likely see?",
       "options": [
         {
           "id": "rough",
@@ -16,25 +16,25 @@
         },
         {
           "id": "top-half",
-          "text": "The top half of the picture finished, the bottom still blank"
+          "text": "The top half finished, the bottom half still blank"
         },
         {
           "id": "small",
-          "text": "The whole finished picture, only smaller and lower quality"
+          "text": "The finished picture, just smaller and lower quality"
         },
         {
           "id": "pieces",
-          "text": "Pieces of real lighthouse photos waiting to be stuck together"
+          "text": "Bits of real lighthouse photos, waiting to be joined"
         }
       ],
       "correctOptionId": "rough",
-      "explanation": "The picture is cleared from static **all over at once**, rough to fine: blobs of colour, then **rough shapes**, then details. It isn't drawn top to bottom, and it isn't stuck together from saved photos."
+      "explanation": "The picture is cleared from static **all over at once**, rough to fine. It isn't drawn top to bottom or stuck together from saved photos."
     },
     {
       "id": "q-perfect-picture",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "A picture of a famous footballer eating at a small local café is spreading fast. You check it closely: normal hands, readable signs, shadows all fine.",
+      "prompt": "A picture of a famous footballer at a small local café is spreading. Hands, signs and shadows all look fine.",
       "start": "checked",
       "steps": [
         {
@@ -44,31 +44,31 @@
             {
               "id": "share",
               "text": "Share it: it passed every check for AI mistakes",
-              "consequence": "Good AI pictures often have no give-aways, so passing those checks proves nothing. Find out where it came from first.",
+              "consequence": "Good AI pictures often have no give-aways, so that proves nothing. Find where it came from.",
               "outcome": "fail"
             },
             {
               "id": "zoom",
               "text": "Zoom in even closer and look for smaller mistakes",
-              "consequence": "Still nothing odd, and still no proof either way. Staring at the picture can't tell you if it's real.",
+              "consequence": "Still nothing odd, and still no proof. Staring can't tell you if it's real.",
               "outcome": "fail"
             },
             {
               "id": "search",
-              "text": "Search with the picture to see where it first appeared",
-              "consequence": "It first appeared on an account that posts AI pictures, with a caption saying it was made with AI.",
+              "text": "Search with the picture to find where it began",
+              "consequence": "It first appeared on an account that posts AI pictures, captioned as made with AI.",
               "outcome": "success"
             }
           ]
         }
       ],
-      "explanation": "Finding **no give-aways proves nothing**: good AI pictures often have none. Check from outside the picture: **where it first appeared**, trusted news and the account that posted it."
+      "explanation": "**No give-aways proves nothing.** Check from outside the picture: **where it first appeared**, trusted news and who posted it."
     },
     {
       "id": "q-clues",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Possible clue that a picture is AI-made, or not a clue?",
+      "prompt": "Is each one a **possible clue** that a picture is AI-made, or **not a clue**?",
       "bins": [
         {
           "id": "clue",
@@ -115,7 +115,7 @@
         },
         {
           "id": "yes-hidden",
-          "text": "Yes: a hidden watermark would show up when you share it"
+          "text": "Yes: a hidden watermark would show when it's shared"
         },
         {
           "id": "no-missing",
@@ -127,13 +127,13 @@
         }
       ],
       "correctOptionId": "no-missing",
-      "explanation": "Watermarks get cropped, screenshots can strip hidden information saved with the file, and many tools add none. No watermark proves **nothing** either way."
+      "explanation": "Watermarks get cropped, screenshots can lose hidden file data, and many tools add none. No watermark proves **nothing** either way."
     },
     {
       "id": "q-principal",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "A video of your principal says school is closed tomorrow. It's spreading in a group chat started by someone you don't know.",
+      "prompt": "A video of your principal says school's closed tomorrow. It's spreading in a chat started by someone you don't know.",
       "start": "the-video",
       "steps": [
         {
@@ -143,31 +143,31 @@
             {
               "id": "lips",
               "text": "Watch it again to check the lips match the words",
-              "consequence": "They match. Good fakes pass that test. Check with the real source instead.",
+              "consequence": "They match: good fakes pass that test. Check with the real source instead.",
               "outcome": "fail"
             },
             {
               "id": "check",
-              "text": "Check the school's website or ask a parent to call the school",
+              "text": "Check the school's website, or have a parent call",
               "consequence": "The school says it's open as normal. The video was a deepfake.",
               "outcome": "success"
             },
             {
               "id": "forward",
               "text": "Ask the group chat whether anyone knows if it's real",
-              "consequence": "People in the chat have only seen the same video. Check with the real source, another way.",
+              "consequence": "People there have only seen the same video. Check with the real source, another way.",
               "outcome": "fail"
             }
           ]
         }
       ],
-      "explanation": "An unknown sender and a surprising message are **situation clues**. Check with the real source, another way: the school's website or a call."
+      "explanation": "An unknown sender and a surprising message are **situation clues**. Check with the real source another way: the school's website or a call."
     },
     {
       "id": "q-help-harm",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Helpful or harmful use of face and voice AI?",
+      "prompt": "Is each use of face and voice AI **helpful** or **harmful**?",
       "bins": [
         {
           "id": "helpful",
@@ -210,26 +210,26 @@
       "pairs": [
         {
           "id": "generative",
-          "left": "An app turns your words into a new painting",
+          "left": "An app turns your words into a painting",
           "right": "Generative AI"
         },
         {
           "id": "deepfake",
-          "left": "A video shows a real singer saying words they never said",
+          "left": "Video of a real singer saying fake words",
           "right": "Deepfake"
         },
         {
           "id": "clone",
-          "left": "A call sounds just like your aunt, but it's AI",
+          "left": "An AI call sounding just like your aunt",
           "right": "Voice clone"
         },
         {
           "id": "watermark",
-          "left": "Hidden information in a picture file says AI made it",
+          "left": "Hidden data saying AI made a picture",
           "right": "Watermark"
         }
       ],
-      "explanation": "Making something new from words is **generative AI**; a fake video of a real person is a **deepfake**; an AI copy of a voice is a **voice clone**; and a mark, visible or hidden, saying AI made it is a **watermark**."
+      "explanation": "Making something new from words is **generative AI**; a fake video of a real person is a **deepfake**; an AI copy of a voice is a **voice clone**; a mark saying AI made it is a **watermark**."
     }
   ]
 }

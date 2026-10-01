@@ -114,7 +114,7 @@ CNAME line added to the `nslookup` output in 6.3; a few ambiguous options and gi
 
 **Key claims:**
 - 8-bit place values are 128, 64, 32, 16, 8, 4, 2, 1.
-- 5 = `00000101`, 42 = `00101010`, 200 = `11001000`.
+- 5 = `00000101`, 42 = `00101010`, 178 = `10110010` (the pictured switches), 200 = `11001000`.
 - 2⁸ = 256 patterns; the largest value is 255.
 - 10 bits give 1,024 patterns, with a largest value of 1,023.
 - An IPv4 address is four octets.
@@ -217,7 +217,7 @@ Learners who had completed `one-bit-values` keep that XP. The lesson's other ids
 **Key claims:**
 - The last big IPv4 blocks were handed out in the 2010s: IANA in 2011, and the regional
   registries between 2011 and 2020.
-- 2¹²⁸ ≈ 3.4 × 10³⁸ ("about 340 trillion trillion trillion").
+- 2¹²⁸ ≈ 3.4 × 10³⁸ (the number is no longer quoted in the text since the 2 Oct wording pass; it says "far more bits").
 - 16 bits per group.
 - Only leading zeros in a group can be dropped, and `::` can appear only once
   (`2001:db8::1::1` is ambiguous).
@@ -274,9 +274,7 @@ Learners who had completed `one-bit-values` keep that XP. The lesson's other ids
 
 **Key claims:**
 - A router only decides the next hop.
-- A home router combines a router, a switch and a Wi-Fi access point.
 - Traceroute probes each hop three times by default and shows times in ms.
-- `tracert` is the Windows name.
 - The first hop is usually the home router, the same as `ipconfig`'s default gateway.
 - `* * *` means no reply in time; later hops replying shows traffic still passed.
 - Each router decrements TTL. At 0 it drops the packet and sends back an error (ICMP Time
@@ -564,7 +562,6 @@ Learners who had completed `one-bit-values` keep that XP. The lesson's other ids
 - Browser error wording varies by browser. The four messages are representative, not exact.
 - "Connection timed out" can also be caused by firewalls silently dropping packets. That's grouped
   under "nothing answered the handshake".
-- "Many browsers would try IPv6 first" simplifies Happy Eyeballs, which races IPv6 and IPv4.
 - The packet_path cards label the home router with its public address `203.0.113.7`, because
   that's the address the server sees and replies to.
 

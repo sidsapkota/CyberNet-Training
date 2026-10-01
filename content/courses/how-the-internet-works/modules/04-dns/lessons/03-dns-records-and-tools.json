@@ -10,28 +10,28 @@
       "id": "one-or-several",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Your club's site, `example.org`, needs two things: an address for its website, and a place for its email to go. Does [[DNS]] give one answer for the name, or several?",
+      "prompt": "Your club's `example.org` needs a website address and somewhere for email.\n\nDoes [[DNS]] give one answer per name, or several?",
       "options": [
-        { "id": "several", "text": "Several: one name can hold different answers for different jobs" },
+        { "id": "several", "text": "Several: one name holds answers for different jobs" },
         {
           "id": "one-address",
-          "text": "One: each name has exactly one IP address, used for everything",
-          "nudge": "Think back to your first lookup: example.com already came back with two addresses."
+          "text": "One: each name has one IP address for everything",
+          "nudge": "Your first lookup already gave example.com two addresses."
         },
         {
           "id": "email-no-dns",
-          "text": "One: email doesn't use DNS, so only the website needs an answer",
-          "nudge": "Email has to find its server too, and finding servers by name is exactly DNS's job."
+          "text": "One: email doesn't use DNS, only the website does",
+          "nudge": "Email must find its server too, and finding servers by name is DNS's job."
         },
         {
           "id": "separate-domain",
-          "text": "One: email needs its own separate domain, registered on its own",
-          "nudge": "Club email can use the same name: `hello@example.org`. Could one name hold more than one kind of answer?"
+          "text": "One: email needs a separate domain of its own",
+          "nudge": "Club email can use the same name, `hello@example.org`: could one name hold more answers?"
         }
       ],
       "correctOptionId": "several",
-      "explanation": "One name can hold **several** answers. Your first `nslookup` already showed two addresses for example.com, and a domain can also say where its email should go. The website and the mail server are often different machines, so each job gets its own answer.",
-      "hint": "Remember your first `nslookup`: how many addresses came back for one name?"
+      "explanation": "One name can hold **several** answers: your first `nslookup` showed two addresses, and a domain can also say where email goes. The website and mail server are often different machines.",
+      "hint": "How many addresses came back from your first `nslookup`?"
     },
     {
       "id": "many-answers",
@@ -44,49 +44,49 @@
       "id": "match-records",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Match each record for example.com to the value it could hold.",
+      "prompt": "Each record holds one kind of answer for example.com. Match each record to a value it could hold.",
       "pairs": [
-        { "id": "a", "left": "A", "right": "`198.51.100.10`" },
-        { "id": "aaaa", "left": "AAAA", "right": "`2001:db8::10`" },
-        { "id": "cname", "left": "CNAME (for www)", "right": "`example.com`" },
-        { "id": "mx", "left": "MX", "right": "`mail.example.com`" }
+        { "id": "a", "left": "A: the site's IPv4 address", "right": "`198.51.100.10`" },
+        { "id": "aaaa", "left": "AAAA: the site's IPv6 address", "right": "`2001:db8::10`" },
+        { "id": "cname", "left": "CNAME for www: an alias", "right": "`example.com`" },
+        { "id": "mx", "left": "MX: where email goes", "right": "`mail.example.com`" }
       ],
-      "explanation": "**A** holds an IPv4 address (dots) and **AAAA** an IPv6 address (colons). **CNAME** holds another *name* to look up instead: `www.example.com` is an alias for `example.com`. **MX** names the mail [[server]], here `mail.example.com`.",
-      "hint": "Look at the shape of each value: dots, colons, or a name. Of the two names, which one sounds like a place for email?",
-      "nudge": "Dots mean [[IPv4]] and colons mean [[IPv6]]. Of the two names, one is just the main domain and one is a mail server."
+      "explanation": "**A** holds an IPv4 address (dots) and **AAAA** an IPv6 one (colons). **CNAME** holds another *name* (`www` is an alias for `example.com`), and **MX** names the mail [[server]].",
+      "hint": "Dots, colons or a name? Of the two names, which sounds like a place for email?",
+      "nudge": "Dots mean [[IPv4]] and colons [[IPv6]]; of the names, one is the main domain and one a mail server."
     },
     {
       "id": "record-for-email",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "You're setting up email for your club's website, `example.org`. The site already loads fine. What extra DNS record do you need so mail to `hello@example.org` can arrive?",
+      "prompt": "The club site `example.org` loads fine. Which extra record lets mail to `hello@example.org` arrive?",
       "options": [
         { "id": "mx", "text": "An MX record naming the club's mail server" },
         {
           "id": "a",
           "text": "A second A record with the website's address again",
-          "nudge": "The website's address is already there and the site works. Email needs a record that says where *mail* goes."
+          "nudge": "The site already works: email needs a record that says where *mail* goes."
         },
         {
           "id": "aaaa",
           "text": "An AAAA record with an IPv6 address for the site",
-          "nudge": "AAAA gives the website a second kind of address. Email needs its own record that names the mail server."
+          "nudge": "AAAA gives the site another kind of address: email needs a record naming the mail server."
         },
         {
           "id": "cname",
           "text": "A CNAME record pointing example.org to another name",
-          "nudge": "A CNAME just says \"look up this other name instead\". Which record says where a domain's email goes?"
+          "nudge": "A CNAME only says \"look up this other name instead\": which record is about email?"
         }
       ],
       "correctOptionId": "mx",
-      "explanation": "An **MX** record tells other mail servers where to deliver email for example.org. The website and the mail server are often different machines, which is why email has a record of its own. A and AAAA give addresses for the site, and a CNAME points to another name.",
+      "explanation": "An **MX** record tells other mail servers where to deliver example.org's email. A and AAAA give the site's addresses, and a CNAME points to another name.",
       "hint": "Look back at the list: which record is about mail?"
     },
     {
       "id": "dig-cname",
       "type": "terminal",
       "difficulty": "core",
-      "prompt": "Run `dig www.example.com` and look at the answer. There are two lines this time.",
+      "prompt": "Run `dig www.example.com`. This time the answer has two lines.",
       "intro": "Simulated Linux terminal, with dig's output shortened to just the answer. Type help to see the commands you can use here.",
       "commands": [
         {
@@ -101,9 +101,9 @@
         "question": "www.example.com is an alias for which name?",
         "accepted": ["example.com", "example.com."]
       },
-      "explanation": "The first line is a **CNAME** record: `www.example.com` is an alias for `example.com`. The [[resolver]] followed it and found example.com's **A** record on the second line, giving `198.51.100.10`.",
-      "hint": "Look at the first line of the answer, the one with `CNAME` in it. The name at the end of that line is what it points to.",
-      "nudge": "Check the line with `CNAME` in it, not the one with `A`. The alias target is the last thing on that line, not an address."
+      "explanation": "Line 1 is a **CNAME**: `www.example.com` is an alias for `example.com`. The [[resolver]] followed it to example.com's **A** record, `198.51.100.10`.",
+      "hint": "Look at the line with `CNAME` in it: the name at its end is what it points to.",
+      "nudge": "Use the `CNAME` line, not the `A` line: the target is a name, not an address."
     },
     {
       "id": "follow-cname",
@@ -112,37 +112,37 @@
       "prompt": "Put the steps in order for a [[browser]] opening `www.example.com`.",
       "items": [
         { "id": "ask-www", "label": "Look up www.example.com" },
-        { "id": "get-alias", "label": "Get a CNAME record: it's an alias for example.com" },
+        { "id": "get-alias", "label": "Get a CNAME: an alias for example.com" },
         { "id": "ask-a", "label": "Look up the A record for example.com" },
         { "id": "get-address", "label": "Get the address 198.51.100.10" },
         { "id": "connect", "label": "Connect to 198.51.100.10" }
       ],
-      "explanation": "A CNAME doesn't contain an address, just another name. So the lookup continues with **example.com** until it reaches an **A** record with an actual address. Only then can the browser connect.",
-      "hint": "A CNAME holds a name, not an address. You can't connect until you've got a real address.",
-      "nudge": "Each look-up comes before its answer, and connecting needs an actual address. What does the alias make the lookup do next?"
+      "explanation": "A CNAME holds a name, not an address, so the lookup carries on with **example.com** to its **A** record. Only then can the browser connect.",
+      "hint": "A CNAME holds a name, and you can't connect without a real address.",
+      "nudge": "Each lookup comes before its answer: what does the alias make the lookup do next?"
     },
     {
       "id": "lookalikes",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "A message says \"Log in to your example.com account\" and offers four links. Which one really belongs to **example.com**?",
+      "prompt": "A message says \"Log in to your example.com account\". Which link really belongs to **example.com**?",
       "options": [
         {
           "id": "digit-one",
           "text": "examp1e.com/login",
-          "nudge": "Look closely at every character. One of them isn't the letter it seems to be, which makes it a different domain."
+          "nudge": "Check every character: one of them isn't the letter it seems."
         },
         {
           "id": "subdomain-trick",
           "text": "example.com.account-check.example.org",
-          "nudge": "It starts with the right words, but what does it end with? The right-hand end decides who owns it."
+          "nudge": "It starts with the right words, but what does it end with? The right-hand end decides."
         },
-        { "id": "hyphen", "text": "example-com.example.org", "nudge": "A hyphen makes a new name, and this one ends with a different domain. Read from the right." },
+        { "id": "hyphen", "text": "example-com.example.org", "nudge": "A hyphen makes a new name, and this one ends in a different domain." },
         { "id": "real", "text": "login.example.com" }
       ],
       "correctOptionId": "real",
-      "explanation": "Read from the right. `login.example.com` ends in **example.com**, so it's a [[subdomain]] that example.com's owner controls.\n\n- `examp1e.com` uses the digit **1** instead of the letter **l**. It's a completely different domain that anyone could register.\n- The other two end in **example.org**, so they belong to whoever owns example.org, whatever the start of the name says.\n\nScammers register lookalike names like these to trick people into typing their passwords. Always check the right-hand end of the name.",
-      "hint": "Check the right-hand end of each name, letter by letter. The owner of that end controls the whole name."
+      "explanation": "`login.example.com` ends in **example.com**, so its owner controls it. `examp1e.com` uses a **1** for an **l**, and the other two end in **example.org**: scammers rely on lookalikes, so always check the right-hand end.",
+      "hint": "Check the right-hand end of each name, letter by letter."
     },
     {
       "id": "recap",

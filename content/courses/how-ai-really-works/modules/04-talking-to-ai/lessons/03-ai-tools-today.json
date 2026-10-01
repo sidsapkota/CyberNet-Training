@@ -11,7 +11,7 @@
       "id": "which-apps-use-ai",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "AI isn't only in chat apps. Remember: AI learns patterns from examples and makes guesses. Which of these use AI, and which just follow fixed steps someone wrote?",
+      "prompt": "AI guesses from learned patterns. Does each one **use AI**, or follow **fixed steps** someone wrote?",
       "bins": [
         {
           "id": "ai",
@@ -54,15 +54,15 @@
           "bin": "fixed"
         }
       ],
-      "hint": "Does the app have to make a guess from patterns it learned, or does it follow the same exact steps every time?",
-      "nudge": "Ask whether the app could ever be unsure. A guess from patterns can be wrong; fixed steps give the same result every time.",
-      "explanation": "Finding your dog, predicting traffic, writing captions and suggesting words are all **guesses** from learned patterns: AI. A calculator and an alarm follow **fixed steps**. Many AI features are switched on by default, and many can be turned off in settings."
+      "hint": "Does it guess from learned patterns, or follow the same steps every time?",
+      "nudge": "Could it ever be unsure? Guesses can be wrong; fixed steps give the same result.",
+      "explanation": "Finding your dog, traffic, captions and word suggestions are **guesses** from patterns: AI. A calculator and an alarm follow **fixed steps**. Many AI features are on by default, and many can be turned off."
     },
     {
       "id": "kind-of-tool",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Some kinds of AI tool: a **chat assistant** writes replies to your messages, an **image generator** makes a picture from a description, a **voice assistant** answers out loud when you speak, and a **translation app** turns text into another language. Which would you use for each job?",
+      "prompt": "A **chat assistant** types replies, an **image generator** makes pictures, a **voice assistant** talks. Which suits each job?",
       "pairs": [
         {
           "id": "chat",
@@ -76,60 +76,60 @@
         },
         {
           "id": "voice",
-          "left": "A timer while your hands are covered in flour",
+          "left": "A timer while your hands are floury",
           "right": "Voice assistant"
         },
         {
           "id": "translate",
-          "left": "A menu written in a language you can't read",
+          "left": "A menu in a language you can't read",
           "right": "Translation app"
         }
       ],
-      "hint": "For each job, what do you give the tool (typing, a description, your voice, some text), and what do you need back?",
-      "nudge": "Floury hands can't type, and a menu you can't read needs its words changed into your language.",
-      "explanation": "Typed questions suit a **chat assistant**, pictures come from an **image generator**, a **voice assistant** works hands-free, and a **translation app** changes the **language**. Many apps now do several of these."
+      "hint": "What do you give the tool, and what do you need back?",
+      "nudge": "Floury hands can't type, and a menu you can't read needs its words changed.",
+      "explanation": "Typed ideas suit a **chat assistant**, pictures an **image generator**, hands-free a **voice assistant**, and a **translation app** changes the language. Many apps do several."
     },
     {
       "id": "best-ai",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "Some widely used AI chat assistants (A to Z) are **ChatGPT** (made by OpenAI), **Claude** (Anthropic), **Copilot** (Microsoft) and **Gemini** (Google). Many can also read files, search the web or make pictures. Your friend says: \"My AI app is the best one. It's never wrong.\"",
+      "prompt": "Chat assistants include **ChatGPT** (OpenAI), **Claude** (Anthropic), **Copilot** (Microsoft) and **Gemini** (Google). Some also search the web or make pictures.",
       "start": "claim",
       "steps": [
         {
           "id": "claim",
-          "text": "What's the most accurate reply?",
+          "text": "Your friend says: \"My AI app is the best. It's never wrong.\" What's the most accurate reply?",
           "choices": [
             {
               "id": "agree",
               "text": "\"If it's the best, you don't need to check it\"",
-              "consequence": "Even a very good model writes likely words, not checked facts. Every one of them can be wrong.",
+              "consequence": "Even a very good model writes likely words, not checked facts. Any of them can be wrong.",
               "outcome": "fail"
             },
             {
               "id": "all-can",
-              "text": "\"Every AI chatbot can be wrong, so check the things that matter\"",
-              "consequence": "Right: they're all language models, so they can all hallucinate, whichever one is best at the moment.",
+              "text": "\"Any chatbot can be wrong, so check what matters\"",
+              "consequence": "Right: they're all language models, so any of them can hallucinate.",
               "outcome": "success"
             },
             {
               "id": "newest",
-              "text": "\"Use the newest version: new ones don't make mistakes\"",
-              "consequence": "Newer models can be better, but they still pick likely words, so they still make mistakes.",
+              "text": "\"Use the newest version: it doesn't make mistakes\"",
+              "consequence": "Newer models can be better, but they still pick likely words and still make mistakes.",
               "outcome": "fail"
             }
           ]
         }
       ],
-      "hint": "Think about how every chat assistant writes its answers, whichever company made it.",
-      "explanation": "Whatever the app, a chat assistant is a language model picking likely words, so **any** of them can be wrong. Check the things that matter."
+      "hint": "How does every chat assistant write its answers, whoever made it?",
+      "explanation": "Every chat assistant is a language model picking likely words, so **any** of them can be wrong. Check the things that matter."
     },
     {
       "id": "rules-and-ages",
       "type": "explainer",
       "difficulty": "core",
       "title": "Age rules and good habits",
-      "body": "Every AI app has its own rules, including **who can use it**. Some say 18 or older; some allow 13 with a parent's OK. Rules can differ by country, and they change.\n\n- **Check the app's own rules**, and **ask a parent or carer** before signing up.\n- **Think twice before uploading photos** of yourself or friends.\n- **Follow your school's AI rules.**"
+      "body": "Every AI app has its own rules, including **who can use it**. Some say 18 or older; some allow 13 with a parent's OK. Rules differ by country, and they change.\n\n- **Check the app's rules**, and **ask a parent or carer** before signing up.\n- **Think twice before uploading photos** of you or friends.\n- **Follow your school's AI rules.**"
     },
     {
       "id": "selfie-app",
@@ -140,31 +140,31 @@
       "steps": [
         {
           "id": "sign-up",
-          "text": "It asks you to upload a selfie and a photo of a friend, and to tick \"I am 18 or older\". You're 13. What do you do?",
+          "text": "It asks for a selfie, a photo of a friend, and a tick for \"I am 18 or older\". You're 13. What do you do?",
           "choices": [
             {
               "id": "tick",
-              "text": "Upload only your own selfie, and leave your friend out",
-              "consequence": "Leaving your friend out is good, but the app still says 18 or older, and you're 13. It isn't for you yet.",
+              "text": "Upload only your own selfie, leaving your friend out",
+              "consequence": "Leaving your friend out is good, but the app says 18 or older, and you're 13.",
               "outcome": "fail"
             },
             {
               "id": "stop",
-              "text": "Stop, and ask a parent or carer about it",
-              "consequence": "Good: the app says it's for adults, and photos of you and a friend are worth a second thought.",
+              "text": "Stop, and ask a parent or carer about the app",
+              "consequence": "Good: the app is for adults, and photos of you and a friend deserve a second thought.",
               "outcome": "success"
             },
             {
               "id": "friend-only",
               "text": "Ask your friend first, then upload both photos",
-              "consequence": "Asking your friend is a good habit, but the app is still for adults only. Ticking \"18 or older\" at 13 breaks its rules.",
+              "consequence": "Asking your friend is good, but the app is for adults only, and ticking \"18 or older\" breaks its rules.",
               "outcome": "fail"
             }
           ]
         }
       ],
       "hint": "Look back at the age rules and good habits.",
-      "explanation": "The app's rules say 18+, so it isn't for you yet, even with only your own photo or your friend's OK. **Stop and ask a parent or carer.**"
+      "explanation": "The app says 18+, so it isn't for you yet, even with only your own photo or your friend's OK. **Stop and ask a parent or carer.**"
     },
     {
       "id": "school-or-ask",
@@ -213,9 +213,9 @@
           "bin": "ask"
         }
       ],
-      "hint": "Does the AI help you learn, or does it make part of what you hand in?",
+      "hint": "Does the AI help you learn, or make part of what you hand in?",
       "nudge": "Does the AI make something that ends up in what you hand in?",
-      "explanation": "Help that lets you **learn** (explaining, quizzing, spotting spelling mistakes) is usually fine. Anything where AI **makes part of what you hand in** (writing, art, translation for a language task) is one to check with your teacher first."
+      "explanation": "Help that lets you **learn** is usually fine. If AI **makes part of what you hand in** (writing, art, translating a language task), check with your teacher first."
     },
     {
       "id": "always-true",
@@ -269,9 +269,9 @@
           "bin": "some"
         }
       ],
-      "hint": "What do all of them share because of how they're built? What are extra features some apps add?",
-      "nudge": "Look for the ones that come from being a language model, and the ones that are extra features (or impossible).",
-      "explanation": "Every chat assistant is a language model: it **learned from text**, writes **a word at a time**, and **can be wrong**. Searching the web, making pictures and knowing today's news are **extra features** only some have, and none is never wrong."
+      "hint": "What do all share because of how they're built, and what extras do some add?",
+      "nudge": "Which come from being a language model, and which are extras (or impossible)?",
+      "explanation": "Every chat assistant **learned from text**, writes **a word at a time** and **can be wrong**. Searching, pictures and today's news are **extras** only some have, and none is never wrong."
     },
     {
       "id": "tools-recap",
