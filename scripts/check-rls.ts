@@ -360,6 +360,53 @@ async function main() {
     const unknown = await anonCheck.rpc("verify_certificate", { p_id: "CNT-ZZZZ-ZZZZ-ZZZZ" });
     record("Withdrawn and unknown certificates show nothing", !revoked.error && (revoked.data ?? []).length === 0 && !unknown.error && (unknown.data ?? []).length === 0);
 
+    // Daily lesson limit: the server counts new lessons with open_lesson (secret key only); learners
+    // read only their own opens; the time zone that dates the day changes at most once every 7 days.
+    const open = (user: string, lesson: string, tz?: string) =>
+      admin.rpc("open_lesson", { p_user: user, p_lesson: lesson, p_limit: 3, ...(tz ? { p_time_zone: tz } : {}) });
+    const opens = [await open(b.id, "rls-lesson-one"), await open(b.id, "rls-lesson-two"), await open(b.id, "rls-lesson-three")];
+    const fourth = await open(b.id, "rls-lesson-four");
+    const reopen = await open(b.id, "rls-lesson-two");
+    record(
+      "open_lesson allows 3 new lessons a day, refuses the 4th, and reopening is free",
+      opens.every((r) => !r.error && r.data?.[0]?.allowed === true) && fourth.data?.[0]?.allowed === false && fourth.data?.[0]?.used === 3 && reopen.data?.[0]?.allowed === true,
+      (opens.find((r) => r.error) ?? fourth).error?.message,
+    );
+    const ownOpens = await b.client.from("lesson_opens").select("user_id, lesson_id");
+    const theirOpens = await a.client.from("lesson_opens").select("user_id").eq("user_id", b.id);
+    record("Learners read only their own lesson opens", !ownOpens.error && (ownOpens.data ?? []).length === 3 && (theirOpens.data ?? []).length === 0);
+    record(
+      "Learners can't add, change or remove lesson opens",
+      blocked(await a.client.from("lesson_opens").insert({ user_id: a.id, day: "2026-10-01", lesson_id: "free-lesson" }).select()) &&
+        blocked(await b.client.from("lesson_opens").delete().eq("user_id", b.id).select()) &&
+        blocked(await b.client.from("lesson_opens").update({ day: "2001-01-01" }).eq("user_id", b.id).select()),
+    );
+    const anonLessons = createClient<Database>(env.url, env.publishableKey, noSession);
+    const userCall = await a.client.rpc("open_lesson", { p_user: a.id, p_lesson: "free-lesson", p_limit: 99 });
+    const anonCall = await anonLessons.rpc("open_lesson", { p_user: a.id, p_lesson: "free-lesson", p_limit: 99 });
+    record("Only the server can call open_lesson", Boolean(userCall.error && anonCall.error));
+    record("Learners can't set their time zone directly", blocked(await a.client.from("profiles").update({ time_zone: "Pacific/Kiritimati" }).eq("id", a.id).select()));
+
+    const eightDaysAgo = new Date(Date.now() - 8 * 86_400_000).toISOString();
+    const zoneOf = async () => (await admin.from("profiles").select("time_zone, time_zone_changed_at").eq("id", c.id).single()).data;
+    await admin.from("profiles").update({ time_zone_changed_at: eightDaysAgo }).eq("id", c.id);
+    await admin.from("profiles").update({ time_zone: "Europe/London" }).eq("id", c.id);
+    const first = await zoneOf();
+    await admin.from("profiles").update({ time_zone: "Asia/Tokyo" }).eq("id", c.id);
+    const tooSoon = await zoneOf();
+    const viaOpen = await open(c.id, "rls-lesson-one", "Asia/Tokyo");
+    const afterOpen = await zoneOf();
+    record(
+      "A time zone change within 7 days is ignored (even by the server and open_lesson)",
+      first?.time_zone === "Europe/London" && tooSoon?.time_zone === "Europe/London" && afterOpen?.time_zone === "Europe/London" && !viaOpen.error,
+      JSON.stringify({ first, tooSoon, afterOpen }),
+    );
+    const londonDay = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/London", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+    record("open_lesson dates the day in the learner's saved time zone", viaOpen.data?.[0]?.day === londonDay, `${viaOpen.data?.[0]?.day} vs ${londonDay}`);
+    await admin.from("profiles").update({ time_zone_changed_at: eightDaysAgo }).eq("id", c.id);
+    await admin.from("profiles").update({ time_zone: "Asia/Tokyo" }).eq("id", c.id);
+    record("After 7 days the time zone can change again", (await zoneOf())?.time_zone === "Asia/Tokyo");
+
     // Signed-out visitors see nothing.
     const anon = createClient<Database>(env.url, env.publishableKey, noSession);
     let anonClean = true;
@@ -367,7 +414,7 @@ async function main() {
       "profiles", "card_completions", "lesson_completions", "quiz_attempts", "xp_events", "goal_days",
       "subscriptions", "pro_grants", "stripe_customers", "stripe_events",
       "league_players", "leagues", "league_members", "league_results", "league_weeks", "league_state", "handle_reports",
-      "certificates",
+      "certificates", "lesson_opens",
     ] as const) {
       const r = await anon.from(table).select("*");
       if (!r.error && (r.data ?? []).length > 0) anonClean = false;
@@ -409,7 +456,7 @@ async function main() {
     let leftovers = 0;
     for (const table of [
       "card_completions", "lesson_completions", "quiz_attempts", "xp_events", "goal_days",
-      "subscriptions", "pro_grants", "stripe_customers", "league_players", "league_members", "league_results", "certificates",
+      "subscriptions", "pro_grants", "stripe_customers", "league_players", "league_members", "league_results", "certificates", "lesson_opens",
     ] as const) {
       const r = await admin.from(table).select("user_id").in("user_id", [a.id, b.id, c.id]);
       leftovers += (r.data ?? []).length;

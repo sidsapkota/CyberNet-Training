@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { SignUpGate } from "@/components/account/SignUpGate";
 import { Mascot } from "@/components/mascot/Mascot";
+import { LimitReached } from "@/components/pro/LimitReached";
 import { ProLockedMessage } from "@/components/pro/ProLocked";
 import { StartFreeFirst } from "@/components/pro/StartFreeFirst";
 import { WhatsNext } from "@/components/pro/WhatsNext";
@@ -25,8 +26,18 @@ type Paid =
   | { state: "locked"; reason: LockedReason }
   | { state: "error" };
 
+/** The browser's time zone for the lesson API, which dates the learner's day (empty if unknown). */
+function timeZoneQuery(): string {
+  try {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    return tz ? `?tz=${encodeURIComponent(tz)}` : "";
+  } catch {
+    return "";
+  }
+}
+
 /**
- * A Pro lesson's content, from /api/lessons/[id], which checks entitlement on the server. Fetched
+ * A lesson's content, from /api/lessons/[id], which checks entitlement on the server. Fetched
  * again if the learner signs in or out. `id` null: the page already had the (free) lesson.
  */
 function usePaidLesson(id: string | null): Paid {
@@ -38,7 +49,7 @@ function usePaidLesson(id: string | null): Paid {
   useEffect(() => {
     if (!key || !id) return;
     let live = true;
-    fetch(`/api/lessons/${encodeURIComponent(id)}`, { cache: "no-store", credentials: "same-origin" })
+    fetch(`/api/lessons/${encodeURIComponent(id)}${timeZoneQuery()}`, { cache: "no-store", credentials: "same-origin" })
       .then(async (response) => {
         const body = (await response.json()) as { lesson?: Lesson; reason?: string };
         const value: Paid =
@@ -47,7 +58,7 @@ function usePaidLesson(id: string | null): Paid {
             : response.status === 401
               ? { state: "locked", reason: body.reason === "account" ? "account" : "sign-in" }
               : response.status === 403
-                ? { state: "locked", reason: "pro" }
+                ? { state: "locked", reason: body.reason === "limit" ? "limit" : "pro" }
                 : { state: "error" };
         if (live) setResult({ key, value });
       })
@@ -86,12 +97,14 @@ export function LessonPlayer({
 
   // A Pro lock needs progress first: before any free lesson is finished it shows the free start,
   // not the paywall, so don't flash (or count) the paywall while progress loads.
-  if (!lesson && paid.state === "locked" && paid.reason !== "account" && !snapshot) return <PlayerSkeleton />;
+  if (!lesson && paid.state === "locked" && paid.reason === "pro" && !snapshot) return <PlayerSkeleton />;
   if (!lesson && (paid.state === "locked" || paid.state === "error")) {
     return (
       <PlayerShell
         nodes={uniformNodes(outline.cardCount, "upcoming")}
-        progressLabel={paid.state === "locked" && paid.reason === "account" ? "Needs a free account" : "Part of Pro"}
+        progressLabel={
+          paid.state !== "locked" ? "Couldn't load" : paid.reason === "account" ? "Needs a free account" : paid.reason === "limit" ? "Back tomorrow" : "Part of Pro"
+        }
         exitHref={`/course/${course.id}`}
       >
         <div className="flex min-h-[60dvh] flex-col items-center justify-center">
@@ -171,7 +184,8 @@ function LockedLesson({
   reason: LockedReason;
   snapshot: ProgressSnapshot | null;
 }) {
-  if (reason === "account") {
+  if (reason === "limit") return <LimitReached lessonId={outline.id} course={course} />;
+  if (reason === "account" || reason === "sign-in") {
     return (
       <div className="w-full py-6">
         <SignUpGate lessonId={outline.id} next={`/lesson/${outline.id}`} variant="page" notNowHref={`/course/${course.id}`} />

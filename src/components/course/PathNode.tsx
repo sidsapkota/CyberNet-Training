@@ -3,17 +3,20 @@
 import * as Popover from "@radix-ui/react-popover";
 import { motion, useReducedMotion } from "motion/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UpgradeSheet } from "@/components/pro/UpgradeSheet";
 import { NetworkMark } from "@/components/network/NetworkMark";
 import { ProBadge } from "@/components/pro/ProBadge";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { AccountIcon, CheckIcon, ExploreModeIcon, LessonIcon, LockIcon, PlayIcon, RetryIcon } from "@/components/ui/icons";
+import { getDailyLessonsAction } from "@/app/actions/pro";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { estimateMinutes } from "@/lib/content/estimate";
 import { formatChecked } from "@/lib/content/lastChecked";
 import type { CourseOutline, LessonOutline, ModuleOutline } from "@/lib/content/schema";
 import { EASE_OUT_QUICK, POPOVER_SPRING, PRESS_SPRING } from "@/lib/motion";
+import { lessonsLeftLine } from "@/lib/pro/dailyLimit";
+import { usePro } from "@/lib/pro/ProProvider";
 import { useProgress } from "@/lib/progress/ProgressProvider";
 import { hasCourseProgress, hasFinishedFreeLesson, type LessonState } from "@/lib/progress/state";
 import { cardKey, type ProgressSnapshot } from "@/lib/progress/types";
@@ -96,9 +99,12 @@ export function PathNode({
   const stateWord = { done: "completed", current: "up next", available: "available", locked: "locked", pro: "part of CyberNet Pro" }[look];
   const [sheetOpen, setSheetOpen] = useState(false);
   const { auth, available } = useAuth();
-  // A free lesson a guest needs a (free) account for: everything but each course's first lesson
-  // and the help modules. Its page shows the sign-up gate. Finished ones stay plain "done".
-  const needsAccount = available && auth.status === "guest" && lesson.access === "free" && !lesson.guests && look !== "done";
+  // A lesson a guest needs a (free) account for: everything but each course's first lesson and the
+  // help modules, Pro modules included. Its page shows the sign-up gate. Finished ones stay "done".
+  const needsAccount = available && auth.status === "guest" && !lesson.guests && look !== "done";
+  // Free accounts open a few new lessons a day (guest lessons never count): say how many are left.
+  const { pro, hasPro } = usePro();
+  const limited = available && auth.status === "signed-in" && !pro.loading && !hasPro && !lesson.guests;
 
   // Pro lessons without Pro open the gentle upgrade sheet instead of the popover.
   if (state.needsPro) {
@@ -220,6 +226,7 @@ export function PathNode({
               {needsAccount && look !== "locked" ? " · free account" : ""}
               {lesson.lastChecked ? ` · checked ${formatChecked(lesson.lastChecked)}` : ""}
             </p>
+            {limited && look !== "done" && <LessonsLeftToday lessonId={lesson.id} />}
             <div className="mt-4 flex flex-col gap-2">
               {look === "locked" ? (
                 <>
@@ -303,4 +310,26 @@ function NodeGlyph({ look, lesson, account = false }: { look: NodeLook; lesson: 
       {badge && <StateBadge look={badge} size="lesson" />}
     </>
   );
+}
+
+/**
+ * "2 new lessons left today", for a free account (fetched when the popover opens; display only:
+ * the lesson API decides). Nothing when this lesson already counted today, so reopening is free.
+ */
+function LessonsLeftToday({ lessonId }: { lessonId: string }) {
+  const [line, setLine] = useState<string | null>(null);
+  useEffect(() => {
+    let live = true;
+    getDailyLessonsAction(lessonId).then(
+      (d) => {
+        if (live) setLine(d.openedToday ? null : lessonsLeftLine(d));
+      },
+      (error: unknown) => console.error(error),
+    );
+    return () => {
+      live = false;
+    };
+  }, [lessonId]);
+  if (!line) return null;
+  return <p className="mt-1 text-small text-ink-muted">{line}</p>;
 }

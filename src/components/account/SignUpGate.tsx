@@ -53,7 +53,7 @@ export function SignUpGate({
   const perks = [
     { icon: <StreakIcon lit={false} className="size-5" />, text: "Your XP and streak, saved" },
     { icon: <AnyDeviceIcon className="size-5" />, text: "Your progress on any device" },
-    { icon: <ModulesIcon className="size-5" />, text: "The full first module of every course" },
+    { icon: <ModulesIcon className="size-5" />, text: "Any lesson in any course, 3 new a day" },
     { icon: <LeaguesIcon className="size-5" />, text: leagues === "open" ? "Weekly leagues" : "Weekly leagues (opening soon)" },
   ];
 

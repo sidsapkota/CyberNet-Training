@@ -739,6 +739,9 @@ Migrations, all applied to the linked project:
   `xp_events` indexes on time.
 - `20261001200000_certificates.sql`: `certificates` and `verify_certificate()` (see
   [Certificates](#paywall-and-certificates)).
+- `20261002100000_daily_lesson_limit.sql`: `lesson_opens`, `open_lesson()` (security definer,
+  `search_path ''`, execute for `service_role` only), `profiles.time_zone_changed_at` and the
+  `limit_time_zone_changes` trigger (see [Daily lesson limit](#daily-lesson-limit)).
 
 | Table | Holds |
 |---|---|
@@ -748,6 +751,7 @@ Migrations, all applied to the linked project:
 | `quiz_attempts` | `id`, `user_id`, `quiz_id`, `attempted_at` (unique per user and quiz), `score` 0 to 1, `passed`, `xp` (0 to 50), `answers` jsonb |
 | `xp_events` | `id`, `user_id`, `at`, `day` (local date), `time_zone`, `kind` (`card`, `lesson`, `quiz`, `practice`), `lesson_id`, `card_id?`, `xp` (0 to 50); practice unique per user, day and card |
 | `goal_days` | `(user_id, day)` primary key, `time_zone`, `goal` (the goal that day), `met_at` |
+| `lesson_opens` | `(user_id, day, lesson_id)` primary key, `opened_at`: each new lesson a free account opened on its own day. Learners select their own; only `open_lesson()` writes |
 | `feedback` | `id`, `created_at`, `message` (1 to 1,000 chars), `lesson_id?` (kebab-case), `rating?` (1 to 5), `session_id` (random per tab). **Not linked to users.** |
 
 - **Not stored:** best score and first pass are derived from attempts, and total XP is summed from
@@ -799,14 +803,19 @@ Migrations, all applied to the linked project:
 Local dev and previews use the Stripe **sandbox** (test keys; live keys are refused there).
 Sandbox setup: `docs/stripe-checklist.md`. `PRO_LAUNCH_AT` in Production marks the launch.
 
-- **What's Pro:** modules with `"access": "pro"`. The first module of each course and every help
-  module (e.g. Stay Safe Online's "When Things Go Wrong") are free; tests enforce both.
-- **Pro content never reaches the browser without entitlement:** lessons load from
-  `/api/lessons/[id]` (`private, no-store`): free lessons for anyone; Pro lessons only after
-  `requireUser()` and `getEntitlement()` (401 guest, 403 no Pro). Progress Server Actions check
-  entitlement again before writing XP for a Pro lesson (`ProRequiredError`). The guest merge keeps
-  Pro progress made before launch, and drops Pro progress from after launch unless the account has
-  Pro (`withoutUnentitledPro`), since guests can't open Pro lessons then.
+- **What's Pro:** unlimited new lessons every day, certificates and an extra streak freeze. Free
+  accounts open **any lesson in any course**, Pro modules included, up to 3 new lessons a day (see
+  [Daily lesson limit](#daily-lesson-limit)). Modules still have `"access": "free" | "pro"`: the
+  first module of each course and every help module (e.g. Stay Safe Online's "When Things Go
+  Wrong") are free (tests enforce both), and only a copy without accounts (no Supabase) still locks
+  Pro modules.
+- **Lesson content never reaches the browser unchecked:** lessons guests can't play load from
+  `/api/lessons/[id]` (`private, no-store`) only after `requireUser()`, then the limit (401
+  `account` for guests, 403 `limit` when today's lessons are used). Progress Server Actions write
+  XP for a Pro lesson only when the learner opened it (`lesson_opens`), has Pro, or finished it
+  before (`ProRequiredError` otherwise). The guest merge keeps Pro progress made before launch, and
+  drops Pro progress from after launch unless the account has Pro (`withoutUnentitledPro`), since
+  guests can't open Pro lessons.
 - **Entitlement** (`src/lib/pro/entitlement.ts`, pure, tested): a subscription that's `trialing`,
   `active` or `past_due` whose period hasn't ended (plus `RENEWAL_GRACE_MS`, 2 days), or an
   unexpired early-user grant. `past_due` keeps Pro while Stripe retries a failed renewal; when
@@ -818,14 +827,21 @@ Sandbox setup: `docs/stripe-checklist.md`. `PRO_LAUNCH_AT` in Production marks t
   each event once (`stripe_events`), and always re-fetches the subscription from Stripe before
   saving it, so duplicates and out-of-order events are safe. `/pro/welcome` syncs the session too,
   after checking it belongs to the signed-in learner.
+- **Trial reminder:** on `customer.subscription.trial_will_end` (3 days before), if the trial will
+  become paid (`shouldRemindTrial`: still trialing, not cancelling), the webhook emails the learner
+  via Resend (`trialReminderEmail` in `src/lib/pro/trialReminder.ts`: the end date in their time
+  zone, the plan and amount, how to cancel; idempotency key `trial-reminder/<subscription>`).
+  Stripe's own trial reminder email must stay **off** (Billing → Subscriptions and emails), or
+  learners get two.
 - **Early-user grant:** accounts created before `PRO_LAUNCH_AT` get 30 days of Pro once, on their
   first visit after launch (`pro_grants`), with a one-time thank-you on the dashboard.
 - **Keys** (`src/lib/pro/env.ts`, `stripe.ts`): `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`,
   `STRIPE_PRICE_MONTHLY`, `STRIPE_PRICE_ANNUAL`, optional `PRO_LAUNCH_AT`; server-only. **Live keys
   are refused everywhere except the production deployment** (`VERCEL_ENV=production`). Amounts
   live in Stripe, never in code (`/pro` reads them and works out the annual saving).
-- **UI:** Pro nodes on the course path show the Pro badge in place of the lock and open the upgrade
-  sheet; `/pro` (plans, FAQ); `/pro/welcome`; the Pro panel on `/account` (plan in one line from
+- **UI:** every Pro screen is `ProPitch` (below); `/pro` (the pitch on top, then what's included,
+  prices and FAQ below the fold; prices from Stripe, `/api/pro/prices` for in-app screens);
+  `/pro/welcome`; the Pro panel on `/account` (plan in one line from
   `proLine()`, "Manage subscription" → the portal). Deleting an account deletes the Stripe customer
   first, which cancels any subscription.
 - **Tables** (`20260930180000_pro_subscriptions.sql`): `stripe_customers`, `subscriptions`,
@@ -842,12 +858,16 @@ Sandbox setup: `docs/stripe-checklist.md`. `PRO_LAUNCH_AT` in Production marks t
 Honest conversion: no timers, no fake urgency, no guilt; "Not now" is always there, and "Ask a
 parent or guardian before subscribing" is shown to everyone.
 
-- **"What's next"** (`src/components/pro/WhatsNext.tsx`) replaces the bare Pro lock: the next Pro
-  module's title, its lessons with their icons, its playable **teaser card** (`TeaserCard`: a
-  sandbox, no XP and nothing saved, with the hint and explanation) and one CTA: "Start your 7-day
-  free trial" (or "Upgrade to Pro" after a first subscription; guests sign in first). Shown in the
-  course path's sheet (Pro nodes), on a Pro lesson's page, and on the quiz-pass screen after the last
-  free module.
+- **`ProPitch`** (`src/components/pro/ProPitch.tsx`) is every Pro screen: the daily-limit screen,
+  "What's next", the Pro sheet and the top of `/pro`. **One screen, no scrolling on a 360×640
+  phone, the button in view:** the mascot (`happy`), one headline, 3 benefits with icons (one line
+  each), the price with **annual preselected** ("A$59.99 a year, just A$5 a month"; monthly is a
+  small switch), one big button ("Start 7-day free trial" via `PlanButton`, which sends
+  `checkout_started`), "Not now", and the parent line. A gentle staggered entrance (none under
+  reduced motion). It sends `paywall_viewed`. Mistake review joins the benefits only once it ships.
+- **"What's next"** (`WhatsNext`) is `ProPitch` with the next module named; its **teaser card**
+  (`TeaserCard`: a sandbox, no XP, nothing saved) sits behind a small "Try a sample" link. With
+  accounts it only shows where Pro is still needed (a copy without accounts).
 - **Free first:** until a learner has finished a free lesson in a course (`hasFinishedFreeLesson`),
   tapping a Pro node, or opening a Pro lesson, shows "Start with the free lessons first"
   (`StartFreeFirst`: one button into the course's first lesson, "Not now", and a quiet link to
@@ -869,6 +889,29 @@ parent or guardian before subscribing" is shown to everyone.
   public check page `/certificate/<id>` (name, course, date and ID only; not indexed), and "Add to
   LinkedIn": LinkedIn no longer pre-fills certificates, so the button opens its form and the page
   lists each value with a copy button (`linkedInFields`). Certificates are listed on `/account`.
+
+## Daily lesson limit
+
+Free accounts open up to **3 new lessons a day** (quizzes count); Pro is unlimited. Rules in
+`src/lib/pro/dailyLimit.ts` (pure, tested), enforced by the database.
+
+- **Never counted:** lessons guests can play (each course's first lesson and the help modules: the
+  API sends them before checking anything), lessons already finished (a lesson completion, or a
+  passed quiz: replays), and opening the same lesson again the same day.
+- **Enforced in `/api/lessons/[id]`:** for a signed-in learner without Pro and a lesson that isn't
+  a replay, it calls `open_lesson(user, lesson, 3, tz)` with the secret key (`openLessonToday` in
+  `src/lib/pro/server.ts`). The function takes a per-learner advisory lock, so two tabs can't both
+  take the last place, then inserts into `lesson_opens` or refuses (403 `{reason: "limit"}`).
+- **The day** is the learner's own: `profiles.time_zone` (the browser sends `?tz=`), else
+  Australia/Sydney. **A time zone can change at most once every 7 days**, enforced by the
+  `limit_time_zone_changes` trigger (a change that comes too soon is silently kept as the old zone,
+  so XP writes never fail over it). `check:rls` proves the limit, the 7-day rule and that only the
+  server can call `open_lesson`.
+- **UI:** the limit screen (`LimitReached`: "You've done 3 lessons today. Come back tomorrow, or go
+  unlimited with Pro.", sends `limit_reached`); "N new lessons left today" in the course-path
+  popover (`getDailyLessonsAction`, display only); a one-time dashboard notice
+  (`DailyLimitNotice`, dismissed per device). Guests see the account badge on every lesson they
+  can't play, Pro modules included.
 
 ## Leagues
 
@@ -1180,7 +1223,7 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   tracked, so a sign-in token or email can never be sent.
 - **Custom events** (`trackEvent` in `src/lib/analytics.ts`): `landing_cta`, `lesson_start`,
   `lesson_complete`, `quiz_pass`, the sign-up gate's `signup_prompt_viewed` and `signed_up`, and the
-  Pro funnel: `paywall_viewed`,
+  Pro funnel: `paywall_viewed`, `limit_reached` (a free account hit today's limit, with the lesson),
   `teaser_played`, `checkout_started`, `trial_started`, `subscribed`, `certificate_issued`. Each
   has at most two properties: `lesson` (or `course`) and `source`; `eventData` only lets a content
   id through, so nothing personal can be sent. **Only Pro collects custom events** (2 properties; Web Analytics Plus allows 8 and

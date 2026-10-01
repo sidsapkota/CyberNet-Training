@@ -12,6 +12,7 @@ import { CountUp } from "@/components/ui/CountUp";
 import { ArrowRightIcon, CheckIcon, RetryIcon, XIcon, XpIcon } from "@/components/ui/icons";
 import { Markdown } from "@/components/ui/Markdown";
 import { WhatsNext } from "@/components/pro/WhatsNext";
+import { useAuth } from "@/lib/auth/AuthProvider";
 import { usePro } from "@/lib/pro/ProProvider";
 import type { CourseOutline, LessonOutline, Quiz } from "@/lib/content/schema";
 import { celebrate } from "@/lib/celebrate";
@@ -49,7 +50,10 @@ export function QuizResults({
   const { hasPro, pro } = usePro();
   const moduleIndex = course.modules.findIndex((m) => m.id === quiz.moduleId);
   const nextModule = course.modules[moduleIndex + 1];
-  const showWhatsNext = attempt.passed && !pro.loading && !hasPro && nextModule?.access === "pro";
+  // Free accounts open Pro modules too (a few new lessons a day), so only a copy without accounts
+  // still has a Pro wall here.
+  const { available } = useAuth();
+  const showWhatsNext = attempt.passed && !available && !pro.loading && !hasPro && nextModule?.access === "pro";
   const isCourseFinal = moduleIndex === course.modules.length - 1;
 
   // Passing the quiz completes the module: a short confetti burst as the hub lights up.

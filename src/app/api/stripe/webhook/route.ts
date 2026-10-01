@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { getStripe, getStripeEnv } from "@/lib/pro/stripe";
 import { handleStripeEvent, type StripeEventLike, type StripeSubscriptionLike, type WebhookDeps } from "@/lib/pro/webhook";
+import { trialReminderEmail } from "@/lib/pro/trialReminder";
+import { SITE_NAME, siteUrl } from "@/lib/site";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
 /**
@@ -59,6 +61,32 @@ export async function POST(request: Request) {
       const { data, error } = await admin.from("stripe_customers").select("user_id").eq("customer_id", customerId).maybeSingle();
       if (error) throw error;
       return data?.user_id ?? null;
+    },
+    async sendTrialReminder(userId, sub) {
+      const key = process.env.RESEND_API_KEY;
+      if (!key) {
+        console.error("Stripe webhook: RESEND_API_KEY isn't set, so the trial reminder wasn't sent.");
+        return;
+      }
+      const [{ data: user, error }, { data: profile }] = await Promise.all([
+        admin.auth.admin.getUserById(userId),
+        admin.from("profiles").select("display_name, time_zone").eq("id", userId).maybeSingle(),
+      ]);
+      if (error) throw error;
+      const email = user.user?.email;
+      if (!email) return;
+      const message = trialReminderEmail({
+        sub,
+        name: profile?.display_name ?? null,
+        timeZone: profile?.time_zone ?? null,
+        accountUrl: new URL("/account", siteUrl()).toString(),
+      });
+      const response = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json", "Idempotency-Key": `trial-reminder/${sub.id}` },
+        body: JSON.stringify({ from: `${SITE_NAME} <noreply@cybernettraining.com>`, to: [email], ...message }),
+      });
+      if (!response.ok) throw new Error(`Resend refused the trial reminder (${response.status})`);
     },
     now: () => new Date(),
   };

@@ -4,7 +4,7 @@ import type { ProStatus } from "./entitlement";
 export function proLine(status: ProStatus, timeZone?: string): string {
   const on = (iso: string | null) =>
     iso ? new Intl.DateTimeFormat("en-AU", { day: "numeric", month: "long", year: "numeric", timeZone }).format(new Date(iso)) : null;
-  if (status.kind === "none") return status.hadSubscription ? "Your Pro has ended. Your progress is all still here." : "Every module of every course.";
+  if (status.kind === "none") return status.hadSubscription ? "Your Pro has ended. Your progress is all still here." : "Unlimited lessons every day.";
   if (status.kind === "grant") return `Free for early users until ${on(status.expiresAt)}. Thank you!`;
   const plan = status.interval === "year" ? "Annual" : "Monthly";
   if (status.status === "past_due") return `${plan} plan. A payment didn't go through: update your card to keep Pro.`;

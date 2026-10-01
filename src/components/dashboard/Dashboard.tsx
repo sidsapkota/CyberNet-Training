@@ -24,7 +24,9 @@ import {
 } from "@/lib/progress/state";
 import { TodayPanel } from "@/components/streak/TodayPanel";
 import { LeaguesCard } from "@/components/leagues/LeaguesCard";
+import { DailyLimitNotice } from "@/components/pro/DailyLimitNotice";
 import { EarlyUserThanks } from "@/components/pro/EarlyUserThanks";
+import { useAuth } from "@/lib/auth/AuthProvider";
 import { usePro } from "@/lib/pro/ProProvider";
 import { ResetProgressButton } from "./ResetProgressButton";
 
@@ -48,6 +50,7 @@ const panel = "rounded-card border border-line bg-surface shadow-card";
 export function Dashboard({ courses }: { courses: CourseOutline[] }) {
   const { snapshot } = useProgress();
   const { pro, hasPro } = usePro();
+  const { available } = useAuth();
 
   if (!snapshot || pro.loading) {
     return (
@@ -68,7 +71,7 @@ export function Dashboard({ courses }: { courses: CourseOutline[] }) {
     );
   }
 
-  const states = courses.map((course) => computeCourseState(snapshot, course, undefined, hasPro));
+  const states = courses.map((course) => computeCourseState(snapshot, course, undefined, hasPro || available));
   const focus =
     states.find((s) => getCurrentLesson(s) && courseProgress(s).completed > 0) ??
     states.find((s) => getCurrentLesson(s)) ??
@@ -81,6 +84,7 @@ export function Dashboard({ courses }: { courses: CourseOutline[] }) {
     <>
       <h1 className="sr-only">Dashboard</h1>
       <EarlyUserThanks />
+      <DailyLimitNotice />
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <Rise index={0} className="lg:col-span-2">
           <ContinueHero state={focus} />

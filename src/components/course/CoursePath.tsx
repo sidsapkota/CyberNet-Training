@@ -12,6 +12,7 @@ import { estimateMinutes } from "@/lib/content/estimate";
 import type { CourseOutline } from "@/lib/content/schema";
 import { EASE_OUT_QUICK, staggerDelay } from "@/lib/motion";
 import { modulePathLayout } from "@/lib/network/path";
+import { useAuth } from "@/lib/auth/AuthProvider";
 import { usePro } from "@/lib/pro/ProProvider";
 import { useProgress } from "@/lib/progress/ProgressProvider";
 import {
@@ -52,6 +53,13 @@ function readCompletedParam(): string | null {
 export function CoursePath({ course }: { course: CourseOutline }) {
   const { snapshot } = useProgress();
   const { pro, hasPro } = usePro();
+  const { available } = useAuth();
+  // With accounts, every lesson opens to anyone with a free account (free accounts have a daily
+  // lesson limit, checked when a lesson opens), so Pro modules aren't locked on the path. Guests see
+  // the account badge instead. Only a copy without accounts still shows Pro locks.
+  const proOpen = hasPro || available;
+  // The Pro unlock celebration only means something where Pro nodes were locked.
+  const celebrate = hasPro && !available;
   const reduceMotion = useReducedMotion();
   const [justCompleted] = useState(readCompletedParam);
   const [justUnlocked] = useState(readUnlockedParam);
@@ -68,7 +76,7 @@ export function CoursePath({ course }: { course: CourseOutline }) {
 
   // Pro unlocked: light the Pro nodes in path order (all at once under reduced motion).
   useEffect(() => {
-    if (!justUnlocked || !hasPro || !snapshot || reduceMotion) return;
+    if (!justUnlocked || !celebrate || !snapshot || reduceMotion) return;
     let interval = 0;
     const start = window.setTimeout(() => {
       interval = window.setInterval(() => {
@@ -82,7 +90,7 @@ export function CoursePath({ course }: { course: CourseOutline }) {
       window.clearTimeout(start);
       window.clearInterval(interval);
     };
-  }, [justUnlocked, hasPro, snapshot === null, reduceMotion, proLessonCount]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [justUnlocked, celebrate, snapshot === null, reduceMotion, proLessonCount]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!snapshot || revealed) return;
@@ -116,16 +124,16 @@ export function CoursePath({ course }: { course: CourseOutline }) {
 
   const showBefore = justCompleted !== null && !revealed;
   const shown: ProgressSnapshot = showBefore ? snapshotBefore(snapshot, justCompleted) : snapshot;
-  const realState = computeCourseState(shown, course, undefined, hasPro);
+  const realState = computeCourseState(shown, course, undefined, proOpen);
   // During the unlock celebration, Pro lessons not yet lit still show as they were without Pro.
   const lit = reduceMotion ? proLessonCount : litPro; // reduced motion: the final state at once
   // Each Pro node ripples as it unlocks (the same ripple as a newly completed node).
   const unlockedIds = new Set(
-    justUnlocked && hasPro && !reduceMotion
+    justUnlocked && celebrate && !reduceMotion
       ? course.modules.filter((m) => m.access === "pro").flatMap((m) => m.lessons.map((l) => l.id)).slice(0, lit)
       : [],
   );
-  const state = justUnlocked && hasPro && lit < proLessonCount ? withUnlockProgress(realState, computeCourseState(shown, course, undefined, false), lit) : realState;
+  const state = justUnlocked && celebrate && lit < proLessonCount ? withUnlockProgress(realState, computeCourseState(shown, course, undefined, false), lit) : realState;
   const current = getCurrentLesson(state);
   const restIsPro = current === null && state.modules.some((m) => m.needsPro && m.status !== "completed");
 

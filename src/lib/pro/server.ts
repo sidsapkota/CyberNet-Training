@@ -90,6 +90,50 @@ export class ProRequiredError extends Error {
   }
 }
 
+// ── The daily lesson limit (free accounts; rules in ./dailyLimit.ts) ─────────
+
+/** A replay: the lesson was finished (or the quiz passed) before. Replays never count. */
+export async function hasFinishedLesson(userId: string, lessonId: string, kind: "lesson" | "quiz"): Promise<boolean> {
+  const admin = createSupabaseAdminClient();
+  const { count, error } =
+    kind === "quiz"
+      ? await admin.from("quiz_attempts").select("id", { count: "exact", head: true }).match({ user_id: userId, quiz_id: lessonId, passed: true })
+      : await admin.from("lesson_completions").select("lesson_id", { count: "exact", head: true }).match({ user_id: userId, lesson_id: lessonId });
+  if (error) throw new Error(`Couldn't check the lesson: ${error.message}`);
+  return (count ?? 0) > 0;
+}
+
+/**
+ * Counts a new lesson for the learner's today if there's room (the database decides, under a lock
+ * per learner). `timeZone` is the browser's, already validated; the database applies the 7-day rule.
+ */
+export async function openLessonToday(
+  userId: string,
+  lessonId: string,
+  limit: number,
+  timeZone: string | null,
+): Promise<{ allowed: boolean; used: number; day: string }> {
+  const { data, error } = await createSupabaseAdminClient().rpc("open_lesson", {
+    p_user: userId,
+    p_lesson: lessonId,
+    p_limit: limit,
+    ...(timeZone ? { p_time_zone: timeZone } : {}),
+  });
+  const row = data?.[0];
+  if (error || !row) throw new Error(`Couldn't open the lesson: ${error?.message ?? "no result"}`);
+  return row;
+}
+
+/** Whether the learner was let into this lesson (on any day): their XP for it may be recorded. */
+export async function hasOpenedLesson(userId: string, lessonId: string): Promise<boolean> {
+  const { count, error } = await createSupabaseAdminClient()
+    .from("lesson_opens")
+    .select("lesson_id", { count: "exact", head: true })
+    .match({ user_id: userId, lesson_id: lessonId });
+  if (error) throw new Error(`Couldn't check lesson opens: ${error.message}`);
+  return (count ?? 0) > 0;
+}
+
 // ── Stripe: customers and syncing ─────────────────────────────────────────────
 
 /** The learner's Stripe customer id, if they have one. */

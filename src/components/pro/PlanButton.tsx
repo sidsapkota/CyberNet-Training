@@ -14,22 +14,24 @@ import { usePro } from "@/lib/pro/ProProvider";
  * subscription manage it instead. Otherwise it opens Stripe's hosted Checkout: card details go to
  * Stripe, never to this site.
  */
-export function PlanButton({ plan, label, primary }: { plan: Plan; label: string; primary: boolean }) {
+export function PlanButton({ plan, label, primary, big = false }: { plan: Plan; label: string; primary: boolean; big?: boolean }) {
   const { auth, available } = useAuth();
   const { pro } = usePro();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // The Pro screens' one big button (with the usual press feedback).
+  const size = big ? "w-full min-h-14 text-lead active:scale-[0.98]" : "w-full";
 
   if (!available || auth.status === "guest") {
     return (
-      <ButtonLink href="/login" variant={primary ? "primary" : "secondary"} className="w-full">
-        <SignInIcon className="size-5" /> Sign in to subscribe
+      <ButtonLink href="/login?next=/pro" variant={primary ? "primary" : "secondary"} className={size}>
+        <SignInIcon className="size-5" /> Sign in to start your free trial
       </ButtonLink>
     );
   }
   if (auth.status === "loading" || pro.loading) {
     return (
-      <Button variant={primary ? "primary" : "secondary"} className="w-full" disabled>
+      <Button variant={primary ? "primary" : "secondary"} className={size} disabled>
         {label}
       </Button>
     );
@@ -38,7 +40,7 @@ export function PlanButton({ plan, label, primary }: { plan: Plan; label: string
     return (
       <Button
         variant="secondary"
-        className="w-full"
+        className={size}
         disabled={busy}
         onClick={async () => {
           setBusy(true);
@@ -59,7 +61,7 @@ export function PlanButton({ plan, label, primary }: { plan: Plan; label: string
     <div>
       <Button
         variant={primary ? "primary" : "secondary"}
-        className="w-full"
+        className={size}
         disabled={busy}
         onClick={async () => {
           setBusy(true);

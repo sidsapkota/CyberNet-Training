@@ -27,10 +27,11 @@ export function lessonAccessLevel(lesson: Pick<LessonOutline, "access" | "guests
 }
 
 /**
- * Why a lesson can't be opened, for the gate: "account" is a free lesson that needs a free
- * account; "sign-in" a Pro lesson for a guest (sign in first); "pro" signed in without Pro.
+ * Why a lesson can't be opened, for the gate: "account" needs a free account (any lesson guests
+ * can't play); "limit" is a free account that has opened today's new lessons; "pro" a Pro lesson
+ * on a copy without accounts; "sign-in" a Pro lesson for a guest.
  */
-export type LockedReason = "account" | "sign-in" | "pro";
+export type LockedReason = "account" | "sign-in" | "pro" | "limit";
 
 export function isProLesson(outline: Pick<LessonOutline, "access">): boolean {
   return outline.access === "pro";
