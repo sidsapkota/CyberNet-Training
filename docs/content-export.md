@@ -30,7 +30,7 @@ Strong passwords, passphrases and two-step sign-in.
 
 **Best interactive cards**
 
-- Simulator: Attackers use computers to guess passwords, a billion guesses a second. For a random password, they have to try **every combination**. Each extra lowercase letter makes that **26 times** harder. This password uses only…
+- Simulator: **Drag the slider** until a computer would need **100+ years** to guess this password.
 - Simulator: Now the password can be **10 characters at most**. Reach **100 years** anyway, by choosing which kinds of characters it can use.
 - Choose what happens: Your friend Mia is proud of her new passphrase. It's a line from her favourite song: five words, 26 characters.
 

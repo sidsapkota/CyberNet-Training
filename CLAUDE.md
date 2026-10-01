@@ -401,7 +401,9 @@ interactive, update `isInteractiveCard` / `InteractiveCard` in `schema.ts`.
     hotspot mode separately), an inline panel above the card explains it with a one-shot animated
     demo ("Show again" replays; final frame under reduced motion). "Got it", ✕, Enter (unless
     typed in an answer box), Check or Continue dismiss it for good: `preferences.coachSeen`, synced
-    like the other preferences. It also shows in quizzes, which have no hints.
+    like the other preferences. **A newcomer's very first card skips it** (`coachAllowedOn`: no
+    progress at all and card 1), because on a phone it would fill the first screen and hide the card;
+    that card's prompt says what to do in one line, and the panel shows next time. It also shows in quizzes, which have no hints.
   - Explainers are marked complete when the learner presses Continue.
 - **`QuizRun`**:
   - An intro screen, then one attempt per question with right/wrong shown immediately and no

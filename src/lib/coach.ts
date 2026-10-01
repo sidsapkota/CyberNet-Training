@@ -50,3 +50,12 @@ export function cleanCoachSeen(seen: readonly unknown[] | null | undefined): Coa
   for (const k of seen ?? []) if (typeof k === "string" && isCoachKey(k) && !out.includes(k)) out.push(k);
   return out;
 }
+
+/**
+ * A newcomer's very first card skips the how-to-play panel: on a phone the panel would fill the
+ * first screen and push the card itself out of sight. That card's own prompt says what to do in
+ * one line instead, and the panel shows the next time that kind of card comes up.
+ */
+export function coachAllowedOn(cardIndex: number, newcomer: boolean): boolean {
+  return !(newcomer && cardIndex === 0);
+}

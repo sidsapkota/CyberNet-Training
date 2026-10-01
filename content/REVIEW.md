@@ -1332,6 +1332,15 @@ section and the per-lesson notes below disagree, this section wins.**
 - 4.2 (help) Copied voices and faces; four red flags; check with the real person another way; family safe word (core; the video-call check `best-check` is now the bonus); if someone fakes you: not your fault, don't share or pay, save evidence but never the image, tell a trusted adult, report to the app, the government's eSafety Commissioner (esafety.gov.au/report) and, if you're under 18 and being threatened, the ACCCE (Australian Centre to Counter Child Exploitation, accce.gov.au/report); Kids Helpline and Lifeline in the recap.
 - 4.3 (help) Telling someone helps and it's never your fault; who to tell (trusted adults; Kids Helpline (in Australia) 1800 55 1800, free, private, any time, ages 5–25; over 25 or anyone, Lifeline 13 11 14, any time); where to report (the app's report button, eSafety, ACCCE, Scamwatch, your bank straight away, IDCARE idcare.org or 1800 595 160, ReportCyber cyber.gov.au, 000 for danger right now); save evidence.
 
+**"Start here" first screen (2 October 2026):** `lesson_quit` showed most early quits on card 1 of
+`strong-passwords`. In Instagram's browser (about 360×560) a newcomer saw only the how-to-play panel;
+the card started below the fold behind a 50-word prompt. Now: no panel on a newcomer's first card;
+`make-it-last` says "Drag the slider until a computer would need 100+ years to guess this password"
+and starts at 6 letters (under a second), so one drag wins; the billion-guesses and 26× facts moved to
+its explanation. New card 2 `which-takes-longer` (one tap: `violet cactus harbour pepper` vs
+`Tr0ub4d!` vs `Sunsh1ne2026`) applies it and names the passphrase; `length-wins` follows. Checked:
+6 lowercase letters ≈ 0.3 s and 14 ≈ 2,000 years at a billion guesses a second.
+
 **Help content check (after the rewrite):** every service, number and URL above matches the verified
 list in this section (30 September and 1 October 2026), and all of it is in core cards of free
 Module 4 (prompts, explainers and recaps; never only in a bonus card or an after-answer
