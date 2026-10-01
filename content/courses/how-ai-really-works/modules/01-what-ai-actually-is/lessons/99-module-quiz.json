@@ -47,20 +47,11 @@
       "id": "q-sports-balls",
       "type": "train_model",
       "difficulty": "core",
-      "prompt": "It calls the mini basketball a tennis ball. Choose examples so it gets **every** test ball right.",
+      "prompt": "Fix the model's mistake.",
       "model": {
         "kind": "nearest",
         "k": 1,
-        "x": {
-          "label": "Size",
-          "low": "Small",
-          "high": "Big"
-        },
-        "y": {
-          "label": "Weight",
-          "low": "Light",
-          "high": "Heavy"
-        }
+        "scene": "ball"
       },
       "labels": [
         {
@@ -78,49 +69,56 @@
           "text": "Tennis ball",
           "x": 1,
           "y": 1,
-          "label": "tennis"
-        },
-        {
-          "id": "e2",
-          "text": "Fuzzy tennis ball",
-          "x": 1.5,
-          "y": 1.5,
-          "label": "tennis"
+          "label": "tennis",
+          "given": true
         },
         {
           "id": "e3",
           "text": "Old tennis ball",
           "x": 2,
           "y": 0.5,
-          "label": "tennis"
-        },
-        {
-          "id": "e7",
-          "text": "Small basketball",
-          "x": 4.5,
-          "y": 4.5,
-          "label": "basketball"
+          "label": "tennis",
+          "given": true
         },
         {
           "id": "e4",
           "text": "Basketball",
           "x": 8,
           "y": 7,
-          "label": "basketball"
-        },
-        {
-          "id": "e5",
-          "text": "Big basketball",
-          "x": 9,
-          "y": 8,
-          "label": "basketball"
+          "label": "basketball",
+          "given": true
         },
         {
           "id": "e6",
           "text": "Worn basketball",
           "x": 8.5,
           "y": 6,
-          "label": "basketball"
+          "label": "basketball",
+          "given": true
+        },
+        {
+          "id": "e7",
+          "text": "Small basketball",
+          "x": 4.5,
+          "y": 4.5,
+          "label": "basketball",
+          "given": false
+        },
+        {
+          "id": "e5",
+          "text": "Big basketball",
+          "x": 9,
+          "y": 8,
+          "label": "basketball",
+          "given": false
+        },
+        {
+          "id": "e2",
+          "text": "Fuzzy tennis ball",
+          "x": 1.5,
+          "y": 1.5,
+          "label": "tennis",
+          "given": false
         }
       ],
       "tests": [
@@ -147,17 +145,10 @@
         }
       ],
       "task": {
-        "goal": "include",
-        "start": [
-          "e1",
-          "e2",
-          "e3",
-          "e4",
-          "e5",
-          "e6"
-        ]
+        "goal": "fix",
+        "action": "add"
       },
-      "explanation": "Every basketball it learned from was big, so adding the **small basketball** fixes the mini one. Removing tennis balls would break the tennis ball test."
+      "explanation": "Every basketball it learned from was big, so the mini one sat nearer the tennis balls. Adding the **small basketball** fixes it; another big basketball or tennis ball doesn't."
     },
     {
       "id": "q-daylight-dogs",

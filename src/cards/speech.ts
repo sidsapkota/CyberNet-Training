@@ -7,6 +7,7 @@
  * - Card text is cleaned for speech: glossary marks read as their word, markdown is dropped, and
  *   technical values read sensibly (`192.0.2.1` → "192 dot 0 dot 2 dot 1", `0101` → "0 1 0 1").
  */
+import { choices, problemTest } from "./train-model/grade";
 import { displayOptions } from "./multiple-choice/grade";
 import type { Card } from "./schema";
 import type { CardStatus } from "./types";
@@ -107,7 +108,13 @@ export function speechText(card: Card, status: CardStatus = "answering"): string
       if (card.mode === "label" && card.labels) add(list("The labels are", card.labels.map((l) => l.label)));
       break;
     case "train_model":
-      add(list("The labels are", card.labels.map((l) => l.text)));
+      if (card.task.goal === "fix") {
+        // Problem first: what it gets wrong, then the choices (never which one fixes it).
+        const problem = problemTest(card);
+        add(sentence(`The model gets "${problem.text}" wrong`), list(card.task.action === "remove" ? "You can take out" : "You can add", choices(card).map((e) => e.text)));
+      } else {
+        add(list("The labels are", card.labels.map((l) => l.text)), list("Label", choices(card).map((e) => e.text)));
+      }
       break;
     case "true_false":
       add("True or false?");

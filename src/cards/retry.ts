@@ -57,9 +57,9 @@ const RETRIES = {
   scenario: (card, answer: string[]) => retryScenario(card, answer),
   // Wrong items go back to the tray.
   sort_bins: (card, answer: Record<string, string>) => keepCorrect(card, answer),
-  // Label goal: wrong labels are cleared. Include goal: the choice stays, and Check waits for a change.
+  // Label goal: wrong labels are cleared. Fix goal: the added example comes off: pick again.
   train_model: (card, answer: { labels: Record<string, string>; included: string[] }) =>
-    card.task.goal === "label" ? keepCorrectLabels(card, answer) : answer,
+    card.task.goal === "label" ? keepCorrectLabels(card, answer) : { ...answer, included: [] },
   // Pick goal: the pick is cleared. Probability goal: the slider stays, and Check waits for a change.
   next_word: (card, answer: { temperature: number; pick: string | null }) =>
     card.goal.type === "pick" ? { ...answer, pick: null } : answer,

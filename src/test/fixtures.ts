@@ -267,20 +267,15 @@ export const sortBins = (over: Partial<SortBinsCard> = {}): SortBinsCard => ({
 });
 
 /**
- * Fruit on a chart (roundness across, yellowness up). Every training apple is red, so the model
- * calls a yellow apple a banana: the mistake the card is there to show.
+ * Fruit pictures (shape: long → round; colour: red → yellow). Every training apple is red, so the
+ * model calls a yellow apple a banana: the mistake the card is there to show.
  */
 export const trainModel = (over: Partial<TrainModelCard> = {}): TrainModelCard => ({
   id: "fruit",
   type: "train_model",
   difficulty: "core",
   prompt: "Label each fruit, then see what the model guesses.",
-  model: {
-    kind: "nearest",
-    k: 1,
-    x: { label: "Shape", low: "Long", high: "Round" },
-    y: { label: "Colour", low: "Red", high: "Yellow" },
-  },
+  model: { kind: "nearest", k: 1, scene: "fruit" },
   labels: [
     { id: "apple", text: "Apple" },
     { id: "banana", text: "Banana" },
@@ -300,6 +295,35 @@ export const trainModel = (over: Partial<TrainModelCard> = {}): TrainModelCard =
   ],
   task: { goal: "label" },
   explanation: "The model only saw red apples, so a yellow apple looked more like a banana.",
+  ...over,
+});
+
+/** Fix goal: it learned from red apples and bananas, calls a yellow apple a banana; adding the golden apple fixes it. */
+export const trainModelFix = (over: Partial<TrainModelCard> = {}): TrainModelCard => ({
+  id: "fix-fruit",
+  type: "train_model",
+  difficulty: "core",
+  prompt: "Fix the model's mistake.",
+  model: { kind: "nearest", k: 1, scene: "fruit" },
+  labels: [
+    { id: "apple", text: "Apple" },
+    { id: "banana", text: "Banana" },
+  ],
+  examples: [
+    { id: "a1", text: "Red apple", x: 9.5, y: 0.5, label: "apple", given: true },
+    { id: "a2", text: "Small red apple", x: 7.5, y: 2, label: "apple", given: true },
+    { id: "b1", text: "Banana", x: 0.5, y: 9.5, label: "banana", given: true },
+    { id: "b2", text: "Spotty banana", x: 1.5, y: 7, label: "banana", given: true },
+    { id: "c1", text: "Golden apple", x: 8, y: 9.5, label: "apple", given: false },
+    { id: "c2", text: "Dark red apple", x: 9, y: 1, label: "apple", given: false },
+    { id: "c3", text: "Short banana", x: 3, y: 8.5, label: "banana", given: false },
+  ],
+  tests: [
+    { id: "t1", text: "Yellow apple", x: 6, y: 8, truth: "apple" },
+    { id: "t2", text: "Ripe banana", x: 1, y: 8.2, truth: "banana" },
+  ],
+  task: { goal: "fix", action: "add" },
+  explanation: "It had never seen a yellow apple. The golden apple shows it that apples can be yellow.",
   ...over,
 });
 

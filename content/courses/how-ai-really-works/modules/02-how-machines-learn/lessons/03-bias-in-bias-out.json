@@ -10,7 +10,7 @@
       "id": "slang-checker",
       "type": "train_model",
       "difficulty": "core",
-      "prompt": "This kind-or-mean checker calls **\"That game was sick!\"** mean. Choose examples so it gets **all 3** tests right.",
+      "prompt": "Fix the kind-or-mean checker's mistake.",
       "model": {
         "kind": "word-vote"
       },
@@ -28,42 +28,56 @@
         {
           "id": "f1",
           "text": "Thanks so much",
-          "label": "friendly"
+          "label": "friendly",
+          "given": true
         },
         {
           "id": "f2",
           "text": "Please help me later",
-          "label": "friendly"
+          "label": "friendly",
+          "given": true
         },
         {
           "id": "f3",
           "text": "That was really kind",
-          "label": "friendly"
+          "label": "friendly",
+          "given": true
         },
         {
           "id": "r1",
           "text": "You are so annoying",
-          "label": "mean"
+          "label": "mean",
+          "given": true
         },
         {
           "id": "r2",
           "text": "Shut up and go away",
-          "label": "mean"
+          "label": "mean",
+          "given": true
         },
         {
           "id": "r3",
           "text": "That was sick and wrong",
-          "label": "mean"
+          "label": "mean",
+          "given": true
         },
         {
           "id": "x1",
           "text": "That trick was sick, love it",
-          "label": "friendly"
+          "label": "friendly",
+          "given": false
         },
         {
           "id": "x2",
           "text": "Go away, you are rude",
-          "label": "mean"
+          "label": "mean",
+          "given": false
+        },
+        {
+          "id": "x3",
+          "text": "Thanks for the help",
+          "label": "friendly",
+          "given": false
         }
       ],
       "tests": [
@@ -84,15 +98,8 @@
         }
       ],
       "task": {
-        "goal": "include",
-        "start": [
-          "f1",
-          "f2",
-          "f3",
-          "r1",
-          "r2",
-          "r3"
-        ]
+        "goal": "fix",
+        "action": "add"
       },
       "hint": "\"Sick\" can mean \"great\", but the model has only seen it used one way. What shows the other?",
       "nudge": "See which test is still wrong, and find an example that uses its words that way.",

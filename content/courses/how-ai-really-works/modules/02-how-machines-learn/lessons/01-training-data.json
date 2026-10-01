@@ -40,7 +40,7 @@
       "id": "label-messages",
       "type": "train_model",
       "difficulty": "core",
-      "prompt": "Label each message **spam** or **not spam**, then Check to train the [[model]] and test it.",
+      "prompt": "Teach the spam filter: tap **Spam** or **Not spam** for each message.",
       "model": {
         "kind": "word-vote"
       },
@@ -56,6 +56,30 @@
       ],
       "examples": [
         {
+          "id": "m3",
+          "text": "Claim your free gift card",
+          "label": "spam",
+          "given": true
+        },
+        {
+          "id": "m4",
+          "text": "Your parcel is held, pay the fee here",
+          "label": "spam",
+          "given": true
+        },
+        {
+          "id": "m7",
+          "text": "Can you send me the homework",
+          "label": "ok",
+          "given": true
+        },
+        {
+          "id": "m8",
+          "text": "Your sister's parcel came today",
+          "label": "ok",
+          "given": true
+        },
+        {
           "id": "m1",
           "text": "Win a free phone now",
           "label": "spam",
@@ -68,18 +92,6 @@
           "given": false
         },
         {
-          "id": "m3",
-          "text": "Claim your free gift card",
-          "label": "spam",
-          "given": true
-        },
-        {
-          "id": "m4",
-          "text": "Your parcel is held, pay the fee here",
-          "label": "spam",
-          "given": false
-        },
-        {
           "id": "m5",
           "text": "See you at training tonight",
           "label": "ok",
@@ -88,18 +100,6 @@
         {
           "id": "m6",
           "text": "Pizza for dinner tonight?",
-          "label": "ok",
-          "given": false
-        },
-        {
-          "id": "m7",
-          "text": "Can you send me the homework",
-          "label": "ok",
-          "given": true
-        },
-        {
-          "id": "m8",
-          "text": "Your sister's parcel came today",
           "label": "ok",
           "given": false
         }
@@ -134,7 +134,7 @@
       "id": "fix-the-data",
       "type": "train_model",
       "difficulty": "core",
-      "prompt": "Choose which examples to train on, so the model gets **both** test messages right.",
+      "prompt": "Fix the spam filter's mistake.",
       "model": {
         "kind": "word-vote"
       },
@@ -152,57 +152,68 @@
         {
           "id": "m1",
           "text": "Win a free phone now",
-          "label": "spam"
+          "label": "spam",
+          "given": true
         },
         {
           "id": "m2",
           "text": "Free prize, click this link",
-          "label": "spam"
+          "label": "spam",
+          "given": true
         },
         {
           "id": "m3",
           "text": "Claim your free gift card",
-          "label": "spam"
+          "label": "spam",
+          "given": true
         },
         {
           "id": "m4",
           "text": "Your parcel is held, pay the fee here",
-          "label": "spam"
+          "label": "spam",
+          "given": true
         },
         {
           "id": "m5",
           "text": "See you at training tonight",
-          "label": "ok"
+          "label": "ok",
+          "given": true
         },
         {
           "id": "m6",
           "text": "Pizza for dinner tonight?",
-          "label": "ok"
+          "label": "ok",
+          "given": true
         },
         {
           "id": "m7",
           "text": "Can you send me the homework",
-          "label": "ok"
+          "label": "ok",
+          "given": true
         },
         {
           "id": "m8",
           "text": "Your sister's parcel came today",
-          "label": "ok"
+          "label": "ok",
+          "given": true
         },
         {
           "id": "x1",
           "text": "Free footy training on Saturday",
-          "label": "ok"
+          "label": "ok",
+          "given": false
         },
         {
           "id": "x2",
           "text": "Win free stuff today",
-          "label": "spam"
+          "label": "spam",
+          "given": false
         },
         {
           "id": "x3",
           "text": "Pizza, pizza, pizza!",
-          "label": "ok"
+          "label": "ok",
+          "given": false
         }
       ],
       "tests": [
@@ -218,20 +229,11 @@
         }
       ],
       "task": {
-        "goal": "include",
-        "start": [
-          "m1",
-          "m2",
-          "m3",
-          "m4",
-          "m5",
-          "m6",
-          "m7",
-          "m8"
-        ]
+        "goal": "fix",
+        "action": "add"
       },
-      "hint": "Which side needs votes from \"free\"? Look for an example where a friend says it.",
-      "nudge": "Watch the pizza message's guess as you tick and untick. \"Not sure\" isn't right yet.",
+      "hint": "Which message shows friends use \"free\" too?",
+      "nudge": "Watch the pizza message's guess as you try each one. \"Not sure\" isn't right yet.",
       "explanation": "**\"Free footy training on Saturday\"** shows friends say \"free\" too, so the pizza message gets more not-spam votes. \"Pizza, pizza, pizza!\" adds one vote: a word counts once per message."
     },
     {
@@ -294,20 +296,11 @@
       "id": "noisy-label",
       "type": "train_model",
       "difficulty": "challenge",
-      "prompt": "One fruit has the wrong label. Choose examples so this nearest-example model gets **both** tests right.",
+      "prompt": "One example has the wrong label.",
       "model": {
         "kind": "nearest",
         "k": 1,
-        "x": {
-          "label": "Shape",
-          "low": "Long",
-          "high": "Round"
-        },
-        "y": {
-          "label": "Colour",
-          "low": "Red",
-          "high": "Yellow"
-        }
+        "scene": "fruit"
       },
       "labels": [
         {
@@ -325,49 +318,56 @@
           "text": "Red apple",
           "x": 9.5,
           "y": 0.5,
-          "label": "apple"
+          "label": "apple",
+          "given": true
         },
         {
           "id": "a2",
           "text": "Small red apple",
           "x": 7.5,
           "y": 2,
-          "label": "apple"
+          "label": "apple",
+          "given": true
         },
         {
           "id": "a3",
           "text": "Big red apple",
           "x": 9.5,
           "y": 3.5,
-          "label": "apple"
+          "label": "apple",
+          "given": true
         },
         {
           "id": "b1",
           "text": "Banana",
           "x": 0.5,
           "y": 9.5,
-          "label": "banana"
+          "label": "banana",
+          "given": true
         },
         {
           "id": "b2",
           "text": "Spotty banana",
           "x": 2.5,
           "y": 9.5,
-          "label": "banana"
+          "label": "banana",
+          "given": false
         },
         {
           "id": "bad",
           "text": "Long banana",
           "x": 1.2,
           "y": 8.3,
-          "label": "apple"
+          "label": "apple",
+          "given": false
         },
         {
           "id": "b3",
           "text": "Short banana",
           "x": 1.5,
           "y": 7,
-          "label": "banana"
+          "label": "banana",
+          "given": false
         }
       ],
       "tests": [
@@ -387,19 +387,11 @@
         }
       ],
       "task": {
-        "goal": "include",
-        "start": [
-          "a1",
-          "a2",
-          "a3",
-          "b1",
-          "b2",
-          "bad",
-          "b3"
-        ]
+        "goal": "fix",
+        "action": "remove"
       },
-      "hint": "Read each example's name and its label. Do they all match?",
-      "nudge": "See which test fruit is still wrong, and check the labels of the examples nearest it.",
+      "hint": "Read each example's name and its label. Do they match?",
+      "nudge": "Look for an example whose label doesn't match what it is.",
       "explanation": "\"Long banana\" was labelled **Apple**, and it sat closest to the ripe banana. Leaving it out fixes it: one wrong label can cause a mistake."
     },
     {

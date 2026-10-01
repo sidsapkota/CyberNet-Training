@@ -389,9 +389,9 @@ What counts as AI, how it learns from examples, and where it goes wrong.
 
 **Best interactive cards**
 
-- Train a model: Label each fruit as an apple or a banana. The computer then guesses new fruits from the **closest** example.
-- Train a model: Choose which examples to train on, so the model gets **every** test fruit right.
-- Train a model: This model goes with the most common label of the **3 nearest** examples. Label the fruit, then Check.
+- Train a model: Teach the model: tap **Apple** or **Banana** for each fruit.
+- Train a model: Fix the model's mistake.
+- Train a model: This model copies its **3 closest** examples. Label the fruit.
 
 #### What AI Can't Do
 
@@ -433,9 +433,9 @@ Training data, fair tests, and how bias sneaks in.
 
 **Best interactive cards**
 
-- Train a model: Label each message **spam** or **not spam**, then Check to train the model and test it.
-- Train a model: Choose which examples to train on, so the model gets **both** test messages right.
-- Train a model: One fruit has the wrong label. Choose examples so this nearest-example model gets **both** tests right.
+- Train a model: Teach the spam filter: tap **Spam** or **Not spam** for each message.
+- Train a model: Fix the spam filter's mistake.
+- Train a model: One example has the wrong label. Take it out to fix the model.
 
 #### Testing a Model
 
@@ -450,8 +450,8 @@ Training data, fair tests, and how bias sneaks in.
 **Best interactive cards**
 
 - Sort into groups: Is each one a **fair** test of how the model will really do, or an **unfair** one?
-- Train a model: Label each training day from what really happened, then see how the model does on **4 new test days**.
-- Train a model: Add training days so the model gets **all 4** test days right.
+- Train a model: Teach the model: label each day by what really happened.
+- Train a model: Fix the model's mistake.
 
 **Surprising facts**
 
@@ -469,7 +469,7 @@ Training data, fair tests, and how bias sneaks in.
 
 **Best interactive cards**
 
-- Train a model: This kind-or-mean checker calls **"That game was sick!"** mean. Choose examples so it gets **all 3** tests right.
+- Train a model: Fix the kind-or-mean checker's mistake.
 - Choose what happens: A sports club wants to sort new sign-ups with a model.
 - Choose what happens: A company is choosing a voice assistant to answer its phone line.
 

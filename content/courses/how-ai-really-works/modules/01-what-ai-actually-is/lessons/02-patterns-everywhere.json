@@ -10,20 +10,11 @@
       "id": "label-the-fruit",
       "type": "train_model",
       "difficulty": "core",
-      "prompt": "Label each fruit as an apple or a banana. The computer then guesses new fruits from the **closest** example.",
+      "prompt": "Teach the model: tap **Apple** or **Banana** for each fruit.",
       "model": {
         "kind": "nearest",
         "k": 1,
-        "x": {
-          "label": "Shape",
-          "low": "Long",
-          "high": "Round"
-        },
-        "y": {
-          "label": "Colour",
-          "low": "Red",
-          "high": "Yellow"
-        }
+        "scene": "fruit"
       },
       "labels": [
         {
@@ -156,20 +147,11 @@
       "id": "choose-the-data",
       "type": "train_model",
       "difficulty": "core",
-      "prompt": "Choose which examples to train on, so the [[model]] gets **every** test fruit right.",
+      "prompt": "Fix the [[model]]'s mistake.",
       "model": {
         "kind": "nearest",
         "k": 1,
-        "x": {
-          "label": "Shape",
-          "low": "Long",
-          "high": "Round"
-        },
-        "y": {
-          "label": "Colour",
-          "low": "Red",
-          "high": "Yellow"
-        }
+        "scene": "fruit"
       },
       "labels": [
         {
@@ -187,49 +169,72 @@
           "text": "Red apple",
           "x": 9.5,
           "y": 0.5,
-          "label": "apple"
+          "label": "apple",
+          "given": true
         },
         {
           "id": "a2",
           "text": "Small red apple",
           "x": 7.5,
           "y": 2,
-          "label": "apple"
+          "label": "apple",
+          "given": true
         },
         {
           "id": "a3",
           "text": "Big red apple",
           "x": 9.5,
           "y": 3.5,
-          "label": "apple"
-        },
-        {
-          "id": "g1",
-          "text": "Golden apple",
-          "x": 8,
-          "y": 9.5,
-          "label": "apple"
+          "label": "apple",
+          "given": true
         },
         {
           "id": "b1",
           "text": "Banana",
           "x": 0.5,
           "y": 9.5,
-          "label": "banana"
+          "label": "banana",
+          "given": true
         },
         {
           "id": "b2",
           "text": "Long banana",
           "x": 2.5,
           "y": 9.5,
-          "label": "banana"
+          "label": "banana",
+          "given": true
         },
         {
           "id": "b3",
           "text": "Spotty banana",
           "x": 1.5,
           "y": 7,
-          "label": "banana"
+          "label": "banana",
+          "given": true
+        },
+        {
+          "id": "g1",
+          "text": "Golden apple",
+          "x": 8,
+          "y": 9.5,
+          "label": "apple",
+          "given": false
+        },
+        {
+          "id": "x1",
+          "text": "Dark red apple",
+          "x": 9,
+          "y": 1,
+          "label": "apple",
+          "given": false
+        },
+        {
+          "id": "x2",
+          "text": "Short banana",
+          "x": 3,
+          "y": 8.5,
+          "label": "banana",
+          "given": false
         }
       ],
       "tests": [
@@ -256,19 +261,12 @@
         }
       ],
       "task": {
-        "goal": "include",
-        "start": [
-          "a1",
-          "a2",
-          "a3",
-          "b1",
-          "b2",
-          "b3"
-        ]
+        "goal": "fix",
+        "action": "add"
       },
-      "hint": "Which unused example looks most like the yellow apple?",
-      "nudge": "See which test fruit it still gets wrong, and find the example most like it.",
-      "explanation": "The **golden apple** shows apples can be yellow, so the yellow apple now sits nearest an apple. The bananas still help with the ripe banana."
+      "hint": "Which example looks most like the yellow apple?",
+      "nudge": "Look at the fruit it gets wrong. Which example is most like it?",
+      "explanation": "The **golden apple** shows apples can be yellow, so the yellow apple now sits nearest an apple. Another red apple or banana doesn't change that."
     },
     {
       "id": "steps-of-learning",
@@ -305,20 +303,11 @@
       "id": "three-fruits",
       "type": "train_model",
       "difficulty": "challenge",
-      "prompt": "This [[model]] goes with the most common label of the **3 nearest** examples. Label the fruit, then Check.",
+      "prompt": "It copies its **3 closest** examples. Label the fruit.",
       "model": {
         "kind": "nearest",
         "k": 3,
-        "x": {
-          "label": "Shape",
-          "low": "Long",
-          "high": "Round"
-        },
-        "y": {
-          "label": "Colour",
-          "low": "Red",
-          "high": "Yellow"
-        }
+        "scene": "fruit"
       },
       "labels": [
         {
@@ -344,18 +333,12 @@
           "given": true
         },
         {
-          "id": "a2",
-          "text": "Small red apple",
-          "x": 8,
-          "y": 2.5,
-          "label": "apple"
-        },
-        {
           "id": "a3",
           "text": "Big red apple",
           "x": 9.5,
           "y": 3.5,
-          "label": "apple"
+          "label": "apple",
+          "given": true
         },
         {
           "id": "b1",
@@ -370,14 +353,8 @@
           "text": "Long banana",
           "x": 2.5,
           "y": 9.5,
-          "label": "banana"
-        },
-        {
-          "id": "b3",
-          "text": "Spotty banana",
-          "x": 1.5,
-          "y": 7.5,
-          "label": "banana"
+          "label": "banana",
+          "given": true
         },
         {
           "id": "l1",
@@ -388,18 +365,36 @@
           "given": true
         },
         {
+          "id": "a2",
+          "text": "Small red apple",
+          "x": 8,
+          "y": 2.5,
+          "label": "apple",
+          "given": false
+        },
+        {
+          "id": "b3",
+          "text": "Spotty banana",
+          "x": 1.5,
+          "y": 7.5,
+          "label": "banana",
+          "given": false
+        },
+        {
           "id": "l2",
           "text": "Small lemon",
           "x": 7,
           "y": 8.5,
-          "label": "lemon"
+          "label": "lemon",
+          "given": true
         },
         {
           "id": "l3",
           "text": "Pointy lemon",
           "x": 5.5,
           "y": 8,
-          "label": "lemon"
+          "label": "lemon",
+          "given": false
         }
       ],
       "tests": [

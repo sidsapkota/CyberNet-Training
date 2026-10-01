@@ -1,22 +1,28 @@
 import type { GradeResult } from "../types";
-import { type Guess, guessTests, subsetsOf } from "./model";
+import { type Guess, guessTests } from "./model";
 import type { TrainModelAnswer, TrainModelCard } from "./schema";
 
 const settings = (card: TrainModelCard) =>
   card.model.kind === "nearest" ? { kind: "nearest" as const, k: card.model.k } : { kind: "word-vote" as const };
 
-export function initialTrainModelAnswer(card: TrainModelCard): TrainModelAnswer {
-  return { labels: {}, included: card.task.goal === "include" ? [...card.task.start] : [] };
+/** Nothing chosen or labelled to start with (zero-confusion rule: nothing pre-selected). */
+export function initialTrainModelAnswer(): TrainModelAnswer {
+  return { labels: {}, included: [] };
 }
 
-/** The examples the learner labels (label goal): every one that isn't given. */
-export const labelable = (card: TrainModelCard) => card.examples.filter((e) => !e.given);
+/** The examples the learner acts on: labels (label goal) or picks one from (fix goal). */
+export const choices = (card: TrainModelCard) => card.examples.filter((e) => !e.given);
+/** What the model already learned from (shown small, not tappable). */
+export const given = (card: TrainModelCard) => card.examples.filter((e) => e.given);
+/** Kept for older callers: the examples to label. */
+export const labelable = choices;
 
-/** The training set the answer makes: chosen labels (label goal) or chosen examples (include goal). */
+/** The training set the answer makes: the given examples plus the learner's labels or pick. */
 export function trainingSet(card: TrainModelCard, answer: TrainModelAnswer): (TrainModelCard["examples"][number] & { label: string })[] {
-  if (card.task.goal === "include") {
-    const included = new Set(Array.isArray(answer?.included) ? answer.included : []);
-    return card.examples.filter((e) => included.has(e.id));
+  if (card.task.goal === "fix") {
+    const picked = new Set(Array.isArray(answer?.included) ? answer.included.slice(0, 1) : []);
+    // add: the given examples plus the pick. remove: everything except the pick.
+    return card.task.action === "remove" ? card.examples.filter((e) => e.given || !picked.has(e.id)) : card.examples.filter((e) => e.given || picked.has(e.id));
   }
   const labels = answer?.labels ?? {};
   return card.examples.flatMap((e) => {
@@ -30,16 +36,21 @@ export function trainModelGuesses(card: TrainModelCard, answer: TrainModelAnswer
   return guessTests(settings(card), trainingSet(card, answer), card.tests);
 }
 
+/** The first test the model gets wrong before the learner acts: the problem the card leads with. */
+export function problemTest(card: TrainModelCard): TrainModelCard["tests"][number] {
+  const before = trainModelGuesses(card, initialTrainModelAnswer());
+  return card.tests.find((t) => before[t.id] !== t.truth) ?? card.tests[0]!;
+}
+
 export function isTrainModelReady(answer: TrainModelAnswer, card: TrainModelCard): boolean {
-  if (card.task.goal === "label") return labelable(card).every((e) => typeof answer.labels[e.id] === "string");
-  // Include goal: something to train on, and a change from the starting choice.
-  const start = new Set(card.task.start);
-  return answer.included.length > 0 && (answer.included.length !== start.size || answer.included.some((id) => !start.has(id)));
+  if (card.task.goal === "label") return choices(card).every((e) => typeof answer.labels[e.id] === "string");
+  return answer.included.length === 1;
 }
 
 export function gradeTrainModel(card: TrainModelCard, answer: TrainModelAnswer): GradeResult {
-  if (card.task.goal === "label") return { correct: labelable(card).every((e) => answer?.labels?.[e.id] === e.label) };
-  return { correct: trainingSet(card, answer).length > 0 && allRight(card, trainModelGuesses(card, answer)) };
+  if (card.task.goal === "label") return { correct: choices(card).every((e) => answer?.labels?.[e.id] === e.label) };
+  const picked = Array.isArray(answer?.included) ? answer.included : [];
+  return { correct: picked.length === 1 && choices(card).some((e) => e.id === picked[0]) && allRight(card, trainModelGuesses(card, answer)) };
 }
 
 /** Whether every test item was guessed as what it really is. */
@@ -47,12 +58,9 @@ export function allRight(card: TrainModelCard, guesses: Record<string, Guess>): 
   return card.tests.every((t) => guesses[t.id] === t.truth);
 }
 
-/** Toggles an example in or out of the training set, keeping the card's order. */
-export function toggleIncluded(card: TrainModelCard, answer: TrainModelAnswer, id: string): TrainModelAnswer {
-  const included = new Set(answer.included);
-  if (included.has(id)) included.delete(id);
-  else included.add(id);
-  return { ...answer, included: card.examples.map((e) => e.id).filter((e) => included.has(e)) };
+/** Fix goal: the one example added (tapping it again takes it away). */
+export function pickExample(answer: TrainModelAnswer, id: string): TrainModelAnswer {
+  return { ...answer, included: answer.included[0] === id ? [] : [id] };
 }
 
 export function setLabel(answer: TrainModelAnswer, exampleId: string, labelId: string): TrainModelAnswer {
@@ -61,31 +69,24 @@ export function setLabel(answer: TrainModelAnswer, exampleId: string, labelId: s
 
 /** After a wrong attempt, wrong labels are cleared (like sort_bins sending wrong items back). */
 export function keepCorrectLabels(card: TrainModelCard, answer: TrainModelAnswer): TrainModelAnswer {
-  return { ...answer, labels: Object.fromEntries(labelable(card).filter((e) => answer.labels[e.id] === e.label).map((e) => [e.id, e.label])) };
+  return { ...answer, labels: Object.fromEntries(choices(card).filter((e) => answer.labels[e.id] === e.label).map((e) => [e.id, e.label])) };
 }
 
 const labelText = (card: TrainModelCard, id: string | undefined) => card.labels.find((l) => l.id === id)?.text ?? "nothing";
 
 export function describeTrainModelAnswer(card: TrainModelCard, answer: TrainModelAnswer): string {
-  if (card.task.goal === "include") {
-    const chosen = trainingSet(card, answer).map((e) => e.text);
-    return chosen.length ? `Trained on: ${chosen.join(", ")}` : "Trained on nothing";
+  if (card.task.goal === "fix") {
+    const picked = card.examples.find((e) => e.id === answer?.included?.[0]);
+    const verb = card.task.action === "remove" ? "Took out" : "Added";
+    return picked ? `${verb}: ${picked.text}` : `${verb} nothing`;
   }
-  return labelable(card)
+  return choices(card)
     .map((e) => `${e.text}: ${labelText(card, answer?.labels?.[e.id])}`)
     .join(" · ");
 }
 
 export function describeTrainModelCorrect(card: TrainModelCard): string {
-  if (card.task.goal === "label") return labelable(card).map((e) => `${e.text}: ${labelText(card, e.label)}`).join(" · ");
-  // The working choice closest to the start (the schema guarantees there is one), as changes.
-  const start = new Set(card.task.start);
-  const changes = (ids: readonly string[]) => card.examples.filter((e) => ids.includes(e.id) !== start.has(e.id)).length;
-  const works = subsetsOf(card.examples.map((e) => e.id))
-    .filter((ids) => allRight(card, trainModelGuesses(card, { labels: {}, included: ids })))
-    .sort((a, b) => changes(a) - changes(b))[0];
-  if (!works) return "";
-  const add = card.examples.filter((e) => works.includes(e.id) && !start.has(e.id)).map((e) => e.text);
-  const drop = card.examples.filter((e) => !works.includes(e.id) && start.has(e.id)).map((e) => e.text);
-  return [add.length ? `Add ${add.join(", ")}` : "", drop.length ? `leave out ${drop.join(", ")}` : ""].filter(Boolean).join("; ");
+  if (card.task.goal === "label") return choices(card).map((e) => `${e.text}: ${labelText(card, e.label)}`).join(" · ");
+  const fix = choices(card).find((c) => allRight(card, trainModelGuesses(card, { labels: {}, included: [c.id] })));
+  return fix ? `${card.task.action === "remove" ? "Take out" : "Add"} ${fix.text}` : "";
 }

@@ -1,283 +1,279 @@
 "use client";
 
-import { useId, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { useId } from "react";
 import { CheckIcon, XIcon } from "@/components/ui/icons";
 import { useFeedback } from "@/lib/feedback";
 import { CardPrompt } from "../CardPrompt";
 import { CardStatusNote } from "../CardStatusNote";
-import { InlineText } from "../shared/InlineText";
 import type { CardComponentProps } from "../types";
-import { setLabel, toggleIncluded, trainingSet, trainModelGuesses } from "./grade";
+import type { Guess } from "./model";
+import { choices, given, pickExample, problemTest, setLabel, trainModelGuesses } from "./grade";
+import { ItemPicture, MessageBubble } from "./pictures";
 import type { TrainModelAnswer, TrainModelCard } from "./schema";
 
-/**
- * Each label has its own shape (circle, square, triangle), so labels never rely on colour. The
- * chart only shows the data: learners act on the rows below it (44px targets at any width).
- */
-function LabelShape({ index, className = "size-4", dashed = false }: { index: number; className?: string; dashed?: boolean }) {
+type Item = { id: string; text: string; x?: number | undefined; y?: number | undefined };
+
+/** Each label has its own shape (circle, square, triangle), so labels never rely on colour. */
+function LabelShape({ index, className = "size-3.5" }: { index: number; className?: string }) {
+  const common = { fill: "currentColor", stroke: "currentColor", strokeWidth: 2 };
   return (
     <svg viewBox="0 0 16 16" aria-hidden="true" className={`shrink-0 ${className}`}>
-      <LabelShapeInner index={index} dashed={dashed} />
+      {index === 1 ? <rect x={2.5} y={2.5} width={11} height={11} rx={1.5} {...common} /> : index === 2 ? <path d="M8 2 14 13.5H2Z" strokeLinejoin="round" {...common} /> : <circle cx={8} cy={8} r={5.75} {...common} />}
     </svg>
   );
 }
 
-type NearestCard = TrainModelCard & { model: Extract<TrainModelCard["model"], { kind: "nearest" }> };
+/** An item's real-looking picture (nothing for word-vote cards, which show the message itself). */
+function Picture({ card, item, className }: { card: TrainModelCard; item: Item; className?: string }) {
+  if (card.model.kind !== "nearest") return null;
+  return <ItemPicture scene={card.model.scene} text={item.text} x={item.x} y={item.y} {...(className ? { className } : {})} />;
+}
 
-/** Chart space: 0–10 on each axis, drawn in a 240 × 200 box with room for the axis words. */
-const X = (v: number) => 36 + v * 19.4;
-const Y = (v: number) => 172 - v * 15.6;
+const GRID_COLS: Record<number, string> = { 2: "grid-cols-2", 3: "grid-cols-3", 4: "grid-cols-2" };
 
-function Chart({
-  card,
-  answer,
-  showGuesses,
-  active,
-}: {
-  card: NearestCard;
-  answer: TrainModelAnswer;
-  showGuesses: boolean;
-  active: string | null;
-}) {
-  const training = new Map(trainingSet(card, answer).map((e) => [e.id, e.label]));
-  const guesses = trainModelGuesses(card, answer);
-  const labelIndex = (id: string | null | undefined) => card.labels.findIndex((l) => l.id === id);
-  const { x, y } = card.model;
+/** The model's guess as a label chip; it flips when the guess changes (instant, visible feedback). */
+function GuessChip({ card, guess }: { card: TrainModelCard; guess: Guess }) {
+  const reduce = useReducedMotion();
+  const index = card.labels.findIndex((l) => l.id === guess);
   return (
-    <svg
-      viewBox="0 0 240 200"
-      role="img"
-      aria-label={`Chart of the examples: ${x.label} across, from ${x.low} to ${x.high}; ${y.label} up, from ${y.low} to ${y.high}. The same examples are listed below.`}
-      className="mt-5 w-full max-w-md rounded-card border border-line bg-surface-raised text-ink"
-    >
-      <path d={`M${X(0)} ${Y(0)}H${X(10)}M${X(0)} ${Y(0)}V${Y(10)}`} stroke="var(--color-line-strong)" strokeWidth={1.5} fill="none" />
-      <g className="fill-ink-muted text-[9px]" fontFamily="var(--font-sans)">
-        <text x={X(0)} y={188}>{x.low}</text>
-        <text x={X(5)} y={188} textAnchor="middle" fontWeight={600}>
-          {x.label} →
-        </text>
-        <text x={X(10)} y={188} textAnchor="end">{x.high}</text>
-        <text x={6} y={Y(0)}>{y.low}</text>
-        <text x={6} y={Y(10) + 3}>{y.high}</text>
-        <text transform={`translate(12 ${Y(5)}) rotate(-90)`} textAnchor="middle" fontWeight={600}>
-          {y.label} →
-        </text>
-      </g>
-      {card.examples.map((e) => {
-        const label = training.get(e.id);
-        const index = labelIndex(label ?? null);
-        const left = card.task.goal === "include" && label === undefined;
-        return (
-          <g key={e.id} transform={`translate(${X(e.x ?? 0) - 7} ${Y(e.y ?? 0) - 7})`} opacity={left ? 0.3 : 1}>
-            {active === e.id && <circle cx={7} cy={7} r={11} fill="none" stroke="var(--color-accent-ink)" strokeWidth={2} />}
-            <svg width={14} height={14} viewBox="0 0 16 16" overflow="visible">
-              <LabelShapeInner index={index < 0 ? 0 : index} dashed={index < 0 || left} />
-            </svg>
-          </g>
-        );
-      })}
-      {card.tests.map((t, i) => {
-        const guess = labelIndex(guesses[t.id]);
-        return (
-          <g key={t.id} transform={`translate(${X(t.x ?? 0)} ${Y(t.y ?? 0)})`}>
-            {active === t.id && <circle r={13} fill="none" stroke="var(--color-accent-ink)" strokeWidth={2} />}
-            <path d="M0 -9 9 0 0 9 -9 0Z" fill="var(--color-surface)" stroke="currentColor" strokeWidth={1.5} strokeDasharray="3 2" />
-            {showGuesses && guess >= 0 ? (
-              <svg x={-5} y={-5} width={10} height={10} viewBox="0 0 16 16">
-                <LabelShapeInner index={guess} />
-              </svg>
-            ) : (
-              <text y={3.5} textAnchor="middle" className="fill-ink text-[10px] font-semibold">
-                ?
-              </text>
-            )}
-            <text x={11} y={-7} className="fill-ink-muted text-[9px]" fontFamily="var(--font-mono)">
-              {i + 1}
-            </text>
-          </g>
-        );
-      })}
-    </svg>
+    <AnimatePresence mode="popLayout" initial={false}>
+      <motion.strong
+        key={guess ?? "unsure"}
+        initial={reduce ? false : { rotateX: 90, opacity: 0 }}
+        animate={{ rotateX: 0, opacity: 1 }}
+        exit={reduce ? { opacity: 0 } : { rotateX: -90, opacity: 0 }}
+        transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+        className="inline-flex items-center gap-1 font-semibold text-ink"
+      >
+        {index >= 0 && <LabelShape index={index} />}
+        {index >= 0 ? card.labels[index]!.text : "Not sure"}
+      </motion.strong>
+    </AnimatePresence>
   );
 }
 
-/** The shape alone, for use inside the chart's own SVG. */
-function LabelShapeInner({ index, dashed = false }: { index: number; dashed?: boolean }) {
-  const common = { fill: dashed ? "none" : "currentColor", stroke: "currentColor", strokeWidth: 2, strokeDasharray: dashed ? "3 2" : undefined };
-  if (index === 1) return <rect x={2.5} y={2.5} width={11} height={11} rx={1.5} {...common} />;
-  if (index === 2) return <path d="M8 2 14 13.5H2Z" strokeLinejoin="round" {...common} />;
-  return <circle cx={8} cy={8} r={5.75} {...common} />;
+/** What the model has already learned from: small pictures (or messages) grouped by label. */
+function Learned({ card }: { card: TrainModelCard }) {
+  const items = given(card);
+  if (items.length === 0) return null;
+  return (
+    <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-control bg-surface px-2.5 py-1.5">
+      <p className="text-caption text-ink-muted">It learned from:</p>
+      <div className="contents">
+        {card.labels.map((label, i) => {
+          const ofLabel = items.filter((e) => e.label === label.id);
+          if (ofLabel.length === 0) return null;
+          return (
+            <div key={label.id} className="flex items-center gap-1.5">
+              <span className="inline-flex items-center gap-1 text-caption font-semibold text-ink">
+                <LabelShape index={i} className="size-3" />
+                {label.text}
+              </span>
+              {card.model.kind === "nearest" ? (
+                ofLabel.map((e) => <Picture key={e.id} card={card} item={e} className="size-5" />)
+              ) : (
+                <span className="text-caption text-ink-muted">({ofLabel.length})</span>
+              )}
+              <span className="sr-only">: {ofLabel.map((e) => e.text).join(", ")}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
 
-export function TrainModelCardView({ card, answer, onAnswerChange, status }: CardComponentProps<TrainModelCard, TrainModelAnswer>) {
+function FixCard({ card, answer, onAnswerChange, status }: CardComponentProps<TrainModelCard, TrainModelAnswer>) {
   const locked = status !== "answering";
   const feedback = useFeedback();
-  const groupId = useId();
-  const [active, setActive] = useState<string | null>(null);
-  const labelGoal = card.task.goal === "label";
-  const labelIndex = (id: string | undefined) => card.labels.findIndex((l) => l.id === id);
-
-  // Label goal: the model trains once you Check. Include goal: it retrains as you choose, but
-  // whether each guess is right only shows after Check. (Try again's clearing of wrong labels is
-  // the card's `retryAnswer`.)
-  const showGuesses = labelGoal ? locked : true;
-  const judged = locked;
+  const id = useId();
+  const problem = problemTest(card);
   const guesses = trainModelGuesses(card, answer);
-  const rowHover = (id: string) => ({ onMouseEnter: () => setActive(id), onMouseLeave: () => setActive(null), onFocus: () => setActive(id), onBlur: () => setActive(null) });
+  const picked = answer.included[0];
+  const remove = card.task.goal === "fix" && card.task.action === "remove";
+  const others = card.tests.filter((t) => t.id !== problem.id);
+  const guess = guesses[problem.id] ?? null;
+  // The problem is marked wrong to start with; after a pick, right or wrong shows only after Check.
+  const mark = !picked ? "wrong" : locked ? (guess === problem.truth ? "right" : "wrong") : null;
 
   return (
     <div>
       <CardPrompt>{card.prompt}</CardPrompt>
-      {card.model.kind === "nearest" && (
-        <Chart card={card as NearestCard} answer={answer} showGuesses={showGuesses} active={active} />
-      )}
 
-      <section aria-labelledby={`${groupId}-examples`} className="mt-5">
-        <h3 id={`${groupId}-examples`} className="font-mono text-caption font-semibold tracking-widest text-ink-faint uppercase">
-          {labelGoal ? "Training examples" : "Train on"}
-        </h3>
-        <ul className="mt-2 space-y-2">
-          {card.examples.map((e) => {
-            if (!labelGoal) {
-              const on = answer.included.includes(e.id);
-              return (
-                <li key={e.id}>
-                  <button
-                    type="button"
-                    aria-pressed={on}
-                    disabled={locked}
-                    onClick={() => {
-                      onAnswerChange(toggleIncluded(card, answer, e.id));
-                      feedback.haptic("tap");
-                    }}
-                    {...rowHover(e.id)}
-                    className={`flex min-h-12 w-full items-center gap-3 rounded-control border-2 px-3 py-2 text-left transition-colors disabled:cursor-default ${
-                      on ? "border-accent-ink bg-accent-soft" : "border-line bg-surface text-ink-muted"
-                    } ${locked ? "" : "hover:border-accent-ink"}`}
-                  >
-                    <span
-                      aria-hidden="true"
-                      className={`grid size-6 shrink-0 place-items-center rounded-sm border-2 ${on ? "border-accent-ink bg-accent text-on-accent" : "border-line-strong"}`}
-                    >
-                      {on && <CheckIcon className="size-4" strokeWidth={2.5} />}
-                    </span>
-                    <span className="flex-1 text-body text-ink">
-                      <InlineText>{e.text}</InlineText>
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 text-small text-ink-muted">
-                      <LabelShape index={labelIndex(e.label)} />
-                      {card.labels[labelIndex(e.label)]?.text}
-                    </span>
-                    <span className="sr-only">{on ? ", in training" : ", left out"}</span>
-                  </button>
-                </li>
-              );
-            }
-            const chosen = e.given ? e.label : answer.labels[e.id];
-            const wrong = status === "incorrect" && !e.given && chosen !== e.label;
-            return (
-              <li key={e.id} {...rowHover(e.id)} className="rounded-control border border-line bg-surface p-2.5">
-                <p id={`${groupId}-${e.id}`} className="flex items-center gap-2 text-body">
-                  {wrong && <XIcon className="size-4 shrink-0 text-danger" strokeWidth={2.5} />}
-                  <InlineText>{e.text}</InlineText>
-                  {wrong && <span className="sr-only">, wrong label</span>}
-                </p>
-                {e.given ? (
-                  <p className="mt-1 inline-flex items-center gap-1.5 text-small text-ink-muted">
-                    <LabelShape index={labelIndex(e.label)} /> Already labelled: {card.labels[labelIndex(e.label)]?.text}
-                  </p>
-                ) : (
-                  <div role="radiogroup" aria-labelledby={`${groupId}-${e.id}`} className="mt-2 flex flex-wrap gap-2">
-                    {card.labels.map((label, i) => {
-                      const selected = chosen === label.id;
-                      return (
-                        <button
-                          key={label.id}
-                          type="button"
-                          role="radio"
-                          aria-checked={selected}
-                          disabled={locked}
-                          onClick={() => {
-                            onAnswerChange(setLabel(answer, e.id, label.id));
-                            feedback.play("snap");
-                            feedback.haptic("tap");
-                          }}
-                          className={`inline-flex min-h-11 items-center gap-2 rounded-control border-2 px-3 text-small font-semibold transition-colors disabled:cursor-default ${
-                            selected ? "border-accent-ink bg-accent-soft text-ink" : "border-line-strong bg-surface text-ink-muted"
-                          } ${locked ? "" : "hover:border-accent-ink hover:text-ink"}`}
-                        >
-                          <LabelShape index={i} dashed={!selected} />
-                          {label.text}
-                        </button>
-                      );
-                    })}
-                  </div>
+      {/* Problem first: the item the model gets wrong, and its wrong guess. */}
+      <div aria-live="polite" className="mt-2 flex items-center gap-3 rounded-card border-2 border-line-strong bg-surface p-2.5">
+        {card.model.kind === "nearest" ? <Picture card={card} item={problem} className="size-12" /> : null}
+        <div className="min-w-0 flex-1">
+          {card.model.kind === "nearest" ? <p className="truncate font-semibold">{problem.text}</p> : <MessageBubble text={problem.text} />}
+          <p className="mt-0.5 flex flex-wrap items-center gap-x-1.5 text-small text-ink-muted [perspective:400px]">
+            Model&apos;s guess: <GuessChip card={card} guess={guess} />
+          </p>
+        {others.length > 0 && (
+          <p className="mt-1 flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-caption text-ink-muted">
+            <span>Also:</span>
+            {others.map((t) => (
+              <span key={t.id} className="inline-flex items-center gap-1">
+                {card.model.kind === "nearest" ? <Picture card={card} item={t} className="size-5" /> : <span className="text-ink">“{t.text}”</span>}
+                <span className="sr-only">{t.text}, model&apos;s guess</span>
+                <GuessChip card={card} guess={guesses[t.id] ?? null} />
+              </span>
+            ))}
+          </p>
+        )}
+
+        </div>
+        {mark === "wrong" && (
+          <span className="inline-flex items-center gap-1 text-small font-semibold text-danger">
+            <XIcon className="size-5" strokeWidth={2.5} />
+            <span className="sr-only">wrong</span>
+          </span>
+        )}
+        {mark === "right" && (
+          <span className="inline-flex items-center gap-1 text-small font-semibold text-success">
+            <CheckIcon className="size-5" strokeWidth={2.5} />
+            <span className="sr-only">right</span>
+          </span>
+        )}
+      </div>
+      <Learned card={card} />
+
+      <p id={`${id}-add`} className="mt-3 text-small font-semibold">
+        {remove ? "Take one example out to fix it:" : "Add one example to fix it:"}
+      </p>
+      <div role="radiogroup" aria-labelledby={`${id}-add`} className={`mt-2 grid gap-2 ${GRID_COLS[choices(card).length] ?? "grid-cols-2"}`}>
+        {choices(card).map((e) => {
+          const on = picked === e.id;
+          const labelIndex = card.labels.findIndex((l) => l.id === e.label);
+          return (
+            <button
+              key={e.id}
+              type="button"
+              role="radio"
+              aria-checked={on}
+              disabled={locked}
+              onClick={() => {
+                onAnswerChange(pickExample(answer, e.id));
+                feedback.play("snap");
+                feedback.haptic("tap");
+              }}
+              className={`relative flex min-h-11 flex-col items-center gap-1 rounded-control border-2 p-2 text-center transition-colors disabled:cursor-default ${
+                on ? "border-accent-ink bg-accent-soft" : "border-line bg-surface"
+              } ${locked ? "" : "hover:border-accent-ink"} ${on && remove ? "opacity-60" : ""}`}
+            >
+              {on && remove && <span className="text-caption font-semibold text-ink">Taken out</span>}
+              <span className="relative">
+                {card.model.kind === "nearest" ? <Picture card={card} item={e} className="size-9" /> : null}
+                {/* Its label as a shape badge (the key is in "It learned from"); spelled out when taking one out, where a wrong label is the point. */}
+                {!remove && card.model.kind === "nearest" && (
+                  <span className="absolute -right-1.5 -bottom-1 grid size-4 place-items-center rounded-node bg-surface text-ink">
+                    <LabelShape index={labelIndex} className="size-2.5" />
+                  </span>
                 )}
-              </li>
-            );
-          })}
-        </ul>
-      </section>
+                {remove && card.model.kind === "nearest" && (
+                  <span className="absolute -bottom-1.5 left-1/2 inline-flex -translate-x-1/2 items-center gap-0.5 rounded-sm bg-surface px-1 text-[0.7rem] leading-4 font-semibold whitespace-nowrap text-ink">
+                    <LabelShape index={labelIndex} className="size-2" />
+                    {card.labels[labelIndex]?.text}
+                  </span>
+                )}
+              </span>
+              <span className={card.model.kind === "nearest" ? "text-caption leading-tight text-ink" : "text-small leading-snug text-ink"}>{e.text}</span>
+              {card.model.kind !== "nearest" && (
+                <span className="inline-flex items-center gap-1 text-caption text-ink-muted">
+                  <LabelShape index={labelIndex} className="size-3" />
+                  {card.labels[labelIndex]?.text}
+                </span>
+              )}
+              <span className="sr-only">, labelled {card.labels[labelIndex]?.text}</span>
+            </button>
+          );
+        })}
+      </div>
+      <CardStatusNote status={status} correctText="The model gets every one right now" incorrectText="That didn't fix it" />
+    </div>
+  );
+}
 
-      <section aria-labelledby={`${groupId}-guesses`} aria-live="polite" className="mt-5">
-        <h3 id={`${groupId}-guesses`} className="font-mono text-caption font-semibold tracking-widest text-ink-faint uppercase">
-          The model&apos;s guesses
-        </h3>
-        {showGuesses ? (
-          <ul className="mt-2 space-y-2">
-            {card.tests.map((t, i) => {
-              const guess = guesses[t.id];
+function LabelCard({ card, answer, onAnswerChange, status }: CardComponentProps<TrainModelCard, TrainModelAnswer>) {
+  const locked = status !== "answering";
+  const feedback = useFeedback();
+  const id = useId();
+  const guesses = trainModelGuesses(card, answer);
+
+  return (
+    <div>
+      <CardPrompt>{card.prompt}</CardPrompt>
+      {/* After Check the model trains on your labels; how it does on new items shows first (that's the point of the card). */}
+      {locked && (
+        <div aria-live="polite" className="mt-2 rounded-control border-2 border-line-strong bg-surface px-3 py-2">
+          <p className="text-caption text-ink-muted">Then it guessed new ones:</p>
+          <ul className="mt-1 space-y-1">
+            {card.tests.map((t) => {
+              const guess = guesses[t.id] ?? null;
               const right = guess === t.truth;
-              const truth = card.labels[labelIndex(t.truth)]?.text;
               return (
-                <li
-                  key={t.id}
-                  {...rowHover(t.id)}
-                  className={`flex items-start gap-3 rounded-control border px-3 py-2.5 ${
-                    !judged ? "border-line bg-surface" : right ? "border-success bg-success-soft" : "border-danger bg-danger-soft"
-                  }`}
-                >
-                  <span className="mt-0.5 font-mono text-caption text-ink-muted">{i + 1}</span>
-                  <div className="flex-1">
-                    <p className="text-body text-ink">
-                      <InlineText>{t.text}</InlineText>
-                    </p>
-                    <p className="mt-0.5 inline-flex flex-wrap items-center gap-x-1.5 text-small text-ink-muted">
-                      Guess:
-                      {guess ? (
-                        <>
-                          <LabelShape index={labelIndex(guess)} className="size-3.5" />
-                          <strong className="text-ink">{card.labels[labelIndex(guess)]?.text}</strong>
-                        </>
-                      ) : (
-                        <strong className="text-ink">Not sure</strong>
-                      )}
-                      {judged && !right && <span>· really: {truth}</span>}
-                    </p>
-                  </div>
-                  {!judged ? null : right ? (
-                    <span className="inline-flex items-center gap-1 text-small font-semibold text-success">
-                      <CheckIcon className="size-4" strokeWidth={2.5} /> Right
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center gap-1 text-small font-semibold text-danger">
-                      <XIcon className="size-4" strokeWidth={2.5} /> Wrong
-                    </span>
-                  )}
+                <li key={t.id} className="flex items-center gap-2 text-small">
+                  {card.model.kind === "nearest" ? <Picture card={card} item={t} className="size-8" /> : null}
+                  <span className="min-w-0 flex-1 truncate">{t.text}</span>
+                  <GuessChip card={card} guess={guess} />
+                  {right ? <CheckIcon className="size-4 text-success" strokeWidth={2.5} /> : <XIcon className="size-4 text-danger" strokeWidth={2.5} />}
+                  <span className="sr-only">{right ? "right" : "wrong"}</span>
                 </li>
               );
             })}
           </ul>
-        ) : (
-          <p className="mt-2 text-small text-ink-muted">Label every example, then press Check to train the model and see its guesses.</p>
-        )}
-      </section>
+        </div>
+      )}
+      <Learned card={card} />
+      <ul className={`mt-2 grid gap-1.5 ${card.labels.length === 3 ? "grid-cols-1" : "grid-cols-2"}`}>
+        {choices(card).map((e) => {
+          const chosen = answer.labels[e.id];
+          const wrong = status === "incorrect" && chosen !== e.label;
+          const words = card.labels.length === 2;
+          return (
+            <li key={e.id} className={`flex items-center gap-1.5 rounded-control border-2 p-1.5 text-center ${card.labels.length === 3 ? "flex-row" : "flex-col"} ${wrong ? "border-danger" : chosen ? "border-accent-ink" : "border-line"} bg-surface`}>
+              {card.model.kind === "nearest" ? <Picture card={card} item={e} className="size-8" /> : null}
+              <p id={`${id}-${e.id}`} className="flex items-center gap-1 text-caption leading-tight text-ink">
+                {wrong && <XIcon className="size-3.5 shrink-0 text-danger" strokeWidth={2.5} />}
+                <span>{e.text}</span>
+                {wrong && <span className="sr-only">, wrong label</span>}
+              </p>
+              <div role="radiogroup" aria-labelledby={`${id}-${e.id}`} className={`flex justify-center gap-1 ${card.labels.length === 3 ? "ml-auto shrink-0" : "w-full"}`}>
+                {card.labels.map((label, i) => {
+                  const selected = chosen === label.id;
+                  return (
+                    <button
+                      key={label.id}
+                      type="button"
+                      role="radio"
+                      aria-checked={selected}
+                      aria-label={label.text}
+                      disabled={locked}
+                      onClick={() => {
+                        onAnswerChange(setLabel(answer, e.id, label.id));
+                        feedback.play("snap");
+                        feedback.haptic("tap");
+                      }}
+                      className={`inline-flex min-h-11 min-w-11 items-center ${card.labels.length === 3 ? "" : "flex-1"} justify-center gap-1 rounded-control border-2 px-1 text-caption font-semibold transition-colors disabled:cursor-default ${
+                        selected ? "border-accent-ink bg-accent-soft text-ink" : "border-line-strong bg-surface text-ink-muted"
+                      } ${locked ? "" : "hover:border-accent-ink hover:text-ink"}`}
+                    >
+                      <LabelShape index={i} className="size-3" />
+                      {words && <span aria-hidden="true">{label.text}</span>}
+                    </button>
+                  );
+                })}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
 
-      <CardStatusNote
-        status={status}
-        correctText={labelGoal ? "Every example is labelled right" : "The model gets every test right"}
-        incorrectText={labelGoal ? "Some labels are wrong" : "The model still gets a test wrong"}
-      />
+      <CardStatusNote status={status} correctText="Every example is labelled right" incorrectText="Some labels are wrong" />
     </div>
   );
+}
+
+export function TrainModelCardView(props: CardComponentProps<TrainModelCard, TrainModelAnswer>) {
+  return props.card.task.goal === "fix" ? <FixCard {...props} /> : <LabelCard {...props} />;
 }

@@ -34,20 +34,11 @@
       "id": "f-day-night",
       "type": "train_model",
       "difficulty": "core",
-      "prompt": "This day-or-night model calls a sunny day **indoors** night. Choose examples so it gets **every** test photo right.",
+      "prompt": "Fix the model's mistake.",
       "model": {
         "kind": "nearest",
         "k": 1,
-        "x": {
-          "label": "Brightness",
-          "low": "Dark",
-          "high": "Bright"
-        },
-        "y": {
-          "label": "Sky",
-          "low": "None",
-          "high": "Lots"
-        }
+        "scene": "daynight"
       },
       "labels": [
         {
@@ -65,63 +56,72 @@
           "text": "Sunny park: day",
           "x": 9,
           "y": 9,
-          "label": "day"
+          "label": "day",
+          "given": true
         },
         {
           "id": "d2",
           "text": "Bright street: day",
           "x": 8,
           "y": 7,
-          "label": "day"
+          "label": "day",
+          "given": true
         },
         {
           "id": "d3",
           "text": "Blue sky at the beach: day",
           "x": 9.5,
           "y": 6,
-          "label": "day"
+          "label": "day",
+          "given": true
         },
         {
           "id": "n1",
           "text": "Dark street: night",
           "x": 1,
           "y": 1,
-          "label": "night"
+          "label": "night",
+          "given": true
         },
         {
           "id": "n2",
           "text": "Starry sky: night",
           "x": 2,
           "y": 0.5,
-          "label": "night"
+          "label": "night",
+          "given": true
         },
         {
           "id": "n3",
           "text": "Moonlit garden: night",
           "x": 1.5,
           "y": 2,
-          "label": "night"
+          "label": "night",
+          "given": true
         },
         {
           "id": "x1",
-          "text": "Bright classroom, no sky: day",
+          "text": "Bright classroom, no sky",
           "x": 8,
           "y": 1,
-          "label": "day"
+          "label": "day",
+          "given": false
         },
         {
           "id": "x2",
-          "text": "Dark evening, deep blue sky: night",
+          "text": "Dark evening, blue sky",
           "x": 3,
           "y": 6,
-          "label": "night"
+          "label": "night",
+          "given": false
         },
         {
           "id": "x3",
-          "text": "Midday at the pool: day",
+          "text": "Midday at the pool",
           "x": 9.5,
           "y": 9,
-          "label": "day"
+          "label": "day",
+          "given": false
         }
       ],
       "tests": [
@@ -148,15 +148,8 @@
         }
       ],
       "task": {
-        "goal": "include",
-        "start": [
-          "d1",
-          "d2",
-          "d3",
-          "n1",
-          "n2",
-          "n3"
-        ]
+        "goal": "fix",
+        "action": "add"
       },
       "explanation": "It had only seen day photos with lots of sky, so the bright room sat nearest the night photos. **\"Bright classroom, no sky\"** fills that gap."
     },
