@@ -29,19 +29,31 @@ const record = (name, ok, detail = "") => {
 const UPGRADE = /Go unlimited|Review with Pro|left today|Start 7-day free trial|Start your 7-day|See CyberNet Pro|Upgrade to Pro|See plans|Come back to Pro/;
 
 /**
- * Analytics events as Vercel's script sends them (logged in development): [name, data], from the
- * payload's `en` and `ed`, so the check sees exactly what would reach Vercel.
+ * Analytics events, recorded inside the page from every call to Vercel's queue (`window.va`), with
+ * Vercel's script blocked so nothing is ever sent (tests never reach the real analytics). Works the
+ * same locally and on production. Read them with `events(page)`: [name, data].
  */
-function watchEvents(page) {
-  const events = [];
-  page.on("console", async (m) => {
-    if (!m.text().includes("[event]")) return;
-    const args = await Promise.all(m.args().map((a) => a.jsonValue().catch(() => null)));
-    const sent = args.find((a) => a && typeof a === "object" && typeof a.en === "string");
-    if (sent) events.push([sent.en, sent.ed ?? {}]);
+async function watchEvents(page) {
+  // Also handed to the test as they happen, so a page that navigates away (to Stripe) can't lose them.
+  const sent = [];
+  page.__sent = sent;
+  await page.exposeFunction("__onEvent", (name, data) => sent.push([name, data]));
+  await page.route(/\/script\.js$|\/_vercel\/insights\//, (route) => route.abort());
+  await page.addInitScript(() => {
+    window.__events = [];
+    let current;
+    const record = (fn) => (...args) => {
+      if (args[0] === "event") {
+        window.__events.push([args[1]?.name, args[1]?.data ?? {}]);
+        void window.__onEvent?.(args[1]?.name, args[1]?.data ?? {});
+      }
+      return fn(...args);
+    };
+    Object.defineProperty(window, "va", { configurable: true, get: () => current, set: (fn) => (current = record(fn)) });
+    // No queue of our own: the app must create it (ensureAnalyticsQueue), or first-load events are lost.
   });
-  return events;
 }
+const events = async (page) => page.__sent ?? [];
 
 async function signIn(ctx, email) {
   const page = await ctx.newPage();
@@ -77,7 +89,7 @@ try {
   {
     const ctx = await browser.newContext({ viewport: PHONE, colorScheme: "dark", reducedMotion: "reduce" });
     const page = await ctx.newPage();
-    const events = watchEvents(page);
+    await watchEvents(page);
     await page.goto(`${BASE}/pro`);
     await page.getByRole("heading", { name: "Choose your plan" }).waitFor({ timeout: 30000 });
     const inView = await proButtonInView(page, /Start your free trial/);
@@ -100,12 +112,12 @@ try {
     await page.emulateMedia({ colorScheme: "light" });
     await page.screenshot({ path: path.join(SHOTS, "plans-guest-360-light.png") });
     await page.waitForTimeout(500);
-    const viewed = events.find(([n]) => n === "plans_viewed");
+    const viewed = (await events(page)).find(([n]) => n === "plans_viewed");
     record("…plans_viewed sent with source pro_page only", JSON.stringify(viewed?.[1]) === '{"source":"pro_page"}', JSON.stringify(viewed));
     await page.getByRole("link", { name: "Start free" }).click();
     await page.waitForURL(/\/login/);
     await page.waitForTimeout(500);
-    const picked = events.find(([n]) => n === "plan_selected");
+    const picked = (await events(page)).find(([n]) => n === "plan_selected");
     record("…Start free sends plan_selected {plan: free}", JSON.stringify(picked?.[1]) === '{"plan":"free"}', JSON.stringify(picked));
     await ctx.close();
   }
@@ -116,7 +128,7 @@ try {
     users.push(free.id);
     const ctx = await browser.newContext({ viewport: PHONE, colorScheme: "dark", reducedMotion: "reduce" });
     const page = await signIn(ctx, free.email);
-    const events = watchEvents(page);
+    await watchEvents(page);
     await page.goto(`${BASE}/`);
     const plansLink = page.getByRole("link", { name: "Free plan · See plans" });
     await plansLink.waitFor({ timeout: 30000 });
@@ -127,17 +139,23 @@ try {
     record("Free /pro: Start 7-day free trial in view at 360×640", inView.ok, inView.detail);
     record("…Free shows Your plan (disabled)", await page.getByRole("button", { name: "Your plan" }).isDisabled());
     await page.waitForTimeout(500);
-    record("…plans_viewed with source dashboard", events.some(([n, d]) => n === "plans_viewed" && JSON.stringify(d) === '{"source":"dashboard"}'), JSON.stringify(events));
-    await page.getByRole("radio", { name: "Monthly" }).click();
-    // Picking Pro opens Stripe's (sandbox) checkout: stop at the event.
-    await page.route(/checkout\.stripe\.com/, (r) => r.abort());
-    await page.getByRole("button", { name: "Start 7-day free trial" }).click();
-    await page.waitForTimeout(1500);
-    record(
-      "…picking Pro sends plan_selected {plan: pro, interval: monthly}",
-      events.some(([n, d]) => n === "plan_selected" && JSON.stringify(d) === '{"plan":"pro","interval":"monthly"}'),
-      JSON.stringify(events.filter(([n]) => n === "plan_selected")),
-    );
+    const seen = await events(page);
+    record("…plans_viewed with source dashboard", seen.some(([n, d]) => n === "plans_viewed" && JSON.stringify(d) === '{"source":"dashboard"}'), JSON.stringify(seen));
+    // Picking Pro opens Stripe's checkout. Locally that's the sandbox; on production it would be a
+    // live checkout (and a real Stripe customer), so it's skipped there.
+    if (/localhost|127\.0\.0\.1/.test(BASE)) {
+      await page.getByRole("radio", { name: "Monthly" }).click();
+      // Picking Pro opens Stripe's (sandbox) checkout: stop at the event.
+      await page.route(/checkout\.stripe\.com/, (r) => r.abort());
+      await page.getByRole("button", { name: "Start 7-day free trial" }).click();
+      await page.waitForTimeout(1500);
+      const picks = await events(page).catch(() => []);
+      record(
+        "…picking Pro sends plan_selected {plan: pro, interval: monthly}",
+        picks.some(([n, d]) => n === "plan_selected" && JSON.stringify(d) === '{"plan":"pro","interval":"monthly"}'),
+        JSON.stringify(picks.filter(([n]) => n === "plan_selected")),
+      );
+    } else console.log("- skipped on production: picking Pro (would open a live Stripe checkout)");
     await page.goto(`${BASE}/account`);
     await page.getByRole("heading", { name: "Your plan" }).waitFor({ timeout: 30000 });
     record("Free /account: Your plan, with See plans", (await page.getByRole("link", { name: "See plans" }).count()) === 1);
