@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { pickVoice } from "./voices";
 
 /**
  * "Listen": the browser's own speech (Web Speech API, `speechSynthesis`). No paid service, no audio
@@ -19,11 +20,9 @@ function readRate(): SpeechRate {
   }
 }
 
-/** An English voice for the learner's locale (en-AU, en-GB…), else any English one. */
-function pickVoice(synth: SpeechSynthesis): SpeechSynthesisVoice | null {
-  const voices = synth.getVoices().filter((v) => v.lang.toLowerCase().startsWith("en"));
-  const want = (navigator.language || "en-AU").toLowerCase();
-  return voices.find((v) => v.lang.toLowerCase() === want && v.localService) ?? voices.find((v) => v.lang.toLowerCase() === want) ?? voices.find((v) => v.localService) ?? voices[0] ?? null;
+/** The best English voice (never a novelty one): see src/lib/voices.ts. */
+function voiceFor(synth: SpeechSynthesis): SpeechSynthesisVoice | null {
+  return pickVoice(synth.getVoices(), navigator.language || "en-AU");
 }
 
 export function useSpeech() {
@@ -54,7 +53,7 @@ export function useSpeech() {
       const synth = window.speechSynthesis;
       synth.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
-      const voice = pickVoice(synth);
+      const voice = voiceFor(synth);
       if (voice) {
         utterance.voice = voice;
         utterance.lang = voice.lang;
