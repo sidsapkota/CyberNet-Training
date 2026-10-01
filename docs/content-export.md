@@ -232,7 +232,7 @@ Open up a laptop and a phone, and meet the parts that make them work.
 
 - Take it apart: Open it: **screws**, then the **panel**, then **unplug the battery**.
 - Tap the picture: Put each job on its part.
-- Take it apart: Phones are **glued shut**. Soften the glue, lift the back and the bracket, then **unplug the battery**.
+- Take it apart: This phone is **glued shut**. Open it and **unplug the battery**.
 
 #### Memory vs Storage
 

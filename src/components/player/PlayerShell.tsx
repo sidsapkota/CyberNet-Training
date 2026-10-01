@@ -4,10 +4,12 @@ import { NetworkMark } from "@/components/network/NetworkMark";
 import { NodeProgress, type ProgressNode } from "@/components/network/NodeProgress";
 import { XIcon } from "@/components/ui/icons";
 import { XpPill } from "@/components/XpPill";
+import { ListenButton } from "./ListenButton";
 
 /**
- * Full-height lesson layout: top bar (exit, the node progress trace, the lesson menu, XP), card
- * area, sticky footer. Back to the previous card lives in the footer, beside the main button.
+ * Full-height lesson layout: top bar (exit, the node progress trace, Listen, the lesson menu, XP),
+ * card area, sticky footer. Back to the previous card and the hint live in the footer, beside the
+ * main button, so the card itself gets the whole screen.
  */
 export function PlayerShell({
   nodes,
@@ -20,7 +22,10 @@ export function PlayerShell({
   onJump,
   viewing,
   menu,
+  listen,
 }: {
+  /** What "Listen" reads for the card on screen (src/cards/speech.ts); no button without it. */
+  listen?: string;
   /** Tap the trace to jump to an answered card (read-only) or back to the current one. */
   onJump?: (index: number) => void;
   /** The card being looked back at, if any. */
@@ -51,6 +56,7 @@ export function PlayerShell({
             <XIcon className="size-5" />
           </Link>
           <NodeProgress nodes={nodes} pulse={pulse} label={progressLabel} onJump={onJump} viewing={viewing} />
+          {listen && <ListenButton text={listen} />}
           {menu}
           {/* With the menu there, XP shows from 400px up (it's in each answer's feedback too). */}
           <span className={menu ? "hidden min-[400px]:contents" : "contents"}>
@@ -58,7 +64,7 @@ export function PlayerShell({
           </span>
         </div>
       </header>
-      <main className="mx-auto w-full max-w-lesson flex-1 px-gutter pt-6 pb-10 sm:pt-10">{children}</main>
+      <main className="mx-auto w-full max-w-lesson flex-1 px-gutter pt-5 pb-6 sm:pt-10 sm:pb-10">{children}</main>
       {footer}
     </div>
   );

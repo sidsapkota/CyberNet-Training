@@ -47,7 +47,7 @@ npm run e2e:latency       # time a lesson save, a lesson fetch and the dashboard
 npm run e2e:plans         # plans at 360px and desktop (guest, free, Pro), plan events, nav, Pro identity
 npm run e2e:account-speed # how fast /account opens from the profile icon (PHONE=1 for throttled 4G)
 npm run e2e:mascot-motion # mascot reactions timed in the browser, the scan filmstrip, reduced motion
-npm run e2e:fit-audit     # every card at 360x640 and 360x560: does it fit without scrolling? (COURSE=<id>)
+npm run e2e:fit-audit     # every card at 360x640 and 360x560: does it fit without scrolling? (COURSE=<id>, LESSONS=<id,id>)
 npm run e2e:player-flow   # before/after screenshots: a hotspot card and the wrong-answer flow (SHOTS_TAG=)
 ```
 
@@ -283,15 +283,20 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   screen (`100dvh` minus room for the player), so the whole scene fits at 360×640 and in the
   Instagram browser (~560px). A tap scrolls the panel fully into view (`useSceneReveal`).
   Feedback about a part (explore's name and job, teardown's "not yet" nudge) uses the panel's
-  pinned `callout`, never a box below the scene.
+  pinned `callout`, never a box below the scene. The live fit (`useFittedHeight`) keeps only the
+  page's bottom padding under a scene (`BELOW`), since Back, the hint and Check live in the footer.
+  A short live `status` (a teardown's "1/4 steps") sits on the panel's top row, opposite the
+  "Simplified diagram" chip.
 - **`teardown`:**
   - Verbs: `unscrew`, `lift`, `slide-out`, `unplug` (remove), `insert`, `fasten`, `plug-in`
     (refit), and `heat` (prep: "Soften the glue on", for a phone's glued back). A heated part stays
     in place with a warm dashed outline (`--color-scene-heat`) until it's lifted.
   - Tapping a part does its next action if its `after` steps are done; otherwise it shows that
     action's `nudge` and counts it. Lift and slide actions can also be dragged.
-  - Every card shows a built-in **"This is a simulation"** safety note. `safety?` (≤240, markdown)
-    adds a line to that note, right above the scene: every phone teardown that heats or pries uses
+  - Every card shows a built-in **"This is a simulation"** safety note, one paragraph: the bold
+    words, then the card's `safety?` line (≤240, markdown) or, without one, "Real phones and laptops
+    should only be opened by an adult or a repair shop." The step count sits on the scene panel
+    (no separate progress bar or instruction line). A `safety` line: every phone teardown that heats or pries uses
     it to say this can damage the battery and start a fire, which is why repairers use special
     tools and training. Never a how-to. Removed parts go to a "Parts out" tray, which is used for
     refitting.
@@ -306,7 +311,8 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - Control and output ids are model input/output names (camelCase allowed). The schema checks they
     exist with the right kind.
   - The `device` output is a phone or laptop mockup that stutters as `smooth` drops, with its state
-    always in text too.
+    always in text too. On phones it sits beside the other outputs (drawn a little smaller), and two
+    or more meters without a device sit side by side, so the controls stay on a 360×640 screen.
   - Answers are ready once a control changes. The server re-grades by running the same model.
 - **`scenario`:** steps tell the story as you go; a picked **ending** is just selected (it can be
   changed) and its consequence and outcome show **after Check**. Try again takes the failed ending
@@ -439,17 +445,19 @@ interactive, update `isInteractiveCard` / `InteractiveCard` in `schema.ts`.
     card N" return to the live card with its answer untouched. In quizzes, Back shows an answered
     question with right or wrong only (still no explanation) and never offers another try. Focus
     moves to the card and an `aria-live` note says where you are.
-  - **Listen** (`ListenButton`, `src/lib/speech.ts`): the browser's own speech, from a tap only,
+  - **Listen** (`ListenButton`, `src/lib/speech.ts`): an icon button in the player header (between
+    the trace and the lesson menu; `listen` on `PlayerShell`). The browser's own speech, from a tap only,
     hidden without support. `speechText(card, status)` (`src/cards/speech.ts`, tested on every card)
     reads the title, body, prompt and the choices, never the answer or explanation before Check
     (lessons read the explanation after Check; quizzes never do). Glossary marks read as their word,
     and technical values are made speakable (`192.0.2.1` → "192 dot 0 dot 2 dot 1", bits digit by
-    digit). It stops on any change of card, Back or Check. The voice (`pickVoice` in `src/lib/voices.ts`, tested) is never a novelty voice (macOS's Albert, Bad News, Zarvox…); it prefers the learner's locale (en-AU, then en-GB, then any English), then higher-quality voices (Premium/Enhanced/Natural/Neural, the well-known system voices, Google's and Microsoft's), then on-device ones; with nothing suitable the browser's en-AU default is used. "Slower / Normal speed" is saved per
-    device (localStorage).
+    digit). It stops on any change of card, Back or Check. The voice (`pickVoice` in `src/lib/voices.ts`, tested) is never a novelty voice (macOS's Albert, Bad News, Zarvox…); it prefers the learner's locale (en-AU, then en-GB, then any English), then higher-quality voices (Premium/Enhanced/Natural/Neural, the well-known system voices, Google's and Microsoft's), then on-device ones; with nothing suitable the browser's en-AU default is used. "Listen speed" (Normal / Slower,
+    `ReadingSpeed`, in the lesson menu) is saved per device (localStorage).
   - **Where people quit:** leaving an unfinished lesson (✕, the browser's back, closing the tab)
     sends `lesson_quit` once, with the lesson id and the card number only.
-  - **Hints** (`HintReveal`): a "Hint" button under the card, with the cost up front ("Using it:
-    +5 XP instead of +10"). Opening it once makes the card pay retry XP. Rules live in
+  - **Hints** (`hint` on `FeedbackFooter`): a "Hint" button in the footer beside Back, with the cost
+    up front on the button ("costs 5 XP", `hintCost`); the hint text opens in the footer above the
+    buttons. Opening it once makes the card pay retry XP. Rules live in
     `src/lib/hints.ts` (`visibleHint`: lessons only, graded cards with a hint, until correct).
   - **Nudges:** a wrong answer shows `nudgeFor(card, answer)` under "Not quite"; the full
     explanation stays collapsed.

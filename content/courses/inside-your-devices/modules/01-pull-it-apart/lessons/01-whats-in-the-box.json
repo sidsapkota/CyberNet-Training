@@ -185,7 +185,7 @@
       "id": "open-the-phone",
       "type": "teardown",
       "difficulty": "core",
-      "prompt": "Phones are **glued shut**. Soften the glue, lift the back and the bracket, then **unplug the battery**.",
+      "prompt": "This phone is **glued shut**. Open it and **unplug the battery**.",
       "scene": "phone",
       "view": "bracket-unscrewed",
       "actions": [
@@ -214,7 +214,7 @@
       ],
       "explanation": "Glue, back, bracket, battery. (In a real phone, two tiny screws hold that bracket down; here they're already out.) The battery is **unplugged first**, before anything else is touched. Repair shops do this with special tools and training, because a damaged phone battery can catch fire.",
       "hint": "The back won't lift until its glue is soft. The battery connector is hidden under a small bracket.",
-      "safety": "**Heating or prying a phone can damage its battery and start a fire.** That's why repair shops use special tools and training. It's never something to try at home."
+      "safety": "**Heating or prying a phone can damage its battery and start a fire.** Repair shops use special tools and training, so never try it at home."
     },
     {
       "id": "where-photos-live",
