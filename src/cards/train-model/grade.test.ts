@@ -190,7 +190,7 @@ describe("train_model schema", () => {
     expect(problems({ ...trainModelWords(), examples: [{ ...trainModelWords().examples[0]!, x: 1, y: 1 }, ...trainModelWords().examples.slice(1)] }).join()).toMatch(
       /don't take x or y/,
     );
-    const { x: _x, ...noX } = trainModel().examples[0]!;
+    const noX = { ...trainModel().examples[0]!, x: undefined };
     expect(problems(trainModel({ examples: [noX as never, ...trainModel().examples.slice(1)] })).join()).toMatch(/needs x and y/);
   });
 
