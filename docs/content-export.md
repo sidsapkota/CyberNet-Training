@@ -225,15 +225,14 @@ Open up a laptop and a phone, and meet the parts that make them work.
 
 **Key facts**
 
-- *The same few parts:* Inside, they're surprisingly alike: nearly all of them are built from the **same handful of parts**.
-- *Before we open anything:* Everything you take apart in this course is a **simulation**: tap and drag as much as you like. **Don't open one without an adult or a repair shop.** It can break parts, it can end the device's warranty (the maker's promise to fix it for free), and the **lithium battery inside can catch fire if it's bent or punctured**.
-- *Recap:* Phones and laptops are built from the same parts: **CPU**, **RAM**, **storage**, a **battery**, and the **motherboard** that connects them. In phones, the RAM and storage are chips **soldered** to the board.
+- *Before we open anything:* Everything you open here is a **simulation**, so tap away. **Leave opening real devices to a repair shop.** It can break parts or end the warranty, and a damaged battery can **catch fire**.
+- *Recap:* Repairers **unplug the battery first**.
 
 **Best interactive cards**
 
+- Explore the picture: Phones, laptops and games consoles look different outside, but inside they share the **same few parts**. Here's a laptop with its bottom panel off. **Tap each part** to find out what it does.
 - Take it apart: Now open a laptop yourself. Take out the **four screws**, lift off the **bottom panel**, then **unplug the battery** before touching anything else. (Real laptops often have more screws, and clips too.)
-- Take it apart: Now a phone. Phones are **glued shut**, so repairers soften the glue first. In this simulation: soften the glue, lift off the back, take out the **two tiny screws**, lift the **bracket**, then **unplug the battery**.
-- Take it apart: A repair: take the camera out, fit it back in, then close the phone up again in a safe order.
+- Take it apart: Now a phone. Phones are **glued shut**. Open this one in four steps: **soften the glue**, lift off the back, lift off the **bracket** over the battery connector (its two tiny screws are already out), then **unplug the…
 
 #### Memory vs Storage
 
@@ -242,19 +241,14 @@ Open up a laptop and a phone, and meet the parts that make them work.
 
 **Key facts**
 
-- *Two kinds of space:* Both are measured in gigabytes (**GB**), a way of counting how much data something can hold, but they're two very different parts: **RAM** and **storage**.
-- *The desk and the cupboard:* Think of **RAM** as your desk. It's very fast to reach, but small, and it's **cleared when the power goes off**.
-- *Recap:* **RAM** is the fast desk for what's in use right now. **Storage** is the big cupboard that keeps apps and files until you delete them.
+- *The desk and the cupboard:* That's because a device has two kinds of space, both measured in gigabytes (**GB**). **RAM** is the desk: fast but small.
+- *Recap:* **RAM** is the fast desk for what's open. **Storage** keeps apps and files until you delete them.
 
 **Best interactive cards**
 
-- Simulator: This phone has **4 GB of RAM**. You want to play the **racing game** while your **music** keeps playing. Get the phone running **smoothly**. (The phone's own system always needs some RAM too.)
+- Simulator: This phone has **4 GB of RAM**. When the open apps need more than that, it starts to lag. Play the **racing game** with your **music** still on, and get it running **smoothly**. (The phone's own system always needs…
 - Choose what happens: You're about to take a photo of a rainbow, and a message pops up.
 - Simulator: You're choosing a new laptop for video editing. More RAM costs more money. Pick the **smallest** amount of RAM that runs everything **smoothly**.
-
-**Surprising facts**
-
-- A phone might say it has "8 GB" of one thing and "256 GB" of another.
 
 #### Meet the CPU
 
@@ -263,20 +257,14 @@ Open up a laptop and a phone, and meet the parts that make them work.
 
 **Key facts**
 
-- *Billions of tiny steps:* Every tap, every video frame and every game move comes down to the **CPU** following instructions. The trick is speed: a CPU gets through **billions** of these steps every second.
-- *The clock:* Each beat is a **tick** of its **clock**, and the CPU moves its work forward on every tick. Clock speed is measured in **gigahertz (GHz)**.
-- *More cooks in the kitchen:* Most CPUs today have several **cores**. So more cores only help when the job can be **split into pieces that don't wait for each other**.
-- *Recap:* The **CPU** follows billions of tiny instructions every second. **Clock speed** in **GHz** is billions of ticks per second.
+- *More cooks in the kitchen:* More cores only help when a job **splits into pieces that don't wait for each other**.
+- *Recap:* **GHz** is speed: 2 GHz is about 2 billion steps a second. **Cores** only help with jobs that split into pieces.
 
 **Best interactive cards**
 
-- Simulator: Saving your finished video (called **exporting** it) takes too long. Add **cores** until it finishes in **3 seconds or less**.
-- Tap the picture: Working hard makes the CPU hot. Tap the **CPU** and the **two parts** that carry its heat away.
+- Simulator: Most CPUs have several **cores**: separate workers that each follow their own steps. Saving your finished video takes too long. Add cores until it finishes in **3 seconds or less**.
+- Tap the picture: Hard work makes the CPU hot. A CPU that gets too hot **slows itself down** to stay safe: that's called **throttling**. Tap the **CPU** and the **two parts** that carry its heat away.
 - Simulator: This laptop is on a blanket, its fan is clogged with dust, and it's working as hard as it can, so it's slowing down. Get it back to its full **3 GHz** without lowering the **load** (how hard it's working).
-
-**Surprising facts**
-
-- One gigahertz means **one billion ticks per second**, so a 3 GHz CPU ticks three billion times a second.
 
 #### Module quiz (7 questions)
 
@@ -293,17 +281,14 @@ Meet the operating system, the apps it manages, and the files it keeps.
 
 **Key facts**
 
-- *Who's in charge?:* Right now your music app, your browser and your messages all want the CPU, a slice of RAM and a spot on the screen, **all at the same time**.
-- *The operating system:* That something is the **operating system**, or **OS**. It gives each app **turns on the CPU**, switching between them so fast it looks like they all run at once.
-- *The task manager:* Every running program is called a **process**. The OS's **task manager** lists them all, with how much CPU and RAM each one uses.
-- *Helpers in the background:* These **background processes** do jobs for you: checking for updates, keeping your files matched up with the cloud (**syncing**), or scanning for viruses.
-- *Recap:* The **operating system** is the referee. The **task manager** shows every **process**, including background and system ones.
+- *The operating system:* That main program is the **operating system**, or **OS**. It talks to the **hardware** (screen, keyboard, speaker, Wi-Fi), so apps don't have to.
+- *Recap:* The **OS** is the referee: it shares out CPU, RAM and hardware.
 
 **Best interactive cards**
 
-- Simulator: Your laptop has frozen up. Here's its **task manager**. End whatever is hogging the CPU, but **keep your music and your homework browser open**.
-- Choose what happens: You're halfway through an essay on your laptop.
-- Simulator: This laptop has **8 GB of RAM**, and it gets slower the longer it's on. Some apps have a **memory leak**: they keep grabbing RAM and never give it back. Move time forward to **at least 40 minutes**, find the leaky app…
+- Choose what happens: Your music is playing, a game wants its sound effects, and a message has just arrived with a ping. All three apps want the **speaker**, right now.
+- Simulator: Your laptop has frozen. This is its **task manager**: it lists every running program (each one is a **process**) and how much of the CPU it's using. **System** is the OS itself: end it and the laptop crashes. End…
+- Simulator: This laptop gets slower the longer it's on. One app keeps grabbing RAM and never gives it back (a **memory leak**). Move time forward to **40 minutes or more**, find that app and end it. Keep the music on.
 
 #### Files and Folders
 
@@ -312,16 +297,14 @@ Meet the operating system, the apps it manages, and the files it keeps.
 
 **Key facts**
 
-- *Where did it go?:* You press **Save** and your essay disappears from the screen. It became a **file** in storage, filed away by the operating system so you (and your apps) can find it again.
-- *Files, folders and extensions:* A **file** is one named piece of saved data: a photo, a song, an essay or an app. Files go in **folders**, and folders can hold other folders, like boxes inside boxes.
-- *The cloud:* When you save to **the cloud**, the file is stored on a company's **server**: a powerful computer in a data centre, reached over the internet.
-- *Recap:* A **file** is saved data with a name. **Folders** hold files and other folders, and the route to a file is its **path**.
+- *Extensions:* The end of a file's name, after the **last** dot, is its **extension**. `.exe` is a **program**: opening it *runs* it, so only open ones you trust.
+- *Recap:* The **path** is the route to a file. The **extension** after the last dot says what it is.
 
 **Best interactive cards**
 
 - Tap the picture: Label what each file really is. Read to the **last** dot.
-- Sort into groups: Where is each file stored: **on your device** or **in the cloud**?
 - Choose what happens: A website promised free holiday wallpapers. You clicked download.
+- Choose what happens: You're on a plane with no Wi-Fi, and you want to work on your essay. It's saved **only in the cloud**.
 
 #### Module quiz (7 questions)
 
@@ -329,7 +312,7 @@ Not exported, so the answers stay secret.
 
 ### Module 3: Fix It Yourself (Pro)
 
-Troubleshoot slow, full and flat devices like a technician.
+Fix slow, full and flat devices with a simple loop, safely.
 
 #### Slow and Full
 
@@ -338,20 +321,18 @@ Troubleshoot slow, full and flat devices like a technician.
 
 **Key facts**
 
-- *Probably not broken:* Most slow or full devices need a **few minutes of tidying**, not a repair shop.
 - *The fix-it loop:* **Describe** exactly what's wrong. **Guess** the most likely cause.
-- *What's safe to delete:* files that are **backed up** somewhere else (like the cloud) **duplicates**, like five blurry copies of one photo
-- *Recap:* Use the loop: **describe, guess, try, check**. **Slow?** Check the task manager.
+- *Recap:* Use the loop: **describe, guess, try, check**. **Slow?** Too many tabs fill RAM.
 
 **Best interactive cards**
 
-- Choose what happens: Your laptop has been getting slower all afternoon.
-- Simulator: This phone is completely full. Free up at least **15 GB**, but **keep your photos and your homework**.
+- Choose what happens: Your laptop has been getting slower all afternoon. It's probably not broken: one part is struggling. RAM, storage or the CPU? Let's find out.
+- Simulator: This phone is completely full. Free up at least **15 GB**. Delete big things that are **backed up** or that you **never use**, but **keep your photos and your essay**.
 - Simulator: An update needs **12 GB free**. Make room without losing anything that **isn't saved somewhere else**.
 
 **Surprising facts**
 
-- "Slow when 30 tabs are open" is a clue.
+- "It's slow when 30 tabs are open" is a clue.
 
 #### Power Problems
 
@@ -360,16 +341,13 @@ Troubleshoot slow, full and flat devices like a technician.
 
 **Key facts**
 
-- *1% left:* Your phone hits **1%** just as you need it most.
-- *Inside the battery:* Phones and laptops use **lithium-ion batteries**. Everything the device does uses some power (measured in **watts**, W), but the biggest drains are usually the **screen's brightness**, **location (GPS)** and **apps busy in the background**.
-- *When it won't charge:* Cables and chargers wear out far more often than phones, so first try **another cable and another socket**. Pocket fluff can also pack into the **charging port**.
-- *When a battery swells:* Very old or damaged batteries can **swell** up.
-- *Recap:* **Brightness, location and background apps** drain the battery most. **Heat** wears batteries out.
+- *When a battery swells:* Phones and laptops use **lithium-ion** batteries. Very old or damaged ones can **swell**: the case bulges, the screen lifts at one edge, or a laptop's trackpad (the touch pad) gets pushed up.
+- *Recap:* **Brightness, location and background apps** drain batteries most. **Heat** wears them out.
 
 **Best interactive cards**
 
-- Choose what happens: You plug your phone in before bed, but the charging symbol doesn't appear.
-- Simulator: You've got a long coach trip. Make the battery last **at least 8 hours**, and keep your **music** playing. (**Low power mode** is a setting that makes the phone save energy.)
+- Simulator: Long coach trip, no charger. Make the battery last **at least 8 hours**, and keep your **music** playing. (**Low power mode** is a setting that makes the phone save energy.)
+- Choose what happens: You plug your phone in before bed, but the charging symbol doesn't appear. Good to know: cables and chargers wear out far more often than phones, and **metal or water** in a charging port can damage it.
 - Choose what happens: You're gaming on your bed with the phone plugged in.
 
 #### Module quiz (8 questions)

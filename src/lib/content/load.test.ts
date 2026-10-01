@@ -11,12 +11,6 @@ import { binaryToggle, explainer, multipleChoice } from "@/test/fixtures";
 import { ContentValidationError, loadContent } from "./load";
 import { lessonShapeProblems } from "./shape";
 
-/**
- * Courses rewritten for the right level (5–7 core cards, 60% hands-on, short explainers, do
- * first). Each joins this list as its rewrite lands; the old rules apply to the rest until then.
- */
-const RIGHT_LEVEL_COURSES = new Set<string>(["how-the-internet-works", "how-ai-really-works", "stay-safe-online"]);
-
 describe("real content in /content", () => {
   it("loads and validates", () => {
     const { courses, lessons } = loadContent();
@@ -56,10 +50,9 @@ describe("real content in /content", () => {
     ]);
   });
 
-  it("rewritten courses follow the right-level rules (src/lib/content/shape.ts)", () => {
+  it("every lesson and quiz follows the right-level rules (src/lib/content/shape.ts)", () => {
     const problems: string[] = [];
     for (const lesson of loadContent().lessons.values()) {
-      if (!RIGHT_LEVEL_COURSES.has(lesson.courseId)) continue;
       if (lesson.kind === "lesson") {
         const help = lesson.moduleId === "when-things-go-wrong";
         for (const p of lessonShapeProblems(lesson, { helpModule: help })) problems.push(`${lesson.id} ${p}`);
@@ -68,22 +61,6 @@ describe("real content in /content", () => {
       }
     }
     expect(problems).toEqual([]);
-  });
-
-  it("courses not yet rewritten keep the old lesson rules: 8-12 cards, hook and recap, ≤3 multiple choice, 2 challenges", () => {
-    for (const lesson of loadContent().lessons.values()) {
-      if (lesson.kind !== "lesson" || RIGHT_LEVEL_COURSES.has(lesson.courseId)) continue;
-      const { cards } = lesson;
-      const where = `lesson ${lesson.id}`;
-      // Photo cards are a quick look next to a diagram, so they don't count toward the length.
-      const steps = cards.filter((c) => c.type !== "photo").length;
-      expect(steps, where).toBeGreaterThanOrEqual(8);
-      expect(steps, where).toBeLessThanOrEqual(12);
-      expect(cards[0]?.type, `${where} opens with a hook explainer`).toBe("explainer");
-      expect(cards.at(-1)?.type, `${where} ends with a recap explainer`).toBe("explainer");
-      expect(cards.filter((c) => c.type === "multiple_choice").length, where).toBeLessThanOrEqual(3);
-      expect(cards.filter((c) => c.difficulty === "challenge").length, where).toBe(2);
-    }
   });
 
   it("gives every lesson an icon, never the same one twice in a module (quizzes keep the hub)", () => {

@@ -700,6 +700,49 @@ Each caption and alt text was checked against the photo itself. The phone photo 
 | `/photos/laptop-heat-pipe.jpg` | `meet-the-cpu/real-heat-pipe` | A laptop (model not recorded) | Kristoferb | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Laptop_Heat_Pipe.JPG) |
 | `/photos/laptop-ram-stick.jpg` | `memory-vs-storage/real-ram` | Samsung 8 GB DDR4 SO-DIMM | D-Kuru | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:DDR_4_RAM_SO-DIMM_8GB_by_Samsung-top_front_PNr%C2%B00838.jpg) |
 
+## Right-level rewrite (October 2026)
+
+The course was rewritten for curious beginners aged 13+ at level **Easy** (game-like: little reading,
+mostly hands-on, almost everyone succeeds). Every lesson has 5–7 core cards plus up to 2 bonus cards
+and at most one photo (about 5–6 minutes), is at least 60% hands-on with 2+ hands-on card types, and
+opens with something to do. Cut (approved list D1–D12, with the owner's change to D2): the 13-step
+camera swap, three photos, the clock explainer, MB→GB and video-division maths, `.docx`/`.txt`/`.png`,
+a repeated update card, an off-topic labelling bonus, and battery detail ("a few hundred charges",
+watts). **"Open the phone" was kept and simplified to four taps** (soften the glue, lift the back,
+lift the bracket, unplug the battery) using a new phone view where the bracket's two screws are
+already out; the card and its explanation say real phones have those screws. **Where this section
+and the per-lesson notes below disagree, this section wins.**
+
+**What each lesson teaches now**
+- 1.1 The main parts of a laptop and a phone (by exploring them); a laptop and a phone opened as simulations; the battery is unplugged first; leave opening real devices to a repair shop.
+- 1.2 RAM vs storage: what survives switching off, what fills up; downloads need free storage, not RAM; full RAM makes a phone lag; a restart empties RAM.
+- 1.3 GHz as billions of steps a second; cores help only when a job can be split; cooling (fan, heat pipe) and throttling (a hot CPU slows itself down); most phones have no fan.
+- 2.1 The OS is the referee (CPU turns, RAM, hardware); end a frozen app's process in the task manager, never System; save, then let updates finish; a web page can't see what's on your laptop, so "virus found" pop-ups are fake (bonus).
+- 2.2 Files, folders and paths; the extension after the last dot (`.jpg`, `.mp3`, `.mp4`, `.exe`); disguised `.exe` files; the cloud is a company's computer over the internet; offline needs a copy on your device (bonus).
+- 3.1 Tell full RAM, full storage and heat apart; the describe → guess → try → check loop; soft surfaces block vents (throttling); delete safely (copies yes, system files never).
+- 3.2 The biggest battery drains (found in the simulator); heat harms batteries; a safe order for charging problems; swollen batteries: stop, don't press, get an adult or a repair shop.
+
+**Safety (unchanged rules, new wording):** `safety-first` now says "Leave opening real devices to a
+repair shop." Port fluff: phone off, an adult, a soft dry brush, never metal or water, or a repair
+shop. Overheating: cool it slowly on a hard surface, never in the fridge. The final's
+`q-phone-safe-order` lists a repair shop's order (no tools, no temperatures) and says it's never
+something to try at home.
+
+**Simplifications added in the rewrite**
+- "2 GHz = 2 billion steps a second" (the explanation adds that GHz counts clock ticks and real CPUs can do several steps per tick).
+- The phone teardown starts with the bracket's screws already out (view `bracket-unscrewed`); real repairs have more steps.
+- "The OS mixes the speaker so all three are heard"; "quick turns" leaves out multiple cores and priorities; apps are "loaded into RAM to run"; the memory leak grows at a steady 0.15 GB a minute.
+- "The extension tells the OS which app opens it" (no file signatures); "download a copy before you fly" stands in for "available offline".
+- "Sudden cold can form water droplets inside" (condensation); "an unused app can be installed again later"; "cables wear out far more often than phones"; the battery simulator's watts are illustrative; the battery running out halfway through an update "is like switching off halfway".
+
+**Beginner audit after the rewrite:** all 14 simulators start unsolved, can be solved and behave as
+their prompts say; no unsafe advice. Fixed: the four-tap phone opening; quiz teardown copies replaced
+(`q-unplug-first`, `q-phone-safe-order`); the path nesting stated in `order-the-path`; quiz copies in
+Module 2 replaced; `fill-the-ram` prompt matches the simulator; a mis-taught pop-up line; small
+wording and a motherboard label position (`labelAt`) so its spot doesn't sit on the CPU.
+
+---
+
 ## Module 1: Pull It Apart
 
 ### 1.1 What's in the Box (`whats-in-the-box`)

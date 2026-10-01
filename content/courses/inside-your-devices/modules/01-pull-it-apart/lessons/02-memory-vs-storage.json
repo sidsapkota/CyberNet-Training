@@ -6,44 +6,35 @@
   "icon": "memory-stick",
   "cards": [
     {
-      "id": "two-kinds-of-space",
-      "type": "explainer",
+      "id": "still-there-after-off",
+      "type": "sort_bins",
       "difficulty": "core",
-      "title": "Two kinds of space",
-      "body": "A phone might say it has \"8 GB\" of one thing and \"256 GB\" of another. Both are measured in gigabytes (**GB**), a way of counting how much data something can hold, but they're two very different parts: **RAM** and **storage**.\n\nMixing them up is one of the most common tech mistakes. By the end of this lesson, you won't."
+      "prompt": "Your laptop's battery dies without warning. When you charge it and switch it back on, what's **still there**? Think about what was **saved** and what was only **open**.",
+      "bins": [{ "id": "still", "label": "Still there" }, { "id": "gone", "label": "Gone" }],
+      "items": [
+        { "id": "saved-photo", "label": "A photo you saved last week", "bin": "still" },
+        { "id": "installed-app", "label": "An app you installed", "bin": "still" },
+        { "id": "downloaded-song", "label": "A song you downloaded", "bin": "still" },
+        { "id": "unsaved-essay", "label": "An essay you hadn't saved yet", "bin": "gone" },
+        { "id": "unsaved-level", "label": "A half-played game level, not saved", "bin": "gone" },
+        { "id": "unsaved-drawing", "label": "A drawing you'd started but hadn't saved", "bin": "gone" }
+      ],
+      "explanation": "Saved and installed things live in **storage**, which keeps them with the power off. Anything that was only open lived in **RAM**, which is wiped when the power goes. (That's why many apps save your work for you every few minutes.)",
+      "hint": "For each one, ask: was it saved or installed, or was it only open on the screen?",
+      "nudge": "Saving is what keeps things safe. Anything that was only open, and never saved, doesn't survive the power going off."
     },
     {
       "id": "desk-and-cupboard",
       "type": "explainer",
       "difficulty": "core",
       "title": "The desk and the cupboard",
-      "body": "Think of **RAM** as your desk. It's where you spread out whatever you're working on *right now*. It's very fast to reach, but small, and it's **cleared when the power goes off**.\n\n**Storage** is the cupboard. It's much bigger and slower to reach, but things stay there until you delete them: apps, photos, songs, saved files.\n\nWhen you open an app, it's copied from storage onto the desk. When the desk is full, a laptop starts shuffling things back into the cupboard, which slows everything down. A phone usually closes apps you aren't looking at, so they have to reload later."
-    },
-    {
-      "id": "real-ram",
-      "type": "photo",
-      "difficulty": "core",
-      "title": "A real RAM stick",
-      "photo": {
-        "src": "/photos/laptop-ram-stick.jpg",
-        "alt": "A green laptop RAM stick with a label in the middle, black memory chips and a row of gold contacts along its bottom edge.",
-        "width": 3594,
-        "height": 1779
-      },
-      "caption": "A laptop RAM stick (8 GB). The gold contacts along the bottom plug into a slot. In phones and many thin laptops, the RAM chips are soldered straight onto the board instead.",
-      "credit": {
-        "author": "D-Kuru",
-        "licence": "CC BY-SA 4.0",
-        "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:DDR_4_RAM_SO-DIMM_8GB_by_Samsung-top_front_PNr%C2%B00838.jpg",
-        "device": "Samsung 8 GB DDR4 SO-DIMM"
-      }
+      "body": "That's because a device has two kinds of space, both measured in gigabytes (**GB**).\n\n**RAM** is the desk: fast but small. It holds whatever is open right now, and it's **cleared when the power goes off**.\n\n**Storage** is the cupboard: bigger and slower. It keeps apps, photos and saved files until you delete them."
     },
     {
       "id": "fill-the-ram",
       "type": "simulator",
       "difficulty": "core",
-      "prompt": "This phone has **4 [[GB|gigabyte]] of RAM**. You want to play the **racing game** while your **music** keeps playing. Get the phone running **smoothly**. (The phone's own system always needs some RAM too.)",
+      "prompt": "This phone has **4 [[GB|gigabyte]] of RAM**. When the open apps need more than that, it starts to lag. Play the **racing game** with your **music** still on, and get it running **smoothly**. (The phone's own system always needs some RAM too.)",
       "model": "memory",
       "params": {
         "ramGb": 4,
@@ -74,41 +65,47 @@
           { "target": "output", "id": "smooth", "op": ">=", "value": 0.9 }
         ]
       },
-      "explanation": "Every open app needs room in **RAM**. With the game added, the apps needed 5.8 GB, more than the phone's 4 GB, so it lagged. Closing the [[browser]] and the video call made room for the game and the music.",
+      "explanation": "Every open app needs room in **RAM**. With the game added, the apps needed 5.8 GB, more than the phone's 4 GB, so it lagged. Closing the [[browser]] and the video call made room for the game and the music. (A laptop with full RAM slows down instead, as it shuffles things out to storage.)",
       "hint": "Every open app takes room in RAM. The game and the music must stay on, so which apps don't you need?",
       "nudge": "If it still lags, the open apps need more room than the phone's 4 GB of RAM. Keep the game and music on, and close what you don't need."
     },
     {
-      "id": "sort-ram-storage",
-      "type": "sort_bins",
+      "id": "real-ram",
+      "type": "photo",
       "difficulty": "core",
-      "prompt": "Where does each thing live: in **RAM** or in **storage**?",
-      "bins": [
-        { "id": "ram", "label": "RAM" },
-        { "id": "storage", "label": "Storage" }
-      ],
-      "items": [
-        { "id": "game-now", "label": "The game you're playing right now", "bin": "ram" },
-        { "id": "photos", "label": "Photos you took last summer", "bin": "storage" },
-        { "id": "unsaved", "label": "An essay you haven't saved yet", "bin": "ram" },
-        { "id": "apps", "label": "Apps you installed but aren't using", "bin": "storage" },
-        { "id": "page", "label": "The web page open on your screen", "bin": "ram" },
-        { "id": "songs", "label": "Downloaded songs", "bin": "storage" }
-      ],
-      "explanation": "**RAM** holds what's in use right now, like the open game and page. That's why an unsaved essay is lost if the power cuts out. **Storage** keeps everything else, even when the device is off.",
-      "hint": "For each one, ask: is it open and in use right now, or kept for later, even when the device is off?",
-      "nudge": "RAM is the desk for whatever is open now. Storage is the cupboard for things kept until you delete them."
+      "title": "A real RAM stick",
+      "photo": {
+        "src": "/photos/laptop-ram-stick.jpg",
+        "alt": "A green laptop RAM stick with a label in the middle, black memory chips and a row of gold contacts along its bottom edge.",
+        "width": 3594,
+        "height": 1779
+      },
+      "caption": "A laptop RAM stick (8 GB). The gold contacts along the bottom plug into a slot. In phones and many thin laptops, the RAM chips are soldered straight onto the board instead.",
+      "credit": {
+        "author": "D-Kuru",
+        "licence": "CC BY-SA 4.0",
+        "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:DDR_4_RAM_SO-DIMM_8GB_by_Samsung-top_front_PNr%C2%B00838.jpg",
+        "device": "Samsung 8 GB DDR4 SO-DIMM"
+      }
     },
     {
-      "id": "films-that-fit",
-      "type": "numeric_input",
+      "id": "what-fits",
+      "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Your laptop has **256 [[GB|gigabyte]]** of free [[storage]]. Each film you download takes up **8 GB**. How many films fit?",
-      "answer": 32,
-      "unit": "films",
-      "hint": "Divide the free space by the size of one film.",
-      "explanation": "256 ÷ 8 = **32** films. Storage is what fills up when you download things. [[RAM]] doesn't change when you download a film.",
-      "nudge": "Every film takes the same 8 GB, so work out how many 8 GB pieces fit into 256 GB."
+      "prompt": "Downloads are saved in **[[storage]]**. Your laptop has **20 [[GB|gigabyte]] free**. Sort each download: does it fit on its own?",
+      "bins": [{ "id": "fits", "label": "Fits" }, { "id": "too-big", "label": "Won't fit" }],
+      "items": [
+        { "id": "film", "label": "A film (4 GB)", "bin": "fits" },
+        { "id": "album", "label": "A music album (0.2 GB)", "bin": "fits" },
+        { "id": "puzzle-game", "label": "A puzzle game (15 GB)", "bin": "fits" },
+        { "id": "space-game", "label": "A space game (21 GB)", "bin": "too-big" },
+        { "id": "tv-series", "label": "A whole TV series (25 GB)", "bin": "too-big" },
+        { "id": "racing-game", "label": "A huge racing game (60 GB)", "bin": "too-big" }
+      ],
+      "explanation": "Anything up to 20 GB fits. The 21 GB game misses by just 1 GB, and the series and the racing game are far too big. [[RAM]] makes no difference: a download needs free storage.",
+      "hint": "Compare each size with the 20 GB you have free.",
+      "nudge": "Only free storage counts here. Anything bigger than 20 GB won't fit, even if it's only a little bigger."
     },
     {
       "id": "storage-full",
@@ -121,7 +118,12 @@
           "id": "message",
           "text": "**\"Not enough space. Can't save photo.\"** Which kind of space has run out?",
           "choices": [
-            { "id": "storage", "text": "Storage space", "consequence": "Right. Saving a photo needs room in storage, and yours is full.", "next": "fix" },
+            {
+              "id": "storage",
+              "text": "Storage space",
+              "consequence": "Right. Saving a photo needs room in storage, and yours is full.",
+              "next": "fix"
+            },
             {
               "id": "ram",
               "text": "RAM space",
@@ -164,26 +166,26 @@
       "difficulty": "core",
       "prompt": "A laptop has been on for weeks and feels slow. Why does restarting it often help?",
       "options": [
-        { "id": "clears-ram", "text": "It clears RAM, so the laptop starts again with a tidy desk" },
+        { "id": "clears-ram", "text": "It empties RAM, clearing out what apps left behind" },
         {
           "id": "deletes-files",
-          "text": "It deletes old files from storage",
+          "text": "It clears out old files you no longer need from storage",
           "nudge": "Restarting doesn't touch storage: every file is still there afterwards. Think about which space is cleared when the power goes off."
         },
         {
           "id": "faster-cpu",
-          "text": "It makes the CPU run at a higher speed",
+          "text": "It resets the CPU so it can run at a higher speed again",
           "nudge": "A restart doesn't change the CPU at all. Think about the desk: what happens to it when the power goes off?"
         },
         {
           "id": "more-ram",
-          "text": "It adds more RAM to the laptop",
+          "text": "It gives the laptop more RAM than it had before",
           "nudge": "The amount of RAM is fixed by the parts inside, so a restart can't add any. Think about what happens to what's already in it."
         }
       ],
       "correctOptionId": "clears-ram",
       "explanation": "Turning off clears **RAM**, including leftovers from apps that didn't tidy up after themselves. Your files in **storage** stay exactly where they were, and the amount of RAM never changes.",
-      "hint": "Think of the desk and the cupboard. Which one is cleared when the power goes off?"
+      "hint": "Which kind of space does a restart affect?"
     },
     {
       "id": "choose-the-ram",
@@ -282,7 +284,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- **RAM** is the fast desk for what's in use right now. It's small, and it's cleared when the power goes off.\n- **Storage** is the big cupboard that keeps apps and files until you delete them.\n- **Full RAM:** apps lag or reload. Close what you aren't using, or restart.\n- **Full storage:** you can't save or download. Delete files you don't need (after [[backing them up|backup]]).\n\nNext: the [[CPU]], the part that does the work."
+      "body": "- **RAM** is the fast desk for what's open. Power off clears it.\n- **Storage** keeps apps and files until you delete them.\n- Full RAM? Close apps. Full storage? Delete files you've [[backed up|backup]].\n\nNext: the [[CPU]], the part that does the work."
     }
   ]
 }

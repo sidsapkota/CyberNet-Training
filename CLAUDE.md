@@ -235,7 +235,10 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - **Accuracy:** phone RAM and storage are never removable. The laptop is an *example* with a
     removable RAM stick and SSD; any card that shows it says many thin laptops have them soldered.
     Phones are glued shut: phone teardowns start with `heat` then `lift` on the back cover, and a
-    screwed bracket holds the battery connector.
+    screwed bracket holds the battery connector. The phone's `bracket-unscrewed` view starts with
+    the bracket's two screws already out, so "open the phone" is four taps (soften the glue, lift
+    the back, lift the bracket, unplug the battery); the card says the screws are out and that real
+    phones have them.
   - Parts under a cover that's still on can't be seen, tapped or announced. Schemas check every part
     id, view and visibility at load.
   - Add a scene by adding its manifest and its drawing; `scenes.test.ts` checks every part is drawn.
@@ -296,7 +299,7 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
     glued back, not an older screwed one), and never shows a how-to (temperatures, tools).
   - Check every caption and `alt` against the photo itself. List each photo, with its source,
     author and licence, in `content/REVIEW.md`.
-  - **Not counted** in the 8–12 cards per lesson, and never in quizzes.
+  - **Not counted** as cards (at most one photo per lesson), and never in quizzes.
 - **`sort_bins`:** tap an item then a bin, or drag (dnd-kit). Snap sound; wrong items go back to the
   tray after Try again.
 - **`train_model`** (AI course): learners teach a tiny model and see it make mistakes. The models
@@ -1310,8 +1313,8 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   (predict, drag, try) set up by its own prompt, then name the idea in a short explainer.
 - **Explain before naming.** Introduce an idea with an everyday analogy first, then give the technical
   term in **bold** (e.g. light switch → **bit**; 8 bits → **byte** → **octet**).
-- **Keep it small.** One idea per explainer, at most 2–4 short paragraphs. Lessons run about 8–12
-  cards and alternate explaining with doing.
+- **Keep it small.** One idea per explainer, at most 60 words. Lessons run 5–7 core cards (about
+  3–5 minutes) and mostly teach by doing; a card's own prompt can teach the idea it asks about.
 - **Explanations teach.** Say *why* the answer is right and address likely wrong answers. Wrong
   options should reflect real misconceptions.
 - **Teach before test.** Never grade something that hasn't been shown or explained earlier in the
@@ -1356,9 +1359,8 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   non-interactive cards (explainer or photo) in a row; a recap explainer of at most 3 bullets at the
   end; at most 3 multiple choice; at most one photo (photos don't count as cards). Quizzes have 5–8
   core, interactive questions, at most one vocabulary match, and no word-for-word copies of lesson
-  cards. `load.test.ts` enforces these for every course in `RIGHT_LEVEL_COURSES`; courses not yet
-  rewritten keep the old rules (8–12 cards, hook and recap explainers, exactly 2 challenges) until
-  they join the list. It also checks that
+  cards. `load.test.ts` enforces these for every lesson and quiz (`npx tsx scripts/check-shape.ts
+  <course-id> [module-id]` prints each lesson's counts and problems while you work). It also checks that
   every simulator card starts unsolved and has a solution, that every drawn part is explored before
   a card tests it, and that every Inside Your Devices
   lesson uses at least 2 hands-on types (hotspot, teardown, simulator, scenario, sort_bins).
@@ -1378,6 +1380,10 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   incident (a hack, a scam, abuse) is always in a free module, never behind Pro. Safety and help
   information must never be behind a paywall. `load.test.ts` checks the modules this covers
   (currently Stay Safe Online's "When Things Go Wrong"); add new ones to its `alwaysFree` list.
+  Help lines inside other courses also sit in a free lesson: How AI Really Works has its Kids
+  Helpline / 000 card in free lesson 1.3 as well as 6.2 (word for word the same). Help information
+  is always in core cards (a prompt, explainer or recap), never only in a bonus card or an
+  after-answer explanation.
 - **Safe examples only:** IPv4 documentation ranges (`192.0.2.0/24`, `198.51.100.0/24`,
   `203.0.113.0/24`) stand in for public addresses, alongside the private ranges, `2001:db8::/32`
   and `example.com`/`example.org`. Never use a real person's or company's address. `load.test.ts`

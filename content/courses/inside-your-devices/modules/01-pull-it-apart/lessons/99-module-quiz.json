@@ -6,32 +6,15 @@
   "passThreshold": 0.7,
   "cards": [
     {
-      "id": "q-open-safely",
-      "type": "teardown",
+      "id": "q-unplug-first",
+      "type": "hotspot",
       "difficulty": "core",
-      "prompt": "Open this laptop the way a technician would, and make it **safe to work on**.",
+      "prompt": "A friend's laptop needs a new SSD. The bottom panel is already off. Tap what has to be **unplugged first**, before anything else inside is touched.",
       "scene": "laptop",
-      "actions": [
-        { "id": "screw-1", "part": "screw-1", "verb": "unscrew", "nudge": "Unscrew this one first." },
-        { "id": "screw-2", "part": "screw-2", "verb": "unscrew", "nudge": "Unscrew this one first." },
-        { "id": "screw-3", "part": "screw-3", "verb": "unscrew", "nudge": "Unscrew this one first." },
-        { "id": "screw-4", "part": "screw-4", "verb": "unscrew", "nudge": "Unscrew this one first." },
-        {
-          "id": "panel",
-          "part": "panel",
-          "verb": "lift",
-          "after": ["screw-1", "screw-2", "screw-3", "screw-4"],
-          "nudge": "All four screws have to come out first."
-        },
-        {
-          "id": "unplug",
-          "part": "battery-connector",
-          "verb": "unplug",
-          "after": ["panel"],
-          "nudge": "Lift the panel off first."
-        }
-      ],
-      "explanation": "Screws, then the panel, then **unplug the battery** before touching any other part."
+      "view": "open",
+      "mode": "tap",
+      "targets": ["battery-connector"],
+      "explanation": "The **battery connector** comes out first, so no part has power while the SSD is swapped. Only then is it safe to touch the SSD, the RAM or anything else."
     },
     {
       "id": "q-tap-ram",
@@ -62,26 +45,27 @@
       "type": "sort_bins",
       "difficulty": "core",
       "prompt": "Sort each one: **RAM** or **storage**?",
-      "bins": [
-        { "id": "ram", "label": "RAM" },
-        { "id": "storage", "label": "Storage" }
-      ],
+      "bins": [{ "id": "ram", "label": "RAM" }, { "id": "storage", "label": "Storage" }],
       "items": [
-        { "id": "video-playing", "label": "The video you're watching right now", "bin": "ram" },
-        { "id": "saved-homework", "label": "Homework you saved yesterday", "bin": "storage" },
+        { "id": "video-playing", "label": "A video call you're on right now", "bin": "ram" },
+        { "id": "saved-homework", "label": "A report you saved yesterday", "bin": "storage" },
         { "id": "open-tabs", "label": "Your open browser tabs", "bin": "ram" },
         { "id": "installed-game", "label": "A game you installed last month", "bin": "storage" }
       ],
       "explanation": "Things in use right now are in **RAM**. Saved and installed things stay in **storage**, even when the device is off."
     },
     {
-      "id": "q-how-many-videos",
-      "type": "numeric_input",
+      "id": "q-game-fits",
+      "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A phone has **64 GB** of free storage. Each video you film takes up **4 GB**. How many videos fit?",
-      "answer": 16,
-      "unit": "videos",
-      "explanation": "64 ÷ 4 = **16** videos."
+      "prompt": "Your laptop has **8 GB of RAM** and **20 GB of free storage**. Can you download a **12 GB** game?",
+      "options": [
+        { "id": "yes-storage", "text": "Yes, it's saved in storage, which has 20 GB free" },
+        { "id": "no-ram", "text": "No, the game is bigger than the 8 GB of RAM" },
+        { "id": "close-apps", "text": "Only after closing apps to free up some space" }
+      ],
+      "correctOptionId": "yes-storage",
+      "explanation": "Downloads are saved in **storage**, and 12 GB fits in the 20 GB free. RAM doesn't limit downloads, and closing apps only frees RAM, not storage."
     },
     {
       "id": "q-cores-help",
@@ -89,22 +73,22 @@
       "difficulty": "core",
       "prompt": "Which job gets **faster** with more CPU cores?",
       "options": [
-        { "id": "photos", "text": "Resizing 1,000 separate photos" },
+        { "id": "photos", "text": "Adding filters to 300 separate photos" },
         { "id": "treasure", "text": "Solving a puzzle where every step needs the one before" },
-        { "id": "storage", "text": "Fitting more files into storage" }
+        { "id": "storage", "text": "Opening one big file that can't be split" }
       ],
       "correctOptionId": "photos",
-      "explanation": "Separate photos can be shared between cores. A chain of steps has to go in order, and cores don't change how much storage you have."
+      "explanation": "Separate photos can be shared between cores. A chain of steps has to go in order, and a job that can't be split runs on one core, however many there are."
     },
     {
       "id": "q-throttling",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A laptop gets very hot while gaming and suddenly runs slower. What's happening?",
+      "prompt": "While you game, a laptop's fan is roaring. The laptop gets very hot, then suddenly runs slower. What's happening?",
       "options": [
-        { "id": "throttle", "text": "The CPU is slowing itself down to stay safe" },
-        { "id": "storage-full", "text": "The battery is running out" },
-        { "id": "ram-melting", "text": "It needs more RAM" }
+        { "id": "throttle", "text": "The hot CPU is slowing itself down to stay safe" },
+        { "id": "storage-full", "text": "The game has filled up all of the storage" },
+        { "id": "ram-melting", "text": "The fan has stopped working for good" }
       ],
       "correctOptionId": "throttle",
       "explanation": "Too much heat makes the CPU **throttle**: it lowers its clock speed to protect itself. Clear vents and a working fan help it stay at full speed."

@@ -1,7 +1,7 @@
 {
   "id": "fix-it-yourself",
   "title": "Fix It Yourself",
-  "description": "Troubleshoot slow, full and flat devices like a technician.",
+  "description": "Fix slow, full and flat devices with a simple loop, safely.",
   "order": 3,
   "access": "pro",
   "teaserCard": { "lesson": "slow-and-full", "card": "free-up-space" }

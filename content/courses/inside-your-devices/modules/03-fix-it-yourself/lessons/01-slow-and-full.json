@@ -6,38 +6,34 @@
   "icon": "gauge",
   "cards": [
     {
-      "id": "not-broken",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "Probably not broken",
-      "body": "When a device crawls or says it's full, it can feel broken. Usually it isn't.\n\nMost slow or full devices need a **few minutes of tidying**, not a repair shop. And now that you know what [[RAM]], [[storage]] and the [[CPU]] do, you can work out which one is struggling."
-    },
-    {
-      "id": "fix-it-loop",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "The fix-it loop",
-      "body": "Technicians fix problems with a simple loop:\n\n1. **Describe** exactly what's wrong. \"Slow\" is vague. \"Slow when 30 [[tabs|browser-tab]] are open\" is a clue.\n2. **Guess** the most likely cause.\n3. **Try** the simplest, safest fix first.\n4. **Check** whether it worked. If not, go back to step 2.\n\nCommon causes of a slow device: too many apps or tabs open (full [[RAM]]), too many **startup apps** (apps that open by themselves when it switches on), and heat.\n\nOne rule before any fix: **never delete something unless you're sure it's [[backed up|backup]] or not needed.**"
-    },
-    {
       "id": "slow-afternoon",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "Your laptop has been getting slower all afternoon.",
+      "prompt": "Your laptop has been getting slower all afternoon. It's probably not broken: one part is struggling. [[RAM]], [[storage]] or the [[CPU]]? Let's find out.",
       "start": "first",
       "steps": [
         {
           "id": "first",
-          "text": "What do you do first?",
+          "text": "What do you do first? (The [[task manager]] shows what every app is using.)",
           "choices": [
-            { "id": "task-manager", "text": "Open the task manager to see what's busy", "consequence": "Good: look before you fix.", "next": "clue" },
+            {
+              "id": "task-manager",
+              "text": "Open the task manager to see what's busy",
+              "consequence": "Good: look before you fix.",
+              "next": "clue"
+            },
             {
               "id": "booster",
               "text": "Download a \"speed booster\" app",
               "consequence": "Booster apps rarely help, and some are junk or worse. Find the cause first.",
               "outcome": "fail"
             },
-            { "id": "new-laptop", "text": "Ask for a new laptop", "consequence": "That's a very expensive guess. The fix is probably free.", "outcome": "fail" }
+            {
+              "id": "new-laptop",
+              "text": "Buy a new laptop",
+              "consequence": "That's a very expensive way to close 30 tabs. Find the cause first.",
+              "outcome": "fail"
+            }
           ]
         },
         {
@@ -47,35 +43,114 @@
             {
               "id": "close-tabs",
               "text": "Close the tabs you don't need",
-              "consequence": "Each tab uses [[RAM]]. With fewer open, the laptop speeds up. Check: it's working!",
+              "consequence": "Each tab uses RAM. With fewer open, the laptop speeds up. Check: it's working!",
               "outcome": "success"
             },
-            { "id": "delete-photos", "text": "Delete some photos", "consequence": "Photos are in storage. The problem was RAM, so nothing changes.", "outcome": "fail" }
+            {
+              "id": "delete-photos",
+              "text": "Delete some photos to make room",
+              "consequence": "Photos are in storage. The problem was RAM, so nothing changes.",
+              "outcome": "fail"
+            }
           ]
         }
       ],
-      "explanation": "Describe, guess, try, check. The task manager showed **full RAM**, so the fix was closing tabs. Deleting files only frees **storage**.",
-      "hint": "Think of the fix-it loop: before you fix anything, find out what's actually busy. Then match the fix to the part that's full."
+      "explanation": "Look first, then fix. The task manager showed **full RAM**, so the fix was closing tabs. Deleting files only frees **storage**, which wasn't the problem.",
+      "hint": "Before you fix anything, find out what's actually busy. Then match the fix to the part that's full."
     },
     {
-      "id": "safe-to-delete",
+      "id": "fix-it-loop",
       "type": "explainer",
       "difficulty": "core",
-      "title": "What's safe to delete",
-      "body": "When [[storage]] is full, go for big things you don't need:\n\n- files that are **backed up** somewhere else (like [[the cloud|cloud]])\n- **duplicates**, like five blurry copies of one photo\n- apps you **never use** (you can reinstall them later)\n- **setup files** (the files you downloaded to install an app) for apps you've already installed\n\nKeep anything that's your **only copy**, anything you still need, and any **system file** you don't recognise: deleting those can stop the device working."
+      "title": "The fix-it loop",
+      "body": "Good fixers use a simple loop:\n\n1. **Describe** exactly what's wrong. \"It's broken\" is a complaint. \"It's slow when 30 [[tabs|browser-tab]] are open\" is a clue.\n2. **Guess** the most likely cause.\n3. **Try** the simplest, safest fix first.\n4. **Check** whether it worked. If not, guess again."
+    },
+    {
+      "id": "order-the-loop",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "Your friend's laptop crawls whenever lots of tabs are open. Put the fix-it loop in order for this problem.",
+      "items": [
+        { "id": "describe", "label": "Notice it's slow only with lots of tabs open" },
+        { "id": "guess", "label": "Guess that the RAM is full" },
+        { "id": "try", "label": "Close the tabs you don't need" },
+        { "id": "check", "label": "See whether it's faster now" }
+      ],
+      "explanation": "**Describe, guess, try, check.** Spotting *when* it's slow gives the clue, the clue points to RAM, closing tabs is the simple fix, and checking tells you if it worked. If not, you'd go back and guess again.",
+      "hint": "You can't guess a cause until you've described the problem, and you can't check a fix you haven't tried yet.",
+      "nudge": "Each step needs the one before it. Start with what you notice, and end with seeing if it worked."
+    },
+    {
+      "id": "hot-on-the-bed",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "A laptop breathes through its vents. If the [[CPU]] gets too hot, it **slows itself down** to stay safe. This is called **throttling**.",
+      "start": "cause",
+      "steps": [
+        {
+          "id": "cause",
+          "text": "You're watching videos with the laptop on your duvet. Only two tabs are open, and there's plenty of free storage. The fan roars, then everything slows down. What's going on?",
+          "choices": [
+            {
+              "id": "too-hot",
+              "text": "The duvet blocks the vents, so the CPU gets hot and slows down",
+              "consequence": "Yes. The heat can't escape, so the CPU throttles.",
+              "next": "fix"
+            },
+            {
+              "id": "ram-full",
+              "text": "The two tabs have filled the RAM, so the laptop slows down",
+              "consequence": "Two tabs use only a little RAM. Listen to the clue: the fan is roaring.",
+              "outcome": "fail"
+            },
+            {
+              "id": "storage-full",
+              "text": "The videos are filling up storage, so the laptop slows down",
+              "consequence": "There's plenty of free storage, so that's not it. What does a roaring fan tell you?",
+              "outcome": "fail"
+            }
+          ]
+        },
+        {
+          "id": "fix",
+          "text": "What's the best fix?",
+          "choices": [
+            {
+              "id": "hard-table",
+              "text": "Move it onto a hard, flat table so the vents are clear",
+              "consequence": "Air flows again, the CPU cools, and it speeds back up.",
+              "outcome": "success"
+            },
+            {
+              "id": "fridge",
+              "text": "Put it in the fridge for a few minutes to cool it fast",
+              "consequence": "Sudden cold can make water droplets form inside. Let it cool slowly in open air instead.",
+              "outcome": "fail"
+            },
+            {
+              "id": "blanket",
+              "text": "Close all your tabs to cool it down",
+              "consequence": "Only two tabs were open, so that changes very little. The duvet is still blocking the vents, so the heat can't get out.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "explanation": "A roaring fan and a sudden slowdown point to **heat**. Soft things like duvets and cushions block the vents, so the CPU **throttles** (slows itself down) to stay safe. A hard, flat surface lets it breathe.",
+      "hint": "Use the clues: few tabs, plenty of storage, and a roaring fan. Which part does the fan cool down?"
     },
     {
       "id": "free-up-space",
       "type": "simulator",
       "difficulty": "core",
-      "prompt": "This phone is completely full. Free up at least **15 [[GB|gigabyte]]**, but **keep your photos and your homework**.",
+      "prompt": "This phone is completely full. Free up at least **15 [[GB|gigabyte]]**. Delete big things that are **backed up** or that you **never use**, but **keep your photos and your essay**.",
       "model": "storage",
       "params": {
         "capacityGb": 64,
         "systemGb": 14,
         "files": [
           { "id": "photos", "label": "Photos", "gb": 14 },
-          { "id": "homework", "label": "Homework", "gb": 0.5 },
+          { "id": "homework", "label": "Essay", "gb": 0.5 },
           { "id": "old-downloads", "label": "Old setup files", "gb": 6 },
           { "id": "unused-game", "label": "Game you never play", "gb": 9 },
           { "id": "videos", "label": "Videos (backed up)", "gb": 20 }
@@ -83,7 +158,7 @@
       },
       "controls": [
         { "id": "delete-photos", "kind": "toggle", "label": "Delete Photos" },
-        { "id": "delete-homework", "kind": "toggle", "label": "Delete Homework" },
+        { "id": "delete-homework", "kind": "toggle", "label": "Delete Essay" },
         { "id": "delete-old-downloads", "kind": "toggle", "label": "Delete Old setup files" },
         { "id": "delete-unused-game", "kind": "toggle", "label": "Delete Game you never play" },
         { "id": "delete-videos", "kind": "toggle", "label": "Delete Videos (backed up)" }
@@ -100,15 +175,15 @@
           { "target": "control", "id": "delete-homework", "op": "==", "value": false }
         ]
       },
-      "explanation": "Big things you don't need are the quickest wins. The game plus the old downloads free 15 GB, and so do the backed-up videos on their own. Photos and homework were never in danger.",
+      "explanation": "Big things you don't need are the quickest wins. The game plus the old setup files (left over from installing apps) free 15 GB, and so do the backed-up videos on their own. Photos and the essay were never in danger.",
       "hint": "Look for big things you don't need: files that are [[backed up|backup]], or things you never use. Watch the free space meter as you go.",
-      "nudge": "Photos and homework must stay. Pick big items that are backed up or unused, and keep going until the free space meter reaches the goal."
+      "nudge": "Photos and the essay must stay. Pick big items that are backed up or unused, and keep going until the free space meter reaches the goal."
     },
     {
       "id": "delete-or-keep",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Tidying up [[storage]]. Is each one **safe to delete** or one to **keep**?",
+      "prompt": "Tidying up [[storage]]. Delete things that are backed up, **duplicated** or unused. Keep your **only copies**, anything you still need, and **system files** (the device needs them to run). Sort each one.",
       "bins": [
         { "id": "delete", "label": "Safe to delete" },
         { "id": "keep", "label": "Keep" }
@@ -117,29 +192,14 @@
         { "id": "installers", "label": "Setup files for apps already installed", "bin": "delete" },
         { "id": "backed-up", "label": "Videos you've already backed up", "bin": "delete" },
         { "id": "unused-app", "label": "An app you haven't opened in a year", "bin": "delete" },
-        { "id": "blurry", "label": "Blurry copies of the same photo", "bin": "delete" },
+        { "id": "blurry", "label": "Five blurry copies of the same photo", "bin": "delete" },
         { "id": "only-copy", "label": "Your only copy of family photos", "bin": "keep" },
-        { "id": "homework", "label": "Homework due next week", "bin": "keep" },
+        { "id": "homework", "label": "A report due next week", "bin": "keep" },
         { "id": "system-files", "label": "System files you don't recognise", "bin": "keep" }
       ],
-      "explanation": "Delete things that are **backed up, duplicated or unused**. Keep anything that's your **only copy**, anything you still need, and any **system file** you don't recognise: deleting those can stop the device working.",
-      "hint": "Ask of each one: is it backed up, a duplicate or unused? Or is it your only copy, still needed, or a system file you don't know?",
-      "nudge": "Only copies, things you still need and unknown system files are risky to delete. Backed-up, duplicated or unused things are the safe ones."
-    },
-    {
-      "id": "order-the-loop",
-      "type": "drag_to_order",
-      "difficulty": "core",
-      "prompt": "Put the fix-it loop in order.",
-      "items": [
-        { "id": "describe", "label": "Describe exactly what's wrong" },
-        { "id": "guess", "label": "Guess the most likely cause" },
-        { "id": "try", "label": "Try the simplest, safest fix" },
-        { "id": "check", "label": "Check whether it worked" }
-      ],
-      "explanation": "**Describe, guess, try, check.** If the check fails, you loop back and try the next most likely cause.",
-      "hint": "Think like a technician: you can't guess a cause until you know the problem, and you can't check a fix you haven't tried yet.",
-      "nudge": "Each step needs the one before it. Start with what you'd do before you know anything, and end with seeing if it worked."
+      "explanation": "Delete things that are **backed up, duplicated or unused** (an unused app can be installed again later). Keep anything that's your **only copy**, anything you still need, and any **system file**: deleting those can stop the device working.",
+      "hint": "Ask of each one: is it backed up, a duplicate or unused? Or is it your only copy, still needed, or a system file?",
+      "nudge": "Only copies, things you still need and system files are risky to delete. Backed-up, duplicated or unused things are the safe ones."
     },
     {
       "id": "slow-start",
@@ -160,7 +220,7 @@
             },
             {
               "id": "brightness",
-              "text": "The screen is too bright",
+              "text": "The screen is set too bright",
               "consequence": "Brightness affects the battery, not how fast the laptop starts.",
               "outcome": "fail"
             }
@@ -182,7 +242,12 @@
               "consequence": "That's the one to keep. It protects you from the moment you log in.",
               "outcome": "fail"
             },
-            { "id": "delete-system", "text": "Delete the system files that load first", "consequence": "Then the laptop might not start at all.", "outcome": "fail" }
+            {
+              "id": "delete-system",
+              "text": "Delete the system files that load first",
+              "consequence": "Then the laptop might not start at all.",
+              "outcome": "fail"
+            }
           ]
         }
       ],
@@ -236,7 +301,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- Use the loop: **describe, guess, try, check**.\n- **Slow?** Check the [[task manager]]. Full [[RAM]] means closing apps or [[tabs|browser-tab]]; too many **startup apps** means a slow start.\n- **Full?** Delete big things that are [[backed up|backup]], duplicated or unused. Keep your only copies and system files.\n\nNext: batteries, chargers and heat."
+      "body": "- Use the loop: **describe, guess, try, check**.\n- **Slow?** Too many [[tabs|browser-tab]] fill [[RAM]]. Heat makes the CPU slow down.\n- **Full?** Delete what's backed up or unused. Keep your only copies."
     }
   ]
 }

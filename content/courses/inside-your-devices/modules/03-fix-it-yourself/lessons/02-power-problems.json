@@ -6,31 +6,59 @@
   "icon": "battery-warning",
   "cards": [
     {
-      "id": "one-percent",
-      "type": "explainer",
+      "id": "last-the-journey",
+      "type": "simulator",
       "difficulty": "core",
-      "title": "1% left",
-      "body": "Your phone hits **1%** just as you need it most. Or you plug it in overnight and wake up to a flat battery.\n\nPower problems are some of the most common device problems, and many of them are easy to fix, or to avoid altogether."
+      "prompt": "Long coach trip, no charger. Make the battery last **at least 8 hours**, and keep your **music** playing. (**Low power mode** is a setting that makes the phone save energy.)",
+      "model": "battery",
+      "params": { "wattHours": 15 },
+      "controls": [
+        { "id": "brightness", "kind": "slider", "label": "Screen brightness", "min": 0, "max": 100, "step": 10, "unit": "%" },
+        { "id": "music", "kind": "toggle", "label": "Music", "initial": true },
+        { "id": "gps", "kind": "toggle", "label": "Location", "initial": true },
+        { "id": "backgroundApps", "kind": "toggle", "label": "Background apps", "initial": true },
+        { "id": "lowPower", "kind": "toggle", "label": "Low power mode" }
+      ],
+      "outputs": [
+        { "id": "hours", "kind": "meter", "label": "Battery lasts", "unit": "hours" },
+        { "id": "watts", "kind": "meter", "label": "Power used", "unit": "W" }
+      ],
+      "goal": {
+        "all": [
+          { "target": "output", "id": "hours", "op": ">=", "value": 8 },
+          { "target": "control", "id": "music", "op": "==", "value": true }
+        ]
+      },
+      "explanation": "The biggest drains are usually **screen brightness**, **location** and **apps busy in the background**. Turning those down or off (or using **low power mode**) stretches the battery. Music on its own uses very little.",
+      "hint": "Change one setting at a time and watch the power meter. Which one makes the biggest difference? Keep the music on.",
+      "nudge": "Music uses very little power, so it can stay on. Find the settings that make the power meter drop the most."
     },
     {
-      "id": "how-batteries-work",
-      "type": "explainer",
+      "id": "helps-or-harms",
+      "type": "sort_bins",
       "difficulty": "core",
-      "title": "Inside the battery",
-      "body": "Phones and laptops use **lithium-ion batteries**. They store a lot of energy in a small, light pack.\n\nEverything the device does uses some power (measured in **watts**, W), but the biggest drains are usually the **screen's brightness**, **location (GPS)** and **apps busy in the background**.\n\nBatteries also wear out slowly: after a few hundred full charges they hold less. **Heat** wears them out faster, so keep devices out of hot cars and don't charge them under a pillow. If one gets too hot, stop, unplug it and let it cool on a table out of the sun (never in the fridge or freezer)."
-    },
-    {
-      "id": "charging-trouble",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "When it won't charge",
-      "body": "Cables and chargers wear out far more often than phones, so first try **another cable and another socket**.\n\nPocket fluff can also pack into the **charging [[port]]**. With the phone switched off, an adult can help brush it out gently with a soft, dry brush. **Never use metal** (like a pin or paper clip) **or water**. If that doesn't work, a repair shop can clean it safely."
+      "prompt": "Batteries hate **heat**: it wears them out faster, so they hold less charge. Does each habit **help** the battery, or **drain or damage** it?",
+      "bins": [
+        { "id": "helps", "label": "Helps" },
+        { "id": "harms", "label": "Drains or damages it" }
+      ],
+      "items": [
+        { "id": "dim", "label": "Turning the brightness down", "bin": "helps" },
+        { "id": "low-power", "label": "Low power mode on a long day", "bin": "helps" },
+        { "id": "shade", "label": "Keeping it out of the hot sun", "bin": "helps" },
+        { "id": "hot-car", "label": "Leaving it in a hot car", "bin": "harms" },
+        { "id": "pillow", "label": "Charging it under your pillow", "bin": "harms" },
+        { "id": "gps-always", "label": "Location on for every app, all day", "bin": "harms" }
+      ],
+      "explanation": "Lower brightness and low power mode save charge. **Heat** wears a battery out: hot cars and charging under a pillow (which traps heat) are bad news. Location on all day keeps draining it.",
+      "hint": "Two things hurt a battery: heavy use, like location on all day, and **heat**. Which habits save energy or keep it cool?",
+      "nudge": "Heat trapped while charging counts too. Settings that save energy help; anything left running all day drains it."
     },
     {
       "id": "wont-charge",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "You plug your phone in before bed, but the charging symbol doesn't appear.",
+      "prompt": "You plug your phone in before bed, but the charging symbol doesn't appear. Good to know: cables and chargers wear out far more often than phones, and **metal or water** in a charging [[port]] can damage it.",
       "start": "first",
       "steps": [
         {
@@ -45,7 +73,7 @@
             },
             {
               "id": "pin",
-              "text": "Poke a pin into the charging port",
+              "text": "Poke a pin into the charging port to clean it",
               "consequence": "Never put metal in the port. It can scratch the contacts or cause a [[short circuit]].",
               "outcome": "fail"
             }
@@ -57,19 +85,19 @@
           "choices": [
             {
               "id": "adult-brush",
-              "text": "Phone off, ask an adult to help brush it out with a soft, dry brush",
+              "text": "Phone off, get an adult to help brush it out with a soft, dry brush",
               "consequence": "Out comes the fluff, and the cable clicks in properly. It's charging! If it hadn't worked, a repair shop could clean it safely.",
               "outcome": "success"
             },
             {
               "id": "paper-clip",
-              "text": "Dig it out with a paper clip",
+              "text": "Dig the fluff out carefully with a paper clip",
               "consequence": "Metal can damage the port or short it out. Use something soft, or let a repair shop do it.",
               "outcome": "fail"
             },
             {
               "id": "water",
-              "text": "Rinse the port with water",
+              "text": "Rinse the fluff out of the port with water",
               "consequence": "Water and electronics don't mix. It could damage the phone for good.",
               "outcome": "fail"
             }
@@ -77,107 +105,61 @@
         }
       ],
       "explanation": "Start with the simplest fix: **another cable and socket**. Fluff in the port is common: with the phone off, an adult can gently brush it out with something soft and dry. **Never metal, never water.** If in doubt, a repair shop can do it.",
-      "hint": "Start with the simplest, safest fix: cables and chargers wear out more often than phones. For fluff, think soft, dry and an adult's help."
+      "hint": "Start with the simplest, safest fix. For fluff, think soft, dry and a grown-up's help."
     },
     {
       "id": "find-the-port",
       "type": "hotspot",
       "difficulty": "core",
-      "prompt": "Tap the **charging [[port]]**, where the fluff was hiding.",
+      "prompt": "Tap the **charging port**, where the fluff was hiding.",
       "scene": "phone",
       "view": "closed",
       "mode": "tap",
       "targets": ["charging-port"],
       "explanation": "The **charging port** is on the bottom edge. It's open to the outside, which is why pocket fluff collects in it.",
-      "hint": "The charging port is where the charger plugs in. It's open to the outside, which is how pocket fluff gets in. Check the edges of the phone.",
-      "nudge": "Think about where you plug a charger into a phone. That opening is on the outside of the phone, along one of its edges."
+      "hint": "It's where the charger plugs in, and it's open to the outside. Check the edges of the phone.",
+      "nudge": "Think about where you plug a charger into a phone. That opening is on the outside, along one of its edges."
     },
     {
-      "id": "last-the-journey",
-      "type": "simulator",
-      "difficulty": "core",
-      "prompt": "You've got a long coach trip. Make the battery last **at least 8 hours**, and keep your **music** playing. (**Low power mode** is a setting that makes the phone save energy.)",
-      "model": "battery",
-      "params": { "wattHours": 15 },
-      "controls": [
-        { "id": "brightness", "kind": "slider", "label": "Screen brightness", "min": 0, "max": 100, "step": 10, "unit": "%" },
-        { "id": "music", "kind": "toggle", "label": "Music", "initial": true },
-        { "id": "gps", "kind": "toggle", "label": "Location (GPS)", "initial": true },
-        { "id": "backgroundApps", "kind": "toggle", "label": "Background apps", "initial": true },
-        { "id": "lowPower", "kind": "toggle", "label": "Low power mode" }
-      ],
-      "outputs": [
-        { "id": "hours", "kind": "meter", "label": "Battery lasts", "unit": "hours" },
-        { "id": "watts", "kind": "meter", "label": "Power used (watts)", "unit": "W" }
-      ],
-      "goal": {
-        "all": [
-          { "target": "output", "id": "hours", "op": ">=", "value": 8 },
-          { "target": "control", "id": "music", "op": "==", "value": true }
-        ]
-      },
-      "explanation": "The screen at full brightness was the biggest drain. Turning it down, switching off location and stopping background apps (or using **low power mode**) all stretch the battery. Music on its own uses very little.",
-      "hint": "Change one setting at a time and watch the [[watts|watt]] meter. Which one uses the most power? Keep the music on.",
-      "nudge": "Music uses very little power, so it can stay on. The lesson named the biggest drains: find them and turn them down or off."
-    },
-    {
-      "id": "helps-or-harms",
+      "id": "safe-for-the-port",
       "type": "sort_bins",
-      "difficulty": "core",
-      "prompt": "Does each habit **help** the battery, or **drain or damage** it?",
+      "difficulty": "challenge",
+      "prompt": "A tablet won't charge, and its port looks fluffy. Is each idea **safe to try** or could it **damage** the tablet?",
       "bins": [
-        { "id": "helps", "label": "Helps" },
-        { "id": "harms", "label": "Drains or damages it" }
+        { "id": "safe", "label": "Safe to try" },
+        { "id": "unsafe", "label": "Could damage it" }
       ],
       "items": [
-        { "id": "dim", "label": "Turning the brightness down", "bin": "helps" },
-        { "id": "low-power", "label": "Low power mode on a long day", "bin": "helps" },
-        { "id": "shade", "label": "Keeping it out of the hot sun", "bin": "helps" },
-        { "id": "hot-car", "label": "Leaving it in a hot car", "bin": "harms" },
-        { "id": "pillow", "label": "Charging it under your pillow", "bin": "harms" },
-        { "id": "gps-always", "label": "Location on for every app, all day", "bin": "harms" }
+        { "id": "another-cable", "label": "Try another cable", "bin": "safe" },
+        { "id": "another-socket", "label": "Try another plug socket", "bin": "safe" },
+        { "id": "soft-brush", "label": "Tablet off, adult uses a soft, dry brush", "bin": "safe" },
+        { "id": "repair-shop", "label": "Take it to a repair shop", "bin": "safe" },
+        { "id": "pin", "label": "Poke the fluff out with a pin", "bin": "unsafe" },
+        { "id": "paper-clip", "label": "Scrape it out with a paper clip", "bin": "unsafe" },
+        { "id": "rinse", "label": "Rinse the port under the tap", "bin": "unsafe" }
       ],
-      "explanation": "Lower brightness and low power mode save charge. **Heat** is a battery's enemy: hot cars and charging under a pillow (which traps heat) wear it out faster. Location on all day keeps draining it.",
-      "hint": "Two things drain or damage a battery: heavy use, like location on all day, and **heat**. Ask which habits save energy or keep it cool.",
-      "nudge": "Heat is a battery's enemy, including heat trapped while charging. Settings that save energy help; anything left running all day drains it."
+      "explanation": "Cables and sockets first, then something **soft and dry** with an adult's help, or a repair shop. **Metal** can scratch the contacts or cause a [[short circuit]], and **water** can damage the tablet for good.",
+      "hint": "Remember the two things that must never go in a port. Everything else here is gentle.",
+      "nudge": "Pins and paper clips are both metal. Water is just as risky. Soft, dry and gentle is the rule."
     },
     {
       "id": "swollen-batteries",
       "type": "explainer",
       "difficulty": "core",
       "title": "When a battery swells",
-      "body": "Very old or damaged batteries can **swell** up. You might see the case bulge, the screen lift at one edge, or a laptop's trackpad (the touch pad) get pushed up.\n\nA swollen battery can catch fire if it's pressed or punctured. Stop using the device, don't press it, and tell an adult. A repair shop can replace the battery safely."
-    },
-    {
-      "id": "real-swollen-battery",
-      "type": "photo",
-      "difficulty": "core",
-      "title": "A real swollen battery",
-      "photo": {
-        "src": "/photos/swollen-phone-battery.jpg",
-        "alt": "A phone battery removed from its phone, puffed up and wrinkled instead of flat and smooth.",
-        "width": 2448,
-        "height": 3264
-      },
-      "caption": "A **swollen** phone battery, removed from a Samsung Galaxy A13. A healthy battery is flat and smooth; this one has puffed up and wrinkled. That's why a swollen phone should go to a repair shop, not be pressed.",
-      "credit": {
-        "author": "Saimmx",
-        "licence": "CC0",
-        "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:20250807_200837_Swollen_Samsung_battery,_back.jpg",
-        "device": "Samsung EB-BA136ABY (from a Galaxy A13)"
-      }
+      "mascot": "presenting",
+      "body": "Phones and laptops use **lithium-ion** batteries. Very old or damaged ones can **swell**: the case bulges, the screen lifts at one edge, or a laptop's trackpad (the touch pad) gets pushed up.\n\nA swollen battery can catch fire if it's pressed or punctured. Stop using the device, don't press it, and get help from an adult or a repair shop."
     },
     {
       "id": "swollen-battery",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "An old laptop's case is **bulging**, and the trackpad (the touch pad) is being pushed up from underneath. What should you do?",
+      "prompt": "An old laptop's case is **bulging**, and the trackpad is being pushed up from underneath. What should you do?",
       "options": [
         { "id": "stop-tell", "text": "Stop using it, unplug it, and tell an adult" },
         {
           "id": "press-flat",
-          "text": "Press the case flat again",
+          "text": "Press the case flat so the trackpad works",
           "nudge": "Pressing is the risky part. A swollen battery can catch fire if it's pressed or punctured, so hands off."
         },
         {
@@ -188,7 +170,7 @@
       ],
       "correctOptionId": "stop-tell",
       "explanation": "A bulge often means the **battery is swelling**. A swollen [[lithium battery|lithium-ion]] can catch fire if it's pressed, bent or punctured. Stop using it, unplug it, keep it away from anything that can burn, and **tell an adult**. A repair shop can replace the battery safely.",
-      "hint": "A bulging case often means something inside is swelling. Think about what the lesson said is dangerous to do to a swollen battery."
+      "hint": "A bulging case often means something inside is swelling. What did the last card say is dangerous to do to a swollen battery?"
     },
     {
       "id": "too-hot-to-handle",
@@ -209,11 +191,16 @@
             },
             {
               "id": "keep-playing",
-              "text": "Ignore it and keep playing",
+              "text": "Ignore it and keep playing until the level ends",
               "consequence": "The phone will slow down to protect itself, and all that heat wears out the battery.",
               "outcome": "fail"
             },
-            { "id": "rest", "text": "Stop, unplug it and leave it on a table out of the sun", "consequence": "It cools down safely in a few minutes.", "next": "puffy" }
+            {
+              "id": "rest",
+              "text": "Stop, unplug it and leave it on a table out of the sun",
+              "consequence": "It cools down safely in a few minutes.",
+              "next": "puffy"
+            }
           ]
         },
         {
@@ -222,47 +209,28 @@
           "choices": [
             {
               "id": "tell-adult",
-              "text": "Stop using it and tell an adult so it can go to a repair shop",
+              "text": "Stop using it and get it to a repair shop with an adult's help",
               "consequence": "A puffed-up phone often has a swollen battery. A repair shop can replace it safely.",
               "outcome": "success"
             },
             {
               "id": "push-back",
               "text": "Push the screen back down",
-              "consequence": "Pressing on a swollen battery can make it catch fire. Leave it alone and tell an adult.",
+              "consequence": "Pressing on a swollen battery can make it catch fire. Leave it alone and get help.",
               "outcome": "fail"
             }
           ]
         }
       ],
-      "explanation": "An overheating phone needs to **stop, unplug and cool down slowly** on a hard surface out of the sun. Never freeze it. A phone that looks puffed up may have a **swollen battery**: stop using it, don't press it, and tell an adult.",
+      "explanation": "An overheating phone needs to **stop, unplug and cool down slowly** on a hard surface out of the sun. Never freeze it. A phone that looks puffed up may have a **swollen battery**: stop using it, don't press it, and get help from an adult or a repair shop.",
       "hint": "Heat and batteries don't mix, and sudden cold isn't the answer either. Cool it gently, and if something looks swollen, hands off."
-    },
-    {
-      "id": "label-power-parts",
-      "type": "hotspot",
-      "difficulty": "challenge",
-      "prompt": "Label five parts: the three that bring power in, store it and pass it on, plus the CPU and the camera.",
-      "scene": "phone",
-      "view": "open",
-      "mode": "label",
-      "labels": [
-        { "part": "charging-port", "label": "Charging port" },
-        { "part": "battery", "label": "Battery" },
-        { "part": "battery-connector", "label": "Battery connector" },
-        { "part": "cpu", "label": "CPU" },
-        { "part": "camera", "label": "Camera" }
-      ],
-      "explanation": "Power comes in through the **charging port**, is stored in the **battery**, and reaches the board through the **battery connector**. The **CPU** and **camera** are two of the hungriest parts, along with the screen.",
-      "hint": "Follow the power: in from the outside, stored in the part with the lightning bolt, then joined to the board. The CPU is the small shiny chip.",
-      "nudge": "Recall the clues: the battery's lightning bolt, the CPU's small shiny chip, the camera's lens, and the port open on the bottom edge."
     },
     {
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- **Brightness, location and background apps** drain the battery most. [[Low power mode]] helps.\n- **Heat** wears batteries out. Keep devices out of the sun and don't charge them under pillows.\n- Won't charge? Try **another cable and socket** first. For fluff, an adult can gently brush the [[port]] with something soft and dry: never metal or water.\n- A **bulging** device may have a swollen battery. Stop using it, don't press it, and tell an adult.\n\nOne quiz left: the course final."
+      "body": "- **Brightness, location and background apps** drain batteries most. **Heat** wears them out.\n- Won't charge? Another cable first. Never metal or water in the port.\n- Bulging device? Stop using it, don't press it, get help."
     }
   ]
 }
