@@ -77,8 +77,15 @@ try {
   await page.getByRole("button", { name: "Try again" }).click();
   await answer(page, right(liveCard));
   await page.getByRole("button", { name: "Continue" }).waitFor();
-  await page.waitForTimeout(1500);
-  const saved = await open();
+  // Server actions run one at a time, and slower on a real deployment: wait for both writes to land
+  // (the mistake, then the card) before leaving the page, which would cancel any still queued.
+  let saved = [];
+  for (let i = 0; i < 40; i++) {
+    saved = await open();
+    const done = (await admin.from("card_completions").select("card_id").match({ user_id: userId, card_id: liveCard.id })).data ?? [];
+    if (saved.length && done.length) break;
+    await page.waitForTimeout(500);
+  }
   record(
     "A wrong lesson answer is saved once per visit (re-graded on the server)",
     saved.length === 1 && saved[0].lesson_id === LIVE && saved[0].card_id === liveCard.id && saved[0].misses === 1,
@@ -90,7 +97,10 @@ try {
   await admin.rpc("record_mistake", { p_user: userId, p_lesson: "not-a-real-lesson", p_card: "nope" });
   await page.goto(`${BASE}/`);
   const cardTitle = page.getByRole("heading", { name: "Your mistakes" });
-  await cardTitle.waitFor({ timeout: 30000 });
+  await cardTitle.waitFor({ timeout: 30000 }).catch(async (error) => {
+    await page.screenshot({ path: path.join(SHOTS, "mistakes-card-missing.png"), fullPage: true });
+    throw error;
+  });
   const line = await page.locator("section[aria-labelledby=mistakes-card-title] p").innerText();
   record("The dashboard shows the count, leaving out cards not in the content", /^3 cards to try again$/.test(line.trim()), line.trim());
   const proButton = page.getByRole("link", { name: "Review with Pro" });
@@ -143,8 +153,14 @@ try {
   const summary = await page.locator("main p").first().innerText();
   record("The finish screen counts what was fixed", /2 of 3 fixed\. One waits for next time\./.test(summary), summary);
   await page.screenshot({ path: path.join(SHOTS, "mistake-review-done-360.png") });
-  await page.waitForTimeout(1500);
-  const left = (await open()).filter((m) => m.lesson_id !== "not-a-real-lesson");
+  // The finish screen's buttons wait for the last saves.
+  await page.getByRole("link", { name: "Back to dashboard" }).waitFor({ timeout: 30000 });
+  let left = [];
+  for (let i = 0; i < 20; i++) {
+    left = (await open()).filter((m) => m.lesson_id !== "not-a-real-lesson");
+    if (left.length === 1) break;
+    await page.waitForTimeout(500);
+  }
   record("Right answers cleared their mistakes; the skipped one stays", left.length === 1 && left[0].card_id === queue[1].card.id, JSON.stringify(left));
 
   await page.goto(`${BASE}/`);
