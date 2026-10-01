@@ -391,7 +391,7 @@ What counts as AI, how it learns from examples, and where it goes wrong.
 
 - Train a model: Teach the model: tap **Apple** or **Banana** for each fruit.
 - Train a model: Fix the model's mistake.
-- Train a model: This model copies its **3 closest** examples. Label the fruit.
+- Train a model: It copies its **3 closest** examples. Label the fruit.
 
 #### What AI Can't Do
 
@@ -435,7 +435,7 @@ Training data, fair tests, and how bias sneaks in.
 
 - Train a model: Teach the spam filter: tap **Spam** or **Not spam** for each message.
 - Train a model: Fix the spam filter's mistake.
-- Train a model: One example has the wrong label. Take it out to fix the model.
+- Train a model: One example has the wrong label.
 
 #### Testing a Model
 
