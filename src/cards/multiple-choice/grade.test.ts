@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { multipleChoice } from "@/test/fixtures";
+import { gradeUntrusted } from "../grading";
 import {
+  displayOptions,
   describeMultipleChoiceAnswer,
   describeMultipleChoiceCorrect,
   gradeMultipleChoice,
@@ -42,3 +44,28 @@ describe("describeMultipleChoice*", () => {
     expect(describeMultipleChoiceCorrect(card)).toBe("2");
   });
 });
+
+describe("displayOptions (the order on screen)", () => {
+  const card = multipleChoice({ id: "shuffle-me" });
+
+  it("shows every option exactly once, in a different order from the file", () => {
+    const shown = displayOptions(card).map((o) => o.id);
+    expect([...shown].sort()).toEqual(card.options.map((o) => o.id).sort());
+    expect(shown).not.toEqual(card.options.map((o) => o.id));
+  });
+
+  it("is the same every time for a card, and differs between cards", () => {
+    expect(displayOptions(card)).toEqual(displayOptions(card));
+    const orders = new Set(["a", "b", "c", "d", "e", "f"].map((id) => displayOptions(multipleChoice({ id })).map((o) => o.id).join()));
+    expect(orders.size).toBeGreaterThan(1);
+  });
+
+  it("can't change grading: answers are option ids, checked the same on the server", () => {
+    expect(gradeMultipleChoice(card, card.correctOptionId).correct).toBe(true);
+    expect(gradeUntrusted(card, card.correctOptionId)).toBe(true);
+    for (const option of displayOptions(card)) {
+      expect(gradeUntrusted(card, option.id)).toBe(option.id === card.correctOptionId);
+    }
+  });
+});
+

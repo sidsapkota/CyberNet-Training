@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import { XIcon } from "@/components/ui/icons";
 import type { CourseOutline, ModuleOutline } from "@/lib/content/schema";
 import { EASE_OUT_QUICK } from "@/lib/motion";
+import { StartFreeFirst } from "./StartFreeFirst";
 import { WhatsNext } from "./WhatsNext";
 
 /**
@@ -18,12 +19,15 @@ export function UpgradeSheet({
   module,
   open,
   onClose,
+  startFirst = false,
 }: {
   title: string;
   course: CourseOutline;
   module: ModuleOutline;
   open: boolean;
   onClose: () => void;
+  /** Before any free lesson is finished: point at the free start instead of the paywall. */
+  startFirst?: boolean;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
   const reduceMotion = useReducedMotion();
@@ -64,7 +68,11 @@ export function UpgradeSheet({
           <span id="upgrade-sheet-title" className="sr-only">
             {title}: part of CyberNet Pro
           </span>
-          <WhatsNext course={course} module={module} onClose={onClose} />
+          {startFirst ? (
+            <StartFreeFirst course={course} module={module} onClose={onClose} />
+          ) : (
+            <WhatsNext course={course} module={module} onClose={onClose} />
+          )}
         </motion.div>
       )}
     </dialog>
