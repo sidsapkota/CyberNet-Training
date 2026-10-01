@@ -1,11 +1,11 @@
 "use client";
 
 import { motion } from "motion/react";
-import Link from "next/link";
+import Link, { useLinkStatus } from "next/link";
 import { usePathname } from "next/navigation";
-import type { ComponentType } from "react";
+import type { ComponentType, ReactNode } from "react";
 import { LogoLockup } from "@/components/brand/Logo";
-import { CoursesIcon, DashboardIcon, LeaguesIcon, SignInIcon } from "@/components/ui/icons";
+import { CoursesIcon, DashboardIcon, LeaguesIcon, PricingIcon, ProIcon, SignInIcon } from "@/components/ui/icons";
 import { SoundToggle } from "@/components/ui/SoundToggle";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { StreakPill } from "@/components/streak/StreakPill";
@@ -37,8 +37,25 @@ const NAV: NavItem[] = [
 /** Leagues: only for signed-in learners, once leagues have opened. */
 const LEAGUES: NavItem = { href: "/leagues", label: "Leagues", Icon: LeaguesIcon, isActive: (p) => p.startsWith("/leagues") };
 
+/** Pricing (the plans on /pro), or "Your plan" for Pro members. */
+const PRICING: NavItem = { href: "/pro?from=nav", label: "Pricing", Icon: PricingIcon, isActive: (p) => p === "/pro" };
+const YOUR_PLAN: NavItem = { href: "/account/plan", label: "Your plan", Icon: ProIcon, isActive: (p) => p.startsWith("/account/plan") };
+
+/**
+ * The plan item: hidden until a signed-in learner's Pro status is known, so a member never sees
+ * "Pricing" flash before "Your plan".
+ */
+function usePlanItem(): NavItem | null {
+  const { auth, available } = useAuth();
+  const { pro, hasPro } = usePro();
+  if (!available || auth.status === "guest") return PRICING;
+  if (auth.status === "loading" || pro.loading) return null;
+  return hasPro ? YOUR_PLAN : PRICING;
+}
+
 function useNav(): NavItem[] {
-  return useLeaguesOpen() ? [...NAV, LEAGUES] : NAV;
+  const plan = usePlanItem();
+  return [...NAV, ...(useLeaguesOpen() ? [LEAGUES] : []), ...(plan ? [plan] : [])];
 }
 
 /** Top bar: logo, Dashboard, Courses and Leagues (from `sm` up), XP and theme. */
@@ -59,7 +76,7 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 aria-current={active ? "page" : undefined}
-                className={`relative flex items-center px-3 text-small font-semibold transition-colors ${
+                className={`relative flex items-center px-3 text-small font-semibold transition-[background-color,color] active:bg-surface-raised ${
                   active ? "text-ink" : "text-ink-muted hover:text-ink"
                 }`}
               >
@@ -109,10 +126,15 @@ function HeaderAccount() {
   return (
     <Link
       href="/account"
+      // The whole page, prefetched (as before loading.tsx existed): the tap shows it at once, and
+      // the loading screen is only a fallback when a tap beats the prefetch.
+      prefetch
       aria-label={`Account: ${name}${hasPro ? ", Pro" : ""}`}
-      className="hidden items-center gap-2 rounded-control px-1.5 py-1 text-small font-semibold text-ink transition-colors hover:bg-surface-raised sm:flex"
+      className="hidden items-center gap-2 rounded-control px-1.5 py-1 text-small font-semibold text-ink hover:bg-surface-raised sm:flex transition-[background-color,color,scale] active:bg-surface-raised motion-safe:active:scale-95"
     >
-      <UserNode name={auth.displayName} pro={hasPro} className="size-8 text-small" />
+      <Pending>
+        <UserNode name={auth.displayName} pro={hasPro} className="size-8 text-small" />
+      </Pending>
       <span className="hidden max-w-32 truncate md:inline">{name}</span>
       {hasPro && <ProBadge size="sm" lit className="hidden md:inline-flex" />}
     </Link>
@@ -136,7 +158,7 @@ export function BottomNav() {
               <Link
                 href={href}
                 aria-current={active ? "page" : undefined}
-                className={`relative flex h-16 flex-col items-center justify-center gap-0.5 text-caption font-semibold ${
+                className={`relative flex h-16 flex-col items-center justify-center gap-0.5 rounded-control text-caption font-semibold transition-[background-color,color,scale] active:bg-surface-raised motion-safe:active:scale-95 ${
                   active ? "text-accent-ink" : "text-ink-muted"
                 }`}
               >
@@ -147,7 +169,9 @@ export function BottomNav() {
                     className="absolute inset-x-8 top-0 h-0.5 rounded-sm bg-accent"
                   />
                 )}
-                <Icon className="size-6" />
+                <Pending>
+                  <Icon className="size-6" />
+                </Pending>
                 {label}
               </Link>
             </li>
@@ -166,13 +190,15 @@ function AccountTab({ pathname }: { pathname: string }) {
   if (!available) return null;
   const signedIn = auth.status === "signed-in";
   const href = signedIn ? "/account" : "/login";
-  const active = pathname.startsWith("/account") || pathname.startsWith("/login");
+  // Your plan has its own tab for Pro members.
+  const active = (pathname.startsWith("/account") && !(hasPro && pathname.startsWith("/account/plan"))) || pathname.startsWith("/login");
   return (
     <li>
       <Link
         href={href}
+        prefetch={signedIn ? true : undefined}
         aria-current={active ? "page" : undefined}
-        className={`relative flex h-16 flex-col items-center justify-center gap-0.5 text-caption font-semibold ${
+        className={`relative flex h-16 flex-col items-center justify-center gap-0.5 rounded-control text-caption font-semibold transition-[background-color,color,scale] active:bg-surface-raised motion-safe:active:scale-95 ${
           active ? "text-accent-ink" : "text-ink-muted"
         }`}
       >
@@ -183,9 +209,24 @@ function AccountTab({ pathname }: { pathname: string }) {
             className="absolute inset-x-8 top-0 h-0.5 rounded-sm bg-accent"
           />
         )}
-        {signedIn ? <UserNode name={auth.displayName} pro={hasPro} className="size-6 text-[0.7rem]" /> : <SignInIcon className="size-6" />}
+        <Pending>
+          {signedIn ? <UserNode name={auth.displayName} pro={hasPro} className="size-6 text-[0.7rem]" /> : <SignInIcon className="size-6" />}
+        </Pending>
         {signedIn ? "Account" : "Sign in"}
       </Link>
     </li>
+  );
+}
+
+/**
+ * Inside a nav link: from the tap until the new page shows, the icon stays visibly pressed (dimmed,
+ * and a touch smaller when motion is allowed), so a tap always gets an answer at once.
+ */
+function Pending({ children }: { children: ReactNode }) {
+  const { pending } = useLinkStatus();
+  return (
+    <span data-pending={pending || undefined} className={`inline-grid transition-[opacity,scale] duration-100 ${pending ? "opacity-60 motion-safe:scale-90" : ""}`}>
+      {children}
+    </span>
   );
 }

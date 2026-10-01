@@ -53,12 +53,14 @@ export function PlansCards({
   });
 
   return (
-    <div className="grid gap-5 pt-3 sm:grid-cols-2 sm:items-start">
+    // Side by side (from `sm`) the cards are the same height with their buttons lined up along the
+    // bottom; stacked on phones they keep their natural heights.
+    <div className="grid gap-5 pt-3 sm:grid-cols-2">
       {/* Pro first in the page (and on phones); on the right from `sm`. */}
       <motion.section
         {...rise(0)}
         aria-labelledby="plan-pro"
-        className="relative -translate-y-0.5 rounded-card border-2 border-accent-ink bg-surface p-5 shadow-pro-card sm:order-2"
+        className="relative flex -translate-y-0.5 flex-col rounded-card border-2 border-accent-ink bg-surface p-5 shadow-pro-card sm:order-2 sm:translate-y-0"
       >
         {prices?.annual.percent ? (
           <span className="absolute -top-3 right-4 rounded-sm bg-accent px-2 py-0.5 font-mono text-caption font-semibold tracking-wider text-on-accent uppercase">
@@ -122,7 +124,7 @@ export function PlansCards({
           ))}
         </ul>
 
-        <div className="mt-4">
+        <div className="mt-auto pt-4">
           {unknown ? (
             <Button variant="secondary" className="min-h-14 w-full" disabled>
               Loading…
@@ -141,11 +143,11 @@ export function PlansCards({
               onSelect={() => trackWith("plan_selected", planSelectedData("pro", plan))}
             />
           ) : null}
-          {!member && !unknown && <p className="mt-2 text-center text-caption text-ink-muted">Ask a parent or guardian before subscribing.</p>}
+          {!member && !unknown && <p className="mt-2 text-center text-caption text-ink-muted sm:min-h-9">Ask a parent or guardian before subscribing.</p>}
         </div>
       </motion.section>
 
-      <motion.section {...rise(1)} aria-labelledby="plan-free" className="rounded-card border border-line bg-surface p-5 sm:order-1">
+      <motion.section {...rise(1)} aria-labelledby="plan-free" className="flex flex-col rounded-card border border-line bg-surface p-5 sm:order-1">
         <Heading id="plan-free" className="text-title font-semibold">
           Free
         </Heading>
@@ -161,21 +163,24 @@ export function PlansCards({
           ))}
         </ul>
         {!member && !unknown && (
-          <div className="mt-4">
+          <div className="mt-auto pt-4">
+            <p className="mb-2 text-center text-small text-ink-muted">Upgrade any time.</p>
             {guest ? (
               <ButtonLink
                 href="/login?next=/"
                 variant="secondary"
-                className="w-full"
+                className="w-full sm:min-h-14"
                 onClick={() => trackWith("plan_selected", planSelectedData("free"))}
               >
                 Start free
               </ButtonLink>
             ) : (
-              <Button variant="secondary" className="w-full" disabled>
+              <Button variant="secondary" className="w-full sm:min-h-14" disabled>
                 Your plan
               </Button>
             )}
+            {/* The same space as Pro's parent line, so both buttons sit at the same height. */}
+            <p aria-hidden="true" className="mt-2 hidden min-h-9 sm:block" />
           </div>
         )}
       </motion.section>
