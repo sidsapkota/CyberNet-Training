@@ -671,6 +671,13 @@ src/dev/                 dev-only card samples + playground (served at /dev/card
   mount, so avoid hydration mismatches: no `Math.random`/`Date` during render. The drag shuffle is
   seeded from the card id.
 - **Mobile-first:** design at 360–390px wide first. Keep tap targets ≥ 44px.
+- **Fit target: 360×560.** Every card must fit a 360×560 screen (the Instagram in-app browser,
+  the smallest real one we see) without scrolling: prompt, interactive area, labels, header and
+  footer on one screen, before Check. `npm run e2e:fit-audit` measures it (`COURSE=` / `LESSONS=`;
+  `E2E_SHARE_URL` for a preview). When a card doesn't fit, split it (one idea per card) or shrink
+  the diagram, whichever keeps it clear; never make a learner scroll to the controls. New and
+  rewritten content must pass at 560; older courses move over in the "learn before you do"
+  rollout. After Check, the footer's feedback may cover part of the card (it scrolls).
 - **Accessibility:** radio/pressed semantics on choices and bits, `aria-live` for feedback, visible
   focus rings, keyboard paths for everything including drag (Space, arrows, Space). **Right/wrong
   is never colour alone:** always a check or cross icon *and* text (`CardStatusNote`, footer
@@ -1518,6 +1525,7 @@ this list and fix anything busy.**
   (predict, drag, try) set up by its own prompt, then name the idea in a short explainer.
 - **Explain before naming.** Introduce an idea with an everyday analogy first, then give the technical
   term in **bold** (e.g. light switch → **bit**; 8 bits → **byte** → **octet**).
+- **Fits a phone:** every card fits 360×560 without scrolling (see Conventions → Fit target).
 - **Keep it small.** One idea per explainer, at most 60 words. Lessons run 5–7 core cards (about
   3–5 minutes) and mostly teach by doing; a card's own prompt can teach the idea it asks about.
 - **Explanations teach.** Say *why* the answer is right and address likely wrong answers. Wrong
