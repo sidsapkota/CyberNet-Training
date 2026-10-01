@@ -9,3 +9,6 @@ next-env.d.ts
 !.env.example
 .DS_Store
 npm-debug.log*
+
+# e2e screenshots
+.e2e-shots/
