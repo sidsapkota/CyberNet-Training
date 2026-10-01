@@ -25,23 +25,14 @@ Strong passwords, passphrases and two-step sign-in.
 
 **Key facts**
 
-- *Your digital keys:* Every account you have, from games to school to email, is locked with a **password**.
-- *How passwords get guessed:* So attackers use computers to **guess** them, billions of times a second. They start with the **most common passwords** (like `password123` and `qwerty`), real words, names, birthdays and patterns like swapping `a` for `@`.
-- *Length wins:* Making a password **longer** helps a lot more. The easiest way to get length you can remember is a **passphrase**: **four or more random words**, at least **15 characters** long, like `violet cactus harbour pepper`.
-- *One password per account:* Attackers then try that same email and password on **other** websites. So every account needs its **own** password.
-- *Recap:* Guessers try **common passwords, words, names and patterns** first. **Length** matters most: each extra lowercase letter makes it 26 times harder.
+- *Length wins:* **Length** helps a lot more. The easiest length to remember is a **passphrase**: **four or more random words**, at least **15 characters**, like `violet cactus harbour pepper`.
+- *Recap:* Guessers try **common passwords**, names and patterns first. **Length** wins: a **passphrase** is four or more **random** words.
 
 **Best interactive cards**
 
-- Simulator: This password uses only **lowercase letters**. Make it long enough that trying every combination would take **at least 100 years**.
+- Simulator: Attackers use computers to guess passwords, a billion guesses a second. For a random password, they have to try **every combination**. Each extra lowercase letter makes that **26 times** harder. This password uses only…
 - Simulator: Now the password can be **10 characters at most**. Reach **100 years** anyway, by choosing which kinds of characters it can use.
-- Choose what happens: You get an email from a game website: it was hacked, and passwords were stolen.
-
-**Surprising facts**
-
-- In this lesson you'll learn what makes a password strong, and how to make one you can actually remember.
-- For lowercase letters, each position could be any of 26 letters, so every extra letter makes the job **26 times bigger**.
-- A **passphrase** is four or more **random** words, at least 15 characters.
+- Choose what happens: Your friend Mia is proud of her new passphrase. It's a line from her favourite song: five words, 26 characters.
 
 #### Two-Step Sign-In
 
@@ -50,20 +41,16 @@ Strong passwords, passphrases and two-step sign-in.
 
 **Key facts**
 
-- *Two locks on the door:* So many accounts let you add a **second lock**.
-- *What two-step sign-in is:* **Two-step sign-in** means proving it's you in two different ways. You'll also see it called **two-factor** or **multi-factor authentication (MFA)**.
-- *Which second proof is strongest?:* A **passkey**: your device signs you in with your fingerprint, face or PIN, and it won't work on a fake website. A code from an **authenticator app** on your phone.
-- *Never share a sign-in code:* **No real company, bank, game or friend will ever ask you to read it out or send it to them.**
-- *Password managers:* A **password manager** is an app that creates a **long random password** for every account, remembers them all, and fills them in for you. You only remember **one main password**: make it a strong passphrase, and protect the manager with two-step sign-in.
-- *Recap:* **Two-step sign-in** adds a second proof: something you know, have or are. Strongest: a **passkey**, then an authenticator app, then a text code.
+- *Two-step sign-in:* **Two-step sign-in** (also called **two-factor**) asks for a password **plus** a second proof, like your phone or fingerprint. A **passkey**: your device checks your fingerprint, face or PIN.
+- *Recap:* **Two-step sign-in** adds a second proof, so a stolen password isn't enough. **Never share a sign-in code.** An unexpected one?
 
 **Best interactive cards**
 
-- Sort into groups: Sort each proof: something you **know**, **have** or **are**.
-- Choose what happens: You're watching a video when your phone buzzes.
-- Choose what happens: Your phone, with your authenticator app on it, falls in a lake.
+- Choose what happens: A **sign-in code** is the second key to your account. A site sends one when someone types your password. **Nobody real ever asks you to send them a code**: not a company, a bank, a game or a friend. You're watching a…
+- Choose what happens: You're setting up a new music app. For two-step sign-in, it only offers one option: **codes by text message**.
+- Choose what happens: When you turn two-step sign-in on, the site gives you **backup codes** to save somewhere safe, in case you lose your phone. Months later, your phone, with your authenticator app on it, falls in a lake.
 
-#### Module quiz (6 questions)
+#### Module quiz (7 questions)
 
 Not exported, so the answers stay secret.
 
@@ -78,16 +65,13 @@ Phishing emails, scam texts and calls, and fake websites.
 
 **Key facts**
 
-- *Something fishy:* **Phishing** (said "fishing") is when a scammer sends a message pretending to be someone you trust, like your bank, your school or a game, hoping you'll bite: click a link, open a file or hand over your details.
-- *The warning signs:* **Fake sender:** the name looks right, but the email address isn't the real company's. **Rushing you:** "Act now!", "Your account closes in 24 hours!" Pressure stops you thinking.
-- *Who really sent it?:* Anyone can type any **name** into the From line. What counts is the **address after the @**.
-- *What to do instead:* **Don't click** links or open attachments in a message you're unsure about, and don't reply. **Go there yourself:** open the official app, or type the address you know.
-- *Recap:* **Phishing** pretends to be someone you trust. Warning signs: **fake sender**, **rushing you**, **"Dear Customer"**, **asks for secrets**, **hidden links**, **too good to be true**.
+- *Something fishy:* That was **phishing** (said "fishing"): a message pretending to be someone you trust, like your bank, school or a game, hoping you'll bite.
+- *Recap:* **Phishing** pretends to be someone you trust. Check the **address after the @**, not the name.
 
 **Best interactive cards**
 
-- Tap the picture: Your Bank's real emails come from **@yourbank.example**. Tap **every** warning sign in this email.
-- Choose what happens: An email pops up while you're doing homework.
+- Choose what happens: An email pops up while you're busy.
+- Explore the picture: Your Bank's real emails come from **@yourbank.example**. **Tap each part** of this email to meet a warning sign.
 - Choose what happens: An email arrives that seems personal.
 
 #### Scam Texts and Calls
@@ -97,17 +81,14 @@ Phishing emails, scam texts and calls, and fake websites.
 
 **Key facts**
 
-- *Scams in your pocket:* The same tricks as phishing emails also arrive as **text messages** and **phone calls**.
-- *Scam texts:* Common scam texts say you owe a **parcel fee** or a **road toll**, that you've won something, or "Hi Mum, this is my new number". Sender names can be faked, so a scam text can even land **in the same thread** as real messages from that company.
-- *Scam calls and cloned voices:* They may ask for a **sign-in code**, your **password**, to **control your computer**, or for payment in **gift cards**. Computers can now **copy a voice** from a short clip, so a call can sound just like someone you know.
-- *Too good to be true:* Some scams offer something amazing: a prize you never entered, a free phone, "double your money", **free game coins or skins**, or a job paying lots for very little work. Watch for **paying a fee to get a prize**, and for payment by **gift cards**, crypto or a money-transfer app.
-- *Recap:* Scam texts use a **small fee**, a **deadline** and an **unfamiliar link**. Scam calls can use a **copied voice**.
+- *Scams in your pocket:* The same tricks as phishing emails come by **text** and **phone call**. Hang up if a caller wants a **sign-in code** or **password**, wants to **control your computer**, asks for **gift cards**, or says to **keep it secret**.
+- *Recap:* Texts with a **fee**, **deadline** and **link**? Check in the **official app**.
 
 **Best interactive cards**
 
-- Tap the picture: Tap the **three** warning signs in the **new** message.
-- Choose what happens: Your phone rings. It sounds exactly like your cousin.
+- Choose what happens: Your phone rings. It sounds exactly like your cousin. (Computers can now make a voice clone from a short clip.)
 - Choose what happens: A website promises **10,000 free coins** for your favourite game.
+- Choose what happens: You have a weekend job at a café. A text arrives from a number you don't know.
 
 #### Fake Websites
 
@@ -116,17 +97,14 @@ Phishing emails, scam texts and calls, and fake websites.
 
 **Key facts**
 
-- *A perfect copy:* Copying how a website **looks** takes minutes: the logo, the colours, the sign-in box. What a fake site can't copy is the real **address**.
-- *Read the address:* The owner of a website is the name **just before the ending** (the ending is like `.example`, `.com` or `.com.au`). `yourbank.example.login-check.example` belongs to **login-check.example**: the name just before the final ending.
-- *What the padlock means:* The padlock next to an address means your connection is **encrypted** (HTTPS): nobody can read what you send on the way. It **doesn't** mean the site is honest.
-- *Safer ways in:* Sign in through the **official app**, a **bookmark**, or by **typing the address** yourself. **Don't sign in from a link** in an email or text.
-- *Recap:* A website's owner is the name **just before the ending** of its address. The **padlock only means encrypted**.
+- *Read the address:* The owner is the name just before the **very last ending** (like `.example`, `.com` or `.com.au`). `yourbank.example.login-check.example` belongs to **login-check.example**.
+- *Recap:* The owner is the name **just before the very last ending**. A **padlock only means encrypted**.
 
 **Best interactive cards**
 
-- Tap the picture: You opened this page from a link in a text. Your Bank's real site is `yourbank.example`. Tap **every** warning sign.
-- Choose what happens: You tap a link in an email to sign in to your game account.
-- Tap the picture: Label four things on this page.
+- Tap the picture: You opened this page from a link in a text. Your Bank's real site is `yourbank.example`. A sign-in page asks for your username and password, but a bank **never** asks for your card PIN. Tap **every** warning sign.
+- Choose what happens: A **password manager** only fills in your password on the real site. You tap a link in an email to sign in to your game account.
+- Choose what happens: Oops. Before you noticed, you typed your bank password and card number into a fake site.
 
 #### Module quiz (7 questions)
 
@@ -143,20 +121,14 @@ Your digital footprint, app permissions and public Wi-Fi.
 
 **Key facts**
 
-- *Footprints in wet cement:* Everything you post, like, comment on or get tagged in adds to your **digital footprint**: the trail you leave online. That's not a reason to stop posting: it's a reason to **choose what you share**.
-- *What to keep private:* your **home address** and **phone number** your **school**, including a uniform or badge in photos
-- *Privacy settings:* Every app has **privacy settings**. **Private account:** only people you approve see your posts.
-- *Recap:* Your **digital footprint** is everything about you online, and it can last. Keep your **address, phone number, school, location right now** and passwords private.
+- *Footprints in wet cement:* Everything you post adds to your **digital footprint**: the trail you leave online. **Stuff that finds you:** address, phone, school, where you are now
+- *Recap:* Your **digital footprint** can last, so choose what you share. Keep private anything that **finds you** or **unlocks you**.
 
 **Best interactive cards**
 
-- Sort into groups: Fine to share, or keep it private?
+- Sort into groups: Some details help a stranger **find you**. For each one, ask: would I be OK with a stranger seeing it? Fine to share, or keep it private?
 - Choose what happens: A fun quiz is going around on social media.
-- Choose what happens: Someone you don't know in real life has been messaging you in a game. They're really friendly.
-
-**Surprising facts**
-
-- That goes for **usernames** too: `SkyDiver_77` is safer than your real name, school or birth year.
+- Choose what happens: If someone online makes you uncomfortable, you can **block** and **report** them in the app, and tell a trusted adult. You won't be in trouble. Someone you only know from a game has been messaging you. They're really…
 
 #### Apps and Public Wi-Fi
 
@@ -165,16 +137,14 @@ Your digital footprint, app permissions and public Wi-Fi.
 
 **Key facts**
 
-- *Why does a torch app want your contacts?:* When you install an app, it may ask to use parts of your phone: the **camera**, **microphone**, **location**, **contacts** or **photos**.
-- *Only what it needs:* Allow what the app needs for **its job**: a map needs location; a video call needs the camera and microphone. Pick **"Only while using the app"** when it's offered, instead of "Always".
-- *Public Wi-Fi:* **Public Wi-Fi** at a café, library or airport is shared with strangers. Most websites use HTTPS, so what you send to them is **encrypted** even on shared Wi-Fi.
-- *Recap:* Give apps only the **permissions they need** for their job. Choose **"Only while using the app"**.
+- *Only what it needs:* Allow what an app needs for **its job**. For location, pick **"Only while using the app"** instead of "Always".
+- *Recap:* Give apps only the **permissions** they need for their job. For location, choose **"Only while using the app"**.
 
 **Best interactive cards**
 
-- Sort into groups: Does the app **need** that permission for its job?
+- Sort into groups: Apps ask to use parts of your phone, like the camera, microphone or your location. Each one is an app permission. Does the app **need** it for its job?
 - Choose what happens: You install a new drawing game.
-- Choose what happens: You're reading on your phone, and a **microphone dot** appears at the top of the screen.
+- Choose what happens: Many phones show a small **dot** at the top of the screen while an app is using the microphone or camera. You're reading on your phone, and a **microphone dot** appears.
 
 #### Module quiz (6 questions)
 
@@ -191,15 +161,12 @@ Signs of a hack, what to do step by step, and where to get help.
 
 **Key facts**
 
-- *Something's off:* Sometimes an account gets **taken over**: someone else gets in, usually with a stolen or guessed password.
-- *Signs someone else got in:* Your password **suddenly doesn't work**. Emails about a **sign-in** or **password change** you didn't make.
-- *What to do, step by step:* **Tell a trusted adult.** You're not in trouble, and two heads are better than one. **Change the password**, on a device you trust, in the real app or website.
-- *How accounts get taken:* a password **reused** from a site that had a data breach a password typed into a **fake website** from a phishing message
-- *Recap:* Signs: a password that stops working, **alerts you didn't cause**, messages you didn't send, unknown devices. Steps: **tell an adult**, **change the password**, **check recovery details**, **sign out other devices**, **turn on two-step sign-in**.
+- *What to do first:* **Tell a trusted adult.** You're not in trouble, and they can help you work through it. **Change the password**, on a device you trust, in the real app or website.
+- *Recap:* Signs: anything on your account that **wasn't you**. First: **tell an adult**, **change the password**, **check recovery details**.
 
 **Best interactive cards**
 
-- Sort into groups: A sign of a hack, or normal?
+- Sort into groups: When someone else gets into your account, it's called a **take-over**. It happens to adults and big companies too. The clue: things happen that **weren't you**. Your **recovery email** is the backup that can reset your…
 - Choose what happens: Your friends say you've been sending them strange links. You haven't.
 - Choose what happens: You check your account's security settings.
 
@@ -210,21 +177,14 @@ Signs of a hack, what to do step by step, and where to get help.
 
 **Key facts**
 
-- *Fake voices and faces:* Then it can make **new** audio or video of them saying things they never said. A fake video or picture made like this is called a **deepfake**.
-- *The same old tricks:* **Hurry:** you must act right now, so you don't stop to check. **Keep it secret:** don't tell anyone, so nobody can warn you.
-- *Ask something only they'd know:* Some families agree a **code word** together, just for emergencies, and never post it online.
-- *If someone makes a fake of you:* It's **not your fault**, and you won't be in trouble for asking for help. **Don't share it** any further, even to show someone.
-- *Recap:* AI can copy voices and faces: **deepfakes** and **voice clones**. The red flags still work: **hurry**, **secrets**, **money or codes**, a **new number**.
+- *Fake voices and faces:* That's a **voice clone**. A faked video or picture is a **deepfake**.
+- *Recap:* **Kids Helpline** (in Australia): 1800 55 1800, free, any time.
 
 **Best interactive cards**
 
-- Sort into groups: Sort each message: **red flag**, or **normal**?
-- Choose what happens: Your phone rings from a number you don't know.
+- Choose what happens: Your phone rings from a number you don't know. Some scammers now use AI to copy people's voices.
+- Choose what happens: **Report** a fake image of you to the app, and to the government's **eSafety Commissioner** (esafety.gov.au/report), which can help get fake nude or sexual images taken down. If you're **under 18** and someone is…
 - Choose what happens: A video message arrives from an account with your coach's name and face.
-
-**Surprising facts**
-
-- If you're under 18 and someone is threatening to share it, or asking you for sexual images or money, report it to the **ACCCE** too (accce.gov.au/report).
 
 #### Getting Help
 
@@ -233,23 +193,18 @@ Signs of a hack, what to do step by step, and where to get help.
 
 **Key facts**
 
-- *You're not alone:* Scammers **count on people feeling embarrassed** and staying quiet. **It's never your fault**, and telling someone is the brave and smart thing to do.
-- *Who to tell:* A **trusted adult** is someone you feel safe talking to: a parent or carer, a teacher, a school counsellor, or an older relative. If you'd rather talk to someone outside your family, **Kids Helpline** is free, private and open any time, for ages 5 to 25: call **1800 55 1800**.
-- *Where to report in Australia:* **The app or website first:** use its report button. **eSafety Commissioner** (esafety.gov.au): serious cyberbullying of anyone under 18 that the app hasn't dealt with, adult cyber abuse, and someone sharing or threatening to share a **private or nude image** of you (report that straight away).
-- *Save the evidence:* Before you block someone, **take screenshots** of the messages, their username, the web address and the date. One exception: if it's a **private or nude image**, **don't copy, save or share the image itself**.
-- *Recap:* It's **never your fault**. Tell a **trusted adult**, or call **Kids Helpline** on 1800 55 1800.
+- *Where to report in Australia:* **eSafety Commissioner** (esafety.gov.au): serious cyberbullying of anyone under 18 that the app hasn't dealt with, adult cyber abuse, and a **private or nude image** of you shared or threatened (report that straight away). **ACCCE**, the Australian Centre to Counter Child Exploitation (accce.gov.au/report): if you're **under 18** and someone pressures or threatens you with a private image.
+- *Recap:* **Never your fault:** tell an adult or Kids Helpline, 1800 55 1800. **Save evidence** first, but never a private image itself.
 
 **Best interactive cards**
 
-- Choose what happens: In a group chat, some people start posting mean messages about you.
-- Sort into groups: Does it help, or make things worse?
+- Sort into groups: Scams and online bullying happen to lots of people, including adults and experts. **It's never your fault.** Scammers **count on people feeling embarrassed** and staying quiet, so telling someone is the brave and smart…
+- Choose what happens: **Save the evidence:** before you block someone, screenshot the messages, their username, the web address and the date. Then **block** and **report**. One exception: if it's a **private or nude image**, **don't copy…
 - Choose what happens: Someone you met online says they'll share a private photo of you unless you pay them. If this ever happens: **it is never your fault**, and you won't be in trouble.
 
 **Surprising facts**
 
-- **ACCCE**, the Australian Centre to Counter Child Exploitation (accce.gov.au/report), run by the Australian Federal Police: if you're **under 18** and someone is pressuring or threatening you with a private image.
-- **IDCARE** (idcare.org or 1800 595 160): free help to make a plan if your personal details were stolen.
-- Then: **eSafety** for serious abuse and private images (and the **ACCCE** if you're under 18), **Scamwatch** for scams, your **bank** for money, **IDCARE** for stolen details, **000** for danger.
+- Report in the app, then eSafety, Scamwatch, your bank or 000.
 
 #### Module quiz (8 questions)
 

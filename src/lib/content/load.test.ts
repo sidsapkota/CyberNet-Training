@@ -15,7 +15,7 @@ import { lessonShapeProblems } from "./shape";
  * Courses rewritten for the right level (5–7 core cards, 60% hands-on, short explainers, do
  * first). Each joins this list as its rewrite lands; the old rules apply to the rest until then.
  */
-const RIGHT_LEVEL_COURSES = new Set<string>(["how-the-internet-works", "how-ai-really-works"]);
+const RIGHT_LEVEL_COURSES = new Set<string>(["how-the-internet-works", "how-ai-really-works", "stay-safe-online"]);
 
 describe("real content in /content", () => {
   it("loads and validates", () => {

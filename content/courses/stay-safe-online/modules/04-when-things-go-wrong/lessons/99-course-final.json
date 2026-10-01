@@ -9,11 +9,11 @@
       "id": "q-hacked",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "A sign of a hack, or normal?",
+      "prompt": "Your shopping account. Sign of a take-over, or normal?",
       "bins": [
         {
           "id": "hacked",
-          "label": "Sign of a hack"
+          "label": "Sign of a take-over"
         },
         {
           "id": "normal",
@@ -23,47 +23,78 @@
       "items": [
         {
           "id": "alert",
-          "label": "A sign-in alert that wasn't you",
+          "label": "An order you never placed",
           "bin": "hacked"
         },
         {
           "id": "device",
-          "label": "An unknown device signed in",
+          "label": "A laptop you don't own, signed in",
           "bin": "hacked"
         },
         {
           "id": "own",
-          "label": "A code while you were signing in",
+          "label": "A receipt for something you just bought",
           "bin": "normal"
         },
         {
           "id": "change",
-          "label": "An email after you changed your password",
+          "label": "A code right after you tapped sign in",
           "bin": "normal"
         }
       ],
-      "explanation": "Alerts and devices that weren't you are signs of a hack. Codes and emails that match what you just did are normal."
+      "explanation": "Orders and devices that weren't you are signs of a take-over. A receipt or code that matches what you just did is the account doing its job."
     },
     {
-      "id": "q-steps",
-      "type": "drag_to_order",
+      "id": "q-music-takeover",
+      "type": "scenario",
       "difficulty": "core",
-      "prompt": "Put the first three steps after a hack in order.",
-      "items": [
+      "prompt": "Your music app is playing songs you never picked. You can still sign in.",
+      "start": "start",
+      "steps": [
         {
-          "id": "tell",
-          "label": "Tell a trusted adult"
-        },
-        {
-          "id": "password",
-          "label": "Change the password"
+          "id": "start",
+          "text": "What do you do first?",
+          "choices": [
+            {
+              "id": "tell-change",
+              "text": "Tell a trusted adult, and make a new, strong password",
+              "consequence": "Good start: the old password no longer works.",
+              "next": "recovery"
+            },
+            {
+              "id": "wait",
+              "text": "Wait a week to see if it keeps happening",
+              "consequence": "Every day gives whoever is in your account more time.",
+              "outcome": "fail"
+            },
+            {
+              "id": "new-account",
+              "text": "Make a new account and forget the old one",
+              "consequence": "The attacker keeps the old account, and may try that password elsewhere.",
+              "outcome": "fail"
+            }
+          ]
         },
         {
           "id": "recovery",
-          "label": "Check the recovery email and phone"
+          "text": "In the settings, the recovery email is one you've never seen. What now?",
+          "choices": [
+            {
+              "id": "remove",
+              "text": "Remove it and add your own",
+              "consequence": "Now nobody else can reset your new password.",
+              "outcome": "success"
+            },
+            {
+              "id": "leave",
+              "text": "Leave it: you've already changed the password",
+              "consequence": "Whoever owns that email could use it to reset your new password.",
+              "outcome": "fail"
+            }
+          ]
         }
       ],
-      "explanation": "Tell a trusted adult, change the password, then check the recovery email and phone so the attacker can't reset it again."
+      "explanation": "Tell a trusted adult and change the password first. Then remove any recovery email that isn't yours, so the attacker can't reset the new password."
     },
     {
       "id": "q-where",
@@ -73,107 +104,32 @@
       "pairs": [
         {
           "id": "card",
-          "left": "Money taken from your card",
+          "left": "Someone used your card details online",
           "right": "Your bank, straight away"
         },
         {
           "id": "scam",
-          "left": "A scam to warn others about",
+          "left": "A fake parcel text you want to warn others about",
           "right": "Scamwatch"
         },
         {
           "id": "danger",
-          "left": "Someone in danger right now",
+          "left": "Someone could get hurt right now",
           "right": "Call 000"
         },
         {
           "id": "details",
-          "left": "Personal details stolen",
+          "left": "Your passport details were stolen",
           "right": "IDCARE"
         }
       ],
-      "explanation": "Bank first for money, Scamwatch for scams, 000 for danger, IDCARE for stolen details."
+      "explanation": "Your bank straight away for card details, Scamwatch for scams, 000 for danger right now, and IDCARE for stolen personal details."
     },
     {
-      "id": "q-fake-site",
-      "type": "hotspot",
-      "difficulty": "core",
-      "prompt": "Your Bank's real site is `yourbank.example`. Tap every warning sign.",
-      "scene": "fake-website",
-      "mode": "tap",
-      "targets": [
-        "site-address",
-        "site-banner",
-        "site-pin"
-      ],
-      "explanation": "The wrong owner in the address, the rush, and the request for your PIN."
-    },
-    {
-      "id": "q-passphrase",
-      "type": "multiple_choice",
-      "difficulty": "core",
-      "prompt": "Which is the strongest password you could remember?",
-      "options": [
-        {
-          "id": "words",
-          "text": "orbit willow pepper canoe"
-        },
-        {
-          "id": "swap",
-          "text": "P@ssw0rd1"
-        },
-        {
-          "id": "pet",
-          "text": "Buddy2015"
-        }
-      ],
-      "correctOptionId": "words",
-      "explanation": "Four random words are long and unpredictable. Swaps and pet names are guessed first."
-    },
-    {
-      "id": "q-permissions",
-      "type": "sort_bins",
-      "difficulty": "core",
-      "prompt": "Does the app need it?",
-      "bins": [
-        {
-          "id": "needs",
-          "label": "Needs it"
-        },
-        {
-          "id": "doesnt",
-          "label": "Doesn't need it"
-        }
-      ],
-      "items": [
-        {
-          "id": "maps",
-          "label": "Maps → location",
-          "bin": "needs"
-        },
-        {
-          "id": "call",
-          "label": "Video call → camera",
-          "bin": "needs"
-        },
-        {
-          "id": "torch",
-          "label": "Torch → contacts",
-          "bin": "doesnt"
-        },
-        {
-          "id": "game",
-          "label": "Puzzle game → microphone",
-          "bin": "doesnt"
-        }
-      ],
-      "explanation": "Allow only what fits the app's job."
-    },
-    {
-      "id": "q-code",
+      "id": "q-voice-message",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "A message from a friend's account: \"I sent my code to you by mistake, send it back!\"",
+      "prompt": "A voice message from a new number sounds just like your aunt: \"Lost my phone! Please buy two gift cards and send me the codes, quick.\"",
       "start": "start",
       "steps": [
         {
@@ -181,27 +137,128 @@
           "text": "What do you do?",
           "choices": [
             {
-              "id": "dont",
-              "text": "Don't send it, and warn your friend another way",
-              "consequence": "Right: it was for your account.",
+              "id": "known-number",
+              "text": "Call your aunt on the number you already have",
+              "consequence": "She answers, confused: she never lost her phone. It was a voice clone.",
               "outcome": "success"
             },
             {
-              "id": "send",
-              "text": "Send the code",
-              "consequence": "That code opens your account.",
+              "id": "buy",
+              "text": "Buy the cards: it's definitely her voice",
+              "consequence": "Voices can be copied with AI. Gift card codes are hard to get back once sent.",
+              "outcome": "fail"
+            },
+            {
+              "id": "ask-new",
+              "text": "Reply to the new number to ask if it's really her",
+              "consequence": "The new number belongs to whoever sent it, so of course they'll say yes.",
               "outcome": "fail"
             }
           ]
         }
       ],
-      "explanation": "Never send a sign-in code to anyone. Their account may have been taken over."
+      "explanation": "A new number, hurry and gift card codes are red flags, and a voice can be faked. Check on the number you already have."
+    },
+    {
+      "id": "q-strong-or-easy",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Strong, or easy to guess?",
+      "bins": [
+        {
+          "id": "strong",
+          "label": "Strong"
+        },
+        {
+          "id": "easy",
+          "label": "Easy to guess"
+        }
+      ],
+      "items": [
+        {
+          "id": "random-words",
+          "label": "frost banjo tulip ladder",
+          "bin": "strong"
+        },
+        {
+          "id": "lyric",
+          "label": "Somewhere over the rainbow",
+          "bin": "easy"
+        },
+        {
+          "id": "pet",
+          "label": "BuddyTheDogBorn2015",
+          "bin": "easy"
+        },
+        {
+          "id": "swap",
+          "label": "Sunsh1ne!",
+          "bin": "easy"
+        }
+      ],
+      "explanation": "Four **random** words are long and unpredictable. Song lyrics, pet names with birth years, and short words with symbol swaps are all guessed early."
+    },
+    {
+      "id": "q-two-step",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Your password leaked when a website was hacked. But you'd turned on two-step sign-in, using codes from an app on your phone. What else would an attacker need to get in?",
+      "options": [
+        {
+          "id": "app-code",
+          "text": "The code from the app on your phone"
+        },
+        {
+          "id": "nothing",
+          "text": "Nothing more: the password gets them in"
+        },
+        {
+          "id": "username",
+          "text": "Just your username, which is easy to find"
+        }
+      ],
+      "correctOptionId": "app-code",
+      "explanation": "With two-step sign-in, a stolen password on its own isn't enough: they'd also need the code from your phone. That's why it's worth turning on."
+    },
+    {
+      "id": "q-code",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "A message from your cousin's account: \"I've entered you in a giveaway! A code is about to arrive by text. Just send it to me.\"",
+      "start": "start",
+      "steps": [
+        {
+          "id": "start",
+          "text": "The code arrives. What do you do?",
+          "choices": [
+            {
+              "id": "dont",
+              "text": "Don't send it, and warn your cousin another way",
+              "consequence": "Right: that code was for signing in to your account.",
+              "outcome": "success"
+            },
+            {
+              "id": "send",
+              "text": "Send it: it's your cousin's account",
+              "consequence": "That code opens your account, and your cousin's account may have been taken over.",
+              "outcome": "fail"
+            },
+            {
+              "id": "send-then-change",
+              "text": "Send it, then change your password straight after",
+              "consequence": "They could be in your account before you change anything. Never send a sign-in code.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "explanation": "Never send a sign-in code to anyone, even a friend or family member. Their account may have been taken over."
     },
     {
       "id": "q-trusted",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Something online is upsetting you. What's always a good first step?",
+      "prompt": "Someone in a game keeps sending you nasty messages, and it's upsetting you. What's always a good first step?",
       "options": [
         {
           "id": "tell",
@@ -209,15 +266,15 @@
         },
         {
           "id": "hide",
-          "text": "Keep it to yourself"
+          "text": "Keep it to yourself so it doesn't get bigger"
         },
         {
           "id": "reply",
-          "text": "Reply to get even"
+          "text": "Reply with something nasty so they stop"
         }
       ],
       "correctOptionId": "tell",
-      "explanation": "Telling a trusted adult is always a good first step. It's never your fault."
+      "explanation": "Telling a trusted adult is always a good first step. It's never your fault, and you don't have to deal with it alone."
     }
   ]
 }

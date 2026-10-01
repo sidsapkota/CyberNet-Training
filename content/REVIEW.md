@@ -692,16 +692,13 @@ Six real photos back up the simplified diagrams. All come from Wikimedia Commons
 CC BY / CC BY-SA, are saved **unmodified** in `public/photos/`, and are credited on the card
 (author, licence link, "via Wikimedia Commons", "Unmodified"). Captions describe the device
 plainly and never suggest a link to its maker; `/terms` says product names belong to their owners.
-Each caption and alt text was checked against the photo itself. The phone photo is a 2019 phone with a **glued** back, so it matches what the lesson teaches (an earlier choice, an iPhone 4 from 2010, had a screwed-on back and was replaced). Photos showing heating temperatures or tools as a how-to are never used.
+Each caption and alt text was checked against the photo itself. The phone photo is a 2019 phone with a **glued** back, so it matches what the lesson teaches (an earlier choice, an iPhone 4 from 2010, had a screwed-on back and was replaced). The October 2026 rewrite keeps one photo per lesson at most, so the phone, dusty-heatsink and swollen-battery photos were removed (their files deleted). Photos showing heating temperatures or tools as a how-to are never used.
 
 | File | Card | Device | Author | Licence | Source |
 |---|---|---|---|---|---|
 | `/photos/framework-laptop-13-inside.jpg` | `whats-in-the-box/real-laptop` | Framework Laptop 13 (2023, AMD Ryzen) | Ogidya | CC BY 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Framework_Laptop_13_-_2023_AMD_Ryzen_-_Internal_motherboard_and_component_view.jpg) |
-| `/photos/phone-glued-back-opened.jpg` | `whats-in-the-box/real-phone` | Huawei P Smart Z (2019), glued back | Raimond Spekking | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Huawei_Honor_P_Smart_Z_-_case_opened-8858.jpg) |
 | `/photos/laptop-heat-pipe.jpg` | `meet-the-cpu/real-heat-pipe` | A laptop (model not recorded) | Kristoferb | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Laptop_Heat_Pipe.JPG) |
-| `/photos/laptop-dusty-heatsink.jpg` | `meet-the-cpu/real-dust` | A laptop (model not recorded) | Audrius Meskauskas (Audriusa) | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Laptop_dust.jpg) |
 | `/photos/laptop-ram-stick.jpg` | `memory-vs-storage/real-ram` | Samsung 8 GB DDR4 SO-DIMM | D-Kuru | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:DDR_4_RAM_SO-DIMM_8GB_by_Samsung-top_front_PNr%C2%B00838.jpg) |
-| `/photos/swollen-phone-battery.jpg` | `power-problems/real-swollen-battery` | Samsung EB-BA136ABY (from a Galaxy A13) | Saimmx | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:20250807_200837_Swollen_Samsung_battery,_back.jpg) |
 
 ## Module 1: Pull It Apart
 
@@ -1262,6 +1259,51 @@ eSafety's and the ACCCE's advice: don't pay, stop replying, screenshot the messa
 (never the image), block, tell a trusted adult, and report to the app, eSafety, and, for under-18s,
 the ACCCE. The card says plainly that it is **never the young person's fault** and that they won't be
 in trouble, and gives **Kids Helpline (1800 55 1800)** and **000** directly.
+
+## Right-level rewrite (October 2026)
+
+The course was rewritten for curious beginners aged 13+ at level **Easy** (game-like: little reading,
+mostly hands-on, almost everyone succeeds). Every lesson has 5–7 core cards plus up to 2 bonus cards
+(about 5 minutes), is at least 60% hands-on and opens with something to do. Explainers are at most 60
+words, or 80 in the help module, where long help cards were **split, never cut**. Cut (approved list
+S1, S3–S13; S2, the cyber.gov.au passphrase line, kept): hashing, the 26² maths drill, the MFA name
+and know/have/are list, the third card on the same proof ranking, the nested-domain rule taught twice,
+the word "subdomain", padlock trivia, a reading-trick bonus, and repeated explainers. **Where this
+section and the per-lesson notes below disagree, this section wins.**
+
+**What each lesson teaches now**
+- 1.1 Length beats complexity; passphrases of 4+ random words (15+ characters, per cyber.gov.au); song lyrics, quotes and pet names are easy to guess; one password per account; after a breach, change your email password first.
+- 1.2 Why a second proof works (a stranger far away can't get your phone or fingerprint); passkey > authenticator app > text code > password alone; never share a sign-in code (an unexpected one means someone has your password); password managers fill in only on the real site; backup codes and "any second proof beats none" (bonus).
+- 2.1 Phishing and its six signs (fake sender, rushing, "Dear Customer", asking for secrets, hidden link, too good to be true), met by exploring the email scene; don't click, go there yourself, report it; if a password is out, change it and tell an adult.
+- 2.2 Scam texts (fee, deadline, link; check in the official app) and calls (codes, passwords, remote control, gift cards, secrecy); hang up and call back; agree a family safe word.
+- 2.3 The owner is the name just before the very last ending; the padlock only means encrypted; sign in through the app, a bookmark or a typed address; a quiet password manager is a clue; if you typed details into a fake site: change the password, tell an adult, call the bank on the number on the card or its official website.
+- 3.1 Posts can last; keep private what finds you (address, phone, school, where you are) or unlocks you (passwords, ID, security answers); quizzes that collect security answers; the four privacy settings; block, report and tell a trusted adult.
+- 3.2 Allow only the permissions an app needs; "Only while using" for location; change permissions in Settings; on public Wi-Fi check the network name with staff; mobile data for banking.
+- 4.1 (help) Signs of a take-over (things that weren't you; a **recovery email** is the backup that can reset your password); the first three steps with reasons, then sign out of other devices, turn on two-step (explained here for guests), change reused passwords and warn friends; never pay.
+- 4.2 (help) Copied voices and faces; four red flags; check with the real person another way; family safe word (bonus); if someone fakes you: not your fault, don't share or pay, save evidence but never the image, tell a trusted adult, report to the app, the government's eSafety Commissioner (esafety.gov.au/report) and, if you're under 18 and being threatened, the ACCCE (Australian Centre to Counter Child Exploitation, accce.gov.au/report); Kids Helpline in the recap.
+- 4.3 (help) Telling someone helps and it's never your fault; who to tell (trusted adults; Kids Helpline (in Australia) 1800 55 1800, free, private, any time, ages 5–25); where to report (the app's report button, eSafety, ACCCE, Scamwatch, your bank straight away, IDCARE idcare.org or 1800 595 160, ReportCyber cyber.gov.au, 000 for danger right now); save evidence.
+
+**Help content check (after the rewrite):** every service, number and URL above matches the verified
+list in this section (30 September and 1 October 2026), and all of it is in core cards of free
+Module 4 (prompts, explainers and recaps; never only in a bonus card or an after-answer
+explanation). The course final (open to guests) tests only Modules 1 and 4.
+
+**Simplifications added in the rewrite**
+- "The owner is the name just before the very last ending", with `.com.au` treated as one ending (strictly `.au` is the last label).
+- "Your phone in your pocket: a stranger far away can't get it" (SIM-swap is covered by "scammers can sometimes steal phone numbers"); passkeys shown as the top way to sign in; a text code "still stops most attackers, who only have a password".
+- "A password manager only fills in on the real site" (autofill matches the domain; copy-paste bypasses it). The padlock means "nobody can read what you send on the way".
+- "Only while using the app" means the app can't see where you are while it's closed (platforms allow brief exceptions); "most sites already scramble what you send" stands in for HTTPS; the camera/mic dot is "on many phones".
+- "Real companies never ask for passwords, codes, card numbers or PINs by email"; "real prizes never cost money to claim"; "copied voices can sound just like the real person".
+- Help wording: eSafety is "the government's eSafety Commissioner"; "fake nude or sexual images" (eSafety's "intimate images"); the ACCCE "run by the Australian Federal Police" aside was cut, its scope kept.
+
+**Beginner audit after the rewrite:** tone calm and kind; every help item matches the verified list.
+Fixed: the address rule ("very last ending") taught before the address sort, which is now 4 items;
+the email hotspot says the time and sign-off are normal; the fake-site hotspot says a bank never asks
+for a PIN, and comes after the padlock card; the hack sort defines a recovery email and has 6 items;
+two-step explained inside Module 4 for guests; quiz copies replaced with new situations; the family
+safe word taught before it's tested; give-away hints and openings fixed.
+
+---
 
 ## Module 1: Lock Your Accounts (free)
 

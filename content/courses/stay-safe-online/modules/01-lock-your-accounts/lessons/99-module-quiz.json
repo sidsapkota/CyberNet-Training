@@ -48,7 +48,7 @@
       "id": "q-long-enough",
       "type": "simulator",
       "difficulty": "core",
-      "prompt": "Lowercase letters only. Make the password long enough to take **at least 100 years** to guess.",
+      "prompt": "A password of only lowercase letters needs to hold out for **at least a million years**. Make it long enough.",
       "model": "password",
       "params": {},
       "controls": [
@@ -75,17 +75,17 @@
             "target": "output",
             "id": "years",
             "op": ">=",
-            "value": 100
+            "value": 1000000
           }
         ]
       },
-      "explanation": "Around **14 lowercase letters** gets past 100 years. Every letter multiplies the time by 26."
+      "explanation": "Around **16 lowercase letters** gets past a million years. Every letter multiplies the time by 26."
     },
     {
       "id": "q-passphrase",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Which is the best passphrase?",
+      "prompt": "Your aunt wants a new passphrase for her email. Which is best?",
       "options": [
         {
           "id": "random",
@@ -93,21 +93,21 @@
         },
         {
           "id": "quote",
-          "text": "To be or not to be"
+          "text": "To be or not to be, that is the question"
         },
         {
           "id": "short",
-          "text": "Tr0ub!e"
+          "text": "P@ssw0rd!Summer2026"
         }
       ],
       "correctOptionId": "random",
-      "explanation": "Four **random** words: long and unpredictable. A famous quote is in guessing lists, and a short swap is quick to guess."
+      "explanation": "Four **random** words: long and unpredictable. A famous quote is in guessing lists, however long it is, and symbol swaps on a common word are tried early."
     },
     {
       "id": "q-reused",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "A website you use announces a data breach. You used that password for your email too.",
+      "prompt": "A shopping site you use had a data breach. You used that same password for your email and your music app.",
       "start": "start",
       "steps": [
         {
@@ -117,25 +117,47 @@
             {
               "id": "email",
               "text": "Change your email password to a new, unique one",
-              "consequence": "Your email can reset everything else, so it comes first.",
+              "consequence": "Your email can reset everything else, so it comes first. Then give the others their own new passwords.",
               "outcome": "success"
             },
             {
               "id": "wait",
-              "text": "Wait and see if anything happens",
+              "text": "Wait and see if anything strange happens",
               "consequence": "Attackers try stolen passwords on other sites quickly.",
               "outcome": "fail"
             },
             {
               "id": "same",
-              "text": "Change both to the same new password",
-              "consequence": "Then one leak opens both again.",
+              "text": "Change all three to the same new password",
+              "consequence": "Then one leak opens all three again.",
               "outcome": "fail"
             }
           ]
         }
       ],
       "explanation": "Change the reused password everywhere, starting with **email**, and give every account its own password."
+    },
+    {
+      "id": "q-stolen-password",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "A stranger in another country has your email password from a data breach. Your email has two-step sign-in with an authenticator app. Can they get in?",
+      "options": [
+        {
+          "id": "no",
+          "text": "No: they'd also need the code from your phone"
+        },
+        {
+          "id": "yes-password",
+          "text": "Yes: a stolen password is all anyone needs"
+        },
+        {
+          "id": "yes-guessers",
+          "text": "Yes: two-step only stops people guessing passwords"
+        }
+      ],
+      "correctOptionId": "no",
+      "explanation": "That's the point of two-step sign-in. The password is only half of it: the code comes from the app on **your** phone, which a stranger far away doesn't have."
     },
     {
       "id": "q-code-request",
@@ -149,40 +171,55 @@
         },
         {
           "id": "support",
-          "text": "Real support, checking it's you"
+          "text": "Real support: they need it to check it's really you"
         },
         {
           "id": "fine",
-          "text": "Fine, as long as they know your username"
+          "text": "Safe, as long as they already know your username"
         }
       ],
       "correctOptionId": "scam",
       "explanation": "No real company ever asks for a sign-in code. Anyone who does is trying to get into your account."
     },
     {
-      "id": "q-rank",
-      "type": "drag_to_order",
+      "id": "q-hardest-account",
+      "type": "scenario",
       "difficulty": "core",
-      "prompt": "Strongest to weakest:",
-      "items": [
+      "prompt": "Four friends protect their email in different ways.",
+      "start": "start",
+      "steps": [
         {
-          "id": "passkey",
-          "label": "Passkey"
-        },
-        {
-          "id": "app",
-          "label": "Password + authenticator app code"
-        },
-        {
-          "id": "sms",
-          "label": "Password + text message code"
-        },
-        {
-          "id": "password",
-          "label": "Password on its own"
+          "id": "start",
+          "text": "Whose account is **hardest** to break into?",
+          "choices": [
+            {
+              "id": "passkey",
+              "text": "Ava's: she signs in with a passkey",
+              "consequence": "Right. A passkey is the strongest way to sign in, and fake sites can't use it.",
+              "outcome": "success"
+            },
+            {
+              "id": "app",
+              "text": "Ben's: a password plus a code from an authenticator app",
+              "consequence": "That's strong, but one way to sign in is stronger still, and fake sites can't use it.",
+              "outcome": "fail"
+            },
+            {
+              "id": "sms",
+              "text": "Cleo's: a password plus a code sent by text message",
+              "consequence": "Better than a password alone, but text codes are the weakest second proof: scammers can sometimes steal phone numbers.",
+              "outcome": "fail"
+            },
+            {
+              "id": "long",
+              "text": "Dev's: a very long passphrase, with nothing else",
+              "consequence": "A great passphrase, but with no second proof, one leak is enough to get in.",
+              "outcome": "fail"
+            }
+          ]
         }
       ],
-      "explanation": "Passkey, then an authenticator app, then a text code, then a password alone."
+      "explanation": "Strongest first: a **passkey**, then a password with an **authenticator app**, then a password with a **text code**. A password on its own, however long, has no second lock."
     }
   ]
 }
