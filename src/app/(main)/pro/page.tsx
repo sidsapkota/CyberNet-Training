@@ -73,6 +73,7 @@ export default async function ProPage() {
           <ul className="mt-3 space-y-2 text-body">
             {[
               "Unlimited lessons every day",
+              "Review your mistakes and try them again",
               "Certificates when you finish a course",
               `Every lesson in all ${courseCount} courses, in any order`,
               "An extra streak freeze: hold 3 instead of 2",

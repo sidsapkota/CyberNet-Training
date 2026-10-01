@@ -19,6 +19,7 @@ import {
   LogOut,
   Mail,
   Lightbulb,
+  ListRestart,
   Lock,
   type LucideIcon,
   type LucideProps,
@@ -216,6 +217,7 @@ export const FreezeIcon = brandIcon(Snowflake, "FreezeIcon");
 export const ProIcon = brandIcon(Gem, "ProIcon");
 export const UnlimitedIcon = brandIcon(InfinityLucide, "UnlimitedIcon");
 export const CertificateIcon = brandIcon(Award, "CertificateIcon");
+export const MistakesIcon = brandIcon(ListRestart, "MistakesIcon");
 
 /**
  * Lesson icons (the `icon` field of every lesson, from `LESSON_ICONS`), shown on course path

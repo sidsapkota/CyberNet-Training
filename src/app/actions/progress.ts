@@ -17,6 +17,7 @@ import { z } from "zod";
 import { requireUserId } from "@/lib/auth/server";
 import { getContentIndex } from "@/lib/content/server";
 import { canCompleteLesson, cardXpFor, gradeQuizAttempt, practiceXpFor } from "@/lib/progress/authority";
+import { lessonMistake, type MistakeKey, quizMistakes } from "@/lib/progress/mistakes";
 import { addDays, DEFAULT_DAILY_GOAL, isDailyGoal, localDay, safeTimeZone, type XpInput } from "@/lib/progress/daily";
 import { GUEST_GATE_AT, mergeLedger, mergeProgress, withoutGatedGuestProgress, withoutUnentitledPro } from "@/lib/progress/merge";
 import {
@@ -279,8 +280,35 @@ export async function recordQuizAttemptAction(
     answers: attempt.answers as never,
   });
   if (error) fail("Couldn't save the quiz attempt", error);
+  await saveMistakes(admin, userId, quizMistakes(getContentIndex(), id, attempt));
   const xpWrite = await recordXp(admin, userId, safeTimeZone(timeZone), { kind: "quiz", lessonId: id, xp: attempt.xp });
   return { attempt, xp: xpWrite };
+}
+
+/** Saves mistakes for Mistake review. Never fails the write it rides on: a miss is a nice-to-have. */
+async function saveMistakes(admin: Admin, userId: string, keys: readonly MistakeKey[]): Promise<void> {
+  const results = await Promise.all(
+    keys.map((k) => admin.rpc("record_mistake", { p_user: userId, p_lesson: k.lessonId, p_card: k.cardId })),
+  );
+  const error = results.find((r) => r.error)?.error;
+  if (error) console.error(`Couldn't save a mistake: ${error.message}`);
+}
+
+/**
+ * Records a lesson card's first wrong try, for Mistake review. The server re-grades the answer and
+ * records nothing unless the lesson and card are in the content, the card is graded, and the
+ * answer really is wrong (`lessonMistake`). Saved for every signed-in learner; reviewing needs Pro.
+ */
+export async function recordMistakeAction(lessonId: string, cardId: string, answer: unknown): Promise<{ recorded: boolean }> {
+  const userId = await requireUserId();
+  const id = Id.parse(lessonId);
+  await assertCanUse(userId, id);
+  const mistake = lessonMistake(getContentIndex(), id, Id.parse(cardId), answer);
+  if (!mistake) return { recorded: false };
+  const admin = createSupabaseAdminClient();
+  const { error } = await admin.rpc("record_mistake", { p_user: userId, p_lesson: mistake.lessonId, p_card: mistake.cardId });
+  if (error) fail("Couldn't save the mistake", error);
+  return { recorded: true };
 }
 
 /**
@@ -326,6 +354,7 @@ export async function resetLessonAction(lessonId: string): Promise<void> {
     admin.from("card_completions").delete().match({ user_id: userId, lesson_id: id }),
     admin.from("lesson_completions").delete().match({ user_id: userId, lesson_id: id }),
     admin.from("quiz_attempts").delete().match({ user_id: userId, quiz_id: id }),
+    admin.from("card_mistakes").delete().match({ user_id: userId, lesson_id: id }),
   ]);
   const error = results.find((r) => r.error)?.error;
   if (error) fail("Couldn't reset the lesson", error);
@@ -339,6 +368,7 @@ export async function resetAllAction(): Promise<void> {
     admin.from("card_completions").delete().eq("user_id", userId),
     admin.from("lesson_completions").delete().eq("user_id", userId),
     admin.from("quiz_attempts").delete().eq("user_id", userId),
+    admin.from("card_mistakes").delete().eq("user_id", userId),
   ]);
   const error = results.find((r) => r.error)?.error;
   if (error) fail("Couldn't reset progress", error);

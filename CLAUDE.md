@@ -42,6 +42,7 @@ npm run e2e:design-qa     # every card type and main page at 360px/desktop, ligh
                           # sideways scrolling, controls under 44px, touch drag (dev server running)
 npm run e2e:player-back   # Back/forward (read-only), Listen and lesson_quit in the lesson player
 npm run e2e:pro-declined  # "What's stopping you?" after Not now on /pro (360px, event data, once a week)
+npm run e2e:mistake-review # Mistake review: a wrong answer saved, the free count + pitch, the Pro review (360px)
 ```
 
 Tap targets are at least **44px** everywhere (inline text links and glossary terms excepted); the
@@ -515,6 +516,7 @@ keep their focused player shell.
 - `/from/<platform>` (and `/from/<platform>/<lesson-id>`): tagged links for videos. Same home
   page (or that lesson), never indexed (canonical is `/` or `/lesson/<id>`); page views then show
   which platform sent people. See [Analytics](#analytics).
+- `/review`: Mistake review (see [Mistake review](#mistake-review)). Not indexed.
 - `/leagues`: weekly leagues and player cards (see [Leagues](#leagues)). A 404 until leagues open;
   guests are sent to sign in. Not indexed.
 - `/privacy`, `/terms`: rendered from `content/legal/*.md` (see [Legal pages](#legal-pages)).
@@ -564,6 +566,7 @@ src/components/streak/   streak icon (node chain), header pill, Today panel, cal
                          goal summary for end screens, milestone screen
 src/components/course/   course path, path nodes + popovers, mode toggle, course card, catalog
 src/components/certificates/ certificate view, issue flow, account list; src/lib/certificates/ rules, server, PDF
+src/components/mistakes/ Mistake review: dashboard card (count), review player (/review)
 src/components/leagues/  tier badges, player card, leagues page view, result screen, settings
 src/lib/leagues/         league rules (week, grouping, settling, handles), server code, config
 src/components/illustrations/ course covers (CourseCover registry, keyed by course id)
@@ -794,6 +797,8 @@ Migrations, all applied to the linked project:
 - `20261002100000_daily_lesson_limit.sql`: `lesson_opens`, `open_lesson()` (security definer,
   `search_path ''`, execute for `service_role` only), `profiles.time_zone_changed_at` and the
   `limit_time_zone_changes` trigger (see [Daily lesson limit](#daily-lesson-limit)).
+- `20261003100000_card_mistakes.sql`: `card_mistakes` and `record_mistake()` (security definer,
+  `search_path ''`, execute for `service_role` only; see [Mistake review](#mistake-review)).
 
 | Table | Holds |
 |---|---|
@@ -803,6 +808,7 @@ Migrations, all applied to the linked project:
 | `quiz_attempts` | `id`, `user_id`, `quiz_id`, `attempted_at` (unique per user and quiz), `score` 0 to 1, `passed`, `xp` (0 to 50), `answers` jsonb |
 | `xp_events` | `id`, `user_id`, `at`, `day` (local date), `time_zone`, `kind` (`card`, `lesson`, `quiz`, `practice`), `lesson_id`, `card_id?`, `xp` (0 to 50); practice unique per user, day and card |
 | `goal_days` | `(user_id, day)` primary key, `time_zone`, `goal` (the goal that day), `met_at` |
+| `card_mistakes` | `(user_id, lesson_id, card_id)` primary key, `misses` (1 to 999), `first_missed_at`, `last_missed_at`, `cleared_at` (set by a right answer in review; a new miss clears it again). Never the wrong answer itself. Learners select their own; only `record_mistake()` and Server Actions write |
 | `lesson_opens` | `(user_id, day, lesson_id)` primary key, `opened_at`: each new lesson a free account opened on its own day. Learners select their own; only `open_lesson()` writes |
 | `feedback` | `id`, `created_at`, `message` (1 to 1,000 chars), `lesson_id?` (kebab-case), `rating?` (1 to 5), `session_id` (random per tab). **Not linked to users.** |
 
@@ -820,6 +826,8 @@ Migrations, all applied to the linked project:
     grant and an update policy; `learning_mode`, `sound_enabled`, `coach_seen`,
     `age_confirmed`, `daily_goal`, `daily_goal_chosen` and `time_zone` aren't writable (Server
     Actions set them with the secret key).
+  - **`card_mistakes` is read-only for learners** (select own rows only); the server records
+    misses with `record_mistake()` and clears them after re-grading a review answer.
   - **`xp_events` and `goal_days` are read-only for learners** (select own rows only, no write
     grants), so nobody can write their own streak.
   - **Certificates:** owners select only their own; nobody writes them except the server (secret
@@ -855,7 +863,8 @@ Migrations, all applied to the linked project:
 Local dev and previews use the Stripe **sandbox** (test keys; live keys are refused there).
 Sandbox setup: `docs/stripe-checklist.md`. `PRO_LAUNCH_AT` in Production marks the launch.
 
-- **What's Pro:** unlimited new lessons every day, certificates and an extra streak freeze. Free
+- **What's Pro:** unlimited new lessons every day, [Mistake review](#mistake-review), certificates
+  and an extra streak freeze. Free
   accounts open **any lesson in any course**, Pro modules included, up to 3 new lessons a day (see
   [Daily lesson limit](#daily-lesson-limit)). Modules still have `"access": "free" | "pro"`: the
   first module of each course and every help module (e.g. Stay Safe Online's "When Things Go
@@ -913,7 +922,8 @@ parent or guardian before subscribing" is shown to everyone.
 - **`ProPitch`** (`src/components/pro/ProPitch.tsx`) is every Pro screen: the daily-limit screen,
   "What's next", the Pro sheet and the top of `/pro`. **One screen, no scrolling on a 360×640
   phone, the button in view:** the mascot (`happy`), one headline, 3 benefits with icons (one line
-  each), the price with **annual preselected** ("A$59.99 a year, just A$5 a month"; monthly is a
+  each: unlimited lessons, "Review your mistakes", certificates; the extra streak freeze is listed on
+  `/pro` only), the price with **annual preselected** ("A$59.99 a year, just A$5 a month"; monthly is a
   small switch), one big button ("Start 7-day free trial" via `PlanButton`, which sends
   `checkout_started`), "Not now", and the parent line. A gentle staggered entrance (none under
   reduced motion). It sends `paywall_viewed`.
@@ -922,7 +932,7 @@ parent or guardian before subscribing" is shown to everyone.
   optional question with four one-tap answers and Skip, then carries on where "Not now" was going.
   It sends `pro_declined` with only `reason` and `source` (the screen: `paywall`, `limit`,
   `pro_page`; not the visitor's source). At most once a week per device (localStorage; never if
-  storage is blocked). The sheet's ✕ and Escape just close. `npm run e2e:pro-declined` checks it. Mistake review joins the benefits only once it ships.
+  storage is blocked). The sheet's ✕ and Escape just close. `npm run e2e:pro-declined` checks it.
 - **"What's next"** (`WhatsNext`) is `ProPitch` with the next module named; its **teaser card**
   (`TeaserCard`: a sandbox, no XP, nothing saved) sits behind a small "Try a sample" link. With
   accounts it only shows where Pro is still needed (a copy without accounts).
@@ -947,6 +957,31 @@ parent or guardian before subscribing" is shown to everyone.
   public check page `/certificate/<id>` (name, course, date and ID only; not indexed), and "Add to
   LinkedIn": LinkedIn no longer pre-fills certificates, so the button opens its form and the page
   lists each value with a copy button (`linkedInFields`). Certificates are listed on `/account`.
+
+## Mistake review
+
+Pro learners try the cards they got wrong again. Pure rules in `src/lib/progress/mistakes.ts`
+(tested), actions in `src/app/actions/mistakes.ts` and `recordMistakeAction` in
+`src/app/actions/progress.ts`, UI in `src/components/mistakes/`.
+
+- **What counts:** a lesson card's **first wrong try in a visit** (`LessonRun` →
+  `store.recordMistake`; guests keep nothing, so `LocalStorageProgressStore` ignores it), and every
+  wrong answer in a **server-graded quiz attempt**. The server re-grades the lesson answer and
+  records nothing unless the lesson and card are in the loaded content, the card is graded (not an
+  explainer, photo or explore card) and the answer really is wrong (`lessonMistake`); quiz mistakes
+  only for cards still in that quiz (`quizMistakes`). Only the fact of the miss is stored.
+- **Everyone signed in is recorded; only Pro reviews.** Free learners see the count on the
+  dashboard (`MistakesCard`: "Your mistakes", "N cards to try again", "Review with Pro") and `/review`
+  shows them `ProPitch` with the count. Lists leave out mistakes whose card has left the content
+  (`reviewableMistakes`). Reset progress (one lesson or all) clears them.
+- **`/review`** (`MistakeReview`, not indexed; guests sign in first): newest first, at most
+  `REVIEW_BATCH` (30) at a time ("Review more" for the rest), in the player shell with the same
+  card components, Check / Try again, nudges and explanations, but no hints, no bonus chip and
+  "Skip for now" on every card (a skipped mistake stays). A right answer is re-graded on the server
+  (`checkMistakeAction`, Pro only), which clears it, and pays like a replay through
+  `store.completeCard`: practice XP toward today's goal, or the card's XP if it was never finished;
+  quiz cards pay nothing. The finish screen counts what was fixed (mascot `celebrating`, or
+  `thinking` if nothing was).
 
 ## Daily lesson limit
 
@@ -1202,6 +1237,7 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   - streak milestones (`celebrating`, on their own screen before lesson or quiz complete; confetti
     from 30 days)
   - quiz fail (`thinking`, with encouraging copy)
+  - the end of a mistake review (`celebrating` when something was fixed, otherwise `thinking`)
   - league results after the weekly reset (`celebrating` with confetti when promoted, `happy` when
     staying, `thinking` when moving down)
   - every answer in lessons (a small reaction beside the feedback, see LessonRun above)
@@ -1264,7 +1300,8 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
 - **Indexing:** only `VERCEL_ENV=production` is indexable. Previews and local dev get a robots file
   that disallows everything, plus `noindex` metadata.
 - **`sitemap.xml`** lists `/`, `/courses`, course paths, every lesson, `/privacy` and `/terms`.
-  **`robots.txt`** disallows `/dev/`, `/account`, `/auth/`, `/feedback` and `/from/`.
+  **`robots.txt`** disallows `/dev/`, `/account`, `/auth/`, `/feedback`, `/from/`, `/leagues`,
+  `/certificate/` and `/review`.
 - **Every page has a title and description.** Lesson titles read "Lesson (Course)".
 - **Link previews** (`src/lib/og.tsx`, rendered at build): the home image (`app/opengraph-image.tsx`)
   and one per course (`app/(main)/course/[id]/opengraph-image.tsx`); lesson pages render their

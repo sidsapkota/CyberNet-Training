@@ -63,6 +63,36 @@ export type Database = {
         }
         Relationships: []
       }
+      card_mistakes: {
+        Row: {
+          card_id: string
+          cleared_at: string | null
+          first_missed_at: string
+          last_missed_at: string
+          lesson_id: string
+          misses: number
+          user_id: string
+        }
+        Insert: {
+          card_id: string
+          cleared_at?: string | null
+          first_missed_at?: string
+          last_missed_at?: string
+          lesson_id: string
+          misses?: number
+          user_id: string
+        }
+        Update: {
+          card_id?: string
+          cleared_at?: string | null
+          first_missed_at?: string
+          last_missed_at?: string
+          lesson_id?: string
+          misses?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
       certificates: {
         Row: {
           completed_on: string
@@ -633,6 +663,10 @@ export type Database = {
           day: string
           used: number
         }[]
+      }
+      record_mistake: {
+        Args: { p_card: string; p_lesson: string; p_user: string }
+        Returns: undefined
       }
       verify_certificate: {
         Args: { p_id: string }
