@@ -24,7 +24,7 @@ Last updated: 1 October 2026.
 - Daily goals and streaks; leagues (hidden until 20 learners earn XP in one week); certificates.
 - Help lines: Kids Helpline and Lifeline (verified), eSafety, ACCCE, Scamwatch, IDCARE, ReportCyber, 000.
 
-- **Feedback emails** (branch `feedback-email`, 2 Oct): each feedback message is still stored in the table and now also emailed to cybernettraining10@gmail.com (`FEEDBACK_INBOX` in `src/lib/site.ts`; switch to hello@ once ImprovMX forwarding works) with the lesson, page, rating, time and signed-in yes/no. Capped at 12 emails an hour plus one "more are waiting" note. Only production has `RESEND_API_KEY`, so emails only arrive from production. One test row ("[test] Automated check… Please ignore.") was stored on 2 Oct while checking the route.
+- **Feedback emails** (merged 2 Oct; production checks passed: mascot 5/5, plans 38/38, mistake review 14/14, guest gate 11/11, `e2e:feedback-form` on production; no runtime errors after one real send): each feedback message is still stored in the table and now also emailed to cybernettraining10@gmail.com (`FEEDBACK_INBOX` in `src/lib/site.ts`; switch to hello@ once ImprovMX forwarding works) with the lesson, page, rating, time and signed-in yes/no. Capped at 12 emails an hour plus one "more are waiting" note. Only production has `RESEND_API_KEY`, so emails only arrive from production. Two test rows starting "[test]" were stored on 2 Oct (one from a local build, one real send on production, which should have arrived in the inbox; check spam if not).
 
 ## 2. Open branches
 
