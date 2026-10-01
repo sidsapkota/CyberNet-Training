@@ -15,6 +15,9 @@ import {
   trainModel,
   trainModelWords,
   nextWord,
+  reveal,
+  trueFalse,
+  fillGap,
   teardown,
   terminal,
 } from "@/test/fixtures";
@@ -63,6 +66,9 @@ describe("CardSchema (discriminated union)", () => {
       trainModel(),
       trainModelWords(),
       nextWord(),
+      reveal(),
+      trueFalse(),
+      fillGap(),
     ]) {
       expect(CardSchema.safeParse(card).success, card.type).toBe(true);
     }
@@ -82,9 +88,11 @@ describe("CardSchema (discriminated union)", () => {
     expect(isInteractiveCard(multipleChoice())).toBe(true);
     expect(isInteractiveCard(dragToOrder())).toBe(true);
     expect(isInteractiveCard(binaryToggle())).toBe(true);
-    for (const card of [numericInput(), matchPairs(), packetPath(), terminal()]) {
+    for (const card of [numericInput(), matchPairs(), packetPath(), terminal(), trueFalse(), fillGap()]) {
       expect(isInteractiveCard(card)).toBe(true);
     }
+    // Learning cards are hands-on but ungraded (guided).
+    expect(isInteractiveCard(reveal())).toBe(false);
   });
 });
 

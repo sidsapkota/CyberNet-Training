@@ -573,6 +573,46 @@ const raw: unknown[] = [
     nudge: "The top word still has too big a share. Keep going in the same direction.",
     explanation: "A **high** temperature evens out the chances, so less likely words (even \"moon\") get picked more often. That's more surprising, and more likely to be nonsense.",
   },
+  {
+    id: "sample-reveal-part",
+    type: "reveal",
+    difficulty: "core",
+    prompt: "Tap the glowing part.",
+    show: { kind: "part", scene: "phone", part: "battery", view: "open" },
+    sentence: "This is the **battery**: it stores the energy that runs the phone.",
+  },
+  {
+    id: "sample-reveal-term",
+    type: "reveal",
+    difficulty: "core",
+    prompt: "Tap the word.",
+    show: { kind: "term", term: "cpu" },
+    sentence: "The **CPU** follows the instructions that make your apps work.",
+  },
+  {
+    id: "sample-true-false",
+    type: "true_false",
+    difficulty: "core",
+    prompt: "RAM keeps your files when the power goes off.",
+    answer: false,
+    hint: "Think about what happens to an unsaved essay in a power cut.",
+    nudge: "RAM is the fast desk for now: it forgets when the power goes.",
+    explanation: "**False.** RAM forgets when the power goes off; **storage** keeps your files.",
+  },
+  {
+    id: "sample-fill-gap",
+    type: "fill_gap",
+    difficulty: "core",
+    prompt: "Open apps live in ___ while you use them.",
+    options: [
+      { id: "ram", text: "RAM" },
+      { id: "storage", text: "storage", nudge: "Storage keeps files for later; open apps need fast space now." },
+      { id: "battery", text: "the battery", nudge: "The battery powers everything, but it doesn't hold apps." },
+    ],
+    correctOptionId: "ram",
+    hint: "Which part is the fast desk for what you're using right now?",
+    explanation: "**RAM** is the fast desk for what you're using now.",
+  },
 ];
 
 /** Validated samples. Throws on import if any sample breaks its schema. */

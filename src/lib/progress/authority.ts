@@ -4,7 +4,7 @@
  * Pure (content passed in), so it's unit-tested and shared by Server Actions and the merge.
  */
 import { gradeUntrusted } from "@/cards/grading";
-import { type Card, isExploreCard, isInteractiveCard } from "@/cards/schema";
+import { type Card, isGuidedCard, isInteractiveCard } from "@/cards/schema";
 import type { Lesson } from "@/lib/content/schema";
 import type { QuizAttempt } from "./types";
 import { practiceXp, scoreQuiz, XP } from "./xp";
@@ -50,7 +50,7 @@ export function buildContentIndex(lessons: Iterable<Lesson>): ContentIndex {
 export function cardXpFor(index: ContentIndex, lessonId: string, cardId: string, claimedXp: number): number | null {
   const card = index.get(lessonId)?.cards.get(cardId);
   if (!card) return null;
-  if (isExploreCard(card)) return XP.explore;
+  if (isGuidedCard(card)) return XP.explore;
   if (!isInteractiveCard(card)) return 0;
   const table = XP.card[card.difficulty];
   return Number.isFinite(claimedXp) && claimedXp >= table.firstTry ? table.firstTry : table.retry;

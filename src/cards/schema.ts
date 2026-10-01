@@ -15,6 +15,9 @@ import { TeardownCardSchema } from "./teardown/schema";
 import { TerminalCardSchema } from "./terminal/schema";
 import { NextWordCardSchema } from "./next-word/schema";
 import { TrainModelCardSchema } from "./train-model/schema";
+import { RevealCardSchema } from "./reveal/schema";
+import { TrueFalseCardSchema } from "./true-false/schema";
+import { FillGapCardSchema } from "./fill-gap/schema";
 
 /**
  * Every card type. Registration step 1 of 2 when adding a card type
@@ -37,13 +40,16 @@ export const CardSchema = z.discriminatedUnion("type", [
   SortBinsCardSchema,
   TrainModelCardSchema,
   NextWordCardSchema,
+  RevealCardSchema,
+  TrueFalseCardSchema,
+  FillGapCardSchema,
 ]);
 
 export type Card = z.infer<typeof CardSchema>;
 export type CardType = Card["type"];
 
 /** Card types that can be graded (everything except read-only ones). */
-export type InteractiveCard = Exclude<Card, { type: "explainer" | "photo" }>;
+export type InteractiveCard = Exclude<Card, { type: "explainer" | "photo" | "reveal" }>;
 
 /** A hotspot in explore mode: hands-on but never graded (see `GuidedCardDefinition`). */
 export function isExploreCard(card: Card): boolean {
@@ -51,9 +57,17 @@ export function isExploreCard(card: Card): boolean {
 }
 
 /**
- * Whether a card is graded. False for explainers, photos and explore-mode hotspots. (Only the true branch
+ * Hands-on but never graded (guided): explore-mode hotspots and learning cards (`reveal`). They pay
+ * `XP.explore` once and can't be in quizzes.
+ */
+export function isGuidedCard(card: Card): boolean {
+  return isExploreCard(card) || card.type === "reveal";
+}
+
+/**
+ * Whether a card is graded. False for explainers, photos, learning cards and explore-mode hotspots. (Only the true branch
  * narrows usefully: a false result can also be a hotspot in explore mode.)
  */
 export function isInteractiveCard(card: Card): card is InteractiveCard {
-  return card.type !== "explainer" && card.type !== "photo" && !isExploreCard(card);
+  return card.type !== "explainer" && card.type !== "photo" && card.type !== "reveal" && !isExploreCard(card);
 }

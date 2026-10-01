@@ -263,6 +263,13 @@ describe("real content in /content", () => {
       const explored = new Map<string, Set<string>>();
       for (const outline of course.modules.flatMap((m) => m.lessons)) {
         for (const card of lessons.get(outline.id)?.cards ?? []) {
+          // A learning card that shows one part counts as meeting it.
+          if (card.type === "reveal" && card.show.kind === "part") {
+            const met = explored.get(card.show.scene) ?? new Set<string>();
+            met.add(card.show.part);
+            explored.set(card.show.scene, met);
+            continue;
+          }
           if (card.type !== "hotspot" && card.type !== "teardown") continue;
           const seen = explored.get(card.scene) ?? new Set<string>();
           explored.set(card.scene, seen);

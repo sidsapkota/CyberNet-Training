@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { CardId, nonEmpty } from "@/cards/base";
 import { type Card, CardSchema, isInteractiveCard } from "@/cards/schema";
+import { cardSeconds } from "./estimate";
 import { LESSON_ICONS, type LessonIconName } from "./lessonIcons";
 
 /** Shared id format for courses, modules and lessons (lesson ids appear in URLs). */
@@ -126,6 +127,8 @@ export interface LessonOutline {
   coreCardIds: string[];
   /** Photo cards: a quick look, so the time estimate leaves them out. */
   photoCount: number;
+  /** Estimated seconds for the core cards, by card type (`estimate.ts`). */
+  coreSeconds: number;
   /** Only set for regular lessons (quizzes use the network hub). */
   icon?: LessonIconName;
   /** Only set for quizzes. */
@@ -162,6 +165,7 @@ export function toLessonOutline(lesson: Lesson): LessonOutline {
     cardCount: lesson.cards.length,
     coreCardIds: lesson.cards.filter((c) => c.difficulty === "core").map((c) => c.id),
     photoCount: lesson.cards.filter((c) => c.type === "photo").length,
+    coreSeconds: lesson.cards.filter((c) => c.difficulty === "core").reduce((sum, c) => sum + cardSeconds(c), 0),
     ...(lesson.kind === "quiz" ? { passThreshold: lesson.passThreshold } : { icon: lesson.icon }),
     ...(lesson.kind === "lesson" && lesson.lastChecked ? { lastChecked: lesson.lastChecked } : {}),
     ...(lesson.kind === "lesson" ? { about: lesson.about } : {}),

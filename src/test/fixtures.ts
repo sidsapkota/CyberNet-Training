@@ -1,3 +1,6 @@
+import type { RevealCard } from "@/cards/reveal/schema";
+import type { TrueFalseCard } from "@/cards/true-false/schema";
+import type { FillGapCard } from "@/cards/fill-gap/schema";
 import type { BinaryToggleCard } from "@/cards/binary-toggle/schema";
 import type { DragToOrderCard } from "@/cards/drag-to-order/schema";
 import type { ExplainerCard } from "@/cards/explainer/schema";
@@ -328,6 +331,39 @@ export const trainModelWords = (over: Partial<TrainModelCard> = {}): TrainModelC
   ...over,
 });
 
+export const reveal = (over: Partial<RevealCard> = {}): RevealCard => ({
+  id: "meet-cpu",
+  type: "reveal",
+  difficulty: "core",
+  show: { kind: "term", term: "cpu" },
+  sentence: "The **CPU** follows the instructions that make apps work.",
+  ...over,
+});
+
+export const trueFalse = (over: Partial<TrueFalseCard> = {}): TrueFalseCard => ({
+  id: "tf",
+  type: "true_false",
+  difficulty: "core",
+  prompt: "RAM keeps your files when the power goes off.",
+  answer: false,
+  explanation: "RAM forgets; storage keeps files.",
+  ...over,
+});
+
+export const fillGap = (over: Partial<FillGapCard> = {}): FillGapCard => ({
+  id: "gap",
+  type: "fill_gap",
+  difficulty: "core",
+  prompt: "Open apps live in ___ while you use them.",
+  options: [
+    { id: "ram", text: "RAM" },
+    { id: "storage", text: "storage" },
+  ],
+  correctOptionId: "ram",
+  explanation: "RAM is the fast desk for now.",
+  ...over,
+});
+
 export const nextWord = (over: Partial<NextWordCard> = {}): NextWordCard => ({
   id: "cat",
   type: "next_word",
@@ -358,6 +394,7 @@ export const lessonOutline = (over: Partial<LessonOutline> = {}): LessonOutline 
   cardCount: 3,
   coreCardIds: ["c1", "c2"],
   photoCount: 0,
+  coreSeconds: 90,
   ...over,
 });
 

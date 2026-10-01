@@ -9,7 +9,7 @@
       "id": "q-unplug-first",
       "type": "hotspot",
       "difficulty": "core",
-      "prompt": "A friend's laptop needs a new SSD. The bottom panel is already off. Tap what has to be **unplugged first**, before anything else inside is touched.",
+      "prompt": "Swapping an SSD? Tap what's **unplugged first**.",
       "scene": "laptop",
       "view": "open",
       "mode": "tap",
@@ -20,52 +20,60 @@
       "id": "q-tap-ram",
       "type": "hotspot",
       "difficulty": "core",
-      "prompt": "Tap the laptop's **RAM**.",
+      "prompt": "This laptop lags with lots of apps open. Tap the part that's **full**.",
       "scene": "laptop",
       "view": "open",
       "mode": "tap",
       "targets": ["ram"],
-      "explanation": "RAM is the stick with a row of chips, clipped into its slot. The small shiny chip is the CPU, and the long, narrow card is the SSD (storage)."
+      "explanation": "Open apps live in **RAM**, the stick with a row of chips. When too many are open, RAM fills up and the laptop lags. Storage (the long, narrow card) only fills up with saved files."
     },
     {
       "id": "q-part-jobs",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Match each part to what it does.",
+      "prompt": "Match each part to its job.",
       "pairs": [
         { "id": "cpu", "left": "CPU", "right": "Follows instructions" },
-        { "id": "ram", "left": "RAM", "right": "Holds what's in use now" },
+        { "id": "ram", "left": "RAM", "right": "Holds what's open now" },
         { "id": "storage", "left": "Storage", "right": "Keeps files when off" },
         { "id": "fan", "left": "Fan", "right": "Blows heat out" }
       ],
-      "explanation": "The **CPU** does the work, **RAM** is the workspace, **storage** keeps things for later, and the **fan** keeps the CPU cool."
+      "explanation": "The **CPU** does the work, **RAM** is the desk for what's open, **storage** keeps things for later, and the **fan** keeps the CPU cool."
     },
     {
       "id": "q-sort-ram-storage",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Sort each one: **RAM** or **storage**?",
+      "prompt": "In **RAM** or in **storage**?",
       "bins": [{ "id": "ram", "label": "RAM" }, { "id": "storage", "label": "Storage" }],
       "items": [
-        { "id": "video-playing", "label": "A video call you're on right now", "bin": "ram" },
-        { "id": "saved-homework", "label": "A report you saved yesterday", "bin": "storage" },
-        { "id": "open-tabs", "label": "Your open browser tabs", "bin": "ram" },
-        { "id": "installed-game", "label": "A game you installed last month", "bin": "storage" }
+        { "id": "video-playing", "label": "A live video call", "bin": "ram" },
+        { "id": "saved-homework", "label": "A saved report", "bin": "storage" },
+        { "id": "open-tabs", "label": "Open browser tabs", "bin": "ram" },
+        { "id": "installed-game", "label": "An installed game", "bin": "storage" }
       ],
       "explanation": "Things in use right now are in **RAM**. Saved and installed things stay in **storage**, even when the device is off."
     },
     {
-      "id": "q-game-fits",
-      "type": "multiple_choice",
+      "id": "q-close-apps-download",
+      "type": "true_false",
       "difficulty": "core",
-      "prompt": "Your laptop has **8 GB of RAM** and **20 GB of free storage**. Can you download a **12 GB** game?",
+      "prompt": "Closing your open apps makes room for a big download.",
+      "answer": false,
+      "explanation": "**False.** Closing apps frees **RAM**. A download is saved in **storage**, so making room means deleting files you don't need (or have backed up)."
+    },
+    {
+      "id": "q-restart-wipes",
+      "type": "fill_gap",
+      "difficulty": "core",
+      "prompt": "Restarting a phone wipes its ___, but your saved photos stay.",
       "options": [
-        { "id": "yes-storage", "text": "Yes, it's saved in storage, which has 20 GB free" },
-        { "id": "no-ram", "text": "No, the game is bigger than the 8 GB of RAM" },
-        { "id": "close-apps", "text": "Only after closing apps to free up some space" }
+        { "id": "ram", "text": "RAM" },
+        { "id": "storage", "text": "storage" },
+        { "id": "battery", "text": "battery" }
       ],
-      "correctOptionId": "yes-storage",
-      "explanation": "Downloads are saved in **storage**, and 12 GB fits in the 20 GB free. RAM doesn't limit downloads, and closing apps only frees RAM, not storage."
+      "correctOptionId": "ram",
+      "explanation": "Switching off wipes **RAM**, the desk for what's open. Saved photos live in **storage**, which keeps everything with the power off."
     },
     {
       "id": "q-cores-help",
@@ -74,7 +82,7 @@
       "prompt": "Which job gets **faster** with more CPU cores?",
       "options": [
         { "id": "photos", "text": "Adding filters to 300 separate photos" },
-        { "id": "treasure", "text": "Solving a puzzle where every step needs the one before" },
+        { "id": "treasure", "text": "A puzzle where each step needs the last one" },
         { "id": "storage", "text": "Opening one big file that can't be split" }
       ],
       "correctOptionId": "photos",
@@ -84,14 +92,14 @@
       "id": "q-throttling",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "While you game, a laptop's fan is roaring. The laptop gets very hot, then suddenly runs slower. What's happening?",
+      "prompt": "Mid-game, a laptop gets very hot, then suddenly runs slower. Why?",
       "options": [
         { "id": "throttle", "text": "The hot CPU is slowing itself down to stay safe" },
         { "id": "storage-full", "text": "The game has filled up all of the storage" },
         { "id": "ram-melting", "text": "The fan has stopped working for good" }
       ],
       "correctOptionId": "throttle",
-      "explanation": "Too much heat makes the CPU **throttle**: it lowers its clock speed to protect itself. Clear vents and a working fan help it stay at full speed."
+      "explanation": "Too much heat makes the CPU **throttle**: it slows itself down to protect itself. Clear vents and a clean fan help it stay at full speed."
     }
   ]
 }

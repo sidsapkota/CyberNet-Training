@@ -63,6 +63,9 @@ const RETRIES = {
   // Pick goal: the pick is cleared. Probability goal: the slider stays, and Check waits for a change.
   next_word: (card, answer: { temperature: number; pick: string | null }) =>
     card.goal.type === "pick" ? { ...answer, pick: null } : answer,
+  // A wrong pick is cleared: choose again.
+  true_false: () => null,
+  fill_gap: () => null,
 } satisfies Retries;
 
 /** The answer after Try again (never throws: a malformed answer starts the card again). */

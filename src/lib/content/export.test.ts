@@ -23,11 +23,11 @@ describe("content export", () => {
     const text = (s: string) => plainText(s);
     // A quiz may reuse a lesson card's wording; those lesson prompts are fine to show.
     const lessonPrompts = new Set(
-      [...content.lessons.values()].filter((l) => l.kind === "lesson").flatMap((l) => l.cards.flatMap((c) => ("prompt" in c ? [text(c.prompt)] : []))),
+      [...content.lessons.values()].filter((l) => l.kind === "lesson").flatMap((l) => l.cards.flatMap((c) => ("prompt" in c && c.prompt ? [text(c.prompt)] : []))),
     );
     for (const lesson of content.lessons.values()) {
       for (const card of lesson.cards) {
-        if (lesson.kind === "quiz" && "prompt" in card && !lessonPrompts.has(text(card.prompt))) expect(doc).not.toContain(truncate(text(card.prompt), 60).replace(/…$/, ""));
+        if (lesson.kind === "quiz" && "prompt" in card && card.prompt && !lessonPrompts.has(text(card.prompt))) expect(doc).not.toContain(truncate(text(card.prompt), 60).replace(/…$/, ""));
         for (const field of ["explanation", "hint", "nudge"] as const) {
           const value = (card as Partial<Record<typeof field, string>>)[field];
           if (value && text(value).length > 40) expect(doc).not.toContain(text(value));

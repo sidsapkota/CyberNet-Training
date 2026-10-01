@@ -676,14 +676,14 @@ What changed after the accuracy review of Inside Your Devices, and why.
 | Was | Now |
 |---|---|
 | The phone scene showed RAM and storage like the laptop's, as if they could be taken out | Soldered chips on the phone's board; the explore card says they can't be swapped, and that RAM is often stacked on the processor |
-| The laptop's RAM stick and SSD were shown as how every laptop works | "An example with removable RAM and an SSD; many thin laptops have them soldered" (explore card, photo caption, recap, RAM photo) |
+| The laptop's RAM stick and SSD were shown as how every laptop works | "An example with removable RAM and an SSD; many thin laptops have them soldered" (the 1.1 labelling explanation and the RAM photo caption) |
 | The phone opened by unscrewing the back | Phones are glued: soften the glue, lift the back, two screws, the bracket, then unplug the battery. Every phone teardown adds the fire-risk line to its safety note |
 | The CPU was drawn with a shiny metal lid | A small shiny die on a square base (laptop and phone chips have no lid) |
 | The laptop had no heat pipe; cooling was "the fan" | A copper heat pipe from the CPU to the fan's fins; `find-the-cooling` taps the CPU, heat pipe and fan |
 | `too-hot` had a "Fan on" switch, as if laptop fans were switched on by hand | "Clean the dusty fan"; the explanation says laptop fans switch on by themselves and dust stops them cooling |
 | "The OS is the first program to start" (the firmware starts first) | "The main program that starts" (`meet-the-os/the-operating-system`) |
 | "Cloud files are kept safe and backed up" | "usually kept safe and backed up" (`files-and-folders/the-cloud`) |
-| Opening the laptop made four screws look like the whole job | The prompt says real laptops often have more screws and clips |
+| Opening the laptop made four screws look like the whole job | The explanation says real laptops often have more screws and clips |
 | Scenes looked like photos of real layouts | Each carries a "Simplified diagram" label, backed by a real, credited photo |
 
 ## Real photos
@@ -745,91 +745,122 @@ wording and a motherboard label position (`labelAt`) so its spot doesn't sit on 
 
 ## Module 1: Pull It Apart
 
+**"Learn before you do" pilot (October 2026).** This module is the first rewritten for
+`docs/plans/learn-before-you-do.md`: every part, word and idea is met in a learning card (`reveal`:
+tap it, see one sentence; or the phone's explore card) before any activity uses it. Lessons are
+measured in time (`TIME_RULES` in `shape.ts`: 3–5 minutes of core cards, at least 60% hands-on, at
+least 3 interaction styles), and questions follow "depth, not exam prep": one short everyday
+sentence, about 5–15 seconds of thought, no calculations or "smallest that still…" puzzles, and
+naming practice only when it's tied to what a part does. Cut in the rewrite: `explore-the-laptop`
+(replaced by one reveal per part), `label-the-phone` (naming only), `desk-and-cupboard` (now two
+reveals), `what-fits` and `choose-the-ram` (number comparisons and a "smallest that still works"
+puzzle), `how-long` (a division), and the quiz's `q-game-fits` (numbers). The fan and heat pipe are
+now met in 1.3, where cooling is taught. **Where this section and the "Right-level rewrite"
+summary above disagree for Module 1, this section wins.**
+
 ### 1.1 What's in the Box (`whats-in-the-box`)
 **Goals:**
-- Phones and laptops contain the same core parts: CPU, RAM, storage, battery and motherboard.
-- Say what each part does.
-- Technicians unplug the battery first and reconnect it last.
-- This is a simulation. Real devices should only be opened by an adult or a repair shop.
-- See every part (explore cards) before being asked to find, label or remove it.
+- Meet the battery, battery connector, motherboard, CPU, RAM and storage of a laptop, one tap each.
+- Open a laptop and a phone as simulations; the battery is unplugged first.
+- Put each job on its part (CPU follows instructions, RAM holds open apps, storage keeps files,
+  battery stores energy).
+- A phone does the same jobs in less space; its RAM and storage are soldered.
+- Leave opening real devices to a repair shop.
+
+**Cards:** reveal battery · reveal battery connector · safety note · open the laptop (teardown) ·
+reveal motherboard · reveal CPU · reveal RAM · reveal storage · label each part's job · photo ·
+explore the phone · true/false "a phone's RAM can be swapped" · fill the gap "repairers unplug
+the ___ first" · open the phone (teardown) · bonus: where photos live · recap. About 4.5 minutes.
 
 **Key claims:**
-- Explore jobs, laptop: motherboard ("signals travel its thin lines, like roads"), CPU, fan ("blows
-  hot air out through the vents"), RAM, storage, battery ("the biggest part inside"), battery
-  connector ("technicians unplug it first"). Phone: logic board, camera, CPU, RAM, storage,
-  battery ("fills most of the phone"), battery connector, charging port ("on the outside edge, so
-  pocket fluff can get in"). Most phones have no fan.
-- The CPU follows instructions; RAM is fast working space; storage keeps data with the power off;
-  the battery stores energy; the motherboard connects the parts through traces.
-- Photos are kept in storage, not RAM.
-- Technicians disconnect the battery before touching other parts, so nothing gets power while
-  they work.
-- Phones are often sealed with adhesive that repair shops soften with gentle heat.
-- In phones, the CPU, RAM and storage sit on one small board, and the battery takes up most of the
-  space.
+- The battery stores the energy that runs everything; unplugging the battery connector cuts the
+  battery's power to everything inside, so repairers do it first.
+- The motherboard: every part plugs into it, and its thin lines carry signals between them.
+- The CPU follows the instructions that make apps work; RAM is a fast workspace for open apps;
+  storage (an SSD) keeps photos, apps and files with the power off.
+- This laptop's RAM and SSD unclip; many thin laptops have them soldered (label explanation; the
+  RAM photo caption in 1.2 says it too).
+- Phone: the processor does the CPU's job and graphics in one chip; RAM and storage chips are
+  soldered, so they can't be swapped; the battery fills most of the phone; the battery connector is
+  unplugged first in every repair; the camera's lens looks out through the back; the charging port
+  is open to the outside, so fluff can get in.
+- Phones are glued shut; repair shops soften the glue, and a damaged phone battery can catch fire.
 
 **Simplifications:**
-- Teardown order is simplified: a few screws and one panel. Real devices have clips, ribbon
-  cables, shields and many more screws.
+- Teardown order is simplified: four screws and one panel (the explanation says real laptops often
+  have more screws, and clips). The phone teardown starts with the bracket's two screws already out
+  (the explanation says so).
 - "The CPU is the brain" is an analogy. In phones, the CPU is part of a larger chip (a
   system-on-a-chip) that also contains the graphics processor and more.
 - The phone's RAM and storage are drawn as separate chips. In many phones, RAM is stacked on the
   processor.
-- The camera swap reconnects the battery before refitting the cover. That's true of real repairs,
-  but real ones also test the device before closing it.
-- "Most phones have no fan": a few gaming phones do have one.
+- "Unplug it, and nothing inside gets power": true of the battery; a laptop on its charger would
+  still have power, which the lesson doesn't cover.
 
 ### 1.2 Memory vs Storage (`memory-vs-storage`)
 **Goals:**
-- Tell RAM (the "desk") from storage (the "cupboard").
-- Know the symptoms: full RAM means lag or reloading apps; full storage means you can't save or
-  download.
-- Choose the right fix for each.
+- Tell RAM (the desk: fast, wiped at power off) from storage (the cupboard: keeps things).
+- Every open app takes room in RAM; too many and the device lags. Closing apps frees RAM.
+- "Not enough space" when saving means storage is full; downloads need free storage.
+- A restart wipes RAM, which often helps a slow laptop; saved files stay.
+
+**Cards:** reveal RAM · reveal storage · sort "what's still there after a power cut" · reveal
+gigabytes · fill-the-RAM simulator · true/false "every open app takes room in RAM" · photo ·
+storage-full scenario · fill the gap "a download needs free space in ___" · why a restart helps
+(multiple choice) · bonus: apps keep reloading (scenario) · recap. About 3 minutes.
 
 **Key claims:**
-- Both are measured in GB. RAM is much smaller and faster, and is cleared when the power goes off.
-- Opening an app copies it from storage into RAM.
-- When RAM fills, laptops move data to storage (swap), which slows them down, and phones usually
-  close background apps, which then reload.
-- Restarting clears RAM; files in storage are untouched. Restarting doesn't change how much RAM
-  there is.
+- Both are measured in GB, and storage usually has many times more than RAM.
 - Unsaved work is only in RAM, so it's lost if the power cuts out.
-- 256 GB ÷ 8 GB = 32 films; 7 GB needed → 8 GB is the smallest option (in steps of 2 GB).
+- `fill-the-ram`: system 1.5 + music 0.3 + video call 1.2 + game 2 = 5 GB on a 4 GB phone → lag;
+  closing the video call (3.8 GB) runs smoothly.
+- When RAM fills, laptops move data to storage (slower), and phones usually close background apps,
+  which then reload.
+- Restarting wipes RAM; files in storage are untouched; the CPU's speed doesn't change.
 - "RAM booster" apps take up RAM themselves, and are often junk or worse.
 
 **Simplifications:**
 - The desk and cupboard analogy hides caches, virtual memory details and compressed memory.
 - "Closing apps and restarting only clear RAM" ignores temporary files that a restart can remove.
 - Phones don't swap at all in this lesson. Some do use compressed memory or a small swap area.
-- Film and app sizes are round, illustrative numbers.
+- App sizes are round, illustrative numbers.
 
 ### 1.3 Meet the CPU (`meet-the-cpu`)
 **Goals:**
-- The CPU follows billions of simple instructions per second.
-- GHz means billions of clock ticks per second.
-- Cores are separate workers that only help with jobs that split.
-- Heat causes throttling. Fans and clear vents prevent it.
+- GHz is a CPU's clock speed: more GHz, more steps a second (for the same CPU).
+- Cores are separate workers that only help with jobs that split into pieces.
+- Heat causes throttling; the heat pipe and fan carry heat away; blocked vents trap it.
+
+**Cards:** reveal GHz · true/false "the same CPU does more at 3 GHz than at 2 GHz" · reveal core ·
+add-cores simulator · cooks explainer · sort "can cores share it?" · reveal heat pipe · reveal fan ·
+reveal throttling · tap the CPU and its cooling · photo · fill the gap "on a blanket the CPU gets
+hot and ___" · bonus: too-hot simulator · bonus: 4 vs 8 cores on a job that can't split · recap.
+About 3.5 minutes.
 
 **Key claims:**
-- 1 GHz = 10⁹ ticks per second. At 2 GHz, 10 billion steps take 5 seconds (at one step per tick).
-- A splittable 24-billion-step job at 2 GHz: 1 core 12 s, 2 cores 6 s, 4 cores 3 s.
+- 1 GHz = a billion clock ticks a second; the CPU does its tiny steps as the clock ticks.
+- A splittable job: 1 core 12 s, 2 cores 6 s, 4 cores 3 s.
 - A job that can't be split runs on one core, so 4 or 8 cores at the same clock finish it in the
   same time.
-- A CPU that gets too hot lowers its clock speed to protect itself (**throttling**). Phones have
-  no fan and throttle too.
-- Blocked vents (like a laptop on a blanket) trap heat.
+- A CPU that gets too hot lowers its clock speed to protect itself (**throttling**). Most phones
+  have no fan and throttle too.
+- Blocked vents (a laptop on a blanket) trap heat; dust stops a fan cooling well. Laptop fans
+  switch on by themselves.
 
 **Simplifications:**
-- **One step per tick** is stated as a simplification in the card itself. Real CPUs can do several
-  instructions per tick, or need several ticks for one.
+- "Steps on clock ticks": the true/false explanation adds that real CPUs can do several steps in
+  one tick. Comparing GHz is only fair for the same CPU, which is why the question says "the same
+  CPU".
 - Perfect splitting across cores ignores coordination overhead (Amdahl's law is not mentioned).
 - All cores are identical. Many phone CPUs mix fast and efficient cores.
-- Sort items ("check 1,000 files for viruses" splits; "a savings total month after month" doesn't)
-  are idealised.
+- Sort items ("resize photos" splits; "knit row by row" doesn't) are idealised.
+- The too-hot simulator always runs at full load (its load slider was removed).
 
 ### Module 1 quiz (`pull-it-apart-quiz`)
-7 questions: open a laptop safely (teardown) · tap the RAM · match parts to jobs · sort RAM vs
-storage · 64 ÷ 4 = 16 videos · which job gains from more cores · throttling.
+8 questions: tap what's unplugged first before an SSD swap · a laptop lags with many apps open:
+tap the part that's full (RAM) · match parts to jobs (the one vocabulary match) · sort RAM vs
+storage · true/false "closing apps makes room for a download" · fill the gap "restarting wipes
+its ___" · which job gains from more cores · throttling.
 
 ## Module 2: Software in Charge
 
@@ -972,8 +1003,8 @@ a real device.
 
 **Opening devices (simulation only):**
 1. `whats-in-the-box/safety-first` (mascot safety note, shown before the first teardown): it's a
-   simulation; don't open a real phone or laptop without an adult or a repair shop; it can break
-   parts and void the warranty; the lithium battery can catch fire if bent or punctured.
+   simulation; leave opening real devices to a repair shop; it can break parts or end the
+   warranty, and a damaged battery can catch fire.
 2. **Every teardown card** shows the built-in note: "This is a simulation. Real phones and laptops
    should only be opened by an adult or a repair shop."
 3. **Phone teardowns (heat and pry):** `open-the-phone`, `swap-the-camera` and
@@ -986,9 +1017,9 @@ a real device.
 4. **Photos:** the dusty heatsink and swollen battery captions end with a repair shop, not a
    fix to try.
 5. "Unplug the battery first" is framed as **how technicians work safely** (`open-the-laptop`,
-   `open-the-phone`, `swap-the-camera`, `pull-it-apart-quiz/q-open-safely`,
-   `inside-your-devices-final/q-open-phone`), and repeated in the 1.1 recap with "Real devices
-   should only be opened by an adult or a repair shop."
+   `open-the-phone`, `swap-the-camera`, `whats-in-the-box/unplug-first` (fill the gap),
+   `pull-it-apart-quiz/q-unplug-first`, `inside-your-devices-final/q-open-phone`), and repeated in
+   the 1.1 recap with "Repairers unplug the battery first. Leave real devices to them."
 6. `open-the-phone` mentions that repair shops soften phone glue with gentle heat. It describes
    what shops do; it isn't an instruction.
 7. `inside-your-devices-final/q-no-charge`: "Open the tablet" is a wrong choice: "Opening a device
@@ -1026,8 +1057,9 @@ a real device.
      them under a pillow; if one gets too hot, "stop, unplug it and let it cool on a table out of
      the sun (never in the fridge or freezer)"; a swelling battery (bulging case, lifting screen):
      "Stop using it, don't press it, and tell an adult."
-13b. `whats-in-the-box/explore-the-laptop`: "Technicians unplug it first, so nothing gets power"
-     (the battery connector), framed as how technicians work, like item 3.
+13b. `whats-in-the-box/meet-the-battery-connector` (learning card): "unplug it, and nothing inside
+     gets power", and `explore-the-phone`: "unplugged first in every repair"; framed as how
+     repairers work, like item 5.
 
 **Software safety (no physical action, listed for completeness):**
 16. `meet-the-os/fake-virus-popup`: don't click anything in the pop-up, don't call the number,

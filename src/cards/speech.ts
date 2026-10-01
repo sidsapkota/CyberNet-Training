@@ -76,6 +76,9 @@ export function speechText(card: Card, status: CardStatus = "answering"): string
     case "photo":
       add(sentence(card.title), sentence(card.caption));
       return parts.join(" ");
+    case "reveal":
+      add(sentence(card.prompt ?? "Tap to see."), sentence(card.sentence));
+      return parts.join(" ");
     default:
       break;
   }
@@ -105,6 +108,12 @@ export function speechText(card: Card, status: CardStatus = "answering"): string
       break;
     case "train_model":
       add(list("The labels are", card.labels.map((l) => l.text)));
+      break;
+    case "true_false":
+      add("True or false?");
+      break;
+    case "fill_gap":
+      add(list("The words are", card.options.map((o) => o.text)));
       break;
     case "next_word":
       add(sentence(card.context), list("The possible next words are", card.candidates.map((c) => c.word)));
