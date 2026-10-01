@@ -424,6 +424,8 @@ keep their focused player shell.
 - `/from/<platform>` (and `/from/<platform>/<lesson-id>`): tagged links for videos. Same home
   page (or that lesson), never indexed (canonical is `/` or `/lesson/<id>`); page views then show
   which platform sent people. See [Analytics](#analytics).
+- `/leagues`: weekly leagues and player cards (see [Leagues](#leagues)). A 404 until leagues open;
+  guests are sent to sign in. Not indexed.
 - `/privacy`, `/terms`: rendered from `content/legal/*.md` (see [Legal pages](#legal-pages)).
 - `/feedback`: the feedback form (`?lesson=<id>` fills in the lesson).
 - `/courses`: **catalog**, a grid of `CourseCard`s (cover, title, one-line description, progress).
@@ -468,6 +470,8 @@ src/components/dashboard/ dashboard (hero, stats, activity, rings, welcome), res
 src/components/streak/   streak icon (node chain), header pill, Today panel, calendar, goal picker,
                          goal summary for end screens, milestone screen
 src/components/course/   course path, path nodes + popovers, mode toggle, course card, catalog
+src/components/leagues/  tier badges, player card, leagues page view, result screen, settings
+src/lib/leagues/         league rules (week, grouping, settling, handles), server code, config
 src/components/illustrations/ course covers (CourseCover registry, keyed by course id)
 src/components/mascot/   the mascot: geometry + palette, poses, SVG parts, <Mascot>
 src/components/ui/       Button, Markdown, icons (lucide wrappers), CountUp, ProgressRing, ThemeToggle
@@ -655,6 +659,8 @@ Migrations, all applied to the linked project:
 - `20260930180000_pro_subscriptions.sql`: the four Pro tables (see [CyberNet Pro](#cybernet-pro)).
 - `20261001000000_drop_is_premium.sql`: drops the unused `profiles.is_premium` (Pro comes from
   subscriptions and grants).
+- `20261001100000_leagues.sql`: the league tables and functions (see [Leagues](#leagues)), plus
+  `xp_events` indexes on time.
 
 | Table | Holds |
 |---|---|
@@ -682,6 +688,12 @@ Migrations, all applied to the linked project:
     Actions set them with the secret key).
   - **`xp_events` and `goal_days` are read-only for learners** (select own rows only, no write
     grants), so nobody can write their own streak.
+  - **Leagues:** learners select only their own `league_players` row and `league_results`. Other
+    learners are visible **only** through `league_standings()` (security definer): rank, handle,
+    tier, weekly XP and the Pro flag, for the caller's own league this week, hidden learners left
+    out, nothing while leagues are closed. `leagues`, `league_members`, `league_weeks`,
+    `league_state` and `handle_reports` are server-only. `join_league` and `finalize_league_week`
+    can only be called with the secret key; `leagues_open()` (a yes/no) is open to everyone.
   - **`feedback` is insert-only:** `anon` and `authenticated` may insert only `message`,
     `lesson_id`, `rating` and `session_id` (column grant + an insert policy). Nobody can select,
     update or delete except the service role (read it in the Supabase dashboard). A `security
@@ -743,6 +755,63 @@ Sandbox setup: `docs/stripe-checklist.md`. `PRO_LAUNCH_AT` in Production marks t
 - **End-to-end:** with `stripe listen` forwarding to the dev server, a scratch Playwright script
   runs real Checkout and portal pages with test cards and test clocks (monthly with trial, annual
   without, portal cancel, a failed renewal, the grant expiring); see the checklist's step 10.
+
+## Leagues
+
+Weekly leagues and player cards, to bring learners back each week. Pure rules in
+`src/lib/leagues/` (tested in `leagues.test.ts`), server code in `src/lib/leagues/server.ts`
+(server-only), actions in `src/app/actions/leagues.ts`, UI in `src/components/leagues/`. Every
+number is in `src/lib/leagues/config.ts`.
+
+- **The week:** Monday 00:00 **Australia/Sydney** to the next Monday (`leagueWeek`, and the
+  database's `league_week()`; daylight saving tested). Weekly XP is every `xp_events` row in that
+  window (card, lesson, quiz and practice), summed on the server; never from the client. The page
+  shows the reset in the learner's own time zone too.
+- **Joining:** a signed-in learner's first XP of the week puts them in a league (`onXpEarned`, run
+  with `after()` from `recordXp`, never blocking the XP). Their player row (generated handle, tier
+  Packet, shown on leaderboards) is made then. Not playing a week keeps your tier.
+- **Grouping:** same tier only, then an activity band from the last 3 weeks' XP (light < 100 a
+  week ≤ regular < 400 ≤ keen). `join_league` puts them in the first league of their tier with space
+  (under 30), own band first then the nearest, and makes a new league only when all are full, under
+  a lock per week and tier (no duplicates, never over 30).
+- **Settling** (`settleLeague`, pure): ranked by weekly XP, ties to whoever got there first, then
+  the handle. The top 20% move up (at least 1 in leagues of 3+, and only with 50+ XP), the bottom
+  15% move down (at least 1 in leagues of 6+). Never above Quantum or below Packet. Hidden learners
+  aren't ranked and keep their tier. Vercel Cron calls `/api/cron/leagues` hourly (`vercel.json`;
+  `CRON_SECRET`, checked first): `finalizeDueWeeks` settles every finished week since leagues opened,
+  each in one transaction (`finalize_league_week`; a second run changes nothing).
+- **Hidden until there are players:** leagues (page, nav entry, standings) stay hidden until
+  `LEAGUES_MIN_ACTIVE` (20) learners earn XP in one week, then stay open for good (`league_state`).
+  No promotions before that, so everyone starts in Packet. **Never add fake or bot players.**
+- **Tiers** (lowest first): Packet, Switch, Router, Firewall, Server, Mainframe, Quantum.
+  `TierBadge` draws them on the logo's shield (concept: `docs/brand/leagues/tier-badges.png`):
+  outline (Packet, Switch), dark-cyan fill (Router, Firewall), reversed bright cyan with a navy icon
+  (Server, Mainframe; Mainframe is a wide multi-cabinet unit), purple Quantum. Always shown with the
+  tier's name (`TierLabel`), never the badge alone.
+- **Player cards** (`PlayerCard`; concept: `docs/brand/leagues/player-card.png`): the avatar circle
+  holds the tier badge (**never photos**), the handle, the tier, and on your own card total XP
+  (bolt), streak (node chain, no flame) and courses completed. Other learners' cards show only the
+  public fields: handle, tier, weekly XP and Pro.
+- **Pro is cosmetic only:** no extra XP or ranking advantage. Pro cards get the Pro frame and badge;
+  `pro_cosmetic_until` is stamped from `getEntitlement()` (`proCosmeticUntil`).
+- **Handles** (`handles.ts`): generated as two brand words and a number ("SwiftRouter42"),
+  re-rolled if the filter objects. Learners can change theirs once a week: 3–20 letters and digits,
+  starting with a letter, at most 3 digits (no phone numbers or birth years), unique ignoring case,
+  no profanity (`obscenity`, with leetspeak) and no names, contact or social words, or staff words.
+  The private display name is never public.
+- **Safety:** "Show me on leaderboards" (on by default) hides the learner from every public view.
+  Any handle in your league can be reported (`handle_reports`, at most 10 a day); when 3 different
+  learners report the same handle it's replaced with a generated one (reports are kept). The cron
+  emails yesterday's (Sydney) reports to `CONTACT_EMAIL` from 8 am, only on days with reports, via
+  Resend (`RESEND_API_KEY`; one idempotency key per day, so hourly retries never send twice).
+- **Screens:** `/leagues` (badge, league name, countdown, ranked list with promotion and demotion
+  zones marked by arrows and text, your card, settings); a result screen once after each reset
+  (promoted: the mascot celebrating, confetti and the new badge; stayed or moved down: gentle).
+  Leaderboard settings are also on `/account`. The nav entry (Trophy) shows only to signed-in
+  learners once leagues are open.
+- **Testing:** `check:rls` proves the league rules with throwaway learners in Quantum leagues (where
+  no real learner can be), opening leagues only for a moment and putting `league_state` back.
+  Previews share the production database, so never leave leagues open or test leagues behind.
 
 ## Brand
 
@@ -808,7 +877,10 @@ text pairing meets WCAG AA (≥ 4.5:1), and UI outlines meet 3:1.
 - **Fills vs strokes:** use `accent` for fills and `accent-ink` for text, strokes and rings. Bright
   cyan on white is only 2:1.
 - **Correct is mint (`success`), not cyan,** so "right" and "interactive" are never confused.
-- **Glow (`shadow-glow`)** is only for lit cyan nodes and the primary button.
+- **Glow (`shadow-glow`)** is only for lit cyan nodes and the primary button. **One exception:** the
+  Pro player card's frame (`drop-shadow-pro`).
+- **Purple belongs to the Quantum tier badge alone** (`--color-quantum`, `drop-shadow-quantum`;
+  7.3:1 on the badge's navy tile, which is navy in both themes). Never use it anywhere else.
 - **Never raw hex in components.** If you need a new colour, add a token (both themes) and check
   its contrast.
 
@@ -849,8 +921,9 @@ text pairing meets WCAG AA (≥ 4.5:1), and UI outlines meet 3:1.
   when the value changes.
 - **Module complete:** one short confetti burst in brand colours on the quiz pass screen
   (`celebrate()`).
-- **The only loops** are the current-node pulse (2.4s), the loading sequence, and the slow moving
-  part on course covers (the packet, the sliding RAM stick).
+- **The only loops** are the current-node pulse (2.4s), the loading sequence, the slow moving
+  part on course covers (the packet, the sliding RAM stick), and the light travelling round the Pro
+  player card's frame (`animate-pro-trace`, 7s). Mainframe's lights are static dots.
 - **`prefers-reduced-motion`:** every animation must render its final state instantly. Use
   `useReducedMotion()` for motion components; CSS keyframes are neutralised in `globals.css`.
 
@@ -907,6 +980,8 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   - streak milestones (`celebrating`, on their own screen before lesson or quiz complete; confetti
     from 30 days)
   - quiz fail (`thinking`, with encouraging copy)
+  - league results after the weekly reset (`celebrating` with confetti when promoted, `happy` when
+    staying, `thinking` when moving down)
   - wrong answers in lessons (a small `confused` beside the feedback)
   - the age check, the locked lesson screen, the 404 page, empty states and the dashboard's
     "Fresh start" note after a streak ends (`presenting`, pointing at the next step)
@@ -938,7 +1013,7 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
 
 ### Anti-generic rules
 - No purple, pink or rainbow gradients. No gradients at all, apart from the faint background
-  node grid.
+  node grid. (The only purple is the Quantum badge's, above.)
 - No glassmorphism: no `backdrop-blur`, no translucent panels. Headers are solid `canvas` with a
   hairline border.
 - No emoji as icons, and one icon set.

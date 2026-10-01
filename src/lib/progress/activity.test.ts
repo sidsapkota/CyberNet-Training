@@ -69,7 +69,13 @@ describe("learnerStats", () => {
       totalXp: 170,
       lessonsCompleted: 2,
       modulesCompleted: 1,
+      coursesCompleted: 0,
     });
+  });
+
+  it("counts a course once every module in it is complete", () => {
+    const snapshot = snapshotWith({ l1: at(9, 1), l2: at(9, 2), l3: at(9, 3) }, { quiz1: [at(9, 4)], quiz2: [at(9, 5)] });
+    expect(learnerStats(snapshot, [twoModuleCourse()]).coursesCompleted).toBe(1);
   });
 
   it("is all zeros for a new learner", () => {
@@ -77,6 +83,7 @@ describe("learnerStats", () => {
       totalXp: 0,
       lessonsCompleted: 0,
       modulesCompleted: 0,
+      coursesCompleted: 0,
     });
   });
 });

@@ -114,6 +114,193 @@ export type Database = {
         }
         Relationships: []
       }
+      handle_reports: {
+        Row: {
+          created_at: string
+          handle: string
+          id: number
+          reason: string
+          reported_user_id: string
+          reporter_id: string | null
+          resolved_at: string | null
+        }
+        Insert: {
+          created_at?: string
+          handle: string
+          id?: never
+          reason: string
+          reported_user_id: string
+          reporter_id?: string | null
+          resolved_at?: string | null
+        }
+        Update: {
+          created_at?: string
+          handle?: string
+          id?: never
+          reason?: string
+          reported_user_id?: string
+          reporter_id?: string | null
+          resolved_at?: string | null
+        }
+        Relationships: []
+      }
+      league_members: {
+        Row: {
+          joined_at: string
+          league_id: string
+          user_id: string
+          week: string
+        }
+        Insert: {
+          joined_at?: string
+          league_id: string
+          user_id: string
+          week: string
+        }
+        Update: {
+          joined_at?: string
+          league_id?: string
+          user_id?: string
+          week?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "league_members_league_id_fkey"
+            columns: ["league_id"]
+            isOneToOne: false
+            referencedRelation: "leagues"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      league_players: {
+        Row: {
+          created_at: string
+          handle: string
+          handle_changed_at: string | null
+          handle_key: string
+          pro_cosmetic_until: string | null
+          show_on_leaderboards: boolean
+          tier: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          handle: string
+          handle_changed_at?: string | null
+          handle_key: string
+          pro_cosmetic_until?: string | null
+          show_on_leaderboards?: boolean
+          tier?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          handle?: string
+          handle_changed_at?: string | null
+          handle_key?: string
+          pro_cosmetic_until?: string | null
+          show_on_leaderboards?: boolean
+          tier?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      league_results: {
+        Row: {
+          from_tier: string
+          league_id: string
+          rank: number
+          seen_at: string | null
+          to_tier: string
+          user_id: string
+          week: string
+          weekly_xp: number
+        }
+        Insert: {
+          from_tier: string
+          league_id: string
+          rank: number
+          seen_at?: string | null
+          to_tier: string
+          user_id: string
+          week: string
+          weekly_xp: number
+        }
+        Update: {
+          from_tier?: string
+          league_id?: string
+          rank?: number
+          seen_at?: string | null
+          to_tier?: string
+          user_id?: string
+          week?: string
+          weekly_xp?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "league_results_league_id_fkey"
+            columns: ["league_id"]
+            isOneToOne: false
+            referencedRelation: "leagues"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      league_state: {
+        Row: {
+          id: boolean
+          opened_at: string | null
+        }
+        Insert: {
+          id?: boolean
+          opened_at?: string | null
+        }
+        Update: {
+          id?: boolean
+          opened_at?: string | null
+        }
+        Relationships: []
+      }
+      league_weeks: {
+        Row: {
+          finalized_at: string
+          week: string
+        }
+        Insert: {
+          finalized_at?: string
+          week: string
+        }
+        Update: {
+          finalized_at?: string
+          week?: string
+        }
+        Relationships: []
+      }
+      leagues: {
+        Row: {
+          band: string
+          created_at: string
+          id: string
+          tier: string
+          week: string
+        }
+        Insert: {
+          band: string
+          created_at?: string
+          id?: string
+          tier: string
+          week: string
+        }
+        Update: {
+          band?: string
+          created_at?: string
+          id?: string
+          tier?: string
+          week?: string
+        }
+        Relationships: []
+      }
       lesson_completions: {
         Row: {
           completed_at: string
@@ -353,7 +540,33 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      finalize_league_week: {
+        Args: { p_results: Json; p_week: string }
+        Returns: undefined
+      }
+      join_league: {
+        Args: {
+          p_bands: string[]
+          p_cap?: number
+          p_tier: string
+          p_user: string
+          p_week: string
+        }
+        Returns: string
+      }
+      league_standings: {
+        Args: never
+        Returns: {
+          handle: string
+          is_me: boolean
+          pro: boolean
+          rank: number
+          tier: string
+          weekly_xp: number
+        }[]
+      }
+      league_week: { Args: { t?: string }; Returns: string }
+      leagues_open: { Args: never; Returns: boolean }
     }
     Enums: {
       [_ in never]: never

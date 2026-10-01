@@ -6,6 +6,7 @@ import { deleteAccountAction, updateDisplayNameAction } from "@/app/actions/acco
 import { Button } from "@/components/ui/Button";
 import { DailyGoalSetting } from "./DailyGoalSetting";
 import { ManageProPanel } from "@/components/pro/ManageProPanel";
+import { LeagueAccountSettings } from "@/components/leagues/LeagueAccountSettings";
 import { DeleteIcon, SignOutIcon } from "@/components/ui/icons";
 import { trackEvent } from "@/lib/analytics";
 import { useAuth } from "@/lib/auth/AuthProvider";
@@ -103,6 +104,8 @@ export function AccountPanel({
       </form>
 
       <ManageProPanel className={panel} />
+
+      <LeagueAccountSettings className={panel} />
 
       <DailyGoalSetting className={panel} />
 

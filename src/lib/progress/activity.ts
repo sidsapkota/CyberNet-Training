@@ -53,18 +53,22 @@ export interface LearnerStats {
   /** Regular lessons completed (quizzes are counted as modules). */
   lessonsCompleted: number;
   modulesCompleted: number;
+  /** Courses with every module complete (shown on the learner's league card). */
+  coursesCompleted: number;
 }
 
 /** Totals across the given courses. Progress for lessons no longer in the content is ignored. */
 export function learnerStats(snapshot: ProgressSnapshot, courses: readonly CourseOutline[]): LearnerStats {
   let lessonsCompleted = 0;
   let modulesCompleted = 0;
+  let coursesCompleted = 0;
   for (const course of courses) {
     const state = computeCourseState(snapshot, course);
     modulesCompleted += state.completedModules;
+    if (course.modules.length > 0 && state.completedModules === course.modules.length) coursesCompleted++;
     for (const mod of state.modules) {
       lessonsCompleted += mod.lessons.filter((l) => l.lesson.kind === "lesson" && l.status === "completed").length;
     }
   }
-  return { totalXp: snapshot.totalXp, lessonsCompleted, modulesCompleted };
+  return { totalXp: snapshot.totalXp, lessonsCompleted, modulesCompleted, coursesCompleted };
 }

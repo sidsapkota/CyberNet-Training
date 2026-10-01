@@ -5,13 +5,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ComponentType } from "react";
 import { LogoLockup } from "@/components/brand/Logo";
-import { CoursesIcon, DashboardIcon, SignInIcon } from "@/components/ui/icons";
+import { CoursesIcon, DashboardIcon, LeaguesIcon, SignInIcon } from "@/components/ui/icons";
 import { SoundToggle } from "@/components/ui/SoundToggle";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { StreakPill } from "@/components/streak/StreakPill";
 import { XpPill } from "@/components/XpPill";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { FALLBACK_DISPLAY_NAME, initialOf } from "@/lib/auth/profile";
+import { useLeaguesOpen } from "@/lib/leagues/useLeaguesOpen";
 
 interface NavItem {
   href: string;
@@ -30,9 +31,17 @@ const NAV: NavItem[] = [
   },
 ];
 
-/** Top bar: logo, Dashboard and Courses (from `sm` up), XP and theme. */
+/** Leagues: only for signed-in learners, once leagues have opened. */
+const LEAGUES: NavItem = { href: "/leagues", label: "Leagues", Icon: LeaguesIcon, isActive: (p) => p.startsWith("/leagues") };
+
+function useNav(): NavItem[] {
+  return useLeaguesOpen() ? [...NAV, LEAGUES] : NAV;
+}
+
+/** Top bar: logo, Dashboard, Courses and Leagues (from `sm` up), XP and theme. */
 export function SiteHeader() {
   const pathname = usePathname();
+  const nav = useNav();
   return (
     <header className="sticky top-0 z-30 border-b border-line bg-canvas">
       <div className="mx-auto flex h-16 max-w-wide items-center gap-2 px-gutter sm:gap-6">
@@ -40,7 +49,7 @@ export function SiteHeader() {
           <LogoLockup />
         </Link>
         <nav aria-label="Main" className="hidden h-full items-stretch gap-1 sm:flex">
-          {NAV.map((item) => {
+          {nav.map((item) => {
             const active = item.isActive(pathname);
             return (
               <Link
@@ -120,13 +129,14 @@ function HeaderAccount() {
 /** Phone tab bar, like Duolingo's: big tap targets at the bottom of the screen. */
 export function BottomNav() {
   const pathname = usePathname();
+  const nav = useNav();
   return (
     <nav
       aria-label="Main"
       className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-canvas pb-[env(safe-area-inset-bottom)] sm:hidden"
     >
       <ul className="grid auto-cols-fr grid-flow-col">
-        {NAV.map(({ href, label, Icon, isActive }) => {
+        {nav.map(({ href, label, Icon, isActive }) => {
           const active = isActive(pathname);
           return (
             <li key={href}>
@@ -156,7 +166,7 @@ export function BottomNav() {
   );
 }
 
-/** Third phone tab: "Sign in" for guests, "Account" with the learner's node when signed in. */
+/** Last phone tab: "Sign in" for guests, "Account" with the learner's node when signed in. */
 function AccountTab({ pathname }: { pathname: string }) {
   const { auth, available } = useAuth();
   if (!available) return null;

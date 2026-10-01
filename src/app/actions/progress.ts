@@ -43,6 +43,8 @@ import {
 import { XP } from "@/lib/progress/xp";
 import { getEntitlement, proLaunchAt, ProRequiredError } from "@/lib/pro/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { after } from "next/server";
+import { onXpEarned } from "@/lib/leagues/server";
 
 const Id = z.string().min(1).max(120);
 
@@ -167,6 +169,8 @@ async function recordXp(admin: Admin, userId: string, tz: string, input: XpInput
   if (inserted.error?.code === "23505") return NO_XP;
   const error = inserted.error ?? profile.error;
   if (error) fail("Couldn't record XP", error);
+  // Leagues: join this week's league (once a week) after the response; never blocks XP.
+  after(() => onXpEarned(userId, now));
   return { event, goalDay: await checkGoalDay(admin, userId, day, tz, now) };
 }
 

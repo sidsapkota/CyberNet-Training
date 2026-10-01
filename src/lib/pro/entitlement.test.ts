@@ -7,6 +7,7 @@ import {
   grantGivesPro,
   hasPro,
   maxFreezesOn,
+  proCosmeticUntil,
   proIntervals,
   proStatus,
   RENEWAL_GRACE_MS,
@@ -131,5 +132,19 @@ describe("Pro's extra streak freeze", () => {
     expect(s.current).toBe(32);
     // A third freeze never used is capped back to 2 once Pro has ended.
     expect(computeStreak(met(run("2026-10-25", 35)), { day: "2026-10-25", tz: SYD }, cap).freezes).toBe(2);
+  });
+});
+
+describe("proCosmeticUntil (the Pro frame on league cards)", () => {
+  it("lasts as long as Pro does", () => {
+    expect(proCosmeticUntil([sub()], null, NOW)).toBe(new Date(Date.parse("2026-11-01T00:00:00Z") + RENEWAL_GRACE_MS).toISOString());
+    expect(proCosmeticUntil([], grant(), NOW)).toBe(iso("2026-10-31T00:00:00Z"));
+    // The later of the two.
+    expect(proCosmeticUntil([sub({ currentPeriodEnd: iso("2026-10-20T00:00:00Z") })], grant(), NOW)).toBe(iso("2026-10-31T00:00:00Z"));
+  });
+
+  it("is null without Pro", () => {
+    expect(proCosmeticUntil([], null, NOW)).toBeNull();
+    expect(proCosmeticUntil([sub({ status: "canceled" })], grant({ expiresAt: iso("2026-10-05T00:00:00Z") }), NOW)).toBeNull();
   });
 });

@@ -103,6 +103,21 @@ export function proStatus(subs: readonly SubscriptionRecord[], grant: GrantRecor
 
 // ── Streak freezes: Pro holds one more, day by day ──────────────────────────
 
+/**
+ * Until when the learner has Pro, for the cosmetic Pro frame on league cards (null: no Pro now).
+ * The latest end among the subscriptions and grant that give Pro right now.
+ */
+export function proCosmeticUntil(subs: readonly SubscriptionRecord[], grant: GrantRecord | null, now: Date): string | null {
+  const ends: number[] = [];
+  for (const s of subs) {
+    if (!subscriptionGivesPro(s, now)) continue;
+    const end = ms(s.currentPeriodEnd);
+    ends.push(Number.isNaN(end) ? now.getTime() + 86_400_000 : end + RENEWAL_GRACE_MS);
+  }
+  if (grant && grantGivesPro(grant, now)) ends.push(ms(grant.expiresAt));
+  return ends.length ? new Date(Math.max(...ends)).toISOString() : null;
+}
+
 export const FREE_MAX_FREEZES = 2;
 export const PRO_MAX_FREEZES = 3;
 

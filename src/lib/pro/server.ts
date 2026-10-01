@@ -1,4 +1,6 @@
 import "server-only";
+import { after } from "next/server";
+import { stampProCosmetic } from "@/lib/leagues/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import type { Database } from "@/lib/supabase/database.types";
 import {
@@ -76,6 +78,8 @@ export async function getEntitlement(user: { id: string; createdAt: string | nul
     grant = grantFromRow(data?.[0] ?? (await admin.from("pro_grants").select("*").eq("user_id", user.id).maybeSingle()).data);
   }
   const subscriptions = (subs.data ?? []).map(subscriptionFromRow);
+  // The Pro frame on league cards follows the same entitlement (cosmetic only).
+  after(() => stampProCosmetic(user.id, subscriptions, grant, now));
   return { hasPro: hasPro(subscriptions, grant, now), status: proStatus(subscriptions, grant, now), subscriptions, grant };
 }
 

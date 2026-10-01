@@ -97,6 +97,11 @@ import {
   Users,
   Wifi,
   Wrench,
+  Trophy,
+  Flag,
+  ChevronsUp,
+  ChevronsDown,
+  BookOpenCheck,
 } from "lucide-react";
 import type { LessonIconName } from "@/lib/content/lessonIcons";
 
@@ -171,6 +176,14 @@ export const HandsOnIcon = brandIcon(Hand, "HandsOnIcon");
 export const FeedbackIcon = brandIcon(MessageSquareText, "FeedbackIcon");
 export const SafeIcon = brandIcon(ShieldCheck, "SafeIcon");
 export const RatingIcon = brandIcon(Star, "RatingIcon");
+
+// Leagues
+export const LeaguesIcon = brandIcon(Trophy, "LeaguesIcon");
+export const ReportIcon = brandIcon(Flag, "ReportIcon");
+export const PromotionIcon = brandIcon(ChevronsUp, "PromotionIcon");
+export const DemotionIcon = brandIcon(ChevronsDown, "DemotionIcon");
+export const CoursesDoneIcon = brandIcon(BookOpenCheck, "CoursesDoneIcon");
+export const HiddenIcon = brandIcon(EyeOff, "HiddenIcon");
 
 // Daily goals and streaks (the streak itself uses the drawn node chain, StreakIcon).
 export const GoalIcon = brandIcon(Target, "GoalIcon");

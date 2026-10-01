@@ -41,6 +41,17 @@
   --color-mascot-pupil: #041937;
   --color-mascot-shine: #ffffff;
   --color-mascot-alert: #ff7a7a;
+  /* League tier badges: fixed in both themes, always on their navy tile (like the mascot). */
+  --color-tier-ground: #061630;
+  --color-tier-line: #00c2ff;
+  --color-tier-fill: #0b5577; /* Router, Firewall: cyan on it 3.9:1; clearly lighter than the tile */
+  /* Purple belongs to the Quantum badge alone (7.3:1 on its navy tile, in both themes). Never use
+     it anywhere else. */
+  --color-quantum: #b392ff;
+  --drop-shadow-quantum: 0 0 6px rgb(179 146 255 / 0.65);
+  /* The Pro card frame (a Brand exception): its glow and travelling light. */
+  --drop-shadow-pro: 0 0 6px rgb(0 194 255 / 0.55);
+  --color-pro-light: light-dark(#006e9e, #e6f9ff);
 
   /* "Continue with Google" button: Google's own light and dark themes, exactly as its sign-in
      branding guidelines specify (a third-party brand, so not our palette). Hover is Material's
@@ -131,6 +142,9 @@
 
   --animate-node-pulse: node-pulse 2.4s ease-in-out infinite;
   --animate-node-seq: node-seq 1.6s ease-in-out infinite;
+  /* The Pro player card's frame: one light travelling round the trace (a Brand exception).
+     Reduced motion stops it in place (globals.css). */
+  --animate-pro-trace: pro-trace 7s linear infinite;
 
   @keyframes node-pulse {
     0%,
@@ -141,6 +155,12 @@
     50% {
       transform: scale(1.35);
       opacity: 0;
+    }
+  }
+
+  @keyframes pro-trace {
+    to {
+      stroke-dashoffset: -100;
     }
   }
 

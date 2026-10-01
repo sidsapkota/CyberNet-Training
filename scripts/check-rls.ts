@@ -53,6 +53,13 @@ async function main() {
   console.log(`Checking Row Level Security on ${new URL(env.url).host}…\n`);
   const a = await makeUser("a");
   const b = await makeUser("b");
+  const c = await makeUser("c");
+  // Leagues: the database's open switch is global (previews share it with production), so it's
+  // only flipped for a moment and always put back; test learners use Quantum leagues, where no
+  // real learner can be placed, and every league made here is deleted afterwards.
+  const leagueState = (await admin.from("league_state").select("opened_at").single()).data;
+  const testLeagues: string[] = [];
+  const PAST_WEEK = "2001-01-01"; // a Monday long ago, for the placement and settling checks
 
   try {
     // Seed B's data with the admin client (as the Server Actions would).
@@ -220,12 +227,111 @@ async function main() {
     const bQuiz = await admin.from("quiz_attempts").select("id").eq("user_id", b.id);
     record("B's data is unchanged afterwards", bCard.data?.xp === 10 && bName.data?.display_name === "Bee" && (bQuiz.data ?? []).length === 1);
 
+    // Leagues: others in your own league are visible only through league_standings(), with public
+    // fields only; everything else is server-only.
+    const lt = Date.now().toString(36).slice(-6);
+    const week = (await admin.rpc("league_week")).data as string;
+    const player = (id: string, handle: string) => ({ user_id: id, handle, handle_key: handle.toLowerCase(), tier: "quantum" });
+    const seedPlayers = await admin.from("league_players").insert([player(a.id, `RlsAce${lt}`), player(b.id, `RlsBee${lt}`), player(c.id, `RlsCee${lt}`)]);
+    const xpAt = new Date().toISOString();
+    const xp = (id: string, amount: number) => ({ user_id: id, at: xpAt, day: xpAt.slice(0, 10), time_zone: "Australia/Sydney", kind: "card", lesson_id: "bits-and-binary", card_id: `rls-${lt}`, xp: amount });
+    await admin.from("xp_events").insert([xp(a.id, 10), xp(b.id, 30), xp(c.id, 50)]);
+    const join = (id: string, w = week, cap = 30) => admin.rpc("join_league", { p_user: id, p_week: w, p_tier: "quantum", p_bands: ["light", "regular", "keen"], p_cap: cap });
+    const leagueA = await join(a.id);
+    const leagueB = await join(b.id);
+    if (leagueA.data) testLeagues.push(leagueA.data);
+    // C gets a league of their own (keen band), so A and B can't see them.
+    const own = await admin.from("leagues").insert({ week, tier: "quantum", band: "keen" }).select("id").single();
+    if (own.data) {
+      testLeagues.push(own.data.id);
+      await admin.from("league_members").insert({ week, user_id: c.id, league_id: own.data.id });
+    }
+    record("The server can place learners in leagues (control)", !seedPlayers.error && !leagueA.error && leagueA.data === leagueB.data && Boolean(own.data));
+
+    const closed = leagueState?.opened_at ? null : await a.client.rpc("league_standings");
+    if (closed) record("Before leagues open, standings show nothing", !closed.error && (closed.data ?? []).length === 0);
+    await admin.from("league_state").update({ opened_at: new Date().toISOString() }).eq("id", true);
+
+    // Weekly XP must equal the ledger's total for this week (other checks above earned XP too).
+    const weekStart = (await admin.rpc("league_week")).data as string;
+    const ledger = (await admin.from("xp_events").select("user_id, xp, at").in("user_id", [a.id, b.id])).data ?? [];
+    const startMs = Date.parse(`${weekStart}T00:00:00+10:00`) - 3_600_000; // Sydney Monday, either offset
+    const weekXp = (id: string) => ledger.filter((e) => e.user_id === id && Date.parse(e.at) >= startMs).reduce((sum, e) => sum + e.xp, 0);
+    const standingsA = await a.client.rpc("league_standings");
+    const rowsA = standingsA.data ?? [];
+    record(
+      "A sees their own league: handles, tier, weekly XP and Pro only",
+      !standingsA.error &&
+        rowsA.length === 2 &&
+        rowsA.every((r) => Object.keys(r).sort().join() === "handle,is_me,pro,rank,tier,weekly_xp") &&
+        rowsA[0]?.handle === `RlsBee${lt}` && rowsA[0]?.weekly_xp === weekXp(b.id) && rowsA[1]?.weekly_xp === weekXp(a.id) && rowsA[1]?.is_me === true,
+      standingsA.error?.message ?? JSON.stringify(rowsA),
+    );
+    record("A can't see learners in other leagues", !rowsA.some((r) => r.handle === `RlsCee${lt}`));
+    await admin.from("league_players").update({ pro_cosmetic_until: new Date(Date.now() + 86_400_000).toISOString() }).eq("user_id", b.id);
+    record("The Pro cosmetic shows only while it lasts", ((await a.client.rpc("league_standings")).data ?? []).find((r) => r.handle === `RlsBee${lt}`)?.pro === true);
+    await admin.from("league_players").update({ show_on_leaderboards: false }).eq("user_id", b.id);
+    const hiddenA = (await a.client.rpc("league_standings")).data ?? [];
+    const hiddenB = (await b.client.rpc("league_standings")).data ?? [];
+    record("Hidden learners disappear from others' standings (but still see themselves)", hiddenA.length === 1 && hiddenB.some((r) => r.is_me));
+    await admin.from("league_players").update({ show_on_leaderboards: true }).eq("user_id", b.id);
+
+    const ownPlayer = await a.client.from("league_players").select("handle");
+    record("A can read only their own player row", !ownPlayer.error && (ownPlayer.data ?? []).length === 1 && ownPlayer.data?.[0]?.handle === `RlsAce${lt}`);
+    let serverOnlyLeagues = true;
+    for (const table of ["leagues", "league_members", "league_weeks", "league_state", "handle_reports"] as const) {
+      const r = await a.client.from(table).select("*");
+      if (!r.error && (r.data ?? []).length > 0) serverOnlyLeagues = false;
+    }
+    record("Learners can't read leagues, members, weeks, state or reports directly", serverOnlyLeagues);
+    record(
+      "A can't change their own tier or handle, or anyone's",
+      blocked(await a.client.from("league_players").update({ tier: "mainframe" }).eq("user_id", a.id).select()) &&
+        blocked(await a.client.from("league_players").update({ handle: "Hacked1", handle_key: "hacked1" }).eq("user_id", b.id).select()),
+    );
+    record(
+      "A can't join, leave or create leagues, or open them",
+      blocked(await a.client.from("league_members").insert({ week, user_id: a.id, league_id: own.data?.id ?? "" }).select()) &&
+        blocked(await a.client.from("league_members").delete().eq("user_id", a.id).select()) &&
+        blocked(await a.client.from("leagues").insert({ week, tier: "packet", band: "light" }).select()) &&
+        blocked(await a.client.from("league_state").update({ opened_at: null }).eq("id", true).select()),
+    );
+    const callJoin = await a.client.rpc("join_league", { p_user: a.id, p_week: week, p_tier: "quantum", p_bands: ["light"], p_cap: 30 });
+    const callSettle = await a.client.rpc("finalize_league_week", { p_week: PAST_WEEK, p_results: [] });
+    record("A can't call the server's join or settle functions", Boolean(callJoin.error && callSettle.error));
+    record(
+      "A can't file reports or results directly",
+      blocked(await a.client.from("handle_reports").insert({ reporter_id: a.id, reported_user_id: b.id, handle: `RlsBee${lt}`, reason: "rude" }).select()) &&
+        blocked(await a.client.from("league_results").insert({ week, user_id: a.id, league_id: own.data?.id ?? "", rank: 1, weekly_xp: 999, from_tier: "quantum", to_tier: "quantum" }).select()),
+    );
+
+    // Placement: fill to the cap, then a new league; one league per learner per week.
+    const p1 = await join(a.id, PAST_WEEK, 2);
+    const p2 = await join(b.id, PAST_WEEK, 2);
+    const p3 = await join(c.id, PAST_WEEK, 2);
+    const again = await join(a.id, PAST_WEEK, 2);
+    record("Leagues fill to the cap before a new one opens, one per learner per week", Boolean(p1.data) && p1.data === p2.data && p3.data !== p1.data && again.data === p1.data);
+    // Settling: once only, in one transaction; results readable by their learner only.
+    const results = [{ user_id: b.id, league_id: p1.data, rank: 1, weekly_xp: 30, from_tier: "quantum", to_tier: "quantum" }];
+    const settle1 = await admin.rpc("finalize_league_week", { p_week: PAST_WEEK, p_results: results });
+    const settle2 = await admin.rpc("finalize_league_week", { p_week: PAST_WEEK, p_results: results });
+    record("A week settles once (a second run changes nothing)", !settle1.error && settle2.error?.code === "23505");
+    const resultB = await b.client.from("league_results").select("rank").eq("week", PAST_WEEK);
+    const resultA = await a.client.from("league_results").select("rank").eq("user_id", b.id);
+    record("Learners read only their own results", (resultB.data ?? []).length === 1 && (resultA.data ?? []).length === 0);
+
+    const anonLeague = createClient<Database>(env.url, env.publishableKey, noSession);
+    const anonOpen = await anonLeague.rpc("leagues_open");
+    const anonStandings = await anonLeague.rpc("league_standings");
+    record("Signed-out visitors can ask if leagues are open, but can't read standings", anonOpen.data === true && Boolean(anonStandings.error));
+
     // Signed-out visitors see nothing.
     const anon = createClient<Database>(env.url, env.publishableKey, noSession);
     let anonClean = true;
     for (const table of [
       "profiles", "card_completions", "lesson_completions", "quiz_attempts", "xp_events", "goal_days",
       "subscriptions", "pro_grants", "stripe_customers", "stripe_events",
+      "league_players", "leagues", "league_members", "league_results", "league_weeks", "league_state", "handle_reports",
     ] as const) {
       const r = await anon.from(table).select("*");
       if (!r.error && (r.data ?? []).length > 0) anonClean = false;
@@ -257,17 +363,22 @@ async function main() {
     await admin.from("feedback").delete().like("message", "%check:rls test%");
     await admin.from("feedback").delete().eq("session_id", session);
   } finally {
-    // Delete both users; ON DELETE CASCADE must remove every row.
-    for (const user of [a, b]) await admin.auth.admin.deleteUser(user.id);
+    // Put the leagues switch back exactly as it was, and remove the test leagues.
+    await admin.from("league_state").update({ opened_at: leagueState?.opened_at ?? null }).eq("id", true);
+    await admin.from("league_weeks").delete().eq("week", PAST_WEEK);
+    await admin.from("leagues").delete().eq("week", PAST_WEEK);
+    if (testLeagues.length) await admin.from("leagues").delete().in("id", testLeagues);
+    // Delete the users; ON DELETE CASCADE must remove every row.
+    for (const user of [a, b, c]) await admin.auth.admin.deleteUser(user.id);
     let leftovers = 0;
     for (const table of [
       "card_completions", "lesson_completions", "quiz_attempts", "xp_events", "goal_days",
-      "subscriptions", "pro_grants", "stripe_customers",
+      "subscriptions", "pro_grants", "stripe_customers", "league_players", "league_members", "league_results",
     ] as const) {
-      const r = await admin.from(table).select("user_id").in("user_id", [a.id, b.id]);
+      const r = await admin.from(table).select("user_id").in("user_id", [a.id, b.id, c.id]);
       leftovers += (r.data ?? []).length;
     }
-    const profiles = await admin.from("profiles").select("id").in("id", [a.id, b.id]);
+    const profiles = await admin.from("profiles").select("id").in("id", [a.id, b.id, c.id]);
     leftovers += (profiles.data ?? []).length;
     record("Deleting a user removes all their rows (cascade)", leftovers === 0);
   }

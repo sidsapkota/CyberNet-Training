@@ -53,14 +53,28 @@ Accounts are for people **aged 13 or older**. When you sign in we keep:
 - **Your email address**, so you can sign in.
 - **Your display name**, a nickname you choose. Please don't use your real full name.
 - **Your learning progress**: which cards, lessons and quizzes you've finished, your quiz answers and scores, and your XP.
-- **When your learning happens, and your time zone**: the time of each moment you earn XP, and your device's time zone (for example "Australia/Sydney": it shows roughly which part of the world you're in, never your address or exact location). We use these **only** to work out your daily goal and your streak, so a day counts on your own calendar.
-- **Your settings**: Path or Explore mode, sound on or off, your daily goal, and which "how to play" tips you've seen.
+- **When your learning happens, and your time zone**: the time of each moment you earn XP, and your device's time zone (for example "Australia/Sydney": it shows roughly which part of the world you're in, never your address or exact location). We use these **only** to work out your daily goal, your streak and your weekly league XP, so a day counts on your own calendar.
+- **Your settings**: Path or Explore mode, sound on or off, your daily goal, which "how to play" tips you've seen, and whether you show on leaderboards.
+- **Your league details**: your public handle, your tier, which league you're in each week and how you finished.
 - **That you confirmed you're 13 or older.** We only store "confirmed", never your date of birth.
 - **If you subscribe to CyberNet Pro:** your Stripe customer number and your subscription's plan, status and dates (for example when it renews). **We never see or store your card details**: Stripe handles them.
 
 If you sign in with Google, Google sends us your email address, and also your name and profile picture. We don't use or show your name or picture, and we remove them from your profile. Our sign-in provider (Supabase) keeps the details Google sent in its sign-in records until you delete your account.
 
 We use this information only to run your account and save your progress across devices.
+
+## Leagues and leaderboards
+
+If you have an account, you take part in weekly leagues of up to 30 learners. **What others in your league can see:**
+
+- your **handle** (a made-up name, like "SwiftRouter42", that we give you and you can change),
+- your **tier** (Packet up to Quantum), your **XP this week**, and whether you have **Pro**.
+
+That's all. They never see your email, your display name, your real name, your other stats or where you are. Only learners in your own league that week see you, and only while they're signed in.
+
+- **Handles must stay anonymous:** no real names, contact details, social media names or rude words (we check them). Please never put personal information in your handle.
+- **Hide yourself any time:** turn off "Show me on leaderboards" on the [Account page](/account) or the Leagues page, and nobody else sees you in any league. Your tier then stays as it is.
+- **Reports:** if you report a handle, we keep the report (your account, the handle and the reason) so an adult can review it, and we email a short daily summary of new reports to our own inbox. If three different learners report the same handle, we replace it with a new made-up one.
 
 ## Feedback
 
@@ -83,7 +97,7 @@ We share information only with the services that run the website:
 - **Supabase**: our database and sign-in system. Stores account data and feedback.
 - **Vercel**: hosts the website and runs our cookieless analytics.
 - **Google**: only if you choose "Continue with Google" to sign in.
-- **Resend**: sends sign-in emails.
+- **Resend**: sends sign-in emails, and our daily summary of handle reports (sent only to us).
 - **Stripe**: only if you subscribe to CyberNet Pro. Stripe runs the checkout and handles your card; it also has your email (for receipts). See [Stripe's privacy policy](https://stripe.com/privacy).
 
 These companies may store data on servers outside Australia. They're only allowed to use it to provide their service to us.

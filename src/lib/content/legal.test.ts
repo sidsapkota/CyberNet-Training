@@ -38,7 +38,10 @@ describe("privacy policy and terms", () => {
       "no ads",
       "don't include personal details",
       "time zone",
-      "only** to work out your daily goal and your streak",
+      "only** to work out your daily goal, your streak and your weekly league xp",
+      "what others in your league can see",
+      "show me on leaderboards",
+      "never see your email",
       "stripe",
       "never see or store your card details",
     ]) {
