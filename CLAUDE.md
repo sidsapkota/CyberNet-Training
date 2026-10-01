@@ -59,9 +59,11 @@ Courses, in catalog order: **Inside Your Devices** (`inside-your-devices`, hardw
 troubleshooting, built on the hands-on card types), **How the Internet Works**
 (`how-the-internet-works`), **Stay Safe Online** (`stay-safe-online`: passwords and two-step
 sign-in, spotting scams, privacy, and what to do when things go wrong, including deepfake scams;
-modules 1 and 4 free, modules 2 and 3 Pro) and **How AI Really Works** (`how-ai-really-works`,
-being built on `ai-course`: module 1 free, modules 2 to 6 Pro; uses the `train_model` and
-`next_word` cards).
+modules 1 and 4 free, modules 2 and 3 Pro) and **How AI Really Works** (`how-ai-really-works`:
+what AI is, how models learn, how chatbots pick words, prompting and checking, AI images and voices,
+and using AI safely and fairly; module 1 free, modules 2 to 6 and the final Pro; built on the
+`train_model` and `next_word` cards; lesson 4.3 "AI Tools Today" is the only one that names real
+products, and carries `lastChecked`).
 Each `module.json` has `"access": "free" | "pro"`. Every course's first module must be free (the
 loader checks), and help, reporting and recovery modules are always free. Every Pro module also has
 `"teaserCard": { "lesson", "card" }`: one card from its **first lesson** that learners without Pro
