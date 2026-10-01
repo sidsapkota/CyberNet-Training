@@ -297,9 +297,16 @@ function FinishScreen({
             Review more
           </Button>
         ) : null}
-        <ButtonLink href="/" variant={more ? "ghost" : "primary"}>
-          Back to dashboard
-        </ButtonLink>
+        {/* Waits for the last answers to save, so leaving at once can't lose a fixed card. */}
+        {saving ? (
+          <Button variant={more ? "ghost" : "primary"} disabled>
+            Back to dashboard
+          </Button>
+        ) : (
+          <ButtonLink href="/" variant={more ? "ghost" : "primary"}>
+            Back to dashboard
+          </ButtonLink>
+        )}
       </div>
     </div>
   );
