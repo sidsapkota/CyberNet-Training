@@ -6,41 +6,45 @@
   "passThreshold": 0.7,
   "cards": [
     {
-      "id": "port-count",
-      "type": "numeric_input",
+      "id": "port-picks-program",
+      "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Port numbers are 16 bits. How many different port numbers are there?",
-      "base": "decimal",
-      "answer": 65536,
-      "unit": "ports",
-      "explanation": "2¹⁶ = **65,536**, so ports go from 0 to 65,535."
+      "prompt": "A server at `198.51.100.10` runs a plain website on port 80 and a secure website on port 443. A packet arrives for `198.51.100.10:443`. Which program gets it?",
+      "options": [
+        { "id": "secure", "text": "The secure website, because the packet says port 443" },
+        { "id": "plain", "text": "The plain website, because every website packet goes to port 80 first" },
+        { "id": "both", "text": "Both website programs, which each keep the parts they need" },
+        { "id": "free", "text": "Whichever website program is less busy at that moment" }
+      ],
+      "correctOptionId": "secure",
+      "explanation": "The IP address got the packet to the server, and the **port** picks the program: 443 is the secure website's door. Packets don't stop at port 80 first, aren't copied to every program, and never go wherever there's room."
     },
     {
-      "id": "standard-ports",
-      "type": "match_pairs",
+      "id": "reply-port",
+      "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Match each port to its service.",
-      "pairs": [
-        { "id": "p443", "left": "`443`", "right": "HTTPS" },
-        { "id": "p80", "left": "`80`", "right": "HTTP" },
-        { "id": "p53", "left": "`53`", "right": "DNS" },
-        { "id": "p22", "left": "`22`", "right": "SSH" },
-        { "id": "p25", "left": "`25`", "right": "SMTP" }
+      "prompt": "Your laptop has two tabs open. `netstat -n` shows:\n\n```\nLocal Address          Foreign Address\n192.168.1.42:51544     198.51.100.10:443\n192.168.1.42:51547     203.0.113.80:443\n```\n\nA reply arrives at your laptop for port **51547**. Where does it go?",
+      "options": [
+        { "id": "second-tab", "text": "To the tab talking to 203.0.113.80" },
+        { "id": "first-tab", "text": "To the tab talking to 198.51.100.10, because it was opened first" },
+        { "id": "both-tabs", "text": "To both tabs, because both are talking to port 443" },
+        { "id": "server", "text": "Back out to a server, because 51547 is a server's port" }
       ],
-      "explanation": "**443** is HTTPS, **80** is HTTP, **53** is DNS, **22** is SSH and **25** is SMTP (email between servers)."
+      "correctOptionId": "second-tab",
+      "explanation": "51547 is your laptop's own temporary port for the conversation with `203.0.113.80`, so the reply goes to that tab. Both servers use port 443, which is exactly why your side needs a different temporary port for each conversation."
     },
     {
       "id": "handshake-order",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "Put TCP's three-way handshake in order, followed by the first data.",
+      "prompt": "A phone opens a TCP connection to a game server to upload a high score. Put the messages in order.",
       "items": [
-        { "id": "syn", "label": "SYN" },
-        { "id": "syn-ack", "label": "SYN-ACK" },
-        { "id": "ack", "label": "ACK" },
-        { "id": "data", "label": "The request is sent" }
+        { "id": "syn", "label": "Phone sends SYN" },
+        { "id": "syn-ack", "label": "Server sends SYN-ACK" },
+        { "id": "ack", "label": "Phone sends ACK" },
+        { "id": "data", "label": "Phone sends the high score" }
       ],
-      "explanation": "**SYN** (can we talk?), **SYN-ACK** (yes, and can I?), **ACK** (yes). Then the connection is open for data."
+      "explanation": "The phone asks (**SYN**), the server agrees and checks back (**SYN-ACK**), and the phone confirms (**ACK**). Only then is the connection open for the score."
     },
     {
       "id": "game-protocol",
@@ -48,54 +52,53 @@
       "difficulty": "core",
       "prompt": "An online game sends every player's position 30 times a second. A late update is useless, because a newer one is already on its way. Which is the better fit?",
       "options": [
-        { "id": "udp", "text": "UDP, because it doesn't wait to resend lost data" },
-        { "id": "tcp", "text": "TCP, because every update must arrive" },
-        { "id": "dns", "text": "DNS, because it's the fastest protocol" },
-        { "id": "smtp", "text": "SMTP, because it delivers messages" }
+        { "id": "udp", "text": "UDP, because it doesn't stop to resend lost updates" },
+        { "id": "tcp", "text": "TCP, because every single update must arrive" },
+        { "id": "tcp-order", "text": "TCP, because the updates must be put back in order" },
+        { "id": "udp-resend", "text": "UDP, because it resends lost updates faster than TCP" }
       ],
       "correctOptionId": "udp",
-      "explanation": "When fresh data matters more than complete data, **UDP** fits: a lost update is simply replaced by the next one. TCP would pause to resend the old update, making the game lag. DNS and SMTP are for names and email, not game data."
+      "explanation": "When fresh data matters more than complete data, **UDP** fits: a lost update is simply replaced by the next one. TCP would pause to resend the old update, making the game lag. UDP never resends anything."
     },
     {
       "id": "nat-table",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "What does a home router's NAT table record?",
+      "prompt": "Two phones in one home video-call the same server at the same time. Every reply arrives at the router's one public address. How does the router know which phone each reply is for?",
       "options": [
-        { "id": "port-mapping", "text": "Which public port it gave to each device's private address and port" },
-        { "id": "websites", "text": "A list of websites that are allowed" },
-        { "id": "passwords", "text": "The Wi-Fi passwords of each device" },
-        { "id": "dns", "text": "The IP address of every domain name" }
+        { "id": "port-mapping", "text": "It gave each call its own public port and noted it in its NAT table" },
+        { "id": "server-private", "text": "The server writes each phone's private address on its replies" },
+        { "id": "send-both", "text": "It sends every reply to both phones, and each keeps its own" },
+        { "id": "one-call", "text": "It can't, so only one of the two calls can work at a time" }
       ],
       "correctOptionId": "port-mapping",
-      "explanation": "Each entry links a **public port**, like `203.0.113.7:40001`, to a **private address and port**, like `192.168.1.20:51000`. That's how the router knows where each reply belongs."
+      "explanation": "The router gives each conversation a **different public port** and writes it in its **NAT table**, next to the phone's private address and port. Replies come back to those ports, so each one goes to the right phone. The server never sees the private addresses."
     },
     {
       "id": "protocol-jobs",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Match each protocol to its job.",
+      "prompt": "Match each thing you want to do to the protocol that does it.",
       "pairs": [
-        { "id": "dns", "left": "DNS", "right": "Turns names into IP addresses" },
-        { "id": "ssh", "left": "SSH", "right": "Securely controls another computer" },
-        { "id": "smtp", "left": "SMTP", "right": "Sends email" },
-        { "id": "imap", "left": "IMAP", "right": "Reads email kept on a server" }
+        { "id": "imap", "left": "Read your inbox on a new laptop", "right": "IMAP" },
+        { "id": "smtp", "left": "Pass an email between mail servers", "right": "SMTP" },
+        { "id": "dns", "left": "Find the address for example.org", "right": "DNS" },
+        { "id": "tcp", "left": "Make sure a big download arrives complete", "right": "TCP" }
       ],
-      "explanation": "**DNS** looks up names, **SSH** is secure remote control, **SMTP** sends email and **IMAP** reads it."
+      "explanation": "**IMAP** reads mail kept on a server, **SMTP** sends mail on its way, **DNS** looks up names, and **TCP** resends anything lost, so a download arrives complete."
     },
     {
-      "id": "sequence-owner",
-      "type": "multiple_choice",
+      "id": "unwrap-order",
+      "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "Which protocol adds the **sequence numbers** that let data be put back in order?",
-      "options": [
-        { "id": "tcp", "text": "TCP" },
-        { "id": "ip", "text": "IP" },
-        { "id": "udp", "text": "UDP" },
-        { "id": "dns", "text": "DNS" }
+      "prompt": "A web server receives your request. Like opening a parcel, it takes off the wrappers one at a time. Put them in the order the server opens them, first at the top.",
+      "items": [
+        { "id": "link", "label": "Ethernet: the wrapper that carried it to this device" },
+        { "id": "ip", "label": "IP: the addresses" },
+        { "id": "tcp", "label": "TCP: which program, and the pieces in order" },
+        { "id": "http", "label": "HTTP: the request for the page" }
       ],
-      "correctOptionId": "tcp",
-      "explanation": "**TCP** adds sequence numbers, and they count bytes. IP adds the addresses, and UDP has no sequence numbers at all."
+      "explanation": "The wrappers come off in reverse: **Ethernet** first (outside), then **IP**, then **TCP**, and finally the **HTTP** request itself, the letter at the centre."
     }
   ]
 }

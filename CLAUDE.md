@@ -4,7 +4,10 @@ A Brilliant.org-style interactive learning web app for **IT fundamentals**: hard
 operating systems, databases, programming logic, cloud and cybersecurity. Learners work through short
 lessons made of interactive **cards** and get instant, satisfying feedback.
 
-Audience: everyone from about **age 12 to adults**. See [Content style guide](#content-style-guide).
+Audience: **"For ages 13+. No experience needed."** (`AUDIENCE` in `src/lib/site.ts`, worded the same
+on the landing page, `/courses`, `/pro` and in metadata). Guests of any age can still play each
+course's first lesson, but nothing is marketed to under-13s. Content must suit a curious beginner of
+13 and an adult alike: simple, never childish. See [Content style guide](#content-style-guide).
 
 Current state: guests learn with progress in `localStorage`; learners who sign in (Google or email
 magic link) get progress synced to Supabase. Both sit behind the same `ProgressStore` interface. See [Accounts and sync](#accounts-and-sync).
@@ -28,7 +31,14 @@ npm run brand:assets      # regenerate logo SVGs + favicon from src/components/b
 npm run brand:mascot      # regenerate public/brand/mascot/<expression>.svg from the Mascot parts
 npm run check:supabase    # verify the Supabase URL + publishable key in .env.local (health check)
 npm run check:rls         # prove users can't read/write each other's rows (needs SUPABASE_SECRET_KEY)
+npm run e2e:design-qa     # every card type and main page at 360px/desktop, light/dark, motion on/off:
+                          # sideways scrolling, controls under 44px, touch drag (dev server running)
+npm run e2e:player-back   # Back/forward (read-only), Listen and lesson_quit in the lesson player
 ```
+
+Tap targets are at least **44px** everywhere (inline text links and glossary terms excepted); the
+design QA script checks it. On phones, the binary bits wrap to two rows of four below 430px, and
+drag to order picks items up with a short press and hold, so a swipe over the list still scrolls.
 
 All of `build`, `lint`, `test` and `typecheck` must pass with zero errors and warnings.
 
@@ -55,15 +65,20 @@ All of `build`, `lint`, `test` and `typecheck` must pass with zero errors and wa
 **Course > Module > Lesson > Cards.** Each module ends with exactly one **quiz**, which is a lesson with
 `kind: "quiz"` that reuses the normal card types.
 
-Courses, in catalog order: **Inside Your Devices** (`inside-your-devices`, hardware, the OS and
-troubleshooting, built on the hands-on card types), **How the Internet Works**
-(`how-the-internet-works`), **Stay Safe Online** (`stay-safe-online`: passwords and two-step
-sign-in, spotting scams, privacy, and what to do when things go wrong, including deepfake scams;
-modules 1 and 4 free, modules 2 and 3 Pro) and **How AI Really Works** (`how-ai-really-works`:
+Courses, in catalog order (Easy first; each `course.json` has a required `level`, `easy` | `medium` |
+`hard`, shown as 1–3 filled dots and the word by `CourseLevel`): **Stay Safe Online**
+(`stay-safe-online`, Easy, "Start here" for new visitors: passwords and two-step sign-in, spotting
+scams, privacy, and what to do when things go wrong, including deepfake scams; modules 1 and 4 free,
+modules 2 and 3 Pro), **Inside Your Devices** (`inside-your-devices`, Easy: hardware, the OS and
+troubleshooting, built on the hands-on card types), **How AI Really Works** (`how-ai-really-works`, Medium:
 what AI is, how models learn, how chatbots pick words, prompting and checking, AI images and voices,
 and using AI safely and fairly; module 1 free, modules 2 to 6 and the final Pro; built on the
 `train_model` and `next_word` cards; lesson 4.3 "AI Tools Today" is the only one that names real
-products, and carries `lastChecked`).
+products, and carries `lastChecked`) and **How the Internet Works** (`how-the-internet-works`, Hard).
+- **What a level means:** **Easy** feels like a game: very little reading, mostly hands-on, and
+  almost everyone succeeds. **Medium** may use simple maths and prediction. **Hard** asks learners
+  to think harder, but stays fully beginner-friendly: everything taught before it's tested, no
+  assumed knowledge, hints that really help.
 Each `module.json` has `"access": "free" | "pro"`. Every course's first module must be free (the
 loader checks), and help, reporting and recovery modules are always free. Every Pro module also has
 `"teaserCard": { "lesson", "card" }`: one card from its **first lesson** that learners without Pro
@@ -72,7 +87,7 @@ free ones; an interactive **core** card, not a hotspot or teardown). Teasers are
 (sent with the course outline), so pick one whose prompt sets it up on its own.
 
 ```
-content/courses/<course-dir>/course.json                   { id, title, description, order }
+content/courses/<course-dir>/course.json                   { id, title, description, order, level }
 content/courses/<course-dir>/modules/<module-dir>/module.json   { id, title, description, order }
 content/courses/<course-dir>/modules/<module-dir>/lessons/*.json
 ```
@@ -220,7 +235,10 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - **Accuracy:** phone RAM and storage are never removable. The laptop is an *example* with a
     removable RAM stick and SSD; any card that shows it says many thin laptops have them soldered.
     Phones are glued shut: phone teardowns start with `heat` then `lift` on the back cover, and a
-    screwed bracket holds the battery connector.
+    screwed bracket holds the battery connector. The phone's `bracket-unscrewed` view starts with
+    the bracket's two screws already out, so "open the phone" is four taps (soften the glue, lift
+    the back, lift the bracket, unplug the battery); the card says the screws are out and that real
+    phones have them.
   - Parts under a cover that's still on can't be seen, tapped or announced. Schemas check every part
     id, view and visibility at load.
   - Add a scene by adding its manifest and its drawing; `scenes.test.ts` checks every part is drawn.
@@ -281,7 +299,7 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
     glued back, not an older screwed one), and never shows a how-to (temperatures, tools).
   - Check every caption and `alt` against the photo itself. List each photo, with its source,
     author and licence, in `content/REVIEW.md`.
-  - **Not counted** in the 8–12 cards per lesson, and never in quizzes.
+  - **Not counted** as cards (at most one photo per lesson), and never in quizzes.
 - **`sort_bins`:** tap an item then a bin, or drag (dnd-kit). Snap sound; wrong items go back to the
   tray after Try again.
 - **`train_model`** (AI course): learners teach a tiny model and see it make mistakes. The models
@@ -346,10 +364,33 @@ interactive, update `isInteractiveCard` / `InteractiveCard` in `schema.ts`.
   renders `LessonRun` or `QuizRun`.
 - **`LessonRun`**:
   - Resumes at the first incomplete core card (`resumeIndex`).
-  - Wrong answer: "Not quite" with a cross, a short soft shake, the explanation collapsed, and Try again.
+  - Wrong answer: a cross, a short soft shake, the explanation collapsed, and Try again.
   - Right answer: a cyan pulse travels along the progress trace to this card's node, which
     ripples. The footer status node fills with a check, and the explanation and XP earned show.
-  - Continue unlocks only after a correct answer. Challenge cards also get a Skip button.
+  - **Mascot reactions** (`src/lib/reactions.ts`): every answer in a lesson gets a small mascot
+    beside the footer heading and a short line as the heading itself ("Nailed it.", "Not quite. Have
+    another look."): `happy` for right (`celebrating` on bonus cards), `confused` or `thinking` for
+    wrong. Lines are picked from the lesson, card and attempt (never random during render, never the
+    same twice in a row), and every wrong line says plainly that it isn't right yet. Quizzes keep
+    the plain "Correct" / "Incorrect".
+  - Continue unlocks only after a correct answer. **Bonus cards** (challenge) show a "Bonus ·
+    Optional: skip it any time" chip and a **Skip bonus** button.
+  - **Back and forward:** a Back button in the header (and Alt + Left / Alt + Right) shows earlier
+    cards **read-only** (`CardReview`): an answer from this visit exactly as it was, a card finished
+    on an earlier visit as its prompt plus "You got this one" and the right answer, a skipped bonus
+    card as its prompt only. Nothing is re-graded, no XP changes, no sound plays; "Next" and "Back to
+    card N" return to the live card with its answer untouched. In quizzes, Back shows an answered
+    question with right or wrong only (still no explanation) and never offers another try. Focus
+    moves to the card and an `aria-live` note says where you are.
+  - **Listen** (`ListenButton`, `src/lib/speech.ts`): the browser's own speech, from a tap only,
+    hidden without support. `speechText(card, status)` (`src/cards/speech.ts`, tested on every card)
+    reads the title, body, prompt and the choices, never the answer or explanation before Check
+    (lessons read the explanation after Check; quizzes never do). Glossary marks read as their word,
+    and technical values are made speakable (`192.0.2.1` → "192 dot 0 dot 2 dot 1", bits digit by
+    digit). It stops on any change of card, Back or Check. "Slower / Normal speed" is saved per
+    device (localStorage).
+  - **Where people quit:** leaving an unfinished lesson (✕, the browser's back, closing the tab)
+    sends `lesson_quit` once, with the lesson id and the card number only.
   - **Hints** (`HintReveal`): a "Hint" button under the card, with the cost up front ("Using it:
     +5 XP instead of +10"). Opening it once makes the card pay retry XP. Rules live in
     `src/lib/hints.ts` (`visibleHint`: lessons only, graded cards with a hint, until correct).
@@ -488,8 +529,9 @@ keep their focused player shell.
 - **Client-only rendering:** progress-dependent pages render the `NetworkMark` loading state until
   progress loads, then draw. This also keeps reduced-motion entrances from mismatching the
   server HTML.
-- **Time estimates:** `src/lib/content/estimate.ts` uses a conservative 45 seconds per card, rounded
-  to whole minutes. Keep estimates honest; don't hand-write durations.
+- **Time estimates:** `src/lib/content/estimate.ts` uses a conservative 45 seconds per **core** card,
+  rounded to whole minutes; bonus cards are named apart ("about 4 min + 2 bonus cards"), and photo
+  cards (a quick look) aren't counted (`photoCount` on the outline). Keep estimates honest; don't hand-write durations.
 
 ## Folder structure
 
@@ -1146,7 +1188,7 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   - quiz fail (`thinking`, with encouraging copy)
   - league results after the weekly reset (`celebrating` with confetti when promoted, `happy` when
     staying, `thinking` when moving down)
-  - wrong answers in lessons (a small `confused` beside the feedback)
+  - every answer in lessons (a small reaction beside the feedback, see LessonRun above)
   - the age check, the locked lesson screen, the 404 page, empty states and the dashboard's
     "Fresh start" note after a streak ends (`presenting`, pointing at the next step)
   - **the one exception inside cards:** a **safety-note explainer** (`mascot: "presenting"`), which
@@ -1154,7 +1196,6 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
     "don't open real devices"), at most once per lesson.
 - **Where it must not appear:**
   - inside cards or card content (apart from safety-note explainers), or in the lesson header
-  - on correct answers (so it never gets repetitive)
   - on the course path or in navigation
   - more than once per screen
 - **Static exports:** `npm run brand:mascot` renders the same parts, with hex colours and no motion,
@@ -1222,7 +1263,7 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   `beforeSend` runs `redactUrl`: query strings are dropped except `utm_*`, and `/dev` isn't
   tracked, so a sign-in token or email can never be sent.
 - **Custom events** (`trackEvent` in `src/lib/analytics.ts`): `landing_cta`, `lesson_start`,
-  `lesson_complete`, `quiz_pass`, the sign-up gate's `signup_prompt_viewed` and `signed_up`, and the
+  `lesson_complete`, `lesson_quit` (lesson id and card number only, without `source`: `quitEventData`), `quiz_pass`, the sign-up gate's `signup_prompt_viewed` and `signed_up`, and the
   Pro funnel: `paywall_viewed`, `limit_reached` (a free account hit today's limit, with the lesson),
   `teaser_played`, `checkout_started`, `trial_started`, `subscribed`, `certificate_issued`. Each
   has at most two properties: `lesson` (or `course`) and `source`; `eventData` only lets a content
@@ -1264,11 +1305,17 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
 
 ## Content style guide
 
-- **Plain, jargon-light language** for ages 12+. Short sentences, second person ("you").
+- **Plain, jargon-light language** for curious beginners aged 13+: a reading age of about 12. Short
+  sentences, everyday words, second person ("you"). Simple, never childish: it should feel right for a
+  13-year-old and a 45-year-old alike, with light humour in examples where it fits (never in help or
+  safety content). Teach how things work, not job-training detail (no memorising ports, flags,
+  record types or standards trivia). Questions test understanding ("I get it"), not recall.
+- **Do first, explain after:** where possible, start a lesson or a new idea with a hands-on card
+  (predict, drag, try) set up by its own prompt, then name the idea in a short explainer.
 - **Explain before naming.** Introduce an idea with an everyday analogy first, then give the technical
   term in **bold** (e.g. light switch → **bit**; 8 bits → **byte** → **octet**).
-- **Keep it small.** One idea per explainer, at most 2–4 short paragraphs. Lessons run about 8–12
-  cards and alternate explaining with doing.
+- **Keep it small.** One idea per explainer, at most 60 words. Lessons run 5–7 core cards (about
+  3–5 minutes) and mostly teach by doing; a card's own prompt can teach the idea it asks about.
 - **Explanations teach.** Say *why* the answer is right and address likely wrong answers. Wrong
   options should reflect real misconceptions.
 - **Teach before test.** Never grade something that hasn't been shown or explained earlier in the
@@ -1300,15 +1347,21 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
 - **No giveaways in multiple choice:** options are shuffled on screen (stable per card), and wrong
   options should be as long, specific and tempting as the right one (real misconceptions, not
   jokes). Beginner audits read the cards with the answers stripped out and options shuffled.
-- **Challenge cards** (`difficulty: "challenge"`) are optional stretch questions. Core cards alone must
-  fully teach the lesson, and nothing later may depend on a challenge card. Aim for about 2 per lesson.
+- **Bonus cards** (`difficulty: "challenge"`) are optional stretch questions, shown as "Bonus ·
+  Optional". Core cards alone must fully teach the lesson, and nothing later may depend on a bonus
+  card. 0–2 per lesson. Thinking, not arithmetic for its own sake.
 - **Quizzes** have about 5 core, interactive questions covering the module's lessons, and nothing
   that wasn't taught.
 - **Technical accuracy is non-negotiable.** Double-check numbers, and prefer precise-but-simple over
   simplified-but-wrong.
-- **Lesson shape:** 8–12 cards (photo cards don't count), opening with a hook explainer and ending with a recap explainer,
-  at most 3 multiple choice cards, exactly 2 challenge cards. Quizzes have 5–8 core, interactive
-  questions. `load.test.ts` enforces all of this for every lesson and quiz. It also checks that
+- **Lesson shape (the right-level rules, `src/lib/content/shape.ts`):** 5–7 core cards (about 3–5
+  minutes) plus 0–2 bonus cards; at least 60% of the core cards hands-on; explainers of at most 60
+  words (80 for a safety note or a help module, which are split rather than cut); never two
+  non-interactive cards (explainer or photo) in a row; a recap explainer of at most 3 bullets at the
+  end; at most 3 multiple choice; at most one photo (photos don't count as cards). Quizzes have 5–8
+  core, interactive questions, at most one vocabulary match, and no word-for-word copies of lesson
+  cards. `load.test.ts` enforces these for every lesson and quiz (`npx tsx scripts/check-shape.ts
+  <course-id> [module-id]` prints each lesson's counts and problems while you work). It also checks that
   every simulator card starts unsolved and has a solution, that every drawn part is explored before
   a card tests it, and that every Inside Your Devices
   lesson uses at least 2 hands-on types (hotspot, teardown, simulator, scenario, sort_bins).
@@ -1328,6 +1381,12 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   incident (a hack, a scam, abuse) is always in a free module, never behind Pro. Safety and help
   information must never be behind a paywall. `load.test.ts` checks the modules this covers
   (currently Stay Safe Online's "When Things Go Wrong"); add new ones to its `alwaysFree` list.
+  Help lines inside other courses also sit in a free lesson: How AI Really Works has its Kids
+  Helpline / Lifeline / 000 card in free lesson 1.3 as well as 6.2 (word for word the same). Wherever
+  Kids Helpline (ages 5–25) appears for a general audience, Lifeline (13 11 14, any time, anyone in
+  Australia; never called "free", since its site doesn't say) appears next to it. Help information
+  is always in core cards (a prompt, explainer or recap), never only in a bonus card or an
+  after-answer explanation.
 - **Safe examples only:** IPv4 documentation ranges (`192.0.2.0/24`, `198.51.100.0/24`,
   `203.0.113.0/24`) stand in for public addresses, alongside the private ranges, `2001:db8::/32`
   and `example.com`/`example.org`. Never use a real person's or company's address. `load.test.ts`

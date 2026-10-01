@@ -47,6 +47,62 @@ fall in IETF-reserved space.
 
 ---
 
+## Right-level rewrite (October 2026)
+
+The whole course was rewritten for curious beginners aged 13+ (level **Hard**: think harder, but
+everything is taught first). Every lesson now has 5–7 core cards plus up to 2 bonus cards (about 5
+minutes), is at least 60% hands-on, opens with something to do, and keeps explainers to 60 words.
+Job-training detail was cut (approved list N1–N25): memorising port numbers, IPv6 shortening rules,
+DNS record types beyond "address, alias, mail", TCP byte counting, KiB/MiB, the 1,500-byte packet
+size drills, packet TTL, the hidden root dot, and admin commands with flags (`ip -brief`, `nc -zv`,
+`curl -v`). **Where this section and the per-lesson notes below disagree, this section wins**; the
+notes below describe the course before the rewrite.
+
+**What each lesson teaches now**
+- 1.1 A bit is an on/off switch; binary places double; read by adding, build biggest place first; a byte is 8 bits (0–255); an IPv4 address is four octets.
+- 1.2 The byte as the unit (one letter of plain text ≈ 1 byte); KB → MB → GB → TB in steps of 1,000; hex is 0–9 and A–F, one hex digit = 4 bits, `FF` = 255. Bonus: why Windows shows a "500 GB" drive as about 465 GB.
+- 2.1 What an IP address is for; IPv4 is 4 octets (32 bits); reading your address with `ipconfig`; about 4.3 billion addresses isn't enough.
+- 2.2 Private vs public addresses; the router is the way out; NAT (Network Address Translation) swaps the sender address and passes replies back; websites see the public address.
+- 2.3 IPv6 is 128 bits in 8 hex groups; `::` hides a run of zero groups; most devices have an IPv4 and an IPv6 address at once; IPv6 needs no address sharing.
+- 3.1 Why data is split into packets, and what a packet carries (source, destination and, for most data, a sequence number).
+- 3.2 Routers choose only the next hop; reading traceroute (hop 1 is your home router; `* * *` means no reply, not a fault).
+- 3.3 Routes change, so packets can arrive out of order or go missing; sequence numbers put them back in order; TCP re-sends missing ones; live apps skip them.
+- 4.1 Why names need DNS; reading names right to left (ending, domain, the parts in front); the owner controls everything in front of their name, which scammers exploit.
+- 4.2 Cache → resolver → root → ending (TLD) → the domain's own server; TTL is how long an answer may be remembered.
+- 4.3 One name can hold several answers: an address (IPv4 or IPv6), an alias (CNAME) and where email goes (MX).
+- 5.1 The IP address finds the computer, the port finds the program; 80 and 443; your side's temporary port; NAT uses ports.
+- 5.2 TCP is reliable (handshake, numbered pieces, re-sends); UDP is quick (no checking that it arrived); pick by need.
+- 5.3 Protocols are shared rules; they wrap like envelopes; email uses SMTP to send, IMAP to read and DNS (MX) to find the server.
+- 6.1 HTTP is request and response: method and path, status code and body; GET vs POST; reading a status code by its first digit.
+- 6.2 HTTPS is HTTP inside TLS (encrypted); the certificate and certificate authority; the padlock means "encrypted, to a server that owns that exact name", never "honest".
+- 6.3 One page load end to end: DNS → route and NAT → TCP → TLS → HTTP → rebuild → draw.
+
+**Simplifications added in the rewrite** (each deliberate)
+- "A lost packet is sent again on its own" is credited to TCP only; packets carry a sequence number "for most data" (UDP traffic doesn't). "TCP numbers the pieces": really it counts bytes.
+- A sequence number is shown on the packet's label next to the addresses, without saying which layer adds it.
+- The 1,500-byte packet size appears only in `count-packets`; elsewhere a packet holds "a small piece".
+- A routing table is "which neighbour to send each address to next" (really groups of addresses).
+- NAT is first taught without ports ("notes who asked"); 5.1 then adds ports.
+- Documentation ranges (`192.0.2.x`, `198.51.100.x`, `203.0.113.x`) are labelled "public" in sorts.
+- IPv6 gives "far more addresses than we'll ever need"; "a home doesn't need to share one address" (IPv6 NAT exists but is rare); the leading-zero shortening rule isn't spelled out.
+- KiB/MiB aren't named: the bonus just says Windows counts in 1,024s but writes "GB". Sizes use 1,000s; typical file sizes are rough.
+- "Billions of tiny switches" stands in for transistors; one letter ≈ 1 byte only for plain English text.
+- `dig` output is shortened to the answer lines (the card says so); `IN A` is glossed as "a kind of answer that holds an internet address"; the trailing dot is "how dig writes a full name"; `co.uk` is a shared ending like `.com`; MX priority numbers are left out.
+- Status codes are taught by first digit; the 4xx bin is "Problem with the request" (403 and 410 aren't user typos); "one request per file" ignores caching; curl output is shortened (the card says so).
+- The café can usually see which site you visit from the DNS lookup and the start of the secure connection (SNI isn't named).
+- TCP is "for downloads and the web" (HTTP/3 over QUIC/UDP isn't mentioned); calls and games "usually" use UDP; layers are HTTP / TCP / IP / Wi-Fi or Ethernet, with TLS left out; IMAP "keeps mail on the server"; SMTP is shown without submission ports.
+- The handshake uses plain labels first ("Can we talk?" / "Yes, can you hear me?" / "Yes"), with SYN, SYN-ACK and ACK once.
+
+**Beginner audit after the rewrite** (a fresh play-through as a 13-year-old, answers hidden): about
+80% first-try success; no factual howlers. Fixed: sequence numbers and re-sending tied to TCP; the
+padlock answers made consistent ("encrypted, to a server that owns that exact name"); the right
+multiple-choice answer is never more than 8 characters longer than the longest wrong one; Module 3
+made harder (counting how many packets to re-send; a detour around a down router in the quiz); the
+4xx bin renamed; dual stack taught before it's tested; UDP's "no checking that it arrived"; the
+CNAME line added to the `nslookup` output in 6.3; a few ambiguous options and give-away hints fixed.
+
+---
+
 ## Module 1: Binary and Data
 
 ### 1.1 Bits and Binary: How Computers Count (`bits-and-binary`)
@@ -636,16 +692,56 @@ Six real photos back up the simplified diagrams. All come from Wikimedia Commons
 CC BY / CC BY-SA, are saved **unmodified** in `public/photos/`, and are credited on the card
 (author, licence link, "via Wikimedia Commons", "Unmodified"). Captions describe the device
 plainly and never suggest a link to its maker; `/terms` says product names belong to their owners.
-Each caption and alt text was checked against the photo itself. The phone photo is a 2019 phone with a **glued** back, so it matches what the lesson teaches (an earlier choice, an iPhone 4 from 2010, had a screwed-on back and was replaced). Photos showing heating temperatures or tools as a how-to are never used.
+Each caption and alt text was checked against the photo itself. The phone photo is a 2019 phone with a **glued** back, so it matches what the lesson teaches (an earlier choice, an iPhone 4 from 2010, had a screwed-on back and was replaced). The October 2026 rewrite keeps one photo per lesson at most, so the phone, dusty-heatsink and swollen-battery photos were removed (their files deleted). Photos showing heating temperatures or tools as a how-to are never used.
 
 | File | Card | Device | Author | Licence | Source |
 |---|---|---|---|---|---|
 | `/photos/framework-laptop-13-inside.jpg` | `whats-in-the-box/real-laptop` | Framework Laptop 13 (2023, AMD Ryzen) | Ogidya | CC BY 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Framework_Laptop_13_-_2023_AMD_Ryzen_-_Internal_motherboard_and_component_view.jpg) |
-| `/photos/phone-glued-back-opened.jpg` | `whats-in-the-box/real-phone` | Huawei P Smart Z (2019), glued back | Raimond Spekking | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Huawei_Honor_P_Smart_Z_-_case_opened-8858.jpg) |
 | `/photos/laptop-heat-pipe.jpg` | `meet-the-cpu/real-heat-pipe` | A laptop (model not recorded) | Kristoferb | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Laptop_Heat_Pipe.JPG) |
-| `/photos/laptop-dusty-heatsink.jpg` | `meet-the-cpu/real-dust` | A laptop (model not recorded) | Audrius Meskauskas (Audriusa) | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Laptop_dust.jpg) |
 | `/photos/laptop-ram-stick.jpg` | `memory-vs-storage/real-ram` | Samsung 8 GB DDR4 SO-DIMM | D-Kuru | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:DDR_4_RAM_SO-DIMM_8GB_by_Samsung-top_front_PNr%C2%B00838.jpg) |
-| `/photos/swollen-phone-battery.jpg` | `power-problems/real-swollen-battery` | Samsung EB-BA136ABY (from a Galaxy A13) | Saimmx | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:20250807_200837_Swollen_Samsung_battery,_back.jpg) |
+
+## Right-level rewrite (October 2026)
+
+The course was rewritten for curious beginners aged 13+ at level **Easy** (game-like: little reading,
+mostly hands-on, almost everyone succeeds). Every lesson has 5–7 core cards plus up to 2 bonus cards
+and at most one photo (about 5–6 minutes), is at least 60% hands-on with 2+ hands-on card types, and
+opens with something to do. Cut (approved list D1–D12, with the owner's change to D2): the 13-step
+camera swap, three photos, the clock explainer, MB→GB and video-division maths, `.docx`/`.txt`/`.png`,
+a repeated update card, an off-topic labelling bonus, and battery detail ("a few hundred charges",
+watts). **"Open the phone" was kept and simplified to four taps** (soften the glue, lift the back,
+lift the bracket, unplug the battery) using a new phone view where the bracket's two screws are
+already out; the card and its explanation say real phones have those screws. **Where this section
+and the per-lesson notes below disagree, this section wins.**
+
+**What each lesson teaches now**
+- 1.1 The main parts of a laptop and a phone (by exploring them); a laptop and a phone opened as simulations; the battery is unplugged first; leave opening real devices to a repair shop.
+- 1.2 RAM vs storage: what survives switching off, what fills up; downloads need free storage, not RAM; full RAM makes a phone lag; a restart empties RAM.
+- 1.3 GHz as billions of steps a second; cores help only when a job can be split; cooling (fan, heat pipe) and throttling (a hot CPU slows itself down); most phones have no fan.
+- 2.1 The OS is the referee (CPU turns, RAM, hardware); end a frozen app's process in the task manager, never System; save, then let updates finish; a web page can't see what's on your laptop, so "virus found" pop-ups are fake (bonus).
+- 2.2 Files, folders and paths; the extension after the last dot (`.jpg`, `.mp3`, `.mp4`, `.exe`); disguised `.exe` files; the cloud is a company's computer over the internet; offline needs a copy on your device (bonus).
+- 3.1 Tell full RAM, full storage and heat apart; the describe → guess → try → check loop; soft surfaces block vents (throttling); delete safely (copies yes, system files never).
+- 3.2 The biggest battery drains (found in the simulator); heat harms batteries; a safe order for charging problems; swollen batteries: stop, don't press, get an adult or a repair shop.
+
+**Safety (unchanged rules, new wording):** `safety-first` now says "Leave opening real devices to a
+repair shop." Port fluff: phone off, an adult, a soft dry brush, never metal or water, or a repair
+shop. Overheating: cool it slowly on a hard surface, never in the fridge. The final's
+`q-phone-safe-order` lists a repair shop's order (no tools, no temperatures) and says it's never
+something to try at home.
+
+**Simplifications added in the rewrite**
+- "2 GHz = 2 billion steps a second" (the explanation adds that GHz counts clock ticks and real CPUs can do several steps per tick).
+- The phone teardown starts with the bracket's screws already out (view `bracket-unscrewed`); real repairs have more steps.
+- "The OS mixes the speaker so all three are heard"; "quick turns" leaves out multiple cores and priorities; apps are "loaded into RAM to run"; the memory leak grows at a steady 0.15 GB a minute.
+- "The extension tells the OS which app opens it" (no file signatures); "download a copy before you fly" stands in for "available offline".
+- "Sudden cold can form water droplets inside" (condensation); "an unused app can be installed again later"; "cables wear out far more often than phones"; the battery simulator's watts are illustrative; the battery running out halfway through an update "is like switching off halfway".
+
+**Beginner audit after the rewrite:** all 14 simulators start unsolved, can be solved and behave as
+their prompts say; no unsafe advice. Fixed: the four-tap phone opening; quiz teardown copies replaced
+(`q-unplug-first`, `q-phone-safe-order`); the path nesting stated in `order-the-path`; quiz copies in
+Module 2 replaced; `fill-the-ram` prompt matches the simulator; a mis-taught pop-up line; small
+wording and a motherboard label position (`labelAt`) so its spot doesn't sit on the CPU.
+
+---
 
 ## Module 1: Pull It Apart
 
@@ -1184,6 +1280,12 @@ No real people, brands or logos appear. The three new scenes (`email`, `text-mes
 - ReportCyber at cyber.gov.au: report cybercrime to police. ASD's 24/7 hotline (1300 CYBER1) isn't
   mentioned, to keep the list short.
 - Kids Helpline, 1800 55 1800: free, private, 24/7, ages 5 to 25.
+- Lifeline, 13 11 14 (lifeline.org.au): 24/7, confidential, one-to-one short-term support from a
+  trained crisis supporter for anyone in Australia who is overwhelmed or having difficulty coping
+  ("all Australians experiencing emotional distress"; crisis support and suicide prevention). Text
+  0477 13 11 14 and 24/7 chat also exist (not mentioned, to keep it short). The site doesn't state
+  the call cost, so the course never says "free" for Lifeline. Shown next to Kids Helpline wherever
+  the audience may be over 25. Verified 2 October 2026 at lifeline.org.au and lifeline.org.au/131114.
 - ACCCE, the Australian Centre to Counter Child Exploitation (accce.gov.au, AFP-led): under-18s
   report sexual extortion ("sextortion") and other online child exploitation at
   **accce.gov.au/report** (the "Report abuse" button). Its advice for young people
@@ -1206,6 +1308,51 @@ eSafety's and the ACCCE's advice: don't pay, stop replying, screenshot the messa
 (never the image), block, tell a trusted adult, and report to the app, eSafety, and, for under-18s,
 the ACCCE. The card says plainly that it is **never the young person's fault** and that they won't be
 in trouble, and gives **Kids Helpline (1800 55 1800)** and **000** directly.
+
+## Right-level rewrite (October 2026)
+
+The course was rewritten for curious beginners aged 13+ at level **Easy** (game-like: little reading,
+mostly hands-on, almost everyone succeeds). Every lesson has 5–7 core cards plus up to 2 bonus cards
+(about 5 minutes), is at least 60% hands-on and opens with something to do. Explainers are at most 60
+words, or 80 in the help module, where long help cards were **split, never cut**. Cut (approved list
+S1, S3–S13; S2, the cyber.gov.au passphrase line, kept): hashing, the 26² maths drill, the MFA name
+and know/have/are list, the third card on the same proof ranking, the nested-domain rule taught twice,
+the word "subdomain", padlock trivia, a reading-trick bonus, and repeated explainers. **Where this
+section and the per-lesson notes below disagree, this section wins.**
+
+**What each lesson teaches now**
+- 1.1 Length beats complexity; passphrases of 4+ random words (15+ characters, per cyber.gov.au); song lyrics, quotes and pet names are easy to guess; one password per account; after a breach, change your email password first.
+- 1.2 Why a second proof works (a stranger far away can't get your phone or fingerprint); passkey > authenticator app > text code > password alone; never share a sign-in code (an unexpected one means someone has your password); password managers fill in only on the real site; backup codes and "any second proof beats none" (bonus).
+- 2.1 Phishing and its six signs (fake sender, rushing, "Dear Customer", asking for secrets, hidden link, too good to be true), met by exploring the email scene; don't click, go there yourself, report it; if a password is out, change it and tell an adult.
+- 2.2 Scam texts (fee, deadline, link; check in the official app) and calls (codes, passwords, remote control, gift cards, secrecy); hang up and call back; agree a family safe word.
+- 2.3 The owner is the name just before the very last ending; the padlock only means encrypted; sign in through the app, a bookmark or a typed address; a quiet password manager is a clue; if you typed details into a fake site: change the password, tell an adult, call the bank on the number on the card or its official website.
+- 3.1 Posts can last; keep private what finds you (address, phone, school, where you are) or unlocks you (passwords, ID, security answers); quizzes that collect security answers; the four privacy settings; block, report and tell a trusted adult.
+- 3.2 Allow only the permissions an app needs; "Only while using" for location; change permissions in Settings; on public Wi-Fi check the network name with staff; mobile data for banking.
+- 4.1 (help) Signs of a take-over (things that weren't you; a **recovery email** is the backup that can reset your password); the first three steps with reasons, then sign out of other devices, turn on two-step (explained here for guests), change reused passwords and warn friends; never pay.
+- 4.2 (help) Copied voices and faces; four red flags; check with the real person another way; family safe word (core; the video-call check `best-check` is now the bonus); if someone fakes you: not your fault, don't share or pay, save evidence but never the image, tell a trusted adult, report to the app, the government's eSafety Commissioner (esafety.gov.au/report) and, if you're under 18 and being threatened, the ACCCE (Australian Centre to Counter Child Exploitation, accce.gov.au/report); Kids Helpline and Lifeline in the recap.
+- 4.3 (help) Telling someone helps and it's never your fault; who to tell (trusted adults; Kids Helpline (in Australia) 1800 55 1800, free, private, any time, ages 5–25; over 25 or anyone, Lifeline 13 11 14, any time); where to report (the app's report button, eSafety, ACCCE, Scamwatch, your bank straight away, IDCARE idcare.org or 1800 595 160, ReportCyber cyber.gov.au, 000 for danger right now); save evidence.
+
+**Help content check (after the rewrite):** every service, number and URL above matches the verified
+list in this section (30 September and 1 October 2026), and all of it is in core cards of free
+Module 4 (prompts, explainers and recaps; never only in a bonus card or an after-answer
+explanation). The course final (open to guests) tests only Modules 1 and 4.
+
+**Simplifications added in the rewrite**
+- "The owner is the name just before the very last ending", with `.com.au` treated as one ending (strictly `.au` is the last label).
+- "Your phone in your pocket: a stranger far away can't get it" (SIM-swap is covered by "scammers can sometimes steal phone numbers"); passkeys shown as the top way to sign in; a text code "still stops most attackers, who only have a password".
+- "A password manager only fills in on the real site" (autofill matches the domain; copy-paste bypasses it). The padlock means "nobody can read what you send on the way".
+- "Only while using the app" means the app can't see where you are while it's closed (platforms allow brief exceptions); "most sites already scramble what you send" stands in for HTTPS; the camera/mic dot is "on many phones".
+- "Real companies never ask for passwords, codes, card numbers or PINs by email"; "real prizes never cost money to claim"; "copied voices can sound just like the real person".
+- Help wording: eSafety is "the government's eSafety Commissioner"; "fake nude or sexual images" (eSafety's "intimate images"); the ACCCE "run by the Australian Federal Police" aside was cut, its scope kept.
+
+**Beginner audit after the rewrite:** tone calm and kind; every help item matches the verified list.
+Fixed: the address rule ("very last ending") taught before the address sort, which is now 4 items;
+the email hotspot says the time and sign-off are normal; the fake-site hotspot says a bank never asks
+for a PIN, and comes after the padlock card; the hack sort defines a recovery email and has 6 items;
+two-step explained inside Module 4 for guests; quiz copies replaced with new situations; the family
+safe word taught before it's tested; give-away hints and openings fixed.
+
+---
 
 ## Module 1: Lock Your Accounts (free)
 
@@ -1416,6 +1563,47 @@ Built on the branch `ai-course`. Every AI output in the course is written in adv
 live AI calls. The two AI card types use tiny, pure models (`src/cards/train-model/model.ts`,
 `src/cards/next-word/model.ts`), so every "guess" a learner sees is worked out from the card's data.
 No real people appear anywhere.
+
+## Right-level rewrite (October 2026)
+
+The course was rewritten for curious beginners aged 13+ at level **Medium** (simple maths and
+prediction, everything taught first). Every lesson has 5–7 core cards plus up to 2 bonus cards
+(about 5 minutes), is at least 60% hands-on, opens with something to do, and keeps explainers to
+60 words. Cut (approved list A1–A17): percentage and fraction drills, vote-counting arithmetic,
+tokenizer trivia, exact temperature percentages, the context window as a topic, vocabulary-match
+quizzes and quiz cards copied from lessons. "Token" is now "word" (once: "really word-pieces").
+**Where this section and the per-lesson notes below disagree, this section wins.**
+
+**What each lesson teaches now**
+- 1.1 Rules vs learning from examples (**machine learning**). 1.2 Training data, labels and a model; missing examples cause mistakes. 1.3 Answers are predictions that can't check themselves; check important facts; a person makes big decisions; where to get help.
+- 2.1 Models learn only from their examples, gaps included; fix the data, don't just add more. 2.2 Test on new, realistic examples; accuracy as a share out of 10; memorising isn't learning. 2.3 Bias comes from gaps in the data; fix the data, test with many kinds of people, keep a person checking; never the fault of the people it gets wrong.
+- 3.1 A chatbot gives each next word a chance, picks one, adds it and repeats, never going back; "likely" isn't "checked". 3.2 Low temperature is predictable, high gives variety and then nonsense; the order never changes; when one word has nearly all the chance, it's still usually picked. 3.3 Hallucinations are fluent and false; they hide in names, dates, numbers, quotes and sources; check a trusted source (asking again checks nothing).
+- 4.1 Prompts: goal, context and format; specific beats long; your own material, never private details; repeat instructions in long chats. 4.2 Check facts and dates, open sources, do the maths yourself; learning vs having it done; school rules. 4.3 AI in everyday apps; kinds of tool; named chat assistants and makers (ChatGPT/OpenAI, Claude/Anthropic, Copilot/Microsoft, Gemini/Google); age rules (some 18+, some 13+ with a parent's OK) — check and ask a parent or carer.
+- 5.1 Image models learned from captioned pictures and clear random speckles colour first, then shapes, then detail; the same prompt gives different pictures; finding no give-aways proves nothing. 5.2 Deepfakes and voice clones; permission; situation clues beat video clues; check with the real person another way; the Australian law line and "report it at esafety.gov.au, and tell a trusted adult" are shown in the explainer and recap. 5.3 A label or watermark is evidence, but no label proves nothing; the 4 checks; correct a share kindly; say when your own pictures are AI.
+- 6.1 Fake reviews and bots; strong feeling → stop and check outside. 6.2 Chats may be saved, read by staff or used for training; keep personal details private; only the permissions an app needs; get help from people. 6.3 Be open about AI use; credit artists who inspire you; when AI decides about people, ask who it's unfair to and keep a person deciding.
+
+**Help content:** the help card (Kids Helpline 1800 55 1800, free, any time, up to age 25; Lifeline
+13 11 14, any time, for anyone; 000 in danger) is in free lesson 1.3 (`if-a-chat-upsets-you`) as well
+as 6.2 (`not-a-person`), with the service sentences word for word the same in both. Lifeline also
+appears next to Kids Helpline in both recaps and in `feeling-down` (verified 2 October 2026; see the
+Stay Safe Online verified list). The 5.2 recap points to Stay Safe Online's free "Deepfake Scams and
+Fakes" lesson.
+
+**Simplifications added in the rewrite**
+- "AI = software that learns from examples" (working definition); every answer is "a prediction that can't check if it's true"; a model can only output the labels it was trained on; a language model on its own doesn't look things up (some apps add search).
+- Word-vote is a toy model (words of 3+ letters, one vote per training message); accuracy is a share out of 10; "memorising instead of learning" stands in for overfitting; a fair test is "new, realistic, easy and hard".
+- Temperature described as Low / 1 / High without numbers; all chances are for small imaginary models (e.g. seat 50% in `rocket-cat`; a deliberately wrong "Sydney" top word in `cold-but-wrong`).
+- Diffusion as clearing speckles "colour first, then shapes, then detail"; "most tools learn from many voices, then copy one from a short clip" (face tools can work from one photo; not mentioned).
+- `f-bias`: a smart speaker failing children's voices "most likely" from few children's voices in training (sound quality can also play a part); `q-rushed-labels`: wrong labels make more mix-ups (direction true; size depends on the model).
+- Long chats "can lose track of the start" stands in for the context window; "a model learned from text up to a certain date" stands in for the training cutoff.
+
+**Beginner audit after the rewrite:** every `train_model` and `next_word` card was simulated and
+behaves as its prompt says. Fixed: the deepfake law and eSafety line made visible; the course final
+now covers bias and honest use, with new numbers; `noise-steps` and `short-clip` now taught before
+they're tested; `rocket-cat` made unambiguous; quiz near-copies replaced with new situations;
+long-answer and stem give-aways removed; straw-man choices replaced with tempting near-misses.
+
+---
 
 ## Module 1: What AI Actually Is (free; guests get 1.1)
 

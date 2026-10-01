@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { NetworkMark } from "@/components/network/NetworkMark";
 import { NodeProgress, type ProgressNode } from "@/components/network/NodeProgress";
-import { XIcon } from "@/components/ui/icons";
+import { BackIcon, XIcon } from "@/components/ui/icons";
 import { XpPill } from "@/components/XpPill";
 
 /** Full-height lesson layout: top bar with the node progress trace, card area, sticky footer. */
@@ -13,7 +13,13 @@ export function PlayerShell({
   children,
   footer,
   exitHref = "/",
+  onBack,
+  onExit,
 }: {
+  /** Back to the previous card (lessons and quizzes); no button without it. */
+  onBack?: () => void;
+  /** Called as the learner leaves with ✕ (e.g. to note where they stopped). */
+  onExit?: () => void;
   /** Where ✕ goes: the lesson's course path. */
   exitHref?: string;
   nodes: ProgressNode[];
@@ -30,10 +36,22 @@ export function PlayerShell({
             href={exitHref}
             aria-label="Exit to the course path"
             title="Exit to the course path"
-            className="grid size-10 shrink-0 place-items-center rounded-control text-ink-muted transition-colors hover:bg-surface-raised hover:text-ink"
+            onClick={onExit}
+            className="grid size-11 shrink-0 place-items-center rounded-control text-ink-muted transition-colors hover:bg-surface-raised hover:text-ink"
           >
             <XIcon className="size-5" />
           </Link>
+          {onBack && (
+            <button
+              type="button"
+              onClick={onBack}
+              aria-label="Back to the previous card"
+              title="Back (Alt + Left arrow)"
+              className="grid size-11 shrink-0 place-items-center rounded-control text-ink-muted transition-colors hover:bg-surface-raised hover:text-ink"
+            >
+              <BackIcon className="size-5" />
+            </button>
+          )}
           <NodeProgress nodes={nodes} pulse={pulse} label={progressLabel} />
           <XpPill />
         </div>

@@ -5,6 +5,8 @@ import {
   BookCheck,
   Check,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   CircleAlert,
   Cloud,
   Compass,
@@ -153,6 +155,8 @@ export const XpIcon = brandIcon(Zap, "XpIcon");
 export const ChallengeIcon = brandIcon(Diamond, "ChallengeIcon");
 export const GripIcon = brandIcon(GripVertical, "GripIcon");
 export const ChevronDownIcon = brandIcon(ChevronDown, "ChevronDownIcon");
+export const BackIcon = brandIcon(ChevronLeft, "BackIcon");
+export const ForwardIcon = brandIcon(ChevronRight, "ForwardIcon");
 export const ArrowRightIcon = brandIcon(ArrowRight, "ArrowRightIcon");
 export const RetryIcon = brandIcon(RotateCcw, "RetryIcon");
 export const SunIcon = brandIcon(Sun, "SunIcon");

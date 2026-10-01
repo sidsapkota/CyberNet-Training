@@ -6,73 +6,46 @@
   "icon": "cpu",
   "cards": [
     {
-      "id": "billions-of-steps",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "Billions of tiny steps",
-      "body": "Every tap, every video frame and every game move comes down to the **CPU** following instructions. Each one is tiny, like \"add these two numbers\" or \"copy this to there\".\n\nThe trick is speed: a CPU gets through **billions** of these steps every second."
-    },
-    {
-      "id": "the-clock",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "The clock",
-      "body": "A [[CPU]] works to a beat, like a drummer keeping time. Each beat is a **tick** of its **clock**, and the CPU moves its work forward on every tick.\n\nClock speed is measured in **gigahertz (GHz)**. One gigahertz means **one billion ticks per second**, so a 3 GHz CPU ticks three billion times a second.\n\nTo keep the maths simple, this course counts **one step per tick**. Real CPUs can manage several steps in a tick, or need a few ticks for a hard step."
-    },
-    {
       "id": "how-long",
       "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "A [[CPU]] runs at **2 [[GHz]]** and does one step per tick. A job takes **10 billion** steps. How many seconds does it take?",
+      "prompt": "Every tap and every game move comes down to the **CPU** following tiny steps, like \"add these two numbers\". Its speed is measured in **gigahertz (GHz)**. Here, **2 GHz = 2 billion steps a second**. A job takes **10 billion** steps. How many seconds does it take?",
       "answer": 5,
       "unit": "seconds",
-      "hint": "2 GHz means 2 billion steps every second.",
-      "explanation": "2 GHz is 2 billion steps a second, so 10 billion steps take 10 ÷ 2 = **5 seconds**.",
+      "hint": "Each second, this CPU gets through 2 billion steps. How many seconds until it reaches 10 billion?",
+      "explanation": "2 GHz is 2 billion steps a second, so 10 billion steps take 10 ÷ 2 = **5 seconds**. (Strictly, GHz counts the ticks of the CPU's clock, and real CPUs can do several steps in one tick. One step per tick keeps the maths simple.)",
       "nudge": "Think of GHz as billions of steps each second. How many seconds of those steps add up to the whole job?"
+    },
+    {
+      "id": "add-cores",
+      "type": "simulator",
+      "difficulty": "core",
+      "prompt": "Most CPUs have several **cores**: separate workers that each follow their own steps. Saving your finished video takes too long. Add cores until it finishes in **3 seconds or less**.",
+      "model": "cpu-cores",
+      "params": { "tasks": [{ "id": "export", "label": "Save a finished video", "work": 24, "splittable": true }] },
+      "controls": [{ "id": "cores", "kind": "slider", "label": "Cores", "min": 1, "max": 8, "step": 1 }],
+      "outputs": [
+        { "id": "seconds", "kind": "timer", "label": "Time to finish" },
+        { "id": "cores", "kind": "list", "label": "Work per core" }
+      ],
+      "goal": { "all": [{ "target": "output", "id": "seconds", "op": "<=", "value": 3 }] },
+      "explanation": "A video is made of separate frames, so the work splits evenly. One core takes 12 seconds, two take 6, and **four** take 3.",
+      "hint": "This job splits evenly, so each extra core takes a share. Watch the timer as you add cores.",
+      "nudge": "Keep adding cores and watch the timer. The job has to finish in 3 seconds or less."
     },
     {
       "id": "cores",
       "type": "explainer",
       "difficulty": "core",
       "title": "More cooks in the kitchen",
-      "body": "Most CPUs today have several **cores**. Each core is a complete worker that can follow its own instructions, like having several cooks in one kitchen.\n\nSome jobs split nicely: four cooks can chop a big pile of vegetables four times as fast. Others can't: a cake takes just as long to bake however many cooks are watching it.\n\nSo more cores only help when the job can be **split into pieces that don't wait for each other**."
-    },
-    {
-      "id": "add-cores",
-      "type": "simulator",
-      "difficulty": "core",
-      "prompt": "Saving your finished video (called **exporting** it) takes too long. Add **cores** until it finishes in **3 seconds or less**.",
-      "model": "cpu-cores",
-      "params": {
-        "tasks": [
-          { "id": "export", "label": "Save a finished video", "work": 24, "splittable": true }
-        ]
-      },
-      "controls": [
-        { "id": "cores", "kind": "slider", "label": "Cores", "min": 1, "max": 8, "step": 1 }
-      ],
-      "outputs": [
-        { "id": "seconds", "kind": "timer", "label": "Time to finish" },
-        { "id": "cores", "kind": "list", "label": "Work per core" }
-      ],
-      "goal": {
-        "all": [
-          { "target": "output", "id": "seconds", "op": "<=", "value": 3 }
-        ]
-      },
-      "explanation": "A video is made of separate frames, so the work splits evenly. One core takes 12 seconds, two take 6, and **four** take 3.",
-      "hint": "This job splits evenly, so each extra core takes a share. Watch the timer as you add cores.",
-      "nudge": "Keep adding cores and watch the timer. The job has to finish in 3 seconds or less."
+      "body": "Four cooks can chop vegetables four times as fast. Four cooks staring at the oven won't bake the cake any sooner.\n\nCores are the same. More cores only help when a job **splits into pieces that don't wait for each other**."
     },
     {
       "id": "split-or-not",
       "type": "sort_bins",
       "difficulty": "core",
       "prompt": "Can extra cores share the job, or must it go **one step at a time**?",
-      "bins": [
-        { "id": "split", "label": "Cores can share it" },
-        { "id": "in-order", "label": "One step at a time" }
-      ],
+      "bins": [{ "id": "split", "label": "Cores can share it" }, { "id": "in-order", "label": "One step at a time" }],
       "items": [
         { "id": "photos", "label": "Resize 500 separate photos", "bin": "split" },
         { "id": "scan", "label": "Check 1,000 files for viruses", "bin": "split" },
@@ -108,12 +81,12 @@
       "id": "find-the-cooling",
       "type": "hotspot",
       "difficulty": "core",
-      "prompt": "Working hard makes the CPU hot. Tap the **CPU** and the **two parts** that carry its heat away.",
+      "prompt": "Hard work makes the CPU hot. A CPU that gets too hot **slows itself down** to stay safe: that's called **throttling**. Tap the **CPU** and the **two parts** that carry its heat away.",
       "scene": "laptop",
       "view": "open",
       "mode": "tap",
       "targets": ["cpu", "heat-pipe", "fan"],
-      "explanation": "The **heat pipe** carries heat from the **CPU** to metal fins, and the **fan** blows air through them and out of the vents. If the vents are blocked, the heat stays in, and a CPU that gets too hot **slows itself down** to stay safe. This is called **throttling**. Most phones have no fan: they spread the heat through the body, and throttle too.",
+      "explanation": "The **heat pipe** carries heat from the **CPU** to metal fins, and the **fan** blows air through them and out of the vents. If the vents are blocked, the heat stays in and the CPU throttles. Most phones have no fan: they spread the heat through their body, and throttle too.",
       "hint": "You need three parts. The CPU is the small shiny chip. What carries heat away from it, and what moves the air?",
       "nudge": "Tap all three: the CPU, the copper pipe that carries its heat, and the part that blows the air out."
     },
@@ -125,7 +98,15 @@
       "model": "thermal",
       "params": {},
       "controls": [
-        { "id": "load", "kind": "slider", "label": "Load (how hard it works)", "min": 0, "max": 100, "step": 10, "unit": "%" },
+        {
+          "id": "load",
+          "kind": "slider",
+          "label": "Load (how hard it works)",
+          "min": 0,
+          "max": 100,
+          "step": 10,
+          "unit": "%"
+        },
         { "id": "fan", "kind": "toggle", "label": "Clean the dusty fan" },
         { "id": "ventsClear", "kind": "toggle", "label": "Move it off the blanket" }
       ],
@@ -145,37 +126,22 @@
       "nudge": "Lowering the load isn't allowed here. A hot [[CPU]] slows itself down, so fix everything that traps heat or stops the fan cooling."
     },
     {
-      "id": "real-dust",
-      "type": "photo",
-      "difficulty": "core",
-      "title": "What dust does",
-      "photo": {
-        "src": "/photos/laptop-dusty-heatsink.jpg",
-        "alt": "A processor, gold pins facing up, resting on its copper heatsink. The heatsink's cooling fins are packed solid with grey dust.",
-        "width": 2986,
-        "height": 1114
-      },
-      "caption": "A laptop's processor on its heatsink, after three years of use. The cooling fins are **packed with dust**, so air couldn't get through: the laptop overheated and kept shutting down. A repair shop can clean it safely.",
-      "credit": {
-        "author": "Audrius Meskauskas (Audriusa)",
-        "licence": "CC BY-SA 3.0",
-        "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Laptop_dust.jpg"
-      }
-    },
-    {
       "id": "more-cores-one-file",
       "type": "multiple_choice",
       "difficulty": "challenge",
       "prompt": "Laptop A has **4 cores** at 3 [[GHz]]. Laptop B has **8 cores** at 3 GHz. Which saves one big file faster, if the job **can't be split**?",
       "options": [
-        { "id": "a", "text": "Laptop A", "nudge": "Fewer cores doesn't make the one core doing this job any quicker. Compare how fast each laptop's cores tick." },
+        {
+          "id": "a",
+          "text": "Laptop A, because fewer cores leave more power for one job",
+          "nudge": "Fewer cores don't make the one core doing this job any quicker. How many cores actually work on a job that can't be split?"
+        },
         {
           "id": "b",
-          "text": "Laptop B, because it has twice the cores",
+          "text": "Laptop B, because twice the cores means twice the speed",
           "nudge": "Extra cores only help when a job can be split into pieces. This one can't, so how many cores actually work on it?"
         },
-        { "id": "same", "text": "They take the same time" }
+        { "id": "same", "text": "They take the same time, since one core does the job" }
       ],
       "correctOptionId": "same",
       "explanation": "A job that can't be split runs on **one core**, whichever laptop it's on. Both cores tick at 3 GHz, so they finish together. Laptop B's extra cores only help with jobs that split.",
@@ -186,7 +152,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- The **CPU** follows billions of tiny instructions every second.\n- **Clock speed** in **GHz** is billions of ticks per second.\n- **Cores** are separate workers. They only speed up jobs that can be split.\n- A CPU that gets too hot **throttles** (slows down). The heat pipe, the fan and clear vents keep it cool.\n\nThat's the [[hardware]]. Next module: the software that runs the show."
+      "body": "- **GHz** is speed: 2 GHz is about 2 billion steps a second.\n- **Cores** only help with jobs that split into pieces.\n- A hot CPU **throttles**. The heat pipe and fan keep it cool.\n\nThat's the [[hardware]]. Next: the software in charge."
     }
   ]
 }

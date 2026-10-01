@@ -20,7 +20,7 @@ export function SoundToggle() {
       aria-pressed={on}
       title={label}
       disabled={!snapshot}
-      className="grid size-10 place-items-center rounded-control text-ink-muted transition-colors hover:bg-surface-raised hover:text-ink disabled:opacity-40"
+      className="grid size-11 place-items-center rounded-control text-ink-muted transition-colors hover:bg-surface-raised hover:text-ink disabled:opacity-40"
     >
       {on ? <SoundOnIcon className="size-5" /> : <SoundOffIcon className="size-5" />}
     </button>

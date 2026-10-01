@@ -6,24 +6,10 @@
   "icon": "footprints",
   "cards": [
     {
-      "id": "wet-cement",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "Footprints in wet cement",
-      "body": "Everything you post, like, comment on or get tagged in adds to your **digital footprint**: the trail you leave online.\n\nLike footprints in wet cement, it can set hard. Posts get screenshotted, shared and saved, even after you delete them. That's not a reason to stop posting: it's a reason to **choose what you share**."
-    },
-    {
-      "id": "keep-private",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "What to keep private",
-      "body": "Some details help strangers find you, or pretend to be you ([[identity theft]]). Keep these off public posts and profiles:\n\n- your **home address** and **phone number**\n- your **school**, including a uniform or badge in photos\n- your **full name with your birthday**\n- **where you are right now**: post holiday photos **after** you get home\n- **passwords, codes**, and photos of tickets or ID cards\n- answers to [[security questions|security-question]], like your first pet's name or the street you grew up on\n\nThat goes for **usernames** too: `SkyDiver_77` is safer than your real name, school or birth year.\n\nA good test: would you be OK with a stranger, a future teacher or a future boss seeing it?"
-    },
-    {
       "id": "share-or-private",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Fine to share, or keep it private?",
+      "prompt": "Some details help a stranger **find you**. For each one, ask: would I be OK with a stranger seeing it? Fine to share, or keep it private?",
       "bins": [
         {
           "id": "share",
@@ -52,7 +38,7 @@
         },
         {
           "id": "uniform",
-          "label": "A selfie in your school uniform",
+          "label": "A selfie showing your school's name",
           "bin": "private"
         },
         {
@@ -72,8 +58,15 @@
         }
       ],
       "explanation": "Interests and things you make are fine to share. Your **school**, **address**, **phone number** and **where you are right now** help strangers find you, so keep them private.",
-      "hint": "For each one, ask: could a stranger use this to find me, or to pretend to be me?",
+      "hint": "Could a stranger use it to work out where you live, go to school or are right now?",
       "nudge": "Details that show where you live, go to school or are right now are the ones to keep private."
+    },
+    {
+      "id": "wet-cement",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Footprints in wet cement",
+      "body": "Everything you post adds to your **digital footprint**: the trail you leave online. Like footprints in wet cement, it can set hard. Posts can be screenshotted, even after you delete them.\n\nKeep these off public posts:\n\n- **Stuff that finds you:** address, phone, school, where you are now\n- **Stuff that unlocks you:** passwords, ID, [[security question|security-question]] answers (like your first pet)"
     },
     {
       "id": "band-name-quiz",
@@ -89,7 +82,7 @@
             {
               "id": "share",
               "text": "Share it. It's just a bit of fun",
-              "consequence": "Pet names and streets are common **security questions**, so sharing them helps someone reset your accounts.",
+              "consequence": "\"Your pop star name is Biscuit Wattle!\" Also: the answers to two of your **security questions**. Sharing them helps someone reset your accounts.",
               "outcome": "fail"
             },
             {
@@ -105,17 +98,35 @@
       "hint": "Think about where else you might have been asked for your first pet's name or your street."
     },
     {
-      "id": "privacy-settings",
-      "type": "explainer",
+      "id": "why-wait",
+      "type": "multiple_choice",
       "difficulty": "core",
-      "title": "Privacy settings",
-      "body": "Every app has **privacy settings**. A few worth checking:\n\n- **Private account:** only people you approve see your posts.\n- **Who can message you:** friends only, not everyone.\n- **Location sharing:** off, unless it's with family you trust.\n- **Tag review:** you approve photos before they show on your profile.\n\nApps sometimes change settings in updates, so check them again every now and then.\n\nIf someone online makes you uncomfortable, you can **block** and **report** them in the app, and tell a trusted adult. You won't be in trouble."
+      "prompt": "Mia wants to post her beach holiday photos **while she's still away**. Is that a problem?",
+      "options": [
+        {
+          "id": "away",
+          "text": "Yes: it shows she's away, so her home may be empty"
+        },
+        {
+          "id": "quality",
+          "text": "No: a photo only shows where she is if she tags it",
+          "nudge": "A tag isn't the only clue. Think about what any holiday photo says about where she is today."
+        },
+        {
+          "id": "likes",
+          "text": "No: only her friends can see it, so nobody else knows",
+          "nudge": "Friends can share or screenshot posts, and friend lists often include people she barely knows."
+        }
+      ],
+      "correctOptionId": "away",
+      "explanation": "Posting while you're away tells people **where you are, and that you're not home**. Share the photos once you're back.",
+      "hint": "Look back at the \"stuff that finds you\" list. Which one is about right now?"
     },
     {
       "id": "match-settings",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Match each setting to what it does.",
+      "prompt": "Every app has **privacy settings**. Match each setting to what it does.",
       "pairs": [
         {
           "id": "private",
@@ -138,40 +149,15 @@
           "right": "You approve photos you're tagged in"
         }
       ],
-      "explanation": "A **private account** limits who sees posts, **friends-only messages** keep strangers out of your inbox, **location off** hides where you are, and **tag review** lets you choose which photos of you appear.",
+      "explanation": "A **private account** limits who sees posts, **friends-only messages** keep strangers out of your inbox, **location off** hides where you are, and **tag review** lets you choose which photos of you appear. Apps sometimes change settings in updates, so check them now and then.",
       "hint": "Think about what each setting controls: your posts, your messages, your location or your photos.",
       "nudge": "Two are about who can see things, one is about who can contact you, and one is about photos other people post."
     },
     {
-      "id": "why-wait",
-      "type": "multiple_choice",
-      "difficulty": "core",
-      "prompt": "Why is it smart to post holiday photos **after** you get home?",
-      "options": [
-        {
-          "id": "away",
-          "text": "It doesn't tell people you're away right now"
-        },
-        {
-          "id": "quality",
-          "text": "Photos look better when edited at home",
-          "nudge": "Photo quality isn't the reason. Think about what the post tells people about where you are."
-        },
-        {
-          "id": "likes",
-          "text": "Posts get more likes later",
-          "nudge": "Likes aren't the reason. Think about who might learn that your home is empty."
-        }
-      ],
-      "correctOptionId": "away",
-      "explanation": "Posting while you're away tells people **where you are, and that you're not home**. Share the photos once you're back.",
-      "hint": "The lesson said to keep \"where you are right now\" private."
-    },
-    {
       "id": "friendly-stranger",
       "type": "scenario",
-      "difficulty": "challenge",
-      "prompt": "Someone you don't know in real life has been messaging you in a game. They're really friendly.",
+      "difficulty": "core",
+      "prompt": "If someone online makes you uncomfortable, you can **block** and **report** them in the app, and tell a trusted adult. You won't be in trouble.\n\nSomeone you only know from a game has been messaging you. They're really friendly.",
       "start": "start",
       "steps": [
         {
@@ -194,13 +180,13 @@
         }
       ],
       "explanation": "Keep your school, photos and location away from people you only know online, however friendly they seem. **Block, report and tell a trusted adult**: you won't be in trouble.",
-      "hint": "Look back at what to keep private. Who could help you if something online feels off?"
+      "hint": "Is a school and a photo \"stuff that finds you\"? And what can you always do in the app?"
     },
     {
       "id": "username-check",
       "type": "sort_bins",
       "difficulty": "challenge",
-      "prompt": "Is each username **safe**, or does it **give too much away**?",
+      "prompt": "A good username says nothing about who you are. Is each one **safe**, or does it **give too much away**?",
       "bins": [
         {
           "id": "safe",
@@ -242,7 +228,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- Your **digital footprint** is everything about you online, and it can last.\n- Keep your **address, phone number, school, location right now** and passwords private.\n- Quizzes can collect **security question** answers.\n- Check your **privacy settings**: private account, friends-only messages, location off, tag review.\n\nNext: what your apps can see, and staying safe on public Wi-Fi."
+      "body": "- Your **digital footprint** can last, so choose what you share.\n- Keep private anything that **finds you** or **unlocks you**.\n- Use **privacy settings**. Block, report and tell a trusted adult.\n\nNext: what your apps can see, and staying safe on public Wi-Fi."
     }
   ]
 }

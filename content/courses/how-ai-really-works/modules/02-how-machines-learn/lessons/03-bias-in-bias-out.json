@@ -6,24 +6,10 @@
   "icon": "scale",
   "cards": [
     {
-      "id": "works-for-some",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "Works for some, not for others",
-      "body": "Imagine a chat app's friendly-message checker that works perfectly for some people, and keeps flagging other people's kind messages as mean.\n\nNobody set out to be unfair. So how does it happen?"
-    },
-    {
-      "id": "what-bias-is",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "Bias in, bias out",
-      "body": "When training data leaves some people or situations out, or has far more of some than others, the model works better for some people than for others. This is called **bias**.\n\nUsually nobody means it. The model just repeats the patterns, and the gaps, in its training data. A voice assistant trained mostly on one accent understands that accent best. A checker trained on one group's way of talking misreads everyone else."
-    },
-    {
       "id": "slang-checker",
       "type": "train_model",
       "difficulty": "core",
-      "prompt": "This checker learned only from formal messages, so it calls **\"That game was sick!\"** mean. Choose the examples to train on, so it gets **all 3** test messages right. (It uses word votes, like the spam model.)",
+      "prompt": "A kind-or-mean message checker learned only from formal messages, so it calls **\"That game was sick!\"** mean. Choose the examples to train on, so it gets **all 3** test messages right. (It uses word votes, like the spam model.)",
       "model": {
         "kind": "word-vote"
       },
@@ -109,55 +95,85 @@
       },
       "hint": "\"Sick\" can mean \"great\". The model has only ever seen it used one way. What would show it the other?",
       "nudge": "Leaving out mean examples breaks the other tests. What could you add instead?",
-      "explanation": "The checker had only seen \"sick\" meaning **bad**, so it misread people who use it to mean **great**. Adding an example of that use fixes it, and the mean messages are still caught. Missing examples from some people is how bias usually starts."
+      "explanation": "To this checker, \"sick\" only ever meant something bad. It had never seen \"sick\" meaning **great**, so it misread the people who say it that way. Adding one example of that use fixes it, and the mean messages are still caught. Missing examples from some people is how unfairness usually starts."
     },
     {
-      "id": "finding-and-fixing",
+      "id": "what-bias-is",
       "type": "explainer",
       "difficulty": "core",
-      "title": "Finding and fixing bias",
-      "body": "The good news: people can find bias and fix it.\n\n- **Ask who it might work worse for**, before and after it's built.\n- **Test it with lots of different people** and situations, not just one group.\n- **Check the score for each group**: an overall score can hide a group it works badly for.\n- **Add the missing examples**, then test again.\n- **Keep a person checking** decisions that matter.\n\nIt's never the fault of the people the model gets wrong."
+      "title": "Bias in, bias out",
+      "body": "When training data leaves some people out, or has far more of some than others, the model works better for some people than others. This is called **bias**.\n\nUsually nobody means it: the model just copies the gaps in its data. A voice assistant trained mostly on one accent understands that accent best."
     },
     {
       "id": "club-filter",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "Your club wants to sort new sign-ups with a model.",
+      "prompt": "A sports club wants to sort new sign-ups with a model.",
       "start": "the-plan",
       "steps": [
         {
           "id": "the-plan",
-          "text": "It was trained on last year's members, who all went to the same school. Now it's turning down most kids from other schools. What do you suggest?",
+          "text": "It was trained on last year's members, who all lived in the same suburb. Now it's turning down most people from other suburbs. What do you suggest?",
           "choices": [
             {
               "id": "keep",
               "text": "Keep it: it learned from real members",
-              "consequence": "It learned from one school only, so it treats everyone else as unusual. That's bias, and it's unfair to them.",
+              "consequence": "It learned from one suburb only, so it treats everyone else as unusual. That's bias, and it's unfair to them.",
               "outcome": "fail"
             },
             {
               "id": "fix",
-              "text": "Retrain it on sign-ups from many schools, and have a person check",
+              "text": "Retrain it on sign-ups from many suburbs, and have a person check",
               "consequence": "That fills the gap in its training data, and a person catches anything it still gets wrong.",
               "outcome": "success"
             },
             {
               "id": "lower-bar",
               "text": "Make it accept everyone more easily",
-              "consequence": "More kids get in, but the model still doesn't understand anyone outside that one school, and it may now let in sign-ups it shouldn't. The gap in its data is still there.",
+              "consequence": "More people get in, but the model still doesn't understand anyone outside that one suburb, and it may now let in sign-ups it shouldn't. The gap in its data is still there.",
               "outcome": "fail"
             }
           ]
         }
       ],
       "hint": "Where did the model's unfairness come from? Fix that, and think about who should check.",
-      "explanation": "The model only knew one school, so it was **biased** against everyone else. The fix is **better training data** from many schools, plus **a person checking** its decisions."
+      "explanation": "The model only knew one suburb, so it was **biased** against everyone else. The fix is **better training data** from many suburbs, plus **a person checking** its decisions."
+    },
+    {
+      "id": "where-bias-comes-from",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Where does bias in a model usually come from?",
+      "options": [
+        {
+          "id": "not-enough",
+          "text": "Not having enough training data overall",
+          "nudge": "A huge pile of data can still leave whole groups out. What matters more: how much, or who's in it?"
+        },
+        {
+          "id": "on-purpose",
+          "text": "Someone making it unfair on purpose",
+          "nudge": "That can happen, but usually nobody means it. What does the model learn everything from?"
+        },
+        {
+          "id": "code-bug",
+          "text": "A mistake somewhere in the computer code",
+          "nudge": "The code can be perfect and the model still unfair. Where does a model's behaviour come from?"
+        },
+        {
+          "id": "data",
+          "text": "Gaps and imbalances in its training data"
+        }
+      ],
+      "correctOptionId": "data",
+      "hint": "A model repeats the patterns in what it learned from, and the gaps.",
+      "explanation": "Bias usually comes from **gaps and imbalances in the training data**: missing people, missing situations, or far more of one kind of example. Nobody has to mean it for a model to be unfair."
     },
     {
       "id": "fixes-that-help",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "A model works worse for some people. Does each idea **help**, or **not help**?",
+      "prompt": "One more way to catch bias: **test the model with lots of different kinds of people**, not just one group.\n\nA model works worse for some people. Does each idea **help**, or **not help**?",
       "bins": [
         {
           "id": "helps",
@@ -200,55 +216,25 @@
           "bin": "doesnt"
         }
       ],
-      "hint": "Look back at the list of ways to find and fix bias.",
+      "hint": "Think back to the sports club: what filled the gap, and who checked?",
       "nudge": "More data only helps if it includes the people the model missed. And the problem is never the people it gets wrong.",
-      "explanation": "Adding the missing examples, testing with many kinds of people and keeping a person checking all **help**. More data from the **same** group, a faster computer, or asking people to change how they talk don't fill the gap."
-    },
-    {
-      "id": "where-bias-comes-from",
-      "type": "multiple_choice",
-      "difficulty": "core",
-      "prompt": "Where does bias in a model usually come from?",
-      "options": [
-        {
-          "id": "not-enough",
-          "text": "Not having enough training data overall",
-          "nudge": "A huge pile of data can still leave whole groups out. What matters more: how much, or who's in it?"
-        },
-        {
-          "id": "on-purpose",
-          "text": "Someone making it unfair on purpose",
-          "nudge": "That can happen, but usually nobody means it. What does the model learn everything from?"
-        },
-        {
-          "id": "code-bug",
-          "text": "A mistake somewhere in the computer code",
-          "nudge": "The code can be perfect and the model still unfair. Where does a model's behaviour come from?"
-        },
-        {
-          "id": "data",
-          "text": "Gaps and imbalances in its training data"
-        }
-      ],
-      "correctOptionId": "data",
-      "hint": "A model repeats the patterns in what it learned from, and the gaps.",
-      "explanation": "Bias usually comes from **gaps and imbalances in the training data**: missing people, missing situations, or far more of one kind of example. Nobody has to mean it for a model to be unfair."
+      "explanation": "Adding the missing examples, testing with many kinds of people and keeping a person checking all **help**. More data from the **same** group, a faster computer, or asking people to change how they talk don't fill the gap. And it's never the fault of the people the model gets wrong."
     },
     {
       "id": "accents",
       "type": "scenario",
       "difficulty": "challenge",
-      "prompt": "A school is choosing a voice assistant to help in class.",
+      "prompt": "A company is choosing a voice assistant to answer its phone line.",
       "start": "the-trial",
       "steps": [
         {
           "id": "the-trial",
-          "text": "In a trial, it understands some students perfectly, but often gets kids with certain accents wrong. The company says it's 95% accurate. What's the best question to ask?",
+          "text": "In a trial, it understands some callers perfectly, but often gets callers with certain accents wrong. The seller says it's 95% accurate. What's the best question to ask?",
           "choices": [
             {
               "id": "overall",
               "text": "\"95% is great, when can we start?\"",
-              "consequence": "An overall score can hide that it works much worse for some people. Those students would keep being misunderstood.",
+              "consequence": "An overall score can hide that it works much worse for some people. Those callers would keep being misunderstood.",
               "outcome": "fail"
             },
             {
@@ -259,8 +245,8 @@
             },
             {
               "id": "speak",
-              "text": "\"Can those kids speak differently?\"",
-              "consequence": "That puts the problem on the students. The model needs better training data, not different students.",
+              "text": "\"Can those callers speak differently?\"",
+              "consequence": "That puts the problem on the callers. The model needs better training data, not different callers.",
               "outcome": "fail"
             }
           ]
@@ -282,8 +268,8 @@
         },
         {
           "id": "one-school",
-          "left": "Trained on one school only",
-          "right": "Retrain with sign-ups from many schools"
+          "left": "Trained on one suburb only",
+          "right": "Retrain with sign-ups from many suburbs"
         },
         {
           "id": "accents",
@@ -298,14 +284,14 @@
       ],
       "hint": "Each problem comes from this lesson. Remember how each one was fixed.",
       "nudge": "For each problem, ask: is it missing data, a hidden gap in the score, or a decision that needs a person?",
-      "explanation": "Missing examples get **added** (slang, other schools); a hidden gap in the score gets found by checking **each group**; and decisions about people need **a person checking**."
+      "explanation": "Missing examples get **added** (slang, other suburbs); a hidden gap in the score gets found by checking **each group**; and decisions about people need **a person checking**."
     },
     {
       "id": "bias-recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- **Bias**: a model works better for some people than others, usually because of gaps in its training data.\n- Nobody has to mean it, and it's never the fault of the people it gets wrong.\n- Find it by testing with many kinds of people and checking accuracy for each group.\n- Fix it with the missing examples, and keep a person checking decisions that matter.\n\nNext: the module quiz."
+      "body": "- **Bias**: a model works better for some people than others.\n- It usually comes from gaps in the training data.\n- Fix the data, test with everyone, keep a person checking.\n\nIt's never the fault of the people it gets wrong."
     }
   ]
 }

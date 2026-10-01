@@ -24,6 +24,8 @@ export type AnalyticsEvent =
   | "paywall_viewed"
   // A free account reached today's lesson limit (with the lesson they tried to open).
   | "limit_reached"
+  // Someone left a lesson without finishing it: the lesson and the card they were on (1-based).
+  | "lesson_quit"
   | "teaser_played"
   | "checkout_started"
   | "trial_started"
@@ -104,6 +106,26 @@ export function currentSource(): string | null {
     return cleanSource(storage()?.getItem(SOURCE_KEY));
   } catch {
     return null;
+  }
+}
+
+/**
+ * `lesson_quit`'s properties: the lesson id and the card number (1–99), nothing else (Vercel keeps
+ * 2 properties an event on our plan, so this one leaves out `source`). Pure.
+ */
+export function quitEventData(lessonId: string, cardNumber: number): Record<string, string> {
+  const data: Record<string, string> = {};
+  if (CONTENT_ID.test(lessonId) && lessonId.length <= 80) data.lesson = lessonId;
+  if (Number.isInteger(cardNumber) && cardNumber >= 1 && cardNumber <= 99) data.card = String(cardNumber);
+  return data;
+}
+
+/** Someone left a lesson unfinished on this card. Never throws. */
+export function trackLessonQuit(lessonId: string, cardNumber: number): void {
+  try {
+    track("lesson_quit", quitEventData(lessonId, cardNumber));
+  } catch {
+    // analytics must never break the app
   }
 }
 

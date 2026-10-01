@@ -6,60 +6,48 @@
   "icon": "map-pin",
   "cards": [
     {
-      "id": "finding-one-device",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "One device out of billions",
-      "body": "You send a message to a friend. There are billions of devices on the internet. How does your message find **their** phone?\n\nThink about posting a letter. It only arrives because the envelope has an address that points to exactly one home. The internet works the same way: every device on a **network** (a group of devices connected so they can talk to each other, like everything on your home Wi-Fi) gets a number that works as its address, called an **IP address**.\n\nIP stands for **Internet Protocol**. A **protocol** is a set of rules that devices agree to follow so they can understand each other. The Internet Protocol is the set of rules for addressing data and getting it to the right place."
-    },
-    {
       "id": "ip-purpose",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "What is an [[IP address]] for?",
+      "prompt": "You post a birthday card. Out of millions of homes, the post office finds your friend's. Your messages have the same problem: billions of devices are online. How do you think a message finds **your friend's** phone?",
       "options": [
-        { "id": "delivery", "text": "Telling the network which device data should be delivered to" },
+        { "id": "delivery", "text": "Every device gets its own number that works like a postal address" },
         {
-          "id": "website-name",
-          "text": "Naming a website, like example.com",
-          "nudge": "Names like example.com are easier for people, but a name isn't an IP address. Think about what the address on an envelope does."
+          "id": "by-name",
+          "text": "Every device is found by its owner's name, like \"Sam's phone\"",
+          "nudge": "Names are handy for people, but thousands of devices could be called \"Sam's phone\". What makes a postal address point to just one home?"
         },
         {
-          "id": "password",
-          "text": "Proving who you are, like a password",
-          "nudge": "The address on a letter doesn't prove who you are. Think about what an envelope's address is actually for."
-        },
-        {
-          "id": "speed",
-          "text": "Setting how fast your internet connection is",
-          "nudge": "An address doesn't change how fast a letter travels. Think about what the address on an envelope is for."
+          "id": "send-to-all",
+          "text": "The message is copied to every device online, and the right one keeps it",
+          "nudge": "Billions of copies of every single message would swamp the internet. The post office doesn't deliver your card to every house either."
         }
       ],
       "correctOptionId": "delivery",
-      "explanation": "An IP address is like the address on an envelope: it says **where data should go**. A name like `example.com` is easier for people to remember, but it isn't an IP address. Computers look up the IP address that belongs to a name, which you'll learn about in a later module. An address doesn't prove who you are, and it doesn't set your speed.",
-      "hint": "Think about the address on an envelope. What job does it do for the letter?"
+      "explanation": "Like the address on an envelope, each device has a **number that says where it is**, so data can be delivered to exactly that device. Names repeat, so they can't pick out one device. And sending every message to everyone would flood the internet.",
+      "hint": "Think about the envelope. What written on it lets the post office pick out one home from millions?"
     },
     {
-      "id": "four-octets",
+      "id": "finding-one-device",
       "type": "explainer",
       "difficulty": "core",
-      "title": "Four octets, 32 bits",
-      "body": "The most common kind of [[IP address]] is **IPv4**, which is version 4 of the Internet [[Protocol]]. You met one in the last module: four numbers separated by dots. Here's another: `192.0.2.44`.\n\nEach of those numbers is an **octet**: exactly 8 [[bits|bit]], so it can only be 0 to 255. Four octets of 8 bits make **32 bits** altogether. Underneath, `192.0.2.44` is really this:\n\n`11000000.00000000.00000010.00101100`\n\nThe dots and decimal numbers are just there to make it easier for people to read."
+      "title": "IP addresses",
+      "body": "That number is an **IP address**. IP stands for **Internet Protocol**, and a **protocol** is a set of rules devices agree to follow so they understand each other.\n\nThe most common kind, **IPv4**, is four numbers separated by dots, like `192.0.2.44`. Each number is an [[octet]]: 8 [[bits|bit]], so 0 to 255."
     },
     {
       "id": "make-192",
       "type": "binary_toggle",
       "difficulty": "core",
-      "prompt": "The first [[octet]] of `192.0.2.44` is **192**. Build it in [[binary]].",
+      "prompt": "Every part of an [[IPv4]] address is an [[octet]]: 8 [[bits|bit]]. The first octet of `192.0.2.44` is **192**. Build it in [[binary]].",
       "target": 192,
       "explanation": "**128** fits in 192, leaving 64. Then **64** fits, leaving 0. So 192 = 128 + 64, which is `11000000`.",
-      "hint": "Switch on the biggest [[bit]] that fits in 192, see what's left over, then keep going with the smaller bits.",
+      "hint": "Switch on the biggest bit that fits in 192, see what's left over, then keep going with the smaller bits.",
       "nudge": "Add up the bits you've switched on. Start from the left, take the biggest value that still fits, and stop once nothing is left over."
     },
     {
       "id": "octets-in-binary",
       "type": "match_pairs",
-      "difficulty": "core",
+      "difficulty": "challenge",
       "prompt": "Match each [[octet]] to its [[binary]] pattern.",
       "pairs": [
         { "id": "o255", "left": "`255`", "right": "`11111111`" },
@@ -76,24 +64,13 @@
       "id": "ipv4-bits",
       "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "How many [[bits|bit]] are in a whole [[IPv4]] address?",
+      "prompt": "Computers don't see the dots and decimal numbers. Underneath, `192.0.2.44` is this:\n\n`11000000.00000000.00000010.00101100`\n\nHow many [[bits|bit]] is the whole [[IPv4]] address?",
       "base": "decimal",
       "answer": 32,
       "unit": "bits",
-      "explanation": "An IPv4 address has 4 octets, and each octet is 8 bits, so it's 4 × 8 = **32 bits**. If you typed 8, that's just one octet. If you typed 4, that's the number of octets.",
-      "hint": "Count how many [[octets|octet]] an IPv4 address has, and how many bits are in each one.",
-      "nudge": "One octet is only part of the address. How many octets are there, and how many bits does each one hold? Multiply them."
-    },
-    {
-      "id": "octet-172",
-      "type": "numeric_input",
-      "difficulty": "challenge",
-      "prompt": "Write the [[octet]] **172** in [[binary]].",
-      "base": "binary",
-      "answer": 172,
-      "hint": "Start with the biggest position that fits: 128, 64, 32, 16, 8, 4, 2, 1.",
-      "explanation": "**128** fits in 172, leaving 44. 64 is too big. **32** fits, leaving 12. 16 is too big. **8** fits, leaving 4. **4** fits, leaving 0. So 172 = 128 + 32 + 8 + 4, which is `10101100`.",
-      "nudge": "Take the biggest position that fits, subtract it, and repeat with what's left. Then check that your 1s add up to exactly 172."
+      "explanation": "There are 4 octets, and each octet is 8 bits, so it's 4 × 8 = **32 bits**. If you typed 8, that's just one octet. If you typed 4, that's the number of octets. The dots are only there to help people read it.",
+      "hint": "Count how many groups there are, and how many bits are in each group.",
+      "nudge": "One group is only part of the address. How many groups are there, and how many bits does each one hold? Multiply them."
     },
     {
       "id": "read-ipconfig",
@@ -119,30 +96,33 @@
       "nudge": "Several lines look like addresses, but only one is labelled as this computer's [[IPv4]] address. Copy that value exactly."
     },
     {
-      "id": "running-out",
-      "type": "explainer",
+      "id": "enough-for-everyone",
+      "type": "multiple_choice",
       "difficulty": "core",
-      "title": "How many addresses are there?",
-      "body": "Each extra [[bit]] doubles the number of patterns. With 32 bits, that's 2 multiplied by itself 32 times: just over **4 billion** [[IPv4]] addresses.\n\nThat sounds like plenty, but there are about 8 billion people. Many of them have a phone, a laptop, a games console and a smart TV, and there are millions of **servers** too (computers that provide things like websites to other devices). Some big blocks of addresses are also set aside for special uses, so not all of them can be handed out.\n\nThere just aren't enough to give every device its own. The internet solved this in two ways: letting devices **share** an address (next lesson), and creating a much **bigger** kind of address (the lesson after)."
-    },
-    {
-      "id": "exact-ipv4-count",
-      "type": "numeric_input",
-      "difficulty": "challenge",
-      "prompt": "Exactly how many different [[IPv4]] addresses are possible? You can use a calculator.",
-      "base": "decimal",
-      "answer": 4294967296,
-      "unit": "addresses",
-      "hint": "Each [[octet]] has 256 possible values, and there are four octets: 256 × 256 × 256 × 256.",
-      "explanation": "Each octet has 256 values, so there are 256 × 256 × 256 × 256 = 2³² = **4,294,967,296** addresses. That's about 4.3 billion. (4,294,967,295 is the largest address written as one number, because counting starts at 0, just like 255 in a [[byte]].)",
-      "nudge": "Use 256, not 255: values from 0 to 255 make 256 in total. Type the whole exact number, not a rounded one like 4 billion."
+      "prompt": "32 [[bits|bit]] give about **4.3 billion** different [[IPv4]] addresses. Earth has about **8 billion** people. Can every device online have its own IPv4 address?",
+      "options": [
+        { "id": "not-enough", "text": "No: there are more devices than addresses to go round" },
+        {
+          "id": "plenty",
+          "text": "Yes: 4.3 billion is plenty, because most people never go online",
+          "nudge": "Billions of people are online, and many own several devices each. Add up the phones alone and compare with 4.3 billion."
+        },
+        {
+          "id": "add-digits",
+          "text": "Yes: when addresses run low, IPv4 just adds an extra octet",
+          "nudge": "An IPv4 address is always exactly 32 bits: four octets, never five. Every device has to agree on that rule."
+        }
+      ],
+      "correctOptionId": "not-enough",
+      "explanation": "There are more devices than IPv4 addresses, so they **can't all have their own**. IPv4 can't grow either: it's always 32 bits, because every device follows the same rules. The internet's fixes: let devices **share** one address, and create a **bigger** kind of address.",
+      "hint": "Compare the two numbers. Then think about how many devices one person might own."
     },
     {
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- An **IP address** tells the [[network]] which device data should be delivered to. IP stands for Internet Protocol.\n- A **protocol** is a set of rules devices agree to follow.\n- An **IPv4** address is 32 [[bits|bit]], written as four [[octets|octet]] from 0 to 255, like `192.0.2.44`.\n- On Windows, `ipconfig` shows your IPv4 address and your **default gateway** (your [[router]]).\n- IPv4 has only about **4.3 billion** addresses, which isn't enough for every device.\n\nNext: how a whole home shares a single address."
+      "body": "- An **IP address** tells the [[network]] where data should go.\n- **IPv4** is four [[octets|octet]] of 8 [[bits|bit]]: 32 bits.\n- About 4.3 billion addresses isn't enough for every device."
     }
   ]
 }

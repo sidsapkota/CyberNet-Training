@@ -6,18 +6,22 @@
   "icon": "search",
   "cards": [
     {
-      "id": "confident-paragraph",
-      "type": "explainer",
+      "id": "pencil-sum",
+      "type": "numeric_input",
       "difficulty": "core",
-      "title": "One wrong number",
-      "body": "A chatbot writes you a great paragraph about the Moon for your project. It's clear, it flows, and one number in it is badly wrong.\n\nWould you spot it? This lesson is about catching AI's mistakes before they become yours."
+      "prompt": "A chatbot can write a great answer with one wrong number hidden in it. One says: \"3 boxes of 24 pencils is **62** pencils.\" Check its maths. How many pencils is it really?",
+      "base": "decimal",
+      "answer": 72,
+      "hint": "Work it out yourself: 3 lots of 24.",
+      "nudge": "24 + 24 + 24. Add them up carefully.",
+      "explanation": "3 × 24 = **72**, not 62. A chatbot predicts likely-looking words, and a likely-looking number isn't always the right one. So do the maths yourself."
     },
     {
       "id": "four-checks",
       "type": "explainer",
       "difficulty": "core",
       "title": "Four ways to check",
-      "body": "- **Facts and dates:** find them in a trusted source, like a textbook or an official website.\n- **Sources:** open each one and make sure it really says what the chatbot claims.\n- **Maths:** work it out yourself, or at least estimate it. Chatbots can get sums wrong.\n- **News and \"latest\" anything:** a model learned from text up to a certain date. Unless it can search the web, it may not know what's happened since.\n\nChecking takes a minute. Handing in a mistake takes longer to fix."
+      "body": "Chatbots can sound sure and be wrong. Check:\n\n- **Facts and dates:** find them in a trusted source, like a textbook or official website.\n- **Sources:** open each one and read it.\n- **Maths:** work it out yourself.\n- **News and \"latest\":** a model learned from text up to a certain date. Unless it searches the web, it may not know what's happened since."
     },
     {
       "id": "moon-distance",
@@ -32,8 +36,8 @@
           "choices": [
             {
               "id": "use",
-              "text": "Use it: the rest of the paragraph is good",
-              "consequence": "One good paragraph doesn't make every number right. A trusted source says about 384,000 km, ten times further.",
+              "text": "Keep it: a second chatbot gave the same distance",
+              "consequence": "Two chatbots can make the same mistake, so agreeing isn't checking. A trusted source says about 384,000 km, ten times further.",
               "outcome": "fail"
             },
             {
@@ -44,50 +48,51 @@
             },
             {
               "id": "ask",
-              "text": "Ask the chatbot \"Is that right?\"",
-              "consequence": "It says \"Yes!\" Asking the chatbot doesn't check anything: it can defend its own mistakes.",
+              "text": "Ask it to show how it worked out the distance",
+              "consequence": "It writes neat, confident working that ends at 38,000 km again. Its working is more predicted words, so it can't check its own number.",
               "outcome": "fail"
             }
           ]
         }
       ],
       "hint": "Which of the four checks fits a fact like a distance?",
-      "explanation": "The Moon is about **384,000 km** away on average, not 38,000. Numbers are easy to get wrong and hard to spot, so check them in a **trusted source**, like a space agency's website."
+      "explanation": "The Moon is about **384,000 km** away on average, not 38,000. Numbers are easy to get wrong and hard to spot, so check them in a **trusted source**, like a space agency's website. A second chatbot, or the chatbot's own working, isn't a check."
     },
     {
-      "id": "pencil-sum",
-      "type": "numeric_input",
+      "id": "latest-phone",
+      "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A chatbot says: \"3 boxes of 24 pencils is **62** pencils.\" Check its maths. How many pencils is it really?",
-      "base": "decimal",
-      "answer": 72,
-      "hint": "Work it out yourself: 3 lots of 24.",
-      "nudge": "24 + 24 + 24. Add them up carefully.",
-      "explanation": "3 × 24 = **72**, not 62. Chatbots predict likely-looking tokens, and a likely-looking number isn't always the right one, so check sums yourself."
-    },
-    {
-      "id": "hours-in-a-year",
-      "type": "numeric_input",
-      "difficulty": "core",
-      "prompt": "A chatbot says: \"There are **8,670** hours in a year (not a leap year).\" It looks about right. Work it out yourself: how many hours are there?",
-      "base": "decimal",
-      "answer": 8760,
-      "hint": "A day has 24 hours, and the year has 365 days. Try 24 × 300, then 24 × 65, and add them.",
-      "nudge": "Check your multiplying: 24 × 365. Try 24 × 300, plus 24 × 65.",
-      "explanation": "24 × 365 = **8,760**. The chatbot swapped two digits: 8,670 looks almost right, which is exactly why you check numbers instead of eyeballing them."
-    },
-    {
-      "id": "honesty",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "Using AI honestly",
-      "body": "Using AI to **learn** is great: ask it to explain a step you don't get, quiz you, or give feedback on your draft.\n\nUsing it to **do the work for you**, and handing that in as yours, is different. Many schools have rules about AI: some ban it for some tasks, some let you use it if you say so. Check your school's rules, and if you used AI, say how."
+      "prompt": "A chatbot tells you the newest model of a phone \"came out last month\". What's the **main** reason to check that?",
+      "options": [
+        {
+          "id": "mix-up",
+          "text": "It may have mixed up this phone with an older model with a similar name",
+          "nudge": "That can happen, but it isn't the main risk with \"last month\". When did the model learn?"
+        },
+        {
+          "id": "cutoff",
+          "text": "It learned from text up to a certain date, so \"last month\" may be long gone"
+        },
+        {
+          "id": "random-date",
+          "text": "It can't tell what today's date is, so it makes up every date at random",
+          "nudge": "Its dates aren't random: they come from the text it learned from. When did it learn?"
+        },
+        {
+          "id": "temperature",
+          "text": "A high temperature may have made it pick an unlikely release date",
+          "nudge": "Temperature changes how it picks, but even at low temperature what might it be missing?"
+        }
+      ],
+      "correctOptionId": "cutoff",
+      "hint": "Look back at the four checks. Which one is about news and \"latest\" things?",
+      "explanation": "A model learned from text up to a certain date. Unless it can search the web, \"the newest\" and \"last month\" mean newest **when it learned**, which may be long before today."
     },
     {
       "id": "learn-or-do",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Is each one using AI to **learn**, or letting it **do your work** for you?",
+      "prompt": "Using AI to **learn** is great: it can explain a step, quiz you, or give feedback on your draft. Letting it **do your work**, and handing that in as yours, is different, and many schools have rules about AI. Which is each one?",
       "bins": [
         {
           "id": "learn",
@@ -135,36 +140,6 @@
       "explanation": "Explanations, quizzes and feedback help **you** think. Handing in its essay, letting it do a test, or rewording its essay to sound like you all let it **do the work**, however it's dressed up."
     },
     {
-      "id": "latest-phone",
-      "type": "multiple_choice",
-      "difficulty": "core",
-      "prompt": "A chatbot tells you the newest model of a phone \"came out last month\". What's the **main** reason to check that?",
-      "options": [
-        {
-          "id": "mix-up",
-          "text": "It may have mixed up this phone with an older model with a similar name",
-          "nudge": "That can happen, but it isn't the main risk with \"last month\". When did the model learn?"
-        },
-        {
-          "id": "cutoff",
-          "text": "It learned from text up to a certain date, so \"last month\" may be long gone"
-        },
-        {
-          "id": "window",
-          "text": "Its context window may have lost track of what today's date is",
-          "nudge": "The context window is about your chat. What about the things it learned, and when?"
-        },
-        {
-          "id": "temperature",
-          "text": "A high temperature may have made it pick an unlikely release date",
-          "nudge": "Temperature changes how it picks, but even at low temperature what might it be missing?"
-        }
-      ],
-      "correctOptionId": "cutoff",
-      "hint": "Look back at the four checks. Which one is about news and \"latest\" things?",
-      "explanation": "A model learned from text up to a certain date. Unless it can search the web, \"the newest\" and \"last month\" mean newest **when it learned**, which may be long before today."
-    },
-    {
       "id": "claim-and-check",
       "type": "match_pairs",
       "difficulty": "challenge",
@@ -207,9 +182,9 @@
           "text": "\"I'm handing this in as mine. It's fine, everyone does it.\" What do you say?",
           "choices": [
             {
-              "id": "copy",
-              "text": "\"Can I copy it too?\"",
-              "consequence": "Now you're both handing in work that isn't yours, and it may break your school's rules.",
+              "id": "say-nothing",
+              "text": "\"OK, but at least read it through before you hand it in\"",
+              "consequence": "Reading it is a start, but it's still the chatbot's work handed in as theirs. That may break the school's rules, and they miss the learning.",
               "outcome": "fail"
             },
             {
@@ -220,8 +195,8 @@
             },
             {
               "id": "reword",
-              "text": "\"Just change some words so it doesn't look copied\"",
-              "consequence": "Changing words doesn't change who did the work, and it's still not honest.",
+              "text": "\"Add a few sentences of your own so it's partly yours\"",
+              "consequence": "Most of it is still the chatbot's work, handed in as theirs. A few extra sentences don't change that.",
               "outcome": "fail"
             }
           ]
@@ -235,7 +210,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- Check facts and dates in a trusted source, open every source, and do the maths yourself.\n- A model learned up to a certain date: be careful with news and \"latest\".\n- Asking the chatbot \"is that right?\" doesn't check anything.\n- Use AI to learn, not to do your work, and follow your school's rules.\n\nNext: the AI tools around today."
+      "body": "- Check facts in a trusted source, and do the maths yourself.\n- A model learned up to a certain date: be careful with \"latest\".\n- Use AI to learn, not to do your work.\n\nNext: the AI tools around today."
     }
   ]
 }

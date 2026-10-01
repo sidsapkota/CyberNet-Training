@@ -9,64 +9,43 @@
       "id": "q-label-laptop",
       "type": "hotspot",
       "difficulty": "core",
-      "prompt": "Label the inside of this laptop.",
+      "prompt": "Label four parts inside this laptop: the one that carries heat away, where the battery joins, the main board, and the fast workspace.",
       "scene": "laptop",
       "view": "open",
       "mode": "label",
       "labels": [
-        { "part": "cpu", "label": "CPU" },
-        { "part": "ram", "label": "RAM" },
-        { "part": "storage", "label": "Storage" },
-        { "part": "fan", "label": "Fan" }
-      ],
-      "explanation": "The small shiny chip is the **CPU**, cooled by the heat pipe and the **fan**. The stick in its slot is **RAM**, and the long, narrow card is **storage**."
-    },
-    {
-      "id": "q-open-phone",
-      "type": "teardown",
-      "difficulty": "core",
-      "prompt": "Open the phone and make it **safe to work on**: soften the glue, lift the back, remove the bracket, then deal with the battery.",
-      "scene": "phone",
-      "actions": [
-        { "id": "heat", "part": "back-cover", "verb": "heat", "nudge": "Soften the glue on the back cover first." },
         {
-          "id": "cover",
-          "part": "back-cover",
-          "verb": "lift",
-          "after": ["heat"],
-          "nudge": "The glue is still hard. Soften it first."
+          "part": "heat-pipe",
+          "label": "Heat pipe"
         },
         {
-          "id": "screw-1",
-          "part": "screw-1",
-          "verb": "unscrew",
-          "after": ["cover"],
-          "nudge": "Take the back cover off first."
-        },
-        {
-          "id": "screw-2",
-          "part": "screw-2",
-          "verb": "unscrew",
-          "after": ["cover"],
-          "nudge": "Take the back cover off first."
-        },
-        {
-          "id": "bracket",
-          "part": "connector-cover",
-          "verb": "lift",
-          "after": ["screw-1", "screw-2"],
-          "nudge": "Both tiny screws have to come out first."
-        },
-        {
-          "id": "unplug",
           "part": "battery-connector",
-          "verb": "unplug",
-          "after": ["bracket"],
-          "nudge": "Lift the bracket off the connector first."
+          "label": "Battery connector"
+        },
+        {
+          "part": "motherboard",
+          "label": "Motherboard"
+        },
+        {
+          "part": "ram",
+          "label": "RAM"
         }
       ],
-      "explanation": "Soften the glue, lift the back, take out the bracket's screws and the bracket, then **unplug the battery** before touching anything else.",
-      "safety": "**Heating or prying a phone can damage its battery and start a fire.** That's why repair shops use special tools and training. It's never something to try at home."
+      "explanation": "The copper **heat pipe** carries the CPU's heat to the fan. The **battery connector** joins the battery to the board. The **motherboard** is the big board everything plugs into, and the stick in its slot is **RAM**."
+    },
+    {
+      "id": "q-phone-safe-order",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "A repair shop is swapping a broken phone camera. Put its steps in a **safe** order, first at the top.",
+      "items": [
+        { "id": "soften", "label": "Soften the glue on the back cover" },
+        { "id": "lift-back", "label": "Lift off the back cover" },
+        { "id": "lift-bracket", "label": "Lift off the bracket over the battery connector" },
+        { "id": "unplug", "label": "Unplug the battery" },
+        { "id": "swap-camera", "label": "Take out the broken camera" }
+      ],
+      "explanation": "The glue holds the back on, and the bracket covers the battery connector. The battery is **unplugged before** the camera, or any other part, is touched. Repair shops do this with special tools and training: it's never something to try at home."
     },
     {
       "id": "q-make-room-in-ram",
@@ -78,30 +57,102 @@
         "ramGb": 6,
         "systemGb": 2,
         "apps": [
-          { "id": "maps", "label": "Maps", "gb": 1 },
-          { "id": "music", "label": "Music", "gb": 0.4 },
-          { "id": "game", "label": "Racing game", "gb": 2.5 },
-          { "id": "video-call", "label": "Video call", "gb": 1.5 },
-          { "id": "browser", "label": "Web browser", "gb": 1 }
+          {
+            "id": "maps",
+            "label": "Maps",
+            "gb": 1
+          },
+          {
+            "id": "music",
+            "label": "Music",
+            "gb": 0.4
+          },
+          {
+            "id": "game",
+            "label": "Racing game",
+            "gb": 2.5
+          },
+          {
+            "id": "video-call",
+            "label": "Video call",
+            "gb": 1.5
+          },
+          {
+            "id": "browser",
+            "label": "Web browser",
+            "gb": 1
+          }
         ]
       },
       "controls": [
-        { "id": "maps", "kind": "toggle", "label": "Maps" },
-        { "id": "music", "kind": "toggle", "label": "Music", "initial": true },
-        { "id": "game", "kind": "toggle", "label": "Racing game", "initial": true },
-        { "id": "video-call", "kind": "toggle", "label": "Video call", "initial": true },
-        { "id": "browser", "kind": "toggle", "label": "Web browser", "initial": true }
+        {
+          "id": "maps",
+          "kind": "toggle",
+          "label": "Maps"
+        },
+        {
+          "id": "music",
+          "kind": "toggle",
+          "label": "Music",
+          "initial": true
+        },
+        {
+          "id": "game",
+          "kind": "toggle",
+          "label": "Racing game",
+          "initial": true
+        },
+        {
+          "id": "video-call",
+          "kind": "toggle",
+          "label": "Video call",
+          "initial": true
+        },
+        {
+          "id": "browser",
+          "kind": "toggle",
+          "label": "Web browser",
+          "initial": true
+        }
       ],
       "outputs": [
-        { "id": "smooth", "kind": "device", "label": "Phone", "frame": "phone" },
-        { "id": "usedPct", "kind": "bar", "label": "RAM used" },
-        { "id": "apps", "kind": "list", "label": "What's in RAM" }
+        {
+          "id": "smooth",
+          "kind": "device",
+          "label": "Phone",
+          "frame": "phone"
+        },
+        {
+          "id": "usedPct",
+          "kind": "bar",
+          "label": "RAM used"
+        },
+        {
+          "id": "apps",
+          "kind": "list",
+          "label": "What's in RAM"
+        }
       ],
       "goal": {
         "all": [
-          { "target": "control", "id": "maps", "op": "==", "value": true },
-          { "target": "control", "id": "music", "op": "==", "value": true },
-          { "target": "output", "id": "smooth", "op": ">=", "value": 0.9 }
+          {
+            "target": "control",
+            "id": "maps",
+            "op": "==",
+            "value": true
+          },
+          {
+            "target": "control",
+            "id": "music",
+            "op": "==",
+            "value": true
+          },
+          {
+            "target": "output",
+            "id": "smooth",
+            "op": ">=",
+            "value": 0.9
+          }
         ]
       },
       "explanation": "Maps didn't fit in RAM alongside everything else. Closing the game (or the video call and the browser) makes room."
@@ -112,19 +163,52 @@
       "difficulty": "core",
       "prompt": "What's most likely causing each problem?",
       "bins": [
-        { "id": "ram", "label": "RAM is full" },
-        { "id": "storage", "label": "Storage is full" },
-        { "id": "heat", "label": "CPU is too hot" }
+        {
+          "id": "ram",
+          "label": "RAM is full"
+        },
+        {
+          "id": "storage",
+          "label": "Storage is full"
+        },
+        {
+          "id": "heat",
+          "label": "CPU is too hot"
+        }
       ],
       "items": [
-        { "id": "reloading", "label": "Apps keep reloading when you switch back", "bin": "ram" },
-        { "id": "tabs", "label": "Everything lags with 40 tabs open", "bin": "ram" },
-        { "id": "cant-save", "label": "\"Can't save photo: not enough space\"", "bin": "storage" },
-        { "id": "download-fails", "label": "A big download stops, saying it's full", "bin": "storage" },
-        { "id": "fan-roaring", "label": "Fan roaring, then the laptop slows down", "bin": "heat" },
-        { "id": "on-bed", "label": "Laptop slows down only when on your bed", "bin": "heat" }
+        {
+          "id": "too-many-apps",
+          "label": "Slow when lots of apps are open at once",
+          "bin": "ram"
+        },
+        {
+          "id": "tabs",
+          "label": "Everything lags with 40 tabs open",
+          "bin": "ram"
+        },
+        {
+          "id": "cant-save",
+          "label": "\"Can't save photo: not enough space\"",
+          "bin": "storage"
+        },
+        {
+          "id": "download-fails",
+          "label": "A big download stops, saying it's full",
+          "bin": "storage"
+        },
+        {
+          "id": "fan-roaring",
+          "label": "Fan roaring, then the laptop slows down",
+          "bin": "heat"
+        },
+        {
+          "id": "on-bed",
+          "label": "Laptop slows down only when on a cushion",
+          "bin": "heat"
+        }
       ],
-      "explanation": "Reloading and lag with lots open point to **RAM**. Messages about space when saving or downloading mean **storage**. A roaring fan or blocked vents (like a bed) mean the CPU is **throttling** to cool down."
+      "explanation": "Lag with lots of apps or tabs open points to **RAM**. Messages about space when saving or downloading mean **storage**. A roaring fan, or soft things blocking the vents, mean the CPU is **throttling**: slowing itself down to cool off."
     },
     {
       "id": "q-no-charge",
@@ -164,53 +248,123 @@
       "id": "q-stretch-battery",
       "type": "simulator",
       "difficulty": "core",
-      "prompt": "Make the battery last **at least 10 hours**, with **music** still playing.",
+      "prompt": "A whole day at a theme park. You need **location on** for the park map. Make the battery last **at least 10 hours**.",
       "model": "battery",
-      "params": { "wattHours": 15 },
+      "params": {
+        "wattHours": 15
+      },
       "controls": [
-        { "id": "brightness", "kind": "slider", "label": "Screen brightness", "min": 0, "max": 100, "step": 10, "unit": "%" },
-        { "id": "music", "kind": "toggle", "label": "Music", "initial": true },
-        { "id": "gps", "kind": "toggle", "label": "Location (GPS)", "initial": true },
-        { "id": "backgroundApps", "kind": "toggle", "label": "Background apps", "initial": true },
-        { "id": "lowPower", "kind": "toggle", "label": "Low power mode" }
+        {
+          "id": "brightness",
+          "kind": "slider",
+          "label": "Screen brightness",
+          "min": 0,
+          "max": 100,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "id": "music",
+          "kind": "toggle",
+          "label": "Music",
+          "initial": true
+        },
+        {
+          "id": "gps",
+          "kind": "toggle",
+          "label": "Location",
+          "initial": true
+        },
+        {
+          "id": "backgroundApps",
+          "kind": "toggle",
+          "label": "Background apps",
+          "initial": true
+        },
+        {
+          "id": "lowPower",
+          "kind": "toggle",
+          "label": "Low power mode"
+        }
       ],
       "outputs": [
-        { "id": "hours", "kind": "meter", "label": "Battery lasts", "unit": "hours" },
-        { "id": "watts", "kind": "meter", "label": "Power used", "unit": "W" }
+        {
+          "id": "hours",
+          "kind": "meter",
+          "label": "Battery lasts",
+          "unit": "hours"
+        },
+        {
+          "id": "watts",
+          "kind": "meter",
+          "label": "Power used",
+          "unit": "W"
+        }
       ],
       "goal": {
         "all": [
-          { "target": "output", "id": "hours", "op": ">=", "value": 10 },
-          { "target": "control", "id": "music", "op": "==", "value": true }
+          {
+            "target": "output",
+            "id": "hours",
+            "op": ">=",
+            "value": 10
+          },
+          {
+            "target": "control",
+            "id": "gps",
+            "op": "==",
+            "value": true
+          }
         ]
       },
-      "explanation": "Lower brightness, location off and background apps off (or low power mode) cut the power used, so the battery lasts longer."
+      "explanation": "With location staying on, the other drains have to go: lower brightness and background apps off (or low power mode) cut the power used. Music can stay on or go; it uses very little."
     },
     {
       "id": "q-fix-it-loop",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "Put the fix-it loop in order.",
+      "prompt": "Your phone's camera says **\"Storage full\"** when you try to take a photo. Put what you do in fix-it-loop order.",
       "items": [
-        { "id": "describe", "label": "Describe exactly what's wrong" },
-        { "id": "guess", "label": "Guess the most likely cause" },
-        { "id": "try", "label": "Try the simplest, safest fix" },
-        { "id": "check", "label": "Check whether it worked" }
+        {
+          "id": "describe",
+          "label": "Read exactly what the message says"
+        },
+        {
+          "id": "guess",
+          "label": "Guess that big videos are filling storage"
+        },
+        {
+          "id": "try",
+          "label": "Delete videos you've already backed up"
+        },
+        {
+          "id": "check",
+          "label": "Try taking the photo again"
+        }
       ],
-      "explanation": "**Describe, guess, try, check**, then loop back if it didn't work."
+      "explanation": "**Describe, guess, try, check.** The exact message is the clue, it points to storage, deleting backed-up videos is a safe fix, and taking the photo again checks it worked."
     },
     {
       "id": "q-disguised-file",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A download is called `game-skins.png.exe`. What is it?",
+      "prompt": "A download is called `game-skins.jpg.exe`. What is it?",
       "options": [
-        { "id": "program", "text": "A program, because it ends in .exe" },
-        { "id": "picture", "text": "A picture, because it says .png" },
-        { "id": "folder", "text": "A folder full of pictures" }
+        {
+          "id": "program",
+          "text": "A program, because the last part is .exe"
+        },
+        {
+          "id": "picture",
+          "text": "A picture, because the name has .jpg in it"
+        },
+        {
+          "id": "folder",
+          "text": "A folder, because its name has two dots"
+        }
       ],
       "correctOptionId": "program",
-      "explanation": "Only the **last** extension counts. `.exe` means it's a program that runs when opened, dressed up to look like a picture."
+      "explanation": "Only the **last** extension counts. `.exe` means it's a program that runs when opened, dressed up to look like a picture. That's a common trick, so it's one to leave unopened."
     }
   ]
 }

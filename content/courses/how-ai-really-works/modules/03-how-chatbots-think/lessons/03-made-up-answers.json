@@ -6,24 +6,10 @@
   "icon": "sparkles",
   "cards": [
     {
-      "id": "the-book-that-isnt",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "The book that doesn't exist",
-      "body": "You ask a chatbot for a book about volcanoes. It suggests \"Fire Below\" by Dr Helen Marsh, with a short summary. It sounds perfect.\n\nYou search the library. There's no such book, and no such author. The chatbot made it up, and sounded completely sure."
-    },
-    {
-      "id": "hallucination",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "Fluent, confident, wrong",
-      "body": "When a chatbot writes something false but says it smoothly and confidently, it's called a **hallucination**.\n\nIt happens because the model picks tokens that **sound** likely, not tokens it has checked are true. A book title, an author's name and a summary are all very likely-sounding things to write. If the true answer isn't in its patterns, it still writes something that looks like an answer.\n\nHallucinations are most common with specific details: names, dates, numbers, quotes and sources. They're also more likely when a model has mostly read one kind of text. Imagine a small model trained on space adventure stories, full of sentences like \"Captain Rivera stepped onto Mars\"."
-    },
-    {
       "id": "mars-walk",
       "type": "next_word",
       "difficulty": "core",
-      "prompt": "That small space-story model gets this text. Which word is it **most likely** to write next?",
+      "prompt": "Imagine a small model that has only read space adventure stories, full of lines like \"Captain Rivera stepped onto Mars\". It gets this text. Which word is it **most likely** to write next?",
       "context": "The first person to walk on Mars was",
       "candidates": [
         {
@@ -49,14 +35,14 @@
       },
       "hint": "It isn't choosing what's true. What did this model read again and again?",
       "nudge": "Think about the stories this model learned from. Which word filled this spot in them?",
-      "explanation": "Nobody has walked on Mars yet, and Neil Armstrong walked on the **Moon**. But in this model's space stories, sentences like this carry on with \"**Captain** …\", so it's likely to invent a Mars walker: a hallucination, built one likely token at a time. (Bigger chatbots have seen this question and usually get it right; the risk is highest for things they've seen less.)"
+      "explanation": "Nobody has walked on Mars yet, and Neil Armstrong walked on the **Moon**. But in this model's stories, sentences like this carry on with \"**Captain** …\", so it's likely to invent a Mars walker, one likely word at a time. (Big chatbots have seen this question and usually get it right; the risk is highest for things they've seen less.)"
     },
     {
-      "id": "check-it",
+      "id": "hallucination",
       "type": "explainer",
       "difficulty": "core",
-      "title": "How to check",
-      "body": "For anything that matters, check it yourself:\n\n- **Find it in a trusted source**: a textbook, a library catalogue, an official website.\n- **Ask for sources, then open them**: chatbots can invent sources too, so make sure each one really exists and says what the chatbot claims.\n- **Be extra careful with details**: names, dates, numbers and quotes.\n- **Health questions**: ask a doctor, a pharmacist or a trusted adult.\n\nAsking the chatbot \"are you sure?\", or asking again, doesn't check anything: it can repeat the same mistake, or change a right answer."
+      "title": "Fluent, confident, wrong",
+      "body": "A **hallucination** is when a chatbot says something false, smoothly and confidently. It picks words that *sound* likely, not facts it has checked, so a made-up book sounds as real as a true one. Watch names, dates, numbers, quotes and sources. Check them in a trusted source, like a library catalogue. Asking the chatbot \"are you sure?\" checks nothing."
     },
     {
       "id": "volcano-book",
@@ -67,18 +53,18 @@
       "steps": [
         {
           "id": "the-suggestion",
-          "text": "A chatbot suggests the book \"Fire Below\" by Dr Helen Marsh, and gives you a quote from it for your report. What do you do?",
+          "text": "A chatbot suggests the book \"Fire Below\" by Dr Helen Marsh, with a confident summary and a quote for your report. What do you do?",
           "choices": [
             {
               "id": "use-quote",
               "text": "Use the quote: it's from a book",
-              "consequence": "Your teacher can't find the book anywhere, because it doesn't exist. A made-up quote in a report is a real problem.",
+              "consequence": "Nobody can find the book anywhere, because it doesn't exist. A made-up quote in a report is a real problem.",
               "outcome": "fail"
             },
             {
               "id": "search",
               "text": "Search for the book in the library catalogue",
-              "consequence": "No results, for the book or the author.",
+              "consequence": "No results, for the book or the author. A great title, a confident author, and one small problem: none of it exists.",
               "next": "no-results"
             },
             {
@@ -108,21 +94,14 @@
           ]
         }
       ],
-      "hint": "Look back at how to check. What's a trusted source for whether a book exists?",
+      "hint": "What's a trusted source for whether a book exists?",
       "explanation": "Book titles, authors and quotes are classic hallucinations. **Check them in a trusted source**, like a library catalogue. Asking the chatbot doesn't help: it can be confidently wrong about its own mistakes."
-    },
-    {
-      "id": "context-window",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "A short memory",
-      "body": "A chatbot can only look at a limited amount of text at once: your messages and its replies so far. This is called its **context window**.\n\nIn a very long chat, the earliest messages can fall out of the window, or get less attention, so it can \"forget\" something you said at the start, like \"keep answers short\". A brand-new chat usually starts with an empty window, unless the app has a memory feature."
     },
     {
       "id": "check-or-fine",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Would you **double-check** each thing a chatbot gives you, or is it **fine to use** as it is?",
+      "prompt": "Would you **double-check** each thing a chatbot gives you, or is it **fine to use** as it is? (Anything about health always goes to a doctor, a pharmacist or a trusted adult.)",
       "bins": [
         {
           "id": "check",
@@ -136,7 +115,7 @@
       "items": [
         {
           "id": "date",
-          "label": "A date for your history project",
+          "label": "A date for a history project",
           "bin": "check"
         },
         {
@@ -166,19 +145,19 @@
         },
         {
           "id": "title",
-          "label": "Possible titles for your story",
+          "label": "Names for a new team group chat",
           "bin": "fine"
         }
       ],
-      "hint": "Ask: if it were made up, would it matter? Details like names, dates, quotes and sources are where hallucinations hide.",
+      "hint": "Ask: if it were made up, would it matter? Names, dates, quotes and sources are where hallucinations hide.",
       "nudge": "Ideas can't really be wrong. Facts, quotes, sources and anything about health can be, and it matters.",
-      "explanation": "Dates, quotes, sources and anything about health are **facts** that could be hallucinated, and getting them wrong matters, so double-check. Medicine questions go to a doctor, a pharmacist or a trusted adult. Ideas for themes, rhymes and titles are fine: there's no \"wrong\" to catch."
+      "explanation": "Dates, quotes, sources and anything about health are **facts** that could be hallucinated, and getting them wrong matters, so double-check. Medicine questions go to a doctor, a pharmacist or a trusted adult. Party themes, rhymes and chat names are fine: there's no \"wrong\" to catch."
     },
     {
       "id": "best-check",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A chatbot tells you a fact you need for an assignment. What's the **best** way to check it?",
+      "prompt": "A chatbot tells you a fact you need for a report at work. What's the **best** way to check it?",
       "options": [
         {
           "id": "trusted-source",
@@ -201,7 +180,7 @@
         }
       ],
       "correctOptionId": "trusted-source",
-      "hint": "Look back at how to check: the answer has to come from outside the chatbot.",
+      "hint": "The check has to come from somewhere that isn't a chatbot.",
       "explanation": "Only a **trusted source** outside chatbots really checks a fact. Asking again, asking it how it knows, or asking a different chatbot all stay inside chatbots, which can repeat or defend a hallucination."
     },
     {
@@ -254,59 +233,19 @@
           ]
         }
       ],
-      "hint": "Look back at how to check: a source has to really exist **and** say what the chatbot claims.",
+      "hint": "Chatbots can invent sources, or link a real one and get it wrong. A source only checks a fact if it really says what the chatbot claims.",
       "explanation": "A link that works isn't enough: chatbots can link a real page and still get the detail wrong. **Read the source**, and go with what it actually says."
-    },
-    {
-      "id": "long-chat",
-      "type": "scenario",
-      "difficulty": "challenge",
-      "prompt": "You're using a chatbot to practise for a quiz.",
-      "start": "the-chat",
-      "steps": [
-        {
-          "id": "the-chat",
-          "text": "At the start you said: \"Don't tell me the answers, just give hints.\" Two hours and hundreds of messages later, it starts giving you the answers. Why, and what do you do?",
-          "choices": [
-            {
-              "id": "ignoring",
-              "text": "It's ignoring you on purpose, so give up",
-              "consequence": "It isn't doing it on purpose. In a long chat, your first message may have fallen out of its context window.",
-              "outcome": "fail"
-            },
-            {
-              "id": "remind",
-              "text": "It may have lost track of your instruction, so repeat it",
-              "consequence": "Exactly. In a long chat, early messages can fall out of its context window or get less attention. Reminding it, or starting a fresh chat with the instruction first, fixes it.",
-              "outcome": "success"
-            },
-            {
-              "id": "broken",
-              "text": "It's broken, so it's lying now",
-              "consequence": "It isn't broken or lying. It can only look at a limited amount of the chat at once.",
-              "outcome": "fail"
-            }
-          ]
-        }
-      ],
-      "hint": "What happens to the earliest messages in a very long chat?",
-      "explanation": "In a long chat, early messages can fall out of the context window or get less attention, so it can lose track of your instruction. **Repeat it**, or start a new chat with it first."
     },
     {
       "id": "problem-and-check",
       "type": "match_pairs",
       "difficulty": "challenge",
-      "prompt": "Match each problem to what to do about it.",
+      "prompt": "Match each thing a chatbot gives you to what to do about it.",
       "pairs": [
         {
           "id": "book",
           "left": "Recommends a book",
           "right": "Search the library catalogue"
-        },
-        {
-          "id": "forgets",
-          "left": "Forgets an early instruction",
-          "right": "Repeat the instruction"
         },
         {
           "id": "source",
@@ -317,18 +256,23 @@
           "id": "medicine",
           "left": "Answers a medicine question",
           "right": "Ask a doctor or pharmacist"
+        },
+        {
+          "id": "themes",
+          "left": "Suggests party themes",
+          "right": "Use them as they are"
         }
       ],
-      "hint": "Each fix uses something outside the chatbot, except one. Which problem is about the chatbot's memory?",
-      "nudge": "Think about each one: is it a fact to check, a source to open, a memory problem, or something only an expert should answer?",
-      "explanation": "Books get checked in a **catalogue**; sources get **opened and read**; medicine questions go to a **doctor or pharmacist**; and a forgotten instruction gets **repeated**, because it fell out of the context window."
+      "hint": "For each one, ask: is it a fact to check, a source to open, a health question, or just ideas?",
+      "nudge": "Ideas can't really be wrong, and health questions need an expert. Which of the other two is about a book, and which about a source?",
+      "explanation": "Books get checked in a **catalogue**; sources get **opened and read**; medicine questions go to a **doctor or pharmacist**; and party themes are ideas, so there's nothing to catch."
     },
     {
       "id": "made-up-recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- A **hallucination** is a fluent, confident answer that's false, because the model picks likely tokens, not checked facts.\n- They hide in details: names, dates, numbers, quotes, sources.\n- Check things that matter in a trusted source; asking the chatbot again doesn't check anything.\n- The **context window** is how much of the chat it can see at once; in long chats it can forget the start.\n\nNext: the module quiz."
+      "body": "- A **hallucination** is a confident, false answer built from likely words.\n- They hide in names, dates, numbers, quotes and sources.\n- Check what matters in a trusted source, not by asking again.\n\nNext: the module quiz."
     }
   ]
 }

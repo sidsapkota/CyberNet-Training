@@ -6,35 +6,40 @@
   "icon": "tags",
   "cards": [
     {
-      "id": "spam-folder",
-      "type": "explainer",
+      "id": "free-pizza-guess",
+      "type": "multiple_choice",
       "difficulty": "core",
-      "title": "How does a spam folder know?",
-      "body": "Your email app quietly moves junk into a spam folder. Nobody wrote a rule for every scam email ever sent. Instead, a [[model]] learned from emails that people had already marked as spam or not spam.\n\nThat's [[training data]] at work. In this lesson you'll build some, and find out how easily it goes wrong."
-    },
-    {
-      "id": "words-that-vote",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "Words that vote",
-      "body": "This model reads short messages. It remembers which words were in the spam examples and which were in the normal ones.\n\nWhen a new message arrives, each word in it **votes**. A word gets **one vote for each training message** it appeared in, for that message's label. So if \"free\" was in three spam messages, it gives spam three votes. A word counts once per message, however many times it's repeated. Words shorter than 3 letters (like \"a\", \"at\", \"is\" and \"go\") are skipped. Only the **exact same word** counts: to this model, \"game\" and \"games\" are different words.\n\nThe label with the most votes wins. A tie means \"not sure\"."
-    },
-    {
-      "id": "count-the-votes",
-      "type": "numeric_input",
-      "difficulty": "core",
-      "prompt": "Be the model. These are its **not spam** training messages:\n\n- See you at training tonight\n- Pizza for dinner tonight?\n- Can you send me the homework\n- Your sister's parcel came today\n\nHow many **not spam** votes does **\"Free pizza at footy training\"** get?",
-      "base": "decimal",
-      "answer": 2,
-      "hint": "Take the new message one word at a time. For each word, count how many of the four messages contain it. Remember which words are skipped.",
-      "nudge": "\"at\" has only 2 letters, so it's skipped. Count only the words of 3 or more letters that appear in the messages.",
-      "explanation": "\"Pizza\" is in one message and \"training\" is in one: **2 votes**. \"Free\" and \"footy\" aren't in any of them, and \"at\" is skipped. The spam messages give \"free\" 3 votes, so spam will win 3 to 2. Let's see."
+      "prompt": "A spam filter learns from messages people have already labelled **spam** or **not spam**. In this one's examples, **\"free\"** only ever appeared in spam: \"Win a free phone\", \"Free prize\", \"Claim your free gift card\".\n\nYour friend texts **\"Free pizza at footy training\"**. Will the filter call it spam?",
+      "options": [
+        {
+          "id": "yes-free",
+          "text": "Yes: in its examples, \"free\" has only ever meant spam"
+        },
+        {
+          "id": "no-friend",
+          "text": "No: it can tell the message comes from a friend",
+          "nudge": "The filter only sees the words, and all it knows about them comes from its examples. What did those teach it about \"free\"?"
+        },
+        {
+          "id": "no-common",
+          "text": "No: it knows people say \"free pizza\" all the time",
+          "nudge": "It only knows what its examples showed it. Did any of them use \"free\" in a friendly way?"
+        },
+        {
+          "id": "cant-guess",
+          "text": "It can't guess: it has never seen this exact message",
+          "nudge": "Guessing about new things is a model's whole job. It uses the patterns in its examples. What pattern does \"free\" follow there?"
+        }
+      ],
+      "correctOptionId": "yes-free",
+      "hint": "The filter knows nothing except its examples. Look at which kind of message \"free\" turned up in.",
+      "explanation": "To this filter, **\"free\" means spam**, because that's all its examples ever showed. Real friends say \"free\" too (free time, free tickets), but a model can't learn from examples it never saw. Next, watch it happen."
     },
     {
       "id": "label-messages",
       "type": "train_model",
       "difficulty": "core",
-      "prompt": "Label each message as **spam** or **not spam**. Then press Check to train the model and see what it makes of two new messages.",
+      "prompt": "A spam filter learns from messages people have labelled. Label each message as **spam** or **not spam**. Then press Check to train the [[model]] and see what it makes of two new messages.",
       "model": {
         "kind": "word-vote"
       },
@@ -115,50 +120,20 @@
       },
       "hint": "Spam tries to get you to win, claim, click or pay. Normal messages are about plans and everyday things.",
       "nudge": "Look again at the messages about prizes, gift cards and paying a fee: who sends those?",
-      "explanation": "Your labels were right, and the model called **\"Free pizza at footy training\"** spam, just as you counted: \"free\" gave spam 3 votes, and \"pizza\" and \"training\" gave not spam only 2."
+      "explanation": "Your labels were right. The model caught the prize message, but it also called **\"Free pizza at footy training\"** spam. In its examples, \"free\" only ever appeared in spam."
     },
     {
-      "id": "why-free-pizza",
+      "id": "words-that-vote",
       "type": "explainer",
       "difficulty": "core",
-      "title": "One word, three votes",
-      "body": "The model isn't being silly: it did exactly what its training data taught it. In those examples, **\"free\" only ever appeared in spam**, so to the model, \"free\" means spam.\n\nReal messages from friends say \"free\" too: free time, free pizza, free tickets. The training data just didn't show any. A model can't learn from examples it never saw."
-    },
-    {
-      "id": "which-example-fixes-it",
-      "type": "multiple_choice",
-      "difficulty": "core",
-      "prompt": "Which **one** new training example would fix the free-pizza mistake, without breaking the spam guess?",
-      "options": [
-        {
-          "id": "free-footy",
-          "text": "\"Free footy training on Saturday\", labelled not spam"
-        },
-        {
-          "id": "pizza-x3",
-          "text": "\"Pizza, pizza, pizza!\", labelled not spam",
-          "nudge": "Count the votes again: a word only counts once per message, however often it's repeated."
-        },
-        {
-          "id": "win-free",
-          "text": "\"Win free stuff today, click here\", labelled spam",
-          "nudge": "That gives \"free\" even more spam votes. Which side needs more votes?"
-        },
-        {
-          "id": "pizza-night",
-          "text": "\"Pizza night at my place tonight\", labelled not spam",
-          "nudge": "Count it: which of its words are in \"Free pizza at footy training\"? Only one, so it's a tie, not a win."
-        }
-      ],
-      "correctOptionId": "free-footy",
-      "hint": "Count each side's votes for the pizza message, then count again with each new example added.",
-      "explanation": "\"Free footy training on Saturday\" adds a not-spam vote for **\"free\"**, **\"footy\"** and **\"training\"**: 5 not-spam votes against 3. \"Pizza, pizza, pizza!\" only adds **one** vote, because a word counts once per message: that makes a 3-3 tie, \"not sure\"."
+      "title": "Words that vote",
+      "body": "So how did it decide? In this model, words **vote**. Each word of 3 or more letters gets one vote for every training message it was in, for that message's label.\n\n\"Free\" was in three spam messages: 3 votes for spam. \"Pizza\" and \"training\" gave not spam just 2. Most votes wins; a tie means \"not sure\"."
     },
     {
       "id": "fix-the-data",
       "type": "train_model",
       "difficulty": "core",
-      "prompt": "Try it. Choose which examples to train on, so the model gets **both** test messages right.",
+      "prompt": "The model only went wrong because nobody friendly in its examples ever said \"free\". Choose which examples to train on, so it gets **both** test messages right.",
       "model": {
         "kind": "word-vote"
       },
@@ -254,22 +229,15 @@
           "m8"
         ]
       },
-      "hint": "Which side needs more votes from \"free\"?",
-      "nudge": "Watch the guess for the pizza message as you tick and untick. A tie shows as \"Not sure\".",
-      "explanation": "Adding **\"Free footy training on Saturday\"** teaches the model that friends say \"free\" too, so the pizza message gets more not-spam votes. Deleting spam examples can also flip it, but then the model learns less about real spam."
-    },
-    {
-      "id": "good-data-bad-data",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "Good data, bad data",
-      "body": "Training data can go wrong in other ways too:\n\n- **Wrong labels:** a spam message labelled \"not spam\" teaches the model the wrong lesson.\n- **Copies:** a thousand copies of one example add nothing new, and make that one example count far too much.\n- **Missing kinds:** examples from only one place, or one kind of person, leave everything else out.\n\nGood training data has **checked labels**, **lots of variety**, and examples like the ones the model will really meet."
+      "hint": "Which side needs more votes from \"free\"? Look for an example where a friend says it.",
+      "nudge": "Watch the guess for the pizza message as you tick and untick. A tie shows as \"Not sure\", which isn't right yet.",
+      "explanation": "Adding **\"Free footy training on Saturday\"** shows the model that friends say \"free\" too, so the pizza message gets more not-spam votes. Deleting spam examples can also flip it, but then the model learns less about real spam. \"Pizza, pizza, pizza!\" adds just one vote: a word counts once per message."
     },
     {
       "id": "helpful-or-problem",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Does each one make training data **better**, or cause a **problem**?",
+      "prompt": "Good training data has **checked labels**, **lots of variety**, and examples like the ones the model will really meet. Does each one make training data **better**, or cause a **problem**?",
       "bins": [
         {
           "id": "better",
@@ -308,7 +276,7 @@
         },
         {
           "id": "one-school",
-          "label": "Messages from just one school class",
+          "label": "Messages from just one office",
           "bin": "problem"
         },
         {
@@ -319,7 +287,7 @@
       ],
       "hint": "Ask of each one: does it teach the model something new and true?",
       "nudge": "Look for the ones that teach the model something wrong, repeat one example over and over, or leave whole groups out.",
-      "explanation": "Variety, checked labels and realistic examples make data **better**. Rushed, unchecked labels and spam labelled \"not spam\" teach wrong lessons; copies add nothing new and tip the votes; one class leaves everyone else out."
+      "explanation": "Variety, checked labels and realistic examples make data **better**. Rushed labels and spam marked \"not spam\" teach wrong lessons. A thousand copies add nothing new and tip the votes. One office leaves everyone else out."
     },
     {
       "id": "noisy-label",
@@ -468,7 +436,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- A model learns only from its **training data**, so it repeats that data's patterns, including its gaps.\n- One word, or one example, can tip a model the wrong way.\n- Wrong labels, copies and missing kinds of examples all cause mistakes.\n- Fix it with **better** data (checked, varied, realistic), not just more of it.\n\nNext: how to tell if a model is any good."
+      "body": "- A model learns only from its **training data**, gaps and all.\n- One word, or one example, can tip it the wrong way.\n- Better data beats more data: checked, varied and realistic.\n\nNext: how to tell if a model is any good."
     }
   ]
 }

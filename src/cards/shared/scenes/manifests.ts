@@ -61,7 +61,8 @@ export const SCENES = {
     width: 320,
     height: 220,
     parts: [
-      { id: "motherboard", name: "Motherboard", box: { x: 32, y: 30, w: 256, h: 86 }, coveredBy: "panel" },
+      // labelAt: an empty patch of board below the CPU, clear of the fan, SSD, battery and connector spots.
+      { id: "motherboard", name: "Motherboard", box: { x: 32, y: 30, w: 256, h: 86 }, labelAt: { x: 124, y: 103 }, coveredBy: "panel" },
       { id: "heat-pipe", name: "Heat pipe", box: { x: 30, y: 30, w: 82, h: 18 }, labelAt: { x: 60, y: 39 }, coveredBy: "panel" },
       { id: "fan", name: "Cooling fan", box: { x: 42, y: 52, w: 54, h: 54 }, labelAt: { x: 46, y: 56 }, exit: { x: 0, y: -60 }, coveredBy: "panel" },
       { id: "cpu", name: "CPU (processor)", box: { x: 118, y: 52, w: 36, h: 36 }, labelAt: { x: 121, y: 55 }, exit: { x: 0, y: -60 }, coveredBy: "panel" },
@@ -108,6 +109,8 @@ export const SCENES = {
     views: {
       closed: [],
       open: ["back-cover"],
+      // Back still glued on, but the bracket's two tiny screws already taken out (a shorter teardown).
+      "bracket-unscrewed": ["screw-1", "screw-2"],
     },
   },
   "file-browser": {

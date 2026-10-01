@@ -9,6 +9,7 @@ import { goalMet, initialSimulatorAnswer, sliderRange } from "@/cards/simulator/
 import type { InputValue } from "@/cards/simulator/models/types";
 import { binaryToggle, explainer, multipleChoice } from "@/test/fixtures";
 import { ContentValidationError, loadContent } from "./load";
+import { lessonShapeProblems } from "./shape";
 
 describe("real content in /content", () => {
   it("loads and validates", () => {
@@ -49,20 +50,17 @@ describe("real content in /content", () => {
     ]);
   });
 
-  it("every lesson follows the lesson rules: 8-12 cards, hook and recap, ≤3 multiple choice, 2 challenges", () => {
+  it("every lesson and quiz follows the right-level rules (src/lib/content/shape.ts)", () => {
+    const problems: string[] = [];
     for (const lesson of loadContent().lessons.values()) {
-      if (lesson.kind !== "lesson") continue;
-      const { cards } = lesson;
-      const where = `lesson ${lesson.id}`;
-      // Photo cards are a quick look next to a diagram, so they don't count toward the length.
-      const steps = cards.filter((c) => c.type !== "photo").length;
-      expect(steps, where).toBeGreaterThanOrEqual(8);
-      expect(steps, where).toBeLessThanOrEqual(12);
-      expect(cards[0]?.type, `${where} opens with a hook explainer`).toBe("explainer");
-      expect(cards.at(-1)?.type, `${where} ends with a recap explainer`).toBe("explainer");
-      expect(cards.filter((c) => c.type === "multiple_choice").length, where).toBeLessThanOrEqual(3);
-      expect(cards.filter((c) => c.difficulty === "challenge").length, where).toBe(2);
+      if (lesson.kind === "lesson") {
+        const help = lesson.moduleId === "when-things-go-wrong";
+        for (const p of lessonShapeProblems(lesson, { helpModule: help })) problems.push(`${lesson.id} ${p}`);
+      } else if (lesson.cards.filter((c) => c.type === "match_pairs").length > 1) {
+        problems.push(`${lesson.id} has more than one match (vocabulary) question`);
+      }
     }
+    expect(problems).toEqual([]);
   });
 
   it("gives every lesson an icon, never the same one twice in a module (quizzes keep the hub)", () => {
@@ -133,10 +131,11 @@ describe("real content in /content", () => {
     expect(loadContent().lessons.get("binary-and-data-quiz")?.cards).toHaveLength(7);
   });
 
-  it("lists Inside Your Devices first, with its modules and lessons in order", () => {
+  it("lists the Easy courses first (Stay Safe Online, then Inside Your Devices), with modules and lessons in order", () => {
     const { courses } = loadContent();
-    expect(courses.map((c) => c.id)).toEqual(["inside-your-devices", "how-the-internet-works", "stay-safe-online", "how-ai-really-works"]);
-    expect(courses[0]?.modules.map((m) => m.lessons.map((l) => l.id))).toEqual([
+    expect(courses.map((c) => c.id)).toEqual(["stay-safe-online", "inside-your-devices", "how-ai-really-works", "how-the-internet-works"]);
+    expect(courses.map((c) => c.level)).toEqual(["easy", "easy", "medium", "hard"]);
+    expect(courses[1]?.modules.map((m) => m.lessons.map((l) => l.id))).toEqual([
       ["whats-in-the-box", "memory-vs-storage", "meet-the-cpu", "pull-it-apart-quiz"],
       ["meet-the-os", "files-and-folders", "software-in-charge-quiz"],
       ["slow-and-full", "power-problems", "inside-your-devices-final"],
@@ -169,7 +168,7 @@ describe("real content in /content", () => {
     const firsts = content.courses.map((c) => c.modules[0]!.lessons.find((l) => l.kind === "lesson")!.id);
     const help = [...content.lessons.values()].filter((l) => l.moduleId === "when-things-go-wrong").map((l) => l.id);
     expect(open.sort()).toEqual([...firsts, ...help].sort());
-    expect(firsts).toEqual(["whats-in-the-box", "bits-and-binary", "strong-passwords", "spot-the-ai"]);
+    expect(firsts).toEqual(["strong-passwords", "whats-in-the-box", "spot-the-ai", "bits-and-binary"]);
     // Outlines (sent to the browser for the path) agree with the lessons.
     for (const mod of content.courses.flatMap((c) => c.modules)) {
       for (const outline of mod.lessons) expect(outline.guests, outline.id).toBe(content.lessons.get(outline.id)!.guests);
@@ -336,7 +335,7 @@ describe("loadContent validation", () => {
   }
 
   const M = "courses/c1/modules/m1";
-  const course = { id: "c1", title: "Course", description: "D", order: 1 };
+  const course = { id: "c1", title: "Course", description: "D", order: 1, level: "easy" };
   const mod = { id: "m1", title: "Module", description: "D", order: 1, access: "free" };
   const lesson = (id: string, order: number) => ({
     id,

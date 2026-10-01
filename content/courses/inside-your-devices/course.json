@@ -2,5 +2,6 @@
   "id": "inside-your-devices",
   "title": "Inside Your Devices",
   "description": "Take a phone and laptop apart, overload them, and fix them.",
-  "order": 1
+  "order": 2,
+  "level": "easy"
 }

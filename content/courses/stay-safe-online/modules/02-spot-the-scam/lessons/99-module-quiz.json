@@ -6,20 +6,31 @@
   "passThreshold": 0.7,
   "cards": [
     {
-      "id": "q-email-signs",
+      "id": "q-email-labels",
       "type": "hotspot",
       "difficulty": "core",
-      "prompt": "Your Bank emails from **@yourbank.example**. Tap every warning sign.",
+      "prompt": "Your Bank emails from **@yourbank.example**. Label four warning signs in this email.",
       "scene": "email",
-      "mode": "tap",
-      "targets": [
-        "email-from",
-        "email-subject",
-        "email-greeting",
-        "email-secrets",
-        "email-link"
+      "mode": "label",
+      "labels": [
+        {
+          "part": "email-from",
+          "label": "Fake sender"
+        },
+        {
+          "part": "email-subject",
+          "label": "Rushing you"
+        },
+        {
+          "part": "email-greeting",
+          "label": "\"Dear Customer\""
+        },
+        {
+          "part": "email-link",
+          "label": "Hidden link"
+        }
       ],
-      "explanation": "The fake sender, the rush, \"Dear Customer\", the request for secrets and the hidden link are all warning signs."
+      "explanation": "The address isn't `@yourbank.example` (**fake sender**), the subject is **rushing you**, it says **\"Dear Customer\"**, and the button is a **hidden link** to `yourbank-verify.example`."
     },
     {
       "id": "q-phish-or-fine",
@@ -49,7 +60,7 @@
         },
         {
           "id": "app",
-          "label": "Real address: \"Check it in the app\"",
+          "label": "@yourbank.example: \"Statement in app\"",
           "bin": "fine"
         },
         {
@@ -61,24 +72,10 @@
       "explanation": "Asking for codes, prize fees and deadlines are phishing signs. The real address sending you to the app is fine."
     },
     {
-      "id": "q-text-signs",
-      "type": "hotspot",
-      "difficulty": "core",
-      "prompt": "Tap the three warning signs in the new message.",
-      "scene": "text-message",
-      "mode": "tap",
-      "targets": [
-        "sms-fee",
-        "sms-deadline",
-        "sms-link"
-      ],
-      "explanation": "A small fee, a deadline and an unfamiliar link."
-    },
-    {
-      "id": "q-voice",
+      "id": "q-parcel-text",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "A caller sounds just like your aunt: \"Send me gift cards now, and don't tell anyone.\"",
+      "prompt": "You're waiting for a parcel. A text from \"Parcels\" says: **\"Missed delivery. Pay $2.50 within 1 hour: parcels-fee.example\"**",
       "start": "start",
       "steps": [
         {
@@ -86,49 +83,95 @@
           "text": "What do you do?",
           "choices": [
             {
-              "id": "call-back",
-              "text": "Hang up and call her saved number",
-              "consequence": "She's fine. It was a scam.",
+              "id": "pay",
+              "text": "Pay it. You really are waiting for a parcel",
+              "consequence": "The link leads to a fake page that keeps your card details.",
+              "outcome": "fail"
+            },
+            {
+              "id": "reply",
+              "text": "Reply to ask which parcel it is",
+              "consequence": "The reply goes to the scammer and shows your number works.",
+              "outcome": "fail"
+            },
+            {
+              "id": "app",
+              "text": "Ignore the link and check in the Parcels app",
+              "consequence": "The app shows your parcel is on its way. No fee.",
               "outcome": "success"
-            },
-            {
-              "id": "send",
-              "text": "Send the gift cards",
-              "consequence": "Voices can be copied; the money would be gone.",
-              "outcome": "fail"
-            },
-            {
-              "id": "secret",
-              "text": "Keep it secret",
-              "consequence": "Secrecy is a warning sign.",
-              "outcome": "fail"
             }
           ]
         }
       ],
-      "explanation": "Hang up and call back on a number you already know. Gift cards and secrecy are warning signs."
+      "explanation": "A small fee, a deadline and an unfamiliar link are scam-text signs, even when you are expecting a parcel. Check in the official app."
     },
     {
-      "id": "q-padlock",
-      "type": "multiple_choice",
+      "id": "q-bank-call",
+      "type": "scenario",
       "difficulty": "core",
-      "prompt": "A page has a padlock. What does that prove?",
-      "options": [
+      "prompt": "A caller says they're from Your Bank's fraud team. They ask you to read out the code that was just texted to you.",
+      "start": "start",
+      "steps": [
         {
-          "id": "encrypted",
-          "text": "Only that the connection is encrypted"
-        },
-        {
-          "id": "real",
-          "text": "That it's the real site"
-        },
-        {
-          "id": "safe",
-          "text": "That it's safe to type your PIN"
+          "id": "start",
+          "text": "What do you do?",
+          "choices": [
+            {
+              "id": "read",
+              "text": "Read out the code so they can protect your account",
+              "consequence": "That code lets them sign in as you.",
+              "outcome": "fail"
+            },
+            {
+              "id": "name",
+              "text": "Ask them to say your full name first, to prove it",
+              "consequence": "Scammers can find names online. Knowing yours proves nothing.",
+              "outcome": "fail"
+            },
+            {
+              "id": "hang-up",
+              "text": "Hang up and call the number on the bank's website",
+              "consequence": "The real bank says nobody called you. Scam stopped.",
+              "outcome": "success"
+            }
+          ]
         }
       ],
-      "correctOptionId": "encrypted",
-      "explanation": "The padlock only means encrypted. Scam sites can have one."
+      "explanation": "Never share a sign-in code. Hang up and call back on a number you found yourself."
+    },
+    {
+      "id": "q-padlock-pin",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "You open a page from a link in a text. It has a padlock next to the address, and it asks for your **card PIN**.",
+      "start": "start",
+      "steps": [
+        {
+          "id": "start",
+          "text": "What do you do?",
+          "choices": [
+            {
+              "id": "type-pin",
+              "text": "Type the PIN in: the padlock shows the page is safe",
+              "consequence": "The padlock only means encrypted. Your PIN goes safely to whoever runs the page, and that could be a scammer.",
+              "outcome": "fail"
+            },
+            {
+              "id": "check-logo",
+              "text": "Check the logo looks right, then type the PIN in",
+              "consequence": "A logo can be copied in minutes. And a bank never asks for your PIN on a website.",
+              "outcome": "fail"
+            },
+            {
+              "id": "close",
+              "text": "Close it: a bank never asks for your PIN on a website",
+              "consequence": "Right. Padlock or not, a page asking for your PIN is a scam.",
+              "outcome": "success"
+            }
+          ]
+        }
+      ],
+      "explanation": "A padlock only means **encrypted**: nobody can read what you send on the way. It doesn't tell you who runs the site, and a bank **never** asks for your card PIN."
     },
     {
       "id": "q-addresses",
@@ -177,15 +220,15 @@
       "options": [
         {
           "id": "scam",
-          "text": "A scam"
+          "text": "A scam: real prizes never cost anything to claim"
         },
         {
           "id": "real",
-          "text": "A real prize with a small fee"
+          "text": "A real prize: the small fee just covers postage"
         },
         {
-          "id": "shop",
-          "text": "A shop special offer"
+          "id": "forgot",
+          "text": "A competition win you've forgotten you entered"
         }
       ],
       "correctOptionId": "scam",

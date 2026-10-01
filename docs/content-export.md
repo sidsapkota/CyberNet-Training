@@ -10,6 +10,206 @@ so Vercel Analytics shows where visitors came from. Visitors without an account 
 and the help lessons; other free lessons ask them to make a free account, and Pro lessons to upgrade. Link to lessons marked
 "no account needed" where you can.
 
+## Stay Safe Online
+
+Lock your accounts, spot scams and keep your private stuff private.
+
+### Module 1: Lock Your Accounts (Free)
+
+Strong passwords, passphrases and two-step sign-in.
+
+#### Strong Passwords
+
+- **Access:** Free, no account needed (best for video links)
+- **Link:** `cybernettraining.com/from/<platform>/strong-passwords`
+
+**Key facts**
+
+- *Length wins:* **Length** helps a lot more. The easiest length to remember is a **passphrase**: **four or more random words**, at least **15 characters**, like `violet cactus harbour pepper`.
+- *Recap:* Guessers try **common passwords**, names and patterns first. **Length** wins: a **passphrase** is four or more **random** words.
+
+**Best interactive cards**
+
+- Simulator: Attackers use computers to guess passwords, a billion guesses a second. For a random password, they have to try **every combination**. Each extra lowercase letter makes that **26 times** harder. This password uses only…
+- Simulator: Now the password can be **10 characters at most**. Reach **100 years** anyway, by choosing which kinds of characters it can use.
+- Choose what happens: Your friend Mia is proud of her new passphrase. It's a line from her favourite song: five words, 26 characters.
+
+#### Two-Step Sign-In
+
+- **Access:** Free with a free account
+- **Link:** `cybernettraining.com/from/<platform>/two-step-sign-in`
+
+**Key facts**
+
+- *Two-step sign-in:* **Two-step sign-in** (also called **two-factor**) asks for a password **plus** a second proof, like your phone or fingerprint. A **passkey**: your device checks your fingerprint, face or PIN.
+- *Recap:* **Two-step sign-in** adds a second proof, so a stolen password isn't enough. **Never share a sign-in code.** An unexpected one?
+
+**Best interactive cards**
+
+- Choose what happens: A **sign-in code** is the second key to your account. A site sends one when someone types your password. **Nobody real ever asks you to send them a code**: not a company, a bank, a game or a friend. You're watching a…
+- Choose what happens: You're setting up a new music app. For two-step sign-in, it only offers one option: **codes by text message**.
+- Choose what happens: When you turn two-step sign-in on, the site gives you **backup codes** to save somewhere safe, in case you lose your phone. Months later, your phone, with your authenticator app on it, falls in a lake.
+
+#### Module quiz (7 questions)
+
+Not exported, so the answers stay secret.
+
+### Module 2: Spot the Scam (Pro)
+
+Phishing emails, scam texts and calls, and fake websites.
+
+#### Phishing Emails
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/phishing-emails`
+
+**Key facts**
+
+- *Something fishy:* That was **phishing** (said "fishing"): a message pretending to be someone you trust, like your bank, school or a game, hoping you'll bite.
+- *Recap:* **Phishing** pretends to be someone you trust. Check the **address after the @**, not the name.
+
+**Best interactive cards**
+
+- Choose what happens: An email pops up while you're busy.
+- Explore the picture: Your Bank's real emails come from **@yourbank.example**. **Tap each part** of this email to meet a warning sign.
+- Choose what happens: An email arrives that seems personal.
+
+#### Scam Texts and Calls
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/scam-texts-and-calls`
+
+**Key facts**
+
+- *Scams in your pocket:* The same tricks as phishing emails come by **text** and **phone call**. Hang up if a caller wants a **sign-in code** or **password**, wants to **control your computer**, asks for **gift cards**, or says to **keep it secret**.
+- *Recap:* Texts with a **fee**, **deadline** and **link**? Check in the **official app**.
+
+**Best interactive cards**
+
+- Choose what happens: Your phone rings. It sounds exactly like your cousin. (Computers can now make a voice clone from a short clip.)
+- Choose what happens: A website promises **10,000 free coins** for your favourite game.
+- Choose what happens: You have a weekend job at a café. A text arrives from a number you don't know.
+
+#### Fake Websites
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/fake-websites`
+
+**Key facts**
+
+- *Read the address:* The owner is the name just before the **very last ending** (like `.example`, `.com` or `.com.au`). `yourbank.example.login-check.example` belongs to **login-check.example**.
+- *Recap:* The owner is the name **just before the very last ending**. A **padlock only means encrypted**.
+
+**Best interactive cards**
+
+- Tap the picture: You opened this page from a link in a text. Your Bank's real site is `yourbank.example`. A sign-in page asks for your username and password, but a bank **never** asks for your card PIN. Tap **every** warning sign.
+- Choose what happens: A **password manager** only fills in your password on the real site. You tap a link in an email to sign in to your game account.
+- Choose what happens: Oops. Before you noticed, you typed your bank password and card number into a fake site.
+
+#### Module quiz (7 questions)
+
+Not exported, so the answers stay secret.
+
+### Module 3: Guard Your Privacy (Pro)
+
+Your digital footprint, app permissions and public Wi-Fi.
+
+#### Your Digital Footprint
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/your-digital-footprint`
+
+**Key facts**
+
+- *Footprints in wet cement:* Everything you post adds to your **digital footprint**: the trail you leave online. **Stuff that finds you:** address, phone, school, where you are now
+- *Recap:* Your **digital footprint** can last, so choose what you share. Keep private anything that **finds you** or **unlocks you**.
+
+**Best interactive cards**
+
+- Sort into groups: Some details help a stranger **find you**. For each one, ask: would I be OK with a stranger seeing it? Fine to share, or keep it private?
+- Choose what happens: A fun quiz is going around on social media.
+- Choose what happens: If someone online makes you uncomfortable, you can **block** and **report** them in the app, and tell a trusted adult. You won't be in trouble. Someone you only know from a game has been messaging you. They're really…
+
+#### Apps and Public Wi-Fi
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/apps-and-wi-fi`
+
+**Key facts**
+
+- *Only what it needs:* Allow what an app needs for **its job**. For location, pick **"Only while using the app"** instead of "Always".
+- *Recap:* Give apps only the **permissions** they need for their job. For location, choose **"Only while using the app"**.
+
+**Best interactive cards**
+
+- Sort into groups: Apps ask to use parts of your phone, like the camera, microphone or your location. Each one is an app permission. Does the app **need** it for its job?
+- Choose what happens: You install a new drawing game.
+- Choose what happens: Many phones show a small **dot** at the top of the screen while an app is using the microphone or camera. You're reading on your phone, and a **microphone dot** appears.
+
+#### Module quiz (6 questions)
+
+Not exported, so the answers stay secret.
+
+### Module 4: When Things Go Wrong (Free)
+
+Signs of a hack, what to do step by step, and where to get help.
+
+#### Signs of a Hack
+
+- **Access:** Free, no account needed (best for video links)
+- **Link:** `cybernettraining.com/from/<platform>/signs-of-a-hack`
+
+**Key facts**
+
+- *What to do first:* **Tell a trusted adult.** You're not in trouble, and they can help you work through it. **Change the password**, on a device you trust, in the real app or website.
+- *Recap:* Signs: anything on your account that **wasn't you**. First: **tell an adult**, **change the password**, **check recovery details**.
+
+**Best interactive cards**
+
+- Sort into groups: When someone else gets into your account, it's called a **take-over**. It happens to adults and big companies too. The clue: things happen that **weren't you**. Your **recovery email** is the backup that can reset your…
+- Choose what happens: Your friends say you've been sending them strange links. You haven't.
+- Choose what happens: You check your account's security settings.
+
+#### Deepfake Scams and Fakes
+
+- **Access:** Free, no account needed (best for video links)
+- **Link:** `cybernettraining.com/from/<platform>/deepfake-scams`
+
+**Key facts**
+
+- *Fake voices and faces:* That's a **voice clone**. A faked video or picture is a **deepfake**.
+- *Recap:* In Australia: **Kids Helpline** 1800 55 1800 (up to 25) or **Lifeline** 13 11 14, any time.
+
+**Best interactive cards**
+
+- Choose what happens: Your phone rings from a number you don't know. Some scammers now use AI to copy people's voices.
+- Choose what happens: **Report** a fake image of you to the app, and to the government's **eSafety Commissioner** (esafety.gov.au/report), which can help get fake nude or sexual images taken down. If you're **under 18** and someone is…
+- Choose what happens: A video message arrives from an account with your coach's name and face.
+
+#### Getting Help
+
+- **Access:** Free, no account needed (best for video links)
+- **Link:** `cybernettraining.com/from/<platform>/getting-help`
+
+**Key facts**
+
+- *Where to report in Australia:* **eSafety Commissioner** (esafety.gov.au): serious cyberbullying of anyone under 18 that the app hasn't dealt with, adult cyber abuse, and a **private or nude image** of you shared or threatened (report that straight away). **ACCCE**, the Australian Centre to Counter Child Exploitation (accce.gov.au/report): if you're **under 18** and someone pressures or threatens you with a private image.
+- *Recap:* **Never your fault:** tell an adult, Kids Helpline (1800 55 1800) or Lifeline (13 11 14). **Save evidence** first, but never a private image itself.
+
+**Best interactive cards**
+
+- Sort into groups: Scams and online bullying happen to lots of people, including adults and experts. **It's never your fault.** Scammers **count on people feeling embarrassed** and staying quiet, so telling someone is the brave and smart…
+- Choose what happens: **Save the evidence:** before you block someone, screenshot the messages, their username, the web address and the date. Then **block** and **report**. One exception: if it's a **private or nude image**, **don't copy…
+- Choose what happens: Someone you met online says they'll share a private photo of you unless you pay them. If this ever happens: **it is never your fault**, and you won't be in trouble.
+
+**Surprising facts**
+
+- Report in the app, then eSafety, Scamwatch, your bank or 000.
+
+#### Module quiz (8 questions)
+
+Not exported, so the answers stay secret.
+
 ## Inside Your Devices
 
 Take a phone and laptop apart, overload them, and fix them.
@@ -25,15 +225,14 @@ Open up a laptop and a phone, and meet the parts that make them work.
 
 **Key facts**
 
-- *The same few parts:* Inside, they're surprisingly alike: nearly all of them are built from the **same handful of parts**.
-- *Before we open anything:* Everything you take apart in this course is a **simulation**: tap and drag as much as you like. **Don't open one without an adult or a repair shop.** It can break parts, it can end the device's warranty (the maker's promise to fix it for free), and the **lithium battery inside can catch fire if it's bent or punctured**.
-- *Recap:* Phones and laptops are built from the same parts: **CPU**, **RAM**, **storage**, a **battery**, and the **motherboard** that connects them. In phones, the RAM and storage are chips **soldered** to the board.
+- *Before we open anything:* Everything you open here is a **simulation**, so tap away. **Leave opening real devices to a repair shop.** It can break parts or end the warranty, and a damaged battery can **catch fire**.
+- *Recap:* Repairers **unplug the battery first**.
 
 **Best interactive cards**
 
+- Explore the picture: Phones, laptops and games consoles look different outside, but inside they share the **same few parts**. Here's a laptop with its bottom panel off. **Tap each part** to find out what it does.
 - Take it apart: Now open a laptop yourself. Take out the **four screws**, lift off the **bottom panel**, then **unplug the battery** before touching anything else. (Real laptops often have more screws, and clips too.)
-- Take it apart: Now a phone. Phones are **glued shut**, so repairers soften the glue first. In this simulation: soften the glue, lift off the back, take out the **two tiny screws**, lift the **bracket**, then **unplug the battery**.
-- Take it apart: A repair: take the camera out, fit it back in, then close the phone up again in a safe order.
+- Take it apart: Now a phone. Phones are **glued shut**. Open this one in four steps: **soften the glue**, lift off the back, lift off the **bracket** over the battery connector (its two tiny screws are already out), then **unplug the…
 
 #### Memory vs Storage
 
@@ -42,19 +241,14 @@ Open up a laptop and a phone, and meet the parts that make them work.
 
 **Key facts**
 
-- *Two kinds of space:* Both are measured in gigabytes (**GB**), a way of counting how much data something can hold, but they're two very different parts: **RAM** and **storage**.
-- *The desk and the cupboard:* Think of **RAM** as your desk. It's very fast to reach, but small, and it's **cleared when the power goes off**.
-- *Recap:* **RAM** is the fast desk for what's in use right now. **Storage** is the big cupboard that keeps apps and files until you delete them.
+- *The desk and the cupboard:* That's because a device has two kinds of space, both measured in gigabytes (**GB**). **RAM** is the desk: fast but small.
+- *Recap:* **RAM** is the fast desk for what's open. **Storage** keeps apps and files until you delete them.
 
 **Best interactive cards**
 
-- Simulator: This phone has **4 GB of RAM**. You want to play the **racing game** while your **music** keeps playing. Get the phone running **smoothly**. (The phone's own system always needs some RAM too.)
+- Simulator: This phone has **4 GB of RAM**. When the open apps need more than that, it starts to lag. Play the **racing game** with your **music** still on, and get it running **smoothly**. (The phone's own system always needs…
 - Choose what happens: You're about to take a photo of a rainbow, and a message pops up.
 - Simulator: You're choosing a new laptop for video editing. More RAM costs more money. Pick the **smallest** amount of RAM that runs everything **smoothly**.
-
-**Surprising facts**
-
-- A phone might say it has "8 GB" of one thing and "256 GB" of another.
 
 #### Meet the CPU
 
@@ -63,20 +257,14 @@ Open up a laptop and a phone, and meet the parts that make them work.
 
 **Key facts**
 
-- *Billions of tiny steps:* Every tap, every video frame and every game move comes down to the **CPU** following instructions. The trick is speed: a CPU gets through **billions** of these steps every second.
-- *The clock:* Each beat is a **tick** of its **clock**, and the CPU moves its work forward on every tick. Clock speed is measured in **gigahertz (GHz)**.
-- *More cooks in the kitchen:* Most CPUs today have several **cores**. So more cores only help when the job can be **split into pieces that don't wait for each other**.
-- *Recap:* The **CPU** follows billions of tiny instructions every second. **Clock speed** in **GHz** is billions of ticks per second.
+- *More cooks in the kitchen:* More cores only help when a job **splits into pieces that don't wait for each other**.
+- *Recap:* **GHz** is speed: 2 GHz is about 2 billion steps a second. **Cores** only help with jobs that split into pieces.
 
 **Best interactive cards**
 
-- Simulator: Saving your finished video (called **exporting** it) takes too long. Add **cores** until it finishes in **3 seconds or less**.
-- Tap the picture: Working hard makes the CPU hot. Tap the **CPU** and the **two parts** that carry its heat away.
+- Simulator: Most CPUs have several **cores**: separate workers that each follow their own steps. Saving your finished video takes too long. Add cores until it finishes in **3 seconds or less**.
+- Tap the picture: Hard work makes the CPU hot. A CPU that gets too hot **slows itself down** to stay safe: that's called **throttling**. Tap the **CPU** and the **two parts** that carry its heat away.
 - Simulator: This laptop is on a blanket, its fan is clogged with dust, and it's working as hard as it can, so it's slowing down. Get it back to its full **3 GHz** without lowering the **load** (how hard it's working).
-
-**Surprising facts**
-
-- One gigahertz means **one billion ticks per second**, so a 3 GHz CPU ticks three billion times a second.
 
 #### Module quiz (7 questions)
 
@@ -93,17 +281,14 @@ Meet the operating system, the apps it manages, and the files it keeps.
 
 **Key facts**
 
-- *Who's in charge?:* Right now your music app, your browser and your messages all want the CPU, a slice of RAM and a spot on the screen, **all at the same time**.
-- *The operating system:* That something is the **operating system**, or **OS**. It gives each app **turns on the CPU**, switching between them so fast it looks like they all run at once.
-- *The task manager:* Every running program is called a **process**. The OS's **task manager** lists them all, with how much CPU and RAM each one uses.
-- *Helpers in the background:* These **background processes** do jobs for you: checking for updates, keeping your files matched up with the cloud (**syncing**), or scanning for viruses.
-- *Recap:* The **operating system** is the referee. The **task manager** shows every **process**, including background and system ones.
+- *The operating system:* That main program is the **operating system**, or **OS**. It talks to the **hardware** (screen, keyboard, speaker, Wi-Fi), so apps don't have to.
+- *Recap:* The **OS** is the referee: it shares out CPU, RAM and hardware.
 
 **Best interactive cards**
 
-- Simulator: Your laptop has frozen up. Here's its **task manager**. End whatever is hogging the CPU, but **keep your music and your homework browser open**.
-- Choose what happens: You're halfway through an essay on your laptop.
-- Simulator: This laptop has **8 GB of RAM**, and it gets slower the longer it's on. Some apps have a **memory leak**: they keep grabbing RAM and never give it back. Move time forward to **at least 40 minutes**, find the leaky app…
+- Choose what happens: Your music is playing, a game wants its sound effects, and a message has just arrived with a ping. All three apps want the **speaker**, right now.
+- Simulator: Your laptop has frozen. This is its **task manager**: it lists every running program (each one is a **process**) and how much of the CPU it's using. **System** is the OS itself: end it and the laptop crashes. End…
+- Simulator: This laptop gets slower the longer it's on. One app keeps grabbing RAM and never gives it back (a **memory leak**). Move time forward to **40 minutes or more**, find that app and end it. Keep the music on.
 
 #### Files and Folders
 
@@ -112,16 +297,14 @@ Meet the operating system, the apps it manages, and the files it keeps.
 
 **Key facts**
 
-- *Where did it go?:* You press **Save** and your essay disappears from the screen. It became a **file** in storage, filed away by the operating system so you (and your apps) can find it again.
-- *Files, folders and extensions:* A **file** is one named piece of saved data: a photo, a song, an essay or an app. Files go in **folders**, and folders can hold other folders, like boxes inside boxes.
-- *The cloud:* When you save to **the cloud**, the file is stored on a company's **server**: a powerful computer in a data centre, reached over the internet.
-- *Recap:* A **file** is saved data with a name. **Folders** hold files and other folders, and the route to a file is its **path**.
+- *Extensions:* The end of a file's name, after the **last** dot, is its **extension**. `.exe` is a **program**: opening it *runs* it, so only open ones you trust.
+- *Recap:* The **path** is the route to a file. The **extension** after the last dot says what it is.
 
 **Best interactive cards**
 
 - Tap the picture: Label what each file really is. Read to the **last** dot.
-- Sort into groups: Where is each file stored: **on your device** or **in the cloud**?
 - Choose what happens: A website promised free holiday wallpapers. You clicked download.
+- Choose what happens: You're on a plane with no Wi-Fi, and you want to work on your essay. It's saved **only in the cloud**.
 
 #### Module quiz (7 questions)
 
@@ -129,7 +312,7 @@ Not exported, so the answers stay secret.
 
 ### Module 3: Fix It Yourself (Pro)
 
-Troubleshoot slow, full and flat devices like a technician.
+Fix slow, full and flat devices with a simple loop, safely.
 
 #### Slow and Full
 
@@ -138,20 +321,18 @@ Troubleshoot slow, full and flat devices like a technician.
 
 **Key facts**
 
-- *Probably not broken:* Most slow or full devices need a **few minutes of tidying**, not a repair shop.
 - *The fix-it loop:* **Describe** exactly what's wrong. **Guess** the most likely cause.
-- *What's safe to delete:* files that are **backed up** somewhere else (like the cloud) **duplicates**, like five blurry copies of one photo
-- *Recap:* Use the loop: **describe, guess, try, check**. **Slow?** Check the task manager.
+- *Recap:* Use the loop: **describe, guess, try, check**. **Slow?** Too many tabs fill RAM.
 
 **Best interactive cards**
 
-- Choose what happens: Your laptop has been getting slower all afternoon.
-- Simulator: This phone is completely full. Free up at least **15 GB**, but **keep your photos and your homework**.
+- Choose what happens: Your laptop has been getting slower all afternoon. It's probably not broken: one part is struggling. RAM, storage or the CPU? Let's find out.
+- Simulator: This phone is completely full. Free up at least **15 GB**. Delete big things that are **backed up** or that you **never use**, but **keep your photos and your essay**.
 - Simulator: An update needs **12 GB free**. Make room without losing anything that **isn't saved somewhere else**.
 
 **Surprising facts**
 
-- "Slow when 30 tabs are open" is a clue.
+- "It's slow when 30 tabs are open" is a clue.
 
 #### Power Problems
 
@@ -160,17 +341,378 @@ Troubleshoot slow, full and flat devices like a technician.
 
 **Key facts**
 
-- *1% left:* Your phone hits **1%** just as you need it most.
-- *Inside the battery:* Phones and laptops use **lithium-ion batteries**. Everything the device does uses some power (measured in **watts**, W), but the biggest drains are usually the **screen's brightness**, **location (GPS)** and **apps busy in the background**.
-- *When it won't charge:* Cables and chargers wear out far more often than phones, so first try **another cable and another socket**. Pocket fluff can also pack into the **charging port**.
-- *When a battery swells:* Very old or damaged batteries can **swell** up.
-- *Recap:* **Brightness, location and background apps** drain the battery most. **Heat** wears batteries out.
+- *When a battery swells:* Phones and laptops use **lithium-ion** batteries. Very old or damaged ones can **swell**: the case bulges, the screen lifts at one edge, or a laptop's trackpad (the touch pad) gets pushed up.
+- *Recap:* **Brightness, location and background apps** drain batteries most. **Heat** wears them out.
 
 **Best interactive cards**
 
-- Choose what happens: You plug your phone in before bed, but the charging symbol doesn't appear.
-- Simulator: You've got a long coach trip. Make the battery last **at least 8 hours**, and keep your **music** playing. (**Low power mode** is a setting that makes the phone save energy.)
+- Simulator: Long coach trip, no charger. Make the battery last **at least 8 hours**, and keep your **music** playing. (**Low power mode** is a setting that makes the phone save energy.)
+- Choose what happens: You plug your phone in before bed, but the charging symbol doesn't appear. Good to know: cables and chargers wear out far more often than phones, and **metal or water** in a charging port can damage it.
 - Choose what happens: You're gaming on your bed with the phone plugged in.
+
+#### Module quiz (8 questions)
+
+Not exported, so the answers stay secret.
+
+## How AI Really Works
+
+Teach a model, watch a chatbot pick its words, and use AI safely.
+
+### Module 1: What AI Actually Is (Free)
+
+What counts as AI, how it learns from examples, and where it goes wrong.
+
+#### Spot the AI
+
+- **Access:** Free, no account needed (best for video links)
+- **Link:** `cybernettraining.com/from/<platform>/spot-the-ai`
+
+**Key facts**
+
+- *AI is already in your pocket:* Most programs follow **rules** a person wrote: at 7:00, ring the alarm. So people give the computer lots of **examples** and let it find the patterns they share.
+- *Recap:* Ordinary programs follow **rules** a person wrote. **AI** learns from **examples** instead, finding patterns.
+
+**Best interactive cards**
+
+- Sort into groups: Does each one **follow rules** someone wrote, or **learn from examples**?
+- Match pairs: Match each kind of AI to the examples it learns from.
+- Sort into groups: Trickier: does each one **follow rules**, or **learn from examples**?
+
+#### Patterns Everywhere
+
+- **Access:** Free with a free account
+- **Link:** `cybernettraining.com/from/<platform>/patterns-everywhere`
+
+**Key facts**
+
+- *What just happened:* You made **training data**: examples, each with a **label** saying what it is. From them the computer built a **model**, its own way of guessing labels for new things.
+- *Recap:* **Training data** is examples, each with a **label** saying what it is. The computer finds patterns and builds a **model** to guess new things.
+
+**Best interactive cards**
+
+- Train a model: Teach a computer to tell **apples** from **bananas**. Label each fruit, then press Check. The chart shows how round each fruit is (across) and how yellow (up). The computer will guess 3 new fruits by finding the…
+- Train a model: Here's the same model, plus a **golden apple** it isn't using yet. Choose which examples to train on, so it gets **every** test fruit right.
+- Train a model: Now there are three kinds of fruit. This model looks at the **3 nearest** examples and goes with the most common label. Label the fruit, then see its guesses.
+
+#### What AI Can't Do
+
+- **Access:** Free with a free account
+- **Link:** `cybernettraining.com/from/<platform>/what-ai-cant-do`
+
+**Key facts**
+
+- *A program, not a person:* If something's worrying you, talk to a **trusted adult** or a friend. In Australia, call **Kids Helpline (1800 55 1800)**, free, any time, up to age 25, or **Lifeline (13 11 14)**, any time, for anyone.
+- *Recap:* AI gives **predictions**, not facts.
+
+**Best interactive cards**
+
+- Choose what happens: AI helpers answer fast and sound sure. But every answer is a **prediction**: the model's best guess from the patterns it learned. Sounding sure isn't the same as being right, so check important things with a source you…
+- Choose what happens: Your photo app sorts pictures by who's in them.
+- Sort into groups: AI is handy for quick, low-stakes jobs, where a mistake is easy to spot and fix. Big decisions about people need a **person** to decide and be responsible. Is each job **fine for AI to help with**, or does it **need a…
+
+**Surprising facts**
+
+- Talk to a trusted adult, Kids Helpline (1800 55 1800) or Lifeline (13 11 14).
+
+#### Module quiz (7 questions)
+
+Not exported, so the answers stay secret.
+
+### Module 2: How Machines Learn (Pro)
+
+Training data, fair tests, and how bias sneaks in.
+
+#### Training Data
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/training-data`
+
+**Key facts**
+
+- *Words that vote:* In this model, words **vote**.
+- *Recap:* A model learns only from its **training data**, gaps and all.
+
+**Best interactive cards**
+
+- Train a model: A spam filter learns from messages people have labelled. Label each message as **spam** or **not spam**. Then press Check to train the model and see what it makes of two new messages.
+- Train a model: The model only went wrong because nobody friendly in its examples ever said "free". Choose which examples to train on, so it gets **both** test messages right.
+- Train a model: Someone made a labelling mistake in this fruit data. Find it, and choose the examples to train on so the model gets **both** test fruits right. (This model picks the **nearest** example.)
+
+#### Testing a Model
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/testing-a-model`
+
+**Key facts**
+
+- *Keep some examples aside:* **Training examples** are for learning. **Test examples** are kept aside, and the model never sees them while it learns.
+- *Recap:* Keep **test examples** aside: the model never learns from them. **Accuracy** is the share it gets right: 8 of 10 is 80%.
+
+**Best interactive cards**
+
+- Sort into groups: A fair test shows how a model will really do. Is each one a **fair** test, or an **unfair** one?
+- Train a model: A weather model guesses whether it will rain from the clouds and the air. Each training day says what really happened: label them, then see how the model does on **4 test days** it has never seen.
+- Train a model: Now add training days so the model gets **all 4** test days right. Three new days are available.
+
+**Surprising facts**
+
+- **Accuracy** is that as a share: 8 right out of 10 is 80%.
+
+#### Bias In, Bias Out
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/bias-in-bias-out`
+
+**Key facts**
+
+- *Bias in, bias out:* This is called **bias**.
+- *Recap:* **Bias**: a model works better for some people than others.
+
+**Best interactive cards**
+
+- Train a model: A kind-or-mean message checker learned only from formal messages, so it calls **"That game was sick!"** mean. Choose the examples to train on, so it gets **all 3** test messages right. (It uses word votes, like the…
+- Choose what happens: A sports club wants to sort new sign-ups with a model.
+- Choose what happens: A company is choosing a voice assistant to answer its phone line.
+
+#### Module quiz (8 questions)
+
+Not exported, so the answers stay secret.
+
+### Module 3: How Chatbots Think (Pro)
+
+Next-word guessing, temperature, and why chatbots make things up.
+
+#### Next-Word Machines
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/next-word-machines`
+
+**Key facts**
+
+- *Guessing the next word:* A chatbot is built on a **language model**. It reads all the text so far, then gives each possible next word a **chance**: after "The cat sat on the", "mat" 60%, "sofa" 20%, "moon" 5%.
+- *Recap:* A **language model** gives each possible next word a chance.
+
+**Best interactive cards**
+
+- Next word: As you type, your phone suggests the next word. A chatbot does the same thing on a much bigger scale: it has read a huge amount of text, and guesses what usually comes next. Which word is it **most likely** to pick here?
+- Put in order: Put the steps a chatbot repeats for every word in order. Once a word is added, it stays: the model never goes back to change it.
+- Next word: After "The cat sat on the", "mat" had the biggest chance. Now the text is different, with more before it. Which word is **most likely** next this time?
+
+#### Temperature
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/temperature`
+
+**Key facts**
+
+- *Turning the dial:* **Temperature** changes how the model uses its chances. **Low:** the likeliest word gets even likelier.
+- *Recap:* **Temperature** changes how a model picks; the order never changes.
+
+**Best interactive cards**
+
+- Next word: Chatbots have a setting called **temperature**. Slide it and watch the chances change. Move it until **mat** has a chance of at least **80%**.
+- Next word: Now make the model more surprising: move the temperature until **no word** has more than a **45%** chance.
+- Sort into groups: Jobs with **one right answer** want the most likely word every time. Jobs where you want **variety** can use a higher temperature. Sort each job.
+
+#### Made-Up Answers
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/made-up-answers`
+
+**Key facts**
+
+- *Fluent, confident, wrong:* A **hallucination** is when a chatbot says something false, smoothly and confidently.
+- *Recap:* A **hallucination** is a confident, false answer built from likely words.
+
+**Best interactive cards**
+
+- Next word: Imagine a small model that has only read space adventure stories, full of lines like "Captain Rivera stepped onto Mars". It gets this text. Which word is it **most likely** to write next?
+- Choose what happens: You're writing a report on volcanoes.
+- Choose what happens: A chatbot tells you a famous ship sank in **1915**, and gives a link to a museum website.
+
+#### Module quiz (8 questions)
+
+Not exported, so the answers stay secret.
+
+### Module 4: Talking to AI (Pro)
+
+Write clear prompts, check the answers, and know today's tools.
+
+#### Writing Good Prompts
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/writing-good-prompts`
+
+**Key facts**
+
+- *What a good prompt says:* A chatbot writes likely words to follow **your** text, so the more your prompt says, the better it aims. **The goal:** what you want done.
+- *Recap:* A good **prompt** says the **goal**, the **context** and the **format**.
+
+**Best interactive cards**
+
+- Sort into groups: What you type to a chatbot is called a **prompt**. A clear prompt says exactly what it wants, and what shape the answer should be. Is each prompt **vague** or **clear**?
+- Choose what happens: You're giving a 1-minute talk about octopuses at your nature club.
+- Choose what happens: You want a chatbot to quiz you on your history notes.
+
+#### Checking AI's Work
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/checking-ais-work`
+
+**Key facts**
+
+- *Four ways to check:* **Facts and dates:** find them in a trusted source, like a textbook or official website. **Sources:** open each one and read it.
+
+**Best interactive cards**
+
+- Choose what happens: The chatbot's paragraph says: "The Moon is about 38,000 km from Earth, and it takes about 3 days to get there by spacecraft."
+- Sort into groups: Using AI to **learn** is great: it can explain a step, quiz you, or give feedback on your draft. Letting it **do your work**, and handing that in as yours, is different, and many schools have rules about AI. Which is…
+- Choose what happens: Your friend shows you an essay a chatbot wrote for them, due tomorrow.
+
+#### AI Tools Today
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/ai-tools-today`
+
+**Key facts**
+
+- *Age rules and good habits:* Every AI app has its own rules, including **who can use it**. **Check the app's own rules**, and **ask a parent or carer** before signing up.
+
+**Best interactive cards**
+
+- Sort into groups: AI isn't only in chat apps. Remember: AI learns patterns from examples and makes guesses. Which of these use AI, and which just follow fixed steps someone wrote?
+- Choose what happens: Some widely used AI chat assistants (A to Z) are **ChatGPT** (made by OpenAI), **Claude** (Anthropic), **Copilot** (Microsoft) and **Gemini** (Google). Many can also read files, search the web or make pictures. Your…
+- Choose what happens: A new AI app promises to turn your selfie into a cartoon.
+
+**Surprising facts**
+
+- Some say 18 or older; some allow 13 with a parent's OK.
+
+#### Module quiz (8 questions)
+
+Not exported, so the answers stay secret.
+
+### Module 5: AI Images, Video and Voices (Pro)
+
+How AI makes pictures and voices, deepfakes, and checking what's real.
+
+#### How AI Makes Pictures
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/how-ai-makes-pictures`
+
+**Key facts**
+
+- *A cat astronaut, in seconds:* AI that makes new things (pictures, text, music, voices) is called **generative AI**.
+
+**Best interactive cards**
+
+- Match pairs: An image model learned from millions of pictures, each with a caption. So it knows which looks go with which words. Match each word in a picture prompt to what it changes.
+- Put in order: Most image tools start from **random static**: random coloured speckles, a bit like an untuned TV. Step by step they clear a little of it, nudging what's left towards your words: colour first, then shapes, then detail…
+- Sort into groups: AI pictures **sometimes** have give-aways: things that rarely happen in real photos. Newer tools make fewer of them. Is each one a **possible clue** that a picture was made by AI, or **not a clue**?
+
+**Surprising facts**
+
+- Image models learned from millions of captioned pictures.
+
+#### Cloned Voices and Faces
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/cloned-voices-and-faces`
+
+**Key facts**
+
+- *Fake faces and voices:* A fake video or picture of a real person is a **deepfake**; a **voice clone** copies their voice.
+- *Recap:* AI can fake a real person: **deepfakes** and **voice clones**. If someone fakes **you**, it's not your fault.
+
+**Best interactive cards**
+
+- Sort into groups: AI can now make a **fake voice** or a **fake video** of a real person, saying things they never said. Is each use **helpful**, or **harmful**?
+- Choose what happens: Your friend has found an app that makes face-swap videos. Making a fake of a real person without their **permission** can hurt them, and it can spread further than you meant.
+- Choose what happens: A video shows a famous singer saying: "I'm giving away 1,000 free concert tickets! Click the link in the next hour."
+
+**Surprising facts**
+
+- In Australia, sharing fake sexual images of a real person without their consent is a serious crime, and fake sexual images of anyone under 18 are always illegal.
+
+#### Who Made This?
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/who-made-this`
+
+**Key facts**
+
+- *How to check a picture:* **Find where it first appeared**: search with the picture itself. **Look for trusted news** showing it, ideally from other angles.
+- *Recap:* Check before sharing, and say when **your** pictures are AI.
+
+**Best interactive cards**
+
+- Choose what happens: After a big storm, a picture spreads everywhere: a shark swimming down a flooded street, past a bus stop. Your friend sends it: "OMG look at this!!" Staring at it won't tell you if it's real. But many search tools let…
+- Choose what happens: You made a funny AI picture of your dog wearing a crown, sitting on a throne.
+- Choose what happens: An hour ago you shared a picture to your group chat: snow piled high on a summer beach. Now you find it was made with AI.
+
+#### Module quiz (7 questions)
+
+Not exported, so the answers stay secret.
+
+### Module 6: Using AI Safely and Fairly (Pro)
+
+Spot AI-made fakes, keep your private stuff private, and use AI honestly.
+
+#### Spotting AI Fakes
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/spotting-ai-fakes`
+
+**Key facts**
+
+- *200 five-star reviews:* With AI, anyone can make **fake reviews**, fake news articles and **bots** (accounts that post automatically) in seconds.
+- *Recap:* Stop, and check **outside** the post.
+
+**Best interactive cards**
+
+- Sort into groups: Real customers buy at different times, have different opinions, and write in their own words. Fake reviews often look like **one source pretending to be many**. Is each sign about a shop's reviews **suspicious**, or…
+- Sort into groups: Now look at single reviews. Real ones usually mention **specific details**, good and bad. Fakes tend to be **vague and over the top**. Does each review **look real**, or is it **suspicious**?
+- Choose what happens: Under a video about a new game, an account replies to dozens of comments within a minute.
+
+**Surprising facts**
+
+- By the next morning it has 200 five-star reviews, all calling the boards "amazing".
+
+#### What Not to Share with AI
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/what-not-to-share`
+
+**Key facts**
+
+- *A program, not a person:* If something's worrying you, talk to a **trusted adult** or a friend. In Australia, call **Kids Helpline (1800 55 1800)**, free, any time, up to age 25, or **Lifeline (13 11 14)**, any time, for anyone.
+
+**Best interactive cards**
+
+- Sort into groups: A chat with an AI app can feel private, but it isn't a diary. Depending on the app, your chats may be **saved**, **read by staff** checking for problems, or **used to train** future models. So: don't type anything you…
+- Choose what happens: Apps ask for permissions to use things like your contacts, location, camera, microphone or photos. You choose what to allow. You install an AI app that turns a photo of a recipe into a shopping list. As it opens, it…
+- Choose what happens: It's late, you're feeling really down, and you've been telling an AI chatbot about it for an hour.
+
+**Surprising facts**
+
+- Talk to a trusted adult, Kids Helpline (1800 55 1800) or Lifeline (13 11 14).
+
+#### Fair and Honest Use
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/fair-and-honest-use`
+
+**Key facts**
+
+- *Whose poster is it?:* **Say how you used it**, **follow the rules** (and ask when you're not sure), and **don't claim AI's work as yours**.
+- *You know how AI really works:* AI learns **patterns from examples**: only as good, and fair, as its data. Chatbots pick **likely words**, not checked facts: check what matters.
+
+**Best interactive cards**
+
+- Sort into groups: Is each one **honest**, or **not honest**?
+- Choose what happens: Remember bias: AI can work better for some people than others. When AI picks, sorts or scores people, it's worth asking who it might leave out, and keeping a person in charge of decisions that matter. Your sports club…
+- Choose what happens: Your friend's story wins a writing prize. You know a chatbot wrote most of it.
 
 #### Module quiz (8 questions)
 
@@ -191,23 +733,19 @@ Discover how computers store everything using just 0s and 1s, and why internet a
 
 **Key facts**
 
-- *Computers are made of switches:* It can only be **off** or **on**. We write off as **0** and on as **1**.
-- *Counting with only 0 and 1:* In everyday numbers, each position is worth **10 times** the one to its right: ones, tens, hundreds. So in their number system, each position is worth **double** the one to its right.
-- *8 bits make a byte:* A group of 8 bits is called a **byte**. Every bit you add **doubles** the number of patterns you can make. 1 bit gives 2 patterns, 2 bits give 4, 3 bits give 8, and so on.
-- *Why this matters for the internet:* The most common kind is an **IPv4 address**. It's four numbers separated by dots, and each number is stored in exactly **8 bits**.
-- *Recap:* A **bit** is a single on/off switch, written as **0** or **1**. In **binary**, each position is worth double the one to its right: 128, 64, 32, 16, 8, 4, 2, 1.
+- *You just counted in binary:* Each on/off switch is a **bit**: 0 for off, 1 for on. Counting with only 0 and 1 is called **binary**.
+- *Recap:* A **bit** is one switch: 0 for off, 1 for on. To read **binary**, add up the places that are on.
 
 **Best interactive cards**
 
-- Binary switches: Tap the bits to switch them on and off. Make the number **5**.
-- Binary switches: Now a bigger one: make **42**. Tip: start with the biggest position that fits, then work your way down.
+- Binary switches: Every computer and phone is packed with billions of tiny switches, each **off** (0) or **on** (1). Here are 8 of them. When a switch is on, it's worth the number above it. Switches that are on add up. Tap them to make…
+- Binary switches: Now a bigger one: make **42**. Tip: start with the biggest place that fits, then work your way down.
 - Binary switches: Ready for a harder one? Make **200**.
 
 **Surprising facts**
 
-- Inside every computer, phone and games console are billions of tiny switches like this, flipping on and off incredibly fast.
-- `00000101` has the **4** and the **1** on, so it means 4 + 1 = **5**.
-- The smallest pattern is every bit off: `00000000`, which is **0**.
+- (Our everyday places, ones, tens and hundreds, go up 10 times.) To read binary, add the places that are on: `00000101` is 4 + 1 = **5**, the number you made.
+- A **byte** is 8 bits, so IPv4 parts go 0 to 255.
 
 #### Bytes, File Sizes and Hex
 
@@ -216,23 +754,20 @@ Discover how computers store everything using just 0s and 1s, and why internet a
 
 **Key facts**
 
-- *3 MB of what?:* Your phone says a photo is **3 MB**. You already know that 8 bits make a **byte**.
-- *The size ladder:* Each step up the ladder is **1,000 times** bigger, just like *kilo* in kilometre means a thousand: 1 **kilobyte** (KB) = 1,000 bytes
-- *1,000 or 1,024?:* Computers love **powers of 2**: the numbers you get by doubling, like 2, 4, 8, 16 and 32. The power of 2 closest to 1,000 is 2¹⁰ (ten 2s multiplied together: 2 × 2 × … × 2) = **1,024**, so for years people used *kilobyte* to mean 1,024 bytes as well as 1,000.
-- *Hexadecimal: a shorthand for binary:* So people often write bytes in **hexadecimal**, or **hex**. Hex is **base 16**: it has 16 digits instead of our usual 10.
-- *Recap:* A **byte** is 8 bits, and it's the unit for measuring data. **KB, MB, GB, TB**: each is 1,000 times the one before.
+- *Hex: a shorthand for binary:* Long rows of 0s and 1s are easy to misread, so people often write bytes in **hex**.
+- *Recap:* A **byte** is 8 bits; one letter of text is about 1 byte. **Hex** uses 0–9 and A–F; one hex digit is 4 bits.
 
 **Best interactive cards**
 
-- Number answer: How many **bits** are in **5 bytes**?
-- Put in order: Drag these sizes into order, from **smallest** at the top to **largest** at the bottom.
+- Number answer: Your phone says a photo is **3 MB**. 3 MB of what? Of bytes, the unit for measuring data, like litres for water. One letter of plain text takes about 1 byte. A long message takes about a hundred. Replying "k" takes…
+- Put in order: Files hold thousands or millions of bytes, so we use bigger units. Each step up is **1,000 times** bigger (*kilo* means a thousand, as in kilometre): **bytes → KB (kilobyte) → MB (megabyte) → GB (gigabyte) → TB…
 - Match pairs: Match each thing to its typical size.
 
 **Surprising facts**
 
-- The letter **A** is stored as the number 65, which is `01000001`.
-- Files are made of thousands or millions of bytes, so we use bigger units.
-- So a 3 MB photo is about 3 million bytes, or 24 million bits.
+- One hex digit stands for exactly 4 bits, so any byte is two hex digits: `11111111` is `FF`.
+- You'll spot hex in colour codes like `#FF0000`.
+- KB, MB, GB, TB: each is 1,000 times the last.
 
 #### Module quiz (7 questions)
 
@@ -249,22 +784,20 @@ Learn how every device gets an address, how a whole home shares one, and why the
 
 **Key facts**
 
-- *One device out of billions:* How does your message find **their** phone? The internet works the same way: every device on a **network** (a group of devices connected so they can talk to each other, like everything on your home Wi-Fi) gets a number that works as its address, called an **IP address**.
-- *Four octets, 32 bits:* The most common kind of IP address is **IPv4**, which is version 4 of the Internet Protocol. Each of those numbers is an **octet**: exactly 8 bits, so it can only be 0 to 255.
-- *How many addresses are there?:* With 32 bits, that's 2 multiplied by itself 32 times: just over **4 billion** IPv4 addresses. Many of them have a phone, a laptop, a games console and a smart TV, and there are millions of **servers** too (computers that provide things like websites to other devices).
-- *Recap:* An **IP address** tells the network which device data should be delivered to. A **protocol** is a set of rules devices agree to follow.
+- *IP addresses:* That number is an **IP address**. IP stands for **Internet Protocol**, and a **protocol** is a set of rules devices agree to follow so they understand each other.
+- *Recap:* An **IP address** tells the network where data should go. **IPv4** is four octets of 8 bits: 32 bits.
 
 **Best interactive cards**
 
-- Binary switches: The first octet of `192.0.2.44` is **192**. Build it in binary.
+- Binary switches: Every part of an IPv4 address is an octet: 8 bits. The first octet of `192.0.2.44` is **192**. Build it in binary.
 - Match pairs: Match each octet to its binary pattern.
 - Terminal: This is a **terminal**: instead of tapping, you type **commands** (instructions) and press Enter. You can use it to see your own computer's IP address. Type `ipconfig`, press Enter, then find this computer's **IPv4…
 
 **Surprising facts**
 
-- There are billions of devices on the internet.
-- Four octets of 8 bits make **32 bits** altogether.
-- That sounds like plenty, but there are about 8 billion people.
+- The most common kind, **IPv4**, is four numbers separated by dots, like `192.0.2.44`.
+- Each number is an octet: 8 bits, so 0 to 255.
+- About 4.3 billion addresses isn't enough for every device.
 
 #### Public and Private Addresses
 
@@ -273,22 +806,18 @@ Learn how every device gets an address, how a whole home shares one, and why the
 
 **Key facts**
 
-- *One address, a whole house:* But the company that connects your home to the internet, your **internet service provider** or **ISP**, usually gives your home just **one** address that the rest of the internet can reach. Every home network has a **router**, the box (often the same one that makes your Wi-Fi) that links your home to the internet.
-- *Private addresses:* These three ranges are set aside as **private addresses**, for use inside homes, schools and offices: An address that *is* unique across the whole internet is called a **public address**.
-- *NAT: the router as receptionist:* It's called **NAT**, short for **Network Address Translation**: When several devices are talking at once, the router tells the replies apart using extra numbers called **ports**.
-- *Recap:* **Private addresses** (`10.x.x.x`, `172.16.x.x` to `172.31.x.x`, `192.168.x.x`) are reused inside millions of homes and offices. A **public address** is unique across the whole internet.
+- *Public and private:* Your **ISP**, the company that connects your home, usually gives it just **one** address the whole internet can reach: a **public address**. Inside, devices use **private addresses**.
+- *Recap:* **Private addresses** are reused inside millions of homes. Your home shares one **public address** from your **ISP**.
 
 **Best interactive cards**
 
-- Route a packet: Send a request from the **laptop** to the **web server** on the internet.
-- Put in order: Your phone at `192.168.1.21` loads a web page. Put the NAT steps in order.
-- Match pairs: Match each term to what it means.
+- Route a packet: At home, a laptop, a phone and a printer are all on the same Wi-Fi. Send a request from the **laptop** to the web server out on the internet.
+- Sort into groups: Sort each address. Is it a **private** address, or could it be a **public** one? (This course uses ranges like `203.0.113.x` for public examples.)
+- Match pairs: Match each situation to what's behind it.
 
 **Surprising facts**
 
-- Room 12 exists in thousands of schools, and that's fine, because a room number only has to make sense *inside* its own building.
-- Millions of networks reuse the same private addresses, so routers on the internet won't deliver data to them.
-- (In this course, public addresses come from ranges like `203.0.113.x` that are reserved for examples, so we never point at anyone's real computer.)
+- They're like room numbers: room 12 exists in thousands of schools.
 
 #### Running Out: Meet IPv6
 
@@ -297,22 +826,14 @@ Learn how every device gets an address, how a whole home shares one, and why the
 
 **Key facts**
 
-- *What happens when you run out?:* The real fix is a new version of the Internet Protocol with far longer addresses: **IPv6**, which is version 6.
-- *128 bits, written in hex:* An IPv6 address is **128 bits** long, four times the length of an IPv4 address. Writing 128 bits in binary would be far too long, so IPv6 uses **hex**, from the last module.
-- *Two rules for shortening:* **Rule 1:** drop the zeros at the *start* of any group. **Rule 2:** replace one row of all-zero groups that sit side by side with a double colon, `::`.
-- *Recap:* IPv4 ran out of addresses, so **IPv6** was created. An IPv6 address is **128 bits**, written as 8 groups of 4 hex digits separated by colons.
+- *128 bits, written in hex:* That fix is **IPv6**. Its addresses are **128 bits**, four times as long as IPv4: far more than we'll ever need.
+- *Recap:* **IPv6** fixes the shortage with **128-bit** addresses.
 
 **Best interactive cards**
 
 - Number answer: Each group in an IPv6 address has 4 hex digits. How many **bits** is one group?
+- Number answer: Written out in full with no shortening, how many hex digits does an IPv6 address have?
 - Match pairs: Match each value to what it is.
-- Terminal: Most devices today have **both** an IPv4 and an IPv6 address. This laptop runs Linux. Run `ip -brief addr` and find the IPv6 address that starts with `2001:db8`. Each line is one connection: `wlan0` is the Wi-Fi, and…
-
-**Surprising facts**
-
-- IPv4 has about 4.3 billion addresses, and there are more connected devices than that.
-- The organisations that hand out addresses gave away their last big blocks of IPv4 addresses in the 2010s.
-- That gives about 340 trillion trillion trillion addresses, enough to never run out.
 
 #### Module quiz (7 questions)
 
@@ -329,20 +850,14 @@ See how data is chopped into packets, passed from router to router, and rebuilt 
 
 **Key facts**
 
-- *Sharing one connection:* Instead, the internet chops all data into small pieces called **packets**, and sends them one at a time.
-- *Numbered postcards:* It carries a small piece of the data, called the **payload**, plus some information added to help it arrive: the **source address**: who sent it, and so where any reply goes back to
-- *Taking turns:* Packets from different conversations do the same thing: they **take turns** on the same connection.
-- *Recap:* Data travels in small pieces called **packets**, typically up to about 1,500 bytes each. Each packet carries a piece of data (the **payload**) plus added information: the **source** and **destination addresses**, and a **sequence number**.
+- *Numbered postcards:* So the internet chops data into **packets**: small pieces that **take turns** on the connection. Each is like a numbered postcard: some data (the **payload**) plus a label with the **source** address (from), the **destination** address (to) and, for most data, a **sequence number**.
+- *Recap:* Data travels in small pieces called **packets**. Each carries data plus addresses and a **sequence number**.
 
 **Best interactive cards**
 
-- Match pairs: Match each part of a packet to its job.
+- Match pairs: Here's one packet from a selfie you're sending. Match each part to what it's used for.
 - Number answer: A message is **6,000 bytes** long. If each packet carries exactly **1,500 bytes of data**, how many packets are needed?
 - Put in order: Put a message's journey in order.
-
-**Surprising facts**
-
-- On Wi-Fi and most home networks, a packet can be up to about **1,500 bytes**, and the added information takes up some of that space.
 
 #### Routers and Hops
 
@@ -351,15 +866,13 @@ See how data is chopped into packets, passed from router to router, and rebuilt 
 
 **Key facts**
 
-- *Routers and routing tables:* A **router** is a device that connects different networks and passes packets between them. When a packet arrives, the router reads its destination address and checks its **routing table**: a list that says, for each group of addresses, which neighbour to send packets to next.
-- *Switches, and the box at home:* Inside one network, devices are usually joined by a **switch**, which passes data between devices on that same network. Your home router is really three boxes in one: a **router** (the way out to the internet), a **switch** (joining your home devices) and a **Wi-Fi access point** (the part that sends out the Wi-Fi signal).
-- *Seeing the hops with traceroute:* You can see the routers your packets pass through using a tool called **traceroute** (on Windows it's called `tracert`). The times are in **ms** (milliseconds, thousandths of a second), and they show how long the router took to reply.
-- *Recap:* A **router** passes packets between networks. It checks its **routing table** to choose the next step, not the whole route.
+- *Routers and hops:* The boxes in the middle are **routers**: they join networks and pass packets on. Each one checks its **routing table**, a list saying which neighbour to send each address to next.
+- *Recap:* **Routers** pass packets on, one **hop** at a time. **Traceroute** lists the hops; `* * *` means a router stayed quiet.
 
 **Best interactive cards**
 
-- Route a packet: Get the packet from the **laptop** to the **web server**. There's more than one way.
-- Terminal: Run `traceroute example.com` on this Linux laptop, then find the address of the **first hop**.
+- Route a packet: Your packet needs to get from the **laptop** to the **web server**. Plan its trip: follow the lines from box to box. There's more than one way.
+- Terminal: A tool called **traceroute** lists every router on the way to a website, one numbered line per hop (on Windows it's `tracert`). Run `traceroute example.com`, then find the address of **hop 1**.
 - Route a packet: **Router 2 is down** (it has stopped working). Find a route from the **laptop** to the **web server** that avoids it.
 
 #### Different Roads, Same Destination
@@ -369,10 +882,8 @@ See how data is chopped into packets, passed from router to router, and rebuilt 
 
 **Key facts**
 
-- *The internet makes no promises:* Here's a surprise: the Internet Protocol **doesn't promise** that packets arrive in order.
-- *Routes can change:* Most of the time a conversation's packets all follow the same road, but when the route changes, packets that took different roads can arrive in a **different order** from the one they were sent in.
-- *Missing packets and TCP:* For things like web pages, photos and downloads, computers follow a set of rules called **TCP**, short for **Transmission Control Protocol**.
-- *Recap: Packets and Routing:* Data travels in **packets**, each with addresses and a **sequence number** added. **Routers** pass packets hop by hop, using their routing tables.
+- *The internet makes no promises:* So packets from one message can take different roads and arrive in a **different order**.
+- *Recap: Packets and Routing:* **Sequence numbers** put the pieces back in order. **TCP** gets any missing packet sent again.
 
 **Best interactive cards**
 
@@ -395,21 +906,18 @@ Find out how a name like example.com becomes an address, through a chain of serv
 
 **Key facts**
 
-- *Who translates?:* You type **example.com** into your browser.
-- *The internet's phone book:* You tap a friend's **name**, and the phone looks up their **number** to make the call. The internet has the same thing, called the **Domain Name System**, or **DNS**.
-- *Reading a name from right to left:* Domain names are read from **right to left**, from the most general part to the most specific. `com` is the **top-level domain**, or **TLD**: the last part of the name.
-- *Recap:* Packets are delivered using **IP addresses**, but people prefer **names**. **DNS** (the Domain Name System) turns names into addresses, like a contacts app for the internet.
+- *The internet's contacts app:* A phone's contacts app works like this: you tap a **name**, and it finds the **number**. The internet has the same thing, the **Domain Name System**, or **DNS**.
+- *Recap:* **DNS** turns names into IP addresses, like a contacts app. Names are read **right to left**: TLD, domain, then subdomains.
 
 **Best interactive cards**
 
 - Match pairs: Match each part of the contacts-app idea to its internet version.
-- Terminal: Time for a real lookup. Run `nslookup example.com` to ask DNS for example.com's address.
-- Match pairs: Some TLDs belong to countries. Two-letter TLDs are country codes, often from the country's own name (Germany is *Deutschland*). Match each TLD to what it stands for.
+- Terminal: Time for a real lookup. Run `nslookup example.com` to ask DNS for example.com's address (the top lines show who answered).
+- Put in order: A domain name like `mail.example.org` is made of parts: `mail` is a **subdomain**: a name the owner chose to add. `org` is the **top-level domain** (**TLD**), shared by millions of names. `example` is the **domain**…
 
 **Surprising facts**
 
-- But you learned earlier that routers deliver packets using IP addresses, like `198.51.100.10`.
-- You give it a name like `example.com`, and it gives back an IP address like `198.51.100.10`.
+- Give it a name like `example.com`, and it gives back an IP address like `198.51.100.10`.
 
 #### The Lookup Journey
 
@@ -418,21 +926,14 @@ Find out how a name like example.com becomes an address, through a chain of serv
 
 **Key facts**
 
-- *First stop: memory:* Your device keeps recent answers in a **cache**: a short-term memory of lookups it has already done. If it isn't, your device asks a **resolver**.
-- *The resolver's trip:* It asks a **root server**: "Who handles `.com`?" There are 13 root servers, each copied many times, so well over a thousand copies are spread around the world. It asks a **`.com` TLD server**: "Who's in charge of `example.com`?"
-- *How long to remember: TTL:* So every DNS answer comes with a **TTL** in **seconds**: how long it may be kept in a cache before it has to be looked up again. Packets carry a **TTL** too, and it's a different thing: a packet's TTL is a **hop limit**, lowered by 1 at each router.
-- *Recap:* Your device checks its **cache** first, then asks a **resolver**. The resolver asks a **root server**, then a **TLD server**, then the domain's **authoritative server**, which holds the real answer.
+- *The resolver's trip:* First, your device checks its **cache**. If the answer isn't there, it asks a **resolver**: a server that hunts for answers for you.
+- *Recap:* Your device checks its **cache**, then asks a **resolver**. The resolver asks root, TLD, then the **authoritative** server.
 
 **Best interactive cards**
 
 - Put in order: Nobody has looked up example.com recently. Put the steps of the lookup in order.
 - Match pairs: Match each DNS server to its job.
-- Terminal: `dig` is another tool for DNS lookups, and it shows more detail. Run `dig example.com`, then find the **TTL** in the ANSWER SECTION. It's the number just after the name.
-
-**Surprising facts**
-
-- There are hundreds of millions of domain names.
-- A TTL of 300 means "remember this for 5 minutes".
+- Terminal: `dig` is another tool for DNS lookups. Run `dig example.com`, then find the **TTL**: it's the number just after the name in the answer.
 
 #### DNS Records and Tools
 
@@ -441,20 +942,14 @@ Find out how a name like example.com becomes an address, through a chain of serv
 
 **Key facts**
 
-- *One name, many answers:* DNS keeps each kind of answer in a different **record**. When you look something up, you ask for a particular **record type**.
-- *Four record types:* An **A** record holds an **IPv4** address, like `198.51.100.10`. An **AAAA** record holds an **IPv6** address, like `2001:db8::10`.
-- *Recap:* DNS stores different kinds of answer in **records**. **A**: an IPv4 address.
+- *One name, many answers:* DNS keeps each kind of answer in its own **record**: **A**: the website's IPv4 address (an **AAAA** record holds its IPv6 address).
+- *Recap:* One name can hold several **records**, one for each job. **A** gives an address, **CNAME** an alias, **MX** the mail server.
 
 **Best interactive cards**
 
-- Match pairs: Match each record type to a value it could hold for example.com.
-- Terminal: Ask DNS for example.com's **AAAA** record by running `nslookup -type=AAAA example.com`.
-- Terminal: Run `dig www.example.com` and look at the ANSWER SECTION. There are two lines this time.
-
-**Surprising facts**
-
-- It's called *quad-A* because an IPv6 address is four times as long as an IPv4 one: 128 bits instead of 32.
-- An **MX** record (mail exchange) names the server that receives **email** for the domain, with a priority number, like `10 mail.example.com`.
+- Match pairs: Match each record for example.com to the value it could hold.
+- Terminal: Run `dig www.example.com` and look at the answer. There are two lines this time.
+- Put in order: Put the steps in order for a browser opening `www.example.com`.
 
 #### Module quiz (7 questions)
 
@@ -471,23 +966,18 @@ Discover how one address runs many services, how TCP and UDP deliver data, and t
 
 **Key facts**
 
-- *Which program gets the packet?:* The address got it to the right computer, but which **program** on that computer should it go to?
-- *Ports are like apartment numbers:* The street address gets a letter to the right **building**, and the apartment number gets it to the right **door**. On the internet, the IP address is the building, and a **port** number is the door.
-- *Your side has a port too:* When your laptop connects to `198.51.100.10:443`, it also picks a port for **its own** end of the conversation: a temporary one, usually a high number like `51000`. So a conversation is really identified by **four** numbers: your address and port, and the server's address and port.
-- *NAT, the full story:* In Module 2 you learned that your home router uses **NAT** to swap private addresses for its public one, and "notes down who asked". Now you can see how it really does that: with **ports**.
-- *Recap:* A **port** picks which program on a computer gets the data. Ports are 16-bit numbers, from **0 to 65,535**.
+- *Ports are like apartment numbers:* The street address gets a letter to the **building**, and the apartment number gets it to the right **door**. The IP address is the building, and a **port** is the door.
+- *Recap:* The IP address finds the computer; the **port** finds the program. Your router's **NAT table** uses ports to route each reply home.
 
 **Best interactive cards**
 
-- Match pairs: Match each service to its standard port.
-- Put in order: Put the NAT steps in order, now with ports.
-- Terminal: On Windows, `netstat -n` lists this computer's connections. Run it and find which **port on the server** `198.51.100.10` this laptop is connected to.
+- Terminal: Your side of a conversation needs a port too, so replies reach the right app. Your laptop picks a temporary one, usually a high number like `51544`. On Windows, `netstat -n` lists connections. **Local Address** is your…
+- Put in order: Your home router shares one public address using **NAT**. Ports are how it keeps replies apart: it swaps your laptop's private address and port for its public address and a port it picks, and writes the pair in its…
+- Number answer: The router's NAT table says: `203.0.113.7:40001` → `192.168.1.20:51000` `203.0.113.7:40002` → `192.168.1.21:51000` A reply arrives for `203.0.113.7:40002`. Which device gets it? Type the **last number** of its private…
 
 **Surprising facts**
 
-- The server at `198.51.100.10` runs a website, an email service and a remote login service (for controlling the computer from far away), all at the same time, all on one IP address.
-- You'll often see them written together with a colon: `198.51.100.10:443` means port 443 at that address.
-- When your laptop sends from `192.168.1.20:51000`, the router rewrites the sender as `203.0.113.7:40001`, using its public address and a port it picks.
+- Websites use port `80`, and secure websites (HTTPS) use `443`.
 
 #### TCP and UDP
 
@@ -496,21 +986,14 @@ Discover how one address runs many services, how TCP and UDP deliver data, and t
 
 **Key facts**
 
-- *Tracked parcel or postcard?:* You can send something important as a **tracked parcel**: it's signed for, you're told when it arrives, and if it gets lost it's sent again. Or you can drop a **postcard** in the postbox: quick and easy, but if it goes missing, nobody knows.
-- *Reliable or fast:* **TCP** (Transmission Control Protocol) is the tracked parcel. **UDP** (User Datagram Protocol) is the postcard.
-- *Sequence numbers, properly:* In Module 3 we said each packet carries a **sequence number**. **IP** adds the source and destination **addresses**.
-- *The three-way handshake:* Before any data flows, TCP sets up the connection with three short messages, called the **three-way handshake**: **SYN** (*synchronise*): your browser asks "Can we talk?"
-- *Recap:* **TCP** is reliable: a handshake, numbered bytes, confirmations, resending and correct order. **UDP** is quick and simple: no handshake, no resending, no guaranteed order.
+- *Reliable or fast:* **TCP** (Transmission Control Protocol) is the tracked parcel. **UDP** (User Datagram Protocol) is the postcard: no setup, no checking that it arrived.
+- *Recap:* **TCP**: a handshake first, numbered pieces, and resending anything lost. **UDP**: no handshake, no resending; quick, but lost data stays lost.
 
 **Best interactive cards**
 
-- Number answer: A TCP packet has sequence number **1** and carries **1,000 bytes** of data. What is the sequence number of the **next** packet?
-- Put in order: Put the start of a TCP connection in order.
-- Match pairs: Match each activity to the reason for how it's delivered.
-
-**Surprising facts**
-
-- If one packet carries bytes 1 to 1,000, the next one starts at byte 1,001, so that's its sequence number.
+- Sort into groups: Apps send data in one of two ways. **TCP** is like a tracked parcel: the sender finds out whether it arrived, lost pieces are sent again, and everything is put back in order. **UDP** is like a postcard: quick, but…
+- Put in order: Before TCP sends any data, both sides check they can hear each other, using three short messages. This is the **three-way handshake**. Put the start of a connection in order.
+- Match pairs: Match each activity to the reason it's delivered that way.
 
 #### Protocols: Shared Rules
 
@@ -519,22 +1002,14 @@ Discover how one address runs many services, how TCP and UDP deliver data, and t
 
 **Key facts**
 
-- *How strangers understand each other:* That works because they all follow the same **rules**, written down and shared openly for anyone to use.
-- *What a protocol is:* You met the word **protocol** in Module 2: a set of rules that devices agree to follow. You already know several: **IP** (addresses and delivery), **TCP** and **UDP** (getting data to the right program, reliably or quickly), and **DNS** (names).
-- *Envelopes inside envelopes:* Protocols work in **layers**, like a letter inside an envelope inside a parcel. The request itself follows **HTTP**.
-- *Email uses two protocols:* **Sending** uses **SMTP**. Your email app hands the message to your mail provider's server (usually on port **587**), and servers pass email between each other on port **25**.
-- *Recap:* A **protocol** is a shared set of rules: message format, order, and what to do when things go wrong. Protocols come in **layers**: HTTP inside TCP inside IP inside Wi-Fi or Ethernet.
+- *How strangers understand each other:* They all follow the same **protocols**: rules for what each message looks like, what order messages go in, and what to do when something goes wrong.
+- *Recap:* A **protocol** is a shared set of rules for one job. Email: **SMTP** sends it, **IMAP** reads it.
 
 **Best interactive cards**
 
-- Put in order: Put the layers of a web request in order, from the **innermost** at the top to the **outermost** at the bottom.
-- Match pairs: Match each protocol to its job.
-- Terminal: `nc` (netcat) can check whether a server answers on a port. Run `nc -zv example.com 22 25 80 443` to test four ports on example.com's server.
-
-**Surprising facts**
-
-- They've never met, yet they understand each other perfectly, billions of times a second.
-- Your app fetches messages that are kept on your provider's server (port **143**, or **993** when **encrypted**: scrambled so only your app and the server can read it), so you see the same inbox on your phone and your laptop.
+- Put in order: When your browser asks for a page, the request travels like a letter inside envelopes inside a parcel. Each wrapper follows its own set of rules, a **protocol**, with one job. Put them in order, from the **letter in…
+- Sort into groups: Every job online has its own protocol. **HTTPS** fetches web pages securely. **DNS** turns names into addresses. **SMTP** and **IMAP** handle email. Which protocol does each job?
+- Put in order: Email uses two protocols. **SMTP** sends mail on its way, from your app to your provider and between mail servers. **IMAP** lets an app read mail that's kept on a server. You email `hello@example.org`. Put the email's…
 
 #### Module quiz (7 questions)
 
@@ -551,23 +1026,14 @@ Put it all together: follow one web page from the moment you press Enter to the 
 
 **Key facts**
 
-- *Nothing arrives unless you ask:* Every web page, picture and video you've ever seen online arrived because your browser **asked** for it. The asking and answering follows a protocol you met in the last module: **HTTP**.
-- *Requests:* **HTTP** stands for **HyperText Transfer Protocol** (*hypertext* just means text with links). Your browser (the **client**) sends a **request**, and the server sends back a **response**.
-- *Responses:* The server's **response** starts with a **status line**, like `HTTP/1.1 200 OK`, that says how it went. More headers follow, then the **body**: the page's content itself, usually written in **HTML** (the code that describes a web page).
-- *GET and POST:* **GET**: "please give me this". **POST**: "please take this data".
-- *Status codes:* Every response has a three-digit **status code**. The **first digit** tells you the kind of answer:
-- *Recap:* **HTTP** is request and response: the browser asks, the server answers. A request has a **method**, a **path** and **headers** like `Host`.
+- *Ask and answer:* That asking follows a protocol called **HTTP**. Your browser sends a **request**, like `GET /news`: a **method** (what to do) and a **path** (which page).
+- *Recap:* **HTTP**: the browser requests, the server responds. **GET** fetches things; **POST** sends your data to the server.
 
 **Best interactive cards**
 
-- Match pairs: Match each part of an HTTP message to its job.
-- Match pairs: Match each status code to its meaning.
-- Terminal: `curl -I` (that's a capital **I**, for *information*) asks a server for just the headers of a response, without the page itself. Run it on `http://example.com/old-news` and find where that page has moved to. (The other…
-
-**Surprising facts**
-
-- Let's see what those messages actually look like.
-- Four you'll see often: **200 OK** (here it is), **301 Moved Permanently** (it's at a new address now, go there), **404 Not Found** (there's nothing at that path) and **500 Internal Server Error** (something broke on the server).
+- Sort into groups: The two methods you'll meet most: **GET** means "please give me this", and **POST** means "please take this data". Which does your browser use for each?
+- Sort into groups: Every response starts with a three-digit **status code**, and its **first digit** says how it went: **2**: all fine, here it is **4**: a problem with the request, like asking for a page that isn't there **5**: a…
+- Terminal: `curl -I` (a capital **I**) asks a server for just the top of a response: the status code and some labelled lines called **headers**. A code starting with **3** means "this has moved", and a `Location` line gives the…
 
 #### HTTPS and the Padlock
 
@@ -576,20 +1042,18 @@ Put it all together: follow one web page from the moment you press Enter to the 
 
 **Key facts**
 
-- *HTTPS: HTTP in a locked box:* Plain **HTTP** sends everything as readable text, rather like writing on a postcard. **HTTPS** is the same HTTP, but carried inside another protocol called **TLS** (**Transport Layer Security**).
-- *The TLS handshake:* In it, the browser and server **say hello and agree secret keys**, and the server **proves its identity with its certificate**. A **certificate** is like a digital ID card for a website.
-- *What the padlock doesn't mean:* The padlock means your connection to **that name** is encrypted. It does **not** mean the site is honest or safe.
-- *Recap:* **HTTPS** is HTTP inside **TLS**, which **encrypts** everything between your browser and the server (port 443). In the **TLS handshake**, the two sides agree secret keys and the server proves its identity with a **certificate** from a **certificate authority**.
+- *HTTPS: HTTP in a locked box:* **HTTPS** is the same HTTP, carried inside another protocol called **TLS**. TLS **encrypts** the data: it scrambles it with secret keys that only your browser and the server have.
+- *Recap:* **HTTPS** is HTTP inside **TLS**: encrypted between browser and server. A **certificate** proves the server owns the name in the address.
 
 **Best interactive cards**
 
-- Match pairs: Match each HTTPS term to what it means.
-- Terminal: Run `curl -v https://example.com` to watch a real HTTPS connection being made, then find **who issued** the certificate. Look for `O=` (the letter O, for *organisation*) on the issuer line.
-- Match pairs: Browsers show a warning when a certificate check fails. Match each warning to what went wrong.
+- Match pairs: Match each thing you want to the part of HTTPS that does it.
+- Tap the picture: A padlock means just two things: the connection is encrypted, and the server proved with its certificate that it owns the **name in the address**. It says nothing about who's behind that name, or whether they're…
+- Match pairs: A certificate only counts if it's within its valid dates, written for the name you visited, and issued by a certificate authority your browser trusts. If a check fails, the browser warns you. Match each warning to what…
 
 **Surprising facts**
 
-- It normally uses port **443**, while plain HTTP uses 80.
+- HTTPS uses port **443** (plain HTTP uses 80), and your browser shows a **padlock** beside the address.
 
 #### What Happens When You Type a URL
 
@@ -598,662 +1062,14 @@ Put it all together: follow one web page from the moment you press Enter to the 
 
 **Key facts**
 
-- *One press of Enter:* You type `https://www.example.com/news` and press **Enter**.
-- *Reading the address:* The web address you type is called a **URL** (Uniform Resource Locator). `https` is the **scheme**: which protocol to use.
-- *Rebuilding the page:* The response comes back as a stream of **packets**, hop by hop, to your router's public address and port. The router's **NAT table** sends them on to your laptop.
-- *Recap: How the Internet Works:* Everything is **bits**, grouped into bytes and written in binary or hex. Devices have **IP addresses**.
+- *Rebuilding the page:* The reply comes back as **packets**, hop by hop, to your router's public address. **NAT** passes them to your laptop.
+- *Recap: How the Internet Works:* **DNS** finds the address; **packets** travel router to router. **TCP** connects reliably, **TLS** encrypts, **HTTP** asks and answers.
 
 **Best interactive cards**
 
-- Terminal: **Step 1: DNS.** The browser needs an IP address for `www.example.com`. Do the lookup yourself with `nslookup www.example.com`. (In the output, `canonical name` means the name is an alias for another name: a CNAME.)
-- Route a packet: **Step 2: the first packet leaves.** Send the laptop's first packet (a TCP SYN to `198.51.100.10:443`) to the web server. (The home router is shown with its **public** address, the one the internet sees.)
-- Route a packet: Now the **reply**. The server sends the page to `203.0.113.7:40001`, the router's public address and port. **Router A is down.** Route the reply back to the laptop.
-
-**Surprising facts**
-
-- HTTPS means HTTP inside TLS, on port 443 unless the URL says otherwise.
-
-#### Module quiz (8 questions)
-
-Not exported, so the answers stay secret.
-
-## Stay Safe Online
-
-Lock your accounts, spot scams and keep your private stuff private.
-
-### Module 1: Lock Your Accounts (Free)
-
-Strong passwords, passphrases and two-step sign-in.
-
-#### Strong Passwords
-
-- **Access:** Free, no account needed (best for video links)
-- **Link:** `cybernettraining.com/from/<platform>/strong-passwords`
-
-**Key facts**
-
-- *Your digital keys:* Every account you have, from games to school to email, is locked with a **password**.
-- *How passwords get guessed:* So attackers use computers to **guess** them, billions of times a second. They start with the **most common passwords** (like `password123` and `qwerty`), real words, names, birthdays and patterns like swapping `a` for `@`.
-- *Length wins:* Making a password **longer** helps a lot more. The easiest way to get length you can remember is a **passphrase**: **four or more random words**, at least **15 characters** long, like `violet cactus harbour pepper`.
-- *One password per account:* Attackers then try that same email and password on **other** websites. So every account needs its **own** password.
-- *Recap:* Guessers try **common passwords, words, names and patterns** first. **Length** matters most: each extra lowercase letter makes it 26 times harder.
-
-**Best interactive cards**
-
-- Simulator: This password uses only **lowercase letters**. Make it long enough that trying every combination would take **at least 100 years**.
-- Simulator: Now the password can be **10 characters at most**. Reach **100 years** anyway, by choosing which kinds of characters it can use.
-- Choose what happens: You get an email from a game website: it was hacked, and passwords were stolen.
-
-**Surprising facts**
-
-- In this lesson you'll learn what makes a password strong, and how to make one you can actually remember.
-- For lowercase letters, each position could be any of 26 letters, so every extra letter makes the job **26 times bigger**.
-- A **passphrase** is four or more **random** words, at least 15 characters.
-
-#### Two-Step Sign-In
-
-- **Access:** Free with a free account
-- **Link:** `cybernettraining.com/from/<platform>/two-step-sign-in`
-
-**Key facts**
-
-- *Two locks on the door:* So many accounts let you add a **second lock**.
-- *What two-step sign-in is:* **Two-step sign-in** means proving it's you in two different ways. You'll also see it called **two-factor** or **multi-factor authentication (MFA)**.
-- *Which second proof is strongest?:* A **passkey**: your device signs you in with your fingerprint, face or PIN, and it won't work on a fake website. A code from an **authenticator app** on your phone.
-- *Never share a sign-in code:* **No real company, bank, game or friend will ever ask you to read it out or send it to them.**
-- *Password managers:* A **password manager** is an app that creates a **long random password** for every account, remembers them all, and fills them in for you. You only remember **one main password**: make it a strong passphrase, and protect the manager with two-step sign-in.
-- *Recap:* **Two-step sign-in** adds a second proof: something you know, have or are. Strongest: a **passkey**, then an authenticator app, then a text code.
-
-**Best interactive cards**
-
-- Sort into groups: Sort each proof: something you **know**, **have** or **are**.
-- Choose what happens: You're watching a video when your phone buzzes.
-- Choose what happens: Your phone, with your authenticator app on it, falls in a lake.
-
-#### Module quiz (6 questions)
-
-Not exported, so the answers stay secret.
-
-### Module 2: Spot the Scam (Pro)
-
-Phishing emails, scam texts and calls, and fake websites.
-
-#### Phishing Emails
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/phishing-emails`
-
-**Key facts**
-
-- *Something fishy:* **Phishing** (said "fishing") is when a scammer sends a message pretending to be someone you trust, like your bank, your school or a game, hoping you'll bite: click a link, open a file or hand over your details.
-- *The warning signs:* **Fake sender:** the name looks right, but the email address isn't the real company's. **Rushing you:** "Act now!", "Your account closes in 24 hours!" Pressure stops you thinking.
-- *Who really sent it?:* Anyone can type any **name** into the From line. What counts is the **address after the @**.
-- *What to do instead:* **Don't click** links or open attachments in a message you're unsure about, and don't reply. **Go there yourself:** open the official app, or type the address you know.
-- *Recap:* **Phishing** pretends to be someone you trust. Warning signs: **fake sender**, **rushing you**, **"Dear Customer"**, **asks for secrets**, **hidden links**, **too good to be true**.
-
-**Best interactive cards**
-
-- Tap the picture: Your Bank's real emails come from **@yourbank.example**. Tap **every** warning sign in this email.
-- Choose what happens: An email pops up while you're doing homework.
-- Choose what happens: An email arrives that seems personal.
-
-#### Scam Texts and Calls
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/scam-texts-and-calls`
-
-**Key facts**
-
-- *Scams in your pocket:* The same tricks as phishing emails also arrive as **text messages** and **phone calls**.
-- *Scam texts:* Common scam texts say you owe a **parcel fee** or a **road toll**, that you've won something, or "Hi Mum, this is my new number". Sender names can be faked, so a scam text can even land **in the same thread** as real messages from that company.
-- *Scam calls and cloned voices:* They may ask for a **sign-in code**, your **password**, to **control your computer**, or for payment in **gift cards**. Computers can now **copy a voice** from a short clip, so a call can sound just like someone you know.
-- *Too good to be true:* Some scams offer something amazing: a prize you never entered, a free phone, "double your money", **free game coins or skins**, or a job paying lots for very little work. Watch for **paying a fee to get a prize**, and for payment by **gift cards**, crypto or a money-transfer app.
-- *Recap:* Scam texts use a **small fee**, a **deadline** and an **unfamiliar link**. Scam calls can use a **copied voice**.
-
-**Best interactive cards**
-
-- Tap the picture: Tap the **three** warning signs in the **new** message.
-- Choose what happens: Your phone rings. It sounds exactly like your cousin.
-- Choose what happens: A website promises **10,000 free coins** for your favourite game.
-
-#### Fake Websites
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/fake-websites`
-
-**Key facts**
-
-- *A perfect copy:* Copying how a website **looks** takes minutes: the logo, the colours, the sign-in box. What a fake site can't copy is the real **address**.
-- *Read the address:* The owner of a website is the name **just before the ending** (the ending is like `.example`, `.com` or `.com.au`). `yourbank.example.login-check.example` belongs to **login-check.example**: the name just before the final ending.
-- *What the padlock means:* The padlock next to an address means your connection is **encrypted** (HTTPS): nobody can read what you send on the way. It **doesn't** mean the site is honest.
-- *Safer ways in:* Sign in through the **official app**, a **bookmark**, or by **typing the address** yourself. **Don't sign in from a link** in an email or text.
-- *Recap:* A website's owner is the name **just before the ending** of its address. The **padlock only means encrypted**.
-
-**Best interactive cards**
-
-- Tap the picture: You opened this page from a link in a text. Your Bank's real site is `yourbank.example`. Tap **every** warning sign.
-- Choose what happens: You tap a link in an email to sign in to your game account.
-- Tap the picture: Label four things on this page.
-
-#### Module quiz (7 questions)
-
-Not exported, so the answers stay secret.
-
-### Module 3: Guard Your Privacy (Pro)
-
-Your digital footprint, app permissions and public Wi-Fi.
-
-#### Your Digital Footprint
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/your-digital-footprint`
-
-**Key facts**
-
-- *Footprints in wet cement:* Everything you post, like, comment on or get tagged in adds to your **digital footprint**: the trail you leave online. That's not a reason to stop posting: it's a reason to **choose what you share**.
-- *What to keep private:* your **home address** and **phone number** your **school**, including a uniform or badge in photos
-- *Privacy settings:* Every app has **privacy settings**. **Private account:** only people you approve see your posts.
-- *Recap:* Your **digital footprint** is everything about you online, and it can last. Keep your **address, phone number, school, location right now** and passwords private.
-
-**Best interactive cards**
-
-- Sort into groups: Fine to share, or keep it private?
-- Choose what happens: A fun quiz is going around on social media.
-- Choose what happens: Someone you don't know in real life has been messaging you in a game. They're really friendly.
-
-**Surprising facts**
-
-- That goes for **usernames** too: `SkyDiver_77` is safer than your real name, school or birth year.
-
-#### Apps and Public Wi-Fi
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/apps-and-wi-fi`
-
-**Key facts**
-
-- *Why does a torch app want your contacts?:* When you install an app, it may ask to use parts of your phone: the **camera**, **microphone**, **location**, **contacts** or **photos**.
-- *Only what it needs:* Allow what the app needs for **its job**: a map needs location; a video call needs the camera and microphone. Pick **"Only while using the app"** when it's offered, instead of "Always".
-- *Public Wi-Fi:* **Public Wi-Fi** at a café, library or airport is shared with strangers. Most websites use HTTPS, so what you send to them is **encrypted** even on shared Wi-Fi.
-- *Recap:* Give apps only the **permissions they need** for their job. Choose **"Only while using the app"**.
-
-**Best interactive cards**
-
-- Sort into groups: Does the app **need** that permission for its job?
-- Choose what happens: You install a new drawing game.
-- Choose what happens: You're reading on your phone, and a **microphone dot** appears at the top of the screen.
-
-#### Module quiz (6 questions)
-
-Not exported, so the answers stay secret.
-
-### Module 4: When Things Go Wrong (Free)
-
-Signs of a hack, what to do step by step, and where to get help.
-
-#### Signs of a Hack
-
-- **Access:** Free, no account needed (best for video links)
-- **Link:** `cybernettraining.com/from/<platform>/signs-of-a-hack`
-
-**Key facts**
-
-- *Something's off:* Sometimes an account gets **taken over**: someone else gets in, usually with a stolen or guessed password.
-- *Signs someone else got in:* Your password **suddenly doesn't work**. Emails about a **sign-in** or **password change** you didn't make.
-- *What to do, step by step:* **Tell a trusted adult.** You're not in trouble, and two heads are better than one. **Change the password**, on a device you trust, in the real app or website.
-- *How accounts get taken:* a password **reused** from a site that had a data breach a password typed into a **fake website** from a phishing message
-- *Recap:* Signs: a password that stops working, **alerts you didn't cause**, messages you didn't send, unknown devices. Steps: **tell an adult**, **change the password**, **check recovery details**, **sign out other devices**, **turn on two-step sign-in**.
-
-**Best interactive cards**
-
-- Sort into groups: A sign of a hack, or normal?
-- Choose what happens: Your friends say you've been sending them strange links. You haven't.
-- Choose what happens: You check your account's security settings.
-
-#### Deepfake Scams and Fakes
-
-- **Access:** Free, no account needed (best for video links)
-- **Link:** `cybernettraining.com/from/<platform>/deepfake-scams`
-
-**Key facts**
-
-- *Fake voices and faces:* Then it can make **new** audio or video of them saying things they never said. A fake video or picture made like this is called a **deepfake**.
-- *The same old tricks:* **Hurry:** you must act right now, so you don't stop to check. **Keep it secret:** don't tell anyone, so nobody can warn you.
-- *Ask something only they'd know:* Some families agree a **code word** together, just for emergencies, and never post it online.
-- *If someone makes a fake of you:* It's **not your fault**, and you won't be in trouble for asking for help. **Don't share it** any further, even to show someone.
-- *Recap:* AI can copy voices and faces: **deepfakes** and **voice clones**. The red flags still work: **hurry**, **secrets**, **money or codes**, a **new number**.
-
-**Best interactive cards**
-
-- Sort into groups: Sort each message: **red flag**, or **normal**?
-- Choose what happens: Your phone rings from a number you don't know.
-- Choose what happens: A video message arrives from an account with your coach's name and face.
-
-**Surprising facts**
-
-- If you're under 18 and someone is threatening to share it, or asking you for sexual images or money, report it to the **ACCCE** too (accce.gov.au/report).
-
-#### Getting Help
-
-- **Access:** Free, no account needed (best for video links)
-- **Link:** `cybernettraining.com/from/<platform>/getting-help`
-
-**Key facts**
-
-- *You're not alone:* Scammers **count on people feeling embarrassed** and staying quiet. **It's never your fault**, and telling someone is the brave and smart thing to do.
-- *Who to tell:* A **trusted adult** is someone you feel safe talking to: a parent or carer, a teacher, a school counsellor, or an older relative. If you'd rather talk to someone outside your family, **Kids Helpline** is free, private and open any time, for ages 5 to 25: call **1800 55 1800**.
-- *Where to report in Australia:* **The app or website first:** use its report button. **eSafety Commissioner** (esafety.gov.au): serious cyberbullying of anyone under 18 that the app hasn't dealt with, adult cyber abuse, and someone sharing or threatening to share a **private or nude image** of you (report that straight away).
-- *Save the evidence:* Before you block someone, **take screenshots** of the messages, their username, the web address and the date. One exception: if it's a **private or nude image**, **don't copy, save or share the image itself**.
-- *Recap:* It's **never your fault**. Tell a **trusted adult**, or call **Kids Helpline** on 1800 55 1800.
-
-**Best interactive cards**
-
-- Choose what happens: In a group chat, some people start posting mean messages about you.
-- Sort into groups: Does it help, or make things worse?
-- Choose what happens: Someone you met online says they'll share a private photo of you unless you pay them. If this ever happens: **it is never your fault**, and you won't be in trouble.
-
-**Surprising facts**
-
-- **ACCCE**, the Australian Centre to Counter Child Exploitation (accce.gov.au/report), run by the Australian Federal Police: if you're **under 18** and someone is pressuring or threatening you with a private image.
-- **IDCARE** (idcare.org or 1800 595 160): free help to make a plan if your personal details were stolen.
-- Then: **eSafety** for serious abuse and private images (and the **ACCCE** if you're under 18), **Scamwatch** for scams, your **bank** for money, **IDCARE** for stolen details, **000** for danger.
-
-#### Module quiz (8 questions)
-
-Not exported, so the answers stay secret.
-
-## How AI Really Works
-
-Teach a model, watch a chatbot pick its words, and use AI safely.
-
-### Module 1: What AI Actually Is (Free)
-
-What counts as AI, how it learns from examples, and where it goes wrong.
-
-#### Spot the AI
-
-- **Access:** Free, no account needed (best for video links)
-- **Link:** `cybernettraining.com/from/<platform>/spot-the-ai`
-
-**Key facts**
-
-- *AI is already in your pocket:* All of these use **artificial intelligence**, or **AI**.
-- *Rules or examples?:* Most programs follow **rules** that a person wrote, step by step. Try writing rules for "what does my friend's face look like?" So instead, people give the computer lots of **examples** and let it work out what they have in common.
-- *Learning by example:* It's called **machine learning**: the computer is shown many examples and finds the patterns in them itself.
-- *Recap:* Ordinary programs follow **rules** a person wrote. **AI** learns from **examples** instead, finding patterns in them.
-
-**Best interactive cards**
-
-- Sort into groups: Does each one **follow rules** someone wrote, or **learn from examples**?
-- Match pairs: Match each kind of AI to the examples it learns from.
-- Sort into groups: Trickier: does each one **follow rules**, or **learn from examples**?
-
-**Surprising facts**
-
-- An alarm clock's rule is simple: at 7:00, ring.
-
-#### Patterns Everywhere
-
-- **Access:** Free with a free account
-- **Link:** `cybernettraining.com/from/<platform>/patterns-everywhere`
-
-**Key facts**
-
-- *Examples, labels and models:* A **pattern** is something that shows up again and again, like apples being round and bananas being long. To teach a computer, you give it **training data**: lots of examples, each with a **label** that says what it really is ("apple" or "banana").
-- *Why did it get one wrong?:* Every apple in its training data was **red**.
-- *Recap:* **Training data** is lots of examples, each with a **label** saying what it really is. The computer finds **patterns** in them and builds a **model** that guesses labels for new things.
-
-**Best interactive cards**
-
-- Train a model: Label each fruit as an **apple** or a **banana**. Then press Check to train the model and see what it guesses about 3 new fruits.
-- Train a model: Here's the same model, plus a **golden apple** it isn't using yet. Choose which examples to train on, so it gets **every** test fruit right.
-- Train a model: Now there are three kinds of fruit. This model looks at the **3 nearest** examples and goes with the most common label. Label the fruit, then see its guesses.
-
-#### What AI Can't Do
-
-- **Access:** Free with a free account
-- **Link:** `cybernettraining.com/from/<platform>/what-ai-cant-do`
-
-**Key facts**
-
-- *A guess, not a fact:* Everything a model gives you is a **prediction**: its best guess, based on patterns in its training data.
-- *People are responsible:* Big decisions about people, like a punishment at school, a medical treatment or who gets a job, need a **person** to decide and to be responsible.
-- *Recap:* Everything AI gives you is a **prediction**, not a fact.
-
-**Best interactive cards**
-
-- Choose what happens: You're using an AI helper for history homework.
-- Sort into groups: Is each job **fine for AI to help with**, or does it **need a person** to decide?
-- Choose what happens: Your photo app sorts pictures by who's in them.
-
-#### Module quiz (6 questions)
-
-Not exported, so the answers stay secret.
-
-### Module 2: How Machines Learn (Pro)
-
-Training data, fair tests, and how bias sneaks in.
-
-#### Training Data
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/training-data`
-
-**Key facts**
-
-- *Words that vote:* When a new message arrives, each word in it **votes**. A word gets **one vote for each training message** it appeared in, for that message's label.
-- *One word, three votes:* In those examples, **"free" only ever appeared in spam**, so to the model, "free" means spam.
-- *Good data, bad data:* **Wrong labels:** a spam message labelled "not spam" teaches the model the wrong lesson. **Copies:** a thousand copies of one example add nothing new, and make that one example count far too much.
-- *Recap:* A model learns only from its **training data**, so it repeats that data's patterns, including its gaps. Fix it with **better** data (checked, varied, realistic), not just more of it.
-
-**Best interactive cards**
-
-- Train a model: Label each message as **spam** or **not spam**. Then press Check to train the model and see what it makes of two new messages.
-- Train a model: Try it. Choose which examples to train on, so the model gets **both** test messages right.
-- Train a model: Someone made a labelling mistake in this fruit data. Find it, and choose the examples to train on so the model gets **both** test fruits right. (This model picks the **nearest** example.)
-
-#### Testing a Model
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/testing-a-model`
-
-**Key facts**
-
-- *Keep some examples aside:* **Training examples** are for learning. **Test examples** are kept aside, and the model never sees them while it learns.
-- *Memorising isn't learning:* A model can learn its training examples **too** well: every detail, instead of the general pattern. This is called **overfitting**.
-- *Recap:* Keep **test examples** aside: the model never sees them while it learns. **Accuracy** = right ÷ tested × 100.
-
-**Best interactive cards**
-
-- Sort into groups: Is each one a **fair** test of a model, or an **unfair** one?
-- Train a model: A weather model guesses whether it will rain from the clouds and the air. Each training day says what really happened: label them, then see how the model does on **4 test days** it has never seen.
-- Train a model: Now add training days so the model gets **all 4** test days right. Three new days are available.
-
-**Surprising facts**
-
-- **Accuracy** is that as a percentage: right ÷ tested × 100.
-- 100% on training examples but much less on new ones means **overfitting**: memorising instead of learning.
-
-#### Bias In, Bias Out
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/bias-in-bias-out`
-
-**Key facts**
-
-- *Bias in, bias out:* This is called **bias**.
-- *Finding and fixing bias:* **Ask who it might work worse for**, before and after it's built. **Test it with lots of different people** and situations, not just one group.
-- *Recap:* **Bias**: a model works better for some people than others, usually because of gaps in its training data.
-
-**Best interactive cards**
-
-- Train a model: This checker learned only from formal messages, so it calls **"That game was sick!"** mean. Choose the examples to train on, so it gets **all 3** test messages right. (It uses word votes, like the spam model.)
-- Choose what happens: Your club wants to sort new sign-ups with a model.
-- Choose what happens: A school is choosing a voice assistant to help in class.
-
-#### Module quiz (8 questions)
-
-Not exported, so the answers stay secret.
-
-### Module 3: How Chatbots Think (Pro)
-
-Next-word guessing, temperature, and why chatbots make things up.
-
-#### Next-Word Machines
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/next-word-machines`
-
-**Key facts**
-
-- *Guessing the next word:* A chatbot is built on a **language model**: a model trained on a huge amount of text, so it learns which words tend to follow which. Give it some text, and it gives every possible next word a **chance**.
-- *Recap:* A **language model** learned from huge amounts of text which words tend to follow which. For the text so far, it gives every possible next **token** a chance, picks one, adds it, and repeats.
-
-**Best interactive cards**
-
-- Next word: A language model is choosing the next word. Which one is it **most likely** to pick?
-- Put in order: Put the steps a chatbot repeats for every token in order.
-- Next word: Remember: after "The cat sat on the", "mat" had the biggest chance. Now the text so far is longer. Which word is **most likely** next this time?
-
-**Surprising facts**
-
-- After "The cat sat on the", it might give "mat" 60%, "sofa" 20%, "floor" 15% and "moon" 5%.
-- A 60% chance means that if it carried on from here 100 times, it would pick "mat" about 60 of them.
-- A 70% chance means about 70 times in every 100, not every time.
-
-#### Temperature
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/temperature`
-
-**Key facts**
-
-- *Same question, different answers:* A setting called **temperature** decides how it picks between its options.
-- *Turning the dial:* **Low temperature:** the likeliest token gets even likelier. **Temperature 1:** the chances are used as the model learned them.
-- *Which temperature, when?:* Low temperatures suit jobs with **one right answer**: maths, facts, summaries, code. Higher temperatures suit jobs where you want **variety**: brainstorming, story ideas, silly poems.
-- *Recap:* **Temperature** changes how a model picks from its chances; the order of the tokens never changes.
-
-**Best interactive cards**
-
-- Next word: Move the temperature until **mat** has a chance of at least **80%**.
-- Next word: Now make the model more surprising: move the temperature until **no word** has more than a **45%** chance.
-- Next word: Can you get **sofa** up to at least **24%**?
-
-#### Made-Up Answers
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/made-up-answers`
-
-**Key facts**
-
-- *Fluent, confident, wrong:* When a chatbot writes something false but says it smoothly and confidently, it's called a **hallucination**. It happens because the model picks tokens that **sound** likely, not tokens it has checked are true.
-- *How to check:* **Find it in a trusted source**: a textbook, a library catalogue, an official website. **Ask for sources, then open them**: chatbots can invent sources too, so make sure each one really exists and says what the chatbot claims.
-- *A short memory:* This is called its **context window**.
-- *Recap:* A **hallucination** is a fluent, confident answer that's false, because the model picks likely tokens, not checked facts. The **context window** is how much of the chat it can see at once; in long chats it can forget the start.
-
-**Best interactive cards**
-
-- Next word: That small space-story model gets this text. Which word is it **most likely** to write next?
-- Choose what happens: You're writing a report on volcanoes.
-- Choose what happens: A chatbot tells you a famous ship sank in **1915**, and gives a link to a museum website.
-
-#### Module quiz (8 questions)
-
-Not exported, so the answers stay secret.
-
-### Module 4: Talking to AI (Pro)
-
-Write clear prompts, check the answers, and know today's tools.
-
-#### Writing Good Prompts
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/writing-good-prompts`
-
-**Key facts**
-
-- *What a good prompt says:* What you type to a chatbot is called a **prompt**. Remember, it writes the likely next words for **your** text, so the more your prompt says, the better it can aim.
-- *Give it what it needs:* Good prompts can include things you have: **paste in your notes** to summarise, or **your draft** for feedback. You can also ask it to **ask you questions first**, or to **say if it isn't sure**.
-- *Recap:* A **prompt** works best when it says the **goal**, the **context** and the **format**.
-
-**Best interactive cards**
-
-- Sort into groups: Is each prompt **vague**, or **clear** about what it wants and what shape?
-- Choose what happens: You're preparing a 1-minute talk about octopuses for class.
-- Choose what happens: You want a chatbot to quiz you on your history notes.
-
-**Surprising facts**
-
-- **The context:** who it's for and what you already know or have ("I'm 12", "here are my notes").
-
-#### Checking AI's Work
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/checking-ais-work`
-
-**Key facts**
-
-- *Four ways to check:* **Facts and dates:** find them in a trusted source, like a textbook or an official website. **Sources:** open each one and make sure it really says what the chatbot claims.
-- *Using AI honestly:* Using AI to **learn** is great: ask it to explain a step you don't get, quiz you, or give feedback on your draft. Using it to **do the work for you**, and handing that in as yours, is different.
-
-**Best interactive cards**
-
-- Choose what happens: The chatbot's paragraph says: "The Moon is about 38,000 km from Earth, and it takes about 3 days to get there by spacecraft."
-- Sort into groups: Is each one using AI to **learn**, or letting it **do your work** for you?
-- Choose what happens: Your friend shows you an essay a chatbot wrote for them, due tomorrow.
-
-#### AI Tools Today
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/ai-tools-today`
-
-**Key facts**
-
-- *Chat assistants:* Some widely used AI chat assistants (in A to Z order) are **ChatGPT** (made by OpenAI), **Claude** (Anthropic), **Copilot** (Microsoft) and **Gemini** (Google).
-- *AI you already use:* There are **voice assistants** you talk to that answer out loud, **image generators** that make pictures from a description, and **translation apps** that turn text into another language.
-- *Age rules and good habits:* Every AI app has its own rules, including **who can use it**, and they differ a lot. **Check the app's own rules**, and **ask a parent or carer** before signing up.
-
-**Best interactive cards**
-
-- Sort into groups: For schoolwork, is each use of an AI tool **usually fine**, or one to **check with your teacher first**?
-- Choose what happens: A new AI app promises to turn your selfie into a cartoon.
-- Choose what happens: Your friend says: "My AI app is the best one. It's never wrong."
-
-**Surprising facts**
-
-- One app's terms may say you must be 18 or older; another may allow 13-year-olds with a parent's OK; some let a parent switch on access for younger children (or turn it off).
-
-#### Module quiz (7 questions)
-
-Not exported, so the answers stay secret.
-
-### Module 5: AI Images, Video and Voices (Pro)
-
-How AI makes pictures and voices, deepfakes, and checking what's real.
-
-#### How AI Makes Pictures
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/how-ai-makes-pictures`
-
-**Key facts**
-
-- *Learning what words look like:* AI that makes new things (pictures, text, music, voices) is called **generative AI**.
-- *From static to picture:* Most image tools start with **random static**, like a fuzzy TV screen. Because each picture starts from **different random static**, the same prompt gives a different picture every time, a bit like temperature giving a chatbot different words.
-- *Mistakes AI pictures sometimes make:* AI pictures **sometimes** have give-aways: a hand with the wrong number of fingers, signs with jumbled letters, earrings that don't match, shadows or reflections pointing the wrong way. So spotting one is a clue, but **not** spotting one proves nothing.
-- *Recap:* **Generative AI** makes new things; image models learned from huge numbers of captioned pictures.
-
-**Best interactive cards**
-
-- Match pairs: Match each word in a picture prompt to what it changes in the picture.
-- Put in order: Put the steps of making an AI picture in order, from first to last.
-- Sort into groups: Is each one a **possible clue** that a picture was made by AI, or **not a clue**?
-
-#### Cloned Voices and Faces
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/cloned-voices-and-faces`
-
-**Key facts**
-
-- *Fake faces and voices:* Generative AI can learn how a real person looks and sounds from recordings of them, then make **new** video or audio of them saying things they never said. A fake video or picture like this is a **deepfake**.
-- *Permission matters:* Never make or share a deepfake or voice clone of a real person without their **permission**. If someone makes a fake of **you**, it's not your fault.
-- *Clues, and context:* Fake videos and audio **sometimes** have clues: lips slightly out of time with the words, odd blinking, a flat voice or strange breathing, the edge of a face flickering. But the strongest clues are usually in the **situation**: who posted it, whether it pushes you to act fast, whether anyone trustworthy is reporting it, whether it makes sense.
-- *Recap:* AI can learn a real person's face or voice from recordings and make new fakes: **deepfakes** and **voice clones**.
-
-**Best interactive cards**
-
-- Sort into groups: Is each use of voice or face AI **helpful**, or **harmful**?
-- Choose what happens: Your friend has found an app that makes funny face-swap videos.
-- Choose what happens: A video shows a famous singer saying: "I'm giving away 1,000 free concert tickets! Click the link in the next hour."
-
-**Surprising facts**
-
-- In Australia, sharing fake sexual images of a real person without their consent is a serious crime, and fake sexual images of anyone under 18 are always illegal.
-
-#### Who Made This?
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/who-made-this`
-
-**Key facts**
-
-- *Labels and watermarks:* Some AI tools add a **watermark**: a visible mark, or hidden information inside the file, saying AI made it. So a label saying AI made it is good evidence; **no label proves nothing**.
-- *How to check a picture:* **Find where it first appeared.** Many search tools let you search with the picture itself: older copies, or the original, often turn up. **Look for trusted news** reporting it, ideally with other photos from other angles.
-- *Recap:* A **watermark** or AI label is good evidence when it's there; no label proves nothing. Check where a picture **first appeared**, whether **trusted news** shows it, the account and the details.
-
-**Best interactive cards**
-
-- Choose what happens: Your friend sends you the shark-in-the-street picture: "OMG look at this!!"
-- Sort into groups: Does each one **help** you tell if a picture is real, or is it a **myth**?
-- Choose what happens: You made a funny AI picture of your dog wearing a crown, sitting on a throne.
-
-#### Module quiz (7 questions)
-
-Not exported, so the answers stay secret.
-
-### Module 6: Using AI Safely and Fairly (Pro)
-
-Spot AI-made fakes, keep your private stuff private, and use AI honestly.
-
-#### Spotting AI Fakes
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/spotting-ai-fakes`
-
-**Key facts**
-
-- *Fakes made in seconds:* With AI, anyone can make in seconds what used to take hours: **fake reviews**, **fake news articles** that look like a real news site, and **fake accounts** (called bots) that post and reply automatically, all day. False information that spreads, whether someone meant it or not, is called **misinformation**.
-- *Check outside the post:* When something surprises you, **stop** and notice how it makes you feel. Then check **outside** the post, not inside it:
-- *Recap:* AI makes fake reviews, articles and accounts (bots) cheap and fast: **misinformation** can come from anywhere. Strong feelings are the moment to stop: check **outside** the post, not inside it.
-
-**Best interactive cards**
-
-- Sort into groups: Is each one about a shop's reviews **suspicious**, or **normal**?
-- Choose what happens: Under a video about a new game, an account replies to dozens of comments within a minute.
-- Sort into groups: Is each one a check **outside** the post (useful), or just looking **inside** it again?
-
-**Surprising facts**
-
-- By the next morning it has 200 five-star reviews, all saying how "amazing" and "life-changing" the boards are.
-
-#### What Not to Share with AI
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/what-not-to-share`
-
-**Key facts**
-
-- *Where your chats go:* Depending on the app and its settings, your chats may be **saved**, **read by staff** checking for problems, or **used to train** future models. But the safest rule is simple: **don't type anything you wouldn't want someone else to read**, and remember that your friends' photos and secrets aren't yours to share.
-- *A program, not a person:* If something's worrying you, talk to a **trusted adult**, a friend, or, in Australia, **Kids Helpline (1800 55 1800)**, free, any time. If you're in danger right now, call **000**.
-
-**Best interactive cards**
-
-- Sort into groups: Is each one **fine to type** into an AI chatbot, or one to **keep private**?
-- Choose what happens: It's late, you're feeling really down, and you've been telling an AI chatbot about it for an hour.
-- Choose what happens: You install an AI homework app. As it opens, it asks for permission to see your **contacts** and your **location**.
-
-**Surprising facts**
-
-- For worries, talk to a trusted adult or Kids Helpline (1800 55 1800).
-
-#### Fair and Honest Use
-
-- **Access:** Pro
-- **Link:** `cybernettraining.com/from/<platform>/fair-and-honest-use`
-
-**Key facts**
-
-- *Say how you used it:* **Say when and how** you used AI ("I used AI to check my spelling"). **Follow the rules** of your school, club or competition, and **ask** when you're not sure.
-- *The people behind it:* What you can do: **respect people's work**, credit artists you're inspired by, and keep making things in your own way.
-- *Fair to everyone:* So when AI makes decisions about people, like picking, sorting or scoring them, ask: **who might this be unfair to?** And keep a **person** checking decisions that matter.
-- *You know how AI really works:* AI learns **patterns from examples**, so it's only as good, and as fair, as its training data. Chatbots pick **likely tokens**, not checked facts: check anything that matters.
-
-**Best interactive cards**
-
-- Sort into groups: Is each one **honest**, or **not honest**?
-- Choose what happens: Your class wants to use an AI tool to pick team captains "fairly", based on who talks most in class discussions.
-- Choose what happens: Your friend's story wins the school writing prize. You know a chatbot wrote most of it.
+- Terminal: **Step 1: DNS.** The browser needs an IP address for `www.example.com`. Do the lookup yourself with `nslookup www.example.com`.
+- Route a packet: **Step 2: the first packet leaves.** It's the first message of TCP's handshake ("Can we talk?"), addressed to `198.51.100.10:443`. Send it from the laptop to the web server. (The home router shows its **public**…
+- Route a packet: Now the **reply**. The server sends the page to `203.0.113.7`, your home router's public address. **Router A is down.** Route the reply back to the laptop that asked for it.
 
 #### Module quiz (8 questions)
 

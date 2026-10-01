@@ -6,11 +6,48 @@
   "icon": "box",
   "cards": [
     {
-      "id": "same-few-parts",
-      "type": "explainer",
+      "id": "explore-the-laptop",
+      "type": "hotspot",
       "difficulty": "core",
-      "title": "The same few parts",
-      "body": "Phones, laptops, tablets and games consoles look very different on the outside. Inside, they're surprisingly alike: nearly all of them are built from the **same handful of parts**.\n\nIn this lesson you'll open up a laptop and a phone, find those parts, and learn what each one does."
+      "prompt": "Phones, laptops and games consoles look different outside, but inside they share the **same few parts**. Here's a laptop with its bottom panel off. **Tap each part** to find out what it does.",
+      "scene": "laptop",
+      "view": "open",
+      "mode": "explore",
+      "parts": [
+        {
+          "part": "motherboard",
+          "job": "The big board everything plugs into. Its thin lines carry signals between the parts, like roads."
+        },
+        {
+          "part": "cpu",
+          "job": "The CPU, the brain. It follows the instructions that make apps work. A small shiny chip on a square base."
+        },
+        {
+          "part": "heat-pipe",
+          "job": "A copper tube that carries the CPU's heat away to metal fins by the vent."
+        },
+        {
+          "part": "fan",
+          "job": "Blows air through the heat pipe's fins and out of the vents, so the CPU doesn't overheat. The round part with blades."
+        },
+        {
+          "part": "ram",
+          "job": "RAM: a fast workspace for whatever you're using right now. Here it's a stick with a row of chips, clipped into a slot."
+        },
+        {
+          "part": "storage",
+          "job": "The SSD keeps your photos, apps and files, even when the power is off. The long, narrow card with striped chips."
+        },
+        {
+          "part": "battery",
+          "job": "Stores the energy that runs everything. It's the biggest part: a row of flat cells with a lightning bolt."
+        },
+        {
+          "part": "battery-connector",
+          "job": "Joins the battery to the board. Repairers unplug it first, so nothing gets power."
+        }
+      ],
+      "explanation": "Almost every laptop has these parts. This one is an example with a **removable** RAM stick and SSD: many thin laptops have them **soldered** to the board instead. Remember the clues: the fan's blades, the copper heat pipe, the [[CPU]]'s small shiny chip, [[RAM]]'s row of chips, [[storage]]'s stripes and the battery's lightning bolt. (The bolt and stripes are this diagram's clues: real parts have printed labels instead.)"
     },
     {
       "id": "safety-first",
@@ -18,47 +55,7 @@
       "difficulty": "core",
       "title": "Before we open anything",
       "mascot": "presenting",
-      "body": "Everything you take apart in this course is a **simulation**: tap and drag as much as you like.\n\nReal phones and laptops are different. **Don't open one without an adult or a repair shop.** It can break parts, it can end the device's [[warranty]] (the maker's promise to fix it for free), and the **lithium battery inside can catch fire if it's bent or punctured**."
-    },
-    {
-      "id": "explore-the-laptop",
-      "type": "hotspot",
-      "difficulty": "core",
-      "prompt": "Here's the inside of a laptop, with its bottom panel off. It's an example with a **removable** RAM stick and SSD: many thin laptops have them **soldered** to the board instead. **Tap each part** to find out what it is and what it does.",
-      "scene": "laptop",
-      "view": "open",
-      "mode": "explore",
-      "parts": [
-        { "part": "motherboard", "job": "The big board everything plugs into. Its thin lines carry signals between the parts, like roads." },
-        { "part": "cpu", "job": "The CPU, the brain. It follows the instructions that make apps work. A small shiny chip on a square base." },
-        { "part": "heat-pipe", "job": "A copper tube that carries the CPU's heat away to metal fins by the vent. The copper pipe." },
-        { "part": "fan", "job": "Blows air through the heat pipe's fins and out of the vents, so the CPU doesn't overheat. The round part with blades." },
-        { "part": "ram", "job": "RAM: a fast workspace for whatever you're using right now. Here it's a stick with a row of chips, clipped into a slot." },
-        { "part": "storage", "job": "The SSD keeps your photos, apps and files, even when the power is off. The long, narrow card with striped chips." },
-        { "part": "battery", "job": "Stores the energy that runs everything. It's the biggest part: a row of flat cells with a lightning bolt." },
-        { "part": "battery-connector", "job": "Joins the battery to the board. Technicians unplug it first, so nothing gets power." }
-      ],
-      "explanation": "Almost every laptop has these same parts. Remember the clues: the fan's blades, the copper heat pipe, the [[CPU]]'s small shiny chip, [[RAM]]'s row of chips, [[storage]]'s stripes and the battery's lightning bolt. (The bolt and stripes are this diagram's clues: real parts have printed labels instead.)"
-    },
-    {
-      "id": "real-laptop",
-      "type": "photo",
-      "difficulty": "core",
-      "title": "Here's the inside of a real laptop",
-      "photo": {
-        "src": "/photos/framework-laptop-13-inside.jpg",
-        "alt": "A real laptop with its bottom cover off: a round fan and a curved black heat pipe at the top, a long narrow SSD card in the middle, and a wide battery across the bottom.",
-        "width": 2869,
-        "height": 2160
-      },
-      "caption": "A **Framework Laptop 13** (2023) with its bottom cover off. Find the fan, the curved heat pipe (black-coated in this one), the long, narrow SSD and the wide battery. This model lets you swap the RAM and SSD; in many thin laptops they're soldered to the board.",
-      "credit": {
-        "author": "Ogidya",
-        "licence": "CC BY 4.0",
-        "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Framework_Laptop_13_-_2023_AMD_Ryzen_-_Internal_motherboard_and_component_view.jpg",
-        "device": "Framework Laptop 13 (2023, AMD Ryzen)"
-      }
+      "body": "Everything you open here is a **simulation**, so tap away.\n\nReal devices are different. **Leave opening real devices to a repair shop.** It can break parts or end the [[warranty]], and a damaged battery can **catch fire**."
     },
     {
       "id": "open-the-laptop",
@@ -86,7 +83,7 @@
           "nudge": "Lift the panel off first."
         }
       ],
-      "explanation": "Screws first, then the panel. Then technicians **unplug the battery** before they touch any other part, so nothing gets a jolt of power while they work.",
+      "explanation": "Screws first, then the panel. Then repairers **unplug the battery** before they touch any other part, so nothing gets a jolt of power while they work.",
       "hint": "Follow the order in the prompt. The panel is held on by screws, and the battery connector only shows once the panel is off."
     },
     {
@@ -109,69 +106,66 @@
       "nudge": "Look again at the shapes. RAM is the stick with a row of chips in its slot; the SSD is the longer, narrower card with striped chips."
     },
     {
-      "id": "match-parts",
-      "type": "match_pairs",
+      "id": "real-laptop",
+      "type": "photo",
       "difficulty": "core",
-      "prompt": "Match each part to its job.",
-      "pairs": [
-        { "id": "cpu", "left": "CPU", "right": "Follows the instructions" },
-        { "id": "ram", "left": "RAM", "right": "Fast workspace for right now" },
-        { "id": "storage", "left": "Storage", "right": "Keeps files when it's off" },
-        { "id": "motherboard", "left": "Motherboard", "right": "Connects all the parts" },
-        { "id": "battery", "left": "Battery", "right": "Stores energy" }
-      ],
-      "explanation": "The **CPU** does the work, **RAM** holds what's in use, **storage** keeps things for later, the **motherboard** links everything, and the **battery** powers it all.",
-      "hint": "Think back to what each part did when you tapped it inside the laptop. Start with the one you're surest of.",
-      "nudge": "RAM and storage are easy to mix up: one is a fast workspace for right now, the other keeps things when the power is off."
+      "title": "Here's the inside of a real laptop",
+      "photo": {
+        "src": "/photos/framework-laptop-13-inside.jpg",
+        "alt": "A real laptop with its bottom cover off: a round fan and a curved black heat pipe at the top, a long narrow SSD card in the middle, and a wide battery across the bottom.",
+        "width": 2869,
+        "height": 2160
+      },
+      "caption": "A real laptop, a **Framework Laptop 13**, with its cover off. Can you spot the fan, the heat pipe (black in this one), the long, narrow SSD and the wide battery?",
+      "credit": {
+        "author": "Ogidya",
+        "licence": "CC BY 4.0",
+        "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Framework_Laptop_13_-_2023_AMD_Ryzen_-_Internal_motherboard_and_component_view.jpg",
+        "device": "Framework Laptop 13 (2023, AMD Ryzen)"
+      }
     },
     {
       "id": "explore-the-phone",
       "type": "hotspot",
       "difficulty": "core",
-      "prompt": "A phone has the same jobs to do, squeezed into a much smaller space. **Tap each part** to meet it.",
+      "prompt": "A phone does the same jobs in a much smaller space. **Tap each part** to meet it.",
       "scene": "phone",
       "view": "open",
       "mode": "explore",
       "parts": [
-        { "part": "camera", "job": "The camera module. Its lens looks out through the back cover, and it plugs into the board with its own little cable." },
-        { "part": "cpu", "job": "The processor. It does the CPU's job and more (graphics too) in one chip. The small shiny chip on a square base." },
-        { "part": "ram", "job": "A RAM chip: the fast workspace, soldered on so it can't be swapped. In many phones it sits right on top of the processor." },
-        { "part": "storage", "job": "The storage chip keeps your photos, apps and messages, even when the phone is off. Soldered on too. It's marked with stripes." },
-        { "part": "battery", "job": "Stores the energy. It fills most of the phone, so it can last all day. Look for the lightning bolt." },
+        { "part": "camera", "job": "The camera module. Its lens looks out through the back cover." },
+        {
+          "part": "cpu",
+          "job": "The processor. It does the CPU's job and more (graphics too) in one chip. The small shiny chip on a square base."
+        },
+        {
+          "part": "ram",
+          "job": "The RAM chip, the fast workspace. A chip of little squares, soldered on so it can't be swapped."
+        },
+        {
+          "part": "storage",
+          "job": "The storage chip keeps your photos, apps and messages, even when the phone is off. Soldered on too. It's marked with stripes."
+        },
+        {
+          "part": "battery",
+          "job": "Stores the energy. It fills most of the phone, so it can last all day. Look for the lightning bolt."
+        },
         { "part": "battery-connector", "job": "Joins the battery to the board. It's unplugged first in every repair." },
-        { "part": "connector-cover", "job": "A small metal bracket, held by two tiny screws, that stops the battery connector popping off." },
-        { "part": "charging-port", "job": "Where the charger plugs in, in the middle of the bottom edge. It's open to the outside, so pocket fluff can get in." },
-        { "part": "speaker", "job": "Plays sounds and music. It's the small grille of holes near the bottom." },
-        { "part": "vibration-motor", "job": "A tiny motor with an off-centre weight. It spins to make the phone buzz." }
+        {
+          "part": "charging-port",
+          "job": "Where the charger plugs in, on the bottom edge. It's open to the outside, so pocket fluff can get in."
+        }
       ],
       "explanation": "Same jobs as the laptop, packed tighter: the processor, a [[RAM]] chip and a [[storage]] chip are all soldered to one small board, so none of them can be swapped. The battery takes up most of the space. Most phones have no fan."
-    },
-    {
-      "id": "real-phone",
-      "type": "photo",
-      "difficulty": "core",
-      "title": "Here's the inside of a real phone",
-      "photo": {
-        "src": "/photos/phone-glued-back-opened.jpg",
-        "alt": "A real smartphone with its glued back removed: a large battery fills the middle, with metal plates covering the boards above and below it and the cameras at the top left.",
-        "width": 3202,
-        "height": 6157
-      },
-      "caption": "A **Huawei P Smart Z** (2019) with its glued-on back removed. Just like in the diagram, the **battery** takes up most of the space. Its printed warning says: do not disassemble, puncture, crush, heat or burn.",
-      "credit": {
-        "author": "Raimond Spekking",
-        "licence": "CC BY-SA 4.0",
-        "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Huawei_Honor_P_Smart_Z_-_case_opened-8858.jpg",
-        "device": "Huawei P Smart Z (2019)"
-      }
     },
     {
       "id": "open-the-phone",
       "type": "teardown",
       "difficulty": "core",
-      "prompt": "Now a phone. Phones are **glued shut**, so repairers soften the glue first. In this simulation: soften the glue, lift off the back, take out the **two tiny screws**, lift the **bracket**, then **unplug the battery**.",
+      "prompt": "Now a phone. Phones are **glued shut**. Open this one in four steps: **soften the glue**, lift off the back, lift off the **bracket** over the battery connector (its two tiny screws are already out), then **unplug the battery**.",
       "scene": "phone",
+      "view": "bracket-unscrewed",
       "actions": [
         { "id": "heat", "part": "back-cover", "verb": "heat", "nudge": "Soften the glue on the back cover first." },
         {
@@ -182,25 +176,11 @@
           "nudge": "The glue is still hard. Soften it first."
         },
         {
-          "id": "screw-1",
-          "part": "screw-1",
-          "verb": "unscrew",
-          "after": ["cover"],
-          "nudge": "Take the back cover off first."
-        },
-        {
-          "id": "screw-2",
-          "part": "screw-2",
-          "verb": "unscrew",
-          "after": ["cover"],
-          "nudge": "Take the back cover off first."
-        },
-        {
           "id": "bracket",
           "part": "connector-cover",
           "verb": "lift",
-          "after": ["screw-1", "screw-2"],
-          "nudge": "Both tiny screws have to come out first."
+          "after": ["cover"],
+          "nudge": "Take the back cover off first."
         },
         {
           "id": "unplug",
@@ -210,14 +190,14 @@
           "nudge": "Lift the bracket off the connector first."
         }
       ],
-      "explanation": "Soften the glue, lift the back, take out the bracket's screws and the bracket, then **unplug the battery** before touching anything else. Repair shops do this with special tools and training, because a damaged phone battery can catch fire.",
-      "hint": "Follow the order in the prompt. The back won't lift until its glue is soft, and a bracket holds the battery connector down.",
+      "explanation": "Glue, back, bracket, battery. (In a real phone, tiny screws hold that bracket down.) The battery is **unplugged first**, before anything else is touched. Repair shops do this with special tools and training, because a damaged phone battery can catch fire.",
+      "hint": "The back won't lift until its glue is soft. The battery connector is hidden under a small bracket.",
       "safety": "**Heating or prying a phone can damage its battery and start a fire.** That's why repair shops use special tools and training. It's never something to try at home."
     },
     {
       "id": "where-photos-live",
       "type": "hotspot",
-      "difficulty": "core",
+      "difficulty": "challenge",
       "prompt": "Tap the part where this phone keeps your **photos**, even when it's switched off.",
       "scene": "phone",
       "view": "open",
@@ -247,108 +227,11 @@
       "nudge": "The main chips are packed close together. Check each one's look: the shiny chip on its base, the chip of little squares, and the stripes."
     },
     {
-      "id": "swap-the-camera",
-      "type": "teardown",
-      "difficulty": "challenge",
-      "prompt": "A repair: take the camera out, fit it back in, then close the phone up again in a safe order.",
-      "scene": "phone",
-      "actions": [
-        { "id": "heat", "part": "back-cover", "verb": "heat", "nudge": "Soften the glue on the back cover first." },
-        {
-          "id": "cover",
-          "part": "back-cover",
-          "verb": "lift",
-          "after": ["heat"],
-          "nudge": "The glue is still hard. Soften it first."
-        },
-        {
-          "id": "screw-1",
-          "part": "screw-1",
-          "verb": "unscrew",
-          "after": ["cover"],
-          "nudge": "Take the back cover off first."
-        },
-        {
-          "id": "screw-2",
-          "part": "screw-2",
-          "verb": "unscrew",
-          "after": ["cover"],
-          "nudge": "Take the back cover off first."
-        },
-        {
-          "id": "bracket",
-          "part": "connector-cover",
-          "verb": "lift",
-          "after": ["screw-1", "screw-2"],
-          "nudge": "Both tiny screws have to come out first."
-        },
-        {
-          "id": "unplug",
-          "part": "battery-connector",
-          "verb": "unplug",
-          "after": ["bracket"],
-          "nudge": "Lift the bracket off the connector first."
-        },
-        {
-          "id": "camera-out",
-          "part": "camera",
-          "verb": "slide-out",
-          "after": ["unplug"],
-          "nudge": "Unplug the battery before touching any other part."
-        },
-        {
-          "id": "camera-in",
-          "part": "camera",
-          "verb": "insert",
-          "after": ["camera-out"],
-          "nudge": "Take the old camera out first."
-        },
-        {
-          "id": "replug",
-          "part": "battery-connector",
-          "verb": "plug-in",
-          "after": ["camera-in"],
-          "nudge": "Fit the camera back before reconnecting the battery."
-        },
-        {
-          "id": "bracket-on",
-          "part": "connector-cover",
-          "verb": "insert",
-          "after": ["replug"],
-          "nudge": "Reconnect the battery before the bracket goes back."
-        },
-        {
-          "id": "fasten-1",
-          "part": "screw-1",
-          "verb": "fasten",
-          "after": ["bracket-on"],
-          "nudge": "Put the bracket back first."
-        },
-        {
-          "id": "fasten-2",
-          "part": "screw-2",
-          "verb": "fasten",
-          "after": ["bracket-on"],
-          "nudge": "Put the bracket back first."
-        },
-        {
-          "id": "cover-on",
-          "part": "back-cover",
-          "verb": "insert",
-          "after": ["fasten-1", "fasten-2"],
-          "nudge": "Screw the bracket down before closing the phone."
-        }
-      ],
-      "explanation": "Putting a device back together is taking it apart in reverse. The battery is **unplugged first** and **plugged back in last**, then the bracket, its screws and the back go on. (Real repairers also fit new glue and test the phone before closing it.)",
-      "hint": "Open it the way you did before. Parts you take out wait in the **Parts out** tray: tap one there to fit it back. Close up in reverse order: battery, bracket, screws, then the back.",
-      "safety": "**Heating or prying a phone can damage its battery and start a fire.** That's why repair shops use special tools and training. It's never something to try at home."
-    },
-    {
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- Phones and laptops are built from the same parts: **CPU**, **RAM**, **storage**, a **battery**, and the **motherboard** that connects them.\n- The CPU does the work, RAM holds what's in use now, and storage keeps things for later.\n- In phones, the RAM and storage are chips **soldered** to the board. Some laptops let you swap the RAM and SSD; many thin ones don't.\n- Technicians **unplug the battery first** and plug it back in last.\n- Real devices should only be opened by an adult or a repair shop.\n\nNext: why RAM and storage are so different."
+      "body": "- Phones and laptops share the same parts: CPU, RAM, storage, battery.\n- The CPU does the work, RAM holds what's open, storage keeps files.\n- Repairers **unplug the battery first**. Leave real phones and laptops to them.\n\nNext: why RAM and storage are so different."
     }
   ]
 }

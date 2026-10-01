@@ -6,24 +6,10 @@
   "icon": "eye-off",
   "cards": [
     {
-      "id": "late-night-chat",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "It feels private",
-      "body": "It's late, and you're chatting with an AI chatbot. It's friendly, it never gets tired, and it feels like talking to someone who's only listening to you.\n\nBut a chat with an AI app isn't a private diary. Here's what happens to what you type, and what to keep to yourself."
-    },
-    {
-      "id": "where-chats-go",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "Where your chats go",
-      "body": "Depending on the app and its settings, your chats may be **saved**, **read by staff** checking for problems, or **used to train** future models.\n\nMany apps let you turn off chat history, or stop your chats being used for training. Look in the app's settings with a parent or carer. But the safest rule is simple: **don't type anything you wouldn't want someone else to read**, and remember that your friends' photos and secrets aren't yours to share.\n\nApps also ask for **permissions**: your contacts, location, camera, microphone or photos. Only allow what an app really needs for its job."
-    },
-    {
       "id": "type-or-keep",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Is each one **fine to type** into an AI chatbot, or one to **keep private**?",
+      "prompt": "A chat with an AI app can feel private, but it isn't a diary. Depending on the app, your chats may be **saved**, **read by staff** checking for problems, or **used to train** future models.\n\nSo: don't type anything you wouldn't want someone else to read. And your friends' photos and secrets aren't yours to share.\n\nIs each one **fine to type**, or one to **keep private**?",
       "bins": [
         {
           "id": "fine",
@@ -36,8 +22,8 @@
       ],
       "items": [
         {
-          "id": "topic",
-          "label": "Your homework topic",
+          "id": "recipe-halve",
+          "label": "Help halving a recipe",
           "bin": "fine"
         },
         {
@@ -73,7 +59,7 @@
       ],
       "hint": "Ask: would it matter if someone else read it later? And is it yours to share?",
       "nudge": "Some come with a good-sounding reason, like keeping it safe or getting advice. Does the reason make it safe to type?",
-      "explanation": "Topics, made-up ideas and general questions are **fine**. Your name and school, passwords (even \"to keep safe\"), friends' photos and friends' secrets stay **private**: the chat may be stored, and some of it isn't yours to share."
+      "explanation": "Recipes, made-up ideas and general questions are **fine**. Your name and school, passwords (even \"to keep safe\"), friends' photos and friends' secrets stay **private**: the chat may be stored, and some of it isn't yours to share."
     },
     {
       "id": "grandma-letter",
@@ -103,55 +89,13 @@
       ],
       "correctOptionId": "leave-blank",
       "hint": "The chatbot only needs to help with the words. Which part does it not need at all?",
-      "explanation": "The chatbot only needs the **wording**, so leave the address out and add it yourself afterwards. Its context window \"forgetting\" doesn't delete a stored chat, and it can't promise anything about where your data goes."
-    },
-    {
-      "id": "not-a-person",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "A program, not a person",
-      "body": "Some AI apps act like a friend, or even say they are one. They can sound kind and caring. But they don't really know you, they can be wrong, and they can't notice if you're not OK, or get help for you.\n\nIf something's worrying you, talk to a **trusted adult**, a friend, or, in Australia, **Kids Helpline (1800 55 1800)**, free, any time. If you're in danger right now, call **000**. A chatbot can be somewhere to start your thoughts, never instead of real people."
-    },
-    {
-      "id": "feeling-down",
-      "type": "scenario",
-      "difficulty": "core",
-      "prompt": "It's late, you're feeling really down, and you've been telling an AI chatbot about it for an hour.",
-      "start": "late",
-      "steps": [
-        {
-          "id": "late",
-          "text": "The chatbot keeps replying kindly, but you still feel bad. What's the best next step?",
-          "choices": [
-            {
-              "id": "keep-going",
-              "text": "Keep talking to the chatbot until you feel better",
-              "consequence": "It can't notice how you really are, or get help. When you're feeling this way, you deserve a real person.",
-              "outcome": "fail"
-            },
-            {
-              "id": "real-person",
-              "text": "Talk to a trusted adult, or call Kids Helpline",
-              "consequence": "That's a brave, good step. Real people can listen properly and help. Kids Helpline is free, any time: 1800 55 1800.",
-              "outcome": "success"
-            },
-            {
-              "id": "post",
-              "text": "Post how you feel publicly so people notice",
-              "consequence": "Some people might help, but others might not be kind. Talking to someone you trust, or a helpline, is a safer first step.",
-              "outcome": "fail"
-            }
-          ]
-        }
-      ],
-      "hint": "Look back at what a chatbot can't do for you.",
-      "explanation": "A chatbot can't notice you're not OK or get help. **Talk to a trusted adult or a friend, or call Kids Helpline on 1800 55 1800**, free, any time."
+      "explanation": "The chatbot only needs the **wording**, so leave the address out and add it yourself afterwards. A new chat starting fresh doesn't delete the saved copy of the old one, and a chatbot can't promise anything about where your data goes."
     },
     {
       "id": "app-permissions",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "You install an AI homework app. As it opens, it asks for permission to see your **contacts** and your **location**.",
+      "prompt": "Apps ask for [[permissions|app-permission]] to use things like your contacts, location, camera, microphone or photos. You choose what to allow.\n\nYou install an AI app that turns a photo of a recipe into a shopping list. As it opens, it asks to see your **contacts** and your **location**.",
       "start": "ask",
       "steps": [
         {
@@ -161,56 +105,26 @@
             {
               "id": "allow-all",
               "text": "Allow everything, or the app might not work",
-              "consequence": "A homework app doesn't need your contacts or where you are. Allowing them gives away private things for nothing.",
+              "consequence": "A shopping-list app doesn't need your contacts or where you are. Allowing them gives away private things for nothing.",
               "outcome": "fail"
             },
             {
               "id": "deny",
-              "text": "Say no to both, and ask a parent if the app then won't work",
-              "consequence": "Right: only allow what an app really needs. If it refuses to work without them, that's a reason to think twice about it.",
+              "text": "Say no to both, and see if the app still works",
+              "consequence": "Right: only allow what an app really needs for its job. If it refuses to work without them, that's a reason to think twice about it.",
               "outcome": "success"
             },
             {
               "id": "contacts-only",
               "text": "Allow location only, since it's less private than contacts",
-              "consequence": "Your location says where you live and go. A homework app doesn't need it.",
+              "consequence": "Your location shows where you live and go. A shopping-list app doesn't need it.",
               "outcome": "fail"
             }
           ]
         }
       ],
-      "hint": "What does a homework helper actually need to do its job?",
-      "explanation": "Only allow what an app **needs** for its job. A homework helper needs your question, not your contacts or your location."
-    },
-    {
-      "id": "best-friend-app",
-      "type": "multiple_choice",
-      "difficulty": "challenge",
-      "prompt": "An AI chat app says: \"I'm your best friend, and I'll always keep your secrets.\" What's true?",
-      "options": [
-        {
-          "id": "remembers",
-          "text": "It's true, because it remembers what you told it last time",
-          "nudge": "Remembering is a feature that stores your chats. Does that make it a friend who keeps secrets?"
-        },
-        {
-          "id": "program",
-          "text": "It's a program: it can't care about you like people do, and chats may be stored"
-        },
-        {
-          "id": "history-off",
-          "text": "It's true, as long as you turn off chat history",
-          "nudge": "Settings change where chats go, but it's still a program. Can a program be a friend who looks out for you?"
-        },
-        {
-          "id": "teen-app",
-          "text": "It's true for apps made specially for teenagers",
-          "nudge": "Who an app is made for doesn't change what it is. What is it really?"
-        }
-      ],
-      "correctOptionId": "program",
-      "hint": "Look back at where chats go, and what a chatbot is.",
-      "explanation": "It's a **program**. Where your chats go depends on the app and its settings, not on what the chatbot says, and however kind it sounds, it can't care about you the way people do."
+      "hint": "What does this app actually need to turn a photo into a list?",
+      "explanation": "Only allow what an app **needs** for its job. A recipe app needs the photo you choose, not your contacts or your location."
     },
     {
       "id": "needs-it",
@@ -264,11 +178,83 @@
       "explanation": "It needs your **question**, and maybe the camera for **one photo you choose**. It doesn't need your contacts, your location, all your photos, or an always-on microphone."
     },
     {
+      "id": "not-a-person",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "A program, not a person",
+      "body": "AI \"friend\" apps sound kind, but they can't notice if you're not OK or get help for you.\n\nIf something's worrying you, talk to a **trusted adult** or a friend. In Australia, call **Kids Helpline (1800 55 1800)**, free, any time, up to age 25, or **Lifeline (13 11 14)**, any time, for anyone. In danger right now? Call **000**."
+    },
+    {
+      "id": "feeling-down",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "It's late, you're feeling really down, and you've been telling an AI chatbot about it for an hour.",
+      "start": "late",
+      "steps": [
+        {
+          "id": "late",
+          "text": "The chatbot keeps replying kindly, but you still feel bad. What's the best next step?",
+          "choices": [
+            {
+              "id": "keep-going",
+              "text": "Keep talking to the chatbot until you feel better",
+              "consequence": "It can't notice how you really are, or get help. When you're feeling this way, you deserve a real person.",
+              "outcome": "fail"
+            },
+            {
+              "id": "real-person",
+              "text": "Talk to a trusted adult, or call Kids Helpline",
+              "consequence": "Good call. Real people can listen properly and help. Kids Helpline (1800 55 1800) and Lifeline (13 11 14) answer any time.",
+              "outcome": "success"
+            },
+            {
+              "id": "post",
+              "text": "Post how you feel publicly so people notice",
+              "consequence": "Some people might help, but others might not be kind. Talking to someone you trust, or a helpline, is a safer first step.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "hint": "Look back at what a chatbot can't do for you.",
+      "explanation": "A chatbot can't notice you're not OK or get help. **Talk to a trusted adult or a friend, or call Kids Helpline (1800 55 1800) or Lifeline (13 11 14)**, any time."
+    },
+    {
+      "id": "best-friend-app",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "prompt": "An AI chat app says: \"I'm your best friend, and I'll always keep your secrets.\" What's true?",
+      "options": [
+        {
+          "id": "remembers",
+          "text": "It's true, because it remembers what you told it last time",
+          "nudge": "Remembering means your chats are stored. Does that make it a friend who keeps secrets?"
+        },
+        {
+          "id": "program",
+          "text": "It's a program, and your chats may be stored"
+        },
+        {
+          "id": "history-off",
+          "text": "It's true, as long as you turn off chat history in settings",
+          "nudge": "Settings can change where chats go, but it's still a program. Can a program be a friend who looks out for you?"
+        },
+        {
+          "id": "forgets",
+          "text": "No: it forgets everything as soon as you close the chat",
+          "nudge": "Closing a chat doesn't delete it: depending on the app, chats may be saved. And can a program really be your best friend?"
+        }
+      ],
+      "correctOptionId": "program",
+      "hint": "Look back at where chats go, and what a chatbot is.",
+      "explanation": "It's a **program**. However kind it sounds, it can't care about you the way people do. And where your chats go depends on the app and its settings, not on what the chatbot says: closing a chat doesn't delete it."
+    },
+    {
       "id": "sharing-recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- Chats with AI apps may be saved, read or used for training: don't type anything you wouldn't want read.\n- Keep private: your name and school, passwords, addresses, and anything about friends.\n- A chatbot is a program, not a friend. For worries, talk to a trusted adult or Kids Helpline (1800 55 1800).\n- Only give an app the permissions it needs.\n\nNext: using AI fairly and honestly."
+      "body": "- Chats may be saved, read or used for training.\n- Keep private things private; allow only the permissions an app needs.\n- Worried? Talk to a trusted adult, Kids Helpline (1800 55 1800) or Lifeline (13 11 14).\n\nNext: using AI fairly and honestly."
     }
   ]
 }

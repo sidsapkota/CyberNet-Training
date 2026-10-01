@@ -19,89 +19,101 @@
       "difficulty": "core",
       "prompt": "Your phone at `192.168.1.21` loads a page. Your router's public address is `203.0.113.7`. Which address does the web server see as the sender?",
       "options": [
-        { "id": "public", "text": "203.0.113.7" },
-        { "id": "phone", "text": "192.168.1.21" },
-        { "id": "router-inside", "text": "192.168.1.1" },
-        { "id": "none", "text": "No address, because HTTPS hides it" }
+        { "id": "public", "text": "203.0.113.7, the router's public address" },
+        { "id": "phone", "text": "192.168.1.21, the phone's own address" },
+        { "id": "router-inside", "text": "192.168.1.1, the router's address inside your home" },
+        { "id": "none", "text": "No address at all, because HTTPS hides it" }
       ],
       "correctOptionId": "public",
-      "explanation": "The router uses **NAT** to swap the phone's private address (and port) for its public address `203.0.113.7` and a public port. HTTPS encrypts the content, but packets still need addresses to be delivered."
+      "explanation": "Private addresses like `192.168.1.21` only work inside your home, so the router uses **NAT** to send the request from its public address, `203.0.113.7`, and notes who asked. HTTPS encrypts the content, but packets still need addresses to be delivered."
     },
     {
-      "id": "packet-count",
-      "type": "numeric_input",
+      "id": "lost-packet",
+      "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A file is **4,500 bytes**. If each packet carries exactly **1,500 bytes of data**, how many packets are needed?",
-      "base": "decimal",
-      "answer": 3,
-      "unit": "packets",
-      "explanation": "4,500 ÷ 1,500 = **3** packets. (Real packets use part of their space for the IP and TCP information, so in practice it would take one more.)"
+      "prompt": "You download a photo over **TCP**. It's split into packets, and one of them gets lost on the way. What happens?",
+      "options": [
+        { "id": "resent", "text": "The missing packet is sent again, and the photo arrives complete" },
+        { "id": "gap", "text": "The photo arrives with a small strip missing where that packet was" },
+        { "id": "restart", "text": "The whole download starts again from the very first packet" },
+        { "id": "router-copy", "text": "The last router keeps a spare copy and quietly fills the gap" }
+      ],
+      "correctOptionId": "resent",
+      "explanation": "TCP numbers its packets and the receiver confirms what arrived, so it notices the gap and gets **just that packet** sent again, then puts everything back in order. A strip going missing is what can happen with UDP, which doesn't resend. Routers just pass packets on; they don't keep copies."
     },
     {
       "id": "lookup-order",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "Nobody has looked up example.com recently. Put the DNS lookup in order.",
+      "prompt": "Nobody on your network has looked up `shop.example.org` before. Put the DNS lookup in order.",
       "items": [
-        { "id": "cache", "label": "Your device checks its cache" },
+        { "id": "cache", "label": "Your device checks its cache, and finds nothing" },
         { "id": "resolver", "label": "Your device asks a resolver" },
-        { "id": "root", "label": "The resolver asks a root server" },
-        { "id": "tld", "label": "The resolver asks a .com TLD server" },
-        { "id": "authoritative", "label": "The resolver asks example.com's authoritative server" }
+        { "id": "root", "label": "The resolver asks a root server who handles .org" },
+        { "id": "tld", "label": "The resolver asks a .org server who's in charge of example.org" },
+        { "id": "authoritative", "label": "The resolver asks example.org's authoritative server for the address" }
       ],
-      "explanation": "Cache first, then the resolver does the asking: **root**, then **TLD**, then the **authoritative** server, which holds the real answer."
+      "explanation": "Cache first. Then the resolver goes from general to specific: **root**, then the **.org** TLD server, then the **authoritative** server, the one that actually holds the address."
     },
     {
-      "id": "ports-final",
-      "type": "match_pairs",
+      "id": "which-door",
+      "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Match each service to its standard port.",
-      "pairs": [
-        { "id": "https", "left": "HTTPS", "right": "`443`" },
-        { "id": "http", "left": "HTTP", "right": "`80`" },
-        { "id": "dns", "left": "DNS", "right": "`53`" },
-        { "id": "ssh", "left": "SSH", "right": "`22`" }
+      "prompt": "One server at `198.51.100.10` runs a website, an email program and a game server. A packet arrives addressed to `198.51.100.10:443`. Which program gets it?",
+      "options": [
+        { "id": "web", "text": "The website, because 443 is the door for secure web pages (HTTPS)" },
+        { "id": "all", "text": "All three programs get a copy, and each ignores what isn't for it" },
+        { "id": "email", "text": "The email program, because email always has to be encrypted" },
+        { "id": "game", "text": "The game server, because games need the fastest door on the server" }
       ],
-      "explanation": "HTTPS **443**, HTTP **80**, DNS **53**, SSH **22**."
+      "correctOptionId": "web",
+      "explanation": "The IP address gets the packet to the right **computer**; the **port** picks the program. Port **443** is the standard door for HTTPS, so the web server gets it. Nothing is copied to every program: that's exactly what ports prevent."
     },
     {
-      "id": "status-final",
-      "type": "match_pairs",
+      "id": "first-digit-final",
+      "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Match each HTTP status code to its meaning.",
-      "pairs": [
-        { "id": "s200", "left": "`200`", "right": "OK" },
-        { "id": "s301", "left": "`301`", "right": "Moved permanently" },
-        { "id": "s404", "left": "`404`", "right": "Not found" },
-        { "id": "s500", "left": "`500`", "right": "Server error" }
+      "prompt": "You've never seen these status codes before. Sort each response: did it work, or where was the problem?",
+      "bins": [
+        { "id": "fine", "label": "All fine" },
+        { "id": "mine", "label": "Problem with the request" },
+        { "id": "server", "label": "The server's problem" }
       ],
-      "explanation": "2xx success, 3xx redirect, 4xx a problem with the request, 5xx a problem on the server: **200** OK, **301** Moved Permanently, **404** Not Found, **500** Internal Server Error."
+      "items": [
+        { "id": "s204", "label": "`204 No Content`", "bin": "fine" },
+        { "id": "s202", "label": "`202 Accepted`", "bin": "fine" },
+        { "id": "s400", "label": "`400 Bad Request`", "bin": "mine" },
+        { "id": "s410", "label": "`410 Gone`", "bin": "mine" },
+        { "id": "s502", "label": "`502 Bad Gateway`", "bin": "server" },
+        { "id": "s504", "label": "`504 Gateway Timeout`", "bin": "server" }
+      ],
+      "explanation": "Only the first digit matters: **2** means it worked, **4** means a problem with the request, and **5** means a problem on the server's side. You don't need to know a code to know whose problem it is."
     },
     {
       "id": "padlock-final",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "What does the padlock next to a web address mean?",
+      "prompt": "A text message links to `parcels-redelivery.example`. The page has a padlock and asks for your card details. What does the padlock tell you for sure?",
       "options": [
-        { "id": "encrypted", "text": "Your connection to that site's name is encrypted" },
-        { "id": "trustworthy", "text": "The site is trustworthy and safe" },
-        { "id": "invisible", "text": "Nobody can tell which site you're visiting" },
-        { "id": "virus-free", "text": "The site has been checked for viruses" }
+        { "id": "encrypted", "text": "Encrypted, to a server that owns that exact name; not who runs it" },
+        { "id": "trustworthy", "text": "A certificate authority has checked that the company is honest" },
+        { "id": "invisible", "text": "Nobody, not even the network, can tell which site you're on" },
+        { "id": "real-company", "text": "The site really belongs to the parcel company you use" }
       ],
       "correctOptionId": "encrypted",
-      "explanation": "The padlock means the connection is **encrypted** with TLS, to the name in the address bar. Scam sites can have padlocks too, and the site you're visiting is usually still visible to the network."
+      "explanation": "The padlock means the connection is **encrypted**, to a server that really owns the exact name `parcels-redelivery.example`. Anyone can get a certificate for a name they own, scammers included, so it says nothing about honesty or which company is behind it."
     },
     {
       "id": "journey-final",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "Put the journey of loading `https://example.com` in order.",
+      "prompt": "You open `https://shop.example.org/cart`. Put what happens in order.",
       "items": [
-        { "id": "dns", "label": "DNS lookup finds the server's IP address" },
-        { "id": "tcp", "label": "TCP handshake: SYN, SYN-ACK, ACK" },
-        { "id": "tls", "label": "TLS handshake: keys agreed and the certificate checked" },
-        { "id": "get", "label": "Encrypted HTTP GET request" },
-        { "id": "response", "label": "200 OK response, and the page is drawn" }
+        { "id": "dns", "label": "A resolver finds shop.example.org's IP address" },
+        { "id": "tcp", "label": "TCP handshake with the server on port 443" },
+        { "id": "tls", "label": "Secret keys agreed and the certificate checked" },
+        { "id": "get", "label": "Encrypted GET request for /cart" },
+        { "id": "response", "label": "200 OK comes back, and the page is drawn" }
       ],
       "explanation": "**DNS** finds the address, **TCP** connects, **TLS** secures the connection, **HTTP** asks, and the response is drawn as the page. That's the whole course in five steps."
     }

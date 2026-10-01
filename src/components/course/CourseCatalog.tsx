@@ -46,7 +46,7 @@ export function CourseCatalog({ courses }: { courses: CourseOutline[] }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: staggerDelay(i, 0.06), ease: EASE_OUT_QUICK }}
         >
-          <CourseCard course={course} />
+          <CourseCard course={course} startHere={i === 0} />
         </motion.li>
       ))}
       {tiles < 2 && (

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cleanSource, eventData, redactUrl, sourceFromUrl } from "./analytics";
+import { cleanSource, eventData, quitEventData, redactUrl, sourceFromUrl } from "./analytics";
 
 describe("analytics: where visitors came from", () => {
   it("takes utm_source first, then a /from/<platform> path", () => {
@@ -41,5 +41,17 @@ describe("eventData (funnel events)", () => {
     expect(eventData("sam@example.com", null)).toEqual({});
     expect(eventData({ course: "Sam Smith" }, null)).toEqual({});
     expect(eventData("a".repeat(81), null)).toEqual({});
+  });
+});
+
+describe("quitEventData (where people leave a lesson)", () => {
+  it("sends only the lesson id and the card number", () => {
+    expect(quitEventData("meet-the-os", 4)).toEqual({ lesson: "meet-the-os", card: "4" });
+  });
+
+  it("drops anything that isn't a content id or a small whole number", () => {
+    expect(quitEventData("someone@example.com", 0)).toEqual({});
+    expect(quitEventData("meet-the-os", 2.5)).toEqual({ lesson: "meet-the-os" });
+    expect(quitEventData("meet-the-os", 400)).toEqual({ lesson: "meet-the-os" });
   });
 });

@@ -9,64 +9,70 @@
       "id": "dns-job",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "What is the main job of DNS?",
+      "prompt": "You type `example.org` into your browser. Before any packet can be sent to the website, what has to happen first?",
       "options": [
-        { "id": "names-to-addresses", "text": "Turning names like example.com into IP addresses" },
-        { "id": "routing", "text": "Choosing the route packets take between routers" },
-        { "id": "encrypt", "text": "Encrypting websites so nobody can read them" },
-        { "id": "private", "text": "Giving devices at home their private addresses" }
+        { "id": "names-to-addresses", "text": "DNS turns the name into an IP address" },
+        { "id": "routing", "text": "Routers read the name example.org to choose a route" },
+        { "id": "encrypt", "text": "The website encrypts its name so nobody can read it" },
+        { "id": "private", "text": "Your home router gives example.org a private address" }
       ],
       "correctOptionId": "names-to-addresses",
-      "explanation": "DNS, the **Domain Name System**, turns names into addresses, like a contacts app for the internet. Routers choose routes, and encryption is a different job entirely."
+      "explanation": "Routers deliver packets using **IP addresses**, not names. So your device first asks **DNS** to turn example.org into an address, like looking up a number in a contacts app. Only then can packets be sent."
     },
     {
-      "id": "blog-name-parts",
-      "type": "drag_to_order",
+      "id": "controlled-by-example-org",
+      "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Put the parts of `blog.example.org` in order, from the **most general** at the top to the **most specific** at the bottom.",
-      "items": [
-        { "id": "root", "label": "The root (.)" },
-        { "id": "tld", "label": "org" },
-        { "id": "domain", "label": "example" },
-        { "id": "subdomain", "label": "blog" }
+      "prompt": "Which of these names is controlled by whoever registered **example.org**?",
+      "options": [
+        { "id": "news-subdomain", "text": "news.example.org" },
+        { "id": "org-in-middle", "text": "example.org.news.example.com" },
+        { "id": "hyphen", "text": "example-org.example.net" },
+        { "id": "org-then-net", "text": "news.example.org.example.net" }
       ],
-      "explanation": "Names are read right to left: the **root**, then the TLD `org`, then the domain `example`, then the subdomain `blog`."
+      "correctOptionId": "news-subdomain",
+      "explanation": "Read from the right. `news.example.org` ends in **example.org**, so it's a subdomain its owner added. The others end in `example.com` or `example.net`, so they belong to whoever registered those, even though they contain the words \"example.org\"."
     },
     {
       "id": "server-jobs",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Match each DNS server to its job.",
+      "prompt": "Nobody has looked up example.com recently. Match each DNS server to what it would \"say\" during the lookup.",
       "pairs": [
-        { "id": "resolver", "left": "Resolver", "right": "Asks the other servers for you" },
-        { "id": "root", "left": "Root server", "right": "Points to the servers for each TLD" },
-        { "id": "tld", "left": "TLD server", "right": "Points to each domain's own servers" },
-        { "id": "authoritative", "left": "Authoritative server", "right": "Holds the domain's real records" }
+        { "id": "resolver", "left": "Resolver", "right": "\"Leave it with me, I'll find out for you.\"" },
+        { "id": "root", "left": "Root server", "right": "\"I don't know, but here are the .com servers.\"" },
+        { "id": "tld", "left": "TLD server", "right": "\"Ask example.com's own server.\"" },
+        { "id": "authoritative", "left": "Authoritative server", "right": "\"example.com is at 198.51.100.10.\"" }
       ],
-      "explanation": "The **resolver** does the legwork. **Root** servers point to TLD servers, **TLD** servers point to a domain's authoritative servers, and the **authoritative** server has the actual answer."
+      "explanation": "The **resolver** does the asking for you. The **root** server points to the `.com` servers, the **TLD** server points to example.com's own server, and only the **authoritative** server gives the real answer."
     },
     {
-      "id": "ttl-300",
-      "type": "numeric_input",
+      "id": "ttl-move-in-time",
+      "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A DNS answer has a TTL of **300**. How many **minutes** can it be cached?",
-      "base": "decimal",
-      "answer": 5,
-      "unit": "minutes",
-      "explanation": "DNS TTLs are in seconds: 300 ÷ 60 = **5 minutes**."
+      "prompt": "A website will move to a new IP address in 10 minutes. Its DNS answers have a TTL of **3,600**. Will every device that has just looked it up switch to the new address as soon as it moves?",
+      "options": [
+        { "id": "no-hour", "text": "No: they may keep using the old answer for up to an hour" },
+        { "id": "yes-updates", "text": "Yes: every cache is updated the moment the site moves" },
+        { "id": "yes-ten", "text": "Yes: 10 minutes is longer than the TTL, so it runs out first" },
+        { "id": "no-forever", "text": "No: they'll keep the old answer forever, until restarted" }
+      ],
+      "correctOptionId": "no-hour",
+      "explanation": "DNS TTLs are in seconds: 3,600 seconds is **one hour**. A device that has just cached the answer may keep it for up to an hour, which is longer than the 10 minutes before the move. Nothing tells caches that a site moved, but the answer isn't kept forever either. Website owners often lower the TTL before a move for this reason."
     },
     {
-      "id": "record-values",
-      "type": "match_pairs",
+      "id": "after-cname",
+      "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Match each record type for example.org to what it holds.",
-      "pairs": [
-        { "id": "a", "left": "A", "right": "`203.0.113.80`" },
-        { "id": "aaaa", "left": "AAAA", "right": "`2001:db8::80`" },
-        { "id": "cname", "left": "CNAME", "right": "Another name to look up instead" },
-        { "id": "mx", "left": "MX", "right": "The server that receives email" }
+      "prompt": "Your browser looks up `shop.example.org`. The answer is a **CNAME** pointing to `example.org`. What happens next?",
+      "options": [
+        { "id": "look-up-target", "text": "It looks up example.org to get an actual address" },
+        { "id": "connect-name", "text": "It connects to the name example.org straight away" },
+        { "id": "give-up", "text": "It gives up, because the answer contained no address" },
+        { "id": "ask-mx", "text": "It asks for shop.example.org's MX record instead" }
       ],
-      "explanation": "**A** holds an IPv4 address and **AAAA** an IPv6 address. **CNAME** is an alias pointing to another name, and **MX** names the mail server."
+      "correctOptionId": "look-up-target",
+      "explanation": "A **CNAME** holds a name, not an address, and you can't connect to a name. So the lookup carries on with `example.org` until it finds an **A** record with a real address. MX records are about email, not websites."
     },
     {
       "id": "lookup-example-org",
@@ -90,18 +96,18 @@
       "explanation": "example.org's IPv4 address is `203.0.113.80`. The other answer, `2001:db8::80`, is its IPv6 address, and `127.0.0.53` at the top is the DNS helper that answered the question."
     },
     {
-      "id": "ttl-difference",
+      "id": "web-and-email",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "How is a DNS answer's TTL different from a packet's TTL?",
+      "prompt": "Visits to `example.org` go to one server, but email to `hello@example.org` goes to a different machine. How does DNS make that work?",
       "options": [
-        { "id": "seconds-vs-hops", "text": "DNS TTL counts seconds of caching; a packet's TTL counts router hops" },
-        { "id": "same", "text": "They're the same thing" },
-        { "id": "reversed", "text": "DNS TTL counts router hops; a packet's TTL counts seconds" },
-        { "id": "dns-only", "text": "Only DNS has a TTL; packets don't" }
+        { "id": "two-records", "text": "One name holds an A record for the site and an MX record for email" },
+        { "id": "cname-email", "text": "The name holds a CNAME record that sends email to the website server" },
+        { "id": "no-dns", "text": "Email doesn't use DNS at all, so it finds its server another way" },
+        { "id": "two-domains", "text": "DNS can only hold one answer, so email must use a second domain" }
       ],
-      "correctOptionId": "seconds-vs-hops",
-      "explanation": "They share a name but not a job. A DNS TTL says how many **seconds** an answer may be cached. A packet's TTL is a **hop** limit that each router lowers by 1."
+      "correctOptionId": "two-records",
+      "explanation": "One name can hold several **records**. The **A** record gives the website's address, and the **MX** record names the mail server, so the two jobs can go to different machines. A CNAME is just an alias to another name."
     }
   ]
 }

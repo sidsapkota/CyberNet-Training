@@ -6,54 +6,10 @@
   "icon": "audio-lines",
   "cards": [
     {
-      "id": "principal-video",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "A day off school?",
-      "body": "A video goes round your class: your principal, in their office, announcing that school is closed tomorrow. It's their face, their voice, their office.\n\nThe principal never said it. This lesson is about how that's possible, and what to do about it."
-    },
-    {
-      "id": "deepfakes-and-clones",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "Fake faces and voices",
-      "body": "Generative AI can learn how a real person looks and sounds from recordings of them, then make **new** video or audio of them saying things they never said.\n\nA fake video or picture like this is a **deepfake**. A fake copy of a voice is a **voice clone**. Some swap one face onto another person's body; some make the lips move to new words. They can be very convincing. Because the model has already learned from many people's faces and voices, it may need only a short recording of the person to copy."
-    },
-    {
-      "id": "short-clip",
-      "type": "multiple_choice",
-      "difficulty": "core",
-      "prompt": "Why can a [[voice clone|voice-clone]] sometimes be made from just a short clip of someone talking?",
-      "options": [
-        {
-          "id": "only-replays",
-          "text": "It can only replay the exact words in the clip",
-          "nudge": "A clone can say new words the person never said. So what does it already know?"
-        },
-        {
-          "id": "already-learned",
-          "text": "The model already learned how voices work from many people, so it just needs this one's sound"
-        },
-        {
-          "id": "stitches",
-          "text": "It cuts words out of the clip and stitches them into new sentences",
-          "nudge": "That would only work for words in the clip, but clones say any words at all. What does the model already know?"
-        },
-        {
-          "id": "short-better",
-          "text": "Short clips hold more detail about a voice than long ones",
-          "nudge": "Longer recordings usually help, not hurt. Why might a short one still be enough?"
-        }
-      ],
-      "correctOptionId": "already-learned",
-      "hint": "Before it ever hears this person, what has the model already learned from?",
-      "explanation": "The model was trained on **many voices**, so it already knows how voices work. A short clip only has to show what's special about **this** voice. That's why posting your voice publicly is worth thinking about."
-    },
-    {
       "id": "help-or-harm",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Is each use of voice or face AI **helpful**, or **harmful**?",
+      "prompt": "AI can now make a **fake voice** or a **fake video** of a real person, saying things they never said. Is each use **helpful**, or **harmful**?",
       "bins": [
         {
           "id": "helpful",
@@ -101,27 +57,57 @@
       "explanation": "Dubbing with consent, restoring a lost voice and a museum guide **help**, and nobody's fooled. A fake Grandma call, a video to embarrass someone and a fake celebrity advert **trick or hurt** people."
     },
     {
-      "id": "consent-and-the-law",
+      "id": "deepfakes-and-clones",
       "type": "explainer",
       "difficulty": "core",
-      "title": "Permission matters",
-      "body": "Never make or share a deepfake or voice clone of a real person without their **permission**. Even as a joke, it can hurt them, spread further than you meant, and get you in serious trouble. In Australia, sharing fake sexual images of a real person without their consent is a serious crime, and fake sexual images of anyone under 18 are always illegal.\n\nIf someone makes a fake of **you**, it's not your fault. Stay Safe Online's free lesson **Deepfake Scams and Fakes** shows exactly what to do."
+      "title": "Fake faces and voices",
+      "body": "A fake video or picture of a real person is a **deepfake**; a **voice clone** copies their voice. Most tools learn from many voices, then copy one from a short clip.\n\nIn Australia, sharing fake sexual images of a real person without their consent is a serious crime, and fake sexual images of anyone under 18 are always illegal."
+    },
+    {
+      "id": "short-clip",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Why can a [[voice clone|voice-clone]] sometimes be made from just a short clip of someone talking?",
+      "options": [
+        {
+          "id": "only-replays",
+          "text": "It can only replay the exact words in the clip",
+          "nudge": "A clone can say new words the person never said. So what does it already know?"
+        },
+        {
+          "id": "already-learned",
+          "text": "It already learned voices from many people"
+        },
+        {
+          "id": "stitches",
+          "text": "It cuts words out of the clip and stitches them into new sentences",
+          "nudge": "That would only work for words in the clip, but clones say any words at all. What does the model already know?"
+        },
+        {
+          "id": "short-better",
+          "text": "Short clips hold more detail about a voice than long ones",
+          "nudge": "Longer recordings usually help, not hurt. Why might a short one still be enough?"
+        }
+      ],
+      "correctOptionId": "already-learned",
+      "hint": "Before it ever hears this person, what has the model already learned from?",
+      "explanation": "The model was trained on **many voices**, so it already knows how voices work. A short clip only has to show what's special about **this** voice. That's why posting your voice publicly is worth thinking about."
     },
     {
       "id": "teacher-video",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "Your friend has found an app that makes funny face-swap videos.",
+      "prompt": "Your friend has found an app that makes face-swap videos. Making a fake of a real person without their **permission** can hurt them, and it can spread further than you meant.",
       "start": "the-idea",
       "steps": [
         {
           "id": "the-idea",
-          "text": "\"Let's make a video of our teacher dancing badly and saying silly things. It's just a joke!\" What do you say?",
+          "text": "\"Let's make a video of our sports coach dancing badly and saying silly things. It's just a joke!\" What do you say?",
           "choices": [
             {
               "id": "tiny-label",
               "text": "\"Only if we put 'FAKE' in tiny letters at the end\"",
-              "consequence": "Your teacher still never agreed, and a tiny label is easy to miss or crop off. It can still spread and hurt them.",
+              "consequence": "Your coach still never agreed, and a tiny label is easy to miss or crop off. It can still spread and hurt them.",
               "outcome": "fail"
             },
             {
@@ -139,21 +125,14 @@
           ]
         }
       ],
-      "hint": "Look back at what matters most before making a fake of a real person.",
-      "explanation": "Without the teacher's **permission**, it's a deepfake of a real person, even as a joke and even with a tiny label. And there's no such thing as \"just two friends\": anything sent can spread."
-    },
-    {
-      "id": "spotting-fakes",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "Clues, and context",
-      "body": "Fake videos and audio **sometimes** have clues: lips slightly out of time with the words, odd blinking, a flat voice or strange breathing, the edge of a face flickering.\n\nBut the strongest clues are usually in the **situation**: who posted it, whether it pushes you to act fast, whether anyone trustworthy is reporting it, whether it makes sense. The best check is to ask the real person, or a trusted source, another way."
+      "hint": "Think about who has to agree before you make a fake of a real person. Does a label or a small audience change that?",
+      "explanation": "Without the coach's **permission**, it's a deepfake of a real person, even as a joke and even with a tiny label. And there's no such thing as \"just two friends\": anything sent can spread. In Australia, sharing fake sexual images of a real person without their consent is a serious crime, and fake sexual images of anyone under 18 are always illegal."
     },
     {
       "id": "video-or-situation",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Is each one a clue **in the video itself**, or a clue **in the situation** around it?",
+      "prompt": "Fake videos **sometimes** have clues in the video itself, like odd blinking, but good fakes can have none. The **situation** around a video often tells you more, like whether the story makes sense. The best check: ask the real person, or a trusted source, another way.\n\nIs each one a clue **in the video**, or **in the situation**?",
       "bins": [
         {
           "id": "video",
@@ -203,7 +182,7 @@
     {
       "id": "concert-tickets",
       "type": "scenario",
-      "difficulty": "challenge",
+      "difficulty": "core",
       "prompt": "A video shows a famous singer saying: \"I'm giving away 1,000 free concert tickets! Click the link in the next hour.\"",
       "start": "the-video",
       "steps": [
@@ -214,7 +193,7 @@
             {
               "id": "click",
               "text": "Click the link quickly before the tickets go",
-              "consequence": "The rush is the trick. The link asks for your parents' card details. It was a deepfake advert.",
+              "consequence": "The rush is the trick. The link asks for your card details. It was a deepfake advert.",
               "outcome": "fail"
             },
             {
@@ -232,46 +211,45 @@
           ]
         }
       ],
-      "hint": "Spot the situation clues first: who posted it, and what is it pushing you to do?",
+      "hint": "Spot the situation clues first: who posted it, and what is it pushing you to do? Then think about the best check.",
       "explanation": "An unknown page, a rush and \"free\" are **situation clues**. The face and voice can be faked, so check the **real person's official account** or trusted news, another way."
     },
     {
-      "id": "words-and-meanings",
-      "type": "match_pairs",
+      "id": "voice-call-check",
+      "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "Match each word to what it means.",
-      "pairs": [
+      "prompt": "Your uncle gets a call. It sounds exactly like you, upset: \"I've lost my phone and wallet. Please send money to this account, quick!\" What's the **best** thing for him to do?",
+      "options": [
         {
-          "id": "deepfake",
-          "left": "Deepfake",
-          "right": "A fake video or picture of a real person"
+          "id": "call-back",
+          "text": "Hang up, then call you on the number he already has"
         },
         {
-          "id": "clone",
-          "left": "Voice clone",
-          "right": "An AI copy of someone's voice"
+          "id": "listen",
+          "text": "Listen closely for a flat or robotic voice before deciding",
+          "nudge": "A good clone can sound perfect. Is there a check that doesn't rely on this call at all?"
         },
         {
-          "id": "consent",
-          "left": "Permission",
-          "right": "The person agreeing first"
+          "id": "small-amount",
+          "text": "Send a small amount first, to see if it's really you",
+          "nudge": "Any money sent to a faker is gone, small or not. How could he check without paying anything?"
         },
         {
-          "id": "generative",
-          "left": "Generative AI",
-          "right": "AI that makes new things"
+          "id": "say-name",
+          "text": "Ask the caller to say his name, to prove they know him",
+          "nudge": "Whoever chose to call him will know his name. What check goes another way, outside this call?"
         }
       ],
-      "hint": "Two are about fakes, one is about agreeing, and one is the big family they all belong to.",
-      "nudge": "A voice clone is only about sound. A deepfake shows a face or body. Which leaves \"AI that makes new things\"?",
-      "explanation": "A **deepfake** is a fake video or picture of a real person; a **voice clone** copies a voice; **permission** means the person agreed first; and **generative AI** is the whole family of AI that makes new things."
+      "correctOptionId": "call-back",
+      "hint": "The voice can be faked. Which check doesn't go through this call?",
+      "explanation": "Hang up and **call back on a number he already has**. That check goes another way, so a faker can't answer it. A good clone can sound perfect, anyone calling him knows his name, and money sent to a scammer is usually gone for good."
     },
     {
       "id": "voices-recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- AI can learn a real person's face or voice from recordings and make new fakes: **deepfakes** and **voice clones**.\n- Helpful uses have everyone's permission; never make a fake of a real person without it.\n- Clues in the video are getting harder to spot; clues in the situation (who, why, how fast) still work.\n- Check with the real person or a trusted source, another way.\n\nNext: working out who made a picture."
+      "body": "- AI can fake a real person: **deepfakes** and **voice clones**.\n- Never fake a real person without their permission.\n- Situation clues beat video clues: check with the real person.\n\nIf someone fakes **you**, it's not your fault. Report it at esafety.gov.au, and tell a trusted adult. More in Stay Safe Online's free lesson **Deepfake Scams and Fakes**."
     }
   ]
 }

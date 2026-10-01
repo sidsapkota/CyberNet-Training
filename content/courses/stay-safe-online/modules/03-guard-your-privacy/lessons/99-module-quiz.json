@@ -9,7 +9,7 @@
       "id": "q-share-or-private",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Fine to share, or keep private?",
+      "prompt": "You're setting up a new public profile. Fine to share, or keep private?",
       "bins": [
         {
           "id": "share",
@@ -40,37 +40,42 @@
           "id": "now",
           "label": "Where you are right now",
           "bin": "private"
+        },
+        {
+          "id": "pet-name",
+          "label": "Your first pet's name",
+          "bin": "private"
         }
       ],
-      "explanation": "Hobbies and things you make are fine. Your school and your location right now help strangers find you."
+      "explanation": "Hobbies and things you make are fine. Your school and where you are right now help strangers find you, and your first pet's name is a common security question answer."
     },
     {
       "id": "q-quiz-post",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A post asks for your first pet's name and your street \"for fun\". What's the risk?",
+      "prompt": "A comment thread says: \"Reply with the street you grew up on and your first pet's name to get your elf name!\" Your uncle has already replied. What's the risk?",
       "options": [
         {
           "id": "security",
-          "text": "They're common security question answers"
+          "text": "Those are common answers to account security questions"
         },
         {
           "id": "none",
-          "text": "There's no risk: it's just a game"
+          "text": "Only a small one: just people he knows will see his reply"
         },
         {
           "id": "slow",
-          "text": "It slows your phone down"
+          "text": "None, because a pet's name and a street can't unlock anything"
         }
       ],
       "correctOptionId": "security",
-      "explanation": "Pet names and streets are common security questions, so sharing them can help someone reset your accounts."
+      "explanation": "Pet names and streets are common security questions, so sharing them can help someone reset his accounts. Comments can also be seen, copied and screenshotted by people he doesn't know."
     },
     {
       "id": "q-permissions",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Needs it, or doesn't?",
+      "prompt": "Does each app need that permission for its job?",
       "bins": [
         {
           "id": "needs",
@@ -89,12 +94,12 @@
         },
         {
           "id": "maps",
-          "label": "Maps → location",
+          "label": "Running route map → location",
           "bin": "needs"
         },
         {
           "id": "torch",
-          "label": "Torch app → contacts",
+          "label": "Alarm clock → contacts",
           "bin": "doesnt"
         },
         {
@@ -103,35 +108,35 @@
           "bin": "doesnt"
         }
       ],
-      "explanation": "Allow what fits the app's job. A torch or calculator doesn't need contacts or the microphone."
+      "explanation": "Allow what fits the app's job: a camera app needs the camera, and a route map needs your location. An alarm clock or a calculator doesn't need your contacts or the microphone."
     },
     {
       "id": "q-stranger",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "Someone you only know from a game asks for a photo and your school.",
+      "prompt": "Someone you only know from a game chat says they want to send you a gift.",
       "start": "start",
       "steps": [
         {
           "id": "start",
-          "text": "What do you do?",
+          "text": "They ask: **\"What suburb do you live in? And send a photo so I know it's you.\"** What do you do?",
           "choices": [
             {
               "id": "safe",
-              "text": "Don't send anything, block and report, and tell a trusted adult",
-              "consequence": "Right. You're not in trouble.",
+              "text": "Don't send anything, block and report them, and tell a trusted adult",
+              "consequence": "Right. You're not in trouble, and telling someone keeps you safe.",
               "outcome": "success"
             },
             {
               "id": "send",
-              "text": "Send it, they seem nice",
-              "consequence": "Friendly online doesn't show who someone really is.",
+              "text": "Send them. A gift is a kind thing to offer",
+              "consequence": "Being friendly online doesn't show who someone really is. Your suburb and a photo help a stranger find you.",
               "outcome": "fail"
             }
           ]
         }
       ],
-      "explanation": "Keep photos and your school away from people you only know online. Block, report and tell a trusted adult."
+      "explanation": "Keep where you live and photos of you away from people you only know online. Block, report and tell a trusted adult."
     },
     {
       "id": "q-wi-fi",
@@ -141,43 +146,48 @@
       "options": [
         {
           "id": "mobile",
-          "text": "Use mobile data"
+          "text": "Use mobile data instead of the café's Wi-Fi"
         },
         {
           "id": "any",
-          "text": "Join any free network"
+          "text": "Pick any network with the café's name in it"
         },
         {
           "id": "strongest",
-          "text": "Join the network with the strongest signal"
+          "text": "Join the Wi-Fi network with the strongest signal"
         }
       ],
       "correctOptionId": "mobile",
-      "explanation": "Mobile data avoids the risk of a fake hotspot."
+      "explanation": "Anyone can name a fake hotspot after the café, and a strong signal doesn't show who runs a network. Mobile data avoids that risk."
     },
     {
       "id": "q-settings",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Match each setting to what it does.",
+      "prompt": "Match each problem to the privacy setting that fixes it.",
       "pairs": [
         {
           "id": "private",
-          "left": "Private account",
-          "right": "Only approved followers see your posts"
+          "left": "Strangers can see all your posts",
+          "right": "Private account"
+        },
+        {
+          "id": "messages",
+          "left": "People you don't know keep messaging you",
+          "right": "Messages from friends only"
         },
         {
           "id": "location",
-          "left": "Location sharing off",
-          "right": "Nobody can see where you are right now"
+          "left": "An app shows people where you are",
+          "right": "Location sharing off"
         },
         {
           "id": "tags",
-          "left": "Tag review",
-          "right": "You approve photos you're tagged in"
+          "left": "Photos of you appear on your profile without asking",
+          "right": "Tag review"
         }
       ],
-      "explanation": "Private accounts, location off and tag review each protect a different part of your privacy."
+      "explanation": "A private account hides posts from strangers, friends-only messages stop strangers messaging you, location off hides where you are, and tag review lets you approve photos first."
     }
   ]
 }

@@ -10,10 +10,7 @@
       "type": "sort_bins",
       "difficulty": "core",
       "prompt": "Whose job is it: the **operating system's** or an **app's**?",
-      "bins": [
-        { "id": "os", "label": "Operating system" },
-        { "id": "app", "label": "An app" }
-      ],
+      "bins": [{ "id": "os", "label": "Operating system" }, { "id": "app", "label": "An app" }],
       "items": [
         { "id": "give-ram", "label": "Give each open app some RAM", "bin": "os" },
         { "id": "screen", "label": "Send pictures to the screen hardware", "bin": "os" },
@@ -26,14 +23,14 @@
       "id": "q-cpu-turns",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Three apps are open, and the CPU can only follow one set of instructions per core at a time. How do they all keep running?",
+      "prompt": "A CPU core can only do one thing at a time. Three apps are open on a laptop with one core. How do they all keep running?",
       "options": [
-        { "id": "turns", "text": "The OS gives each app very quick turns on the CPU" },
-        { "id": "storage", "text": "The apps run from storage instead" },
-        { "id": "wait", "text": "Two of the apps stop until the first one closes" }
+        { "id": "turns", "text": "The OS switches between them, giving each one very quick turns" },
+        { "id": "storage", "text": "Two of them run from storage while one uses the CPU" },
+        { "id": "wait", "text": "Each app runs to the end before the next one can start" }
       ],
       "correctOptionId": "turns",
-      "explanation": "The **operating system** switches between apps so quickly that they all seem to run at the same time."
+      "explanation": "The **operating system** switches between apps so quickly that they all seem to run at the same time. Apps are loaded into RAM to run, not run from storage, and nobody would wait for a game to finish before their music played."
     },
     {
       "id": "q-end-frozen",
@@ -46,12 +43,14 @@
         "processes": [
           { "id": "notes", "label": "Notes", "kind": "app", "cpu": 3, "ramGb": 0.3 },
           { "id": "game", "label": "Puzzle game", "kind": "app", "cpu": 90, "ramGb": 1.5 },
+          { "id": "updater", "label": "Updater", "kind": "background", "cpu": 3, "ramGb": 0.2 },
           { "id": "system", "label": "System", "kind": "system", "cpu": 5, "ramGb": 1.5 }
         ]
       },
       "controls": [
         { "id": "end-notes", "kind": "button", "label": "End Notes", "doneLabel": "Notes ended" },
         { "id": "end-game", "kind": "button", "label": "End Puzzle game", "doneLabel": "Puzzle game ended" },
+        { "id": "end-updater", "kind": "button", "label": "End Updater", "doneLabel": "Updater ended" },
         { "id": "end-system", "kind": "button", "label": "End System", "doneLabel": "System ended" }
       ],
       "outputs": [
@@ -62,39 +61,45 @@
         "all": [
           { "target": "output", "id": "smooth", "op": ">=", "value": 0.9 },
           { "target": "output", "id": "crashed", "op": "==", "value": 0 },
-          { "target": "control", "id": "end-notes", "op": "==", "value": false }
+          { "target": "control", "id": "end-notes", "op": "==", "value": false },
+          { "target": "control", "id": "end-updater", "op": "==", "value": false }
         ]
       },
-      "explanation": "The **puzzle game** was using 90% of the CPU. Ending it fixes the freeze. Ending **System** would crash the laptop."
+      "explanation": "The **puzzle game** was using 90% of the CPU. Ending it fixes the freeze. The **Updater** was only using 3%, so it wasn't the problem, and ending **System** would crash the laptop."
     },
     {
       "id": "q-update",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "You're drawing a comic on your laptop.",
+      "prompt": "Your laptop is in the middle of an update. Its battery is down to **10%**.",
       "start": "prompt",
       "steps": [
         {
           "id": "prompt",
-          "text": "**\"Updates are ready. Restart now?\"**",
+          "text": "The screen says **\"Working on updates. Don't turn off your device.\"**",
           "choices": [
             {
-              "id": "save-restart",
-              "text": "Save the comic, then restart",
-              "consequence": "Your comic is safe in storage, and the update installs.",
+              "id": "plug-in",
+              "text": "Plug in the charger and let it finish",
+              "consequence": "With power coming in, the update can finish safely, however long it takes.",
               "outcome": "success"
             },
-            { "id": "restart-unsaved", "text": "Restart without saving", "consequence": "Unsaved work is only in RAM, so restarting loses it.", "outcome": "fail" },
             {
-              "id": "switch-off",
-              "text": "Switch updates off forever",
-              "consequence": "Updates fix security holes. Skipping them leaves the laptop less safe.",
+              "id": "hold-power",
+              "text": "Hold the power button and finish it tomorrow",
+              "consequence": "Switching off halfway through an update can leave the OS broken and unable to start.",
+              "outcome": "fail"
+            },
+            {
+              "id": "leave-it",
+              "text": "Leave it on battery, as updates are quick",
+              "consequence": "Big updates can take a while. If the battery runs out halfway, that's just like switching off halfway.",
               "outcome": "fail"
             }
           ]
         }
       ],
-      "explanation": "Save first, then let the update install. Updates fix bugs and security holes."
+      "explanation": "Never cut an update off halfway: it can leave the OS broken. Keep the device **plugged in** and let it finish."
     },
     {
       "id": "q-extensions",
@@ -110,14 +115,17 @@
       "explanation": "The extension after the **last** dot gives the kind of file. `.exe` is a program that runs when opened."
     },
     {
-      "id": "q-spot-the-program",
-      "type": "hotspot",
+      "id": "q-which-is-program",
+      "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "One of these files is a **program in disguise**. Tap it.",
-      "scene": "file-browser",
-      "mode": "tap",
-      "targets": ["file-fake-photo"],
-      "explanation": "`photo.jpg.exe` ends in **.exe**, so it's a program, not a photo."
+      "prompt": "A friend sends you three files. Which one is really a **program**?",
+      "options": [
+        { "id": "mp3-exe", "text": "`song.mp3.exe`" },
+        { "id": "exe-mp3", "text": "`song.exe.mp3`" },
+        { "id": "exe-name", "text": "`exe-song.mp3`" }
+      ],
+      "correctOptionId": "mp3-exe",
+      "explanation": "Only the part after the **last** dot counts. `song.mp3.exe` ends in `.exe`, so it's a program dressed up as a song. The other two end in `.mp3`, so they're songs, whatever else is in their names."
     },
     {
       "id": "q-cloud",
@@ -126,11 +134,11 @@
       "prompt": "You save a file \"to the cloud\". Where is it actually stored?",
       "options": [
         { "id": "server", "text": "On a company's servers, reached over the internet" },
-        { "id": "ram", "text": "In your device's RAM" },
-        { "id": "air", "text": "In the air, carried by Wi-Fi signals" }
+        { "id": "ram", "text": "In your device's RAM, until you switch it off" },
+        { "id": "air", "text": "On your device, in a hidden folder" }
       ],
       "correctOptionId": "server",
-      "explanation": "The cloud is **other people's computers**: servers in data centres that you reach over the internet."
+      "explanation": "The cloud is **someone else's computer**: servers in data centres that you reach over the internet. That's why you need the internet to open a cloud-only file."
     }
   ]
 }

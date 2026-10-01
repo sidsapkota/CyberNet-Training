@@ -10,14 +10,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Whose poster is it?",
-      "body": "For a school poster competition, a student types one prompt and gets an amazing poster in seconds. Another student spends a week painting theirs.\n\nWhich one is \"theirs\"? This lesson is about using AI in a way that's fair to you, and to everyone else."
-    },
-    {
-      "id": "say-how",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "Say how you used it",
-      "body": "Using AI is often fine. Hiding it usually isn't.\n\n- **Say when and how** you used AI (\"I used AI to check my spelling\").\n- **Follow the rules** of your school, club or competition, and **ask** when you're not sure.\n- **Don't claim AI's work as yours**: in a competition, that's not fair on people who did the work."
+      "body": "In a town poster competition, one entrant types a prompt and gets an amazing poster in seconds. Another spends a week painting theirs.\n\nUsing AI is often fine. Hiding it usually isn't. **Say how you used it**, **follow the rules** (and ask when you're not sure), and **don't claim AI's work as yours**."
     },
     {
       "id": "honest-or-not",
@@ -42,7 +35,7 @@
         },
         {
           "id": "ask-teacher",
-          "label": "Asking your teacher if AI is allowed",
+          "label": "Asking first if AI is allowed",
           "bin": "honest"
         },
         {
@@ -69,13 +62,6 @@
       "hint": "Look for whether the person is open about the AI's part.",
       "nudge": "Using AI isn't the problem. Which ones hide it, or claim its work?",
       "explanation": "Saying how you used AI, asking first and writing it yourself are **honest**. Entering AI art as yours, giving an AI speech as yours, or denying it when asked are **not**, however good the result."
-    },
-    {
-      "id": "people-behind-it",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "The people behind it",
-      "body": "AI learned from huge amounts of work made by people: artists' pictures, writers' stories, musicians' songs. Many weren't asked, and some are unhappy about it. People disagree about what's fair here, and the rules are still being argued about.\n\nWhat you can do: **respect people's work**, credit artists you're inspired by, and keep making things in your own way. AI can help, but your ideas and your voice are yours."
     },
     {
       "id": "spelling-only",
@@ -108,17 +94,40 @@
       "explanation": "When you're not sure, **ask first**. Spelling help might be allowed, but it's your teacher's rule to explain, not yours to guess."
     },
     {
-      "id": "fair-to-everyone",
-      "type": "explainer",
+      "id": "inspired-by-an-artist",
+      "type": "multiple_choice",
       "difficulty": "core",
-      "title": "Fair to everyone",
-      "body": "Remember bias: a model works better for some people than others when its training data leaves people out. So when AI makes decisions about people, like picking, sorting or scoring them, ask: **who might this be unfair to?** And keep a **person** checking decisions that matter."
+      "prompt": "AI learned from huge amounts of work by people: artists' pictures, writers' stories, musicians' songs. Many weren't asked, and people still disagree about what's fair.\n\nYou love one illustrator's style, and use AI to make a poster in that style for your band's gig. What's the **fairest** thing to do?",
+      "options": [
+        {
+          "id": "credit",
+          "text": "Credit the illustrator who inspired it, and say AI helped make it"
+        },
+        {
+          "id": "styles-free",
+          "text": "Say nothing: a style can't belong to anyone, so no credit is needed",
+          "nudge": "People argue about styles, but this one came from a real person's work. Is hiding that fair to them, or to your audience?"
+        },
+        {
+          "id": "free-tool",
+          "text": "Say nothing, as long as the AI app you used was free",
+          "nudge": "The price of the app doesn't change whose work it learned from. What would be fair to the artist?"
+        },
+        {
+          "id": "say-painted",
+          "text": "Say you drew it yourself, since choosing the style was your idea",
+          "nudge": "Choosing a style is your idea, but the drawing isn't your work. Look back at what's honest."
+        }
+      ],
+      "correctOptionId": "credit",
+      "hint": "Two things are true here: a real artist inspired it, and AI made it. Which answer is open about both?",
+      "explanation": "**Credit the artist and say AI helped.** That respects the person whose work inspired it, and it's honest with everyone who sees the poster. Your own ideas and voice are still yours."
     },
     {
       "id": "captain-picker",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "Your class wants to use an AI tool to pick team captains \"fairly\", based on who talks most in class discussions.",
+      "prompt": "Remember [[bias]]: AI can work better for some people than others. When AI picks, sorts or scores people, it's worth asking who it might leave out, and keeping a person in charge of decisions that matter.\n\nYour sports club wants an AI tool to pick team captains \"fairly\", based on who talks most at training.",
       "start": "the-plan",
       "steps": [
         {
@@ -128,26 +137,26 @@
             {
               "id": "fair",
               "text": "\"It's fair: everyone is judged by the same rule\"",
-              "consequence": "The same rule for everyone can still be unfair, if the rule itself leaves people out. Quiet kids would never get picked.",
+              "consequence": "The same rule for everyone can still be unfair, if the rule itself leaves people out. Quiet players would never get picked.",
               "outcome": "fail"
             },
             {
               "id": "unfair-who",
-              "text": "\"Who might this be unfair to? Quieter kids can lead too\"",
-              "consequence": "Exactly. Talking a lot isn't the same as leading well. The class agrees to pick with a person deciding, using more than one thing.",
+              "text": "\"Who might this be unfair to? Quiet players can lead too\"",
+              "consequence": "Exactly. Talking a lot isn't the same as leading well. The club agrees to have a person decide, using more than one thing.",
               "outcome": "success"
             },
             {
               "id": "random",
-              "text": "\"Let it pick, but check it picks the same people every time\"",
-              "consequence": "Picking the same people every time just repeats the unfairness. The question is whether its rule is fair.",
+              "text": "\"Fine, as long as it also counts who scores the most goals\"",
+              "consequence": "Another number doesn't ask who the rule leaves out, and the AI is still deciding alone. Quiet players who'd lead well still miss out.",
               "outcome": "fail"
             }
           ]
         }
       ],
       "hint": "Look back at the question to ask whenever AI makes decisions about people.",
-      "explanation": "Judging by who **talks most** leaves out quieter people who could lead well, even though it's the same rule for everyone. Ask **who it might be unfair to**, and keep a **person** deciding."
+      "explanation": "Judging by who **talks most** leaves out quieter people who could lead well, even though it's the same rule for everyone, and adding another number doesn't fix that. Ask **who it might be unfair to**, and keep a **person** deciding."
     },
     {
       "id": "fair-move",
@@ -184,7 +193,7 @@
       "id": "friends-story",
       "type": "scenario",
       "difficulty": "challenge",
-      "prompt": "Your friend's story wins the school writing prize. You know a chatbot wrote most of it.",
+      "prompt": "Your friend's story wins a writing prize. You know a chatbot wrote most of it.",
       "start": "after",
       "steps": [
         {
@@ -193,20 +202,20 @@
           "choices": [
             {
               "id": "announce",
-              "text": "Tell everyone in the class what really happened",
-              "consequence": "That could embarrass your friend in front of everyone before they've had a chance to fix it.",
+              "text": "Tell the other entrants, since it's unfair on them",
+              "consequence": "It is unfair on them, but this could embarrass your friend in front of everyone before they've had a chance to put it right.",
               "outcome": "fail"
             },
             {
               "id": "talk-friend",
-              "text": "Talk to your friend privately, and encourage them to tell the teacher",
+              "text": "Talk to your friend privately, and encourage them to tell the organisers",
               "consequence": "Fair to your friend and to the others who entered. If they won't, you can talk to a trusted adult about it.",
               "outcome": "success"
             },
             {
               "id": "nothing",
-              "text": "Say nothing: everyone uses AI anyway",
-              "consequence": "The rules said own work only, and other students did theirs themselves. Staying quiet isn't fair on them.",
+              "text": "Say nothing: it's the judges' job to spot AI writing",
+              "consequence": "Judges can't always tell, and the rules said own work only. Other people did theirs themselves, so staying quiet isn't fair on them.",
               "outcome": "fail"
             }
           ]
@@ -220,7 +229,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "You know how AI really works",
-      "body": "- AI learns **patterns from examples**, so it's only as good, and as fair, as its training data.\n- Chatbots pick **likely tokens**, not checked facts: check anything that matters.\n- Clear prompts get better answers; say what you want, who it's for and what shape.\n- Pictures, voices and videos can be faked: check **outside** the post, and get permission.\n- Keep your private stuff private, and use AI **openly and fairly**.\n\nNext: the course final."
+      "body": "- AI learns **patterns from examples**: only as good, and fair, as its data.\n- Chatbots pick **likely words**, not checked facts: check what matters.\n- Fakes are cheap: check **outside** the post, and use AI **openly**.\n\nNext: the course final."
     }
   ]
 }

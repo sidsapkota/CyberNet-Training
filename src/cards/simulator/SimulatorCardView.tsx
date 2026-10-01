@@ -198,7 +198,7 @@ function ControlView({
           value={Number(value)}
           disabled={locked}
           onChange={(e) => onChange(Number(e.target.value))}
-          className="mt-2 h-8 w-full accent-[var(--color-accent)]"
+          className="mt-1 h-11 w-full accent-[var(--color-accent)]"
         />
       </div>
     );

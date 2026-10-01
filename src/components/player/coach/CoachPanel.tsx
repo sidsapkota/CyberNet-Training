@@ -12,7 +12,7 @@ export const COACH_COPY: Record<CoachKey, { title: string; lines: string[] }> = 
   binary_toggle: { title: "Flip the bits", lines: ["Tap a switch to turn it on or off.", "The number above them adds up the switches that are on."] },
   drag_to_order: {
     title: "Put them in order",
-    lines: ["Drag each item up or down until the list is in order.", "Keyboard: Space to pick up, arrows to move, Space to drop."],
+    lines: ["Drag each item up or down until the list is in order. On a phone, press and hold an item first.", "Keyboard: Space to pick up, arrows to move, Space to drop."],
   },
   match_pairs: { title: "Match the pairs", lines: ["Tap an item on the left, then its partner on the right.", "Tap a pair again to undo it."] },
   packet_path: {

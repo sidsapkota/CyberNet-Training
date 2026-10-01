@@ -104,6 +104,7 @@ describe("toLessonOutline", () => {
       moduleId: "m",
       cardCount: 2,
       coreCardIds: ["intro"],
+      photoCount: 0,
       icon: "binary",
     });
   });

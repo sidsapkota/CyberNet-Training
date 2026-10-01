@@ -55,6 +55,7 @@ function ItemChip({
       {...attributes}
       {...listeners}
       ref={setNodeRef}
+      data-drag-item
       type="button"
       layout={!reduceMotion}
       layoutId={reduceMotion ? undefined : `sort-${item.id}`}
@@ -93,6 +94,7 @@ function Bin({
   return (
     <section
       ref={setNodeRef}
+      data-drop-bin
       aria-label={label}
       className={`flex min-h-32 flex-col rounded-card border-2 border-dashed p-2 transition-colors ${
         isOver || canDrop ? "border-accent-ink bg-accent-soft" : "border-line-strong bg-surface-raised"
@@ -104,7 +106,7 @@ function Bin({
         disabled={!canDrop}
         onClick={onPlace}
         aria-label={selectedLabel ? `Put ${selectedLabel} in ${label}` : label}
-        className="rounded-control px-2 py-1.5 text-left font-mono text-caption font-semibold tracking-wider text-ink-muted uppercase enabled:text-accent-ink enabled:hover:bg-surface disabled:cursor-default"
+        className="min-h-11 rounded-control px-2 py-1.5 text-left font-mono text-caption font-semibold tracking-wider text-ink-muted uppercase enabled:text-accent-ink enabled:hover:bg-surface disabled:cursor-default"
       >
         {label}
       </button>

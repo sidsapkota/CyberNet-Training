@@ -11,7 +11,7 @@ import { Button, ButtonLink } from "@/components/ui/Button";
 import { AccountIcon, CheckIcon, ExploreModeIcon, LessonIcon, LockIcon, PlayIcon, RetryIcon } from "@/components/ui/icons";
 import { getDailyLessonsAction } from "@/app/actions/pro";
 import { useAuth } from "@/lib/auth/AuthProvider";
-import { estimateMinutes } from "@/lib/content/estimate";
+import { timeLine } from "@/lib/content/estimate";
 import { formatChecked } from "@/lib/content/lastChecked";
 import type { CourseOutline, LessonOutline, ModuleOutline } from "@/lib/content/schema";
 import { EASE_OUT_QUICK, POPOVER_SPRING, PRESS_SPRING } from "@/lib/motion";
@@ -45,7 +45,7 @@ function earnedXp(snapshot: ProgressSnapshot, lessonId: string): number {
 /** The popover's one short line, derived from progress (never extra lesson content). */
 function summary(state: LessonState, look: NodeLook, snapshot: ProgressSnapshot, blocking: LessonOutline | null) {
   const { lesson } = state;
-  const minutes = `about ${estimateMinutes(lesson)} min`;
+  const minutes = timeLine(lesson);
   if (look === "locked") return blocking ? `Finish “${blocking.title}” first` : "Locked for now";
   if (lesson.kind === "quiz") {
     if (look === "done") return `Passed · best ${Math.round((state.bestScore ?? 1) * 100)}%`;

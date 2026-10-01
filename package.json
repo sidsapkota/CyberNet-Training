@@ -22,7 +22,9 @@
     "e2e:quiz-pass": "node scripts/e2e/quiz-pass-whats-next.mjs",
     "e2e:guest-gate": "node scripts/e2e/guest-gate.mjs",
     "e2e:in-app": "node scripts/e2e/in-app-sign-in.mjs",
-    "e2e:daily-limit": "node scripts/e2e/daily-limit.mjs"
+    "e2e:daily-limit": "node scripts/e2e/daily-limit.mjs",
+    "e2e:design-qa": "node scripts/e2e/design-qa.mjs",
+    "e2e:player-back": "node scripts/e2e/player-back.mjs"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

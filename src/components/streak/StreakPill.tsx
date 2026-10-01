@@ -17,7 +17,7 @@ export function StreakPill() {
     <Link
       href="/"
       aria-label={daily ? `${streakSummary(daily)} Open the dashboard.` : "Streak, on the dashboard"}
-      className={`inline-flex h-9 min-w-11 items-center justify-center gap-1 rounded-control border border-line bg-surface px-2.5 max-[399px]:px-2 transition-colors hover:border-line-strong font-mono text-small font-semibold tabular-nums ${
+      className={`inline-flex h-11 min-w-11 items-center justify-center gap-1 rounded-control border border-line bg-surface px-2.5 max-[399px]:px-2 transition-colors hover:border-line-strong font-mono text-small font-semibold tabular-nums ${
         days ? "text-accent-ink" : "text-ink-muted"
       }`}
     >
