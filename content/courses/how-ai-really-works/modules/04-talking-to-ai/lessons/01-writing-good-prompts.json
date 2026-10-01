@@ -1,0 +1,342 @@
+{
+  "id": "writing-good-prompts",
+  "kind": "lesson",
+  "title": "Writing Good Prompts",
+  "order": 1,
+  "icon": "wand-sparkles",
+  "cards": [
+    {
+      "id": "tell-me-about-dogs",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Tell me about dogs",
+      "body": "Type \"Tell me about dogs\" into a chatbot and you'll get a long, general essay: breeds, history, care. Probably not what you needed.\n\nType \"I'm 12 and getting my first puppy. Give me 5 tips for the first week, one sentence each\" and you get exactly that.\n\nSame chatbot. The difference is what you asked."
+    },
+    {
+      "id": "what-a-prompt-needs",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "What a good prompt says",
+      "body": "What you type to a chatbot is called a **prompt**. Remember, it writes the likely next words for **your** text, so the more your prompt says, the better it can aim. A good prompt usually says:\n\n- **The goal:** what you want (explain, list, check, brainstorm).\n- **The context:** who it's for and what you already know or have (\"I'm 12\", \"here are my notes\").\n- **The format:** how long, and what shape (3 sentences, a list of 5, a table).\n\nBeing specific beats being long: one clear sentence can do more than a paragraph of waffle."
+    },
+    {
+      "id": "vague-or-clear",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Is each prompt **vague**, or **clear** about what it wants and what shape?",
+      "bins": [
+        {
+          "id": "vague",
+          "label": "Vague"
+        },
+        {
+          "id": "clear",
+          "label": "Clear"
+        }
+      ],
+      "items": [
+        {
+          "id": "help-homework",
+          "label": "Help with my homework",
+          "bin": "vague"
+        },
+        {
+          "id": "space",
+          "label": "Write something about space",
+          "bin": "vague"
+        },
+        {
+          "id": "better",
+          "label": "Make it better",
+          "bin": "vague"
+        },
+        {
+          "id": "long-vague",
+          "label": "Tell me all about rivers, please!",
+          "bin": "vague"
+        },
+        {
+          "id": "photosynthesis",
+          "label": "Explain photosynthesis in 3 sentences",
+          "bin": "clear"
+        },
+        {
+          "id": "titles",
+          "label": "3 titles for my lost-robot story",
+          "bin": "clear"
+        }
+      ],
+      "hint": "For each one, ask: does it say what it wants, who it's for, and how long or what shape?",
+      "nudge": "A long or polite prompt can still be vague. Look for the ones that say exactly what they want and what shape.",
+      "explanation": "The clear ones say the **goal** (explain, titles) and the **format** (3 sentences, 3 titles), and the robot one gives context. \"Tell me all about rivers, please!\" is polite, but still vague: all of what, for whom, how long?"
+    },
+    {
+      "id": "whats-missing",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Your prompt is: **\"Write a summary of the water cycle.\"** It has a goal. What would improve it **most**?",
+      "options": [
+        {
+          "id": "who-and-length",
+          "text": "Saying who it's for and how long it should be"
+        },
+        {
+          "id": "please",
+          "text": "Adding \"please\" and \"thank you\"",
+          "nudge": "Being polite is nice, but what information is still missing?"
+        },
+        {
+          "id": "detailed",
+          "text": "Adding \"with lots of detail\"",
+          "nudge": "\"Lots of detail\" makes it longer, not better aimed. Who is it for, and how long should it be?"
+        },
+        {
+          "id": "really-good",
+          "text": "Adding \"make it really good\"",
+          "nudge": "Everyone wants it good. What would actually help it aim the answer?"
+        }
+      ],
+      "correctOptionId": "who-and-length",
+      "hint": "Check it against the three parts of a good prompt. Which two are missing?",
+      "explanation": "It has a **goal**, but no **context** (who's it for? a 12-year-old? a science test?) and no **format** (one paragraph? five bullet points?). Adding those does far more than politeness, capitals or repeating yourself."
+    },
+    {
+      "type": "sort_bins",
+      "difficulty": "core",
+      "bins": [
+        {
+          "id": "goal",
+          "label": "Goal"
+        },
+        {
+          "id": "context",
+          "label": "Context"
+        },
+        {
+          "id": "format",
+          "label": "Format"
+        }
+      ],
+      "id": "goal-context-format",
+      "prompt": "These bits are from different prompts. Is each one the **goal**, the **context** or the **format**?",
+      "items": [
+        {
+          "id": "summarise",
+          "label": "Summarise chapter 2",
+          "bin": "goal"
+        },
+        {
+          "id": "magnets",
+          "label": "Explain how magnets work",
+          "bin": "goal"
+        },
+        {
+          "id": "brother",
+          "label": "It's for my little brother",
+          "bin": "context"
+        },
+        {
+          "id": "read-ch1",
+          "label": "I've already read chapter 1",
+          "bin": "context"
+        },
+        {
+          "id": "rhyme",
+          "label": "As a rhyme",
+          "bin": "format"
+        },
+        {
+          "id": "table",
+          "label": "In a table",
+          "bin": "format"
+        }
+      ],
+      "hint": "Goal = what you want done. Context = who it's for, or what you already know or have. Format = the shape or length of the answer.",
+      "nudge": "\"For my little brother\" changes who it's aimed at, and \"I've already read chapter 1\" is something you know. What kind of part are those?",
+      "explanation": "**Goals** say what to do (summarise, explain). **Context** says who it's for or what you already know (your little brother, chapter 1). **Format** is the shape (a rhyme, a table)."
+    },
+    {
+      "id": "improve-the-prompt",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "You're preparing a 1-minute talk about octopuses for class.",
+      "start": "first-try",
+      "steps": [
+        {
+          "id": "first-try",
+          "text": "You type \"octopus facts\". The chatbot replies with 20 long paragraphs. What do you change?",
+          "choices": [
+            {
+              "id": "same",
+              "text": "Ask \"octopus facts\" again",
+              "consequence": "You get another 20 paragraphs, a bit different. Nothing you said changed, so nothing useful changed.",
+              "outcome": "fail"
+            },
+            {
+              "id": "specific",
+              "text": "\"3 surprising octopus facts for a 1-minute talk, one sentence each\"",
+              "consequence": "Much better: three short, surprising facts. One says an octopus has \"nine brains\".",
+              "next": "check-it"
+            },
+            {
+              "id": "hotter",
+              "text": "Turn the temperature right up for more interesting facts",
+              "consequence": "The facts get stranger, and some make no sense. Temperature changes how it picks, not what it knows.",
+              "outcome": "fail"
+            }
+          ]
+        },
+        {
+          "id": "check-it",
+          "text": "\"Nine brains\" sounds amazing. What do you do before using it?",
+          "choices": [
+            {
+              "id": "check",
+              "text": "Check it on a trusted science website",
+              "consequence": "It's close: an octopus has one central brain plus a cluster of nerve cells in each of its 8 arms, so you say that.",
+              "outcome": "success"
+            },
+            {
+              "id": "use",
+              "text": "Use it: it's from a good prompt",
+              "consequence": "A good prompt gets a better-aimed answer, not a checked one. Surprising facts are exactly the ones to check.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "hint": "Look back at what a good prompt says. And remember: a better prompt doesn't make the answer checked.",
+      "explanation": "Saying the **goal, context and format** turned 20 paragraphs into 3 useful facts. But a good prompt doesn't make facts true: surprising ones still need **checking** in a trusted source."
+    },
+    {
+      "id": "what-to-give-it",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Give it what it needs",
+      "body": "Good prompts can include things you have: **paste in your notes** to summarise, or **your draft** for feedback. You can also ask it to **ask you questions first**, or to **say if it isn't sure**. (It may still be wrong, so you check anyway.)\n\nBut never put **private details** in a prompt: your address, passwords, phone number, or anything about friends they haven't agreed to share. Chats may be stored, and you can't always take them back."
+    },
+    {
+      "id": "include-or-leave-out",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Should each thing go **in** your prompt, or be **left out**?",
+      "bins": [
+        {
+          "id": "in",
+          "label": "Put it in"
+        },
+        {
+          "id": "out",
+          "label": "Leave it out"
+        }
+      ],
+      "items": [
+        {
+          "id": "audience",
+          "label": "Who the answer is for",
+          "bin": "in"
+        },
+        {
+          "id": "length",
+          "label": "How long the answer should be",
+          "bin": "in"
+        },
+        {
+          "id": "notes",
+          "label": "The notes you want summarised",
+          "bin": "in"
+        },
+        {
+          "id": "address",
+          "label": "Your home address, for a local answer",
+          "bin": "out"
+        },
+        {
+          "id": "password",
+          "label": "Your school login, to check marks",
+          "bin": "out"
+        },
+        {
+          "id": "friend-message",
+          "label": "A friend's private message to you",
+          "bin": "out"
+        }
+      ],
+      "hint": "Ask of each one: does it help the chatbot aim the answer, and is it mine to share?",
+      "nudge": "Some of these come with a helpful-sounding reason. Is the reason worth sharing something private?",
+      "explanation": "Who it's for, how long and your own notes help it aim. Your address and login are private even with a good reason (for a local answer, name your town or suburb instead), and a friend's private message isn't yours to share."
+    },
+    {
+      "id": "boring-list",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "prompt": "\"Give me facts about sharks\" got a long, boring list. Which **one** change helps **most**?",
+      "options": [
+        {
+          "id": "goal-format",
+          "text": "\"Give me 3 surprising shark facts for a class talk, one sentence each\""
+        },
+        {
+          "id": "again",
+          "text": "Send the same prompt again",
+          "nudge": "Same prompt, same kind of answer. What did the prompt not say?"
+        },
+        {
+          "id": "hot",
+          "text": "Turn the temperature up as high as it goes",
+          "nudge": "High temperatures add randomness, and nonsense. They don't add what you were missing."
+        },
+        {
+          "id": "interesting",
+          "text": "\"Give me facts about sharks, but make them really, really interesting!!!\"",
+          "nudge": "That's closer, but how many facts, for what, and how long?"
+        }
+      ],
+      "correctOptionId": "goal-format",
+      "hint": "Which option adds a clear goal, context and format?",
+      "explanation": "Only the first says **how many** (3), **what kind** (surprising), **what for** (a class talk) and **what shape** (one sentence each). \"Really, really interesting!!!\" is enthusiastic, but still doesn't say what you need."
+    },
+    {
+      "id": "no-answers-please",
+      "type": "scenario",
+      "difficulty": "challenge",
+      "prompt": "You want a chatbot to quiz you on your history notes.",
+      "start": "first-quiz",
+      "steps": [
+        {
+          "id": "first-quiz",
+          "text": "You paste your notes and type \"Quiz me\". It writes 10 questions, with the answers right underneath. What's the best fix?",
+          "choices": [
+            {
+              "id": "cover",
+              "text": "Cover the answers with your hand",
+              "consequence": "That works a bit, but it's easy to peek, and you didn't fix the prompt.",
+              "outcome": "fail"
+            },
+            {
+              "id": "say-it",
+              "text": "\"Ask me one question at a time. Don't show the answer until I reply\"",
+              "consequence": "Now it asks, waits, and tells you if you were right. You said exactly what you wanted.",
+              "outcome": "success"
+            },
+            {
+              "id": "harder",
+              "text": "\"Make the questions harder\"",
+              "consequence": "Harder questions, still with the answers underneath. The prompt didn't say what was wrong.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "hint": "What exactly went wrong with its answer? Say that in the prompt.",
+      "explanation": "When an answer isn't what you wanted, **say what was wrong** in the next prompt: here, the format (one question at a time, answers hidden)."
+    },
+    {
+      "id": "prompts-recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "- A **prompt** works best when it says the **goal**, the **context** and the **format**.\n- Specific beats long or polite. If an answer misses, say exactly what was wrong.\n- Paste in what you have (notes, drafts), but never private details.\n- A better prompt gets a better-aimed answer, not a checked one.\n\nNext: checking AI's work."
+    }
+  ]
+}

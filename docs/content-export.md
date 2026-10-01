@@ -1060,3 +1060,68 @@ Next-word guessing, temperature, and why chatbots make things up.
 #### Module quiz (8 questions)
 
 Not exported, so the answers stay secret.
+
+### Module 4: Talking to AI (Pro)
+
+Write clear prompts, check the answers, and know today's tools.
+
+#### Writing Good Prompts
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/writing-good-prompts`
+
+**Key facts**
+
+- *What a good prompt says:* What you type to a chatbot is called a **prompt**. Remember, it writes the likely next words for **your** text, so the more your prompt says, the better it can aim.
+- *Give it what it needs:* Good prompts can include things you have: **paste in your notes** to summarise, or **your draft** for feedback. You can also ask it to **ask you questions first**, or to **say if it isn't sure**.
+- *Recap:* A **prompt** works best when it says the **goal**, the **context** and the **format**.
+
+**Best interactive cards**
+
+- Sort into groups: Is each prompt **vague**, or **clear** about what it wants and what shape?
+- Choose what happens: You're preparing a 1-minute talk about octopuses for class.
+- Choose what happens: You want a chatbot to quiz you on your history notes.
+
+**Surprising facts**
+
+- **The context:** who it's for and what you already know or have ("I'm 12", "here are my notes").
+
+#### Checking AI's Work
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/checking-ais-work`
+
+**Key facts**
+
+- *Four ways to check:* **Facts and dates:** find them in a trusted source, like a textbook or an official website. **Sources:** open each one and make sure it really says what the chatbot claims.
+- *Using AI honestly:* Using AI to **learn** is great: ask it to explain a step you don't get, quiz you, or give feedback on your draft. Using it to **do the work for you**, and handing that in as yours, is different.
+
+**Best interactive cards**
+
+- Choose what happens: The chatbot's paragraph says: "The Moon is about 38,000 km from Earth, and it takes about 3 days to get there by spacecraft."
+- Sort into groups: Is each one using AI to **learn**, or letting it **do your work** for you?
+- Choose what happens: Your friend shows you an essay a chatbot wrote for them, due tomorrow.
+
+#### AI Tools Today
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/ai-tools-today`
+
+**Key facts**
+
+- *Chat assistants:* Some widely used AI chat assistants (in A to Z order) are **ChatGPT** (made by OpenAI), **Claude** (Anthropic), **Copilot** (Microsoft) and **Gemini** (Google).
+- *Age rules and good habits:* Every AI app has its own rules, including **who can use it**, and they differ a lot. **Check the app's own rules**, and **ask a parent or carer** before signing up.
+
+**Best interactive cards**
+
+- Sort into groups: For schoolwork, is each use of an AI tool **usually fine**, or one to **check with your teacher first**?
+- Choose what happens: A new AI app promises to turn your selfie into a cartoon.
+- Choose what happens: Your friend says: "My AI app is the best one. It's never wrong."
+
+**Surprising facts**
+
+- One app's terms may say you must be 18 or older; another may allow 13-year-olds with a parent's OK; some let a parent switch on access for younger children (or turn it off).
+
+#### Module quiz (7 questions)
+
+Not exported, so the answers stay secret.

@@ -1,0 +1,11 @@
+{
+  "id": "talking-to-ai",
+  "title": "Talking to AI",
+  "description": "Write clear prompts, check the answers, and know today's tools.",
+  "order": 4,
+  "access": "pro",
+  "teaserCard": {
+    "lesson": "writing-good-prompts",
+    "card": "vague-or-clear"
+  }
+}

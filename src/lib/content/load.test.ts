@@ -191,6 +191,7 @@ describe("real content in /content", () => {
       ["free", "spot-the-ai", "patterns-everywhere", "what-ai-cant-do", "what-ai-actually-is-quiz"],
       ["pro", "training-data", "testing-a-model", "bias-in-bias-out", "how-machines-learn-quiz"],
       ["pro", "next-word-machines", "temperature", "made-up-answers", "how-chatbots-think-quiz"],
+      ["pro", "writing-good-prompts", "checking-ais-work", "ai-tools-today", "talking-to-ai-quiz"],
     ]);
   });
 

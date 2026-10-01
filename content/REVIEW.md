@@ -1627,10 +1627,72 @@ easy. The one miss (`which-go-up`, "only moon") was recovered by its nudge. Chan
 | 3.1 `hungry-horse`, `split-tokens` | Hints nearly named the answer | Point at the method |
 | Glossary `training-data` | Said every example has a label (language models learn without) | "usually each with a label" |
 
-## AI Tools Today (lesson 4.3, not built yet)
-The only lesson that names real products. It carries `lastChecked` (shown to learners), and
-`validate-content` warns once a recheck is due. **Recheck by 1 January 2027, then every 3 months:**
-the tools named, what each one does, and every age limit quoted (from each tool's own terms).
+## Module 4: Talking to AI (Pro; teaser: 4.1 `vague-or-clear`)
+
+### 4.1 Writing Good Prompts (`writing-good-prompts`)
+**Goals:** a prompt works best when it says the goal, the context and the format; specific beats
+long or polite; say what was wrong when an answer misses; paste in what you have, never private
+details; a better prompt gets a better-aimed answer, not a checked one.
+
+**Key claims:** an octopus has one central brain plus a cluster of nerve cells in each of its 8
+arms (the popular "nine brains"). Chats may be stored.
+
+**Simplifications:** prompting advice is general good practice, not tied to any product.
+
+### 4.2 Checking AI's Work (`checking-ais-work`)
+**Goals:** check facts and dates in a trusted source, open and read sources, do the maths, and be
+careful with news (a model learned up to a certain date unless it can search the web); asking the
+chatbot "is that right?" doesn't check anything; use AI to learn, not to do your work, and follow
+school rules.
+
+**Key claims:** the Moon is about 384,000 km from Earth on average (the chatbot's 38,000 is
+wrong); about 3 days by spacecraft. 3 × 24 = 72; 15% of 80 = 12. Schools' AI rules vary.
+
+### 4.3 AI Tools Today (`ai-tools-today`), `lastChecked: 2026-10-01`
+The only lesson that names real products. Named neutrally, in A to Z order, with no ranking:
+ChatGPT (OpenAI), Claude (Anthropic), Copilot (Microsoft) and Gemini (Google). No card tests a
+brand name. Anthropic, which makes Claude, also made the model that drafted this course; the
+lesson treats all four the same, and the age-rules card names none of them (one app may say 18+,
+another 13+ with a parent's OK, and so on).
+
+**Age rules (checked 1 October 2026):**
+- Claude: Anthropic's Consumer Terms say "You must be at least 18 years old or the minimum age
+  required to consent to use the Services in your location, whichever is higher." (Quoted.)
+- Gemini: Google's Gemini Apps help says a parent who manages a child's account with Family Link
+  can turn off Gemini Apps for under-13s (so younger children can have access, controlled by a
+  parent). The lesson says "some let a parent switch on access for younger children (or turn it
+  off)".
+- ChatGPT and Copilot: their terms pages couldn't be read automatically (blocked), so the lesson
+  makes **no** age claim about them; it says "some other apps allow teenagers". **Check these two
+  by hand before publishing.**
+
+**Recheck by 1 January 2027, then every 3 months:**
+- The four names, their makers, and that each is still widely used (add or remove neutrally).
+- "Many can also read files, search the web, or make pictures."
+- Claude's age rule, Gemini's Family Link rule, and the general "some allow teenagers" line.
+- The "AI you already use" examples, and that much of it can be switched off.
+
+### Module 4 quiz (`talking-to-ai-quiz`)
+Seven core questions: vague or clear prompts, the missing parts of a prompt, 15% of 80, a linked
+page that says 18 (and the chatbot's "sorry, it's 17"), learning vs doing your work, knowledge up to
+a date, and sorting bits of prompts into goal, context and format.
+
+### Beginner audit: Module 4 (1 October 2026)
+First audit: 24 of 24 right first try, so too easy; facts all checked correct. Changes:
+
+| Where | Issue | Fix |
+|---|---|---|
+| 4.2 `moon-distance`, `confident-paragraph` | The bolded 38,000 km and "a factor of ten" pointed at the error | No bold; the hook says "badly wrong" |
+| 4.3 `kind-of-tool`, `school-or-ask` | Nudges listed the answers | Point at the method |
+| 4.3 `rules-and-ages` | Only Claude was named, as the restrictive one: uneven | No product named; one app 18+, another 13+ with a parent's OK, some parent-controlled for younger children |
+| 4.3 `why-dated` | A free point labelled challenge | Now core; new challenge `always-true` (true of every chat assistant, or only some: search, pictures, today's news, never wrong) |
+| 4.2 (new) `hours-in-a-year` | Checking maths was too easy (62 vs 72) | The chatbot says 8,670; really 24 × 365 = 8,760 (swapped digits look right) |
+| 4.1 (new) `goal-context-format`, quiz `q-parts` | Prompt parts were only word-matched | Sort bits of prompts into goal, context and format; context and format blur |
+| Quiz `q-link` | One step | Second step: the chatbot "corrects" itself to 17; the page says 18 |
+| 4.1 `whats-missing`, 4.2 `latest-phone`, `friends-essay`, 4.3 `best-ai`, quiz `q-missing`, `q-latest` | Silly wrong options | Tempting ones ("lots of detail", "mixing up two models", "its context window forgot", "just change some words", "use the newest version") |
+| 4.1 `vague-or-clear` | "Explain photosynthesis in 3 sentences" has no context | Prompt asks "what it wants and what shape" |
+| 4.2 `claim-and-check` | A news site is also a trusted source | Date row: "a textbook or museum site" |
+| 4.2 `honesty` | "Most schools" unverified | "Many schools" |
 
 ## Beginner audit: How AI Really Works module 1 and Deepfake Scams (1 October 2026)
 

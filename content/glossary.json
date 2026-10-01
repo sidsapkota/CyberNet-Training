@@ -169,6 +169,7 @@
       "definition": "An IP address for use inside a home, school or office network. The same private addresses are reused in millions of networks."
     },
     { "id": "process", "term": "process", "definition": "A program that's running right now. The task manager lists them all." },
+    { "id": "prompt", "term": "prompt", "definition": "What you type (or say) to an AI chatbot. A good one says the goal, who it's for, and the length or shape you want." },
     { "id": "protocol", "term": "protocol", "definition": "A set of rules that devices agree to follow so they can understand each other." },
     { "id": "public-address", "term": "public address", "definition": "An IP address that's unique across the whole internet, so anyone on the internet can reach it." },
     { "id": "public-wi-fi", "term": "public Wi-Fi", "definition": "Wi-Fi that anyone nearby can join, like at a café, library or airport." },

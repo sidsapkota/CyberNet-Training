@@ -1,0 +1,247 @@
+{
+  "id": "talking-to-ai-quiz",
+  "kind": "quiz",
+  "title": "Talking to AI: Module Quiz",
+  "order": 99,
+  "cards": [
+    {
+      "id": "q-vague-clear",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Sort these prompts: **vague**, or **clear** about what they want?",
+      "bins": [
+        {
+          "id": "vague",
+          "label": "Vague"
+        },
+        {
+          "id": "clear",
+          "label": "Clear"
+        }
+      ],
+      "items": [
+        {
+          "id": "fix",
+          "label": "Fix this",
+          "bin": "vague"
+        },
+        {
+          "id": "about-rome",
+          "label": "Write lots and lots about ancient Rome",
+          "bin": "vague"
+        },
+        {
+          "id": "five-words",
+          "label": "List 5 words that rhyme with \"light\"",
+          "bin": "clear"
+        },
+        {
+          "id": "explain-fractions",
+          "label": "Explain dividing fractions in 4 steps",
+          "bin": "clear"
+        }
+      ],
+      "explanation": "Clear prompts say exactly what they want and what shape (5 words, 4 steps). \"Lots and lots\" is long, but still vague."
+    },
+    {
+      "id": "q-missing",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "\"Make a list of healthy snacks.\" What would improve this prompt **most**?",
+      "options": [
+        {
+          "id": "context-format",
+          "text": "Saying who they're for and how many you want"
+        },
+        {
+          "id": "polite",
+          "text": "Adding \"please\" at the start"
+        },
+        {
+          "id": "detail",
+          "text": "Asking for \"lots of detail\""
+        },
+        {
+          "id": "temperature",
+          "text": "Turning the temperature up"
+        }
+      ],
+      "correctOptionId": "context-format",
+      "explanation": "It has a goal but no context (for a lunchbox? a 12-year-old?) or format (how many?). Politeness, \"lots of detail\" and temperature don't add either."
+    },
+    {
+      "id": "q-sum",
+      "type": "numeric_input",
+      "difficulty": "core",
+      "prompt": "A chatbot says: \"15% of 80 is **10**.\" Check it. What is 15% of 80?",
+      "base": "decimal",
+      "answer": 12,
+      "explanation": "10% of 80 is 8, and 5% is 4, so 15% is **12**. Check sums yourself."
+    },
+    {
+      "id": "q-link",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "A chatbot says there are **about 50** kinds of penguin, with a link to a zoo's website.",
+      "start": "the-link",
+      "steps": [
+        {
+          "id": "the-link",
+          "text": "The link opens a real zoo page about penguins. What now?",
+          "choices": [
+            {
+              "id": "done",
+              "text": "It's checked: the page is real",
+              "consequence": "A real page isn't proof. Read whether it says the same thing.",
+              "outcome": "fail"
+            },
+            {
+              "id": "read",
+              "text": "Read the page to see what it says",
+              "consequence": "The page says there are about 18 kinds of penguin.",
+              "next": "sorry"
+            },
+            {
+              "id": "ask",
+              "text": "Ask the chatbot to confirm",
+              "consequence": "Asking the chatbot doesn't check anything.",
+              "outcome": "fail"
+            }
+          ]
+        },
+        {
+          "id": "sorry",
+          "text": "You tell the chatbot. It replies: \"Sorry, you're right, it's 17.\" Which number do you use?",
+          "choices": [
+            {
+              "id": "page",
+              "text": "18, from the zoo page",
+              "consequence": "Right: go with the source you actually read, not the chatbot's new guess.",
+              "outcome": "success"
+            },
+            {
+              "id": "seventeen",
+              "text": "17: the chatbot fixed its mistake",
+              "consequence": "Its \"fix\" is just another guess. The page says 18.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "explanation": "Open sources **and read them**, then go with what the source says. A chatbot's correction is just another prediction."
+    },
+    {
+      "id": "q-learn-do",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Sort each one: does it help you **learn**, or let AI **do your work**?",
+      "bins": [
+        {
+          "id": "learn",
+          "label": "Learning"
+        },
+        {
+          "id": "do",
+          "label": "Doing your work"
+        }
+      ],
+      "items": [
+        {
+          "id": "why-wrong",
+          "label": "Asking why your answer was wrong",
+          "bin": "learn"
+        },
+        {
+          "id": "flashcards",
+          "label": "Making flashcards from your notes",
+          "bin": "learn"
+        },
+        {
+          "id": "book-report",
+          "label": "Handing in its book report as yours",
+          "bin": "do"
+        },
+        {
+          "id": "paraphrase",
+          "label": "Changing a few words in its answer",
+          "bin": "do"
+        }
+      ],
+      "explanation": "Asking why and practising with flashcards help you learn. Handing in its report, or lightly rewording its answer, is letting it do your work."
+    },
+    {
+      "id": "q-latest",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "A chatbot (that can't search the web) says a band's newest album came out \"this year\". What's the main risk?",
+      "options": [
+        {
+          "id": "cutoff",
+          "text": "It learned up to a certain date, so \"this year\" may be out of date"
+        },
+        {
+          "id": "mix-up",
+          "text": "It might be mixing up two bands"
+        },
+        {
+          "id": "hallucinate-always",
+          "text": "It always makes up album names"
+        },
+        {
+          "id": "window",
+          "text": "Its context window is too small to hold the album"
+        }
+      ],
+      "correctOptionId": "cutoff",
+      "explanation": "Without web search, a model only knows what it learned up to a certain date. \"This year\" and \"newest\" may be long out of date."
+    },
+    {
+      "type": "sort_bins",
+      "difficulty": "core",
+      "bins": [
+        {
+          "id": "goal",
+          "label": "Goal"
+        },
+        {
+          "id": "context",
+          "label": "Context"
+        },
+        {
+          "id": "format",
+          "label": "Format"
+        }
+      ],
+      "id": "q-parts",
+      "prompt": "Sort these bits of prompts: the **goal**, the **context** or the **format**?",
+      "items": [
+        {
+          "id": "volcano",
+          "label": "Explain how volcanoes erupt",
+          "bin": "goal"
+        },
+        {
+          "id": "test",
+          "label": "I'm 12 and it's for a science test",
+          "bin": "context"
+        },
+        {
+          "id": "notes",
+          "label": "Here are my notes from class",
+          "bin": "context"
+        },
+        {
+          "id": "bullets",
+          "label": "In 5 bullet points",
+          "bin": "format"
+        },
+        {
+          "id": "short",
+          "label": "No longer than one paragraph",
+          "bin": "format"
+        }
+      ],
+      "explanation": "The **goal** is what to do; the **context** is who it's for and what you already have (your age, your notes); the **format** is the shape and length."
+    }
+  ]
+}

@@ -88,6 +88,7 @@ import {
   MessageSquare,
   ThermometerSun,
   Sparkles,
+  WandSparkles,
   Link,
   MailWarning,
   MapPin,
@@ -283,6 +284,7 @@ export const LESSON_ICON_COMPONENTS = {
   "message-square": MessageSquare,
   "thermometer-sun": ThermometerSun,
   sparkles: Sparkles,
+  "wand-sparkles": WandSparkles,
 } satisfies Record<LessonIconName, LucideIcon>;
 
 /** A lesson's icon, with the brand stroke. Decorative: the lesson title always carries the meaning. */
