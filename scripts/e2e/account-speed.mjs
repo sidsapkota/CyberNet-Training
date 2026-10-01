@@ -37,6 +37,8 @@ try {
   }
   // Never send test analytics.
   await page.route(/\/script\.js$|\/_vercel\/insights\//, (route) => route.abort());
+  // A protected preview: open Vercel's share link first (it sets an access cookie).
+  if (process.env.E2E_SHARE_URL) await page.goto(process.env.E2E_SHARE_URL);
   await page.goto(`${BASE}/auth/callback?token_hash=${link.data.properties.hashed_token}&type=magiclink&next=/`);
   await page.waitForURL((u) => !u.pathname.startsWith("/auth"), { timeout: 30000 });
 

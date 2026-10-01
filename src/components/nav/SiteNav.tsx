@@ -126,6 +126,9 @@ function HeaderAccount() {
   return (
     <Link
       href="/account"
+      // The whole page, prefetched (as before loading.tsx existed): the tap shows it at once, and
+      // the loading screen is only a fallback when a tap beats the prefetch.
+      prefetch
       aria-label={`Account: ${name}${hasPro ? ", Pro" : ""}`}
       className="hidden items-center gap-2 rounded-control px-1.5 py-1 text-small font-semibold text-ink hover:bg-surface-raised sm:flex transition-[background-color,color,scale] active:bg-surface-raised motion-safe:active:scale-95"
     >
@@ -193,6 +196,7 @@ function AccountTab({ pathname }: { pathname: string }) {
     <li>
       <Link
         href={href}
+        prefetch={signedIn ? true : undefined}
         aria-current={active ? "page" : undefined}
         className={`relative flex h-16 flex-col items-center justify-center gap-0.5 rounded-control text-caption font-semibold transition-[background-color,color,scale] active:bg-surface-raised motion-safe:active:scale-95 ${
           active ? "text-accent-ink" : "text-ink-muted"
