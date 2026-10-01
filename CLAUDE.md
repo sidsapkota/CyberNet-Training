@@ -909,6 +909,13 @@ number is in `src/lib/leagues/config.ts`.
   learners report the same handle it's replaced with a generated one (reports are kept). The cron
   emails yesterday's (Sydney) reports to `CONTACT_EMAIL` from 8 am, only on days with reports, via
   Resend (`RESEND_API_KEY`; one idempotency key per day, so hourly retries never send twice).
+- **Dashboard card** (`LeaguesCard`, state from `leagueCardState` in `src/lib/leagues/card.ts`):
+  while leagues are closed, everyone with a dashboard sees "Weekly leagues": the Packet badge, how
+  leagues work (up to 30 learners; the tier ladder), and "Leagues open soon. Earn XP now to be
+  ready." It loads no league data (no counts, other learners or empty leaderboard; a test checks).
+  Guests also get "Create a free account". Once leagues open it becomes the learner's league card
+  by itself (tier, place this week, time left, "See your league"); guests are invited to join. It
+  waits for `useLeaguesStatus()` so it never flips from "soon" to open on screen.
 - **Screens:** `/leagues` (badge, league name, countdown, ranked list with promotion and demotion
   zones marked by arrows and text, your card, settings); a result screen once after each reset
   (promoted: the mascot celebrating, confetti and the new badge; stayed or moved down: gentle).

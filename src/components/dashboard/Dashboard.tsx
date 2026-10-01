@@ -23,6 +23,7 @@ import {
   hasAnyProgress,
 } from "@/lib/progress/state";
 import { TodayPanel } from "@/components/streak/TodayPanel";
+import { LeaguesCard } from "@/components/leagues/LeaguesCard";
 import { EarlyUserThanks } from "@/components/pro/EarlyUserThanks";
 import { usePro } from "@/lib/pro/ProProvider";
 import { ResetProgressButton } from "./ResetProgressButton";
@@ -98,11 +99,14 @@ export function Dashboard({ courses }: { courses: CourseOutline[] }) {
           <CourseRings states={states} />
         </Rise>
         <Rise index={4} className="lg:col-span-3">
+          <LeaguesCard className={panel} />
+        </Rise>
+        <Rise index={5} className="lg:col-span-3">
           <Activity days={activity} />
         </Rise>
       </div>
 
-      <Rise index={5} className="mt-10">
+      <Rise index={6} className="mt-10">
         <h2 className="text-title font-semibold">Your courses</h2>
         <div className="-mx-gutter mt-4 flex snap-x gap-4 overflow-x-auto px-gutter pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-3">
           {courses.map((course) => (
