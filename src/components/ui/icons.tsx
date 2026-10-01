@@ -19,6 +19,7 @@ import {
   LogOut,
   Mail,
   Lightbulb,
+  Tag,
   ListRestart,
   Lock,
   type LucideIcon,
@@ -218,6 +219,7 @@ export const ProIcon = brandIcon(Gem, "ProIcon");
 export const UnlimitedIcon = brandIcon(InfinityLucide, "UnlimitedIcon");
 export const CertificateIcon = brandIcon(Award, "CertificateIcon");
 export const MistakesIcon = brandIcon(ListRestart, "MistakesIcon");
+export const PricingIcon = brandIcon(Tag, "PricingIcon");
 
 /**
  * Lesson icons (the `icon` field of every lesson, from `LESSON_ICONS`), shown on course path

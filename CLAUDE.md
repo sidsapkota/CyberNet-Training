@@ -44,7 +44,8 @@ npm run e2e:player-back   # Back/forward (read-only), Listen and lesson_quit in 
 npm run e2e:pro-declined  # "What's stopping you?" after Not now on /pro (360px, event data, once a week)
 npm run e2e:mistake-review # Mistake review: a wrong answer saved, the free count + pitch, the Pro review (360px)
 npm run e2e:latency       # time a lesson save, a lesson fetch and the dashboard (E2E_BASE_URL=production)
-npm run e2e:plans         # plans at 360px (guest, free, Pro), plan events, Pro identity, no prompts for Pro
+npm run e2e:plans         # plans at 360px and desktop (guest, free, Pro), plan events, nav, Pro identity
+npm run e2e:account-speed # how fast /account opens from the profile icon (PHONE=1 for throttled 4G)
 ```
 
 Tap targets are at least **44px** everywhere (inline text links and glossary terms excepted); the
@@ -540,6 +541,13 @@ keep their focused player shell.
   learner with no progress plays any lesson they're allowed to open straight away (guests: see
   [Guest sign-up gate](#guest-sign-up-gate)). Learners with progress, in Path mode, see the gate:
   "Play it anyway", "Switch to Explore", or go to the next lesson.
+- **Instant taps:** routes that render on the server per request (`/account`, `/account/plan`,
+  `/leagues`, the certificate page, `/review`) have a `loading.tsx` (`PageLoading`: the page's real
+  heading, panel outlines and the loading network mark; never grey blocks), which Next prefetches
+  with the link, so a tap shows the page's shape at once. Static pages (dashboard, catalog, course
+  paths, `/pro`) are prefetched whole. Nav links show a pressed state on touch and stay dimmed
+  until the page arrives (`useLinkStatus`); the shrink is `motion-safe` only. `/account` checks the
+  session and reads the profile in one parallel round trip (RLS returns only the learner's row).
 - **Client-only rendering:** progress-dependent pages render the `NetworkMark` loading state until
   progress loads, then draw. This also keeps reduced-motion entrances from mismatching the
   server HTML.
@@ -952,10 +960,14 @@ parent or guardian before subscribing" is shown to everyone.
     guests, "Your plan" disabled when signed in) and Pro (Stripe's prices, annual preselected with a
     Yearly/Monthly switch, "Best value" only when the annual plan really saves, the 4 benefits,
     "Start 7-day free trial", the parent line). Pro first in the page and on phones (its button in
-    view at 360×640), on the right from `sm`. The Pro card is raised, with a cyan border and
-    `shadow-pro-card`; a gentle staggered entrance (none under reduced motion). Below: the trial
+    view at 360×640), on the right from `sm`. Side by side they're the same height with the buttons
+    lined up along the bottom (Free says "Upgrade any time." above its button; never extra
+    benefits); stacked on phones they keep natural heights. The Pro card has a cyan border and
+    `shadow-pro-card` (raised 2px on phones); a gentle staggered entrance (none under reduced motion). Below: the trial
     terms and a 3-question FAQ (cancel, after the trial, ask a parent).
-  - **Events:** `plans_viewed` (`source`: `pro_page`, `account` or `dashboard`, from `?from=`) and
+  - **Nav:** "Pricing" (`/pro?from=nav`) in the header nav and the phone tab bar; "Your plan"
+    (`/account/plan`) for Pro members. Hidden until a signed-in learner's Pro status is known.
+  - **Events:** `plans_viewed` (`source`: `pro_page`, `account`, `dashboard` or `nav`, from `?from=`) and
     `plan_selected` (`plan`: free or pro; `interval`: monthly or annual for Pro), data only from
     `plansViewedData` / `planSelectedData`.
   - **Pro identity:** the member's node wears the Pro frame (an outer cyan ring and glow) in the

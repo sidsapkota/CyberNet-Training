@@ -18,8 +18,8 @@ export const PRO_BENEFITS = [
 export const FREE_BENEFITS = [`${DAILY_LESSON_LIMIT} new lessons a day`, "Every course", "Streaks and XP"] as const;
 
 /** Where the plans section was opened from (`plans_viewed`'s `source`). */
-export type PlansSource = "pro_page" | "account" | "dashboard";
-const SOURCES = new Set<string>(["pro_page", "account", "dashboard"]);
+export type PlansSource = "pro_page" | "account" | "dashboard" | "nav";
+const SOURCES = new Set<string>(["pro_page", "account", "dashboard", "nav"]);
 
 /** `?from=` on /pro, from a link elsewhere in the app; anything else is the page itself. */
 export function plansSourceFrom(search: string): PlansSource {

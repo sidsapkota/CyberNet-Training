@@ -107,6 +107,9 @@ try {
     record("…Free says Start free", (await page.getByRole("link", { name: "Start free" }).count()) === 1);
     record("…a three-question FAQ", (await page.locator("details").count()) === 3);
     record("…no sideways scrolling", !(await sideways(page)));
+    const proH = (await page.locator("section[aria-labelledby=plan-pro]").boundingBox())?.height ?? 0;
+    const freeH = (await page.locator("section[aria-labelledby=plan-free]").boundingBox())?.height ?? 0;
+    record("…stacked on phones, the cards keep their natural heights", Math.abs(proH - freeH) > 40, `Pro ${Math.round(proH)}px, Free ${Math.round(freeH)}px`);
     await page.getByRole("radio", { name: /Yearly/ }).click();
     await page.screenshot({ path: path.join(SHOTS, "plans-guest-360.png") });
     await page.emulateMedia({ colorScheme: "light" });
@@ -114,12 +117,44 @@ try {
     await page.waitForTimeout(500);
     const viewed = (await events(page)).find(([n]) => n === "plans_viewed");
     record("…plans_viewed sent with source pro_page only", JSON.stringify(viewed?.[1]) === '{"source":"pro_page"}', JSON.stringify(viewed));
+    // The tab bar's Pricing link (phones) goes to the plans and says it came from the nav.
+    await page.goto(`${BASE}/courses`);
+    const tab = page.getByRole("navigation", { name: "Main" }).last().getByRole("link", { name: "Pricing" });
+    await tab.waitFor({ timeout: 30000 });
+    record("Guest, phone: Pricing in the tab bar", true);
+    await page.screenshot({ path: path.join(SHOTS, "nav-guest-360.png") });
+    await tab.click();
+    await page.getByRole("heading", { name: "Choose your plan" }).waitFor({ timeout: 30000 });
+    await page.waitForTimeout(500);
+    record("…opens the plans with plans_viewed {source: nav}", (await events(page)).some(([n, d]) => n === "plans_viewed" && JSON.stringify(d) === '{"source":"nav"}'), JSON.stringify(await events(page)));
     await page.getByRole("link", { name: "Start free" }).click();
     await page.waitForURL(/\/login/);
     await page.waitForTimeout(500);
     const picked = (await events(page)).find(([n]) => n === "plan_selected");
     record("…Start free sends plan_selected {plan: free}", JSON.stringify(picked?.[1]) === '{"plan":"free"}', JSON.stringify(picked));
     await ctx.close();
+
+    // Desktop: the cards side by side, the same height, the buttons lined up; Pricing in the header.
+    for (const scheme of ["dark", "light"]) {
+      const wide = await browser.newContext({ viewport: { width: 1280, height: 900 }, colorScheme: scheme, reducedMotion: "reduce" });
+      const desk = await wide.newPage();
+      await desk.goto(`${BASE}/pro`);
+      await desk.getByRole("heading", { name: "Choose your plan" }).waitFor({ timeout: 30000 });
+      await desk.getByRole("link", { name: /Start your free trial/ }).waitFor({ timeout: 30000 });
+      const pro = await desk.locator("section[aria-labelledby=plan-pro]").boundingBox();
+      const free = await desk.locator("section[aria-labelledby=plan-free]").boundingBox();
+      const proBtn = await desk.getByRole("link", { name: /Start your free trial/ }).boundingBox();
+      const freeBtn = await desk.getByRole("link", { name: "Start free" }).boundingBox();
+      if (scheme === "dark") {
+        record("Desktop: Free and Pro side by side", Math.abs(pro.y - free.y) < 8 && free.x < pro.x);
+        record("…the same height", Math.abs(pro.height - free.height) <= 2, `Pro ${Math.round(pro.height)}px, Free ${Math.round(free.height)}px`);
+        record("…buttons aligned along the bottom", Math.abs(proBtn.y + proBtn.height - (freeBtn.y + freeBtn.height)) <= 2, `Pro ${Math.round(proBtn.y + proBtn.height)}, Free ${Math.round(freeBtn.y + freeBtn.height)}`);
+        record("…Free says Upgrade any time, no extra benefits", (await desk.getByText("Upgrade any time.").count()) === 1 && (await desk.getByRole("list", { name: "Free includes" }).getByRole("listitem").count()) === 3);
+        record("Desktop: Pricing in the header nav", (await desk.getByRole("navigation", { name: "Main" }).first().getByRole("link", { name: "Pricing" }).count()) === 1);
+      }
+      await desk.screenshot({ path: path.join(SHOTS, `plans-desktop-${scheme}.png`) });
+      await wide.close();
+    }
   }
 
   // 2. Free account.
@@ -196,6 +231,8 @@ try {
     record("…the learner's node wears the Pro frame (tab bar)", (await page.locator("nav [data-pro]").count()) >= 1);
     await page.getByRole("heading", { name: "Your mistakes" }).waitFor({ timeout: 30000 });
     record("…Review now, not Review with Pro", (await page.getByRole("link", { name: "Review now" }).count()) === 1);
+    const tabs = page.getByRole("navigation", { name: "Main" }).last();
+    record("…'Your plan' in the tab bar, not Pricing", (await tabs.getByRole("link", { name: "Your plan" }).count()) === 1 && (await tabs.getByRole("link", { name: "Pricing" }).count()) === 0);
     record("…no sideways scrolling", !(await sideways(page)));
     await page.screenshot({ path: path.join(SHOTS, "pro-dashboard-360.png") });
     await page.emulateMedia({ colorScheme: "light" });

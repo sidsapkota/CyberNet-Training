@@ -2,22 +2,29 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { AccountPanel } from "@/components/account/AccountPanel";
 import { safeNextPath } from "@/lib/auth/redirect";
-import { signedInUserId } from "@/lib/auth/session";
 import { getCourses } from "@/lib/content/server";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = { title: "Account" };
 
+/**
+ * One round trip: the session check (`auth.getUser()`, verified by Supabase Auth) and the profile
+ * read go out together. The profile query needs no user id: Row Level Security returns only the
+ * signed-in learner's own row (and nothing for a guest, who is sent to sign in).
+ */
 export default async function AccountPage({ searchParams }: PageProps<"/account">) {
-  const userId = await signedInUserId();
-  if (!userId) redirect("/login");
-
-  const supabase = await createSupabaseServerClient();
-  const [{ data: user }, { data: profile }] = await Promise.all([
+  let supabase;
+  try {
+    supabase = await createSupabaseServerClient();
+  } catch {
+    redirect("/login"); // no Supabase settings: no accounts on this copy
+  }
+  const [{ data: user, error }, { data: profile }, { welcome, next }] = await Promise.all([
     supabase.auth.getUser(),
-    supabase.from("profiles").select("display_name").eq("id", userId).maybeSingle(),
+    supabase.from("profiles").select("display_name").maybeSingle(),
+    searchParams,
   ]);
-  const { welcome, next } = await searchParams;
+  if (error || !user.user) redirect("/login");
 
   return (
     <main className="px-gutter py-8 sm:py-12">

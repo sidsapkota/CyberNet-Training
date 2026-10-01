@@ -24,6 +24,7 @@ Last updated: 1 October 2026.
 
 ## 2. Open branches
 
+- `plans-polish-nav`: equal-height plan cards on desktop, "Pricing" / "Your plan" in the nav (`plans_viewed` source `nav`), faster /account (one round trip) and loading screens + pressed nav states. **Don't merge until the owner has seen it.**
 - `mascot-motion`: mascot reactions and the "security scan" (below). **Don't merge until the owner has checked it** (they'll look on 2 Oct). Preview URLs follow `https://cyber-net-training-git-<branch>-sidsapkotas-projects.vercel.app`.
 
 ## 3. In progress

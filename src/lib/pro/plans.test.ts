@@ -41,6 +41,7 @@ describe("plan events (nothing personal)", () => {
   it("reads where /pro was opened from", () => {
     expect(plansSourceFrom("?from=dashboard")).toBe("dashboard");
     expect(plansSourceFrom("?from=account")).toBe("account");
+    expect(plansSourceFrom("?from=nav")).toBe("nav");
     expect(plansSourceFrom("?from=nowhere")).toBe("pro_page");
     expect(plansSourceFrom("")).toBe("pro_page");
   });
