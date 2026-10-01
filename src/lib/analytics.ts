@@ -3,7 +3,7 @@
  *
  * Where a visitor came from is worked out once per browser tab and kept in sessionStorage
  * (never a cookie): a `utm_source` in the first URL they open, or a tagged path like
- * `/from/tiktok`. Custom events carry at most two properties, `lesson` and `source`, which fits
+ * `/from/tiktok`. Custom events carry at most two properties, `lesson` (or `course`) and `source`, which fits
  * Vercel Pro's limit. (On Hobby, custom events aren't collected at all; page views of the
  * `/from/<platform>` paths still show which video sent people. See CLAUDE.md → Analytics.)
  */
@@ -11,7 +11,36 @@ import { track } from "@vercel/analytics";
 
 export const SOURCE_KEY = "cybernet.source";
 
-export type AnalyticsEvent = "landing_cta" | "lesson_start" | "lesson_complete" | "quiz_pass" | "signup_complete";
+export type AnalyticsEvent =
+  | "landing_cta"
+  | "lesson_start"
+  | "lesson_complete"
+  | "quiz_pass"
+  | "signup_complete"
+  // The Pro funnel (lesson or course id and source only).
+  | "paywall_viewed"
+  | "teaser_played"
+  | "checkout_started"
+  | "trial_started"
+  | "subscribed"
+  | "certificate_issued";
+
+/** What an event is about: a lesson id (a plain string), or a course. */
+export type EventTarget = string | { course: string };
+
+const CONTENT_ID = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+
+/**
+ * An event's properties: at most `lesson` or `course`, plus `source`. Only a content id
+ * (kebab-case) is ever sent, so nothing personal can ride along. Pure.
+ */
+export function eventData(target: EventTarget | undefined, source: string | null): Record<string, string> {
+  const data: Record<string, string> = {};
+  const [key, id] = typeof target === "string" ? ["lesson", target] : target ? ["course", target.course] : [null, ""];
+  if (key && CONTENT_ID.test(id) && id.length <= 80) data[key] = id;
+  if (source) data.source = source;
+  return data;
+}
 
 /**
  * The URL analytics may see: query strings are dropped except `utm_*` (so a sign-in token or an
@@ -73,14 +102,10 @@ export function currentSource(): string | null {
   }
 }
 
-/** Sends a custom event with at most `lesson` and `source`. Never throws. */
-export function trackEvent(name: AnalyticsEvent, lesson?: string): void {
+/** Sends a custom event with at most `lesson` (or `course`) and `source`. Never throws. */
+export function trackEvent(name: AnalyticsEvent, target?: EventTarget): void {
   try {
-    const data: Record<string, string> = {};
-    if (lesson) data.lesson = lesson.slice(0, 80);
-    const source = currentSource();
-    if (source) data.source = source;
-    track(name, data);
+    track(name, eventData(target, currentSource()));
   } catch {
     // analytics must never break the app
   }

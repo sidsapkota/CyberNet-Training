@@ -325,6 +325,41 @@ async function main() {
     const anonStandings = await anonLeague.rpc("league_standings");
     record("Signed-out visitors can ask if leagues are open, but can't read standings", anonOpen.data === true && Boolean(anonStandings.error));
 
+    // Certificates: owners read their own; the public check shows a valid one's public fields only.
+    const ct = Date.now().toString(32).toUpperCase().replace(/[ILOU]/g, "X").slice(-4).padStart(4, "0");
+    const certB = `CNT-B${ct.slice(1)}-0000-0001`;
+    const certBOld = `CNT-B${ct.slice(1)}-0000-0002`;
+    const certA = `CNT-A${ct.slice(1)}-0000-0003`;
+    const seedCerts = [
+      await admin.from("certificates").insert({ id: certBOld, user_id: b.id, course_id: "stay-safe-online", name: "Bee Old", completed_on: "2026-10-01", revoked_at: new Date(Date.now() + 1000).toISOString() }),
+      await admin.from("certificates").insert({ id: certB, user_id: b.id, course_id: "stay-safe-online", name: "Bee", completed_on: "2026-10-01" }),
+      await admin.from("certificates").insert({ id: certA, user_id: a.id, course_id: "stay-safe-online", name: "Ace", completed_on: "2026-10-01" }),
+    ];
+    record("The server can issue certificates (control)", seedCerts.every((r) => !r.error), seedCerts.find((r) => r.error)?.error?.message);
+    const twoActive = await admin.from("certificates").insert({ id: `CNT-C${ct.slice(1)}-0000-0004`, user_id: b.id, course_id: "stay-safe-online", name: "Bee Two", completed_on: "2026-10-01" });
+    record("Only one valid certificate per learner per course", twoActive.error?.code === "23505");
+    const badId = await admin.from("certificates").insert({ id: "CNT-OOOO-0000-0005", user_id: a.id, course_id: "x", name: "Ace", completed_on: "2026-10-01" });
+    record("Certificate IDs must use the readable alphabet", Boolean(badId.error));
+    const ownCerts = await a.client.from("certificates").select("id, user_id");
+    record("A reads only their own certificates", !ownCerts.error && (ownCerts.data ?? []).length === 1 && ownCerts.data?.[0]?.id === certA);
+    record(
+      "Nobody can issue, change or withdraw certificates directly",
+      blocked(await a.client.from("certificates").insert({ id: `CNT-D${ct.slice(1)}-0000-0006`, user_id: a.id, course_id: "x", name: "Fake", completed_on: "2026-10-01" }).select()) &&
+        blocked(await a.client.from("certificates").update({ name: "Changed" }).eq("id", certA).select()) &&
+        blocked(await a.client.from("certificates").update({ revoked_at: new Date().toISOString() }).eq("id", certB).select()) &&
+        blocked(await a.client.from("certificates").delete().eq("id", certA).select()),
+    );
+    const anonCheck = createClient<Database>(env.url, env.publishableKey, noSession);
+    const valid = await anonCheck.rpc("verify_certificate", { p_id: certB.toLowerCase() });
+    record(
+      "The public check shows a valid certificate's name, course and date only",
+      !valid.error && valid.data?.length === 1 && Object.keys(valid.data[0] ?? {}).sort().join() === "completed_on,course_id,name" && valid.data[0]?.name === "Bee",
+      valid.error?.message,
+    );
+    const revoked = await anonCheck.rpc("verify_certificate", { p_id: certBOld });
+    const unknown = await anonCheck.rpc("verify_certificate", { p_id: "CNT-ZZZZ-ZZZZ-ZZZZ" });
+    record("Withdrawn and unknown certificates show nothing", !revoked.error && (revoked.data ?? []).length === 0 && !unknown.error && (unknown.data ?? []).length === 0);
+
     // Signed-out visitors see nothing.
     const anon = createClient<Database>(env.url, env.publishableKey, noSession);
     let anonClean = true;
@@ -332,6 +367,7 @@ async function main() {
       "profiles", "card_completions", "lesson_completions", "quiz_attempts", "xp_events", "goal_days",
       "subscriptions", "pro_grants", "stripe_customers", "stripe_events",
       "league_players", "leagues", "league_members", "league_results", "league_weeks", "league_state", "handle_reports",
+      "certificates",
     ] as const) {
       const r = await anon.from(table).select("*");
       if (!r.error && (r.data ?? []).length > 0) anonClean = false;
@@ -373,7 +409,7 @@ async function main() {
     let leftovers = 0;
     for (const table of [
       "card_completions", "lesson_completions", "quiz_attempts", "xp_events", "goal_days",
-      "subscriptions", "pro_grants", "stripe_customers", "league_players", "league_members", "league_results",
+      "subscriptions", "pro_grants", "stripe_customers", "league_players", "league_members", "league_results", "certificates",
     ] as const) {
       const r = await admin.from(table).select("user_id").in("user_id", [a.id, b.id, c.id]);
       leftovers += (r.data ?? []).length;

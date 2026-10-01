@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { CardId, nonEmpty } from "@/cards/base";
-import { CardSchema, isInteractiveCard } from "@/cards/schema";
+import { type Card, CardSchema, isInteractiveCard } from "@/cards/schema";
 import { LESSON_ICONS, type LessonIconName } from "./lessonIcons";
 
 /** Shared id format for courses, modules and lessons (lesson ids appear in URLs). */
@@ -25,7 +25,12 @@ export const ModuleAccessSchema = z.enum(["free", "pro"]);
 export type ModuleAccess = z.infer<typeof ModuleAccessSchema>;
 
 /** content/courses/<course>/modules/<module>/module.json */
-export const ModuleFileSchema = z.object({ ...orderedMeta, access: ModuleAccessSchema });
+export const ModuleFileSchema = z.object({
+  ...orderedMeta,
+  access: ModuleAccessSchema,
+  /** Pro modules: the one playable card shown on the "What's next" screen (see content/teaser.ts). */
+  teaserCard: z.object({ lesson: ContentId, card: CardId }).optional(),
+});
 export type ModuleFile = z.infer<typeof ModuleFileSchema>;
 
 const lessonBase = {
@@ -100,6 +105,8 @@ export interface LessonOutline {
 
 export interface ModuleOutline extends ModuleFile {
   courseId: string;
+  /** Pro modules: the teaser card itself (deliberately public; the rest of the module isn't). */
+  teaser?: Card;
   /** Sorted by order. Regular lessons first, the module quiz last. */
   lessons: LessonOutline[];
 }

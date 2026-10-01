@@ -3,6 +3,7 @@ import path from "node:path";
 import type { z } from "zod";
 import { GlossarySchema } from "@/lib/glossary";
 import { checkGlossaryMarks } from "./glossaryCheck";
+import { teaserCardOf, teaserProblem } from "./teaser";
 import {
   CourseFileSchema,
   type CourseOutline,
@@ -161,8 +162,12 @@ export function loadContent(root: string = DEFAULT_CONTENT_ROOT): LoadedContent 
         problems.push(`${where}: a module needs at least one regular lesson`);
       }
 
+      const teaser = teaserProblem(mod, moduleLessons);
+      if (teaser) problems.push(`${rel(moduleFile)} → ${teaser}`);
+
       for (const lesson of moduleLessons) lessons.set(lesson.id, lesson);
-      modules.push({ ...mod, courseId: course.id, lessons: moduleLessons.map(toLessonOutline) });
+      const teaserCard = teaser ? undefined : teaserCardOf(mod, moduleLessons);
+      modules.push({ ...mod, courseId: course.id, lessons: moduleLessons.map(toLessonOutline), ...(teaserCard ? { teaser: teaserCard } : {}) });
     }
 
     modules.sort((a, b) => a.order - b.order);

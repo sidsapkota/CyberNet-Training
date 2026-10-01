@@ -76,6 +76,14 @@ That's all. They never see your email, your display name, your real name, your o
 - **Hide yourself any time:** turn off "Show me on leaderboards" on the [Account page](/account) or the Leagues page, and nobody else sees you in any league. Your tier then stays as it is.
 - **Reports:** if you report a handle, we keep the report (your account, the handle and the reason) so an adult can review it, and we email a short daily summary of new reports to our own inbox. If three different learners report the same handle, we replace it with a new made-up one.
 
+## Certificates
+
+With CyberNet Pro, you can create a certificate when you pass a course final. We keep **the name you choose for it** (a first name or nickname is fine), the **course**, the **date you finished** and a random **certificate ID**.
+
+- **Its public check page** (cybernettraining.com/certificate/your-ID) shows only that **name, course, date and ID**, so anyone you give the link to can see it's genuine. Nobody can find it without the ID, it's hidden from search engines, and it never shows your email, display name or anything else about your account.
+- **Withdraw it any time** on the certificate's page or your [Account page](/account): its check page then says it isn't valid. Creating a new one (for example with a different name) withdraws the old one.
+- Deleting your account deletes your certificates.
+
 ## Feedback
 
 If you use "Send feedback", we store your **message**, and optionally **which lesson** it's about and a **star rating**. Feedback isn't linked to your account. We also keep a random code for your browser tab, only to stop spam. **Please don't include personal details in your message.**

@@ -3,19 +3,30 @@
 import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef } from "react";
 import { XIcon } from "@/components/ui/icons";
-import { useAuth } from "@/lib/auth/AuthProvider";
+import type { CourseOutline, ModuleOutline } from "@/lib/content/schema";
 import { EASE_OUT_QUICK } from "@/lib/motion";
-import { ProLockedMessage } from "./ProLocked";
+import { WhatsNext } from "./WhatsNext";
 
 /**
- * The gentle upgrade sheet for a Pro lesson on the course path: a native modal <dialog> (focus
+ * The "What's next" sheet for a Pro lesson on the course path: a native modal <dialog> (focus
  * moves in and back, Escape and the close button dismiss it), a bottom sheet on phones and a
- * centred card on wider screens. Guests are asked to sign in first. No pressure, no urgency.
+ * centred card on wider screens. No pressure, no urgency.
  */
-export function UpgradeSheet({ title, open, onClose }: { title: string; open: boolean; onClose: () => void }) {
+export function UpgradeSheet({
+  title,
+  course,
+  module,
+  open,
+  onClose,
+}: {
+  title: string;
+  course: CourseOutline;
+  module: ModuleOutline;
+  open: boolean;
+  onClose: () => void;
+}) {
   const ref = useRef<HTMLDialogElement>(null);
   const reduceMotion = useReducedMotion();
-  const { auth } = useAuth();
 
   useEffect(() => {
     const dialog = ref.current;
@@ -33,7 +44,7 @@ export function UpgradeSheet({ title, open, onClose }: { title: string; open: bo
         // A click on the backdrop (outside the sheet) closes it.
         if (event.target === ref.current) onClose();
       }}
-      className="m-0 mt-auto w-full max-w-none bg-transparent p-0 backdrop:bg-canvas/80 sm:m-auto sm:max-w-md"
+      className="m-0 mt-auto max-h-[92dvh] w-full max-w-none overflow-y-auto bg-transparent p-0 backdrop:bg-canvas/80 sm:m-auto sm:max-w-lg"
     >
       {open && (
         <motion.div
@@ -53,7 +64,7 @@ export function UpgradeSheet({ title, open, onClose }: { title: string; open: bo
           <span id="upgrade-sheet-title" className="sr-only">
             {title}: part of CyberNet Pro
           </span>
-          <ProLockedMessage title={title} reason={auth.status === "signed-in" ? "pro" : "sign-in"} headingLevel={2} compact />
+          <WhatsNext course={course} module={module} onClose={onClose} />
         </motion.div>
       )}
     </dialog>

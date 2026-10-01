@@ -3,5 +3,6 @@
   "title": "Fix It Yourself",
   "description": "Troubleshoot slow, full and flat devices like a technician.",
   "order": 3,
-  "access": "pro"
+  "access": "pro",
+  "teaserCard": { "lesson": "slow-and-full", "card": "free-up-space" }
 }

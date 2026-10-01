@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { DailyGoalSetting } from "./DailyGoalSetting";
 import { ManageProPanel } from "@/components/pro/ManageProPanel";
 import { LeagueAccountSettings } from "@/components/leagues/LeagueAccountSettings";
+import { CertificatesPanel } from "@/components/certificates/CertificatesPanel";
 import { DeleteIcon, SignOutIcon } from "@/components/ui/icons";
 import { trackEvent } from "@/lib/analytics";
 import { useAuth } from "@/lib/auth/AuthProvider";
@@ -15,10 +16,13 @@ import { initialOf } from "@/lib/auth/profile";
 const panel = "rounded-card border border-line bg-surface p-5 shadow-card";
 
 export function AccountPanel({
+  courseTitles,
   email,
   displayName,
   welcome,
 }: {
+  /** Course id → title, for the certificates list. */
+  courseTitles: Record<string, string>;
   email: string | null;
   displayName: string | null;
   welcome: boolean;
@@ -106,6 +110,8 @@ export function AccountPanel({
       <ManageProPanel className={panel} />
 
       <LeagueAccountSettings className={panel} />
+
+      <CertificatesPanel className={panel} courseTitles={courseTitles} />
 
       <DailyGoalSetting className={panel} />
 

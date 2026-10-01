@@ -3,5 +3,6 @@
   "title": "Software in Charge",
   "description": "Meet the operating system, the apps it manages, and the files it keeps.",
   "order": 2,
-  "access": "pro"
+  "access": "pro",
+  "teaserCard": { "lesson": "meet-the-os", "card": "end-the-frozen-app" }
 }

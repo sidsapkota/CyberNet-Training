@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cleanSource, redactUrl, sourceFromUrl } from "./analytics";
+import { cleanSource, eventData, redactUrl, sourceFromUrl } from "./analytics";
 
 describe("analytics: where visitors came from", () => {
   it("takes utm_source first, then a /from/<platform> path", () => {
@@ -27,5 +27,19 @@ describe("analytics: URLs sent to Vercel", () => {
 
   it("never tracks dev pages", () => {
     expect(redactUrl("https://cybernettraining.com/dev/cards")).toBeNull();
+  });
+});
+
+describe("eventData (funnel events)", () => {
+  it("sends a lesson or a course id, plus the source, and nothing else", () => {
+    expect(eventData("meet-the-os", "tiktok")).toEqual({ lesson: "meet-the-os", source: "tiktok" });
+    expect(eventData({ course: "stay-safe-online" }, null)).toEqual({ course: "stay-safe-online" });
+    expect(eventData(undefined, "youtube")).toEqual({ source: "youtube" });
+  });
+
+  it("drops anything that isn't a content id (so nothing personal is sent)", () => {
+    expect(eventData("sam@example.com", null)).toEqual({});
+    expect(eventData({ course: "Sam Smith" }, null)).toEqual({});
+    expect(eventData("a".repeat(81), null)).toEqual({});
   });
 });

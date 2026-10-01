@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { AccountPanel } from "@/components/account/AccountPanel";
 import { signedInUserId } from "@/lib/auth/session";
+import { getCourses } from "@/lib/content/server";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = { title: "Account" };
@@ -20,6 +21,7 @@ export default async function AccountPage({ searchParams }: PageProps<"/account"
   return (
     <main className="px-gutter py-8 sm:py-12">
       <AccountPanel
+        courseTitles={Object.fromEntries(getCourses().map((c) => [c.id, c.title]))}
         email={user.user?.email ?? null}
         displayName={profile?.display_name ?? null}
         welcome={welcome === "1"}
