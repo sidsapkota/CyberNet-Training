@@ -24,7 +24,7 @@ Last updated: 1 October 2026.
 
 ## 2. Open branches
 
-- `plans-polish-nav`: equal-height plan cards on desktop, "Pricing" / "Your plan" in the nav (`plans_viewed` source `nav`), faster /account (one round trip) and loading screens + pressed nav states. **Don't merge until the owner has seen it.**
+- `plans-polish-nav`: equal-height plan cards on desktop, "Pricing" / "Your plan" in the nav (`plans_viewed` source `nav`), faster /account and loading screens + pressed nav states. Measured (`e2e:account-speed`, median of 6): production before, tap → account content 322 ms desktop / 536 ms throttled-4G phone; this branch's preview, 63 ms / 66 ms (full prefetch of the account link, loading screen as fallback). Server alone ~170 ms either way. Re-measure production after merge. **Don't merge until the owner has seen it.**
 - `mascot-motion`: mascot reactions and the "security scan" (below). **Don't merge until the owner has checked it** (they'll look on 2 Oct). Preview URLs follow `https://cyber-net-training-git-<branch>-sidsapkotas-projects.vercel.app`.
 
 ## 3. In progress
