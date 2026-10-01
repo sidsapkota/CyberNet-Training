@@ -15,6 +15,7 @@ import { FeedbackFooter, type FeedbackTone, type FooterAction } from "@/componen
 import { PlayerShell, uniformNodes } from "@/components/player/PlayerShell";
 import { ProPitch } from "@/components/pro/ProPitch";
 import { ButtonLink, Button } from "@/components/ui/Button";
+import { useAuth } from "@/lib/auth/AuthProvider";
 import { useFeedback } from "@/lib/feedback";
 import { hintCost, visibleHint } from "@/lib/hints";
 import { useGlobalKeyDown } from "@/lib/keyboard";
@@ -299,10 +300,15 @@ function FinishScreen({
     };
   }, [saves]);
   const left = total - cleared;
+  const { auth } = useAuth();
+  const name = auth.status === "signed-in" ? auth.username : null;
   return (
     <div className="flex flex-col items-center py-6 text-center">
       <Mascot expression={cleared > 0 ? "celebrating" : "thinking"} size={120} idle />
-      <h1 className="mt-4 text-headline font-semibold">{cleared > 0 ? "Review done" : "Review over"}</h1>
+      <h1 className="mt-4 text-headline font-semibold">
+        {cleared > 0 ? "Review done" : "Review over"}
+        {name && <span className="block truncate text-lead font-medium text-ink-muted">{name}</span>}
+      </h1>
       <p className="mt-2 text-ink-muted">
         <span className="font-mono font-semibold text-ink tabular-nums">{cleared}</span> of {total} fixed
         {left > 0 ? `. ${left === 1 ? "One waits" : `${left} wait`} for next time.` : "."}

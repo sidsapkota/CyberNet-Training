@@ -42,7 +42,7 @@ try {
   const { data: created, error } = await admin.auth.admin.createUser({ email, email_confirm: true });
   if (error) throw error;
   userId = created.user.id;
-  await admin.from("profiles").update({ display_name: "Limit Tester", age_confirmed: true }).eq("id", userId);
+  await admin.from("profiles").update({ username: `E2e_${Math.random().toString(36).slice(2, 12)}`, age_confirmed: true }).eq("id", userId);
   const link = await admin.auth.admin.generateLink({ type: "magiclink", email });
 
   const ctx = await browser.newContext({ viewport: PHONE, colorScheme: "dark", reducedMotion: "reduce", timezoneId: "Australia/Perth" });

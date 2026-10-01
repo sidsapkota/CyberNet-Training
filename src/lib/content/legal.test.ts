@@ -23,7 +23,7 @@ describe("privacy policy and terms", () => {
     const privacy = stripDraftBanner(read("privacy")).toLowerCase();
     for (const must of [
       "email",
-      "display name",
+      "username",
       "learning progress",
       "settings",
       "supabase",

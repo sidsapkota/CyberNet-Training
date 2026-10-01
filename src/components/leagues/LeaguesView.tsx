@@ -123,7 +123,7 @@ function League({ league, courses, reload }: { league: MyLeague; courses: Course
 
       <aside className="space-y-6">
         <OwnCard handle={player.handle} tier={player.tier} courses={courses} />
-        <LeagueSettings className={panel} handle={player.handle} showOnLeaderboards={player.showOnLeaderboards} onChange={reload} />
+        <LeagueSettings className={panel} showOnLeaderboards={player.showOnLeaderboards} onChange={reload} />
       </aside>
 
       <PublicCardDialog row={open} onClose={() => setOpen(null)} />
@@ -182,7 +182,7 @@ function Standings({ rows, tier, onOpen }: { rows: StandingRow[]; tier: MyLeague
                 {row.handle}
                 {row.isMe && <span className="ml-2 text-caption font-semibold text-accent-ink">You</span>}
               </span>
-              {/* The full Pro badge is on the card; rows keep the gem so long handles fit at 360px. */}
+              {/* The full Pro badge is on the card; rows keep the gem so long usernames fit at 360px. */}
               {row.pro && <ProIcon className="size-4 shrink-0 text-ink-muted" />}
               <span className="font-mono font-semibold tabular-nums">
                 {row.weeklyXp.toLocaleString("en-AU")} <span className="text-caption text-ink-faint">XP</span>
@@ -247,7 +247,7 @@ function PublicCardDialog({ row, onClose }: { row: StandingRow | null; onClose: 
 
           {!row.isMe && !reporting && !message && (
             <Button variant="ghost" className="mt-3 w-full" onClick={() => setReporting(true)}>
-              <ReportIcon className="size-5" /> Report this handle
+              <ReportIcon className="size-5" /> Report this username
             </Button>
           )}
           {!row.isMe && reporting && !message && (
@@ -262,7 +262,7 @@ function PublicCardDialog({ row, onClose }: { row: StandingRow | null; onClose: 
               }}
             >
               <fieldset>
-                <legend className="text-small font-semibold">What&apos;s wrong with this handle?</legend>
+                <legend className="text-small font-semibold">What&apos;s wrong with this username?</legend>
                 {[
                   ["rude", "It's rude or unkind"],
                   ["personal_info", "It shares personal information"],
@@ -285,7 +285,7 @@ function PublicCardDialog({ row, onClose }: { row: StandingRow | null; onClose: 
               {message.text}
             </p>
           )}
-          <p className="mt-3 text-caption text-ink-faint">Only handles, tiers and this week&apos;s XP are shown to your league. {TIER_NAMES[row.tier]} tier.</p>
+          <p className="mt-3 text-caption text-ink-faint">Only usernames, tiers and this week&apos;s XP are shown to your league. {TIER_NAMES[row.tier]} tier.</p>
         </div>
       )}
     </dialog>

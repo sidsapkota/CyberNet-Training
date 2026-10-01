@@ -11,7 +11,7 @@ import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { StreakPill } from "@/components/streak/StreakPill";
 import { XpPill } from "@/components/XpPill";
 import { useAuth } from "@/lib/auth/AuthProvider";
-import { FALLBACK_DISPLAY_NAME } from "@/lib/auth/profile";
+import { FALLBACK_NAME } from "@/lib/auth/profile";
 import { UserNode } from "@/components/account/UserNode";
 import { ProBadge } from "@/components/pro/ProBadge";
 import { usePro } from "@/lib/pro/ProProvider";
@@ -122,7 +122,7 @@ function HeaderAccount() {
       </Link>
     );
   }
-  const name = auth.displayName ?? FALLBACK_DISPLAY_NAME;
+  const name = auth.username ?? FALLBACK_NAME;
   return (
     <Link
       href="/account"
@@ -133,7 +133,7 @@ function HeaderAccount() {
       className="hidden items-center gap-2 rounded-control px-1.5 py-1 text-small font-semibold text-ink hover:bg-surface-raised sm:flex transition-[background-color,color,scale] active:bg-surface-raised motion-safe:active:scale-95"
     >
       <Pending>
-        <UserNode name={auth.displayName} pro={hasPro} className="size-8 text-small" />
+        <UserNode name={auth.username} pro={hasPro} className="size-8 text-small" />
       </Pending>
       <span className="hidden max-w-32 truncate md:inline">{name}</span>
       {hasPro && <ProBadge size="sm" lit className="hidden md:inline-flex" />}
@@ -210,7 +210,7 @@ function AccountTab({ pathname }: { pathname: string }) {
           />
         )}
         <Pending>
-          {signedIn ? <UserNode name={auth.displayName} pro={hasPro} className="size-6 text-[0.7rem]" /> : <SignInIcon className="size-6" />}
+          {signedIn ? <UserNode name={auth.username} pro={hasPro} className="size-6 text-[0.7rem]" /> : <SignInIcon className="size-6" />}
         </Pending>
         {signedIn ? "Account" : "Sign in"}
       </Link>

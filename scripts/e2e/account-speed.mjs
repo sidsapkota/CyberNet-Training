@@ -8,6 +8,8 @@ import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { chromium } from "playwright-core";
 
+// A unique, valid username for the throwaway account (usernames are unique ignoring case).
+const SPEEDY = `Speedy_${Math.random().toString(36).slice(2, 10)}`;
 const APP = path.resolve(import.meta.dirname, "../..");
 const env = Object.fromEntries(
   fs.readFileSync(path.join(APP, ".env.local"), "utf8").split("\n").filter((l) => /^[A-Z_]+=/.test(l)).map((l) => [l.slice(0, l.indexOf("=")), l.slice(l.indexOf("=") + 1).trim()]),
@@ -24,7 +26,7 @@ if (error) throw error;
 const userId = created.user.id;
 const browser = await chromium.launch({ channel: process.env.E2E_BROWSER ?? "msedge", headless: true });
 try {
-  await admin.from("profiles").update({ display_name: "Speedy", age_confirmed: true }).eq("id", userId);
+  await admin.from("profiles").update({ username: SPEEDY, age_confirmed: true }).eq("id", userId);
   await admin.from("card_completions").insert({ user_id: userId, lesson_id: "what-is-an-ip-address", card_id: "ip-purpose", xp: 10, completed_at: new Date().toISOString() });
   const link = await admin.auth.admin.generateLink({ type: "magiclink", email });
   // PHONE=1: a phone on a mobile network (4G-like: 150 ms round trips, 1.6 Mbps down).
@@ -69,7 +71,7 @@ try {
     await page.locator('[data-loading="account"], main h1').filter({ hasText: /.*/ }).first().waitFor({ timeout: 60000 }).catch(() => {});
     await page.waitForFunction(() => location.pathname === "/account" || document.querySelector('[data-loading="account"]'), null, { timeout: 60000 });
     const shown = Date.now() - t0;
-    await page.getByRole("heading", { name: "Speedy" }).waitFor({ timeout: 60000 });
+    await page.getByRole("heading", { name: SPEEDY }).waitFor({ timeout: 60000 });
     const done = Date.now() - t0;
     page.off("request", onReq);
     page.off("response", onRes);

@@ -1,5 +1,5 @@
 /** Small league rules, pure so they're tested on their own. */
-import { HANDLE_CHANGE_DAYS, LEAGUES_MIN_ACTIVE, REPORTS_TO_REPLACE } from "./config";
+import { LEAGUES_MIN_ACTIVE, REPORTS_TO_REPLACE } from "./config";
 import type { Tier } from "./tiers";
 import { tierIndex } from "./tiers";
 
@@ -11,17 +11,11 @@ export function shouldOpenLeagues(activeThisWeek: number, openedAt: string | nul
   return openedAt === null && activeThisWeek >= LEAGUES_MIN_ACTIVE;
 }
 
-/** A handle is replaced with a generated one once this many different learners report it. */
+/** A username is replaced with a generated one once this many different learners report it. */
 export function shouldReplaceHandle(distinctReporters: number): boolean {
   return distinctReporters >= REPORTS_TO_REPLACE;
 }
 
-/** When the learner may next change their handle (null: now). */
-export function nextHandleChange(changedAt: string | null, now: Date): Date | null {
-  if (!changedAt) return null;
-  const next = new Date(Date.parse(changedAt) + HANDLE_CHANGE_DAYS * 86_400_000);
-  return next.getTime() > now.getTime() ? next : null;
-}
 
 export type WeekOutcome = "promoted" | "stayed" | "demoted";
 

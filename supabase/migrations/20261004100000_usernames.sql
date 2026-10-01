@@ -1,13 +1,13 @@
 -- One public username per learner. It replaces the private display name and the league handle,
--- and it is set only by the server, after its checks (shape, uniqueness, word filters), so the
--- filters can't be skipped from the browser.
+-- and it is set only by the server, after its checks (shape, uniqueness, word filters).
+-- Part 1 of 2: additive, safe to apply while the previous code is still live.
 
 -- 1. The username, its shape, and uniqueness ignoring case.
 alter table public.profiles
   add column username text,
-  -- One change after the username is first set (sign-up's pick doesn't count). A name replaced
-  -- after reports, or by the safety scan, gives the change back.
-  add column username_change_used boolean not null default false,
+  -- When the learner last changed it: the first change is free (sign-up's pick doesn't count),
+  -- then one every 30 days. A name replaced after reports, or by the safety scan, clears it.
+  add column username_changed_at timestamptz,
   add constraint profiles_username_shape
     check (username is null or username ~ '^[A-Za-z0-9_]{3,20}$');
 
@@ -21,10 +21,8 @@ set username = lp.handle
 from public.league_players lp
 where lp.user_id = p.id and p.username is null;
 
--- 3. Learners can no longer write their own profile row: usernames go through a Server Action
---    with the secret key. (display_name is no longer used; it's dropped in a later migration.)
-revoke update (display_name) on public.profiles from authenticated;
-drop policy "Users update their own profile" on public.profiles;
+-- 3. (In the next migration, once the code that uses the username is live: learners lose
+--    their direct write on profiles, so usernames only go through the server's checks.)
 
 -- 4. Leaderboards show the username. The handle columns stay for one release, empty for new
 --    players, and are dropped with display_name later.

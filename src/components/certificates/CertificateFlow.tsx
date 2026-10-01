@@ -40,12 +40,12 @@ export function CertificateFlow({ courseId, courseTitle }: { courseId: string; c
       </div>
     );
   }
-  if (!status.hasPro) return <FreePreview status={status} courseTitle={courseTitle} />;
+  if (!status.hasPro) return <FreePreview courseTitle={courseTitle} />;
   if (status.certificate) return <Issued status={status} courseId={courseId} courseTitle={courseTitle} onChange={load} />;
-  return <IssueForm courseId={courseId} courseTitle={courseTitle} initialName={status.suggestedName} onIssued={load} />;
+  return <IssueForm courseId={courseId} courseTitle={courseTitle} initialName="" onIssued={load} />;
 }
 
-function FreePreview({ status, courseTitle }: { status: CertificateStatus; courseTitle: string }) {
+function FreePreview({ courseTitle }: { courseTitle: string }) {
   const { pro } = usePro();
   const trial = pro.loading || pro.trialEligible;
   return (
@@ -53,7 +53,7 @@ function FreePreview({ status, courseTitle }: { status: CertificateStatus; cours
       <h1 className="text-title font-semibold">You finished {courseTitle}!</h1>
       <p className="mt-2 text-ink-muted">Here&apos;s a preview of your certificate. With Pro, you can download it as a PDF and share a link that anyone can check.</p>
       <div className="mt-6">
-        <CertificateView name={status.suggestedName || "Your name"} courseTitle={courseTitle} completedOn={new Date().toISOString().slice(0, 10)} preview />
+        <CertificateView name="Your name" courseTitle={courseTitle} completedOn={new Date().toISOString().slice(0, 10)} preview />
       </div>
       <div className={`${panel} mt-6`}>
         <div className="flex items-center gap-2">

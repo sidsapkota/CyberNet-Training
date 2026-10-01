@@ -236,9 +236,9 @@ export type Database = {
       league_players: {
         Row: {
           created_at: string
-          handle: string
+          handle: string | null
           handle_changed_at: string | null
-          handle_key: string
+          handle_key: string | null
           pro_cosmetic_until: string | null
           show_on_leaderboards: boolean
           tier: string
@@ -246,9 +246,9 @@ export type Database = {
         }
         Insert: {
           created_at?: string
-          handle: string
+          handle?: string | null
           handle_changed_at?: string | null
-          handle_key: string
+          handle_key?: string | null
           pro_cosmetic_until?: string | null
           show_on_leaderboards?: boolean
           tier?: string
@@ -256,9 +256,9 @@ export type Database = {
         }
         Update: {
           created_at?: string
-          handle?: string
+          handle?: string | null
           handle_changed_at?: string | null
-          handle_key?: string
+          handle_key?: string | null
           pro_cosmetic_until?: string | null
           show_on_leaderboards?: boolean
           tier?: string
@@ -440,6 +440,8 @@ export type Database = {
           sound_enabled: boolean
           time_zone: string | null
           time_zone_changed_at: string | null
+          username: string | null
+          username_changed_at: string | null
         }
         Insert: {
           age_confirmed?: boolean
@@ -453,6 +455,8 @@ export type Database = {
           sound_enabled?: boolean
           time_zone?: string | null
           time_zone_changed_at?: string | null
+          username?: string | null
+          username_changed_at?: string | null
         }
         Update: {
           age_confirmed?: boolean
@@ -466,6 +470,8 @@ export type Database = {
           sound_enabled?: boolean
           time_zone?: string | null
           time_zone_changed_at?: string | null
+          username?: string | null
+          username_changed_at?: string | null
         }
         Relationships: []
       }

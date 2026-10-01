@@ -1,6 +1,6 @@
 # Usernames: one public identity
 
-Status: plan, waiting for the owner's OK on the SQL (`supabase/migrations/20261004100000_usernames.sql`).
+Status: **approved and built** (2 Oct 2026). SQL part 1 (`20261004100000_usernames.sql`, additive) applied before the code; part 2 (`20261004110000_usernames_server_only.sql`, removes the learner's profile write) applied once the code is live. Owner's changes: generated names (not display names), and one change every 30 days (first one free) instead of one ever.
 
 ## What changes for learners
 
@@ -12,8 +12,8 @@ Status: plan, waiting for the owner's OK on the SQL (`supabase/migrations/202610
   `/account`, leagues (rows, your card, other players' cards, reports), the Mistake review finish
   screen, the trial-reminder email ("Hi PacketPilot482"). Nothing from Google is ever shown (the
   provider-metadata trigger already strips names).
-- **Changing it:** once, in `/account` (sign-up's pick doesn't count). A name replaced after
-  3 reports, or by the safety scan, gives the change back. Leagues lose their own "change handle"
+- **Changing it:** in `/account`: sign-up's pick doesn't count, the first change is free, then one
+  every 30 days. A name replaced after 3 reports, or by the safety scan, gives the change back. Leagues lose their own "change handle"
   box (one place to change it).
 - **Certificates:** unchanged: "Name on certificate" is chosen at issue. It is no longer prefilled
   from the old display name (a username isn't a real name).

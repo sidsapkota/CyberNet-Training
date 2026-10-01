@@ -1,0 +1,107 @@
+"use client";
+
+import { useEffect, useId, useState, useTransition } from "react";
+import { setUsernameAction, suggestUsernameAction } from "@/app/actions/account";
+import { Button } from "@/components/ui/Button";
+import { USERNAME_MAX } from "@/lib/usernames/check";
+
+/**
+ * The learner's public username: picked at sign-up (prefilled with a suggestion, so "Use this" is
+ * one tap) and changed in account settings (first change free, then every 30 days). The server
+ * checks every name; this form only shows its answer.
+ */
+export function UsernameForm({
+  initial,
+  nextChange,
+  welcome,
+  onSaved,
+  className = "",
+}: {
+  initial: string | null;
+  /** "20 October" when the next change is allowed later, or null when it's allowed now. */
+  nextChange: string | null;
+  welcome: boolean;
+  onSaved: (username: string) => void;
+  className?: string;
+}) {
+  const id = useId();
+  const [name, setName] = useState(initial ?? "");
+  const [saved, setSaved] = useState(initial);
+  const [locked, setLocked] = useState(initial !== null && nextChange !== null);
+  const [message, setMessage] = useState<{ tone: "ok" | "error"; text: string } | null>(null);
+  const [pending, startTransition] = useTransition();
+  const choosing = saved === null;
+
+  const shuffle = () =>
+    startTransition(async () => {
+      setName(await suggestUsernameAction());
+      setMessage(null);
+    });
+
+  // A new account starts with a suggestion, so skipping is one tap.
+  useEffect(() => {
+    if (choosing && name === "") shuffle();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- once, on arrival
+  }, []);
+
+  function save(event: React.FormEvent) {
+    event.preventDefault();
+    startTransition(async () => {
+      const result = await setUsernameAction(name);
+      if (!result.ok) {
+        setMessage({ tone: "error", text: result.error });
+        return;
+      }
+      const changed = saved !== null && saved !== result.username;
+      setSaved(result.username);
+      setName(result.username);
+      if (changed) setLocked(true);
+      setMessage({ tone: "ok", text: "Saved." });
+      onSaved(result.username);
+    });
+  }
+
+  return (
+    <form onSubmit={save} className={className}>
+      <label htmlFor={`${id}-username`} className="text-small font-semibold">
+        {choosing && welcome ? "Pick a username" : "Username"}
+      </label>
+      <div className="mt-2 flex flex-col gap-2 sm:flex-row">
+        <input
+          id={`${id}-username`}
+          value={name}
+          maxLength={USERNAME_MAX}
+          autoComplete="username"
+          spellCheck={false}
+          disabled={locked}
+          onChange={(e) => {
+            setName(e.target.value);
+            setMessage(null);
+          }}
+          aria-describedby={`${id}-help`}
+          className="min-h-12 min-w-0 flex-1 rounded-control border border-line-strong bg-surface px-4 font-mono text-body text-ink outline-none focus-visible:border-accent-ink disabled:opacity-60"
+        />
+        {choosing && (
+          <Button type="button" variant="secondary" onClick={shuffle} disabled={pending}>
+            Shuffle
+          </Button>
+        )}
+        <Button type="submit" disabled={pending || locked || name.trim() === "" || name.trim() === saved}>
+          {choosing ? "Use this" : "Save"}
+        </Button>
+      </div>
+      <p id={`${id}-help`} className="mt-2 text-caption text-ink-faint">
+        {locked && nextChange
+          ? `Other learners see this. You can change it again on ${nextChange}.`
+          : locked
+            ? "Other learners see this. You can change it again in 30 days."
+            : "Other learners see this. 3 to 20 letters, numbers or underscores; never your real name."}
+      </p>
+      {message && (
+        <p role={message.tone === "error" ? "alert" : "status"} className={`mt-2 text-small ${message.tone === "error" ? "text-danger" : "text-success"}`}>
+          {message.text}
+        </p>
+      )}
+    </form>
+  );
+}

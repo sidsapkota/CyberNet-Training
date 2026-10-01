@@ -14,5 +14,5 @@ export function LeagueAccountSettings({ className }: { className: string }) {
     getMyLeagueAction().then((league) => setPlayer(league.player), console.error);
   }, [open]);
   if (!open || !player) return null;
-  return <LeagueSettings className={className} handle={player.handle} showOnLeaderboards={player.showOnLeaderboards} />;
+  return <LeagueSettings className={className} showOnLeaderboards={player.showOnLeaderboards} />;
 }

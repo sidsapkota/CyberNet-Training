@@ -31,7 +31,7 @@ const { data: created } = await admin.auth.admin.createUser({ email, email_confi
 const userId = created.user.id;
 const browser = await chromium.launch({ channel: process.env.E2E_BROWSER ?? "msedge", headless: true });
 try {
-  await admin.from("profiles").update({ display_name: "Quiz Tester", age_confirmed: true, daily_goal_chosen: true, time_zone: "Australia/Sydney" }).eq("id", userId);
+  await admin.from("profiles").update({ username: `E2e_${Math.random().toString(36).slice(2, 12)}`, age_confirmed: true, daily_goal_chosen: true, time_zone: "Australia/Sydney" }).eq("id", userId);
   // Seeded: an earlier passing attempt (the learner is retaking a quiz they've passed).
   await admin.from("quiz_attempts").insert({ user_id: userId, quiz_id: QUIZ, attempted_at: new Date(Date.now() - 86_400_000).toISOString(), score: 1, passed: true, xp: 50, answers: [] });
   const context = await browser.newContext({ viewport: { width: 360, height: 900 }, colorScheme: "dark", reducedMotion: "reduce" });
