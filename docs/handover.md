@@ -24,6 +24,8 @@ Last updated: 1 October 2026.
 - Daily goals and streaks; leagues (hidden until 20 learners earn XP in one week); certificates.
 - Help lines: Kids Helpline and Lifeline (verified), eSafety, ACCCE, Scamwatch, IDCARE, ReportCyber, 000.
 
+- **Feedback emails** (branch `feedback-email`, 2 Oct): each feedback message is still stored in the table and now also emailed to cybernettraining10@gmail.com (`FEEDBACK_INBOX` in `src/lib/site.ts`; switch to hello@ once ImprovMX forwarding works) with the lesson, page, rating, time and signed-in yes/no. Capped at 12 emails an hour plus one "more are waiting" note. Only production has `RESEND_API_KEY`, so emails only arrive from production. One test row ("[test] Automated check… Please ignore.") was stored on 2 Oct while checking the route.
+
 ## 2. Open branches
 
 - `player-flow-fixes`: the player feedback rounds (one Check flow with no early reveals; Try again clears only what's wrong, Check waits for a change; scenes fit the screen with pinned callouts and "glowing" parts; footer Back; tap-the-trace card list; lesson menu; "Up next" step; glossary full names and one-sentence definitions; themed wrong-answer animations; `about` lines for every lesson; fit audit + `/dev/fit`). **Don't merge until the owner has seen it.** Preview URLs follow `https://cyber-net-training-git-<branch>-sidsapkotas-projects.vercel.app` (behind Vercel login; scripts use a share link).
