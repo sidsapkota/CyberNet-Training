@@ -1,0 +1,230 @@
+{
+  "id": "ai-images-video-and-voices-quiz",
+  "kind": "quiz",
+  "title": "AI Images, Video and Voices: Module Quiz",
+  "order": 99,
+  "cards": [
+    {
+      "id": "q-steps",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "prompt": "Order the stages of an AI picture, from start to finish.",
+      "items": [
+        {
+          "id": "static",
+          "label": "Random static, like a fuzzy TV"
+        },
+        {
+          "id": "blobs",
+          "label": "Blurry blobs of colour"
+        },
+        {
+          "id": "shapes",
+          "label": "Rough shapes"
+        },
+        {
+          "id": "details",
+          "label": "Details and texture"
+        },
+        {
+          "id": "finished",
+          "label": "The finished picture"
+        }
+      ],
+      "explanation": "Random static, blobs of colour, rough shapes, details, the finished picture."
+    },
+    {
+      "id": "q-twice",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Why does the same image prompt give a different picture each time?",
+      "options": [
+        {
+          "id": "learns",
+          "text": "The model learns from each picture and changes it"
+        },
+        {
+          "id": "noise",
+          "text": "Each picture starts from different random static"
+        },
+        {
+          "id": "words",
+          "text": "It reads the words in a different order each time"
+        },
+        {
+          "id": "busy",
+          "text": "It uses a different model when the app is busy"
+        }
+      ],
+      "correctOptionId": "noise",
+      "explanation": "Each picture starts from **different random static**, so the steps lead somewhere different, while still matching the words."
+    },
+    {
+      "id": "q-clues",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Possible clue that a picture is AI-made, or not a clue?",
+      "bins": [
+        {
+          "id": "clue",
+          "label": "Possible clue"
+        },
+        {
+          "id": "not",
+          "label": "Not a clue"
+        }
+      ],
+      "items": [
+        {
+          "id": "earrings",
+          "label": "Two earrings that don't match",
+          "bin": "clue"
+        },
+        {
+          "id": "jumbled",
+          "label": "A shop sign with jumbled letters",
+          "bin": "clue"
+        },
+        {
+          "id": "grainy",
+          "label": "A grainy photo from a concert",
+          "bin": "not"
+        },
+        {
+          "id": "zoomed",
+          "label": "A blurry photo of a dog running",
+          "bin": "not"
+        }
+      ],
+      "explanation": "Mismatched earrings and jumbled letters can be AI give-aways. Grainy and blurry photos are just normal photos."
+    },
+    {
+      "id": "q-no-label",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "A viral picture has no watermark. Your friend says that proves it's real. Are they right?",
+      "options": [
+        {
+          "id": "yes-always",
+          "text": "Yes: AI tools always add a watermark you can see"
+        },
+        {
+          "id": "yes-hidden",
+          "text": "Yes: a hidden watermark would show up when you share it"
+        },
+        {
+          "id": "no-missing",
+          "text": "No: watermarks get cropped or stripped, and many tools add none"
+        },
+        {
+          "id": "no-ai",
+          "text": "No: a picture with no watermark is always made by AI"
+        }
+      ],
+      "correctOptionId": "no-missing",
+      "explanation": "Watermarks get cropped, screenshots can strip hidden information saved with the file, and many tools add none. No watermark proves **nothing** either way."
+    },
+    {
+      "id": "q-principal",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "A video of your principal says school is closed tomorrow. It's spreading in a group chat started by someone you don't know.",
+      "start": "the-video",
+      "steps": [
+        {
+          "id": "the-video",
+          "text": "What's the best thing to do?",
+          "choices": [
+            {
+              "id": "lips",
+              "text": "Watch it again to check the lips match the words",
+              "consequence": "They match. Good fakes pass that test. Check with the real source instead.",
+              "outcome": "fail"
+            },
+            {
+              "id": "check",
+              "text": "Check the school's website or ask a parent to call the school",
+              "consequence": "The school says it's open as normal. The video was a deepfake.",
+              "outcome": "success"
+            },
+            {
+              "id": "forward",
+              "text": "Forward it so everyone knows",
+              "consequence": "If it's fake, you're spreading it. Check first.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "explanation": "An unknown sender and a surprising message are **situation clues**. Check with the real source, another way: the school's website or a call."
+    },
+    {
+      "id": "q-help-harm",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "prompt": "Helpful or harmful use of face and voice AI?",
+      "bins": [
+        {
+          "id": "helpful",
+          "label": "Helpful"
+        },
+        {
+          "id": "harmful",
+          "label": "Harmful"
+        }
+      ],
+      "items": [
+        {
+          "id": "audiobook",
+          "label": "An author's voice cloned, with their OK",
+          "bin": "helpful"
+        },
+        {
+          "id": "translate",
+          "label": "A video translated with the speaker's OK",
+          "bin": "helpful"
+        },
+        {
+          "id": "fake-call",
+          "label": "A fake call to get bank details",
+          "bin": "harmful"
+        },
+        {
+          "id": "prank",
+          "label": "A fake video of a classmate as a prank",
+          "bin": "harmful"
+        }
+      ],
+      "explanation": "With the person's **permission** and nobody fooled, it helps. Fakes that trick or embarrass people harm."
+    },
+    {
+      "id": "q-words",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each word to what it means.",
+      "pairs": [
+        {
+          "id": "generative",
+          "left": "Generative AI",
+          "right": "AI that makes new things"
+        },
+        {
+          "id": "deepfake",
+          "left": "Deepfake",
+          "right": "Fake video of a real person"
+        },
+        {
+          "id": "clone",
+          "left": "Voice clone",
+          "right": "AI copy of someone's voice"
+        },
+        {
+          "id": "watermark",
+          "left": "Watermark",
+          "right": "A mark saying AI made it"
+        }
+      ],
+      "explanation": "**Generative AI** makes new things; a **deepfake** fakes a real person; a **voice clone** copies a voice; a **watermark** marks something as AI-made."
+    }
+  ]
+}

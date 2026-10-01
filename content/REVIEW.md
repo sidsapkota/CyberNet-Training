@@ -1741,3 +1741,61 @@ match the explanations.
 lesson that isn't first got the Path gate after their first card, because their own progress in
 that lesson counted. `deepLinkGate` now ignores progress in the lesson being played
 (`hasProgressOutside`).
+
+## Module 5: AI Images, Video and Voices (Pro; teaser: 5.1 `prompt-words`)
+Defence only: nothing explains how to make a deepfake or clone a voice. Every story (the principal,
+the shark, the singer, the dog) is fictional, and no real person is named or shown.
+
+### 5.1 How AI Makes Pictures (`how-ai-makes-pictures`)
+**Goals:** generative AI; image models learn from captioned pictures; most start from random static
+and remove it step by step towards the prompt, so the same prompt gives different pictures; give-
+aways are clues but rarer over time, and no give-aways proves nothing.
+
+**Simplifications:** "start from static and remove it step by step" describes diffusion models,
+the most common kind today, without the maths; some tools work differently. "Learned which shapes
+go with which words" stands in for how text and images are linked during training. The model
+makes a new picture rather than copying one; whether training on others' pictures is fair is a
+real debate the course doesn't cover.
+
+### 5.2 Cloned Voices and Faces (`cloned-voices-and-faces`)
+**Goals:** deepfakes and voice clones; why a short clip can be enough (the model already learned
+voices in general); helpful uses need permission; never make a fake of a real person without it;
+clues in the video vs the stronger clues in the situation; check another way.
+
+**Key claims (checked 1 October 2026):** in Australia, sharing sexual deepfakes of a real person
+without consent is a crime (Criminal Code Amendment (Deepfake Sexual Material) Act 2024), and
+sexual images of anyone under 18 are illegal whether real or fake. The card says exactly that; it
+doesn't claim that making one is illegal everywhere, because that differs between states. Points
+to Stay Safe Online's free Deepfake Scams lesson for help.
+
+### 5.3 Who Made This? (`who-made-this`)
+**Goals:** watermarks and labels are evidence when present, but a missing one proves nothing; check
+where a picture first appeared (searching with the picture itself), trusted news from other angles,
+the account and the details; likes, sharpness and a trusted friend aren't evidence; say when your
+own pictures are AI; be kind when someone's fooled.
+
+**Key claims:** screenshots throw away hidden information in a file; many tools add no mark. 3 + 9
++ 27 + 81 = 120.
+
+### Module 5 quiz (`ai-images-video-and-voices-quiz`)
+Seven core questions: the noise-to-picture stages, why the same prompt differs, clue or not, no
+watermark, the principal deepfake, helpful or harmful, and the four words.
+
+### Beginner audit: Module 5 (1 October 2026)
+Read with the answers stripped out and options shuffled: 24 of 24 right first try (the auditor is
+a strong AI model, so this overstates a beginner). Near-misses: "act fast" (video or situation),
+"a friend you trust sent it", the share-rounds total, and "zoom in for give-aways". Changes:
+
+| Where | Issue | Fix |
+|---|---|---|
+| 5.1 `clue-or-not` | "Can't happen in a real photo" was wrong (six fingers exist; odd shadows happen) | "Rarely happen in real photos": possible clues, not proof |
+| 5.3 `labels-and-watermarks`, quiz `q-no-label` | Some hidden watermarks are in the pixels and survive screenshots | "A screenshot can throw away hidden information saved with the file" |
+| 5.1 `telltale-mistakes` | "Too-smooth skin" clashed with "filters aren't clues" | Removed |
+| 5.3 `clue-or-myth` | "Likes", "sharp" and "a trusted friend" were only called myths in the recap | Taught in `how-to-check-a-picture` |
+| 5.2 `short-clip` | "Already learned from many voices" wasn't taught | In `deepfakes-and-clones`; tempting new option "stitches together words cut from the clip" |
+| 5.2 `video-or-situation` | "It tells you to act fast" fit both bins; the nudge gave it away | "Comes with a 'hurry!' message"; nudge points at watching and listening |
+| 5.2 `help-or-harm` | The museum guide didn't say anyone agreed | "…with OK" |
+| 5.3 `share-rounds` | 81 vs 120 | "altogether, across all 4 rounds" |
+| Quiz `q-clues` | "Zoomed in" wasn't taught | "A blurry photo of a dog running" |
+| Glossary `prompt` | Said chatbots only | "An AI tool, like a chatbot or an image maker" |
+| Free points: 5.1 `where-it-learned`, 5.2 `teacher-video`, `concert-tickets`, 5.3 `the-shark`, quiz `q-principal` | Joke wrong options | Tempting ones: "cuts up saved watercolours and mixes the pieces", "only if we put 'FAKE' in tiny letters", "check the lips match the words" (good fakes pass), "say nothing, it's their problem" |

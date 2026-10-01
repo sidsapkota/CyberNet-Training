@@ -82,6 +82,7 @@ export const LESSON_ICONS = [
   "thermometer-sun",
   "sparkles",
   "wand-sparkles",
+  "image-play",
 ] as const;
 
 export type LessonIconName = (typeof LESSON_ICONS)[number];

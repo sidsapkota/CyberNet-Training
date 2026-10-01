@@ -1126,3 +1126,68 @@ Write clear prompts, check the answers, and know today's tools.
 #### Module quiz (7 questions)
 
 Not exported, so the answers stay secret.
+
+### Module 5: AI Images, Video and Voices (Pro)
+
+How AI makes pictures and voices, deepfakes, and checking what's real.
+
+#### How AI Makes Pictures
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/how-ai-makes-pictures`
+
+**Key facts**
+
+- *Learning what words look like:* AI that makes new things (pictures, text, music, voices) is called **generative AI**.
+- *From static to picture:* Most image tools start with **random static**, like a fuzzy TV screen. Because each picture starts from **different random static**, the same prompt gives a different picture every time, a bit like temperature giving a chatbot different words.
+- *Mistakes AI pictures sometimes make:* AI pictures **sometimes** have give-aways: a hand with the wrong number of fingers, signs with jumbled letters, earrings that don't match, shadows or reflections pointing the wrong way. So spotting one is a clue, but **not** spotting one proves nothing.
+- *Recap:* **Generative AI** makes new things; image models learned from huge numbers of captioned pictures.
+
+**Best interactive cards**
+
+- Match pairs: Match each word in a picture prompt to what it changes in the picture.
+- Put in order: Put the steps of making an AI picture in order, from first to last.
+- Sort into groups: Is each one a **possible clue** that a picture was made by AI, or **not a clue**?
+
+#### Cloned Voices and Faces
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/cloned-voices-and-faces`
+
+**Key facts**
+
+- *Fake faces and voices:* Generative AI can learn how a real person looks and sounds from recordings of them, then make **new** video or audio of them saying things they never said. A fake video or picture like this is a **deepfake**.
+- *Permission matters:* Never make or share a deepfake or voice clone of a real person without their **permission**. If someone makes a fake of **you**, it's not your fault.
+- *Clues, and context:* Fake videos and audio **sometimes** have clues: lips slightly out of time with the words, odd blinking, a flat voice or strange breathing, the edge of a face flickering. But the strongest clues are usually in the **situation**: who posted it, whether it pushes you to act fast, whether anyone trustworthy is reporting it, whether it makes sense.
+- *Recap:* AI can learn a real person's face or voice from recordings and make new fakes: **deepfakes** and **voice clones**.
+
+**Best interactive cards**
+
+- Sort into groups: Is each use of voice or face AI **helpful**, or **harmful**?
+- Choose what happens: Your friend has found an app that makes funny face-swap videos.
+- Choose what happens: A video shows a famous singer saying: "I'm giving away 1,000 free concert tickets! Click the link in the next hour."
+
+**Surprising facts**
+
+- In Australia, sharing fake sexual images of a real person without their consent is a serious crime, and fake sexual images of anyone under 18 are always illegal.
+
+#### Who Made This?
+
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/who-made-this`
+
+**Key facts**
+
+- *Labels and watermarks:* Some AI tools add a **watermark**: a visible mark, or hidden information inside the file, saying AI made it. So a label saying AI made it is good evidence; **no label proves nothing**.
+- *How to check a picture:* **Find where it first appeared.** Many search tools let you search with the picture itself: older copies, or the original, often turn up. **Look for trusted news** reporting it, ideally with other photos from other angles.
+- *Recap:* A **watermark** or AI label is good evidence when it's there; no label proves nothing. Check where a picture **first appeared**, whether **trusted news** shows it, the account and the details.
+
+**Best interactive cards**
+
+- Choose what happens: Your friend sends you the shark-in-the-street picture: "OMG look at this!!"
+- Sort into groups: Does each one **help** you tell if a picture is real, or is it a **myth**?
+- Choose what happens: You made a funny AI picture of your dog wearing a crown, sitting on a throne.
+
+#### Module quiz (7 questions)
+
+Not exported, so the answers stay secret.

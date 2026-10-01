@@ -89,6 +89,7 @@ import {
   ThermometerSun,
   Sparkles,
   WandSparkles,
+  ImagePlay,
   Link,
   MailWarning,
   MapPin,
@@ -285,6 +286,7 @@ export const LESSON_ICON_COMPONENTS = {
   "thermometer-sun": ThermometerSun,
   sparkles: Sparkles,
   "wand-sparkles": WandSparkles,
+  "image-play": ImagePlay,
 } satisfies Record<LessonIconName, LucideIcon>;
 
 /** A lesson's icon, with the brand stroke. Decorative: the lesson title always carries the meaning. */

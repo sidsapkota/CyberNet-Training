@@ -78,6 +78,7 @@
     { "id": "extension", "term": "file extension", "definition": "The end of a file's name after the last dot, like .jpg. It tells the computer what kind of file it is." },
     { "id": "file", "term": "file", "definition": "One named piece of saved data, like a photo, a song or an essay." },
     { "id": "folder", "term": "folder", "definition": "A container for files, and for other folders, like a box inside a box." },
+    { "id": "generative-ai", "term": "generative AI", "definition": "AI that makes new things, like text, pictures, music or voices, from patterns it learned in huge amounts of examples." },
     { "id": "ghz", "term": "GHz", "definition": "Gigahertz: a billion ticks per second. A CPU's clock speed is measured in GHz." },
     { "id": "gigabyte", "term": "gigabyte (GB)", "definition": "A unit for amounts of data: 1,000 megabytes. Phone storage and RAM are measured in GB." },
     { "id": "gps", "term": "GPS", "definition": "The system a phone uses to work out where it is, using signals from satellites. Also called location." },
@@ -169,7 +170,7 @@
       "definition": "An IP address for use inside a home, school or office network. The same private addresses are reused in millions of networks."
     },
     { "id": "process", "term": "process", "definition": "A program that's running right now. The task manager lists them all." },
-    { "id": "prompt", "term": "prompt", "definition": "What you type (or say) to an AI chatbot. A good one says the goal, who it's for, and the length or shape you want." },
+    { "id": "prompt", "term": "prompt", "definition": "What you type (or say) to an AI tool, like a chatbot or an image maker. A good one says the goal, who it's for, and the length or shape you want." },
     { "id": "protocol", "term": "protocol", "definition": "A set of rules that devices agree to follow so they can understand each other." },
     { "id": "public-address", "term": "public address", "definition": "An IP address that's unique across the whole internet, so anyone on the internet can reach it." },
     { "id": "public-wi-fi", "term": "public Wi-Fi", "definition": "Wi-Fi that anyone nearby can join, like at a café, library or airport." },
@@ -231,6 +232,7 @@
     { "id": "virus", "term": "virus", "definition": "A harmful program that spreads to other files or devices. Security apps look for them." },
     { "id": "voice-clone", "term": "voice clone", "definition": "A fake copy of someone's voice made with AI, which can say things the real person never said." },
     { "id": "warranty", "term": "warranty", "definition": "The maker's promise to repair a device for free if it breaks by itself within a set time." },
+    { "id": "watermark", "term": "watermark", "definition": "A mark, which can be visible or hidden inside the file, showing something was made by AI. It can be removed, so a missing one proves nothing." },
     { "id": "watt", "term": "watt (W)", "definition": "A unit for how fast energy is used. A phone uses a few watts; the more watts, the faster the battery empties." },
     { "id": "wi-fi-access-point", "term": "Wi-Fi access point", "definition": "The part of a network that sends out the Wi-Fi signal, so wireless devices can join." }
   ]
