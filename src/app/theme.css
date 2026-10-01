@@ -35,6 +35,24 @@
   /* Warm outline on a part whose glue has been softened (phone teardown "heat" step). */
   --color-scene-heat: #ffb547;
 
+  /* Real-world pictures in train_model cards (fruit, balls, sky): real colours, fixed in both
+     themes and drawn on the navy screen panel. Fruit colour is mixed from red to yellow. */
+  --color-pic-red: #d93a3a;
+  --color-pic-yellow: #f6d23c;
+  --color-pic-leaf: #4caf50;
+  --color-pic-stem: #7a5230;
+  --color-pic-tennis: #d6e83a;
+  --color-pic-basket: #e8762c;
+  --color-pic-sky-day: #5fb4f0;
+  --color-pic-sky-night: #0b1c3d;
+  --color-pic-sun: #ffd43b;
+  --color-pic-moon: #e8eef8;
+  --color-pic-cloud: #e9eef5;
+  --color-pic-cloud-dark: #8a97a8;
+  --color-pic-rain: #7cc4ff;
+  --color-pic-wall: #c9b79c;
+  --color-pic-ground: #4f8a3c;
+
   /* Mascot: fixed in both themes (like the screen panel) so the character never changes. */
   --color-mascot-body: #122b52;
   --color-mascot-line: #00c2ff;
