@@ -1850,14 +1850,19 @@ another 13+ with a parent's OK, and so on).
   can turn off Gemini Apps for under-13s (so younger children can have access, controlled by a
   parent). The lesson says "some let a parent switch on access for younger children (or turn it
   off)".
-- ChatGPT and Copilot: their terms pages couldn't be read automatically (blocked), so the lesson
-  makes **no** age claim about them; it says "some other apps allow teenagers". **Check these two
-  by hand before publishing.**
+- ChatGPT (checked by hand by the owner, 1 October 2026, OpenAI Terms of Use): 13 or older, and
+  under 18 needs a parent or guardian's permission.
+- Copilot (checked by hand by the owner, 1 October 2026, Microsoft support): 13 or older, higher in
+  some countries, with parental controls through Microsoft Family Safety.
+- The lesson still names no app's age. Its general lines stay accurate: "Some say 18 or older"
+  (e.g. Claude); "some allow 13 with a parent's OK" (e.g. ChatGPT); and, added after the Copilot
+  check, "Rules can differ by country, and they change."
 
 **Recheck by 1 January 2027, then every 3 months:**
 - The four names, their makers, and that each is still widely used (add or remove neutrally).
 - "Many can also read files, search the web, or make pictures."
-- Claude's age rule, Gemini's Family Link rule, and the general "some allow teenagers" line.
+- Claude's, ChatGPT's and Copilot's age rules, Gemini's Family Link rule, and the general lines
+  ("some say 18 or older; some allow 13 with a parent's OK; rules can differ by country").
 - The "AI you already use" examples, and that much of it can be switched off.
 
 ### Module 4 quiz (`talking-to-ai-quiz`)
