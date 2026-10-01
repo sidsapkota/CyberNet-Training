@@ -40,6 +40,8 @@ describe("privacy policy and terms", () => {
       "time zone",
       "only** to work out your daily goal, your streak and your weekly league xp",
       "what others in your league can see",
+      "its public check page",
+      "withdraw it any time",
       "show me on leaderboards",
       "never see your email",
       "stripe",

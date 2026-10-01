@@ -30,6 +30,15 @@ import { nodeLook, PathNode } from "./PathNode";
 /** How long the path shows the "before" state when returning from a completed lesson. */
 const REVEAL_DELAY_MS = 650;
 
+/** After Checkout (`?unlocked=1`): Pro nodes light up one by one, this far apart. */
+const UNLOCK_START_MS = 500;
+const UNLOCK_STEP_MS = 120;
+
+function readUnlockedParam(): boolean {
+  if (typeof window === "undefined") return false;
+  return new URLSearchParams(window.location.search).get("unlocked") === "1";
+}
+
 /** Reads `?completed=<lessonId>` once (set by the lesson and quiz end screens). */
 function readCompletedParam(): string | null {
   if (typeof window === "undefined") return null;
@@ -45,13 +54,35 @@ export function CoursePath({ course }: { course: CourseOutline }) {
   const { pro, hasPro } = usePro();
   const reduceMotion = useReducedMotion();
   const [justCompleted] = useState(readCompletedParam);
+  const [justUnlocked] = useState(readUnlockedParam);
   const [revealed, setRevealed] = useState(false);
+  // How many Pro lessons have lit up so far (the Pro unlock celebration).
+  const [litPro, setLitPro] = useState(0);
+  const proLessonCount = course.modules.filter((m) => m.access === "pro").reduce((n, m) => n + m.lessons.length, 0);
 
   // Drop the query so a refresh doesn't replay the animation, then reveal the new state.
   useEffect(() => {
-    if (!justCompleted) return;
+    if (!justCompleted && !justUnlocked) return;
     window.history.replaceState(window.history.state, "", window.location.pathname);
-  }, [justCompleted]);
+  }, [justCompleted, justUnlocked]);
+
+  // Pro unlocked: light the Pro nodes in path order (all at once under reduced motion).
+  useEffect(() => {
+    if (!justUnlocked || !hasPro || !snapshot || reduceMotion) return;
+    let interval = 0;
+    const start = window.setTimeout(() => {
+      interval = window.setInterval(() => {
+        setLitPro((n) => {
+          if (n + 1 >= proLessonCount) window.clearInterval(interval);
+          return Math.min(n + 1, proLessonCount);
+        });
+      }, UNLOCK_STEP_MS);
+    }, UNLOCK_START_MS);
+    return () => {
+      window.clearTimeout(start);
+      window.clearInterval(interval);
+    };
+  }, [justUnlocked, hasPro, snapshot === null, reduceMotion, proLessonCount]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!snapshot || revealed) return;
@@ -85,7 +116,16 @@ export function CoursePath({ course }: { course: CourseOutline }) {
 
   const showBefore = justCompleted !== null && !revealed;
   const shown: ProgressSnapshot = showBefore ? snapshotBefore(snapshot, justCompleted) : snapshot;
-  const state = computeCourseState(shown, course, undefined, hasPro);
+  const realState = computeCourseState(shown, course, undefined, hasPro);
+  // During the unlock celebration, Pro lessons not yet lit still show as they were without Pro.
+  const lit = reduceMotion ? proLessonCount : litPro; // reduced motion: the final state at once
+  // Each Pro node ripples as it unlocks (the same ripple as a newly completed node).
+  const unlockedIds = new Set(
+    justUnlocked && hasPro && !reduceMotion
+      ? course.modules.filter((m) => m.access === "pro").flatMap((m) => m.lessons.map((l) => l.id)).slice(0, lit)
+      : [],
+  );
+  const state = justUnlocked && hasPro && lit < proLessonCount ? withUnlockProgress(realState, computeCourseState(shown, course, undefined, false), lit) : realState;
   const current = getCurrentLesson(state);
   const restIsPro = current === null && state.modules.some((m) => m.needsPro && m.status !== "completed");
 
@@ -104,6 +144,7 @@ export function CoursePath({ course }: { course: CourseOutline }) {
               course={course}
               currentId={current?.lesson.id ?? null}
               justFilledId={revealed ? justCompleted : null}
+              unlockedIds={unlockedIds}
               staggerOffset={state.modules.slice(0, m).reduce((n, s) => n + s.lessons.length, 0)}
             />
           ))}
@@ -205,6 +246,7 @@ function ModulePath({
   course,
   currentId,
   justFilledId,
+  unlockedIds,
   staggerOffset,
 }: {
   state: ModuleState;
@@ -213,6 +255,8 @@ function ModulePath({
   course: CourseOutline;
   currentId: string | null;
   justFilledId: string | null;
+  /** Pro lessons lit so far by the unlock celebration (each plays the ripple). */
+  unlockedIds: ReadonlySet<string>;
   staggerOffset: number;
 }) {
   const reduceMotion = useReducedMotion();
@@ -267,12 +311,14 @@ function ModulePath({
                 style={{ left: `calc(50% + ${node.x}px)`, top: node.y }}
               >
                 <PathNode
+                  course={course}
+                  module={state.module}
                   state={item}
                   number={i + 1}
                   look={nodeLook(item, item.lesson.id === currentId)}
                   blocking={blocking}
                   entranceDelay={staggerDelay(staggerOffset + i, 0.03, 0.6)}
-                  justFilled={item.lesson.id === justFilledId}
+                  justFilled={item.lesson.id === justFilledId || unlockedIds.has(item.lesson.id)}
                 />
               </li>
             );
@@ -309,4 +355,17 @@ function RestIsPro() {
       </ButtonLink>
     </div>
   );
+}
+
+/** The path part-way through the Pro unlock: the first `lit` Pro lessons as they are now. */
+function withUnlockProgress(real: CourseState, before: CourseState, lit: number): CourseState {
+  let k = 0;
+  return {
+    ...real,
+    modules: real.modules.map((mod, m) =>
+      mod.module.access !== "pro"
+        ? mod
+        : { ...mod, lessons: mod.lessons.map((lesson, i) => (k++ < lit ? lesson : (before.modules[m]?.lessons[i] ?? lesson))) },
+    ),
+  };
 }

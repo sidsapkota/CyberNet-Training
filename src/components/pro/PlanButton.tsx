@@ -4,6 +4,7 @@ import { useState } from "react";
 import { openPortalAction, startCheckoutAction } from "@/app/actions/pro";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { SignInIcon } from "@/components/ui/icons";
+import { trackEvent } from "@/lib/analytics";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import type { Plan } from "@/lib/pro/env";
 import { usePro } from "@/lib/pro/ProProvider";
@@ -66,6 +67,7 @@ export function PlanButton({ plan, label, primary }: { plan: Plan; label: string
           try {
             const result = await startCheckoutAction(plan);
             if ("url" in result) {
+              trackEvent("checkout_started");
               window.location.assign(result.url);
               return;
             }

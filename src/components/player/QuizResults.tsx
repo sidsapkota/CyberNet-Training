@@ -11,12 +11,15 @@ import { Button, ButtonLink } from "@/components/ui/Button";
 import { CountUp } from "@/components/ui/CountUp";
 import { ArrowRightIcon, CheckIcon, RetryIcon, XIcon, XpIcon } from "@/components/ui/icons";
 import { Markdown } from "@/components/ui/Markdown";
-import type { LessonOutline, Quiz } from "@/lib/content/schema";
+import { WhatsNext } from "@/components/pro/WhatsNext";
+import { usePro } from "@/lib/pro/ProProvider";
+import type { CourseOutline, LessonOutline, Quiz } from "@/lib/content/schema";
 import { celebrate } from "@/lib/celebrate";
 import { useFeedback } from "@/lib/feedback";
 import type { QuizAttempt } from "@/lib/progress/types";
 
 export function QuizResults({
+  course,
   quiz,
   attempt,
   next,
@@ -31,6 +34,7 @@ export function QuizResults({
   freezeEarned?: boolean;
   /** The course path, with `?completed=` so the hub fills in there. */
   pathHref: string;
+  course: CourseOutline;
   quiz: Quiz;
   attempt: QuizAttempt;
   next: LessonOutline | null;
@@ -41,6 +45,12 @@ export function QuizResults({
   const percent = Math.round(attempt.score * 100);
   const threshold = Math.round(quiz.passThreshold * 100);
   const results = quiz.cards.map((card) => attempt.answers.find((a) => a.cardId === card.id)?.correct ?? false);
+  // After the last free module: what the next (Pro) module holds, for learners without Pro.
+  const { hasPro, pro } = usePro();
+  const moduleIndex = course.modules.findIndex((m) => m.id === quiz.moduleId);
+  const nextModule = course.modules[moduleIndex + 1];
+  const showWhatsNext = attempt.passed && !pro.loading && !hasPro && nextModule?.access === "pro";
+  const isCourseFinal = moduleIndex === course.modules.length - 1;
 
   // Passing the quiz completes the module: a short confetti burst as the hub lights up.
   // (celebrate() does nothing under prefers-reduced-motion.)
@@ -90,7 +100,12 @@ export function QuizResults({
         <div className="mx-auto mt-8 flex max-w-sm flex-col gap-2">
           {attempt.passed ? (
             <>
-              {next ? (
+              {isCourseFinal && (
+                <ButtonLink href={`/course/${course.id}/certificate`}>
+                  Get your certificate <ArrowRightIcon className="size-5" />
+                </ButtonLink>
+              )}
+              {showWhatsNext ? null : next ? (
                 <ButtonLink href={`/lesson/${next.id}`}>
                   Start the next module <ArrowRightIcon className="size-5" />
                 </ButtonLink>
@@ -118,6 +133,12 @@ export function QuizResults({
           )}
         </div>
       </div>
+
+      {showWhatsNext && nextModule && (
+        <section className="mx-auto mt-10 max-w-lesson rounded-card border border-line bg-surface p-5 shadow-card">
+          <WhatsNext course={course} module={nextModule} />
+        </section>
+      )}
 
       <section aria-labelledby="review-heading" className="mt-14">
         <h2 id="review-heading" className="text-title font-semibold">

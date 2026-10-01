@@ -156,6 +156,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
     return (
       <PlayerShell nodes={uniformNodes(total, "done")} progressLabel="Quiz progress: complete" exitHref={`/course/${course.id}`}>
         <QuizResults
+          course={course}
           goalMetNow={Boolean(daily?.today.met && !startDaily.met)}
           freezeEarned={(daily?.streak.freezes ?? 0) > startDaily.freezes}
           quiz={quiz}

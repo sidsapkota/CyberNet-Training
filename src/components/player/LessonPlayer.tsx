@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Mascot } from "@/components/mascot/Mascot";
 import { ProLockedMessage } from "@/components/pro/ProLocked";
+import { WhatsNext } from "@/components/pro/WhatsNext";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { ExploreModeIcon } from "@/components/ui/icons";
 import { useAuth } from "@/lib/auth/AuthProvider";
@@ -84,7 +85,7 @@ export function LessonPlayer({
       <PlayerShell nodes={uniformNodes(outline.cardCount, "upcoming")} progressLabel="Part of Pro" exitHref={`/course/${course.id}`}>
         <div className="flex min-h-[60dvh] flex-col items-center justify-center">
           {paid.state === "locked" ? (
-            <ProLockedMessage title={outline.title} reason={paid.reason} />
+            <LockedLesson outline={outline} course={course} reason={paid.reason} />
           ) : (
             <div className="text-center">
               <Mascot expression="thinking" size={150} idle />
@@ -141,5 +142,16 @@ export function LessonPlayer({
       course={course}
       initialIndex={resumeIndex(snapshot, lesson.id, lesson.cards)}
     />
+  );
+}
+
+/** A Pro lesson without Pro: "What's next" for its module (or the plain message if there's none). */
+function LockedLesson({ outline, course, reason }: { outline: LessonOutline; course: CourseOutline; reason: LockedReason }) {
+  const mod = course.modules.find((m) => m.id === outline.moduleId);
+  if (!mod) return <ProLockedMessage title={outline.title} reason={reason} />;
+  return (
+    <div className="mx-auto w-full max-w-lesson py-6">
+      <WhatsNext course={course} module={mod} headingLevel={1} />
+    </div>
   );
 }

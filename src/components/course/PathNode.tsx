@@ -10,7 +10,7 @@ import { ProBadge } from "@/components/pro/ProBadge";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { CheckIcon, ExploreModeIcon, LessonIcon, LockIcon, PlayIcon, RetryIcon } from "@/components/ui/icons";
 import { estimateMinutes } from "@/lib/content/estimate";
-import type { LessonOutline } from "@/lib/content/schema";
+import type { CourseOutline, LessonOutline, ModuleOutline } from "@/lib/content/schema";
 import { EASE_OUT_QUICK, POPOVER_SPRING, PRESS_SPRING } from "@/lib/motion";
 import { useProgress } from "@/lib/progress/ProgressProvider";
 import type { LessonState } from "@/lib/progress/state";
@@ -65,6 +65,8 @@ const LOOK_CLASSES: Record<NodeLook, string> = {
 const QUIZ_DONE = "border-accent-ink bg-accent-soft text-accent-ink shadow-node-lit";
 
 export function PathNode({
+  course,
+  module,
   state,
   number,
   look,
@@ -72,6 +74,8 @@ export function PathNode({
   entranceDelay,
   justFilled,
 }: {
+  course: CourseOutline;
+  module: ModuleOutline;
   state: LessonState;
   /** 1-based position within the module, shown on lesson nodes. */
   number: number;
@@ -115,7 +119,7 @@ export function PathNode({
           {/* Finished before Pro ended: the check stays, and the Pro badge sits on the other corner. */}
           {look === "done" && <ProBadge size="sm" className="absolute -bottom-1 -left-2 ring-2 ring-canvas" />}
         </motion.button>
-        <UpgradeSheet title={lesson.title} open={sheetOpen} onClose={() => setSheetOpen(false)} />
+        <UpgradeSheet title={lesson.title} course={course} module={module} open={sheetOpen} onClose={() => setSheetOpen(false)} />
       </motion.div>
     );
   }

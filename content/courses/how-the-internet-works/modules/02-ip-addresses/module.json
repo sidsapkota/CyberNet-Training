@@ -3,5 +3,6 @@
   "title": "IP Addresses",
   "description": "Learn how every device gets an address, how a whole home shares one, and why the internet needed a bigger kind.",
   "order": 2,
-  "access": "pro"
+  "access": "pro",
+  "teaserCard": { "lesson": "what-is-an-ip-address", "card": "make-192" }
 }

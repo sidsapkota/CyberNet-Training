@@ -61,7 +61,11 @@ troubleshooting, built on the hands-on card types), **How the Internet Works**
 sign-in, spotting scams, privacy, and what to do when things go wrong; modules 1 and 4 free,
 modules 2 and 3 Pro).
 Each `module.json` has `"access": "free" | "pro"`. Every course's first module must be free (the
-loader checks), and help, reporting and recovery modules are always free.
+loader checks), and help, reporting and recovery modules are always free. Every Pro module also has
+`"teaserCard": { "lesson", "card" }`: one card from its **first lesson** that learners without Pro
+can play on the "What's next" screen (`content/teaser.ts`: required on Pro modules, not allowed on
+free ones; an interactive **core** card, not a hotspot or teardown). Teasers are deliberately public
+(sent with the course outline), so pick one whose prompt sets it up on its own.
 
 ```
 content/courses/<course-dir>/course.json                   { id, title, description, order }
@@ -471,6 +475,7 @@ src/components/dashboard/ dashboard (hero, stats, activity, rings, welcome), res
 src/components/streak/   streak icon (node chain), header pill, Today panel, calendar, goal picker,
                          goal summary for end screens, milestone screen
 src/components/course/   course path, path nodes + popovers, mode toggle, course card, catalog
+src/components/certificates/ certificate view, issue flow, account list; src/lib/certificates/ rules, server, PDF
 src/components/leagues/  tier badges, player card, leagues page view, result screen, settings
 src/lib/leagues/         league rules (week, grouping, settling, handles), server code, config
 src/components/illustrations/ course covers (CourseCover registry, keyed by course id)
@@ -662,6 +667,8 @@ Migrations, all applied to the linked project:
   subscriptions and grants).
 - `20261001100000_leagues.sql`: the league tables and functions (see [Leagues](#leagues)), plus
   `xp_events` indexes on time.
+- `20261001200000_certificates.sql`: `certificates` and `verify_certificate()` (see
+  [Certificates](#paywall-and-certificates)).
 
 | Table | Holds |
 |---|---|
@@ -689,6 +696,9 @@ Migrations, all applied to the linked project:
     Actions set them with the secret key).
   - **`xp_events` and `goal_days` are read-only for learners** (select own rows only, no write
     grants), so nobody can write their own streak.
+  - **Certificates:** owners select only their own; nobody writes them except the server (secret
+    key). The public page reads one valid certificate's `name`, `course_id` and `completed_on`
+    through `verify_certificate(id)` (security definer; nothing for revoked or unknown IDs).
   - **Leagues:** learners select only their own `league_players` row and `league_results`. Other
     learners are visible **only** through `league_standings()` (security definer): rank, handle,
     tier, weekly XP and the Pro flag, for the caller's own league this week, hidden learners left
@@ -756,6 +766,34 @@ Sandbox setup: `docs/stripe-checklist.md`. `PRO_LAUNCH_AT` in Production marks t
 - **End-to-end:** with `stripe listen` forwarding to the dev server, a scratch Playwright script
   runs real Checkout and portal pages with test cards and test clocks (monthly with trial, annual
   without, portal cancel, a failed renewal, the grant expiring); see the checklist's step 10.
+
+## Paywall and certificates
+
+Honest conversion: no timers, no fake urgency, no guilt; "Not now" is always there, and "Ask a
+parent or guardian before subscribing" is shown to everyone.
+
+- **"What's next"** (`src/components/pro/WhatsNext.tsx`) replaces the bare Pro lock: the next Pro
+  module's title, its lessons with their icons, its playable **teaser card** (`TeaserCard`: a
+  sandbox, no XP and nothing saved, with the hint and explanation) and one CTA: "Start your 7-day
+  free trial" (or "Upgrade to Pro" after a first subscription; guests sign in first). Shown in the
+  course path's sheet (Pro nodes), on a Pro lesson's page, and on the quiz-pass screen after the last
+  free module.
+- **Unlock celebration:** `/pro/welcome` (the mascot celebrating, one confetti burst), then "Keep
+  learning" returns to the course the learner was upgrading from (`?unlocked=1`), where the Pro
+  nodes light up one by one (120ms apart; the final state at once under reduced motion).
+- **Certificates (Pro)** (`src/lib/certificates/`): passing a course final (the last module's quiz,
+  judged from server-graded `quiz_attempts`) and having Pro lets the learner create one at
+  `/course/<id>/certificate`. The name is theirs to choose (1–60 letters, spaces, apostrophes,
+  hyphens and full stops; no digits, emails, web addresses or profanity: `checkCertificateName`),
+  never their email. IDs are `CNT-XXXX-XXXX-XXXX` (60 random bits, Crockford base32, unguessable).
+  The completion date is the day the final was first passed, in the learner's time zone. One valid
+  certificate per course; re-issuing (e.g. a new name) revokes the old ID. Free learners who finish a
+  course see a watermarked preview and the upgrade CTA.
+- **Sharing:** the PDF (`/api/certificates/<id>/pdf`, owner only; `@react-pdf/renderer`, server-side,
+  Plex fonts and the logo geometry, kept out of the server bundle by `serverExternalPackages`), the
+  public check page `/certificate/<id>` (name, course, date and ID only; not indexed), and "Add to
+  LinkedIn": LinkedIn no longer pre-fills certificates, so the button opens its form and the page
+  lists each value with a copy button (`linkedInFields`). Certificates are listed on `/account`.
 
 ## Leagues
 
@@ -1059,8 +1097,10 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   `beforeSend` runs `redactUrl`: query strings are dropped except `utm_*`, and `/dev` isn't
   tracked, so a sign-in token or email can never be sent.
 - **Custom events** (`trackEvent` in `src/lib/analytics.ts`): `landing_cta`, `lesson_start`,
-  `lesson_complete`, `quiz_pass`, `signup_complete`, each with at most two properties: `lesson`
-  and `source`. **Only Pro collects custom events** (2 properties; Web Analytics Plus allows 8 and
+  `lesson_complete`, `quiz_pass`, `signup_complete`, and the Pro funnel: `paywall_viewed`,
+  `teaser_played`, `checkout_started`, `trial_started`, `subscribed`, `certificate_issued`. Each
+  has at most two properties: `lesson` (or `course`) and `source`; `eventData` only lets a content
+  id through, so nothing personal can be sent. **Only Pro collects custom events** (2 properties; Web Analytics Plus allows 8 and
   shows UTM parameters). On Hobby, page views still work, and the event calls are harmless.
 - **Where visitors came from:** the first `utm_source` or `/from/<platform>` path seen in a tab is
   kept in sessionStorage (never a cookie) and attached to that tab's events as `source`.

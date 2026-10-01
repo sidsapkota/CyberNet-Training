@@ -3,5 +3,6 @@
   "title": "Guard Your Privacy",
   "description": "Your digital footprint, app permissions and public Wi-Fi.",
   "order": 3,
-  "access": "pro"
+  "access": "pro",
+  "teaserCard": { "lesson": "your-digital-footprint", "card": "band-name-quiz" }
 }

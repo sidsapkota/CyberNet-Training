@@ -403,8 +403,9 @@ describe("loadContent validation", () => {
 
   it("gives every lesson its module's access", () => {
     const files = validFiles();
-    files["courses/c1/modules/m2/module.json"] = { ...mod, id: "m2", order: 2, access: "pro" };
-    files["courses/c1/modules/m2/lessons/01.json"] = lesson("l3", 1);
+    // Pro modules need a teaser card from their first lesson.
+    files["courses/c1/modules/m2/module.json"] = { ...mod, id: "m2", order: 2, access: "pro", teaserCard: { lesson: "l3", card: "try-me" } };
+    files["courses/c1/modules/m2/lessons/01.json"] = { ...lesson("l3", 1), cards: [explainer(), multipleChoice({ id: "try-me" })] };
     files["courses/c1/modules/m2/lessons/99.json"] = quiz("q3", 99);
     const loaded = loadContent(makeContent(files));
     expect(loaded.lessons.get("l1")?.access).toBe("free");

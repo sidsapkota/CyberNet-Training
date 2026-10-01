@@ -1,9 +1,12 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { trackEvent } from "@/lib/analytics";
+import { UPGRADE_COURSE_KEY } from "./WhatsNext";
 import { Mascot } from "@/components/mascot/Mascot";
-import { ButtonLink } from "@/components/ui/Button";
+import { Button, ButtonLink } from "@/components/ui/Button";
 import { celebrate } from "@/lib/celebrate";
 import { useFeedback } from "@/lib/feedback";
 import { usePro } from "@/lib/pro/ProProvider";
@@ -28,6 +31,32 @@ export function WelcomeToPro({ confirmed }: { confirmed: boolean }) {
   }, []);
 
   const trialEnd = !pro.loading && pro.status.kind === "subscription" && pro.status.trialEnd ? pro.status.trialEnd : null;
+  const subscription = !pro.loading && pro.status.kind === "subscription" ? pro.status.status : null;
+
+  // The funnel: a trial or a paid start, once per checkout (this tab).
+  useEffect(() => {
+    if (!confirmed || !subscription) return;
+    try {
+      if (sessionStorage.getItem("cybernet.checkoutTracked")) return;
+      sessionStorage.setItem("cybernet.checkoutTracked", "1");
+    } catch {
+      // storage blocked: track it anyway
+    }
+    trackEvent(subscription === "trialing" ? "trial_started" : "subscribed");
+  }, [confirmed, subscription]);
+
+  // Back to the course the learner came from, where the Pro nodes light up (read on click, so the
+  // server and browser render the same button).
+  const router = useRouter();
+  const keepLearning = () => {
+    let courseId: string | null = null;
+    try {
+      courseId = sessionStorage.getItem(UPGRADE_COURSE_KEY);
+    } catch {
+      // storage blocked
+    }
+    router.push(courseId && /^[a-z0-9]+(-[a-z0-9]+)*$/.test(courseId) ? `/course/${courseId}?unlocked=1` : "/courses");
+  };
 
   if (!confirmed) {
     return (
@@ -62,7 +91,7 @@ export function WelcomeToPro({ confirmed }: { confirmed: boolean }) {
           </p>
         )}
         <div className="mt-8 flex flex-col gap-2">
-          <ButtonLink href="/courses">Keep learning</ButtonLink>
+          <Button onClick={keepLearning}>Keep learning</Button>
           <ButtonLink href="/account" variant="ghost">
             Manage subscription
           </ButtonLink>
