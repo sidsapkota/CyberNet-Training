@@ -24,7 +24,7 @@ interface Run {
 
 function buildRun(mode: Mode, cardIds: string[]) {
   const cards = CARD_SAMPLES.filter((c) => cardIds.includes(c.id));
-  const base = { order: 1, courseId: "dev", moduleId: "dev-module", access: "free" as const };
+  const base = { order: 1, courseId: "dev", moduleId: "dev-module", access: "free" as const, guests: true };
   const lesson: RegularLesson | Quiz =
     mode === "lesson"
       ? { ...base, id: "dev-lesson", kind: "lesson", title: "Card playground (lesson)", icon: "layers", cards }

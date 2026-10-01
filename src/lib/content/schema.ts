@@ -30,6 +30,11 @@ export const ModuleFileSchema = z.object({
   access: ModuleAccessSchema,
   /** Pro modules: the one playable card shown on the "What's next" screen (see content/teaser.ts). */
   teaserCard: z.object({ lesson: ContentId, card: CardId }).optional(),
+  /**
+   * Free modules only: every lesson plays without an account (help and recovery modules, which
+   * must never sit behind a sign-up). Otherwise guests only get each course's first lesson.
+   */
+  openToGuests: z.literal(true).optional(),
 });
 export type ModuleFile = z.infer<typeof ModuleFileSchema>;
 
@@ -81,7 +86,13 @@ export type LessonFile = z.infer<typeof LessonFileSchema>;
 export type LessonKind = LessonFile["kind"];
 
 /** A validated lesson plus where it lives in the hierarchy (derived from its folder), and its module's access. */
-export type Lesson = LessonFile & { courseId: string; moduleId: string; access: ModuleAccess };
+export type Lesson = LessonFile & {
+  courseId: string;
+  moduleId: string;
+  access: ModuleAccess;
+  /** Playable without an account: the course's first lesson, or any lesson in an `openToGuests` module. */
+  guests: boolean;
+};
 export type RegularLesson = Extract<Lesson, { kind: "lesson" }>;
 export type Quiz = Extract<Lesson, { kind: "quiz" }>;
 
@@ -93,6 +104,8 @@ export interface LessonOutline {
   order: number;
   /** From the lesson's module. */
   access: ModuleAccess;
+  /** Playable without an account (see `Lesson.guests`). */
+  guests: boolean;
   courseId: string;
   moduleId: string;
   cardCount: number;
@@ -123,6 +136,7 @@ export function toLessonOutline(lesson: Lesson): LessonOutline {
     title: lesson.title,
     order: lesson.order,
     access: lesson.access,
+    guests: lesson.guests,
     courseId: lesson.courseId,
     moduleId: lesson.moduleId,
     cardCount: lesson.cards.length,

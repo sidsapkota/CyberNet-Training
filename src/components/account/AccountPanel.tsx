@@ -10,6 +10,7 @@ import { LeagueAccountSettings } from "@/components/leagues/LeagueAccountSetting
 import { CertificatesPanel } from "@/components/certificates/CertificatesPanel";
 import { DeleteIcon, SignOutIcon } from "@/components/ui/icons";
 import { trackEvent } from "@/lib/analytics";
+import { takeSignupLesson } from "@/lib/auth/afterSignIn";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { initialOf } from "@/lib/auth/profile";
 
@@ -20,12 +21,15 @@ export function AccountPanel({
   email,
   displayName,
   welcome,
+  next = "/",
 }: {
   /** Course id → title, for the certificates list. */
   courseTitles: Record<string, string>;
   email: string | null;
   displayName: string | null;
   welcome: boolean;
+  /** Where a new account carries on after choosing a name (e.g. the lesson that asked them to sign up). */
+  next?: string;
 }) {
   const router = useRouter();
   const { refreshProfile, signOut } = useAuth();
@@ -45,8 +49,8 @@ export function AccountPanel({
         setMessage({ tone: "ok", text: "Saved." });
         await refreshProfile();
         if (welcome) {
-          trackEvent("signup_complete"); // a new account has just finished setting up
-          router.push("/");
+          trackEvent("signed_up", takeSignupLesson()); // a new account has just finished setting up
+          router.push(next);
         }
       } else {
         setMessage({ tone: "error", text: result.error });

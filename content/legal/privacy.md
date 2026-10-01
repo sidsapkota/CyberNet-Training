@@ -95,6 +95,7 @@ We use Vercel Web Analytics to count page visits and a few events, such as "less
 ## Cookies and storage
 
 - **Sign-in cookies**: only if you have an account, to keep you signed in. They're needed for the site to work.
+- **A return-page cookie**: when you start signing in, it remembers which page to bring you back to (such as the lesson you were on). It holds only that page's address, and it's deleted when you get back, or after an hour.
 - **Browser storage on your device**: your guest progress and settings, your light or dark theme, and small flags such as whether you've closed a tip.
 - **No advertising or tracking cookies.**
 

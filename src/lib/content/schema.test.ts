@@ -92,13 +92,14 @@ describe("LessonFileSchema: quizzes", () => {
 describe("toLessonOutline", () => {
   it("summarises a lesson without card content", () => {
     const parsed = LessonFileSchema.parse(lesson());
-    const outline = toLessonOutline({ ...parsed, courseId: "c", moduleId: "m", access: "pro" });
+    const outline = toLessonOutline({ ...parsed, courseId: "c", moduleId: "m", access: "pro", guests: false });
     expect(outline).toEqual({
       id: "bits",
       kind: "lesson",
       title: "Bits",
       order: 1,
       access: "pro",
+      guests: false,
       courseId: "c",
       moduleId: "m",
       cardCount: 2,
@@ -109,7 +110,7 @@ describe("toLessonOutline", () => {
 
   it("includes the pass threshold for quizzes", () => {
     const parsed = LessonFileSchema.parse(quiz());
-    const outline = toLessonOutline({ ...parsed, courseId: "c", moduleId: "m", access: "pro" });
+    const outline = toLessonOutline({ ...parsed, courseId: "c", moduleId: "m", access: "pro", guests: false });
     expect(outline.passThreshold).toBe(0.7);
     expect(outline.icon).toBeUndefined();
   });

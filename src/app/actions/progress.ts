@@ -18,7 +18,7 @@ import { requireUserId } from "@/lib/auth/server";
 import { getContentIndex } from "@/lib/content/server";
 import { canCompleteLesson, cardXpFor, gradeQuizAttempt, practiceXpFor } from "@/lib/progress/authority";
 import { addDays, DEFAULT_DAILY_GOAL, isDailyGoal, localDay, safeTimeZone, type XpInput } from "@/lib/progress/daily";
-import { mergeLedger, mergeProgress, withoutUnentitledPro } from "@/lib/progress/merge";
+import { GUEST_GATE_AT, mergeLedger, mergeProgress, withoutGatedGuestProgress, withoutUnentitledPro } from "@/lib/progress/merge";
 import {
   eventToRow,
   GOAL_DAY_COLUMNS,
@@ -368,7 +368,8 @@ export async function mergeGuestProgressAction(local: unknown): Promise<Progress
   const account = await loadAccountSnapshot(admin, userId, addDays(earliest, -1));
   // Guests can't open Pro lessons after launch, so Pro progress from after then only counts with Pro.
   const { hasPro } = await getEntitlement({ id: userId, createdAt: null });
-  const guest = withoutUnentitledPro(regraded, index, proLaunchAt(), hasPro);
+  // Likewise, guests can't open account-only lessons once the sign-up gate launched.
+  const guest = withoutGatedGuestProgress(withoutUnentitledPro(regraded, index, proLaunchAt(), hasPro), index, GUEST_GATE_AT);
   const merged = mergeProgress(account, guest, index, now);
   const passedQuizzes = new Set(
     Object.entries(guest.quizzes)

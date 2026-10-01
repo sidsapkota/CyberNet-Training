@@ -33,9 +33,12 @@ describe("Continue with Google button (Google's branding guidelines)", () => {
     expect(css).toMatch(/--text-google-button: 0\.875rem;\s*--text-google-button--line-height: 1\.25rem;/);
   });
 
-  it("is the sign-in page's Google button", () => {
-    const login = read("src/components/account/LoginForm.tsx").toString();
-    expect(login).toContain("<GoogleSignInButton");
-    expect(login.match(/Continue with Google/g)).toBeNull();
+  it("is the Google button for sign-in (the login page and the sign-up gate share SignInOptions)", () => {
+    const options = read("src/components/account/SignInOptions.tsx").toString();
+    expect(options).toContain("<GoogleSignInButton");
+    expect(options.match(/Continue with Google/g)).toBeNull();
+    for (const file of ["src/components/account/LoginForm.tsx", "src/components/account/SignUpGate.tsx"]) {
+      expect(read(file).toString(), file).toContain("<SignInOptions");
+    }
   });
 });

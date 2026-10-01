@@ -446,9 +446,10 @@ keep their focused player shell.
     `snapshotBefore` for a moment, then the real state, so the node fills and the trace lights.
     The query is then removed.
 - `/lesson/[id]`: statically generated for every lesson and quiz (`dynamicParams = false`). ✕
-  returns to the course path. **Deep links always work for newcomers** (`deepLinkGate` in
-  `state.ts`): a learner with no progress plays any lesson straight away. Learners with progress,
-  in Path mode, see the gate: "Play it anyway", "Switch to Explore", or go to the next lesson.
+  returns to the course path. **Deep links work for newcomers** (`deepLinkGate` in `state.ts`): a
+  learner with no progress plays any lesson they're allowed to open straight away (guests: see
+  [Guest sign-up gate](#guest-sign-up-gate)). Learners with progress, in Path mode, see the gate:
+  "Play it anyway", "Switch to Explore", or go to the next lesson.
 - **Client-only rendering:** progress-dependent pages render the `NetworkMark` loading state until
   progress loads, then draw. This also keeps reduced-motion entrances from mismatching the
   server HTML.
@@ -648,8 +649,33 @@ src/dev/                 dev-only card samples + playground (served at /dev/card
     Met days are the **union**: the account's plus each guest met day whose merged XP really
     reaches its goal, so the streak afterwards is at least as long as either.
   - Merging is idempotent, so repeated sign-ins are safe.
-- **Save prompt:** guests see "Save your progress?" on the lesson-complete screen. Dismissing it
-  sets `cybernet.savePrompt.dismissed`, and it never shows again in that browser.
+- **Save prompt:** guests see "Save your progress?" on the lesson-complete screen when the next
+  lesson is one they can play (otherwise the sign-up gate shows there instead). Dismissing it sets
+  `cybernet.savePrompt.dismissed`, and it never shows again in that browser.
+
+### Guest sign-up gate
+Guests play **each course's first lesson** and every lesson in a module with `"openToGuests": true`
+(free modules only; every `alwaysFree` help module must have it, `load.test.ts` checks). Every other
+free lesson needs a **free account**; Pro needs Pro. The loader sets `lesson.guests` (and the
+outline's), and everything reads it: `lessonAccessLevel()` in `src/lib/pro/access.ts` →
+`"guest" | "account" | "pro"`.
+- **Enforced on the server:** only guest lessons carry their cards in the static page
+  (`publicLesson`); the rest come from `/api/lessons/[id]`, which answers `401 { reason: "account" }`
+  to guests. Without Supabase env vars (no accounts possible) free lessons stay open.
+- **The screen** (`src/components/account/SignUpGate.tsx`): "Create a free account to keep going.
+  Your XP comes with you." (with the lesson's XP on the lesson-complete screen), four perks, the
+  shared `SignInOptions` (13+ check, Google, email link) and a plain **Not now**. No timers, counts
+  or guilt. Shown on a gated lesson's page, and on the lesson-complete screen when a guest's next
+  lesson needs an account. On the course path those nodes carry a person badge and "Create a free
+  account".
+- **Back to the lesson:** `SignInOptions` saves the path in a one-hour, same-site cookie
+  (`cybernet_next`, `src/lib/auth/afterSignIn.ts`) that `/auth/callback` reads and clears; new
+  accounts pick a name on `/account?welcome=1&next=…` and carry on there. `/login?next=` works too.
+- **Progress:** the usual guest merge, plus `withoutGatedGuestProgress`: guest records on account
+  lessons made after `GUEST_GATE_AT` (in `merge.ts`, set when the gate shipped) are dropped, since a
+  guest couldn't have played them.
+- **Events:** `signup_prompt_viewed` (lesson) when the gate shows, and `signed_up` (the lesson that
+  prompted it, kept for a day in localStorage) when a new account has chosen its name.
 
 ### Schema (`supabase/migrations/`)
 Migrations, all applied to the linked project:
@@ -1097,7 +1123,8 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
   `beforeSend` runs `redactUrl`: query strings are dropped except `utm_*`, and `/dev` isn't
   tracked, so a sign-in token or email can never be sent.
 - **Custom events** (`trackEvent` in `src/lib/analytics.ts`): `landing_cta`, `lesson_start`,
-  `lesson_complete`, `quiz_pass`, `signup_complete`, and the Pro funnel: `paywall_viewed`,
+  `lesson_complete`, `quiz_pass`, the sign-up gate's `signup_prompt_viewed` and `signed_up`, and the
+  Pro funnel: `paywall_viewed`,
   `teaser_played`, `checkout_started`, `trial_started`, `subscribed`, `certificate_issued`. Each
   has at most two properties: `lesson` (or `course`) and `source`; `eventData` only lets a content
   id through, so nothing personal can be sent. **Only Pro collects custom events** (2 properties; Web Analytics Plus allows 8 and

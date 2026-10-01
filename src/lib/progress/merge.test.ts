@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import type { Lesson } from "@/lib/content/schema";
 import { binaryToggle, explainer, hotspot, multipleChoice } from "@/test/fixtures";
 import { buildContentIndex, canCompleteLesson, cardXpFor, gradeQuizAttempt } from "./authority";
-import { mergeLedger, mergeProgress, recomputeXp } from "./merge";
+import { mergeLedger, mergeProgress, recomputeXp, withoutGatedGuestProgress } from "./merge";
 import { computeStreak } from "./streak";
 import { cardKey, defaultPreferences, emptySnapshot, type ProgressSnapshot, type QuizAttempt, type XpEvent } from "./types";
 
@@ -17,6 +17,7 @@ const lessons: Lesson[] = [
     courseId: "c",
     moduleId: "m",
     access: "free",
+    guests: true,
     cards: [
       explainer({ id: "intro" }),
       multipleChoice({ id: "core-q" }),
@@ -32,6 +33,7 @@ const lessons: Lesson[] = [
     courseId: "c",
     moduleId: "m",
     access: "free",
+    guests: true,
     cards: [multipleChoice({ id: "a" }), binaryToggle({ id: "b", target: 5 })],
   },
   {
@@ -44,6 +46,7 @@ const lessons: Lesson[] = [
     courseId: "c",
     moduleId: "m",
     access: "free",
+    guests: true,
     cards: [multipleChoice({ id: "p1", difficulty: "challenge" }), multipleChoice({ id: "p2", difficulty: "challenge" })],
   },
 ];
@@ -340,5 +343,40 @@ describe("mergeLedger (daily goals and streaks)", () => {
     expect(merged.preferences).toMatchObject({ dailyGoal: 100, dailyGoalChosen: true });
     expect(merged.totalXp).toBe(0); // the ledger never adds to total XP
     expect(mergeProgress(snapshot({ preferences: { ...defaultPreferences(), dailyGoal: 20, dailyGoalChosen: true } }), snapshot(), index, NOW).preferences.dailyGoal).toBe(20);
+  });
+});
+
+describe("guest progress on lessons that need an account", () => {
+  // g1: guests can play it; a1: free, account only; p1: Pro (judged by withoutUnentitledPro).
+  const gated = buildContentIndex([
+    { ...lessons[0]!, id: "g1", guests: true },
+    { ...lessons[0]!, id: "a1", guests: false },
+    { ...lessons[0]!, id: "p1", guests: false, access: "pro" },
+  ] as Lesson[]);
+  const gateAt = new Date(T(30));
+  const event = (lessonId: string, minute: number): XpEvent => ({ at: T(minute), day: "2026-09-01", tz: "UTC", kind: "card", lessonId, cardId: "core-q", xp: 10 });
+  const guest = (minute: number): ProgressSnapshot => ({
+    ...emptySnapshot(),
+    cards: Object.fromEntries(["g1", "a1", "p1"].map((id) => [cardKey(id, "core-q"), { completedAt: T(minute), xp: 10 }])),
+    lessons: Object.fromEntries(["g1", "a1", "p1"].map((id) => [id, { completedAt: T(minute), xp: 20 }])),
+    xpEvents: ["g1", "a1", "p1"].map((id) => event(id, minute)),
+  });
+
+  it("keeps everything made before the gate launched (existing guests lose nothing)", () => {
+    const kept = withoutGatedGuestProgress(guest(10), gated, gateAt);
+    expect(Object.keys(kept.lessons).sort()).toEqual(["a1", "g1", "p1"]);
+    expect(kept.xpEvents).toHaveLength(3);
+  });
+
+  it("drops account-only progress made after the gate, but keeps guest and Pro lessons", () => {
+    const kept = withoutGatedGuestProgress(guest(40), gated, gateAt);
+    expect(Object.keys(kept.lessons).sort()).toEqual(["g1", "p1"]);
+    expect(Object.keys(kept.cards).sort()).toEqual([cardKey("g1", "core-q"), cardKey("p1", "core-q")]);
+    expect(kept.xpEvents.map((e) => e.lessonId).sort()).toEqual(["g1", "p1"]);
+    expect(kept.totalXp).toBe(60);
+  });
+
+  it("keeps everything while the gate hasn't launched", () => {
+    expect(withoutGatedGuestProgress(guest(40), gated, null)).toEqual(guest(40));
   });
 });

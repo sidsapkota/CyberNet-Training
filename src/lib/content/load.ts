@@ -129,6 +129,7 @@ export function loadContent(root: string = DEFAULT_CONTENT_ROOT): LoadedContent 
     claimId("course", course.id, courseFile);
 
     const modules: ModuleOutline[] = [];
+    const fullLessons = new Map<string, Lesson[]>();
     for (const moduleDir of listDirs(path.join(coursePath, "modules"))) {
       const modulePath = path.join(coursePath, "modules", moduleDir);
       const moduleFile = path.join(modulePath, "module.json");
@@ -145,7 +146,8 @@ export function loadContent(root: string = DEFAULT_CONTENT_ROOT): LoadedContent 
         parsed.cards.forEach((card, i) => {
           for (const problem of checkGlossaryMarks(card, glossaryIds)) problems.push(`${rel(lessonFile)} → cards[${i}].${problem}`);
         });
-        moduleLessons.push({ ...parsed, courseId: course.id, moduleId: mod.id, access: mod.access });
+        // `guests` is settled once the course's module order is known (below).
+        moduleLessons.push({ ...parsed, courseId: course.id, moduleId: mod.id, access: mod.access, guests: false });
       }
 
       const where = rel(modulePath);
@@ -162,15 +164,24 @@ export function loadContent(root: string = DEFAULT_CONTENT_ROOT): LoadedContent 
         problems.push(`${where}: a module needs at least one regular lesson`);
       }
 
+      if (mod.openToGuests && mod.access !== "free") problems.push(`${rel(moduleFile)} → openToGuests: only free modules can be open to guests`);
       const teaser = teaserProblem(mod, moduleLessons);
       if (teaser) problems.push(`${rel(moduleFile)} → ${teaser}`);
 
       for (const lesson of moduleLessons) lessons.set(lesson.id, lesson);
+      fullLessons.set(mod.id, moduleLessons);
       const teaserCard = teaser ? undefined : teaserCardOf(mod, moduleLessons);
-      modules.push({ ...mod, courseId: course.id, lessons: moduleLessons.map(toLessonOutline), ...(teaserCard ? { teaser: teaserCard } : {}) });
+      modules.push({ ...mod, courseId: course.id, lessons: [], ...(teaserCard ? { teaser: teaserCard } : {}) });
     }
 
     modules.sort((a, b) => a.order - b.order);
+    // Guests play the course's first lesson, and every lesson in a module open to guests.
+    modules.forEach((mod, m) => {
+      const full = fullLessons.get(mod.id) ?? [];
+      const firstLesson = full.find((l) => l.kind === "lesson");
+      for (const lesson of full) lesson.guests = mod.access === "free" && (mod.openToGuests === true || (m === 0 && lesson === firstLesson));
+      mod.lessons = full.map(toLessonOutline);
+    });
     checkUniqueOrder(modules, rel(coursePath));
     if (modules.length === 0) problems.push(`${rel(coursePath)}: a course needs at least one module`);
     // Everyone can start every course: its first module is always free.

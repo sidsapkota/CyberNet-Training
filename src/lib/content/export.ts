@@ -114,6 +114,12 @@ export function interactivePicks(lesson: Lesson): { type: string; prompt: string
     }));
 }
 
+/** Who can open a lesson from a link: what a video's viewers will meet. */
+export function accessLabel(lesson: Pick<Lesson, "access" | "guests">): string {
+  if (lesson.access === "pro") return "Pro";
+  return lesson.guests ? "Free, no account needed (best for video links)" : "Free with a free account";
+}
+
 export function taggedLink(lessonId: string): string {
   return `${new URL(DEFAULT_SITE_URL).host}/from/<platform>/${lessonId}`;
 }
@@ -128,7 +134,9 @@ export function renderContentExport(content: LoadedContent): string {
     "**no quiz questions or answers**, and no explanations, hints or nudges.",
     "",
     "**Tagged links:** replace `<platform>` with one lower-case word per platform or video (`tiktok`, `youtube`, `tiktok-ram`),",
-    "so Vercel Analytics shows where visitors came from. Pro lessons ask visitors to upgrade, so link to free lessons where you can.",
+    "so Vercel Analytics shows where visitors came from. Visitors without an account can play each course's first lesson",
+    "and the help lessons; other free lessons ask them to make a free account, and Pro lessons to upgrade. Link to lessons marked",
+    "\"no account needed\" where you can.",
     "",
   ];
 
@@ -144,7 +152,7 @@ export function renderContentExport(content: LoadedContent): string {
           out.push(`#### Module quiz (${questions} question${questions === 1 ? "" : "s"})`, "", "Not exported, so the answers stay secret.", "");
           continue;
         }
-        out.push(`#### ${lesson.title}`, "", `- **Access:** ${lesson.access === "pro" ? "Pro" : "Free"}`, `- **Link:** \`${taggedLink(lesson.id)}\``, "");
+        out.push(`#### ${lesson.title}`, "", `- **Access:** ${accessLabel(lesson)}`, `- **Link:** \`${taggedLink(lesson.id)}\``, "");
 
         const facts = keyFacts(lesson);
         if (facts.length) {

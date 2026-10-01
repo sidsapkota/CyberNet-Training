@@ -6,7 +6,9 @@ For planning videos and posts. It only uses what learners see before answering (
 **no quiz questions or answers**, and no explanations, hints or nudges.
 
 **Tagged links:** replace `<platform>` with one lower-case word per platform or video (`tiktok`, `youtube`, `tiktok-ram`),
-so Vercel Analytics shows where visitors came from. Pro lessons ask visitors to upgrade, so link to free lessons where you can.
+so Vercel Analytics shows where visitors came from. Visitors without an account can play each course's first lesson
+and the help lessons; other free lessons ask them to make a free account, and Pro lessons to upgrade. Link to lessons marked
+"no account needed" where you can.
 
 ## Inside Your Devices
 
@@ -18,7 +20,7 @@ Open up a laptop and a phone, and meet the parts that make them work.
 
 #### What's in the Box
 
-- **Access:** Free
+- **Access:** Free, no account needed (best for video links)
 - **Link:** `cybernettraining.com/from/<platform>/whats-in-the-box`
 
 **Key facts**
@@ -35,7 +37,7 @@ Open up a laptop and a phone, and meet the parts that make them work.
 
 #### Memory vs Storage
 
-- **Access:** Free
+- **Access:** Free with a free account
 - **Link:** `cybernettraining.com/from/<platform>/memory-vs-storage`
 
 **Key facts**
@@ -56,7 +58,7 @@ Open up a laptop and a phone, and meet the parts that make them work.
 
 #### Meet the CPU
 
-- **Access:** Free
+- **Access:** Free with a free account
 - **Link:** `cybernettraining.com/from/<platform>/meet-the-cpu`
 
 **Key facts**
@@ -184,7 +186,7 @@ Discover how computers store everything using just 0s and 1s, and why internet a
 
 #### Bits and Binary: How Computers Count
 
-- **Access:** Free
+- **Access:** Free, no account needed (best for video links)
 - **Link:** `cybernettraining.com/from/<platform>/bits-and-binary`
 
 **Key facts**
@@ -209,7 +211,7 @@ Discover how computers store everything using just 0s and 1s, and why internet a
 
 #### Bytes, File Sizes and Hex
 
-- **Access:** Free
+- **Access:** Free with a free account
 - **Link:** `cybernettraining.com/from/<platform>/bytes-file-sizes-and-hex`
 
 **Key facts**
@@ -625,7 +627,7 @@ Strong passwords, passphrases and two-step sign-in.
 
 #### Strong Passwords
 
-- **Access:** Free
+- **Access:** Free, no account needed (best for video links)
 - **Link:** `cybernettraining.com/from/<platform>/strong-passwords`
 
 **Key facts**
@@ -650,7 +652,7 @@ Strong passwords, passphrases and two-step sign-in.
 
 #### Two-Step Sign-In
 
-- **Access:** Free
+- **Access:** Free with a free account
 - **Link:** `cybernettraining.com/from/<platform>/two-step-sign-in`
 
 **Key facts**
@@ -791,7 +793,7 @@ Signs of a hack, what to do step by step, and where to get help.
 
 #### Signs of a Hack
 
-- **Access:** Free
+- **Access:** Free, no account needed (best for video links)
 - **Link:** `cybernettraining.com/from/<platform>/signs-of-a-hack`
 
 **Key facts**
@@ -810,7 +812,7 @@ Signs of a hack, what to do step by step, and where to get help.
 
 #### Getting Help
 
-- **Access:** Free
+- **Access:** Free, no account needed (best for video links)
 - **Link:** `cybernettraining.com/from/<platform>/getting-help`
 
 **Key facts**

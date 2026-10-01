@@ -16,7 +16,10 @@ export type AnalyticsEvent =
   | "lesson_start"
   | "lesson_complete"
   | "quiz_pass"
-  | "signup_complete"
+  // The sign-up gate: a guest saw it (on a lesson that needs an account, or after lesson 1), and a
+  // new account finished setting up (with the lesson that prompted it, when there was one).
+  | "signup_prompt_viewed"
+  | "signed_up"
   // The Pro funnel (lesson or course id and source only).
   | "paywall_viewed"
   | "teaser_played"

@@ -4,7 +4,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { ArrowRightIcon } from "@/components/ui/icons";
 import { trackEvent } from "@/lib/analytics";
 
-/** The landing page's one primary action: straight into a lesson, no sign-up. */
+/** The landing page's one primary action: straight into a course's first lesson, no sign-up. */
 export function LandingCta({ lessonId }: { lessonId: string }) {
   return (
     <ButtonLink

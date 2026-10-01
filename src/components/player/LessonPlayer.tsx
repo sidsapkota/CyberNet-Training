@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { SignUpGate } from "@/components/account/SignUpGate";
 import { Mascot } from "@/components/mascot/Mascot";
 import { ProLockedMessage } from "@/components/pro/ProLocked";
 import { WhatsNext } from "@/components/pro/WhatsNext";
@@ -42,7 +43,7 @@ function usePaidLesson(id: string | null): Paid {
           response.ok && body.lesson
             ? { state: "ready", lesson: body.lesson }
             : response.status === 401
-              ? { state: "locked", reason: "sign-in" }
+              ? { state: "locked", reason: body.reason === "account" ? "account" : "sign-in" }
               : response.status === 403
                 ? { state: "locked", reason: "pro" }
                 : { state: "error" };
@@ -61,16 +62,17 @@ function usePaidLesson(id: string | null): Paid {
 }
 
 /**
- * Entry point for /lesson/[id]. Free lessons come with the page; Pro lessons are fetched after the
- * server checks entitlement (without it, a gentle "part of Pro" screen). Then it waits for progress
- * (client-only), shows a friendly gate for locked items, and runs the lesson or quiz.
+ * Entry point for /lesson/[id]. Lessons guests can play come with the page; the rest are fetched
+ * after the server checks the session (a free account) and, for Pro, entitlement. Without them, the
+ * sign-up gate or a gentle "part of Pro" screen. Then it waits for progress (client-only), shows a
+ * friendly gate for locked items, and runs the lesson or quiz.
  */
 export function LessonPlayer({
   lesson: pageLesson,
   outline,
   course,
 }: {
-  /** The full lesson for free lessons; null for Pro ones (never in the page). */
+  /** The full lesson when guests can play it; null otherwise (never in the page). */
   lesson: Lesson | null;
   outline: LessonOutline;
   course: CourseOutline;
@@ -82,7 +84,11 @@ export function LessonPlayer({
 
   if (!lesson && (paid.state === "locked" || paid.state === "error")) {
     return (
-      <PlayerShell nodes={uniformNodes(outline.cardCount, "upcoming")} progressLabel="Part of Pro" exitHref={`/course/${course.id}`}>
+      <PlayerShell
+        nodes={uniformNodes(outline.cardCount, "upcoming")}
+        progressLabel={paid.state === "locked" && paid.reason === "account" ? "Needs a free account" : "Part of Pro"}
+        exitHref={`/course/${course.id}`}
+      >
         <div className="flex min-h-[60dvh] flex-col items-center justify-center">
           {paid.state === "locked" ? (
             <LockedLesson outline={outline} course={course} reason={paid.reason} />
@@ -145,8 +151,18 @@ export function LessonPlayer({
   );
 }
 
-/** A Pro lesson without Pro: "What's next" for its module (or the plain message if there's none). */
+/**
+ * A lesson the learner can't open yet: the sign-up gate (a free lesson, as a guest), or "What's
+ * next" for a Pro module (or the plain message if there's none).
+ */
 function LockedLesson({ outline, course, reason }: { outline: LessonOutline; course: CourseOutline; reason: LockedReason }) {
+  if (reason === "account") {
+    return (
+      <div className="w-full py-6">
+        <SignUpGate lessonId={outline.id} next={`/lesson/${outline.id}`} variant="page" notNowHref={`/course/${course.id}`} />
+      </div>
+    );
+  }
   const mod = course.modules.find((m) => m.id === outline.moduleId);
   if (!mod) return <ProLockedMessage title={outline.title} reason={reason} />;
   return (

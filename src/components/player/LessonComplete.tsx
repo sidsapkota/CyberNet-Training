@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { useEffect } from "react";
 import { SaveProgressPrompt } from "@/components/account/SaveProgressPrompt";
+import { SignUpGate } from "@/components/account/SignUpGate";
 import { DailyGoalSummary } from "@/components/streak/DailyGoalSummary";
 import { Mascot } from "@/components/mascot/Mascot";
 import { ButtonLink } from "@/components/ui/Button";
@@ -11,6 +12,7 @@ import { CountUp } from "@/components/ui/CountUp";
 import { ArrowRightIcon, ChallengeIcon, FeedbackIcon, LessonIcon, XpIcon } from "@/components/ui/icons";
 import type { LessonIconName } from "@/lib/content/lessonIcons";
 import type { LessonOutline } from "@/lib/content/schema";
+import { useAuth } from "@/lib/auth/AuthProvider";
 import { useFeedback } from "@/lib/feedback";
 
 export function nextLessonLabel(next: LessonOutline) {
@@ -48,6 +50,9 @@ export function LessonComplete({
   next: LessonOutline | null;
 }) {
   const feedback = useFeedback();
+  const { auth, available } = useAuth();
+  // A guest whose next lesson needs a free account (after each course's first lesson).
+  const gateNext = available && auth.status === "guest" && next !== null && next.access === "free" && !next.guests;
   // The lesson-complete chime, once, as the screen appears.
   const { play } = feedback;
   useEffect(() => {
@@ -102,22 +107,27 @@ export function LessonComplete({
 
         <DailyGoalSummary goalMetNow={goalMetNow} freezeEarned={freezeEarned} />
 
-        <SaveProgressPrompt />
-
-        <div className="mx-auto mt-10 flex max-w-sm flex-col gap-2">
-          {next ? (
-            <>
-              <ButtonLink href={`/lesson/${next.id}`}>
-                {nextLessonLabel(next)} <ArrowRightIcon className="size-5" />
-              </ButtonLink>
-              <ButtonLink href={pathHref} variant="ghost">
-                Back to path
-              </ButtonLink>
-            </>
-          ) : (
-            <ButtonLink href={pathHref}>Back to path</ButtonLink>
-          )}
-        </div>
+        {gateNext && next ? (
+          <SignUpGate lessonId={lessonId} next={`/lesson/${next.id}`} xp={xpEarned} variant="inline" notNowHref={pathHref} />
+        ) : (
+          <>
+            <SaveProgressPrompt />
+            <div className="mx-auto mt-10 flex max-w-sm flex-col gap-2">
+              {next ? (
+                <>
+                  <ButtonLink href={`/lesson/${next.id}`}>
+                    {nextLessonLabel(next)} <ArrowRightIcon className="size-5" />
+                  </ButtonLink>
+                  <ButtonLink href={pathHref} variant="ghost">
+                    Back to path
+                  </ButtonLink>
+                </>
+              ) : (
+                <ButtonLink href={pathHref}>Back to path</ButtonLink>
+              )}
+            </div>
+          </>
+        )}
         <Link
           href={`/feedback?lesson=${lessonId}`}
           className="mt-6 inline-flex min-h-11 items-center gap-1.5 text-small text-ink-muted underline-offset-2 hover:text-ink hover:underline"
