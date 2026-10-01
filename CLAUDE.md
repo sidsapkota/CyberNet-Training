@@ -17,6 +17,13 @@ Production is **https://cybernettraining.com** (`src/lib/site.ts`); see [Launch]
 and `docs/launch-checklist.md` for the dashboards (Vercel, Supabase, Google, Resend, ImprovMX).
 Code is on GitHub: `sidsapkota/CyberNet-Training`, branch `main`.
 
+## Handover
+
+**Keep `docs/handover.md` up to date.** Update it at the end of every task, whenever a branch is
+merged or created, and whenever the owner adds something to the queue. Commit it with the work it
+describes. **At the start of every session, read it first.** Keep it short: replace old information
+rather than appending history (git keeps the history). No secrets, keys or user data.
+
 ## Commands
 
 ```bash
