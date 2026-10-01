@@ -6,14 +6,13 @@ import { CheckIcon, RatingIcon } from "@/components/ui/icons";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { FEEDBACK_MAX, feedbackSessionId, friendlyFeedbackError } from "@/lib/feedback-form";
 import { CONTACT_EMAIL } from "@/lib/site";
-import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
 type Status = { kind: "idle" } | { kind: "sending" } | { kind: "sent" } | { kind: "error"; message: string };
 
 /**
  * A short feedback form: message (required), which lesson and a 1–5 rating (both optional).
- * Stored in Supabase's `feedback` table, which anyone can add to and nobody can read back
- * (RLS). Not linked to an account.
+ * Sent to `/api/feedback`, which stores it in Supabase's `feedback` table (anyone can add to it,
+ * nobody can read it back: RLS) and emails a copy to the owner. Not linked to an account.
  */
 export function FeedbackForm({ lessons, initialLesson }: { lessons: { id: string; title: string }[]; initialLesson: string | null }) {
   const { available } = useAuth();
@@ -28,10 +27,24 @@ export function FeedbackForm({ lessons, initialLesson }: { lessons: { id: string
     event.preventDefault();
     if (!trimmed || trimmed.length > FEEDBACK_MAX) return;
     setStatus({ kind: "sending" });
-    const { error } = await getSupabaseBrowserClient()
-      .from("feedback")
-      .insert({ message: trimmed, lesson_id: lesson || null, rating, session_id: feedbackSessionId() });
-    setStatus(error ? { kind: "error", message: friendlyFeedbackError(error.message) } : { kind: "sent" });
+    try {
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: trimmed,
+          lessonId: lesson || null,
+          rating,
+          sessionId: feedbackSessionId(),
+          page: document.referrer || null,
+        }),
+      });
+      if (response.ok) return setStatus({ kind: "sent" });
+      const body = (await response.json().catch(() => ({}))) as { error?: string };
+      setStatus({ kind: "error", message: body.error ?? friendlyFeedbackError("") });
+    } catch {
+      setStatus({ kind: "error", message: friendlyFeedbackError("") });
+    }
   }
 
   if (!available) {

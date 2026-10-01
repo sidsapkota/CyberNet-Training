@@ -10,6 +10,11 @@ export const SITE_TAGLINE = "Short, hands-on lessons on how devices, the interne
 /** Who the site is for, worded the same everywhere (landing, /courses, /pro, metadata). */
 export const AUDIENCE = "For ages 13+. No experience needed.";
 export const CONTACT_EMAIL = "hello@cybernettraining.com";
+/**
+ * Where new feedback is emailed (owner, 2 Oct 2026). Switch to CONTACT_EMAIL once its forwarding
+ * (ImprovMX) is set up.
+ */
+export const FEEDBACK_INBOX = "cybernettraining10@gmail.com";
 export const DEFAULT_SITE_URL = "https://cybernettraining.com";
 
 /** The production origin. Only an absolute https URL is accepted; anything else falls back. */
