@@ -39,6 +39,13 @@ Last updated: 1 October 2026.
 1. **Streak freeze** (Pro): **on hold until data says otherwise.** Don't build. Watch `pro_declined` reasons and the Pro funnel first. (Pro already holds 3 freezes instead of 2.) Show the SQL before applying if it's ever picked up.
 2. Family plan: **on hold**, don't build.
 
+## Overnight log (1–2 Oct, owner asleep; decisions made on my recommendation)
+
+- **Previews can't run signed-in checks:** `SUPABASE_SECRET_KEY` is set for Production only, so on every preview `/api/lessons` (non-guest lessons for signed-in learners), Pro checks, Mistake review and the guest merge return 500. Not a code bug (production returns 200 for the same calls). I may not change env vars, so for merges: preview-capable checks run against the preview (design QA, Back/Listen, mascot), and the checks needing the secret key (Mistake review, plans, guest gate, "What's stopping you?") run against a **local production build** (`next start`) of the same commit. Owner may want to add the key to Preview (note: previews share the production database).
+- **Back/Listen on the preview** failed once (Listen pressed while the card was still sliding in), then passed twice: script timing, not the app.
+- **player-flow-fixes:** fixes from the four beginner audits added before merging (text scenes never shrunk; taps go to the drawn part; simulator keeps moves; drag/binary wait for a real change; drag announcements by label; course final named; content: too-hot safety line, backticks in options). Merged after: lint, typecheck, 959 tests, build, design QA on the preview (clean), mascot + Back/Listen on the preview, Mistake review 14/14, plans 39/39, guest gate 11/11, pro-declined on a local production build.
+- **"Secret Codes":** no request by that name ever reached me (the messages I got were cut off in places). Nothing planned; owner to resend.
+
 ## 5. Waiting on the owner
 
 - Recheck AI lesson 4.3 (product names, makers, age rules) by 1 January 2027, then every 3 months.
