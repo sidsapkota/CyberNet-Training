@@ -17,29 +17,29 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Fluent, confident, wrong",
-      "body": "When a chatbot writes something false but says it smoothly and confidently, it's called a **hallucination**.\n\nIt happens because the model picks tokens that **sound** likely, not tokens it has checked are true. A book title, an author's name and a summary are all very likely-sounding things to write. If the true answer isn't in its patterns, it still writes something that looks like an answer.\n\nHallucinations are most common with specific details: names, dates, numbers, quotes and sources."
+      "body": "When a chatbot writes something false but says it smoothly and confidently, it's called a **hallucination**.\n\nIt happens because the model picks tokens that **sound** likely, not tokens it has checked are true. A book title, an author's name and a summary are all very likely-sounding things to write. If the true answer isn't in its patterns, it still writes something that looks like an answer.\n\nHallucinations are most common with specific details: names, dates, numbers, quotes and sources. They're also more likely when a model has mostly read one kind of text. Imagine a small model trained on space adventure stories, full of sentences like \"Captain Rivera stepped onto Mars\"."
     },
     {
       "id": "mars-walk",
       "type": "next_word",
       "difficulty": "core",
-      "prompt": "This small model learned mostly from space adventure stories, where the hero is usually called \"Captain\" something. Which word is it **most likely** to write next?",
+      "prompt": "That small space-story model gets this text. Which word is it **most likely** to write next?",
       "context": "The first person to walk on Mars was",
       "candidates": [
         {
           "word": "Captain",
-          "p": 0.6
+          "p": 0.55
+        },
+        {
+          "word": "Neil",
+          "p": 0.2
         },
         {
           "word": "nobody",
           "p": 0.1
         },
         {
-          "word": "my",
-          "p": 0.15
-        },
-        {
-          "word": "probably",
+          "word": "an",
           "p": 0.15
         }
       ],
@@ -47,9 +47,9 @@
         "type": "pick",
         "word": "Captain"
       },
-      "hint": "It isn't choosing what's true. What usually comes next in a space adventure story?",
-      "nudge": "Is the model choosing what's true, or what usually comes next in the stories it learned from?",
-      "explanation": "Nobody has walked on Mars yet, but in space stories this sentence usually carries on with a name, like \"**Captain** …\". So the model is likely to invent a Mars walker: a hallucination, built one likely token at a time. (Bigger chatbots have seen this question and usually get it right; the risk is highest for things they've seen less.)"
+      "hint": "It isn't choosing what's true. What did this model read again and again?",
+      "nudge": "Think about the stories this model learned from. Which word filled this spot in them?",
+      "explanation": "Nobody has walked on Mars yet, and Neil Armstrong walked on the **Moon**. But in this model's space stories, sentences like this carry on with \"**Captain** …\", so it's likely to invent a Mars walker: a hallucination, built one likely token at a time. (Bigger chatbots have seen this question and usually get it right; the risk is highest for things they've seen less.)"
     },
     {
       "id": "check-it",
@@ -203,6 +203,59 @@
       "correctOptionId": "trusted-source",
       "hint": "Look back at how to check: the answer has to come from outside the chatbot.",
       "explanation": "Only a **trusted source** outside the chatbot really checks a fact. Asking again, asking if it's sure, or judging how confident it sounds all stay inside the chatbot, which can repeat or defend a hallucination."
+    },
+    {
+      "id": "link-works",
+      "type": "scenario",
+      "difficulty": "core",
+      "prompt": "A chatbot tells you a famous ship sank in **1915**, and gives a link to a museum website.",
+      "start": "the-link",
+      "steps": [
+        {
+          "id": "the-link",
+          "text": "You click the link, and it opens a real museum page about the ship. What now?",
+          "choices": [
+            {
+              "id": "done",
+              "text": "Use 1915: the link works, so it's checked",
+              "consequence": "The page is real, but you didn't read it. It actually says the ship sank in **1912**. A real link isn't proof of the claim.",
+              "outcome": "fail"
+            },
+            {
+              "id": "read",
+              "text": "Read the page and find the date it gives",
+              "consequence": "The page says 1912, not 1915.",
+              "next": "different-date"
+            },
+            {
+              "id": "ask",
+              "text": "Ask the chatbot to double-check its date",
+              "consequence": "It apologises and says 1914. Still not checked: the answer is on the page you already have.",
+              "outcome": "fail"
+            }
+          ]
+        },
+        {
+          "id": "different-date",
+          "text": "The museum page says 1912. The chatbot said 1915. Which do you use?",
+          "choices": [
+            {
+              "id": "museum",
+              "text": "1912, from the museum page",
+              "consequence": "Right: the trusted source you actually read wins.",
+              "outcome": "success"
+            },
+            {
+              "id": "chatbot",
+              "text": "1915: the chatbot found the page, so it knows",
+              "consequence": "The chatbot linked the right page but wrote the wrong date. Go with what the source really says.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "hint": "Look back at how to check: a source has to really exist **and** say what the chatbot claims.",
+      "explanation": "A link that works isn't enough: chatbots can link a real page and still get the detail wrong. **Read the source**, and go with what it actually says."
     },
     {
       "id": "long-chat",

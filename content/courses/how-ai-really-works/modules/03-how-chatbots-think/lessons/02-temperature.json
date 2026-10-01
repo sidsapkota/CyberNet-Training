@@ -206,7 +206,7 @@
       "id": "get-sofa",
       "type": "next_word",
       "difficulty": "challenge",
-      "prompt": "Can you get **sofa** up to at least **24%**? This slider goes higher than before.",
+      "prompt": "Can you get **sofa** up to at least **24%**?",
       "context": "The cat sat on the",
       "candidates": [
         {
@@ -226,12 +226,6 @@
           "p": 0.05
         }
       ],
-      "temperature": {
-        "min": 0.2,
-        "max": 3,
-        "start": 1,
-        "step": 0.1
-      },
       "goal": {
         "type": "probability",
         "word": "sofa",
@@ -239,44 +233,44 @@
       },
       "hint": "\"sofa\" is second, so it can never overtake \"mat\". But which way gives the less likely words a bigger share?",
       "nudge": "Keep going right. The higher the temperature, the more evenly the chances are shared.",
-      "explanation": "\"sofa\" passes 24% from about temperature 2. High temperatures share the chances out more evenly, but \"mat\" stays on top: the order never changes, and \"sofa\" can never get much past 25%."
+      "explanation": "\"sofa\" passes 24% from about temperature 1.8. High temperatures share the chances out more evenly, but \"mat\" stays on top: the order never changes, and \"sofa\" can never get much past 25%."
     },
     {
-      "id": "hotter-smarter",
+      "id": "fifty-fifty",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "Does turning the temperature **up** make a chatbot's answers more likely to be **correct**?",
+      "prompt": "A model gives just two next words **50%** each. You turn the temperature **down to 0.2**. What happens to their chances?",
       "options": [
         {
-          "id": "no",
-          "text": "No: it only makes less likely tokens get picked more often"
+          "id": "still-even",
+          "text": "They stay 50% each"
         },
         {
-          "id": "yes-thinks",
-          "text": "Yes: it makes the model think harder",
-          "nudge": "Temperature doesn't change how the model works things out. What does it change?"
+          "id": "one-jumps",
+          "text": "One of them jumps to about 99%",
+          "nudge": "Which one would it be? Low temperature makes the top word likelier, but here is there a top word?"
         },
         {
-          "id": "yes-maths",
-          "text": "Yes, but only for maths questions",
-          "nudge": "For a question with one right answer, which temperature picks the most likely answer every time?"
+          "id": "both-up",
+          "text": "They both go up",
+          "nudge": "The chances always add up to 100%. Can both go up?"
         },
         {
-          "id": "yes-above-2",
-          "text": "Yes, once it's above 2",
-          "nudge": "High temperatures pick unlikely tokens more often. Are unlikely answers more often right?"
+          "id": "both-down",
+          "text": "They both go down",
+          "nudge": "The chances always add up to 100%, and there are only two words."
         }
       ],
-      "correctOptionId": "no",
-      "hint": "Temperature changes how the model picks from its chances. Does it change what it knows?",
-      "explanation": "Temperature only changes **how** the model picks from its chances. Turning it up makes unlikely tokens more common, which adds variety, and more mistakes. It never adds knowledge."
+      "correctOptionId": "still-even",
+      "hint": "Temperature stretches or squashes the **gaps** between chances. How big is the gap here?",
+      "explanation": "Temperature only stretches or squashes the **gaps** between chances. With 50% and 50% there's no gap to stretch, so at any temperature they stay **50% each**. Temperature never makes answers more correct, either: it only changes how the model picks."
     },
     {
       "id": "temperature-recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- **Temperature** changes how a model picks from its chances; the order of the tokens never changes.\n- Low: the top token wins almost every time. Good for facts, maths and summaries.\n- High: the chances even out. Good for ideas and stories; too high, and it's nonsense.\n- It never makes answers more correct.\n\nNext: why chatbots sometimes make things up."
+      "body": "- **Temperature** changes how a model picks from its chances; the order of the tokens never changes.\n- Low: the top token wins almost every time. Good for facts, maths and summaries.\n- High: the chances even out. Good for ideas and stories; too high, and it's nonsense.\n- It only stretches the gaps: two words with equal chances stay equal. It never makes answers more correct.\n\nNext: why chatbots sometimes make things up."
     }
   ]
 }

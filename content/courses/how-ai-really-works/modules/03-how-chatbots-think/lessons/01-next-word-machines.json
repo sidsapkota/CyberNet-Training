@@ -47,7 +47,7 @@
         "type": "pick",
         "word": "horse"
       },
-      "hint": "The model doesn't pick what makes sense to eat. It picks what most often comes next in the text it learned from. Is this sentence a common saying?",
+      "hint": "What does the model learn from: what's sensible to eat, or what's common in text?",
       "nudge": "That's a sensible thing to eat, but the model isn't choosing food. Which ending have you heard people say most often?",
       "explanation": "\"I could eat a **horse**\" is a common saying, so it appears far more often in text than any sensible snack. This small model picks what usually comes next, not what makes sense, or what's true."
     },
@@ -84,6 +84,38 @@
       "hint": "It can't pick a token before it knows the chances, and it can't work out the chances before it has read the text.",
       "nudge": "Start with what the model needs first: the text so far. What does it need before it can pick?",
       "explanation": "**Read** the text so far, give each next token a **chance**, **pick** one, **add** it. Then the loop starts again with the longer text."
+    },
+    {
+      "id": "rocket-cat",
+      "type": "next_word",
+      "difficulty": "core",
+      "prompt": "Remember: after \"The cat sat on the\", \"mat\" had the biggest chance. Now the text so far is longer. Which word is **most likely** next this time?",
+      "context": "Inside the rocket, the cat sat on the",
+      "candidates": [
+        {
+          "word": "seat",
+          "p": 0.45
+        },
+        {
+          "word": "mat",
+          "p": 0.3
+        },
+        {
+          "word": "moon",
+          "p": 0.15
+        },
+        {
+          "word": "floor",
+          "p": 0.1
+        }
+      ],
+      "goal": {
+        "type": "pick",
+        "word": "seat"
+      },
+      "hint": "Step one of the loop is to read **all** the text so far. Which words at the start change the picture?",
+      "nudge": "\"mat\" won before, but the model reads everything, including \"Inside the rocket\". What do rockets have for sitting on?",
+      "explanation": "The model reads **all** the text so far, so \"Inside the rocket\" changes the chances: **seat** goes to the top and \"mat\" drops. The same last few words can lead to a different next word."
     },
     {
       "id": "hundred-times",
@@ -164,7 +196,7 @@
         }
       ],
       "correctOptionId": "unbelievably",
-      "hint": "A token is often a whole word, and sometimes part of a long or unusual one.",
+      "hint": "Which word could be built from smaller, common pieces?",
       "explanation": "Common short words like \"the\", \"cat\" and \"and\" are usually one token each. A long, less common word like **\"unbelievably\"** is usually split into pieces, such as \"un\", \"believ\" and \"ably\" (the exact pieces depend on the model)."
     },
     {

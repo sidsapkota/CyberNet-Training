@@ -1013,7 +1013,7 @@ Next-word guessing, temperature, and why chatbots make things up.
 
 - Next word: A language model is choosing the next word. Which one is it **most likely** to pick?
 - Put in order: Put the steps a chatbot repeats for every token in order.
-- Number answer: After "Fish and", a model gives "chips" a **70%** chance. If it carries on from "Fish and" **200** times, about how many times will it pick "chips"?
+- Next word: Remember: after "The cat sat on the", "mat" had the biggest chance. Now the text so far is longer. Which word is **most likely** next this time?
 
 **Surprising facts**
 
@@ -1037,7 +1037,7 @@ Next-word guessing, temperature, and why chatbots make things up.
 
 - Next word: Move the temperature until **mat** has a chance of at least **80%**.
 - Next word: Now make the model more surprising: move the temperature until **no word** has more than a **45%** chance.
-- Next word: Can you get **sofa** up to at least **24%**? This slider goes higher than before.
+- Next word: Can you get **sofa** up to at least **24%**?
 
 #### Made-Up Answers
 
@@ -1053,9 +1053,9 @@ Next-word guessing, temperature, and why chatbots make things up.
 
 **Best interactive cards**
 
-- Next word: This small model learned mostly from space adventure stories, where the hero is usually called "Captain" something. Which word is it **most likely** to write next?
+- Next word: That small space-story model gets this text. Which word is it **most likely** to write next?
 - Choose what happens: You're writing a report on volcanoes.
-- Choose what happens: You're using a chatbot to practise for a quiz.
+- Choose what happens: A chatbot tells you a famous ship sank in **1915**, and gives a link to a museum website.
 
 #### Module quiz (8 questions)
 

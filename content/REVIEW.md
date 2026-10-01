@@ -1567,7 +1567,7 @@ out. Chatbots are also trained further, after the text, to answer helpfully; tha
 the order never changes; which jobs suit which; it never makes answers more correct.
 
 **Key claims (formula p^(1/T), rescaled):** "mat" 60% at 1, 84.7% at 0.5, 99.5% at 0.2, 42.3%
-at 2.0; "sofa" reaches 24% from about 1.9 (the card's slider goes to 3; it can never get much past 25%). Most chatbot apps set the
+at 2.0; "sofa" reaches 24% from 1.8 (it can never get much past 25%). Most chatbot apps set the
 temperature for you; some tools let you change it.
 
 **Simplifications:** real apps combine temperature with other sampling settings; only temperature
@@ -1611,6 +1611,21 @@ caused by an app bug, now fixed.
 | 3.3 `context-window`, `long-chat` | Stated as definite; modern windows are large and apps vary | "Can fall out of the window, or get less attention"; the right choice says "may have lost track" |
 | 3.3 `problem-and-check` | "Doctor or pharmacist" only appeared in an explanation | Now taught in `check-it` |
 | Quiz `q-why-hallucinate` | Weak wrong options | "Temperature too low" and "context window too small" |
+
+**Second audit (after the rounding fix):** 26 of 27 right first try, so the content was still too
+easy. The one miss (`which-go-up`, "only moon") was recovered by its nudge. Changes:
+
+| Where | Issue | Fix |
+|---|---|---|
+| 3.1 (new) `rocket-cat` | Nothing tested "read all the text so far" | Hidden-chance pick: "Inside the rocket, the cat sat on the" (seat, not mat) |
+| 3.2 (new) `fifty-fifty`, replacing `hotter-smarter` | Temperature cards could be done by dragging until the bar looks right | Predict: two words at 50% stay 50% at any temperature (no gap to stretch); "never more correct" moves to its explanation and the recap |
+| 3.3 (new) `link-works` | "Check it says what the chatbot claims" was only in an explainer | Scenario: the link is real, but the page says 1912, not 1915 |
+| 3.3 `mars-walk` | The answer was in the prompt; odd distractors | The story-model fact is in the `hallucination` explainer; distractors "Neil" (the Moon, not Mars), "nobody" (true), "an" |
+| 3.2 `get-sofa` | Explanation said "about 2" (it's 1.8); the prompt hinted the direction | Fixed; default slider; no direction clue |
+| Quiz `q-coldest` | Its numbers couldn't be worked out from one chance | Lists all four chances |
+| Quiz `q-loop` | A word-for-word copy of the lesson card | Adds a fifth step, "Start again with the longer text" |
+| 3.1 `hungry-horse`, `split-tokens` | Hints nearly named the answer | Point at the method |
+| Glossary `training-data` | Said every example has a label (language models learn without) | "usually each with a label" |
 
 ## AI Tools Today (lesson 4.3, not built yet)
 The only lesson that names real products. It carries `lastChecked` (shown to learners), and

@@ -218,7 +218,7 @@
     { "id": "tls", "term": "TLS", "definition": "Transport Layer Security: the protocol that encrypts HTTPS connections and checks the server's certificate." },
     { "id": "token", "term": "token", "definition": "A piece of text a language model works with: often a whole word, sometimes part of a long or unusual one." },
     { "id": "traceroute", "term": "traceroute", "definition": "A tool that lists the routers (hops) your packets pass through on the way to a destination." },
-    { "id": "training-data", "term": "training data", "definition": "The examples a model learns from, each with a label saying what it really is." },
+    { "id": "training-data", "term": "training data", "definition": "The examples a model learns from, usually each with a label saying what it really is." },
     {
       "id": "two-step-sign-in",
       "term": "two-step sign-in",

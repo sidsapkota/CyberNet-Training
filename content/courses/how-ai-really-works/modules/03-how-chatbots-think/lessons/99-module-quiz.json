@@ -8,7 +8,7 @@
       "id": "q-coldest",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "After \"Ready, set,\" a model gives \"go\" a 70% chance at temperature 1. At which temperature is it **most likely** to pick \"go\"?",
+      "prompt": "After \"Ready, set,\" a model gives these chances at temperature 1: **go 70%**, now 15%, then 10%, slow 5%. At which temperature is it **most likely** to pick \"go\"?",
       "options": [
         {
           "id": "low",
@@ -155,9 +155,13 @@
         {
           "id": "add",
           "label": "Add it to the end of the text"
+        },
+        {
+          "id": "again",
+          "label": "Start again with the longer text"
         }
       ],
-      "explanation": "Read, give each token a chance, pick one, add it, and repeat."
+      "explanation": "Read the text, give each token a chance, pick one, add it, then start again with the longer text, until the answer is done."
     },
     {
       "id": "q-check",
