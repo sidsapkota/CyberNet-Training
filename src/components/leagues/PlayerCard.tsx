@@ -1,3 +1,4 @@
+import { Avatar } from "@/components/rewards/Avatar";
 import type { ReactNode } from "react";
 import { ProBadge } from "@/components/pro/ProBadge";
 import { StreakIcon } from "@/components/streak/StreakIcon";
@@ -15,7 +16,7 @@ export type CardStats =
  * learners get the cosmetic frame (a cyan trace with nodes and one travelling light) and the Pro
  * badge; free learners' cards use the same layout with a clean outline.
  */
-export function PlayerCard({ handle, tier, pro, stats, className = "" }: { handle: string; tier: Tier; pro: boolean; stats: CardStats; className?: string }) {
+export function PlayerCard({ handle, tier, pro, avatar, stats, className = "" }: { handle: string; tier: Tier; pro: boolean; avatar: string; stats: CardStats; className?: string }) {
   return (
     <article
       aria-label={`Player card: ${handle}, ${TIER_NAMES[tier]} tier${pro ? ", Pro" : ""}`}
@@ -24,8 +25,12 @@ export function PlayerCard({ handle, tier, pro, stats, className = "" }: { handl
       {pro && <ProFrame />}
       {pro && <ProBadge size="sm" className="absolute top-4 right-4" />}
       <div className="flex flex-col items-center text-center">
-        <span className="grid size-24 place-items-center rounded-node border-2 border-accent-ink bg-screen">
-          <TierBadge tier={tier} tile={false} className="size-16" />
+        {/* Their avatar (never a photo), with the tier badge in the corner. */}
+        <span className="relative">
+          <Avatar avatar={avatar} pro={pro} className="size-24" />
+          <span className="absolute -right-2 -bottom-1 grid size-10 place-items-center rounded-node border-2 border-line-strong bg-screen">
+            <TierBadge tier={tier} tile={false} className="size-7" />
+          </span>
         </span>
         <p className="mt-3 max-w-full truncate text-lead font-semibold">{handle}</p>
         <p className="mt-0.5 text-small text-ink-muted">{TIER_NAMES[tier]} tier</p>

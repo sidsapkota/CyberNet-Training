@@ -27,20 +27,23 @@ export interface LeaguePlayer {
   handle: string;
   tier: Tier;
   showOnLeaderboards: boolean;
+  /** The learner's avatar item id. */
+  avatar: string;
 }
 
 /** The learner's league player row, created the first time. Their public name is their username. */
 export async function ensurePlayer(admin: Admin, userId: string): Promise<LeaguePlayer> {
-  const username = await ensureUsername(admin, userId);
+  const [username, profile] = await Promise.all([ensureUsername(admin, userId), admin.from("profiles").select("avatar").eq("id", userId).maybeSingle()]);
+  const avatar = profile.data?.avatar ?? "mascot";
   const existing = await admin.from("league_players").select("tier, show_on_leaderboards").eq("user_id", userId).maybeSingle();
   fail("Couldn't read the league player", existing.error);
   if (existing.data) {
-    return { handle: username, tier: isTier(existing.data.tier) ? existing.data.tier : "packet", showOnLeaderboards: existing.data.show_on_leaderboards };
+    return { handle: username, avatar, tier: isTier(existing.data.tier) ? existing.data.tier : "packet", showOnLeaderboards: existing.data.show_on_leaderboards };
   }
   const { error } = await admin.from("league_players").insert({ user_id: userId });
   // 23505: a parallel request just created this player.
   if (error && error.code !== "23505") fail("Couldn't create the league player", error);
-  return { handle: username, tier: "packet", showOnLeaderboards: true };
+  return { handle: username, avatar, tier: "packet", showOnLeaderboards: true };
 }
 
 /** Usernames for a set of learners (leaderboards show nothing else about them). */

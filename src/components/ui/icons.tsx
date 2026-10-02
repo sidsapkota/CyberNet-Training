@@ -51,6 +51,15 @@ import {
   Target,
   UserRound,
   MonitorSmartphone,
+  Shield,
+  Rocket,
+  Satellite,
+  Gamepad2,
+  Music,
+  Camera,
+  Puzzle,
+  Telescope,
+  Map as MapIcon_,
 } from "lucide-react";
 import {
   AppWindow,
@@ -311,4 +320,34 @@ export function LessonIcon({ name, ...props }: LucideProps & { name: LessonIconN
   return (
     <Icon strokeWidth={ICON_STROKE} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false" {...props} />
   );
+}
+
+/** Avatar badges (src/lib/rewards/items.ts): one glyph per badge, in the brand stroke. */
+const BADGE_GLYPHS = {
+  shield: brandIcon(Shield, "BadgeShield"),
+  chip: brandIcon(Cpu, "BadgeChip"),
+  terminal: brandIcon(SquareTerminal, "BadgeTerminal"),
+  wifi: brandIcon(Wifi, "BadgeWifi"),
+  router: brandIcon(Router, "BadgeRouter"),
+  rocket: brandIcon(Rocket, "BadgeRocket"),
+  satellite: brandIcon(Satellite, "BadgeSatellite"),
+  key: brandIcon(KeyRound, "BadgeKey"),
+  cloud: brandIcon(Cloud, "BadgeCloud"),
+  globe: brandIcon(Globe, "BadgeGlobe"),
+  bot: brandIcon(Bot, "BadgeBot"),
+  gamepad: brandIcon(Gamepad2, "BadgeGamepad"),
+  music: brandIcon(Music, "BadgeMusic"),
+  camera: brandIcon(Camera, "BadgeCamera"),
+  bug: brandIcon(Bug, "BadgeBug"),
+  puzzle: brandIcon(Puzzle, "BadgePuzzle"),
+  telescope: brandIcon(Telescope, "BadgeTelescope"),
+  lightbulb: brandIcon(Lightbulb, "BadgeLightbulb"),
+  server: brandIcon(Server, "BadgeServer"),
+  compass: brandIcon(Compass, "BadgeCompass"),
+  map: brandIcon(MapIcon_, "BadgeMap"),
+} satisfies Record<import("@/lib/rewards/items").BadgeIcon, ReturnType<typeof brandIcon>>;
+
+export function BadgeGlyph({ icon, ...props }: LucideProps & { icon: import("@/lib/rewards/items").BadgeIcon }) {
+  const Glyph = BADGE_GLYPHS[icon];
+  return <Glyph {...props} />;
 }
