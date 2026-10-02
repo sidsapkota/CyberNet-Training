@@ -53,6 +53,8 @@ npm run e2e:mascot-motion # mascot reactions timed in the browser, the scan film
 npm run e2e:usernames    # pick a username at sign-up, rude/taken names refused, the 30-day change (secret key: local build)
 npm run e2e:fit-audit     # every card at 360x640 and 360x560: does it fit without scrolling? (COURSE=<id>, LESSONS=<id,id>;
                           # E2E_SHARE_URL for a protected preview)
+npm run e2e:dashboard-numbers # cards done, no lesson finished: header XP, Activity XP bars and rings
+                          # (throwaway account; secret key, so a local production build or production)
 npm run e2e:player-flow   # before/after screenshots: a hotspot card and the wrong-answer flow (SHOTS_TAG=)
 ```
 
