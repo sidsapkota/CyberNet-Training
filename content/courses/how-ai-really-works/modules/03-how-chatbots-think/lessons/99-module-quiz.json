@@ -8,6 +8,9 @@
       "id": "q-coldest",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "temperature-effect"
+      ],
       "prompt": "At temperature 1, \"go\" has a **70%** chance after \"Ready, set,\". At which temperature is \"go\" **most likely**?",
       "options": [
         {
@@ -34,6 +37,9 @@
       "id": "q-two-hundred",
       "type": "numeric_input",
       "difficulty": "core",
+      "uses": [
+        "chance-as-frequency"
+      ],
       "prompt": "A word has a **40%** chance. In **20** tries from the same text, how many times would you expect it?",
       "base": "decimal",
       "answer": 8,
@@ -43,6 +49,9 @@
       "id": "q-pick",
       "type": "next_word",
       "difficulty": "core",
+      "uses": [
+        "word-chances"
+      ],
       "prompt": "Which word is this model **most likely** to pick next?",
       "context": "It's raining cats and",
       "candidates": [
@@ -73,6 +82,9 @@
       "id": "q-no-going-back",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "one-word-at-a-time"
+      ],
       "prompt": "In a story, the model happens to pick an unlikely word: the dog is now **purple**. What happens next?",
       "options": [
         {
@@ -99,6 +111,9 @@
       "id": "q-temperature",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "temperature-use-cases"
+      ],
       "prompt": "Would each job be better with a **low** temperature, or a **higher** one?",
       "bins": [
         {
@@ -138,6 +153,9 @@
       "id": "q-why-hallucinate",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "hallucination"
+      ],
       "prompt": "Why can a chatbot confidently name a book that doesn't exist?",
       "options": [
         {
@@ -164,6 +182,11 @@
       "id": "q-check",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "check-trusted-source",
+        "hallucination-hotspots",
+        "asking-ai-doesnt-verify"
+      ],
       "prompt": "You're planning a holiday, and ask a chatbot when a museum is open.",
       "start": "the-hours",
       "steps": [
@@ -198,6 +221,12 @@
       "id": "q-words",
       "type": "match_pairs",
       "difficulty": "core",
+      "uses": [
+        "language-model",
+        "temperature",
+        "hallucination",
+        "word-chances"
+      ],
       "prompt": "Match each situation to the idea it shows.",
       "pairs": [
         {

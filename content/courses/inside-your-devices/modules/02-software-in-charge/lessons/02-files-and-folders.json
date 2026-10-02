@@ -10,12 +10,28 @@
       "id": "order-the-path",
       "type": "drag_to_order",
       "difficulty": "core",
+      "teaches": [
+        "file-path"
+      ],
+      "uses": [],
       "prompt": "`volcanoes.docx` is in `Science`, inside `School`, inside `Documents`. Order its **path**, biggest folder first.",
       "items": [
-        { "id": "documents", "label": "`Documents`" },
-        { "id": "school", "label": "`School`" },
-        { "id": "science", "label": "`Science`" },
-        { "id": "essay", "label": "`volcanoes.docx`" }
+        {
+          "id": "documents",
+          "label": "`Documents`"
+        },
+        {
+          "id": "school",
+          "label": "`School`"
+        },
+        {
+          "id": "science",
+          "label": "`Science`"
+        },
+        {
+          "id": "essay",
+          "label": "`volcanoes.docx`"
+        }
       ],
       "explanation": "A path runs from the biggest folder inwards: `Documents > School > Science > volcanoes.docx`. The file comes last.",
       "hint": "Folders are like boxes in boxes: start with the one that holds everything.",
@@ -25,6 +41,12 @@
       "id": "files-folders-extensions",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "file-extension",
+        "last-dot-rule",
+        "extension-types",
+        "exe-runs-when-opened"
+      ],
       "title": "Extensions",
       "body": "The end of a file's name, after the **last** dot, is its **extension**. It tells the OS what kind of file it is.\n\n`.jpg` is a photo, `.mp3` a song, `.mp4` a video. `.exe` is a **program**: opening it *runs* it, so only open ones you trust."
     },
@@ -32,12 +54,31 @@
       "id": "match-extensions",
       "type": "match_pairs",
       "difficulty": "core",
+      "uses": [
+        "extension-types"
+      ],
       "prompt": "Match each [[extension]] to the kind of file it marks.",
       "pairs": [
-        { "id": "jpg", "left": "`.jpg`", "right": "A photo" },
-        { "id": "mp3", "left": "`.mp3`", "right": "A song" },
-        { "id": "mp4", "left": "`.mp4`", "right": "A video" },
-        { "id": "exe", "left": "`.exe`", "right": "A program that runs when opened" }
+        {
+          "id": "jpg",
+          "left": "`.jpg`",
+          "right": "A photo"
+        },
+        {
+          "id": "mp3",
+          "left": "`.mp3`",
+          "right": "A song"
+        },
+        {
+          "id": "mp4",
+          "left": "`.mp4`",
+          "right": "A video"
+        },
+        {
+          "id": "exe",
+          "left": "`.exe`",
+          "right": "A program that runs when opened"
+        }
       ],
       "explanation": "`.mp3` is a song and `.mp4` a video: one letter apart. `.exe` is a **program**, so opening it *runs* it.",
       "hint": "Think back to the list: photos, songs, videos and programs.",
@@ -47,13 +88,26 @@
       "id": "label-the-files",
       "type": "hotspot",
       "difficulty": "core",
+      "uses": [
+        "extension-types",
+        "last-dot-rule"
+      ],
       "prompt": "Label what each file really is. Read to the **last** dot.",
       "scene": "file-browser",
       "mode": "label",
       "labels": [
-        { "part": "file-holiday", "label": "Photo" },
-        { "part": "file-song", "label": "Song" },
-        { "part": "file-fake-photo", "label": "Program" }
+        {
+          "part": "file-holiday",
+          "label": "Photo"
+        },
+        {
+          "part": "file-song",
+          "label": "Song"
+        },
+        {
+          "part": "file-fake-photo",
+          "label": "Program"
+        }
       ],
       "explanation": "`photo.jpg.exe` ends in **.exe**, so it's a program, whatever the `.jpg` in the middle says.",
       "hint": "Only the [[extension]] after the **last** dot counts.",
@@ -63,6 +117,10 @@
       "id": "suspicious-download",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "last-dot-rule",
+        "exe-runs-when-opened"
+      ],
       "prompt": "A website promised free holiday wallpapers. You clicked download.",
       "start": "look",
       "steps": [
@@ -116,14 +174,50 @@
       "id": "local-or-cloud",
       "type": "sort_bins",
       "difficulty": "core",
+      "teaches": [
+        "cloud",
+        "server"
+      ],
+      "uses": [
+        "storage"
+      ],
       "prompt": "**The cloud** is a company's **server**: a computer you reach over the internet. Where is each file stored?",
-      "bins": [{ "id": "device", "label": "On your device" }, { "id": "cloud", "label": "In the cloud" }],
+      "bins": [
+        {
+          "id": "device",
+          "label": "On your device"
+        },
+        {
+          "id": "cloud",
+          "label": "In the cloud"
+        }
+      ],
       "items": [
-        { "id": "offline-song", "label": "A song downloaded to play offline", "bin": "device" },
-        { "id": "laptop-drawing", "label": "A drawing saved to the laptop's storage", "bin": "device" },
-        { "id": "shared-doc", "label": "A shared doc you edit in a web browser", "bin": "cloud" },
-        { "id": "web-email", "label": "Emails in a web mail inbox", "bin": "cloud" },
-        { "id": "online-save", "label": "A game save kept in your online account", "bin": "cloud" }
+        {
+          "id": "offline-song",
+          "label": "A song downloaded to play offline",
+          "bin": "device"
+        },
+        {
+          "id": "laptop-drawing",
+          "label": "A drawing saved to the laptop's storage",
+          "bin": "device"
+        },
+        {
+          "id": "shared-doc",
+          "label": "A shared doc you edit in a web browser",
+          "bin": "cloud"
+        },
+        {
+          "id": "web-email",
+          "label": "Emails in a web mail inbox",
+          "bin": "cloud"
+        },
+        {
+          "id": "online-save",
+          "label": "A game save kept in your online account",
+          "bin": "cloud"
+        }
       ],
       "explanation": "Files you **downloaded** or **saved to the device** are in its storage. Files you reach **online** live on a company's servers.",
       "hint": "Did you save it to the device, or do you reach it through a website or account?",
@@ -133,6 +227,10 @@
       "id": "essay-on-a-plane",
       "type": "scenario",
       "difficulty": "challenge",
+      "uses": [
+        "cloud",
+        "storage"
+      ],
       "prompt": "You're on a plane with no Wi-Fi, and you want to work on your essay. It's saved **only in the cloud**.",
       "start": "can-you-open",
       "steps": [
@@ -186,6 +284,12 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "file-path",
+        "last-dot-rule",
+        "exe-runs-when-opened",
+        "cloud"
+      ],
       "title": "Recap",
       "body": "- Folders hold files. The **path** is the route to a file.\n- The **extension** after the last dot says what it is. `.exe` runs.\n- **Cloud** files live on a server you reach over the internet.\n\nThat's the software side. Next module: fixing things yourself."
     }

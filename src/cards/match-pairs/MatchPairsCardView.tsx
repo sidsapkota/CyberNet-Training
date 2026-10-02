@@ -105,7 +105,7 @@ export function MatchPairsCardView({
           verdict ? (verdict === "correct" ? ", correct" : ", incorrect") : ""
         }`}
         onClick={() => tap(side, id)}
-        className={`relative flex min-h-12 w-full items-center gap-2 rounded-control border-2 px-3 py-2 text-left text-small font-medium transition-colors disabled:cursor-default sm:text-body ${
+        className={`relative flex min-h-11 w-full items-center gap-2 rounded-control border-2 px-2.5 py-1.5 text-left text-small leading-snug font-medium transition-colors disabled:cursor-default sm:min-h-12 sm:px-3 sm:py-2 sm:text-body sm:leading-normal ${
           side === "right" ? "pl-4" : "pr-4"
         } ${itemClasses(isSelected, Boolean(partnerId), verdict)}`}
       >
@@ -165,10 +165,10 @@ export function MatchPairsCardView({
             );
           })}
         </svg>
-        <div role="group" aria-label="Items to match" className="flex flex-col gap-2 sm:gap-2.5">
+        <div role="group" aria-label="Items to match" className="flex flex-col gap-1.5 sm:gap-2.5">
           {card.pairs.map((p) => renderItem("left", p.id))}
         </div>
-        <div role="group" aria-label="Possible matches" className="flex flex-col gap-2 sm:gap-2.5">
+        <div role="group" aria-label="Possible matches" className="flex flex-col gap-1.5 sm:gap-2.5">
           {rightOrder.map((id) => renderItem("right", id))}
         </div>
       </div>

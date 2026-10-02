@@ -9,13 +9,42 @@
       "id": "q-os-or-app",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "os-shares-ram",
+        "os-talks-to-hardware"
+      ],
       "prompt": "Whose job is it: the **operating system's** or an **app's**?",
-      "bins": [{ "id": "os", "label": "Operating system" }, { "id": "app", "label": "An app" }],
+      "bins": [
+        {
+          "id": "os",
+          "label": "Operating system"
+        },
+        {
+          "id": "app",
+          "label": "An app"
+        }
+      ],
       "items": [
-        { "id": "give-ram", "label": "Give each open app some RAM", "bin": "os" },
-        { "id": "screen", "label": "Send pictures to the screen hardware", "bin": "os" },
-        { "id": "crop", "label": "Crop a photo", "bin": "app" },
-        { "id": "playlist", "label": "Shuffle your playlist", "bin": "app" }
+        {
+          "id": "give-ram",
+          "label": "Give each open app some RAM",
+          "bin": "os"
+        },
+        {
+          "id": "screen",
+          "label": "Send pictures to the screen hardware",
+          "bin": "os"
+        },
+        {
+          "id": "crop",
+          "label": "Crop a photo",
+          "bin": "app"
+        },
+        {
+          "id": "playlist",
+          "label": "Shuffle your playlist",
+          "bin": "app"
+        }
       ],
       "explanation": "The **OS** manages shared things like RAM and the hardware. **Apps** do particular jobs for you."
     },
@@ -23,11 +52,23 @@
       "id": "q-cpu-turns",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "os-cpu-turns"
+      ],
       "prompt": "One CPU core does one thing at a time. How do three open apps all run?",
       "options": [
-        { "id": "turns", "text": "The OS gives each one very quick turns" },
-        { "id": "storage", "text": "Two run from storage while one uses the CPU" },
-        { "id": "wait", "text": "Each app finishes before the next one starts" }
+        {
+          "id": "turns",
+          "text": "The OS gives each one very quick turns"
+        },
+        {
+          "id": "storage",
+          "text": "Two run from storage while one uses the CPU"
+        },
+        {
+          "id": "wait",
+          "text": "Each app finishes before the next one starts"
+        }
       ],
       "correctOptionId": "turns",
       "explanation": "The **OS** switches between apps so fast they seem to run at once. Apps run from RAM, not storage, and nobody waits for a game to end before music plays."
@@ -36,33 +77,111 @@
       "id": "q-end-frozen",
       "type": "simulator",
       "difficulty": "core",
+      "uses": [
+        "task-manager",
+        "process",
+        "never-end-system"
+      ],
       "prompt": "The laptop is frozen. End **only** the process that's hogging the CPU: keep **Notes** open, and don't crash the laptop.",
       "model": "task-manager",
       "params": {
         "ramGb": 8,
         "processes": [
-          { "id": "notes", "label": "Notes", "kind": "app", "cpu": 3, "ramGb": 0.3 },
-          { "id": "game", "label": "Puzzle game", "kind": "app", "cpu": 90, "ramGb": 1.5 },
-          { "id": "updater", "label": "Updater", "kind": "background", "cpu": 3, "ramGb": 0.2 },
-          { "id": "system", "label": "System", "kind": "system", "cpu": 5, "ramGb": 1.5 }
+          {
+            "id": "notes",
+            "label": "Notes",
+            "kind": "app",
+            "cpu": 3,
+            "ramGb": 0.3
+          },
+          {
+            "id": "game",
+            "label": "Puzzle game",
+            "kind": "app",
+            "cpu": 90,
+            "ramGb": 1.5
+          },
+          {
+            "id": "updater",
+            "label": "Updater",
+            "kind": "background",
+            "cpu": 3,
+            "ramGb": 0.2
+          },
+          {
+            "id": "system",
+            "label": "System",
+            "kind": "system",
+            "cpu": 5,
+            "ramGb": 1.5
+          }
         ]
       },
       "controls": [
-        { "id": "end-notes", "kind": "button", "label": "End Notes", "doneLabel": "Notes ended" },
-        { "id": "end-game", "kind": "button", "label": "End Puzzle game", "doneLabel": "Puzzle game ended" },
-        { "id": "end-updater", "kind": "button", "label": "End Updater", "doneLabel": "Updater ended" },
-        { "id": "end-system", "kind": "button", "label": "End System", "doneLabel": "System ended" }
+        {
+          "id": "end-notes",
+          "kind": "button",
+          "label": "End Notes",
+          "doneLabel": "Notes ended"
+        },
+        {
+          "id": "end-game",
+          "kind": "button",
+          "label": "End Puzzle game",
+          "doneLabel": "Puzzle game ended"
+        },
+        {
+          "id": "end-updater",
+          "kind": "button",
+          "label": "End Updater",
+          "doneLabel": "Updater ended"
+        },
+        {
+          "id": "end-system",
+          "kind": "button",
+          "label": "End System",
+          "doneLabel": "System ended"
+        }
       ],
       "outputs": [
-        { "id": "smooth", "kind": "device", "label": "Laptop", "frame": "laptop" },
-        { "id": "processes", "kind": "list", "label": "Running" }
+        {
+          "id": "smooth",
+          "kind": "device",
+          "label": "Laptop",
+          "frame": "laptop"
+        },
+        {
+          "id": "processes",
+          "kind": "list",
+          "label": "Running"
+        }
       ],
       "goal": {
         "all": [
-          { "target": "output", "id": "smooth", "op": ">=", "value": 0.9 },
-          { "target": "output", "id": "crashed", "op": "==", "value": 0 },
-          { "target": "control", "id": "end-notes", "op": "==", "value": false },
-          { "target": "control", "id": "end-updater", "op": "==", "value": false }
+          {
+            "target": "output",
+            "id": "smooth",
+            "op": ">=",
+            "value": 0.9
+          },
+          {
+            "target": "output",
+            "id": "crashed",
+            "op": "==",
+            "value": 0
+          },
+          {
+            "target": "control",
+            "id": "end-notes",
+            "op": "==",
+            "value": false
+          },
+          {
+            "target": "control",
+            "id": "end-updater",
+            "op": "==",
+            "value": false
+          }
         ]
       },
       "explanation": "The **puzzle game** was using 90% of the CPU. The **Updater** (3%) wasn't the problem, and ending **System** crashes the laptop."
@@ -71,6 +190,9 @@
       "id": "q-update",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "dont-interrupt-updates"
+      ],
       "prompt": "Your laptop is mid-update, with its battery at **10%**.",
       "start": "prompt",
       "steps": [
@@ -105,12 +227,31 @@
       "id": "q-extensions",
       "type": "match_pairs",
       "difficulty": "core",
+      "uses": [
+        "extension-types"
+      ],
       "prompt": "Match each file to what it is.",
       "pairs": [
-        { "id": "mp3", "left": "`dance.mp3`", "right": "A song" },
-        { "id": "mp4", "left": "`match.mp4`", "right": "A video" },
-        { "id": "jpg", "left": "`cat.jpg`", "right": "A photo" },
-        { "id": "exe", "left": "`setup.exe`", "right": "A program" }
+        {
+          "id": "mp3",
+          "left": "`dance.mp3`",
+          "right": "A song"
+        },
+        {
+          "id": "mp4",
+          "left": "`match.mp4`",
+          "right": "A video"
+        },
+        {
+          "id": "jpg",
+          "left": "`cat.jpg`",
+          "right": "A photo"
+        },
+        {
+          "id": "exe",
+          "left": "`setup.exe`",
+          "right": "A program"
+        }
       ],
       "explanation": "The extension after the **last** dot gives the kind of file. `.exe` is a program that runs when opened."
     },
@@ -118,11 +259,24 @@
       "id": "q-which-is-program",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "last-dot-rule",
+        "exe-runs-when-opened"
+      ],
       "prompt": "A friend sends you three files. Which one is really a **program**?",
       "options": [
-        { "id": "mp3-exe", "text": "song.mp3.exe" },
-        { "id": "exe-mp3", "text": "song.exe.mp3" },
-        { "id": "exe-name", "text": "exe-song.mp3" }
+        {
+          "id": "mp3-exe",
+          "text": "song.mp3.exe"
+        },
+        {
+          "id": "exe-mp3",
+          "text": "song.exe.mp3"
+        },
+        {
+          "id": "exe-name",
+          "text": "exe-song.mp3"
+        }
       ],
       "correctOptionId": "mp3-exe",
       "explanation": "Only the part after the **last** dot counts: `song.mp3.exe` ends in `.exe`, so it's a program. The other two end in `.mp3`."
@@ -131,11 +285,24 @@
       "id": "q-cloud",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "cloud",
+        "server"
+      ],
       "prompt": "You save a file \"to the cloud\". Where is it actually stored?",
       "options": [
-        { "id": "server", "text": "On a company's servers, over the internet" },
-        { "id": "ram", "text": "In your device's RAM, until you turn it off" },
-        { "id": "air", "text": "On your device, in a hidden cloud folder" }
+        {
+          "id": "server",
+          "text": "On a company's servers, over the internet"
+        },
+        {
+          "id": "ram",
+          "text": "In your device's RAM, until you turn it off"
+        },
+        {
+          "id": "air",
+          "text": "On your device, in a hidden cloud folder"
+        }
       ],
       "correctOptionId": "server",
       "explanation": "The cloud is **someone else's computer**: servers you reach over the internet. That's why cloud-only files need the internet."

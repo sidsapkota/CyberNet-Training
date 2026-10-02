@@ -10,19 +10,62 @@
       "id": "parcel-or-postcard",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "**TCP** is a tracked parcel: lost pieces are resent and put back in order. **UDP** is a postcard: quick, but nothing is checked or resent.\n\nWhich suits each job?",
+      "teaches": [
+        "tcp",
+        "udp",
+        "live-data-skips-resend"
+      ],
+      "uses": [
+        "tcp-resend",
+        "live-data-skips-resend"
+      ],
+      "prompt": "**TCP** is a tracked parcel: lost pieces are resent and put back in order. **UDP** is a postcard: quick, nothing checked or resent, so it suits **live** things, where late data is useless.\n\nWhich suits each job?",
       "bins": [
-        { "id": "tcp", "label": "Tracked parcel (TCP)" },
-        { "id": "udp", "label": "Postcard (UDP)" }
+        {
+          "id": "tcp",
+          "label": "Tracked parcel (TCP)"
+        },
+        {
+          "id": "udp",
+          "label": "Postcard (UDP)"
+        }
       ],
       "items": [
-        { "id": "download", "label": "Downloading a game update", "bin": "tcp" },
-        { "id": "email", "label": "Sending an email", "bin": "tcp" },
-        { "id": "chat-photo", "label": "Sending a photo in a chat", "bin": "tcp" },
-        { "id": "cloud-save", "label": "Saving a document to the cloud", "bin": "tcp" },
-        { "id": "video-call", "label": "A live video call", "bin": "udp" },
-        { "id": "race", "label": "Your car's position in a racing game", "bin": "udp" },
-        { "id": "voice-chat", "label": "Voice chat while gaming", "bin": "udp" }
+        {
+          "id": "download",
+          "label": "Downloading a game update",
+          "bin": "tcp"
+        },
+        {
+          "id": "email",
+          "label": "Sending an email",
+          "bin": "tcp"
+        },
+        {
+          "id": "chat-photo",
+          "label": "Sending a photo in a chat",
+          "bin": "tcp"
+        },
+        {
+          "id": "cloud-save",
+          "label": "Saving a document to the cloud",
+          "bin": "tcp"
+        },
+        {
+          "id": "video-call",
+          "label": "A live video call",
+          "bin": "udp"
+        },
+        {
+          "id": "race",
+          "label": "Your car's position in a racing game",
+          "bin": "udp"
+        },
+        {
+          "id": "voice-chat",
+          "label": "Voice chat while gaming",
+          "bin": "udp"
+        }
       ],
       "explanation": "Downloads, email, photos and saved files break if one piece is missing, so they use **TCP**. Calls, voice chat and game positions are about **right now**, so they usually use **UDP**: waiting would only cause lag.",
       "hint": "Would one missing piece ruin it, or is it live, so old data is useless?",
@@ -32,6 +75,11 @@
       "id": "tcp-vs-udp",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "tcp",
+        "udp",
+        "transport-in-ip"
+      ],
       "title": "Reliable or fast",
       "body": "**TCP** (Transmission Control [[Protocol]]) is the parcel: it sets up a connection, numbers the pieces so they go back in order, and resends anything lost.\n\n**UDP** (User Datagram Protocol) is the postcard: no setup, no checks. Quick, but lost data stays lost.\n\nBoth travel inside IP [[packets|packet]] and use **ports**."
     },
@@ -39,12 +87,28 @@
       "id": "order-handshake",
       "type": "drag_to_order",
       "difficulty": "core",
+      "teaches": [
+        "tcp-handshake"
+      ],
+      "uses": [],
       "prompt": "Before sending data, TCP checks both sides can hear each other with three messages: the **three-way handshake**.\n\nPut them in order.",
       "items": [
-        { "id": "syn", "label": "Browser: \"Can we talk?\" (SYN)" },
-        { "id": "syn-ack", "label": "Server: \"Yes! Hear me too?\" (SYN-ACK)" },
-        { "id": "ack", "label": "Browser: \"Yes!\" (ACK)" },
-        { "id": "request", "label": "Browser asks for the web page" }
+        {
+          "id": "syn",
+          "label": "Browser: \"Can we talk?\" (SYN)"
+        },
+        {
+          "id": "syn-ack",
+          "label": "Server: \"Yes! Hear me too?\" (SYN-ACK)"
+        },
+        {
+          "id": "ack",
+          "label": "Browser: \"Yes!\" (ACK)"
+        },
+        {
+          "id": "request",
+          "label": "Browser asks for the web page"
+        }
       ],
       "explanation": "The browser asks (**SYN**, *synchronise*), the server agrees and checks back (**SYN-ACK**), and the browser confirms (**ACK**, *acknowledge*). Only then does the request go.",
       "hint": "Each message answers the one before, and no data goes until all three are done.",
@@ -54,9 +118,16 @@
       "id": "frozen-call",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "tcp",
+        "tcp-resend"
+      ],
       "prompt": "On a video call, one [[packet]] goes missing. If the call used **TCP**, what would happen?",
       "options": [
-        { "id": "freeze", "text": "The picture freezes until it's resent, then jumps" },
+        {
+          "id": "freeze",
+          "text": "The picture freezes until it's resent, then jumps"
+        },
         {
           "id": "skip",
           "text": "The call skips the lost piece and carries on",
@@ -81,11 +152,28 @@
       "id": "which-and-why",
       "type": "match_pairs",
       "difficulty": "core",
+      "uses": [
+        "tcp",
+        "udp",
+        "dns-lookup"
+      ],
       "prompt": "Match each activity to the reason it's delivered that way.",
       "pairs": [
-        { "id": "download", "left": "Downloading a file (TCP)", "right": "Every piece must arrive, in order" },
-        { "id": "call", "left": "Voice chat in a game (usually UDP)", "right": "Fresh sound matters more than late sound" },
-        { "id": "dns", "left": "A DNS lookup (usually UDP)", "right": "One tiny question, not worth a setup" }
+        {
+          "id": "download",
+          "left": "Downloading a file (TCP)",
+          "right": "Every piece must arrive, in order"
+        },
+        {
+          "id": "call",
+          "left": "Voice chat in a game (usually UDP)",
+          "right": "Fresh sound matters more than late sound"
+        },
+        {
+          "id": "dns",
+          "left": "A DNS lookup (usually UDP)",
+          "right": "One tiny question, not worth a setup"
+        }
       ],
       "explanation": "A download needs every piece (**TCP**), and voice chat would rather skip a lost moment (**UDP**). A DNS lookup is so small a handshake would take longer, so it usually uses **UDP**, switching to TCP for large answers.",
       "hint": "Ruined by one missing piece, better off skipping old data, or too small for a setup?",
@@ -95,9 +183,18 @@
       "id": "udp-true",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "udp",
+        "tcp-handshake",
+        "transport-in-ip",
+        "port"
+      ],
       "prompt": "Which statement about **UDP** is true?",
       "options": [
-        { "id": "no-handshake", "text": "It sends with no handshake and never resends" },
+        {
+          "id": "no-handshake",
+          "text": "It sends with no handshake and never resends"
+        },
         {
           "id": "orders",
           "text": "No resending, but it always delivers in order",
@@ -122,9 +219,16 @@
       "id": "lost-syn-ack",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "uses": [
+        "tcp-handshake",
+        "tcp-resend"
+      ],
       "prompt": "Your browser sends a SYN, but the server's SYN-ACK reply is **lost** on the way. What happens?",
       "options": [
-        { "id": "both-retry", "text": "Both sides wait, then resend their message" },
+        {
+          "id": "both-retry",
+          "text": "Both sides wait, then resend their message"
+        },
         {
           "id": "opens-anyway",
           "text": "It opens anyway, since the server got the SYN",
@@ -149,6 +253,11 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "tcp",
+        "udp",
+        "tcp-handshake"
+      ],
       "title": "Recap",
       "body": "- **TCP**: a handshake first, numbered pieces, and resending anything lost.\n- **UDP**: no handshake, no resending; quick, but lost data stays lost.\n- Files and email need TCP; live calls and games prefer UDP.\n\nNext: the rules on top, like [[HTTP]], DNS and email."
     }

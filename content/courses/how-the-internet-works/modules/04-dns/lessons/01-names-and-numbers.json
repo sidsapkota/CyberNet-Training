@@ -10,9 +10,16 @@
       "id": "why-dns",
       "type": "multiple_choice",
       "difficulty": "core",
+      "teaches": [
+        "routers-use-ip"
+      ],
+      "uses": [],
       "prompt": "[[Routers|router]] deliver [[packets|packet]] by [[IP address|ip-address]], like `198.51.100.10`, not by name.\n\nSo why do websites have names?",
       "options": [
-        { "id": "routers-need-numbers", "text": "Routers need numbers, but people remember names" },
+        {
+          "id": "routers-need-numbers",
+          "text": "Routers need numbers, but people remember names"
+        },
         {
           "id": "names-faster",
           "text": "Names make packets travel faster than numbers",
@@ -37,6 +44,11 @@
       "id": "phone-book",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "dns",
+        "domain-name",
+        "dns-lookup"
+      ],
       "title": "The internet's contacts app",
       "body": "A contacts app turns a **name** into a **number**. The internet has the same thing: the **Domain Name System**, or **DNS**.\n\nGive it a name like `example.com`, and it gives back an [[IP address]] like `198.51.100.10`. That's a **DNS lookup**, and it happens before almost every connection."
     },
@@ -44,12 +56,33 @@
       "id": "contacts-analogy",
       "type": "match_pairs",
       "difficulty": "core",
+      "uses": [
+        "dns",
+        "domain-name",
+        "ip-address"
+      ],
       "prompt": "Match each part of the contacts app to its internet version.",
       "pairs": [
-        { "id": "name", "left": "A contact's name", "right": "A domain name, like `example.com`" },
-        { "id": "number", "left": "A contact's phone number", "right": "An IP address, like `198.51.100.10`" },
-        { "id": "app", "left": "The contacts app", "right": "DNS" },
-        { "id": "call", "left": "Making the call", "right": "Connecting to the server" }
+        {
+          "id": "name",
+          "left": "A contact's name",
+          "right": "A domain name, like `example.com`"
+        },
+        {
+          "id": "number",
+          "left": "A contact's phone number",
+          "right": "An IP address, like `198.51.100.10`"
+        },
+        {
+          "id": "app",
+          "left": "The contacts app",
+          "right": "DNS"
+        },
+        {
+          "id": "call",
+          "left": "Making the call",
+          "right": "Connecting to the server"
+        }
       ],
       "explanation": "People use the **name**, the network uses the **number** (IP address), and **DNS** looks one up from the other. With the address, your device connects, like a phone dialling.",
       "hint": "People remember the name, the [[network]] uses the number, and something looks one up from the other.",
@@ -59,17 +92,26 @@
       "id": "first-lookup",
       "type": "terminal",
       "difficulty": "core",
+      "teaches": [
+        "nslookup"
+      ],
+      "uses": [],
       "prompt": "Run `nslookup example.com` to ask [[DNS]] for example.com's address.",
       "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
       "commands": [
         {
           "command": "nslookup example.com",
-          "aliases": ["nslookup example.com."],
+          "aliases": [
+            "nslookup example.com."
+          ],
           "description": "Ask DNS for the address of example.com",
           "output": "Server:\t\t127.0.0.53\nAddress:\t127.0.0.53#53\n\nNon-authoritative answer:\nName:\texample.com\nAddress: 198.51.100.10\nName:\texample.com\nAddress: 2001:db8::10"
         }
       ],
-      "success": { "type": "ran_command", "command": "nslookup example.com" },
+      "success": {
+        "type": "ran_command",
+        "command": "nslookup example.com"
+      },
       "explanation": "DNS gave **two** addresses: [[IPv4]] `198.51.100.10` and [[IPv6]] `2001:db8::10`, and either works. The `Server` and `Address` lines at the top are the DNS helper that answered, not example.com.",
       "hint": "Type the [[command]] exactly as it's shown, then press Enter.",
       "nudge": "Check the spelling and the space: the tool's name first, then the website's."
@@ -78,11 +120,25 @@
       "id": "order-name-parts",
       "type": "drag_to_order",
       "difficulty": "core",
+      "teaches": [
+        "domain-name-parts",
+        "names-read-right-to-left"
+      ],
+      "uses": [],
       "prompt": "In `mail.example.org`, `mail` is a **subdomain** the owner added, `org` is the **top-level domain** (**TLD**), shared by millions, and `example` is the registered **domain**.\n\nNames read right to left: order the parts, **most general** first.",
       "items": [
-        { "id": "tld", "label": "org" },
-        { "id": "domain", "label": "example" },
-        { "id": "subdomain", "label": "mail" }
+        {
+          "id": "tld",
+          "label": "org"
+        },
+        {
+          "id": "domain",
+          "label": "example"
+        },
+        {
+          "id": "subdomain",
+          "label": "mail"
+        }
       ],
       "explanation": "Right to left: the TLD `org`, shared by millions; then `example`, making the registered `example.org`; then `mail`, a subdomain its owner added.",
       "hint": "Start at the right-hand end: which part is shared by the most names?",
@@ -92,9 +148,19 @@
       "id": "who-controls",
       "type": "multiple_choice",
       "difficulty": "core",
+      "teaches": [
+        "owner-controls-left"
+      ],
+      "uses": [
+        "domain-name-parts",
+        "names-read-right-to-left"
+      ],
       "prompt": "A domain's owner can add any subdomains to its **left**. Who controls `login.example.com.example.org`?",
       "options": [
-        { "id": "org-owner", "text": "Whoever registered example.org" },
+        {
+          "id": "org-owner",
+          "text": "Whoever registered example.org"
+        },
         {
           "id": "com-owner",
           "text": "Whoever registered example.com",
@@ -119,9 +185,19 @@
       "id": "who-controls-co-uk",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "teaches": [
+        "shared-second-level"
+      ],
+      "uses": [
+        "owner-controls-left",
+        "domain-name-parts"
+      ],
       "prompt": "Many UK names end in `.co.uk`: the TLD is `uk`, and `co.uk` is shared by millions of companies, like `.com`.\n\nWho controls `shop.example.co.uk`?",
       "options": [
-        { "id": "example-owner", "text": "Whoever registered example.co.uk" },
+        {
+          "id": "example-owner",
+          "text": "Whoever registered example.co.uk"
+        },
         {
           "id": "co-uk-owner",
           "text": "Whoever runs co.uk, since it sits next to the TLD",
@@ -146,6 +222,12 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "dns",
+        "names-read-right-to-left",
+        "domain-name-parts",
+        "owner-controls-left"
+      ],
       "title": "Recap",
       "body": "- **DNS** turns names into [[IP addresses|ip-address]], like a contacts app.\n- Names are read **right to left**: TLD, domain, then subdomains.\n- A domain's owner controls every subdomain to its left."
     }

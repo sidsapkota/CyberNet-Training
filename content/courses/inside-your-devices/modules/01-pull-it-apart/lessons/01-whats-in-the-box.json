@@ -10,6 +10,9 @@
       "id": "meet-the-battery",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "battery"
+      ],
       "prompt": "Tap the glowing part.",
       "show": {
         "kind": "part",
@@ -23,6 +26,9 @@
       "id": "meet-the-battery-connector",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "battery-connector"
+      ],
       "prompt": "Tap the small plug.",
       "show": {
         "kind": "part",
@@ -36,6 +42,10 @@
       "id": "safety-first",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "repair-safety",
+        "warranty"
+      ],
       "title": "Before we open anything",
       "mascot": "presenting",
       "body": "Everything you open here is a **simulation**, so tap away.\n\nReal devices are different: **leave opening them to a repair shop**. It can break parts or end the [[warranty]], and a damaged battery can **catch fire**."
@@ -44,6 +54,12 @@
       "id": "open-the-laptop",
       "type": "teardown",
       "difficulty": "core",
+      "teaches": [
+        "laptop-open-order"
+      ],
+      "uses": [
+        "battery-connector"
+      ],
       "prompt": "Open it: **screws**, then the **panel**, then **unplug the battery**.",
       "scene": "laptop",
       "actions": [
@@ -100,6 +116,9 @@
       "id": "meet-the-motherboard",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "motherboard"
+      ],
       "prompt": "Tap the big board.",
       "show": {
         "kind": "part",
@@ -113,6 +132,9 @@
       "id": "meet-the-cpu-chip",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "cpu"
+      ],
       "prompt": "Tap the small shiny chip.",
       "show": {
         "kind": "part",
@@ -126,6 +148,9 @@
       "id": "meet-the-ram-stick",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "ram"
+      ],
       "prompt": "Tap the stick with a row of chips.",
       "show": {
         "kind": "part",
@@ -139,6 +164,9 @@
       "id": "meet-the-ssd",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "storage"
+      ],
       "prompt": "Tap the long, narrow card.",
       "show": {
         "kind": "part",
@@ -152,6 +180,12 @@
       "id": "label-the-laptop",
       "type": "hotspot",
       "difficulty": "core",
+      "uses": [
+        "cpu",
+        "ram",
+        "storage",
+        "battery"
+      ],
       "prompt": "Put each job on its part.",
       "scene": "laptop",
       "view": "open",
@@ -202,6 +236,12 @@
       "id": "explore-the-phone",
       "type": "hotspot",
       "difficulty": "core",
+      "teaches": [
+        "phone-parts",
+        "phone-chips-soldered",
+        "battery-connector-first",
+        "charging-port"
+      ],
       "prompt": "A phone packs the same jobs into less space. **Tap each part.**",
       "scene": "phone",
       "view": "open",
@@ -242,6 +282,9 @@
       "id": "phone-ram-swap",
       "type": "true_false",
       "difficulty": "core",
+      "uses": [
+        "phone-chips-soldered"
+      ],
       "prompt": "You can unclip a phone's RAM and swap it, like a laptop's RAM stick.",
       "answer": false,
       "explanation": "**False.** A phone's RAM and storage chips are **soldered** to its board, so they can't be unclipped or swapped.",
@@ -252,6 +295,9 @@
       "id": "unplug-first",
       "type": "fill_gap",
       "difficulty": "core",
+      "uses": [
+        "battery-connector-first"
+      ],
       "prompt": "Before touching anything inside, repairers unplug the ___.",
       "options": [
         {
@@ -278,6 +324,13 @@
       "id": "open-the-phone",
       "type": "teardown",
       "difficulty": "core",
+      "teaches": [
+        "phone-glued-shut",
+        "phone-open-order"
+      ],
+      "uses": [
+        "phone-parts"
+      ],
       "prompt": "This phone is **glued shut**. Open it and **unplug the battery**.",
       "scene": "phone",
       "view": "bracket-unscrewed",
@@ -324,6 +377,10 @@
       "id": "where-photos-live",
       "type": "hotspot",
       "difficulty": "challenge",
+      "uses": [
+        "storage",
+        "phone-parts"
+      ],
       "prompt": "Tap where your **photos** stay when the phone is off.",
       "scene": "phone",
       "view": "open",
@@ -339,6 +396,13 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "cpu",
+        "ram",
+        "storage",
+        "battery-connector-first",
+        "repair-safety"
+      ],
       "title": "Recap",
       "body": "- Phones and laptops share the same main parts.\n- The CPU follows instructions, RAM holds what's open, storage keeps files.\n- Repairers **unplug the battery first**. Leave real devices to them.\n\nNext: why RAM and storage are so different.\n\n**Try this:** find your device's storage size in its settings (ask an adult if you're not sure where)."
     }

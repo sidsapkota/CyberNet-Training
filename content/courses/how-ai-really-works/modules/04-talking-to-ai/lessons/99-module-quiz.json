@@ -8,6 +8,10 @@
       "id": "q-best-prompt",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "goal-context-format",
+        "temperature-not-knowledge"
+      ],
       "prompt": "Which prompt gets the most useful first draft of a thank-you email to a client?",
       "options": [
         {
@@ -34,6 +38,9 @@
       "id": "q-missing",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "goal-context-format"
+      ],
       "prompt": "\"Make a list of healthy snacks.\" What would improve this prompt **most**?",
       "options": [
         {
@@ -59,6 +66,9 @@
     {
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "goal-context-format"
+      ],
       "bins": [
         {
           "id": "goal",
@@ -108,6 +118,9 @@
       "id": "q-sum",
       "type": "numeric_input",
       "difficulty": "core",
+      "uses": [
+        "check-ai-maths"
+      ],
       "prompt": "A chatbot says \"5 trays of 8 cupcakes is **45** cupcakes.\" Check it: how many are there really?",
       "base": "decimal",
       "answer": 40,
@@ -117,6 +130,10 @@
       "id": "q-link",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "check-trusted-source",
+        "asking-ai-doesnt-verify"
+      ],
       "prompt": "A chatbot says there are **about 50** kinds of penguin, with a link to a zoo's website.",
       "start": "the-link",
       "steps": [
@@ -169,6 +186,9 @@
       "id": "q-latest",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "knowledge-cutoff"
+      ],
       "prompt": "A chatbot that can't search the web says a band's newest album came out \"this year\". Main risk?",
       "options": [
         {
@@ -195,6 +215,9 @@
       "id": "q-stuck",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "learn-not-do-work"
+      ],
       "prompt": "It's late, and you're stuck on one question in tomorrow's maths homework.",
       "start": "stuck",
       "steps": [
@@ -229,6 +252,10 @@
       "id": "q-app-rules",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "app-age-rules",
+        "ask-parent-before-signing-up"
+      ],
       "prompt": "You're 14. A popular AI app's rules say **18 or older**, and your friends all use it. Best move?",
       "options": [
         {

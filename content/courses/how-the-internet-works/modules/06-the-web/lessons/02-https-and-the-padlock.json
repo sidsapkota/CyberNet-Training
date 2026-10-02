@@ -7,12 +7,35 @@
   "icon": "shield-check",
   "cards": [
     {
+      "id": "plain-vs-https",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "https",
+        "tls",
+        "encryption",
+        "plain-http-readable",
+        "port-443-https",
+        "padlock"
+      ],
+      "title": "HTTPS: HTTP in a locked box",
+      "body": "**HTTPS** is [[HTTP]] carried inside another [[protocol]], **TLS**, which **encrypts** it: scrambles it with secret keys only your [[browser]] and the [[server]] have. To routers in between, it's random noise.\n\nHTTPS uses [[port]] **443** (plain HTTP uses 80), and browsers show a **padlock** beside the address."
+    },
+    {
       "id": "who-can-read",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "packet",
+        "router",
+        "plain-http-readable"
+      ],
       "prompt": "On café Wi-Fi you log in to a **plain [[HTTP]]** site (no S). Your [[packets|packet]] pass the café's [[router]], then many more run by strangers.\n\nWho could read your password?",
       "options": [
-        { "id": "anyone-on-path", "text": "Anyone running a device on the route, like the café" },
+        {
+          "id": "anyone-on-path",
+          "text": "Anyone running a device on the route, like the café"
+        },
         {
           "id": "only-server",
           "text": "Only the website, since it's addressed there",
@@ -34,22 +57,38 @@
       "hint": "Plain HTTP is a postcard: who handles a postcard on its way?"
     },
     {
-      "id": "plain-vs-https",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "HTTPS: HTTP in a locked box",
-      "body": "**HTTPS** is [[HTTP]] carried inside another [[protocol]], **TLS**, which **encrypts** it: scrambles it with secret keys only your [[browser]] and the [[server]] have. To routers in between, it's random noise.\n\nHTTPS uses [[port]] **443** (plain HTTP uses 80), and browsers show a **padlock** beside the address."
-    },
-    {
       "id": "order-https",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "TLS does its own [[handshake]]: keys are agreed, and the server shows its **certificate**, a digital ID proving it owns the name, issued by a **certificate authority** your [[browser]] trusts.\n\nPut the steps of loading an HTTPS page in order.",
+      "teaches": [
+        "tls-handshake",
+        "certificate",
+        "certificate-authority",
+        "tls-after-tcp"
+      ],
+      "uses": [
+        "tcp-handshake",
+        "tls-after-tcp",
+        "get-post"
+      ],
+      "prompt": "TLS starts once TCP has connected, with its own [[handshake]]: keys are agreed, and the server shows its **certificate**, a digital ID proving it owns the name, issued by a **certificate authority** your [[browser]] trusts.\n\nPut the steps of loading an HTTPS page in order.",
       "items": [
-        { "id": "tcp", "label": "TCP handshake: SYN, SYN-ACK, ACK" },
-        { "id": "tls", "label": "TLS handshake: keys and certificate" },
-        { "id": "request", "label": "Browser sends an encrypted GET request" },
-        { "id": "response", "label": "Server sends an encrypted response" }
+        {
+          "id": "tcp",
+          "label": "TCP handshake: SYN, SYN-ACK, ACK"
+        },
+        {
+          "id": "tls",
+          "label": "TLS handshake: keys and certificate"
+        },
+        {
+          "id": "request",
+          "label": "Browser sends an encrypted GET request"
+        },
+        {
+          "id": "response",
+          "label": "Server sends an encrypted response"
+        }
       ],
       "explanation": "TCP opens the connection first, then the **TLS handshake** agrees keys and checks the certificate. Only then does any HTTP travel, all of it encrypted.",
       "hint": "A connection must be open before it's secured, and secure before anything private travels.",
@@ -59,12 +98,34 @@
       "id": "https-terms",
       "type": "match_pairs",
       "difficulty": "core",
+      "uses": [
+        "encryption",
+        "certificate",
+        "certificate-authority",
+        "padlock"
+      ],
       "prompt": "Match each thing you want to the part of [[HTTPS]] that does it.",
       "pairs": [
-        { "id": "encryption", "left": "Stop the café reading your password", "right": "Encryption" },
-        { "id": "certificate", "left": "Prove the server really is example.com", "right": "Its certificate" },
-        { "id": "ca", "left": "Vouch that a certificate is genuine", "right": "A certificate authority" },
-        { "id": "padlock", "left": "Check at a glance that you're encrypted", "right": "The padlock icon" }
+        {
+          "id": "encryption",
+          "left": "Stop the café reading your password",
+          "right": "Encryption"
+        },
+        {
+          "id": "certificate",
+          "left": "Prove the server really is example.com",
+          "right": "Its certificate"
+        },
+        {
+          "id": "ca",
+          "left": "Vouch that a certificate is genuine",
+          "right": "A certificate authority"
+        },
+        {
+          "id": "padlock",
+          "left": "Check at a glance that you're encrypted",
+          "right": "The padlock icon"
+        }
       ],
       "explanation": "**Encryption** keeps what you send private, the **certificate** is the server's ID, a **certificate authority** vouches for it, and the **padlock** shows the connection is encrypted.",
       "hint": "Scrambling, an ID card, whoever issues ID cards, and an icon in the address bar.",
@@ -74,10 +135,16 @@
       "id": "padlock-promise",
       "type": "hotspot",
       "difficulty": "core",
+      "teaches": [
+        "padlock-meaning"
+      ],
+      "uses": [],
       "prompt": "A padlock means the connection is encrypted and the server owns the **name in the address**, nothing about who runs it.\n\nTap the **one** thing here that the padlock vouches for.",
       "scene": "fake-website",
       "mode": "tap",
-      "targets": ["site-address"],
+      "targets": [
+        "site-address"
+      ],
       "explanation": "The certificate only backs the **address**: this server belongs to whoever owns `login-check.example`. The logo and banner are just drawn on the page, so this padlocked site isn't Your Bank at all.",
       "hint": "A certificate is an ID card for a name: which part shows the site's real name?",
       "nudge": "The logo and banner are page parts anyone could draw: the certificate is about something your browser shows."
@@ -86,9 +153,16 @@
       "id": "lookalike-padlock",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "padlock-meaning",
+        "certificate"
+      ],
       "prompt": "A login page at `examp1e.com` (with a digit 1) shows a **padlock**. What does it prove?",
       "options": [
-        { "id": "encrypted-only", "text": "It's encrypted to examp1e.com's owner, nothing more" },
+        {
+          "id": "encrypted-only",
+          "text": "It's encrypted to examp1e.com's owner, nothing more"
+        },
         {
           "id": "real-site",
           "text": "It's really example.com, checked by an authority",
@@ -113,9 +187,19 @@
       "id": "cafe-can-see",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "teaches": [
+        "https-visible-metadata"
+      ],
+      "uses": [
+        "https",
+        "url-path"
+      ],
       "prompt": "HTTPS encrypts the whole request, path included. But every [[packet]] shows the server's [[IP address]], and the name usually shows in your [[DNS]] lookup.\n\nOn café Wi-Fi you change your password at `https://example.com/account/settings`. What can the café see?",
       "options": [
-        { "id": "site-only", "text": "Which site you're on, but not the page or what you type" },
+        {
+          "id": "site-only",
+          "text": "Which site you're on, but not the page or what you type"
+        },
         {
           "id": "everything",
           "text": "Everything, including your new password",
@@ -140,11 +224,27 @@
       "id": "certificate-warnings",
       "type": "match_pairs",
       "difficulty": "challenge",
+      "teaches": [
+        "certificate-checks"
+      ],
+      "uses": [],
       "prompt": "A certificate must be in date, issued for the name you visited, and from an authority your [[browser]] trusts.\n\nMatch each warning to what went wrong.",
       "pairs": [
-        { "id": "expired", "left": "Certificate has expired", "right": "Its valid dates have run out" },
-        { "id": "mismatch", "left": "Name doesn't match", "right": "It was issued for a different name" },
-        { "id": "untrusted", "left": "Issuer isn't trusted", "right": "No trusted authority vouches for it" }
+        {
+          "id": "expired",
+          "left": "Certificate has expired",
+          "right": "Its valid dates have run out"
+        },
+        {
+          "id": "mismatch",
+          "left": "Name doesn't match",
+          "right": "It was issued for a different name"
+        },
+        {
+          "id": "untrusted",
+          "left": "Issuer isn't trusted",
+          "right": "No trusted authority vouches for it"
+        }
       ],
       "explanation": "Each warning means one check failed: the **dates**, the **name** or a **trusted issuer**. On a site where you'd log in or pay, don't click past it.",
       "hint": "Three checks, three warnings: dates, names, and who issued it.",
@@ -154,6 +254,12 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "https",
+        "tls",
+        "certificate",
+        "padlock-meaning"
+      ],
       "title": "Recap",
       "body": "- **HTTPS** is [[HTTP]] inside **TLS**: encrypted between [[browser]] and [[server]].\n- A **certificate** proves the server owns the name in the address.\n- The padlock means **encrypted**, not **honest**: scam sites have one too.\n\nNext: the grand tour. Everything in this course, in one click."
     }

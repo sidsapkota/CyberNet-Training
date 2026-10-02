@@ -10,6 +10,10 @@
       "id": "help-or-harm",
       "type": "sort_bins",
       "difficulty": "core",
+      "teaches": [
+        "ai-can-fake-people"
+      ],
+      "uses": [],
       "prompt": "AI can fake a real person's **voice** or **video**. Is each use **helpful** or **harmful**?",
       "bins": [
         {
@@ -61,6 +65,12 @@
       "id": "deepfakes-and-clones",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "deepfake",
+        "voice-clone",
+        "voice-clone-learned-from-many",
+        "deepfake-law"
+      ],
       "title": "Fake faces and voices",
       "body": "A fake video or picture of a real person is a **deepfake**; a **voice clone** copies their voice. Most tools learn from many voices, then copy one from a short clip.\n\nIn Australia, sharing fake sexual images of a real person without their consent is a serious crime, and fake sexual images of anyone under 18 are always illegal."
     },
@@ -68,6 +78,9 @@
       "id": "short-clip",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "voice-clone-learned-from-many"
+      ],
       "prompt": "Why can a [[voice clone|voice-clone]] sometimes be made from just a short clip of someone talking?",
       "options": [
         {
@@ -98,6 +111,12 @@
       "id": "teacher-video",
       "type": "scenario",
       "difficulty": "core",
+      "teaches": [
+        "consent-to-fake"
+      ],
+      "uses": [
+        "consent-to-fake"
+      ],
       "prompt": "Your friend found a face-swap app. Faking a real person without **permission** can hurt them and spread far.",
       "start": "the-idea",
       "steps": [
@@ -133,6 +152,13 @@
       "id": "video-or-situation",
       "type": "sort_bins",
       "difficulty": "core",
+      "teaches": [
+        "situation-clues",
+        "check-with-real-person"
+      ],
+      "uses": [
+        "situation-clues"
+      ],
       "prompt": "Clues can be **in the video** or **in the situation**, which often tells more. Best check: the real person, another way.",
       "bins": [
         {
@@ -184,6 +210,10 @@
       "id": "concert-tickets",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "situation-clues",
+        "check-with-real-person"
+      ],
       "prompt": "A video shows a famous singer: \"1,000 free concert tickets! Click the link in the next hour.\"",
       "start": "the-video",
       "steps": [
@@ -219,6 +249,10 @@
       "id": "voice-call-check",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "uses": [
+        "voice-clone",
+        "check-with-real-person"
+      ],
       "prompt": "Your uncle gets an upset call that sounds just like you, asking for money fast. What's **best** for him to do?",
       "options": [
         {
@@ -249,6 +283,13 @@
       "id": "voices-recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "deepfake",
+        "voice-clone",
+        "consent-to-fake",
+        "situation-clues",
+        "check-with-real-person"
+      ],
       "title": "Recap",
       "body": "- AI can fake a real person: **deepfakes** and **voice clones**.\n- Never fake a real person without their permission.\n- Situation clues beat video clues: check with the real person.\n\nIf someone fakes **you**, it's not your fault. Report it at esafety.gov.au, and tell a trusted adult. More in Stay Safe Online's free lesson **Deepfake Scams and Fakes**."
     }

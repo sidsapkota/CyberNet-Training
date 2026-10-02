@@ -10,6 +10,7 @@
       "id": "old-photo",
       "type": "true_false",
       "difficulty": "core",
+      "uses": [],
       "prompt": "A photo you posted and deleted years ago can still turn up today.",
       "answer": true,
       "explanation": "True. Anyone could have saved or screenshotted it while it was up. Posts can last, so choose what you share.",
@@ -20,6 +21,9 @@
       "id": "meet-footprint",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "digital-footprint"
+      ],
       "show": {
         "kind": "term",
         "term": "digital-footprint"
@@ -30,6 +34,7 @@
       "id": "share-or-private",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [],
       "prompt": "Share with strangers, or keep private?",
       "bins": [
         {
@@ -71,6 +76,9 @@
       "id": "meet-security-question",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "security-question"
+      ],
       "show": {
         "kind": "term",
         "term": "security-question"
@@ -81,6 +89,9 @@
       "id": "band-name-quiz",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "security-question"
+      ],
       "prompt": "A fun quiz is going around on social media.",
       "start": "start",
       "steps": [
@@ -110,6 +121,7 @@
       "id": "why-wait",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [],
       "prompt": "Mia wants to post holiday photos **while she's still away**. Is that a problem?",
       "options": [
         {
@@ -135,6 +147,10 @@
       "id": "match-settings",
       "type": "match_pairs",
       "difficulty": "core",
+      "teaches": [
+        "privacy-settings"
+      ],
+      "uses": [],
       "prompt": "Match each **privacy setting** to what it does.",
       "pairs": [
         {
@@ -166,6 +182,10 @@
       "id": "meet-block-report",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "block-and-report",
+        "trusted-adult"
+      ],
       "show": {
         "kind": "icon",
         "icon": "shield-check"
@@ -176,6 +196,10 @@
       "id": "friendly-stranger",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "block-and-report",
+        "trusted-adult"
+      ],
       "prompt": "A friend from a game is really nice.",
       "start": "start",
       "steps": [
@@ -205,6 +229,7 @@
       "id": "username-check",
       "type": "sort_bins",
       "difficulty": "challenge",
+      "uses": [],
       "prompt": "Safe username, or gives too much away?",
       "bins": [
         {
@@ -246,6 +271,12 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "digital-footprint",
+        "keep-locating-info-private",
+        "privacy-settings",
+        "block-and-report"
+      ],
       "title": "Recap",
       "body": "- Your **digital footprint** can last: keep anything that **finds you** or **unlocks you** private.\n- Use **privacy settings**. Block, report and tell a trusted adult.\n- **Try this:** set one social account to private."
     }

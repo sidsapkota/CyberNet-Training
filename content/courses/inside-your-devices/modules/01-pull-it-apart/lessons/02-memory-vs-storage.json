@@ -10,6 +10,9 @@
       "id": "meet-ram-the-desk",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "ram-wiped-at-power-off"
+      ],
       "prompt": "Tap the word.",
       "show": {
         "kind": "term",
@@ -21,6 +24,9 @@
       "id": "meet-storage-the-cupboard",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "storage"
+      ],
       "prompt": "Tap the word.",
       "show": {
         "kind": "term",
@@ -32,6 +38,10 @@
       "id": "still-there-after-off",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "storage",
+        "ram-wiped-at-power-off"
+      ],
       "prompt": "Power cut! What's **still there**?",
       "bins": [
         {
@@ -73,6 +83,10 @@
       "id": "meet-gigabytes",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "gigabyte",
+        "storage-bigger-than-ram"
+      ],
       "prompt": "Tap the word.",
       "show": {
         "kind": "term",
@@ -84,6 +98,15 @@
       "id": "fill-the-ram",
       "type": "simulator",
       "difficulty": "core",
+      "teaches": [
+        "apps-use-ram",
+        "full-ram-slows-device",
+        "close-apps-frees-ram"
+      ],
+      "uses": [
+        "ram",
+        "gigabyte"
+      ],
       "prompt": "Run the **racing game** and the **music** on this 4 GB phone, with no lag.",
       "model": "memory",
       "params": {
@@ -169,6 +192,9 @@
       "id": "apps-need-ram",
       "type": "true_false",
       "difficulty": "core",
+      "uses": [
+        "apps-use-ram"
+      ],
       "prompt": "Every app you open takes up some room in RAM.",
       "answer": true,
       "explanation": "**True.** Each open app needs space on the desk. Open too many, and RAM fills up and the device lags.",
@@ -199,6 +225,14 @@
       "id": "storage-full",
       "type": "scenario",
       "difficulty": "core",
+      "teaches": [
+        "backup"
+      ],
+      "uses": [
+        "storage",
+        "ram",
+        "ram-wiped-at-power-off"
+      ],
       "prompt": "You're about to photograph a rainbow, and a message pops up.",
       "start": "message",
       "steps": [
@@ -252,6 +286,9 @@
       "id": "download-needs-storage",
       "type": "fill_gap",
       "difficulty": "core",
+      "uses": [
+        "storage"
+      ],
       "prompt": "A film you download needs free space in ___.",
       "options": [
         {
@@ -278,6 +315,10 @@
       "id": "why-restart-helps",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "ram-wiped-at-power-off",
+        "full-ram-slows-device"
+      ],
       "prompt": "A laptop on for weeks feels slow. Why does a restart help?",
       "options": [
         {
@@ -303,6 +344,11 @@
       "id": "apps-keep-reloading",
       "type": "scenario",
       "difficulty": "challenge",
+      "uses": [
+        "ram",
+        "storage",
+        "close-apps-frees-ram"
+      ],
       "prompt": "Your phone has **40 GB of free storage**, but something's wrong.",
       "start": "symptom",
       "steps": [
@@ -356,6 +402,13 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "ram-wiped-at-power-off",
+        "storage",
+        "close-apps-frees-ram",
+        "full-storage-delete-backed-up",
+        "backup"
+      ],
       "title": "Recap",
       "body": "- **RAM** is the fast desk for what's open. Power off wipes it.\n- **Storage** keeps apps and files until you delete them.\n- Full RAM? Close apps. Full storage? Delete files you've [[backed up|backup]].\n\nNext: the [[CPU]], the part that does the work.\n\n**Try this:** close apps you aren't using, and see if your phone feels quicker."
     }

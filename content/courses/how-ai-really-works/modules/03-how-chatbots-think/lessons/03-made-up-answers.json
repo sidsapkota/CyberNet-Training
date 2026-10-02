@@ -10,6 +10,10 @@
       "id": "mars-walk",
       "type": "next_word",
       "difficulty": "core",
+      "uses": [
+        "language-model",
+        "word-chances"
+      ],
       "prompt": "This model only read space stories like \"Captain Rivera stepped onto Mars\". What's it **most likely** to write next?",
       "context": "The first person to walk on Mars was",
       "candidates": [
@@ -42,6 +46,12 @@
       "id": "hallucination",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "hallucination",
+        "hallucination-hotspots",
+        "check-trusted-source",
+        "asking-ai-doesnt-verify"
+      ],
       "title": "Fluent, confident, wrong",
       "body": "A **hallucination** is when a chatbot says something false, smoothly and confidently. It picks words that *sound* likely, not checked facts, so a made-up book sounds as real as a true one. Watch names, dates, numbers, quotes and sources: check them in a trusted source, like a library catalogue. Asking \"are you sure?\" checks nothing."
     },
@@ -49,6 +59,11 @@
       "id": "volcano-book",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "hallucination",
+        "check-trusted-source",
+        "asking-ai-doesnt-verify"
+      ],
       "prompt": "You're writing a report on volcanoes.",
       "start": "the-suggestion",
       "steps": [
@@ -102,6 +117,13 @@
       "id": "check-or-fine",
       "type": "sort_bins",
       "difficulty": "core",
+      "teaches": [
+        "health-questions-to-professional"
+      ],
+      "uses": [
+        "hallucination-hotspots",
+        "health-questions-to-professional"
+      ],
       "prompt": "**Double-check** each chatbot answer, or **fine as it is**? Health questions go to a doctor, pharmacist or trusted adult.",
       "bins": [
         {
@@ -158,6 +180,10 @@
       "id": "best-check",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "check-trusted-source",
+        "asking-ai-doesnt-verify"
+      ],
       "prompt": "A chatbot gives you a fact for a work report. What's the **best** way to check it?",
       "options": [
         {
@@ -188,6 +214,10 @@
       "id": "link-works",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "check-trusted-source",
+        "hallucination-hotspots"
+      ],
       "prompt": "A chatbot says a famous ship sank in **1915**, with a link to a museum website.",
       "start": "the-link",
       "steps": [
@@ -241,6 +271,11 @@
       "id": "problem-and-check",
       "type": "match_pairs",
       "difficulty": "challenge",
+      "uses": [
+        "check-trusted-source",
+        "health-questions-to-professional",
+        "hallucination-hotspots"
+      ],
       "prompt": "Match each thing a chatbot gives you to what to do about it.",
       "pairs": [
         {
@@ -272,6 +307,12 @@
       "id": "made-up-recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "hallucination",
+        "hallucination-hotspots",
+        "check-trusted-source",
+        "asking-ai-doesnt-verify"
+      ],
       "title": "Recap",
       "body": "- A **hallucination** is a confident, false answer built from likely words.\n- They hide in names, dates, numbers, quotes and sources.\n- Check what matters in a trusted source, not by asking again.\n\nNext: the module quiz."
     }

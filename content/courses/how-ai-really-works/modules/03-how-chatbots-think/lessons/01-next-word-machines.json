@@ -10,6 +10,12 @@
       "id": "hungry-horse",
       "type": "next_word",
       "difficulty": "core",
+      "teaches": [
+        "next-word-prediction"
+      ],
+      "uses": [
+        "next-word-prediction"
+      ],
       "prompt": "Like your phone's keyboard, a chatbot guesses what usually comes next. Which word is it **most likely** to pick?",
       "context": "I'm so hungry, I could eat a",
       "candidates": [
@@ -42,6 +48,11 @@
       "id": "guess-the-next-word",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "language-model",
+        "word-chances",
+        "one-word-at-a-time"
+      ],
       "title": "Guessing the next word",
       "body": "A chatbot is built on a **language model**. Having read huge amounts of text, it reads everything so far and gives each possible next word a **chance**: after \"The cat sat on the\", \"mat\" 60%, \"sofa\" 20%, \"moon\" 5%. It picks one, adds it, and repeats."
     },
@@ -49,6 +60,12 @@
       "id": "the-loop",
       "type": "drag_to_order",
       "difficulty": "core",
+      "teaches": [
+        "one-word-at-a-time"
+      ],
+      "uses": [
+        "one-word-at-a-time"
+      ],
       "prompt": "Order the steps a chatbot repeats for each word. Once added, a word stays put.",
       "items": [
         {
@@ -76,6 +93,13 @@
       "id": "rocket-cat",
       "type": "next_word",
       "difficulty": "core",
+      "teaches": [
+        "context-changes-chances"
+      ],
+      "uses": [
+        "word-chances",
+        "context-changes-chances"
+      ],
       "prompt": "The text has changed, with more words before it. Which word is **most likely** next now?",
       "context": "Strapped in for launch, the cat sat in its",
       "candidates": [
@@ -108,6 +132,9 @@
       "id": "no-going-back",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "uses": [
+        "one-word-at-a-time"
+      ],
       "prompt": "After \"The cat sat on the\", the model happens to pick \"moon\". What happens next?",
       "options": [
         {
@@ -138,6 +165,12 @@
       "id": "hundred-times",
       "type": "numeric_input",
       "difficulty": "core",
+      "teaches": [
+        "chance-as-frequency"
+      ],
+      "uses": [
+        "chance-as-frequency"
+      ],
       "prompt": "After \"Fish and\", \"chips\" has a **70%** chance: 70 in 100 tries. In **10** tries, how many \"chips\" would you expect?",
       "base": "decimal",
       "answer": 7,
@@ -149,6 +182,10 @@
       "id": "how-it-knows",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "language-model",
+        "ai-prediction"
+      ],
       "prompt": "A chatbot writes \"The Eiffel Tower is in Paris\". How did it come up with that?",
       "options": [
         {
@@ -179,6 +216,12 @@
       "id": "next-word-recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "language-model",
+        "word-chances",
+        "one-word-at-a-time",
+        "likely-not-true"
+      ],
       "title": "Recap",
       "body": "- A **language model** gives each possible next word a chance.\n- It picks one, adds it, and repeats until it's done.\n- Likely isn't the same as checked or true.\n\nNext: the setting that decides how adventurous its picks are."
     }

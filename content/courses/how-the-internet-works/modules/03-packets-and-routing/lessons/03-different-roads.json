@@ -10,6 +10,13 @@
       "id": "no-promises",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "routes-change",
+        "out-of-order-and-loss"
+      ],
+      "uses": [
+        "routing-table"
+      ],
       "title": "The internet makes no promises",
       "body": "[[Routers|router]] keep updating their [[routing tables|routing-table]]: if a cable breaks or a road gets busy, they find another way round. So packets from one message can arrive in a **different order**, and some never arrive. Yet your photos turn up perfectly. How?"
     },
@@ -17,28 +24,100 @@
       "id": "cut-cable",
       "type": "packet_path",
       "difficulty": "core",
+      "uses": [],
       "prompt": "The cable from **Router A** straight to the web [[server]] is cut, so it's gone from the map.\n\nGet the [[packet]] there another way.",
       "nodes": [
-        { "id": "laptop", "kind": "device", "label": "Laptop", "address": "192.168.1.20", "col": 0, "row": 1 },
-        { "id": "home", "kind": "router", "label": "Home router", "address": "192.168.1.1", "col": 1, "row": 1 },
-        { "id": "ra", "kind": "router", "label": "Router A", "address": "203.0.113.1", "col": 2, "row": 0 },
-        { "id": "rc", "kind": "router", "label": "Router C", "address": "203.0.113.3", "col": 3, "row": 0 },
-        { "id": "rb", "kind": "router", "label": "Router B", "address": "203.0.113.2", "col": 2, "row": 2 },
-        { "id": "server", "kind": "server", "label": "Web server", "address": "198.51.100.10", "col": 3, "row": 1 }
+        {
+          "id": "laptop",
+          "kind": "device",
+          "label": "Laptop",
+          "address": "192.168.1.20",
+          "col": 0,
+          "row": 1
+        },
+        {
+          "id": "home",
+          "kind": "router",
+          "label": "Home router",
+          "address": "192.168.1.1",
+          "col": 1,
+          "row": 1
+        },
+        {
+          "id": "ra",
+          "kind": "router",
+          "label": "Router A",
+          "address": "203.0.113.1",
+          "col": 2,
+          "row": 0
+        },
+        {
+          "id": "rc",
+          "kind": "router",
+          "label": "Router C",
+          "address": "203.0.113.3",
+          "col": 3,
+          "row": 0
+        },
+        {
+          "id": "rb",
+          "kind": "router",
+          "label": "Router B",
+          "address": "203.0.113.2",
+          "col": 2,
+          "row": 2
+        },
+        {
+          "id": "server",
+          "kind": "server",
+          "label": "Web server",
+          "address": "198.51.100.10",
+          "col": 3,
+          "row": 1
+        }
       ],
       "links": [
-        { "from": "laptop", "to": "home" },
-        { "from": "home", "to": "ra" },
-        { "from": "home", "to": "rb" },
-        { "from": "ra", "to": "rc" },
-        { "from": "rc", "to": "server" },
-        { "from": "rb", "to": "server" }
+        {
+          "from": "laptop",
+          "to": "home"
+        },
+        {
+          "from": "home",
+          "to": "ra"
+        },
+        {
+          "from": "home",
+          "to": "rb"
+        },
+        {
+          "from": "ra",
+          "to": "rc"
+        },
+        {
+          "from": "rc",
+          "to": "server"
+        },
+        {
+          "from": "rb",
+          "to": "server"
+        }
       ],
       "source": "laptop",
       "destination": "server",
       "validPaths": [
-        ["laptop", "home", "ra", "rc", "server"],
-        ["laptop", "home", "rb", "server"]
+        [
+          "laptop",
+          "home",
+          "ra",
+          "rc",
+          "server"
+        ],
+        [
+          "laptop",
+          "home",
+          "rb",
+          "server"
+        ]
       ],
       "explanation": "Either detour works: via **Router B**, or via Router A and **Router C**. But packets on different roads may arrive in a different order.",
       "hint": "Only follow the links you can see; there's more than one way round.",
@@ -48,12 +127,27 @@
       "id": "rebuild-message",
       "type": "drag_to_order",
       "difficulty": "core",
+      "uses": [
+        "sequence-number"
+      ],
       "prompt": "These [[packets|packet]] took different roads and arrived jumbled. Put them back in order by **sequence number**.",
       "items": [
-        { "id": "p1", "label": "#1 YOUR" },
-        { "id": "p2", "label": "#2 PIZZA" },
-        { "id": "p3", "label": "#3 IS" },
-        { "id": "p4", "label": "#4 ARRIVING" }
+        {
+          "id": "p1",
+          "label": "#1 YOUR"
+        },
+        {
+          "id": "p2",
+          "label": "#2 PIZZA"
+        },
+        {
+          "id": "p3",
+          "label": "#3 IS"
+        },
+        {
+          "id": "p4",
+          "label": "#4 ARRIVING"
+        }
       ],
       "explanation": "By sequence number they read *YOUR PIZZA IS ARRIVING*. The order they arrive in doesn't matter: the numbers say where each piece belongs.",
       "hint": "The arrival order is no help: what did the sender put on every packet?",
@@ -63,6 +157,10 @@
       "id": "which-is-missing",
       "type": "numeric_input",
       "difficulty": "core",
+      "teaches": [
+        "tcp-resend"
+      ],
+      "uses": [],
       "prompt": "With **TCP** rules, the receiver reports which numbered packets arrived, and gaps are resent. Of packets 1 to 7, **1, 2, 4, 6 and 7** arrived: how many will TCP resend?",
       "base": "decimal",
       "answer": 2,
@@ -75,11 +173,28 @@
       "id": "problems-and-fixes",
       "type": "match_pairs",
       "difficulty": "core",
+      "uses": [
+        "sequence-number",
+        "tcp-resend",
+        "routes-change"
+      ],
       "prompt": "Match each problem to how the internet deals with it.",
       "pairs": [
-        { "id": "order", "left": "Packets arrive out of order", "right": "Sort them by sequence number" },
-        { "id": "missing", "left": "A packet goes missing", "right": "Send that packet again" },
-        { "id": "broken", "left": "A cable on the route breaks", "right": "Routers find another route" }
+        {
+          "id": "order",
+          "left": "Packets arrive out of order",
+          "right": "Sort them by sequence number"
+        },
+        {
+          "id": "missing",
+          "left": "A packet goes missing",
+          "right": "Send that packet again"
+        },
+        {
+          "id": "broken",
+          "left": "A cable on the route breaks",
+          "right": "Routers find another route"
+        }
       ],
       "explanation": "Sequence numbers **sort** jumbled packets, [[TCP]] **resends** a missing one, and routers [[update]] their tables to **go another way** round a break.",
       "hint": "Which fix uses sequence numbers, which one resends, and which is a job for routers?",
@@ -89,9 +204,18 @@
       "id": "video-call-glitch",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "teaches": [
+        "live-data-skips-resend"
+      ],
+      "uses": [
+        "tcp-resend"
+      ],
       "prompt": "On a video call, a lost packet makes the picture glitch, but the call doesn't wait for a resend. Why not?",
       "options": [
-        { "id": "live", "text": "Waiting would lag the call; fresh data beats late data" },
+        {
+          "id": "live",
+          "text": "Waiting would lag the call; fresh data beats late data"
+        },
         {
           "id": "no-packets",
           "text": "Calls use one unbroken stream, not packets at all",
@@ -116,12 +240,18 @@
       "id": "route-changed",
       "type": "terminal",
       "difficulty": "challenge",
+      "uses": [
+        "traceroute",
+        "hop"
+      ],
       "prompt": "Yesterday's [[traceroute]] is saved at the top.\n\nRun `traceroute example.com` and compare each numbered [[hop]]. Which one changed?",
       "intro": "Saved from yesterday:\n\n$ traceroute example.com\ntraceroute to example.com (198.51.100.10), 30 hops max, 60 byte packets\n 1  192.168.1.1 (192.168.1.1)  1.912 ms  1.804 ms  1.765 ms\n 2  203.0.113.1 (203.0.113.1)  9.483 ms  9.412 ms  9.377 ms\n 3  203.0.113.65 (203.0.113.65)  11.207 ms  11.164 ms  11.122 ms\n 4  198.51.100.1 (198.51.100.1)  18.930 ms  18.842 ms  19.004 ms\n 5  example.com (198.51.100.10)  19.315 ms  19.271 ms  19.233 ms\n\nType help to see the commands you can use here.",
       "commands": [
         {
           "command": "traceroute example.com",
-          "aliases": ["traceroute www.example.com"],
+          "aliases": [
+            "traceroute www.example.com"
+          ],
           "description": "List each router between you and example.com, right now",
           "output": "traceroute to example.com (198.51.100.10), 30 hops max, 60 byte packets\n 1  192.168.1.1 (192.168.1.1)  1.887 ms  1.821 ms  1.790 ms\n 2  203.0.113.1 (203.0.113.1)  9.506 ms  9.441 ms  9.402 ms\n 3  203.0.113.129 (203.0.113.129)  14.863 ms  14.802 ms  14.779 ms\n 4  198.51.100.1 (198.51.100.1)  22.415 ms  22.371 ms  22.340 ms\n 5  example.com (198.51.100.10)  22.806 ms  22.764 ms  22.731 ms"
         }
@@ -129,7 +259,9 @@
       "success": {
         "type": "answer",
         "question": "What is the address of the router that's on today's route but wasn't on yesterday's?",
-        "accepted": ["203.0.113.129"]
+        "accepted": [
+          "203.0.113.129"
+        ]
       },
       "explanation": "Hop 3 changed from `203.0.113.65` to `203.0.113.129`: maybe the old [[router]] was busy or being repaired. The detour is a bit slower (22 ms to the end instead of 19), but your [[packets|packet]] still arrive.",
       "hint": "Compare the address on each numbered line with yesterday's, one line at a time.",
@@ -139,6 +271,12 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "routes-change",
+        "out-of-order-and-loss",
+        "sequence-number",
+        "tcp-resend"
+      ],
       "title": "Recap: Packets and Routing",
       "body": "- Routes can change, so packets may arrive jumbled or go missing.\n- **Sequence numbers** put the pieces back in order.\n- **TCP** gets any missing packet sent again."
     }

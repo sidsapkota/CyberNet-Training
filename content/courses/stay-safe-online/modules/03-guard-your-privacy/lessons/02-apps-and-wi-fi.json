@@ -10,6 +10,7 @@
       "id": "torch-contacts",
       "type": "true_false",
       "difficulty": "core",
+      "uses": [],
       "prompt": "A torch app asks to see your contacts. It needs them to work.",
       "answer": false,
       "explanation": "False. A torch only needs your phone's light. Asking for contacts is more than its job needs.",
@@ -20,6 +21,9 @@
       "id": "meet-permission",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "app-permission"
+      ],
       "show": {
         "kind": "term",
         "term": "app-permission"
@@ -30,6 +34,9 @@
       "id": "needs-it",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "app-permission"
+      ],
       "prompt": "Does the app **need** it for its job?",
       "bins": [
         {
@@ -71,6 +78,9 @@
       "id": "meet-while-using",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "location-while-using"
+      ],
       "show": {
         "kind": "icon",
         "icon": "map-pin"
@@ -81,6 +91,10 @@
       "id": "new-game-asks",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "app-permission",
+        "location-while-using"
+      ],
       "prompt": "You install a new drawing game.",
       "start": "start",
       "steps": [
@@ -110,16 +124,25 @@
       "id": "switch-it-off",
       "type": "true_false",
       "difficulty": "core",
-      "prompt": "You can switch an app's permission off later in Settings.",
+      "uses": [
+        "permissions-changeable-in-settings"
+      ],
+      "prompt": "Your phone's **Settings** list every app permission you've given. You can switch one off there later.",
       "answer": true,
       "explanation": "True. Any permission can be turned off in **Settings**, so you can change your mind any time.",
       "hint": "Where on your phone do you control what apps can use?",
-      "nudge": "Permissions aren't for ever: look in your phone's Settings."
+      "nudge": "Permissions aren't for ever: look in your phone's Settings.",
+      "teaches": [
+        "permissions-changeable-in-settings"
+      ]
     },
     {
       "id": "weather-location",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "uses": [
+        "location-while-using"
+      ],
       "prompt": "Which gives a weather app your location, **and no more**?",
       "options": [
         {
@@ -145,6 +168,9 @@
       "id": "meet-public-wi-fi",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "public-wi-fi"
+      ],
       "show": {
         "kind": "term",
         "term": "public-wi-fi"
@@ -155,6 +181,9 @@
       "id": "wi-fi-ok",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "public-wi-fi"
+      ],
       "prompt": "Fine on public Wi-Fi, or better on **mobile data**?",
       "bins": [
         {
@@ -196,6 +225,9 @@
       "id": "bank-on",
       "type": "fill_gap",
       "difficulty": "core",
+      "uses": [
+        "public-wi-fi"
+      ],
       "prompt": "Check your bank on ___, not on public Wi-Fi.",
       "options": [
         {
@@ -221,6 +253,12 @@
       "id": "riskiest-wi-fi",
       "type": "multiple_choice",
       "difficulty": "core",
+      "teaches": [
+        "fake-hotspot"
+      ],
+      "uses": [
+        "public-wi-fi"
+      ],
       "prompt": "At a café, which is **riskiest**? (A **fake hotspot** is Wi-Fi named to look like the café's.)",
       "options": [
         {
@@ -246,6 +284,12 @@
       "id": "mic-dot",
       "type": "scenario",
       "difficulty": "challenge",
+      "teaches": [
+        "mic-indicator"
+      ],
+      "uses": [
+        "app-permission"
+      ],
       "prompt": "A **microphone dot** appears while you're reading. (It means an app is using the mic.)",
       "start": "start",
       "steps": [
@@ -281,6 +325,12 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "app-permission",
+        "location-while-using",
+        "public-wi-fi",
+        "mobile-data-for-banking"
+      ],
       "title": "Recap",
       "body": "- Give apps only the **permissions** they need; choose **\"Only while using\"** for location.\n- On **public Wi-Fi**, check the name, and bank on **mobile data**.\n- **Try this:** switch one app's location to \"Only while using\"."
     }

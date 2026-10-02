@@ -10,26 +10,88 @@
       "id": "the-way-out",
       "type": "packet_path",
       "difficulty": "core",
+      "uses": [],
       "prompt": "A laptop, phone and printer share home Wi-Fi. Send a request from the **laptop** to the web [[server]].",
       "nodes": [
-        { "id": "laptop", "kind": "device", "label": "Laptop", "address": "192.168.1.20", "col": 0, "row": 0 },
-        { "id": "phone", "kind": "device", "label": "Phone", "address": "192.168.1.21", "col": 0, "row": 1 },
-        { "id": "home", "kind": "router", "label": "Home router", "address": "192.168.1.1", "col": 1, "row": 0 },
-        { "id": "printer", "kind": "device", "label": "Printer", "address": "192.168.1.30", "col": 1, "row": 1 },
-        { "id": "internet", "kind": "internet", "label": "Internet", "col": 2, "row": 0 },
-        { "id": "server", "kind": "server", "label": "Web server", "address": "198.51.100.10", "col": 3, "row": 0 }
+        {
+          "id": "laptop",
+          "kind": "device",
+          "label": "Laptop",
+          "address": "192.168.1.20",
+          "col": 0,
+          "row": 0
+        },
+        {
+          "id": "phone",
+          "kind": "device",
+          "label": "Phone",
+          "address": "192.168.1.21",
+          "col": 0,
+          "row": 1
+        },
+        {
+          "id": "home",
+          "kind": "router",
+          "label": "Home router",
+          "address": "192.168.1.1",
+          "col": 1,
+          "row": 0
+        },
+        {
+          "id": "printer",
+          "kind": "device",
+          "label": "Printer",
+          "address": "192.168.1.30",
+          "col": 1,
+          "row": 1
+        },
+        {
+          "id": "internet",
+          "kind": "internet",
+          "label": "Internet",
+          "col": 2,
+          "row": 0
+        },
+        {
+          "id": "server",
+          "kind": "server",
+          "label": "Web server",
+          "address": "198.51.100.10",
+          "col": 3,
+          "row": 0
+        }
       ],
       "links": [
-        { "from": "laptop", "to": "home" },
-        { "from": "phone", "to": "home" },
-        { "from": "printer", "to": "home" },
-        { "from": "home", "to": "internet" },
-        { "from": "internet", "to": "server" }
+        {
+          "from": "laptop",
+          "to": "home"
+        },
+        {
+          "from": "phone",
+          "to": "home"
+        },
+        {
+          "from": "printer",
+          "to": "home"
+        },
+        {
+          "from": "home",
+          "to": "internet"
+        },
+        {
+          "from": "internet",
+          "to": "server"
+        }
       ],
       "source": "laptop",
       "destination": "server",
       "validPaths": [
-        ["laptop", "home", "internet", "server"]
+        [
+          "laptop",
+          "home",
+          "internet",
+          "server"
+        ]
       ],
       "explanation": "Every home device reaches the internet through the **home [[router]]**, the doorway between your home [[network]] and the internet. The phone and printer aren't a way out.",
       "hint": "Follow the links from the laptop to the box that joins the home to the internet.",
@@ -39,6 +101,12 @@
       "id": "private-ranges",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "isp",
+        "public-address",
+        "private-address",
+        "private-ranges"
+      ],
       "title": "Public and private",
       "body": "Your **ISP**, the company that connects your home, usually gives it **one** address the whole internet can reach: a **public address**.\n\nInside, devices use **private addresses**, like room numbers: every school has a room 12. Private addresses start `10.`, `192.168.`, or `172.16.` to `172.31.`"
     },
@@ -46,18 +114,52 @@
       "id": "sort-private-public",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "private-ranges",
+        "public-address"
+      ],
       "prompt": "Sort each address: **private**, or could it be **public**?",
       "bins": [
-        { "id": "private", "label": "Private" },
-        { "id": "public", "label": "Public" }
+        {
+          "id": "private",
+          "label": "Private"
+        },
+        {
+          "id": "public",
+          "label": "Public"
+        }
       ],
       "items": [
-        { "id": "a10", "label": "10.0.0.5", "bin": "private" },
-        { "id": "a192-168", "label": "192.168.1.20", "bin": "private" },
-        { "id": "a172-20", "label": "172.20.5.9", "bin": "private" },
-        { "id": "a192-0", "label": "192.0.2.9", "bin": "public" },
-        { "id": "a203", "label": "203.0.113.7", "bin": "public" },
-        { "id": "a198", "label": "198.51.100.10", "bin": "public" }
+        {
+          "id": "a10",
+          "label": "10.0.0.5",
+          "bin": "private"
+        },
+        {
+          "id": "a192-168",
+          "label": "192.168.1.20",
+          "bin": "private"
+        },
+        {
+          "id": "a172-20",
+          "label": "172.20.5.9",
+          "bin": "private"
+        },
+        {
+          "id": "a192-0",
+          "label": "192.0.2.9",
+          "bin": "public"
+        },
+        {
+          "id": "a203",
+          "label": "203.0.113.7",
+          "bin": "public"
+        },
+        {
+          "id": "a198",
+          "label": "198.51.100.10",
+          "bin": "public"
+        }
       ],
       "explanation": "`10.0.0.5`, `192.168.1.20` and `172.20.5.9` (20 is between 16 and 31) are private. `192.0.2.9` is the trap: only **192.168** is private, so it and the rest can be public.",
       "hint": "Check the first **two** numbers against `10`, `192.168`, and `172.16` to `172.31`.",
@@ -67,12 +169,31 @@
       "id": "nat-steps",
       "type": "drag_to_order",
       "difficulty": "core",
+      "teaches": [
+        "nat"
+      ],
+      "uses": [
+        "public-address",
+        "private-address"
+      ],
       "prompt": "Your [[router]] is like a receptionist: requests leave from your public address, `203.0.113.7`, and it notes who asked. That's **NAT**.\n\nPut the steps in order.",
       "items": [
-        { "id": "send", "label": "Phone (192.168.1.21) sends a request" },
-        { "id": "swap-out", "label": "Router swaps in 203.0.113.7, takes notes" },
-        { "id": "reply", "label": "Server replies to 203.0.113.7" },
-        { "id": "swap-back", "label": "Router checks notes and hands it back" }
+        {
+          "id": "send",
+          "label": "Phone (192.168.1.21) sends a request"
+        },
+        {
+          "id": "swap-out",
+          "label": "Router swaps in 203.0.113.7, takes notes"
+        },
+        {
+          "id": "reply",
+          "label": "Server replies to 203.0.113.7"
+        },
+        {
+          "id": "swap-back",
+          "label": "Router checks notes and hands it back"
+        }
       ],
       "explanation": "The request goes out first and gets the public address on the way. The server can only reply to `203.0.113.7`, and the router's notes send the reply back to the phone.",
       "hint": "A request goes out before a reply comes back, and notes are made before they're needed.",
@@ -82,9 +203,17 @@
       "id": "what-server-sees",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "nat",
+        "public-address",
+        "private-address"
+      ],
       "prompt": "Laptop `192.168.1.20` asks [[server]] `198.51.100.10` for a page. Your public address is `203.0.113.7`.\n\nWhich **sender** address does the server see?",
       "options": [
-        { "id": "public", "text": "203.0.113.7" },
+        {
+          "id": "public",
+          "text": "203.0.113.7"
+        },
         {
           "id": "laptop",
           "text": "192.168.1.20",
@@ -95,7 +224,11 @@
           "text": "192.168.1.1",
           "nudge": "That's the router's address inside your home: which one does it use outside?"
         },
-        { "id": "server", "text": "198.51.100.10", "nudge": "That's where the request is going, not where it comes from." }
+        {
+          "id": "server",
+          "text": "198.51.100.10",
+          "nudge": "That's where the request is going, not where it comes from."
+        }
       ],
       "correctOptionId": "public",
       "explanation": "[[NAT]] swapped in the router's public address, so the server sees **203.0.113.7**. `192.168.1.1` is the router's inside address, and `198.51.100.10` is the server's own.",
@@ -105,12 +238,34 @@
       "id": "address-terms",
       "type": "match_pairs",
       "difficulty": "core",
+      "uses": [
+        "private-address",
+        "public-address",
+        "nat",
+        "isp"
+      ],
       "prompt": "Match each situation to what's behind it.",
       "pairs": [
-        { "id": "private", "left": "Your laptop's address on your home Wi-Fi", "right": "A private address" },
-        { "id": "public", "left": "The address a website sees from you", "right": "Your router's public address" },
-        { "id": "nat", "left": "Five devices at home sharing one address", "right": "NAT" },
-        { "id": "isp", "left": "Who gave your home its public address", "right": "Your ISP" }
+        {
+          "id": "private",
+          "left": "Your laptop's address on your home Wi-Fi",
+          "right": "A private address"
+        },
+        {
+          "id": "public",
+          "left": "The address a website sees from you",
+          "right": "Your router's public address"
+        },
+        {
+          "id": "nat",
+          "left": "Five devices at home sharing one address",
+          "right": "NAT"
+        },
+        {
+          "id": "isp",
+          "left": "Who gave your home its public address",
+          "right": "Your ISP"
+        }
       ],
       "explanation": "At home your laptop has a **private address**. Websites see your router's **public address**, swapped in by **NAT** so devices can share it, and your **ISP** gave you that address.",
       "hint": "Think of the room numbers, the receptionist and the company that connects your home.",
@@ -120,9 +275,15 @@
       "id": "same-address-two-houses",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "uses": [
+        "private-address"
+      ],
       "prompt": "Your laptop and a friend's across town both show `192.168.1.20`. Is that a problem?",
       "options": [
-        { "id": "fine", "text": "No: private addresses only need to be unique at home" },
+        {
+          "id": "fine",
+          "text": "No: private addresses only need to be unique at home"
+        },
         {
           "id": "clash",
           "text": "Yes: websites won't know which laptop to reply to",
@@ -142,9 +303,15 @@
       "id": "why-unreachable",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "uses": [
+        "private-address"
+      ],
       "prompt": "Someone online tries to connect straight to your laptop at `192.168.1.20`. Why can't they?",
       "options": [
-        { "id": "not-routed", "text": "Millions of homes use it, so routers can't deliver it" },
+        {
+          "id": "not-routed",
+          "text": "Millions of homes use it, so routers can't deliver it"
+        },
         {
           "id": "banned",
           "text": "Addresses starting 192.168 are banned as unsafe",
@@ -169,6 +336,12 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "private-address",
+        "public-address",
+        "isp",
+        "nat"
+      ],
       "title": "Recap",
       "body": "- **Private addresses** are reused inside millions of homes.\n- Your home shares one **public address** from your **ISP**.\n- **NAT** swaps addresses on the way out, and back."
     }

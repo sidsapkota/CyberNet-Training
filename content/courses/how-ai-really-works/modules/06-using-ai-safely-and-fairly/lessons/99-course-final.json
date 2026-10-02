@@ -8,6 +8,9 @@
       "id": "f-bias",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "bias"
+      ],
       "prompt": "A smart speaker understands adults well, but often gets children's voices wrong. What's the most likely cause?",
       "options": [
         {
@@ -34,6 +37,11 @@
       "id": "f-day-night",
       "type": "train_model",
       "difficulty": "core",
+      "uses": [
+        "training-data",
+        "only-knows-its-examples",
+        "nearest-example"
+      ],
       "prompt": "Fix the model's mistake.",
       "model": {
         "kind": "nearest",
@@ -157,6 +165,9 @@
       "id": "f-accuracy",
       "type": "numeric_input",
       "difficulty": "core",
+      "uses": [
+        "accuracy"
+      ],
       "prompt": "A model gets **18** of **20** new test photos right. What is its accuracy?",
       "base": "decimal",
       "answer": 90,
@@ -167,6 +178,9 @@
       "id": "f-next-word",
       "type": "next_word",
       "difficulty": "core",
+      "uses": [
+        "word-chances"
+      ],
       "prompt": "Which word is this model **most likely** to pick next?",
       "context": "Good night, sleep",
       "candidates": [
@@ -197,6 +211,12 @@
       "id": "f-confident",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "hallucination-hotspots",
+        "check-trusted-source",
+        "temperature-not-knowledge",
+        "asking-ai-doesnt-verify"
+      ],
       "prompt": "A chatbot quotes a famous scientist word for word, sounding completely sure. What should you do?",
       "options": [
         {
@@ -223,6 +243,9 @@
       "id": "f-honest",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "honest-ai-use"
+      ],
       "prompt": "Is each use of AI **honest**, or **not honest**?",
       "bins": [
         {
@@ -262,6 +285,11 @@
       "id": "f-viral-video",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "check-with-real-person",
+        "no-label-proves-nothing",
+        "no-giveaway-proves-nothing"
+      ],
       "prompt": "A viral video shows a famous athlete retiring. No AI label, and the lips match perfectly. What's the **best** check?",
       "options": [
         {
@@ -288,6 +316,11 @@
       "id": "f-private",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "friends-info-not-yours",
+        "chats-may-be-stored",
+        "trusted-adult"
+      ],
       "prompt": "A friend tells you a secret, and you want advice about it. You're thinking of asking an AI chatbot.",
       "start": "advice",
       "steps": [

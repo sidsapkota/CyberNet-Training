@@ -9,6 +9,12 @@
       "id": "q-easy-or-hard",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "names-and-years-guessed-early",
+        "common-passwords-guessed-early",
+        "length-makes-strong",
+        "passphrase"
+      ],
       "prompt": "Easy to guess, or hard to guess?",
       "bins": [
         {
@@ -48,6 +54,9 @@
       "id": "q-long-enough",
       "type": "simulator",
       "difficulty": "core",
+      "uses": [
+        "length-makes-strong"
+      ],
       "prompt": "Make an all-lowercase password last **at least a million years**.",
       "model": "password",
       "params": {},
@@ -85,6 +94,10 @@
       "id": "q-passphrase",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "passphrase",
+        "song-lines-guessed-early"
+      ],
       "prompt": "Your aunt needs a new passphrase for her email. Which is best?",
       "options": [
         {
@@ -107,6 +120,10 @@
       "id": "q-reused",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "password-reuse-risk",
+        "unique-password-per-account"
+      ],
       "prompt": "A shopping site was hacked. You used that password for your email and music app too.",
       "start": "start",
       "steps": [
@@ -141,6 +158,10 @@
       "id": "q-stolen-password",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "two-step-sign-in",
+        "authenticator-app"
+      ],
       "prompt": "A stranger has your email password, but your email uses an authenticator app too. Can they get in?",
       "options": [
         {
@@ -163,6 +184,9 @@
       "id": "q-code-request",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "never-share-sign-in-code"
+      ],
       "prompt": "\"I'm from the game's support team. Tell me the code we just texted you.\" What is this?",
       "options": [
         {
@@ -185,6 +209,12 @@
       "id": "q-hardest-account",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "passkey",
+        "passkey-strongest",
+        "app-codes-beat-text-codes",
+        "two-step-sign-in"
+      ],
       "prompt": "Whose email is **hardest** to break into?",
       "start": "start",
       "steps": [

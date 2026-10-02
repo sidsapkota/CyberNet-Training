@@ -27,8 +27,9 @@ const KIND: Record<NetworkNodeKind, { Icon: ComponentType<{ className?: string }
   internet: { Icon: InternetIcon, name: "the internet" },
 };
 
-/** Row height in px: node (48) + label + optional address. */
+/** Row height in px: node (48) + label + optional address. Phones use shorter rows. */
 const ROW_H = 120;
+const ROW_H_NARROW = 92;
 /** Node centre offset from the top of its row. */
 const NODE_Y = 28;
 const HOP_SECONDS = 0.22;
@@ -53,13 +54,16 @@ export function PacketPathCardView({
     () => false,
   );
   const locked = status !== "answering";
-  const layout = layoutNetwork(card, narrow);
+  // Never rotated: a 4-column network fits a phone at about 82px a column, while rotating it made
+  // 4 tall rows that pushed the stops below the fold. Phones get shorter rows instead.
+  const layout = layoutNetwork(card, false);
+  const rowH = narrow ? ROW_H_NARROW : ROW_H;
   const placed = new Map(layout.nodes.map((n) => [n.id, n]));
   const byId = new Map(card.nodes.map((n) => [n.id, n]));
 
   const xPct = (id: string) => (((placed.get(id)?.col ?? 0) + 0.5) / layout.cols) * 100;
-  const yPx = (id: string) => (placed.get(id)?.row ?? 0) * ROW_H + NODE_Y;
-  const height = layout.rows * ROW_H;
+  const yPx = (id: string) => (placed.get(id)?.row ?? 0) * rowH + NODE_Y;
+  const height = layout.rows * rowH;
 
   const finished = answer.at(-1) === card.destination;
   const wrongAt = locked ? firstWrongHop(card, answer) : null;
@@ -90,14 +94,13 @@ export function PacketPathCardView({
     <div>
       <CardPrompt>{card.prompt}</CardPrompt>
       <p className="mt-2 text-small text-ink-muted">
-        Tap the next stop along a line, starting from <strong className="font-semibold text-ink">{byId.get(card.source)?.label}</strong>.
-        Tap the last stop again to undo.
+        Tap each next stop along a line, from <strong className="font-semibold text-ink">{byId.get(card.source)?.label}</strong>.
       </p>
 
       <div
         role="group"
         aria-label="Network diagram"
-        className="relative mt-6 w-full rounded-card border border-line bg-surface"
+        className="relative mt-3 w-full rounded-card border border-line bg-surface sm:mt-6"
         style={{ height: height + 8 }}
       >
         <svg

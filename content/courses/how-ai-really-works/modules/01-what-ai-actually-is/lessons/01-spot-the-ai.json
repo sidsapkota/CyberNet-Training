@@ -10,13 +10,25 @@
       "id": "ai-in-your-pocket",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "rules-based-program",
+        "learning-from-examples",
+        "artificial-intelligence",
+        "machine-learning",
+        "everyday-ai-apps"
+      ],
       "title": "AI is already in your pocket",
-      "body": "Your phone unlocks when it sees your face. Most programs follow **rules** a person wrote: at 7:00, ring the alarm. Nobody could write rules for every face, so face unlock learns from lots of **examples** instead.\n\nIn this course, **artificial intelligence (AI)** means software that learns from examples, called **machine learning**."
+      "body": "Your phone unlocks when it sees your face. Most programs follow **rules** a person wrote: at 7:00, ring the alarm. Nobody could write rules for every face, so face unlock learns from lots of **examples** instead. Spam filters and keyboard suggestions learn the same way.\n\nIn this course, **artificial intelligence (AI)** means software that learns from examples, called **machine learning**."
     },
     {
       "id": "rules-or-learning",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "rules-based-program",
+        "learning-from-examples",
+        "everyday-ai-apps"
+      ],
       "prompt": "Does each one **follow rules** someone wrote, or **learn from examples**?",
       "bins": [
         {
@@ -68,6 +80,10 @@
       "id": "which-needs-learning",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "rules-based-program",
+        "learning-from-examples"
+      ],
       "prompt": "Which job is easiest to solve by **learning from examples**?",
       "options": [
         {
@@ -98,6 +114,12 @@
       "id": "what-it-learned-from",
       "type": "match_pairs",
       "difficulty": "core",
+      "teaches": [
+        "everyday-ai-apps"
+      ],
+      "uses": [
+        "learning-from-examples"
+      ],
       "prompt": "Match each kind of [[AI|artificial-intelligence]] to the examples it learns from.",
       "pairs": [
         {
@@ -129,6 +151,10 @@
       "id": "trickier-sort",
       "type": "sort_bins",
       "difficulty": "challenge",
+      "uses": [
+        "rules-based-program",
+        "learning-from-examples"
+      ],
       "prompt": "Trickier: does each one **follow rules**, or **learn from examples**?",
       "bins": [
         {
@@ -180,7 +206,10 @@
       "id": "does-it-understand",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "When [[AI|artificial-intelligence]] recognises your face, does it **understand** you like a friend does?",
+      "uses": [
+        "learning-from-examples"
+      ],
+      "prompt": "Face unlock learned from lots of photos of your face. Does it **understand** you like a friend does?",
       "options": [
         {
           "id": "friend",
@@ -210,6 +239,12 @@
       "id": "spot-the-ai-recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "rules-based-program",
+        "learning-from-examples",
+        "machine-learning",
+        "ai-doesnt-understand"
+      ],
       "title": "Recap",
       "body": "- Ordinary programs follow **rules** a person wrote.\n- **AI** learns from **examples** instead, finding patterns. That's **machine learning**.\n- It matches patterns. It doesn't understand things like people do.\n\nNext: you'll teach a model yourself."
     }

@@ -10,6 +10,10 @@
       "id": "free-pizza-guess",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "learning-from-examples",
+        "only-knows-its-examples"
+      ],
       "prompt": "In this spam filter's examples, **\"free\"** only appeared in spam. Will it call **\"Free pizza at footy training\"** spam?",
       "options": [
         {
@@ -40,6 +44,9 @@
       "id": "label-messages",
       "type": "train_model",
       "difficulty": "core",
+      "uses": [
+        "label"
+      ],
       "prompt": "Teach the spam filter: tap **Spam** or **Not spam** for each message.",
       "model": {
         "kind": "word-vote"
@@ -127,6 +134,9 @@
       "id": "words-that-vote",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "word-vote"
+      ],
       "title": "Words that vote",
       "body": "In this model, words **vote**. Each word of 3 or more letters gets one vote per training message it was in, for that message's label.\n\n\"Free\" was in three spam messages: 3 votes for spam. \"Pizza\" and \"training\" gave not spam just 2. Most votes wins; a tie means \"not sure\"."
     },
@@ -134,6 +144,10 @@
       "id": "fix-the-data",
       "type": "train_model",
       "difficulty": "core",
+      "uses": [
+        "word-vote",
+        "training-data"
+      ],
       "prompt": "Fix the spam filter's mistake.",
       "model": {
         "kind": "word-vote"
@@ -240,6 +254,12 @@
       "id": "helpful-or-problem",
       "type": "sort_bins",
       "difficulty": "core",
+      "teaches": [
+        "good-data-qualities"
+      ],
+      "uses": [
+        "good-data-qualities"
+      ],
       "prompt": "Good data has **checked labels**, **variety** and **realistic** examples. Does each one make data **better** or cause a **problem**?",
       "bins": [
         {
@@ -296,6 +316,10 @@
       "id": "noisy-label",
       "type": "train_model",
       "difficulty": "challenge",
+      "uses": [
+        "label",
+        "nearest-example"
+      ],
       "prompt": "One example has the wrong label.",
       "model": {
         "kind": "nearest",
@@ -398,6 +422,10 @@
       "id": "more-or-better",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "uses": [
+        "good-data-qualities",
+        "only-knows-its-examples"
+      ],
       "prompt": "A spam filter learned only from **English** and misses **Spanish** spam. Which **one** addition helps most?",
       "options": [
         {
@@ -428,6 +456,12 @@
       "id": "training-data-recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "training-data",
+        "only-knows-its-examples",
+        "quality-over-quantity",
+        "good-data-qualities"
+      ],
       "title": "Recap",
       "body": "- A model learns only from its **training data**, gaps and all.\n- One word, or one example, can tip it the wrong way.\n- Better data beats more data: checked, varied and realistic.\n\nNext: how to tell if a model is any good."
     }

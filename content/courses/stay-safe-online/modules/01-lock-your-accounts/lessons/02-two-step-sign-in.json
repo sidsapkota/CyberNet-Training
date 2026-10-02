@@ -10,16 +10,23 @@
       "id": "password-is-enough",
       "type": "true_false",
       "difficulty": "core",
-      "prompt": "If someone learns your password, they can always get into your account.",
+      "uses": [],
+      "prompt": "Many accounts ask for a **second proof** after your password, like a code on your phone. With only your password, someone can still always get in.",
       "answer": false,
       "explanation": "False, if the account asks for a **second proof** too, like a code on your phone. Then a password alone isn't enough.",
       "hint": "Could an account ask for something more than the password?",
-      "nudge": "Some accounts ask for a second proof after the password. Without it, the password isn't enough."
+      "nudge": "Some accounts ask for a second proof after the password. Without it, the password isn't enough.",
+      "teaches": [
+        "second-proof"
+      ]
     },
     {
       "id": "stranger-far-away",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "data-breach"
+      ],
       "prompt": "Could a **stranger far away** get it?",
       "bins": [
         {
@@ -61,6 +68,9 @@
       "id": "meet-two-step",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "two-step-sign-in"
+      ],
       "show": {
         "kind": "term",
         "term": "two-step-sign-in"
@@ -71,7 +81,15 @@
       "id": "the-code-text",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "**Nobody real ever asks you to send a sign-in code.**",
+      "teaches": [
+        "never-share-sign-in-code",
+        "unexpected-code-means-password-known"
+      ],
+      "uses": [
+        "two-step-sign-in",
+        "unexpected-code-means-password-known"
+      ],
+      "prompt": "A **sign-in code** is sent when someone types your password. **Nobody real ever asks you to send one.**",
       "start": "text",
       "steps": [
         {
@@ -118,16 +136,24 @@
       "id": "meet-passkey",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "passkey",
+        "passkey-strongest"
+      ],
       "show": {
         "kind": "term",
         "term": "passkey"
       },
-      "sentence": "A **passkey** signs you in with your face, fingerprint or PIN, and fake sites can't use it."
+      "sentence": "A **passkey** signs you in with your face, fingerprint or PIN: the strongest kind, since fake sites can't use it."
     },
     {
       "id": "meet-authenticator",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "authenticator-app",
+        "app-codes-beat-text-codes"
+      ],
       "show": {
         "kind": "term",
         "term": "authenticator-app"
@@ -138,6 +164,12 @@
       "id": "rank-proofs",
       "type": "drag_to_order",
       "difficulty": "core",
+      "uses": [
+        "passkey",
+        "passkey-strongest",
+        "app-codes-beat-text-codes",
+        "two-step-sign-in"
+      ],
       "prompt": "Strongest to weakest: put them in order.",
       "items": [
         {
@@ -165,6 +197,10 @@
       "id": "text-codes-only",
       "type": "scenario",
       "difficulty": "challenge",
+      "uses": [
+        "two-step-sign-in",
+        "app-codes-beat-text-codes"
+      ],
       "prompt": "A music app only offers **text codes** for two-step sign-in.",
       "start": "choose",
       "steps": [
@@ -200,6 +236,13 @@
       "id": "forty-accounts",
       "type": "multiple_choice",
       "difficulty": "core",
+      "teaches": [
+        "password-manager"
+      ],
+      "uses": [
+        "unique-password-per-account",
+        "password-reuse-risk"
+      ],
       "prompt": "A **password manager** remembers a different strong password for every account. What's safest for Sam's 40 accounts?",
       "options": [
         {
@@ -225,6 +268,12 @@
       "id": "match-tools",
       "type": "match_pairs",
       "difficulty": "core",
+      "uses": [
+        "passphrase",
+        "password-manager",
+        "two-step-sign-in",
+        "passkey"
+      ],
       "prompt": "Match each one to what it does.",
       "pairs": [
         {
@@ -256,6 +305,12 @@
       "id": "lost-phone",
       "type": "scenario",
       "difficulty": "challenge",
+      "teaches": [
+        "backup-codes"
+      ],
+      "uses": [
+        "two-step-sign-in"
+      ],
       "prompt": "You saved **backup codes** when you set up two-step. Then your phone falls in a lake.",
       "start": "start",
       "steps": [
@@ -291,6 +346,12 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "two-step-sign-in",
+        "never-share-sign-in-code",
+        "unexpected-code-means-password-known",
+        "change-stolen-password"
+      ],
       "title": "Recap",
       "body": "- **Two-step sign-in** adds a second proof, so a stolen password isn't enough.\n- **Never share a sign-in code.** One you didn't ask for? Change your password.\n- **Try this:** turn on two-step sign-in for one account, with an adult."
     }

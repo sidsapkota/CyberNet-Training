@@ -10,6 +10,9 @@
       "id": "meet-ghz",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "ghz"
+      ],
       "prompt": "Tap the word.",
       "show": {
         "kind": "term",
@@ -21,6 +24,9 @@
       "id": "more-ghz-more-steps",
       "type": "true_false",
       "difficulty": "core",
+      "uses": [
+        "ghz"
+      ],
       "prompt": "The same CPU gets through more steps a second at 3 GHz than at 2 GHz.",
       "answer": true,
       "explanation": "**True.** More GHz means more ticks each second, and every tick moves the work along, so the same CPU gets more done. (Real CPUs can even do several steps in one tick.)",
@@ -31,6 +37,9 @@
       "id": "meet-cores",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "cpu-cores"
+      ],
       "prompt": "Tap the word.",
       "show": {
         "kind": "term",
@@ -42,6 +51,12 @@
       "id": "add-cores",
       "type": "simulator",
       "difficulty": "core",
+      "teaches": [
+        "split-jobs-share-cores"
+      ],
+      "uses": [
+        "cpu-cores"
+      ],
       "prompt": "Saving this video takes 12 seconds. Add cores to get it to **3 seconds or less**.",
       "model": "cpu-cores",
       "params": {
@@ -89,6 +104,9 @@
       "id": "cores",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "cores-need-splittable-jobs"
+      ],
       "title": "More cooks in the kitchen",
       "body": "Four cooks chop vegetables four times as fast. But four cooks can't bake a cake any sooner.\n\nCores are the same: they only help when a job **splits into pieces** that don't wait for each other."
     },
@@ -96,6 +114,9 @@
       "id": "split-or-not",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "cores-need-splittable-jobs"
+      ],
       "prompt": "Can more cores **share** this job?",
       "bins": [
         {
@@ -137,6 +158,10 @@
       "id": "meet-the-heat-pipe",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "cpu-gets-hot",
+        "heat-pipe"
+      ],
       "prompt": "Hard work makes the CPU hot. Tap the copper pipe.",
       "show": {
         "kind": "part",
@@ -150,6 +175,10 @@
       "id": "meet-the-fan",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "fan",
+        "vents"
+      ],
       "prompt": "Tap the round part with blades.",
       "show": {
         "kind": "part",
@@ -163,6 +192,9 @@
       "id": "meet-throttling",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "throttling"
+      ],
       "prompt": "Tap the word.",
       "show": {
         "kind": "term",
@@ -174,6 +206,11 @@
       "id": "find-the-cooling",
       "type": "hotspot",
       "difficulty": "core",
+      "uses": [
+        "cpu",
+        "heat-pipe",
+        "fan"
+      ],
       "prompt": "Tap the **CPU** and the **two parts** that cool it.",
       "scene": "laptop",
       "view": "open",
@@ -210,6 +247,10 @@
       "id": "blanket-slows-it",
       "type": "fill_gap",
       "difficulty": "core",
+      "uses": [
+        "throttling",
+        "vents"
+      ],
       "prompt": "On a soft blanket, the vents are blocked, so the CPU gets hot and ___.",
       "options": [
         {
@@ -236,6 +277,11 @@
       "id": "too-hot",
       "type": "simulator",
       "difficulty": "challenge",
+      "uses": [
+        "throttling",
+        "fan",
+        "ghz"
+      ],
       "prompt": "This laptop is throttling on a blanket, with a dusty fan. Get it back to **3 GHz**.",
       "model": "thermal",
       "params": {},
@@ -283,6 +329,10 @@
       "id": "more-cores-one-file",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "uses": [
+        "cores-need-splittable-jobs",
+        "ghz"
+      ],
       "prompt": "A job can't be split. Which laptop finishes it first, if both run at 3 GHz?",
       "options": [
         {
@@ -308,6 +358,12 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "ghz",
+        "cores-need-splittable-jobs",
+        "throttling",
+        "hard-surface-clears-vents"
+      ],
       "title": "Recap",
       "body": "- **GHz** is clock speed: more GHz, more steps a second.\n- **Cores** only help with jobs that split into pieces.\n- A hot CPU **throttles**. The heat pipe and fan keep it cool.\n\nThat's the [[hardware]]. Next: the software in charge.\n\n**Try this:** use your laptop on a hard surface, not a bed, so its vents stay clear."
     }

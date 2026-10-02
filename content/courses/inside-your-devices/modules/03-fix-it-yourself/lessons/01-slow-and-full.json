@@ -10,6 +10,14 @@
       "id": "slow-afternoon",
       "type": "scenario",
       "difficulty": "core",
+      "teaches": [
+        "tabs-use-ram"
+      ],
+      "uses": [
+        "task-manager",
+        "close-apps-frees-ram",
+        "storage"
+      ],
       "prompt": "Your laptop got slower all afternoon. Let's find out which part is struggling.",
       "start": "first",
       "steps": [
@@ -63,6 +71,9 @@
       "id": "fix-it-loop",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "fix-it-loop"
+      ],
       "title": "The fix-it loop",
       "body": "Good fixers use a loop:\n\n1. **Describe** what's wrong: \"slow with 30 [[tabs|browser-tab]] open\" is a clue; \"it's broken\" isn't.\n2. **Guess** the likely cause.\n3. **Try** the simplest, safest fix.\n4. **Check** it worked. If not, guess again."
     },
@@ -70,12 +81,28 @@
       "id": "order-the-loop",
       "type": "drag_to_order",
       "difficulty": "core",
+      "uses": [
+        "fix-it-loop",
+        "tabs-use-ram"
+      ],
       "prompt": "Your friend's laptop crawls with lots of tabs open. Put the fix-it loop in order.",
       "items": [
-        { "id": "describe", "label": "Notice it's slow only with many tabs" },
-        { "id": "guess", "label": "Guess that the RAM is full" },
-        { "id": "try", "label": "Close the tabs you don't need" },
-        { "id": "check", "label": "See whether it's faster now" }
+        {
+          "id": "describe",
+          "label": "Notice it's slow only with many tabs"
+        },
+        {
+          "id": "guess",
+          "label": "Guess that the RAM is full"
+        },
+        {
+          "id": "try",
+          "label": "Close the tabs you don't need"
+        },
+        {
+          "id": "check",
+          "label": "See whether it's faster now"
+        }
       ],
       "explanation": "**Describe, guess, try, check.** The clue points to RAM, closing tabs is the fix, and checking shows if it worked.",
       "hint": "You can't guess before describing, or check before trying.",
@@ -85,6 +112,15 @@
       "id": "hot-on-the-bed",
       "type": "scenario",
       "difficulty": "core",
+      "teaches": [
+        "vents",
+        "throttling",
+        "fan-roars-when-hot"
+      ],
+      "uses": [
+        "fan",
+        "hard-surface-clears-vents"
+      ],
       "prompt": "Laptops cool through **vents**. If the [[CPU]] gets too hot, it slows itself down (**throttling**).",
       "start": "cause",
       "steps": [
@@ -124,8 +160,8 @@
             },
             {
               "id": "fridge",
-              "text": "Put it in the fridge to cool it fast",
-              "consequence": "Sudden cold can make water droplets form inside. Let it cool slowly in open air instead.",
+              "text": "Turn the screen brightness down",
+              "consequence": "The screen isn't what's overheating: the duvet still blocks the vents.",
               "outcome": "fail"
             },
             {
@@ -144,36 +180,108 @@
       "id": "free-up-space",
       "type": "simulator",
       "difficulty": "core",
+      "uses": [
+        "backup",
+        "gigabyte"
+      ],
       "prompt": "Free up at least **15 [[GB|gigabyte]]** on this full phone, but **keep your photos and essay**.",
       "model": "storage",
       "params": {
         "capacityGb": 64,
         "systemGb": 14,
         "files": [
-          { "id": "photos", "label": "Photos", "gb": 14 },
-          { "id": "homework", "label": "Essay", "gb": 0.5 },
-          { "id": "old-downloads", "label": "Old setup files", "gb": 6 },
-          { "id": "unused-game", "label": "Game you never play", "gb": 9 },
-          { "id": "videos", "label": "Videos (backed up)", "gb": 20 }
+          {
+            "id": "photos",
+            "label": "Photos",
+            "gb": 14
+          },
+          {
+            "id": "homework",
+            "label": "Essay",
+            "gb": 0.5
+          },
+          {
+            "id": "old-downloads",
+            "label": "Old setup files",
+            "gb": 6
+          },
+          {
+            "id": "unused-game",
+            "label": "Game you never play",
+            "gb": 9
+          },
+          {
+            "id": "videos",
+            "label": "Videos (backed up)",
+            "gb": 20
+          }
         ]
       },
       "controls": [
-        { "id": "delete-photos", "kind": "toggle", "label": "Delete Photos" },
-        { "id": "delete-homework", "kind": "toggle", "label": "Delete Essay" },
-        { "id": "delete-old-downloads", "kind": "toggle", "label": "Delete Old setup files" },
-        { "id": "delete-unused-game", "kind": "toggle", "label": "Delete Game you never play" },
-        { "id": "delete-videos", "kind": "toggle", "label": "Delete Videos (backed up)" }
+        {
+          "id": "delete-photos",
+          "kind": "toggle",
+          "label": "Delete Photos"
+        },
+        {
+          "id": "delete-homework",
+          "kind": "toggle",
+          "label": "Delete Essay"
+        },
+        {
+          "id": "delete-old-downloads",
+          "kind": "toggle",
+          "label": "Delete Old setup files"
+        },
+        {
+          "id": "delete-unused-game",
+          "kind": "toggle",
+          "label": "Delete Game you never play"
+        },
+        {
+          "id": "delete-videos",
+          "kind": "toggle",
+          "label": "Delete Videos (backed up)"
+        }
       ],
       "outputs": [
-        { "id": "freeGb", "kind": "meter", "label": "Free space", "unit": "GB" },
-        { "id": "usedPct", "kind": "bar", "label": "Storage used" },
-        { "id": "files", "kind": "list", "label": "What's using space" }
+        {
+          "id": "freeGb",
+          "kind": "meter",
+          "label": "Free space",
+          "unit": "GB"
+        },
+        {
+          "id": "usedPct",
+          "kind": "bar",
+          "label": "Storage used"
+        },
+        {
+          "id": "files",
+          "kind": "list",
+          "label": "What's using space"
+        }
       ],
       "goal": {
         "all": [
-          { "target": "output", "id": "freeGb", "op": ">=", "value": 15 },
-          { "target": "control", "id": "delete-photos", "op": "==", "value": false },
-          { "target": "control", "id": "delete-homework", "op": "==", "value": false }
+          {
+            "target": "output",
+            "id": "freeGb",
+            "op": ">=",
+            "value": 15
+          },
+          {
+            "target": "control",
+            "id": "delete-photos",
+            "op": "==",
+            "value": false
+          },
+          {
+            "target": "control",
+            "id": "delete-homework",
+            "op": "==",
+            "value": false
+          }
         ]
       },
       "explanation": "The game plus the old setup files (left over from installing apps) free 15 GB, and so do the backed-up videos alone. Photos and the essay stay.",
@@ -184,19 +292,60 @@
       "id": "delete-or-keep",
       "type": "sort_bins",
       "difficulty": "core",
+      "teaches": [
+        "delete-safely",
+        "system-files"
+      ],
+      "uses": [
+        "backup"
+      ],
       "prompt": "Delete what's backed up, **duplicated** or unused; keep **only copies**, things you need and **system files**.",
       "bins": [
-        { "id": "delete", "label": "Safe to delete" },
-        { "id": "keep", "label": "Keep" }
+        {
+          "id": "delete",
+          "label": "Safe to delete"
+        },
+        {
+          "id": "keep",
+          "label": "Keep"
+        }
       ],
       "items": [
-        { "id": "installers", "label": "Setup files for apps already installed", "bin": "delete" },
-        { "id": "backed-up", "label": "Videos you've already backed up", "bin": "delete" },
-        { "id": "unused-app", "label": "An app you haven't opened in a year", "bin": "delete" },
-        { "id": "blurry", "label": "Five blurry copies of the same photo", "bin": "delete" },
-        { "id": "only-copy", "label": "Your only copy of family photos", "bin": "keep" },
-        { "id": "homework", "label": "A report due next week", "bin": "keep" },
-        { "id": "system-files", "label": "System files you don't recognise", "bin": "keep" }
+        {
+          "id": "installers",
+          "label": "Leftover installers for apps you have",
+          "bin": "delete"
+        },
+        {
+          "id": "backed-up",
+          "label": "Videos you've already backed up",
+          "bin": "delete"
+        },
+        {
+          "id": "unused-app",
+          "label": "An app you haven't opened in a year",
+          "bin": "delete"
+        },
+        {
+          "id": "blurry",
+          "label": "Five blurry copies of the same photo",
+          "bin": "delete"
+        },
+        {
+          "id": "only-copy",
+          "label": "Your only copy of family photos",
+          "bin": "keep"
+        },
+        {
+          "id": "homework",
+          "label": "A report due next week",
+          "bin": "keep"
+        },
+        {
+          "id": "system-files",
+          "label": "System files you don't recognise",
+          "bin": "keep"
+        }
       ],
       "explanation": "Backed-up, duplicated or unused things can go (an app can be reinstalled). Keep **only copies**, things you need and **system files**, which the device needs to run.",
       "hint": "Is it backed up, a duplicate or unused? Or an only copy, needed, or a system file?",
@@ -206,6 +355,13 @@
       "id": "slow-start",
       "type": "scenario",
       "difficulty": "challenge",
+      "teaches": [
+        "startup-apps"
+      ],
+      "uses": [
+        "task-manager",
+        "apps-use-ram"
+      ],
       "prompt": "Your laptop takes five minutes to start, then crawls for a while after.",
       "start": "cause",
       "steps": [
@@ -259,38 +415,119 @@
       "id": "room-for-update",
       "type": "simulator",
       "difficulty": "challenge",
+      "uses": [
+        "delete-safely",
+        "cloud",
+        "backup"
+      ],
       "prompt": "An [[update]] needs **12 GB free**. Delete what's saved elsewhere; keep **only copies**.",
       "model": "storage",
       "params": {
         "capacityGb": 34,
         "systemGb": 10,
         "files": [
-          { "id": "photos", "label": "Photos (only copy)", "gb": 10 },
-          { "id": "notes", "label": "Notes (only copy)", "gb": 0.2 },
-          { "id": "music", "label": "Music (also in cloud)", "gb": 5 },
-          { "id": "old-videos", "label": "Old videos (backed up)", "gb": 4 },
-          { "id": "maps", "label": "Maps (can re-download)", "gb": 2 },
-          { "id": "downloads", "label": "Old setup files", "gb": 1.5 }
+          {
+            "id": "photos",
+            "label": "Photos (only copy)",
+            "gb": 10
+          },
+          {
+            "id": "notes",
+            "label": "Notes (only copy)",
+            "gb": 0.2
+          },
+          {
+            "id": "music",
+            "label": "Music (also in cloud)",
+            "gb": 5
+          },
+          {
+            "id": "old-videos",
+            "label": "Old videos (backed up)",
+            "gb": 4
+          },
+          {
+            "id": "maps",
+            "label": "Maps (can re-download)",
+            "gb": 2
+          },
+          {
+            "id": "downloads",
+            "label": "Old setup files",
+            "gb": 1.5
+          }
         ]
       },
       "controls": [
-        { "id": "delete-photos", "kind": "toggle", "label": "Delete Photos" },
-        { "id": "delete-notes", "kind": "toggle", "label": "Delete Notes" },
-        { "id": "delete-music", "kind": "toggle", "label": "Delete Music" },
-        { "id": "delete-old-videos", "kind": "toggle", "label": "Delete Old videos" },
-        { "id": "delete-maps", "kind": "toggle", "label": "Delete Maps" },
-        { "id": "delete-downloads", "kind": "toggle", "label": "Delete Old setup files" }
+        {
+          "id": "delete-photos",
+          "kind": "toggle",
+          "label": "Delete Photos"
+        },
+        {
+          "id": "delete-notes",
+          "kind": "toggle",
+          "label": "Delete Notes"
+        },
+        {
+          "id": "delete-music",
+          "kind": "toggle",
+          "label": "Delete Music"
+        },
+        {
+          "id": "delete-old-videos",
+          "kind": "toggle",
+          "label": "Delete Old videos"
+        },
+        {
+          "id": "delete-maps",
+          "kind": "toggle",
+          "label": "Delete Maps"
+        },
+        {
+          "id": "delete-downloads",
+          "kind": "toggle",
+          "label": "Delete Old setup files"
+        }
       ],
       "outputs": [
-        { "id": "freeGb", "kind": "meter", "label": "Free space", "unit": "GB" },
-        { "id": "usedPct", "kind": "bar", "label": "Storage used" },
-        { "id": "files", "kind": "list", "label": "What's using space" }
+        {
+          "id": "freeGb",
+          "kind": "meter",
+          "label": "Free space",
+          "unit": "GB"
+        },
+        {
+          "id": "usedPct",
+          "kind": "bar",
+          "label": "Storage used"
+        },
+        {
+          "id": "files",
+          "kind": "list",
+          "label": "What's using space"
+        }
       ],
       "goal": {
         "all": [
-          { "target": "output", "id": "freeGb", "op": ">=", "value": 12 },
-          { "target": "control", "id": "delete-photos", "op": "==", "value": false },
-          { "target": "control", "id": "delete-notes", "op": "==", "value": false }
+          {
+            "target": "output",
+            "id": "freeGb",
+            "op": ">=",
+            "value": 12
+          },
+          {
+            "target": "control",
+            "id": "delete-photos",
+            "op": "==",
+            "value": false
+          },
+          {
+            "target": "control",
+            "id": "delete-notes",
+            "op": "==",
+            "value": false
+          }
         ]
       },
       "explanation": "Music (in the cloud), backed-up videos and maps (re-downloadable) free enough. Photos and notes are **only copies**, so they stay.",
@@ -301,6 +538,12 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "fix-it-loop",
+        "tabs-use-ram",
+        "throttling",
+        "delete-safely"
+      ],
       "title": "Recap",
       "body": "- Use the loop: **describe, guess, try, check**.\n- **Slow?** Too many [[tabs|browser-tab]] fill [[RAM]]. Heat makes the CPU slow down.\n- **Full?** Delete what's backed up or unused. Keep your only copies."
     }

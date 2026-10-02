@@ -10,6 +10,7 @@
       "id": "weird-link-sent",
       "type": "true_false",
       "difficulty": "core",
+      "uses": [],
       "prompt": "Friends say you sent them a weird link, but you didn't. Someone may be in your account.",
       "answer": true,
       "explanation": "True. Messages you didn't send are a sign of a **take-over**: someone else is in your account.",
@@ -20,6 +21,9 @@
       "id": "meet-take-over",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "account-take-over"
+      ],
       "show": {
         "kind": "icon",
         "icon": "shield-alert"
@@ -30,6 +34,9 @@
       "id": "meet-recovery",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "recovery-email"
+      ],
       "show": {
         "kind": "icon",
         "icon": "key-round"
@@ -40,6 +47,11 @@
       "id": "hacked-or-normal",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "account-take-over",
+        "recovery-email",
+        "two-step-sign-in"
+      ],
       "prompt": "Sign of a take-over, or normal?",
       "bins": [
         {
@@ -81,6 +93,9 @@
       "id": "surprise-code",
       "type": "fill_gap",
       "difficulty": "core",
+      "uses": [
+        "unexpected-code-means-password-known"
+      ],
       "prompt": "A sign-in code you didn't ask for means someone may have your ___.",
       "options": [
         {
@@ -106,6 +121,10 @@
       "id": "step-by-step",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "first-steps-after-hack",
+        "trusted-adult"
+      ],
       "title": "What to do first",
       "body": "Spotted a sign? Do these first, in order:\n\n1. **Tell a trusted adult.** You're not in trouble, and they can help you work through it.\n2. **Change the password** on a device you trust, in the real app or website. Make it new, strong and unique.\n3. **Check the recovery email and phone**, and remove anything that isn't yours, so the attacker can't reset your new password."
     },
@@ -113,6 +132,9 @@
       "id": "order-the-steps",
       "type": "drag_to_order",
       "difficulty": "core",
+      "uses": [
+        "first-steps-after-hack"
+      ],
       "prompt": "Put the first three steps in order.",
       "items": [
         {
@@ -136,6 +158,14 @@
       "id": "weird-messages",
       "type": "scenario",
       "difficulty": "core",
+      "teaches": [
+        "attacker-stays-signed-in"
+      ],
+      "uses": [
+        "first-steps-after-hack",
+        "recovery-email",
+        "two-step-sign-in"
+      ],
       "prompt": "Your friends say you've been sending them strange links. You haven't.",
       "start": "start",
       "steps": [
@@ -189,6 +219,9 @@
       "id": "still-signed-in",
       "type": "true_false",
       "difficulty": "core",
+      "uses": [
+        "attacker-stays-signed-in"
+      ],
       "prompt": "Changing your password signs the attacker out of every device.",
       "answer": false,
       "explanation": "False. They can stay signed in where they already are. Use **sign out other devices** in the account's security settings too.",
@@ -199,6 +232,10 @@
       "id": "recovery-offer",
       "type": "multiple_choice",
       "difficulty": "core",
+      "teaches": [
+        "official-account-recovery"
+      ],
+      "uses": [],
       "prompt": "Locked out? Use the app's own **Forgot password**. Then a stranger offers to get your account back for $20. What is this?",
       "options": [
         {
@@ -224,6 +261,10 @@
       "id": "recovery-changed",
       "type": "scenario",
       "difficulty": "challenge",
+      "uses": [
+        "recovery-email",
+        "two-step-sign-in"
+      ],
       "prompt": "You check your account's security settings.",
       "start": "start",
       "steps": [
@@ -253,6 +294,10 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "first-steps-after-hack",
+        "official-account-recovery"
+      ],
       "title": "Recap",
       "body": "- First: **tell an adult**, **change the password**, **check recovery details**.\n- Locked out? Use the **official recovery**. Never pay a stranger.\n- **Try this:** check your account's recovery email and phone today."
     }

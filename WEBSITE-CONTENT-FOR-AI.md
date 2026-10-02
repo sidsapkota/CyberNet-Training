@@ -51,7 +51,7 @@ Strong passwords, passphrases and two-step sign-in.
 
 **Key facts**
 
-- *Words it teaches:* A **passphrase** is four or more **random** words, like `otter planet brick soup`: never a song line or quote.
+- *Words it teaches:* A **passphrase** is four or more **random** words, like `otter planet brick soup`: never a song line or quote. Guessers try **common passwords** like `password123`, **names and years**, and **swaps** like `@` for `a` first.
 - *Recap:* **Length** wins: a **passphrase** is four or more **random** words. Give every account its **own** password.
 
 **Best interactive cards**
@@ -68,12 +68,12 @@ Strong passwords, passphrases and two-step sign-in.
 
 **Key facts**
 
-- *Words it teaches:* **Two-step sign-in** asks for your password **plus** a second proof, like your phone. A **passkey** signs you in with your face, fingerprint or PIN, and fake sites can't use it. An **authenticator app** makes fresh codes on your phone, safer than codes sent by text.
+- *Words it teaches:* **Two-step sign-in** asks for your password **plus** a second proof, like your phone. A **passkey** signs you in with your face, fingerprint or PIN: the strongest kind, since fake sites can't use it. An **authenticator app** makes fresh codes on your phone, safer than codes sent by text.
 - *Recap:* **Two-step sign-in** adds a second proof, so a stolen password isn't enough. **Never share a sign-in code.** One you didn't ask for?
 
 **Best interactive cards**
 
-- Choose what happens: **Nobody real ever asks you to send a sign-in code.**
+- Choose what happens: A **sign-in code** is sent when someone types your password. **Nobody real ever asks you to send one.**
 - Choose what happens: A music app only offers **text codes** for two-step sign-in.
 - Choose what happens: You saved **backup codes** when you set up two-step. Then your phone falls in a lake.
 
@@ -709,7 +709,7 @@ How AI makes pictures and voices, deepfakes, and checking what's real.
 
 **Key facts**
 
-- *How to check a picture:* **Find where it first appeared**: search with the picture itself. **Look for trusted news** showing it, ideally from other angles.
+- *How to check a picture:* **Find where it first appeared**: search with the picture. **Look for trusted news** showing it, ideally from other angles.
 - *Recap:* Check before sharing, and say when **your** pictures are AI.
 
 **Best interactive cards**
@@ -760,7 +760,7 @@ Spot AI-made fakes, keep your private stuff private, and use AI honestly.
 **Best interactive cards**
 
 - Sort into groups: Chats may be **saved**, **read** or **used for training**, and friends' things aren't yours to share. Type it, or keep it private?
-- Choose what happens: Apps ask for permissions, and you choose. This recipe-to-shopping-list app asks for your **contacts** and **location**.
+- Choose what happens: Apps ask for permissions, and you choose: allow only what an app needs for its job. This recipe-to-shopping-list app asks for your **contacts** and **location**.
 - Choose what happens: It's late, you're feeling really down, and you've been telling an AI chatbot about it for an hour.
 
 **Surprising facts**
@@ -818,7 +818,6 @@ Discover how computers store everything using just 0s and 1s, and why internet a
 **Surprising facts**
 
 - Each place is worth **double** the one to its right: the switches pictured read `10110010`, so 128 + 32 + 16 + 2 = **178**.
-- A **byte** is 8 bits, so IPv4 parts go 0 to 255.
 
 #### Bytes, File Sizes and Hex
 
@@ -1075,7 +1074,7 @@ Discover how one address runs many services, how TCP and UDP deliver data, and t
 
 **Best interactive cards**
 
-- Sort into groups: **TCP** is a tracked parcel: lost pieces are resent and put back in order. **UDP** is a postcard: quick, but nothing is checked or resent. Which suits each job?
+- Sort into groups: **TCP** is a tracked parcel: lost pieces are resent and put back in order. **UDP** is a postcard: quick, nothing checked or resent, so it suits **live** things, where late data is useless. Which suits each job?
 - Put in order: Before sending data, TCP checks both sides can hear each other with three messages: the **three-way handshake**. Put them in order.
 - Match pairs: Match each activity to the reason it's delivered that way.
 
@@ -1092,7 +1091,7 @@ Discover how one address runs many services, how TCP and UDP deliver data, and t
 
 **Best interactive cards**
 
-- Put in order: A page request travels like a letter in nested wrappers, each following its own rules: a **protocol**. Order them from the **letter in the middle** to the **outside wrapper**.
+- Put in order: A page request travels like a letter in nested wrappers, each following its own rules: a **protocol**. The outside one is Wi-Fi or a cable, to the next device. Order them from the **letter in the middle** to the…
 - Sort into groups: **HTTPS** fetches web pages securely, **DNS** turns names into addresses, and **SMTP** and **IMAP** handle email. Which protocol does each job?
 - Put in order: **SMTP** sends mail on its way (app to provider, and server to server). **IMAP** lets an app read mail kept on a server. Put your email to `hello@example.org` in order.
 

@@ -10,12 +10,15 @@
       "id": "prize-email",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "dont-reply-to-scams"
+      ],
       "prompt": "You've \"won\" a prize by email. What do you do?",
       "start": "start",
       "steps": [
         {
           "id": "start",
-          "text": "**\"You've won a games console! Claim it within 1 hour.\"** You never entered. What do you do?",
+          "text": "**\"You've won a games console! Claim it within 1 hour.\"** You never entered. (Replying to a scam tells the scammer your address works.) What do you do?",
           "choices": [
             {
               "id": "click",
@@ -39,12 +42,18 @@
         }
       ],
       "explanation": "A prize you never entered, plus a deadline, is a classic scam. **Don't click, don't reply**: report it and delete it.",
-      "hint": "You never entered a competition. So why would someone give you a prize, and why only one hour to claim it?"
+      "hint": "You never entered a competition. So why would someone give you a prize, and why only one hour to claim it?",
+      "teaches": [
+        "dont-reply-to-scams"
+      ]
     },
     {
       "id": "meet-phishing",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "phishing"
+      ],
       "show": {
         "kind": "term",
         "term": "phishing"
@@ -52,19 +61,21 @@
       "sentence": "**Phishing** is a message pretending to be someone you trust, to trick you."
     },
     {
-      "id": "asks-for-password",
-      "type": "true_false",
-      "difficulty": "core",
-      "prompt": "A real company might ask for your password by email.",
-      "answer": false,
-      "explanation": "False. Real companies never ask for passwords, codes, card numbers or PINs by email. Anyone who does is phishing.",
-      "hint": "Would your bank or school ever need your password?",
-      "nudge": "Real companies already run your account. They never need your password."
-    },
-    {
       "id": "meet-the-signs",
       "type": "hotspot",
       "difficulty": "core",
+      "teaches": [
+        "fake-sender-address",
+        "lookalike-domain",
+        "rushing-is-a-scam-sign",
+        "generic-greeting",
+        "name-proves-nothing",
+        "companies-never-ask-for-secrets",
+        "hidden-link"
+      ],
+      "uses": [
+        "phishing"
+      ],
       "prompt": "This email says it's from Your Bank. What gives it away?",
       "scene": "email",
       "mode": "explore",
@@ -93,9 +104,27 @@
       "explanation": "Five warning signs: a **fake sender**, **rushing you**, **\"Dear Customer\"**, **asking for secrets** and a **hidden link**. Plus **too good to be true** from the prize email."
     },
     {
+      "id": "asks-for-password",
+      "type": "true_false",
+      "difficulty": "core",
+      "uses": [
+        "companies-never-ask-for-secrets"
+      ],
+      "prompt": "A real company might ask for your password by email.",
+      "answer": false,
+      "explanation": "False. Real companies never ask for passwords, codes, card numbers or PINs by email. Anyone who does is phishing.",
+      "hint": "Would your bank or school ever need your password?",
+      "nudge": "Real companies already run your account. They never need your password."
+    },
+    {
       "id": "phish-or-fine",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "rushing-is-a-scam-sign",
+        "companies-never-ask-for-secrets",
+        "hidden-link"
+      ],
       "prompt": "Phishing, or probably fine?",
       "bins": [
         {
@@ -137,6 +166,13 @@
       "id": "spot-the-signs",
       "type": "hotspot",
       "difficulty": "core",
+      "uses": [
+        "fake-sender-address",
+        "rushing-is-a-scam-sign",
+        "generic-greeting",
+        "companies-never-ask-for-secrets",
+        "hidden-link"
+      ],
       "prompt": "Tap **every** warning sign in this email.",
       "scene": "email",
       "mode": "tap",
@@ -155,6 +191,10 @@
       "id": "knows-your-name",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "name-proves-nothing",
+        "change-stolen-password"
+      ],
       "prompt": "This email uses your real name.",
       "start": "start",
       "steps": [
@@ -208,6 +248,10 @@
       "id": "real-sender",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "uses": [
+        "fake-sender-address",
+        "lookalike-domain"
+      ],
       "prompt": "Your Bank's website is `yourbank.example`. Which email address is **really** Your Bank's?",
       "options": [
         {
@@ -233,6 +277,11 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "phishing",
+        "fake-sender-address",
+        "go-there-yourself"
+      ],
       "title": "Recap",
       "body": "- **Phishing** pretends to be someone you trust.\n- Check the **address after the @**; don't click, **go there yourself**.\n- **Try this:** check the address after the @ on the next email you get."
     }

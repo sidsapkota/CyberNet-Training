@@ -10,26 +10,87 @@
       "id": "two-routes",
       "type": "packet_path",
       "difficulty": "core",
+      "uses": [],
       "prompt": "Get your [[packet]] from the **laptop** to the **web [[server]]** by following the lines. There's more than one way.",
       "nodes": [
-        { "id": "laptop", "kind": "device", "label": "Laptop", "address": "192.168.1.20", "col": 0, "row": 1 },
-        { "id": "home", "kind": "router", "label": "Home router", "address": "192.168.1.1", "col": 1, "row": 1 },
-        { "id": "isp-a", "kind": "router", "label": "ISP router A", "address": "203.0.113.1", "col": 2, "row": 0 },
-        { "id": "isp-b", "kind": "router", "label": "ISP router B", "address": "203.0.113.2", "col": 2, "row": 2 },
-        { "id": "server", "kind": "server", "label": "Web server", "address": "198.51.100.10", "col": 3, "row": 1 }
+        {
+          "id": "laptop",
+          "kind": "device",
+          "label": "Laptop",
+          "address": "192.168.1.20",
+          "col": 0,
+          "row": 1
+        },
+        {
+          "id": "home",
+          "kind": "router",
+          "label": "Home router",
+          "address": "192.168.1.1",
+          "col": 1,
+          "row": 1
+        },
+        {
+          "id": "isp-a",
+          "kind": "router",
+          "label": "ISP router A",
+          "address": "203.0.113.1",
+          "col": 2,
+          "row": 0
+        },
+        {
+          "id": "isp-b",
+          "kind": "router",
+          "label": "ISP router B",
+          "address": "203.0.113.2",
+          "col": 2,
+          "row": 2
+        },
+        {
+          "id": "server",
+          "kind": "server",
+          "label": "Web server",
+          "address": "198.51.100.10",
+          "col": 3,
+          "row": 1
+        }
       ],
       "links": [
-        { "from": "laptop", "to": "home" },
-        { "from": "home", "to": "isp-a" },
-        { "from": "home", "to": "isp-b" },
-        { "from": "isp-a", "to": "server" },
-        { "from": "isp-b", "to": "server" }
+        {
+          "from": "laptop",
+          "to": "home"
+        },
+        {
+          "from": "home",
+          "to": "isp-a"
+        },
+        {
+          "from": "home",
+          "to": "isp-b"
+        },
+        {
+          "from": "isp-a",
+          "to": "server"
+        },
+        {
+          "from": "isp-b",
+          "to": "server"
+        }
       ],
       "source": "laptop",
       "destination": "server",
       "validPaths": [
-        ["laptop", "home", "isp-a", "server"],
-        ["laptop", "home", "isp-b", "server"]
+        [
+          "laptop",
+          "home",
+          "isp-a",
+          "server"
+        ],
+        [
+          "laptop",
+          "home",
+          "isp-b",
+          "server"
+        ]
       ],
       "explanation": "Both routes work. The internet has lots of connections, so there's usually more than one way, and it keeps working when one fails.",
       "hint": "From the laptop, follow the lines box to box until you reach the server.",
@@ -39,6 +100,11 @@
       "id": "routers",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "router",
+        "routing-table",
+        "hop"
+      ],
       "title": "Routers and hops",
       "body": "The boxes in the middle are **routers**: they join networks and pass packets on. No router plans the whole trip: each checks its **routing table**, a list of which neighbour to send each address to next, like signposts at junctions. Each step from one box to the next is a **hop**."
     },
@@ -46,6 +112,9 @@
       "id": "count-routers",
       "type": "numeric_input",
       "difficulty": "core",
+      "uses": [
+        "router"
+      ],
       "prompt": "A [[packet]] travels:\n\nlaptop → home router → [[ISP]] router → main internet router → the [[server]]'s router → web server\n\nHow many **routers** does it pass through?",
       "base": "decimal",
       "answer": 4,
@@ -58,12 +127,36 @@
       "id": "device-jobs",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Routers work **between** networks; inside one network, a **switch** joins the devices. Match each job to its device.",
+      "teaches": [
+        "switch",
+        "server"
+      ],
+      "uses": [
+        "router",
+        "server"
+      ],
+      "prompt": "Routers work **between** networks; inside one network, a **switch** joins the devices. A **server** is a computer that hands things out. Match each job to its device.",
       "pairs": [
-        { "id": "router", "left": "Sends the office's data to the internet", "right": "Router" },
-        { "id": "switch", "left": "Sends a file from laptop to printer", "right": "Switch" },
-        { "id": "server", "left": "Hands out web pages to anyone who asks", "right": "Server" },
-        { "id": "laptop", "left": "Where you type the email first", "right": "Laptop" }
+        {
+          "id": "router",
+          "left": "Sends the office's data to the internet",
+          "right": "Router"
+        },
+        {
+          "id": "switch",
+          "left": "Sends a file from laptop to printer",
+          "right": "Switch"
+        },
+        {
+          "id": "server",
+          "left": "Hands out web pages to anyone who asks",
+          "right": "Server"
+        },
+        {
+          "id": "laptop",
+          "left": "Where you type the email first",
+          "right": "Laptop"
+        }
       ],
       "explanation": "Leaving the office crosses **between** networks (a **router**), while laptop to printer stays **inside** one (a **switch**). A **server** hands out pages, and a **laptop** is where packets start or finish.",
       "hint": "Does the data leave the network, stay inside it, get served to others, or start with a person?",
@@ -73,12 +166,20 @@
       "id": "first-hop",
       "type": "terminal",
       "difficulty": "core",
+      "teaches": [
+        "traceroute"
+      ],
+      "uses": [
+        "hop"
+      ],
       "prompt": "**Traceroute** lists each router on the way to a website, one numbered line per [[hop]].\n\nRun `traceroute example.com`. What is **hop 1**'s address?",
       "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
       "commands": [
         {
           "command": "traceroute example.com",
-          "aliases": ["traceroute www.example.com"],
+          "aliases": [
+            "traceroute www.example.com"
+          ],
           "description": "List each router between you and example.com",
           "output": "traceroute to example.com (198.51.100.10), 30 hops max, 60 byte packets\n 1  192.168.1.1 (192.168.1.1)  1.912 ms  1.804 ms  1.765 ms\n 2  203.0.113.1 (203.0.113.1)  9.483 ms  9.412 ms  9.377 ms\n 3  203.0.113.65 (203.0.113.65)  11.207 ms  11.164 ms  11.122 ms\n 4  198.51.100.1 (198.51.100.1)  18.930 ms  18.842 ms  19.004 ms\n 5  example.com (198.51.100.10)  19.315 ms  19.271 ms  19.233 ms"
         }
@@ -86,7 +187,9 @@
       "success": {
         "type": "answer",
         "question": "What is the address of hop 1?",
-        "accepted": ["192.168.1.1"]
+        "accepted": [
+          "192.168.1.1"
+        ]
       },
       "explanation": "Hop 1, `192.168.1.1`, is a [[private address]]: your **home router**, the first stop out of your home. Hops 2 to 4 are internet companies' routers, hop 5 is example.com itself, and the times are replies in [[milliseconds|millisecond]] (ms).",
       "hint": "Find the line numbered 1: the top line only repeats where you're going.",
@@ -96,9 +199,19 @@
       "id": "stars",
       "type": "multiple_choice",
       "difficulty": "core",
+      "teaches": [
+        "traceroute-lines"
+      ],
+      "uses": [
+        "traceroute",
+        "router"
+      ],
       "prompt": "Each traceroute line is one hop answering, and the last line is the site itself.\n\nHop 3 shows `* * *`, yet hops 4 and 5 still appear. What does that mean?",
       "options": [
-        { "id": "no-reply", "text": "That router stayed quiet, but passed the packets on" },
+        {
+          "id": "no-reply",
+          "text": "That router stayed quiet, but passed the packets on"
+        },
         {
           "id": "broken",
           "text": "That router is broken, so packets went another way",
@@ -123,31 +236,118 @@
       "id": "router-down",
       "type": "packet_path",
       "difficulty": "challenge",
+      "uses": [],
       "prompt": "**Router 2 is down.** Find a route from the **laptop** to the **web [[server]]** that avoids it.",
       "nodes": [
-        { "id": "laptop", "kind": "device", "label": "Laptop", "address": "192.168.1.20", "col": 0, "row": 0 },
-        { "id": "home", "kind": "router", "label": "Home router", "address": "192.168.1.1", "col": 1, "row": 0 },
-        { "id": "r1", "kind": "router", "label": "Router 1", "address": "203.0.113.1", "col": 2, "row": 0 },
-        { "id": "r2", "kind": "router", "label": "Router 2", "address": "203.0.113.2", "col": 3, "row": 0, "down": true },
-        { "id": "r3", "kind": "router", "label": "Router 3", "address": "203.0.113.3", "col": 1, "row": 1 },
-        { "id": "r4", "kind": "router", "label": "Router 4", "address": "198.51.100.1", "col": 2, "row": 1 },
-        { "id": "server", "kind": "server", "label": "Web server", "address": "198.51.100.10", "col": 3, "row": 1 }
+        {
+          "id": "laptop",
+          "kind": "device",
+          "label": "Laptop",
+          "address": "192.168.1.20",
+          "col": 0,
+          "row": 0
+        },
+        {
+          "id": "home",
+          "kind": "router",
+          "label": "Home router",
+          "address": "192.168.1.1",
+          "col": 1,
+          "row": 0
+        },
+        {
+          "id": "r1",
+          "kind": "router",
+          "label": "Router 1",
+          "address": "203.0.113.1",
+          "col": 2,
+          "row": 0
+        },
+        {
+          "id": "r2",
+          "kind": "router",
+          "label": "Router 2",
+          "address": "203.0.113.2",
+          "col": 3,
+          "row": 0,
+          "down": true
+        },
+        {
+          "id": "r3",
+          "kind": "router",
+          "label": "Router 3",
+          "address": "203.0.113.3",
+          "col": 1,
+          "row": 1
+        },
+        {
+          "id": "r4",
+          "kind": "router",
+          "label": "Router 4",
+          "address": "198.51.100.1",
+          "col": 2,
+          "row": 1
+        },
+        {
+          "id": "server",
+          "kind": "server",
+          "label": "Web server",
+          "address": "198.51.100.10",
+          "col": 3,
+          "row": 1
+        }
       ],
       "links": [
-        { "from": "laptop", "to": "home" },
-        { "from": "home", "to": "r1" },
-        { "from": "home", "to": "r3" },
-        { "from": "r1", "to": "r2" },
-        { "from": "r2", "to": "server" },
-        { "from": "r1", "to": "r4" },
-        { "from": "r3", "to": "r4" },
-        { "from": "r4", "to": "server" }
+        {
+          "from": "laptop",
+          "to": "home"
+        },
+        {
+          "from": "home",
+          "to": "r1"
+        },
+        {
+          "from": "home",
+          "to": "r3"
+        },
+        {
+          "from": "r1",
+          "to": "r2"
+        },
+        {
+          "from": "r2",
+          "to": "server"
+        },
+        {
+          "from": "r1",
+          "to": "r4"
+        },
+        {
+          "from": "r3",
+          "to": "r4"
+        },
+        {
+          "from": "r4",
+          "to": "server"
+        }
       ],
       "source": "laptop",
       "destination": "server",
       "validPaths": [
-        ["laptop", "home", "r1", "r4", "server"],
-        ["laptop", "home", "r3", "r4", "server"]
+        [
+          "laptop",
+          "home",
+          "r1",
+          "r4",
+          "server"
+        ],
+        [
+          "laptop",
+          "home",
+          "r3",
+          "r4",
+          "server"
+        ]
       ],
       "explanation": "Every working route goes through **Router 4**, the server's only other link, reached via Router 1 or Router 3. Real routers [[update]] their [[routing tables|routing-table]] and send [[packets|packet]] around failures by themselves.",
       "hint": "No route can use Router 2: find another router linked to the server, then work back.",
@@ -157,6 +357,14 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "router",
+        "hop",
+        "routing-table",
+        "traceroute",
+        "traceroute-lines",
+        "traceroute-stars"
+      ],
       "title": "Recap",
       "body": "- **Routers** pass packets on, one **hop** at a time, using routing tables.\n- **Traceroute** lists the hops; its last line is the destination itself.\n- `* * *` means a router stayed quiet but still passed packets on."
     }

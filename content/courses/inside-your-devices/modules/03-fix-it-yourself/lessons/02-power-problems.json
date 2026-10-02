@@ -10,24 +10,77 @@
       "id": "last-the-journey",
       "type": "simulator",
       "difficulty": "core",
+      "teaches": [
+        "low-power-mode"
+      ],
+      "uses": [],
       "prompt": "No charger on a long trip: last **at least 8 hours** with **music** on. (**Low power mode** saves energy.)",
       "model": "battery",
-      "params": { "wattHours": 15 },
+      "params": {
+        "wattHours": 15
+      },
       "controls": [
-        { "id": "brightness", "kind": "slider", "label": "Screen brightness", "min": 0, "max": 100, "step": 10, "unit": "%" },
-        { "id": "music", "kind": "toggle", "label": "Music", "initial": true },
-        { "id": "gps", "kind": "toggle", "label": "Location", "initial": true },
-        { "id": "backgroundApps", "kind": "toggle", "label": "Background apps", "initial": true },
-        { "id": "lowPower", "kind": "toggle", "label": "Low power mode" }
+        {
+          "id": "brightness",
+          "kind": "slider",
+          "label": "Screen brightness",
+          "min": 0,
+          "max": 100,
+          "step": 10,
+          "unit": "%"
+        },
+        {
+          "id": "music",
+          "kind": "toggle",
+          "label": "Music",
+          "initial": true
+        },
+        {
+          "id": "gps",
+          "kind": "toggle",
+          "label": "Location",
+          "initial": true
+        },
+        {
+          "id": "backgroundApps",
+          "kind": "toggle",
+          "label": "Background apps",
+          "initial": true
+        },
+        {
+          "id": "lowPower",
+          "kind": "toggle",
+          "label": "Low power mode"
+        }
       ],
       "outputs": [
-        { "id": "hours", "kind": "meter", "label": "Battery lasts", "unit": "hours" },
-        { "id": "watts", "kind": "meter", "label": "Power used", "unit": "W" }
+        {
+          "id": "hours",
+          "kind": "meter",
+          "label": "Battery lasts",
+          "unit": "hours"
+        },
+        {
+          "id": "watts",
+          "kind": "meter",
+          "label": "Power used",
+          "unit": "W"
+        }
       ],
       "goal": {
         "all": [
-          { "target": "output", "id": "hours", "op": ">=", "value": 8 },
-          { "target": "control", "id": "music", "op": "==", "value": true }
+          {
+            "target": "output",
+            "id": "hours",
+            "op": ">=",
+            "value": 8
+          },
+          {
+            "target": "control",
+            "id": "music",
+            "op": "==",
+            "value": true
+          }
         ]
       },
       "explanation": "**Brightness**, **location** and **background apps** drain most; turn them down or use **low power mode**. Music uses very little.",
@@ -38,18 +91,58 @@
       "id": "helps-or-harms",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "**Heat** wears batteries out. Does each habit **help** the battery, or **drain or damage** it?",
+      "teaches": [
+        "heat-wears-batteries",
+        "location-drains-battery",
+        "brightness-drains-battery"
+      ],
+      "uses": [
+        "low-power-mode",
+        "location-drains-battery",
+        "brightness-drains-battery"
+      ],
+      "prompt": "**Heat** wears batteries out, and a bright screen and location use the most power. Does each habit **help** the battery, or **drain or damage** it?",
       "bins": [
-        { "id": "helps", "label": "Helps" },
-        { "id": "harms", "label": "Drains or damages it" }
+        {
+          "id": "helps",
+          "label": "Helps"
+        },
+        {
+          "id": "harms",
+          "label": "Drains or damages it"
+        }
       ],
       "items": [
-        { "id": "dim", "label": "Turning the brightness down", "bin": "helps" },
-        { "id": "low-power", "label": "Low power mode on a long day", "bin": "helps" },
-        { "id": "shade", "label": "Keeping it out of the hot sun", "bin": "helps" },
-        { "id": "hot-car", "label": "Leaving it in a hot car", "bin": "harms" },
-        { "id": "pillow", "label": "Charging it under your pillow", "bin": "harms" },
-        { "id": "gps-always", "label": "Location on for every app, all day", "bin": "harms" }
+        {
+          "id": "dim",
+          "label": "Turning the brightness down",
+          "bin": "helps"
+        },
+        {
+          "id": "low-power",
+          "label": "Low power mode on a long day",
+          "bin": "helps"
+        },
+        {
+          "id": "shade",
+          "label": "Keeping it out of the hot sun",
+          "bin": "helps"
+        },
+        {
+          "id": "hot-car",
+          "label": "Leaving it in a hot car",
+          "bin": "harms"
+        },
+        {
+          "id": "pillow",
+          "label": "Charging it under your pillow",
+          "bin": "harms"
+        },
+        {
+          "id": "gps-always",
+          "label": "Location on for every app, all day",
+          "bin": "harms"
+        }
       ],
       "explanation": "Dimming and low power mode save charge. **Heat** (hot cars, charging under a pillow) wears it out, and location all day drains it.",
       "hint": "Heavy use and **heat** both hurt: which habits save energy or keep it cool?",
@@ -59,6 +152,11 @@
       "id": "wont-charge",
       "type": "scenario",
       "difficulty": "core",
+      "teaches": [
+        "cables-wear-out",
+        "no-metal-or-water-in-port"
+      ],
+      "uses": [],
       "prompt": "Your phone won't charge. Tip: cables wear out more often than phones, and **metal or water** can damage a [[port]].",
       "start": "first",
       "steps": [
@@ -112,11 +210,16 @@
       "id": "find-the-port",
       "type": "hotspot",
       "difficulty": "core",
+      "uses": [
+        "charging-port"
+      ],
       "prompt": "Tap the **charging port**, where the fluff was hiding.",
       "scene": "phone",
       "view": "closed",
       "mode": "tap",
-      "targets": ["charging-port"],
+      "targets": [
+        "charging-port"
+      ],
       "explanation": "The **charging port** is on the bottom edge, open to the outside, so fluff collects there.",
       "hint": "It's where the charger plugs in, on one of the phone's edges.",
       "nudge": "Where do you plug in a charger? That opening is on an outside edge."
@@ -125,19 +228,58 @@
       "id": "safe-for-the-port",
       "type": "sort_bins",
       "difficulty": "challenge",
+      "uses": [
+        "cables-wear-out",
+        "no-metal-or-water-in-port",
+        "repair-safety"
+      ],
       "prompt": "This tablet's port looks fluffy. Is each idea **safe to try**, or could it **damage** it?",
       "bins": [
-        { "id": "safe", "label": "Safe to try" },
-        { "id": "unsafe", "label": "Could damage it" }
+        {
+          "id": "safe",
+          "label": "Safe to try"
+        },
+        {
+          "id": "unsafe",
+          "label": "Could damage it"
+        }
       ],
       "items": [
-        { "id": "another-cable", "label": "Try another cable", "bin": "safe" },
-        { "id": "another-socket", "label": "Try another plug socket", "bin": "safe" },
-        { "id": "soft-brush", "label": "Tablet off, adult uses a soft, dry brush", "bin": "safe" },
-        { "id": "repair-shop", "label": "Take it to a repair shop", "bin": "safe" },
-        { "id": "pin", "label": "Poke the fluff out with a pin", "bin": "unsafe" },
-        { "id": "paper-clip", "label": "Scrape it out with a paper clip", "bin": "unsafe" },
-        { "id": "rinse", "label": "Rinse the port under the tap", "bin": "unsafe" }
+        {
+          "id": "another-cable",
+          "label": "Try another cable",
+          "bin": "safe"
+        },
+        {
+          "id": "another-socket",
+          "label": "Try another plug socket",
+          "bin": "safe"
+        },
+        {
+          "id": "soft-brush",
+          "label": "Tablet off, adult uses a soft, dry brush",
+          "bin": "safe"
+        },
+        {
+          "id": "repair-shop",
+          "label": "Take it to a repair shop",
+          "bin": "safe"
+        },
+        {
+          "id": "pin",
+          "label": "Poke the fluff out with a pin",
+          "bin": "unsafe"
+        },
+        {
+          "id": "paper-clip",
+          "label": "Scrape it out with a paper clip",
+          "bin": "unsafe"
+        },
+        {
+          "id": "rinse",
+          "label": "Rinse the port under the tap",
+          "bin": "unsafe"
+        }
       ],
       "explanation": "Cables and sockets first, then something **soft and dry** with an adult, or a repair shop. **Metal** can cause a [[short circuit]], and **water** can ruin it.",
       "hint": "Remember the two things that must never go in a port.",
@@ -147,6 +289,11 @@
       "id": "swollen-batteries",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "lithium-ion",
+        "swollen-battery-signs",
+        "swollen-battery-action"
+      ],
       "title": "When a battery swells",
       "mascot": "presenting",
       "body": "Old or damaged **lithium-ion** batteries (in phones and laptops) can **swell**: the case bulges, the screen lifts, or the trackpad (touch pad) is pushed up.\n\nA swollen battery can catch fire if it's pressed or punctured. Stop using the device, don't press it, and get help from an adult or a repair shop."
@@ -155,9 +302,16 @@
       "id": "swollen-battery",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "swollen-battery-signs",
+        "swollen-battery-action"
+      ],
       "prompt": "An old laptop's case is **bulging** and its trackpad is pushed up. What should you do?",
       "options": [
-        { "id": "stop-tell", "text": "Stop using it, unplug it, and tell an adult" },
+        {
+          "id": "stop-tell",
+          "text": "Stop using it, unplug it, and tell an adult"
+        },
         {
           "id": "press-flat",
           "text": "Press the case flat so the trackpad works",
@@ -177,6 +331,11 @@
       "id": "too-hot-to-handle",
       "type": "scenario",
       "difficulty": "challenge",
+      "uses": [
+        "heat-wears-batteries",
+        "throttling",
+        "swollen-battery-action"
+      ],
       "prompt": "You're gaming on your bed with the phone plugged in.",
       "start": "warning",
       "steps": [
@@ -186,8 +345,8 @@
           "choices": [
             {
               "id": "freezer",
-              "text": "Put it in the freezer to cool it quickly",
-              "consequence": "Sudden cold can make water droplets form inside. Let it cool slowly.",
+              "text": "Keep playing, but turn the brightness down",
+              "consequence": "It still needs to cool: stop, unplug it and let it rest.",
               "outcome": "fail"
             },
             {
@@ -230,6 +389,14 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "brightness-drains-battery",
+        "location-drains-battery",
+        "heat-wears-batteries",
+        "cables-wear-out",
+        "no-metal-or-water-in-port",
+        "swollen-battery-action"
+      ],
       "title": "Recap",
       "body": "- **Brightness, location and background apps** drain batteries most. **Heat** wears them out.\n- Won't charge? Another cable first. Never metal or water in the port.\n- Bulging device? Stop using it, don't press it, get help."
     }

@@ -9,6 +9,9 @@
       "id": "three-switch-patterns",
       "type": "numeric_input",
       "difficulty": "core",
+      "uses": [
+        "bits-double-patterns"
+      ],
       "prompt": "How many on/off **patterns** can **3** switches (3 bits) make?",
       "base": "decimal",
       "answer": 8,
@@ -19,6 +22,10 @@
       "id": "make-100",
       "type": "binary_toggle",
       "difficulty": "core",
+      "uses": [
+        "binary-place-values",
+        "decimal-to-binary"
+      ],
       "prompt": "Make the number **100**.",
       "target": 100,
       "explanation": "64 fits, leaving 36; 32 fits, leaving 4; then 4. So 100 = 64 + 32 + 4: `01100100`."
@@ -27,12 +34,27 @@
       "id": "read-17",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "binary-place-values"
+      ],
       "prompt": "What number does `00010001` stand for?",
       "options": [
-        { "id": "two", "text": "2" },
-        { "id": "seventeen", "text": "17" },
-        { "id": "thirty-four", "text": "34" },
-        { "id": "ten-thousand-one", "text": "10,001" }
+        {
+          "id": "two",
+          "text": "2"
+        },
+        {
+          "id": "seventeen",
+          "text": "17"
+        },
+        {
+          "id": "thirty-four",
+          "text": "34"
+        },
+        {
+          "id": "ten-thousand-one",
+          "text": "10,001"
+        }
       ],
       "correctOptionId": "seventeen",
       "explanation": "The 16 and 1 places are on: 16 + 1 = **17**. 2 counts the 1s, and 10,001 reads it as an everyday number."
@@ -41,12 +63,27 @@
       "id": "convert-13-steps",
       "type": "drag_to_order",
       "difficulty": "core",
+      "uses": [
+        "decimal-to-binary"
+      ],
       "prompt": "Put the steps for turning **13** into binary in order.",
       "items": [
-        { "id": "eight", "label": "8 fits in 13: switch on 8, leaving 5" },
-        { "id": "four", "label": "4 fits in 5: switch on 4, leaving 1" },
-        { "id": "two", "label": "2 doesn't fit in 1: leave 2 off" },
-        { "id": "one", "label": "1 fits in 1: switch on 1, leaving 0" }
+        {
+          "id": "eight",
+          "label": "8 fits in 13: switch on 8, leaving 5"
+        },
+        {
+          "id": "four",
+          "label": "4 fits in 5: switch on 4, leaving 1"
+        },
+        {
+          "id": "two",
+          "label": "2 doesn't fit in 1: leave 2 off"
+        },
+        {
+          "id": "one",
+          "label": "1 fits in 1: switch on 1, leaving 0"
+        }
       ],
       "explanation": "Work from the biggest place down: 8, 4, 2, 1. So 13 = 8 + 4 + 1: `00001101`."
     },
@@ -54,20 +91,39 @@
       "id": "why-255",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Why can't any part of an IPv4 address be **300**?",
+      "uses": [
+        "byte",
+        "byte-max-255"
+      ],
+      "prompt": "Why can't one **byte** hold the number **300**?",
       "options": [
-        { "id": "eight-bits", "text": "Each part is one byte, which only goes up to 255" },
-        { "id": "two-digits", "text": "Parts can only have two digits, so 99 is the top" },
-        { "id": "reserved", "text": "300 is saved for private home networks only" },
-        { "id": "even-only", "text": "Numbers from 300 up are kept for special messages" }
+        {
+          "id": "eight-bits",
+          "text": "A byte has 8 bits, and 8 bits only reach 255"
+        },
+        {
+          "id": "two-digits",
+          "text": "A byte stores two digits, so 99 is the top"
+        },
+        {
+          "id": "reserved",
+          "text": "300 needs a special byte saved for big numbers"
+        },
+        {
+          "id": "even-only",
+          "text": "Above 255, a byte can only hold even numbers"
+        }
       ],
       "correctOptionId": "eight-bits",
-      "explanation": "Each part is an **octet**: 8 bits, which make 256 patterns, 0 to 255. 300 simply doesn't fit."
+      "explanation": "8 bits make 256 patterns, numbered 0 to 255, so 255 is the most one byte can hold. Bigger numbers need more bytes."
     },
     {
       "id": "two-mb-in-kb",
       "type": "numeric_input",
       "difficulty": "core",
+      "uses": [
+        "size-units"
+      ],
       "prompt": "A video clip is **4,000 KB**. How many **MB** is that?",
       "base": "decimal",
       "answer": 4,
@@ -78,12 +134,28 @@
       "id": "why-hex",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "hex",
+        "hex-digit-4-bits"
+      ],
       "prompt": "Why do people often write bytes in **hex**, not binary?",
       "options": [
-        { "id": "shorter", "text": "Easier to read: 4 bits per hex digit, 2 per byte" },
-        { "id": "less-space", "text": "Hex uses less storage: 2 digits saved, not 8" },
-        { "id": "computers-use-hex", "text": "Computers work in hex inside, not in binary" },
-        { "id": "bigger-numbers", "text": "Hex lets one byte hold much bigger numbers" }
+        {
+          "id": "shorter",
+          "text": "Easier to read: 4 bits per hex digit, 2 per byte"
+        },
+        {
+          "id": "less-space",
+          "text": "Hex uses less storage: 2 digits saved, not 8"
+        },
+        {
+          "id": "computers-use-hex",
+          "text": "Computers work in hex inside, not in binary"
+        },
+        {
+          "id": "bigger-numbers",
+          "text": "Hex lets one byte hold much bigger numbers"
+        }
       ],
       "correctOptionId": "shorter",
       "explanation": "Hex is just a shorter way to **write** the same bits: `FF` instead of `11111111`. The storage and the byte's top of 255 don't change."

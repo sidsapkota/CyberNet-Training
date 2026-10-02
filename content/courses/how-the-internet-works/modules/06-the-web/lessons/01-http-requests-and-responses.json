@@ -10,6 +10,10 @@
       "id": "requests-per-page",
       "type": "numeric_input",
       "difficulty": "core",
+      "teaches": [
+        "one-request-per-file"
+      ],
+      "uses": [],
       "prompt": "Your [[browser]] has to **ask** for every file a page needs, one request per file.\n\nA page has its text (one file) and 3 photos, none saved yet. How many requests?",
       "base": "decimal",
       "answer": 4,
@@ -22,6 +26,16 @@
       "id": "request-and-response",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "http",
+        "http-request",
+        "http-method",
+        "url-path",
+        "http-response",
+        "status-code",
+        "response-body",
+        "html"
+      ],
       "title": "Ask and answer",
       "body": "That asking follows a [[protocol]] called **HTTP**. Your [[browser]] sends a **request**, like `GET /news`: a **method** (what to do) and a **path** (which page).\n\nThe [[server]] replies with a **response**: a **status code** (how it went), then the **body**, the content itself. Web pages are written in **HTML**."
     },
@@ -29,12 +43,34 @@
       "id": "request-parts",
       "type": "match_pairs",
       "difficulty": "core",
+      "uses": [
+        "http-method",
+        "url-path",
+        "status-code",
+        "response-body"
+      ],
       "prompt": "Match each part of an [[HTTP]] conversation to its job.",
       "pairs": [
-        { "id": "method", "left": "The method (`GET`)", "right": "What you want the server to do" },
-        { "id": "path", "left": "The path (`/news`)", "right": "Which page or file you want" },
-        { "id": "status", "left": "The status code (`200`)", "right": "How the request went" },
-        { "id": "body", "left": "The response body", "right": "The content itself, like the page's HTML" }
+        {
+          "id": "method",
+          "left": "The method (`GET`)",
+          "right": "What you want the server to do"
+        },
+        {
+          "id": "path",
+          "left": "The path (`/news`)",
+          "right": "Which page or file you want"
+        },
+        {
+          "id": "status",
+          "left": "The status code (`200`)",
+          "right": "How the request went"
+        },
+        {
+          "id": "body",
+          "left": "The response body",
+          "right": "The content itself, like the page's HTML"
+        }
       ],
       "explanation": "The **method** (the action) and the **path** (which item) go out in the request. The **status code** and the **body** come back: first how it went, then the content.",
       "hint": "Like ordering at a café: what to do, which item, whether they could, and what you get handed.",
@@ -44,18 +80,52 @@
       "id": "get-or-post",
       "type": "sort_bins",
       "difficulty": "core",
+      "teaches": [
+        "get-post"
+      ],
+      "uses": [],
       "prompt": "**GET** means \"please give me this\"; **POST** means \"please take this data\".\n\nWhich does your [[browser]] use for each?",
       "bins": [
-        { "id": "get", "label": "GET: give me this" },
-        { "id": "post", "label": "POST: take this data" }
+        {
+          "id": "get",
+          "label": "GET: give me this"
+        },
+        {
+          "id": "post",
+          "label": "POST: take this data"
+        }
       ],
       "items": [
-        { "id": "watch-video", "label": "Watch a video", "bin": "get" },
-        { "id": "view-photo", "label": "View a friend's photo", "bin": "get" },
-        { "id": "open-news", "label": "Open the news page", "bin": "get" },
-        { "id": "post-comment", "label": "Post a comment", "bin": "post" },
-        { "id": "log-in", "label": "Log in with your password", "bin": "post" },
-        { "id": "upload-photo", "label": "Upload a photo", "bin": "post" }
+        {
+          "id": "watch-video",
+          "label": "Watch a video",
+          "bin": "get"
+        },
+        {
+          "id": "view-photo",
+          "label": "View a friend's photo",
+          "bin": "get"
+        },
+        {
+          "id": "open-news",
+          "label": "Open the news page",
+          "bin": "get"
+        },
+        {
+          "id": "post-comment",
+          "label": "Post a comment",
+          "bin": "post"
+        },
+        {
+          "id": "log-in",
+          "label": "Log in with your password",
+          "bin": "post"
+        },
+        {
+          "id": "upload-photo",
+          "label": "Upload a photo",
+          "bin": "post"
+        }
       ],
       "explanation": "Watching, viewing and opening all **fetch**, so they're **GET**. Commenting, logging in and uploading **send your data**, so they're **POST**.",
       "hint": "Is data coming **to** you, or are you sending something of yours **to** the server?",
@@ -65,19 +135,56 @@
       "id": "whose-problem",
       "type": "sort_bins",
       "difficulty": "core",
+      "teaches": [
+        "status-code-classes"
+      ],
+      "uses": [],
       "prompt": "A response's **status code** starts with a digit that says how it went: **2** all fine, **4** a problem with the request (like a missing page), **5** a problem on the server.\n\nSort these responses.",
       "bins": [
-        { "id": "fine", "label": "All fine" },
-        { "id": "mine", "label": "Problem with the request" },
-        { "id": "server", "label": "The server's problem" }
+        {
+          "id": "fine",
+          "label": "All fine"
+        },
+        {
+          "id": "mine",
+          "label": "Problem with the request"
+        },
+        {
+          "id": "server",
+          "label": "The server's problem"
+        }
       ],
       "items": [
-        { "id": "s200", "label": "`200 OK`", "bin": "fine" },
-        { "id": "s201", "label": "`201 Created`", "bin": "fine" },
-        { "id": "s404", "label": "`404 Not Found`", "bin": "mine" },
-        { "id": "s403", "label": "`403 Forbidden`", "bin": "mine" },
-        { "id": "s500", "label": "`500 Internal Server Error`", "bin": "server" },
-        { "id": "s503", "label": "`503 Service Unavailable`", "bin": "server" }
+        {
+          "id": "s200",
+          "label": "`200 OK`",
+          "bin": "fine"
+        },
+        {
+          "id": "s201",
+          "label": "`201 Created`",
+          "bin": "fine"
+        },
+        {
+          "id": "s404",
+          "label": "`404 Not Found`",
+          "bin": "mine"
+        },
+        {
+          "id": "s403",
+          "label": "`403 Forbidden`",
+          "bin": "mine"
+        },
+        {
+          "id": "s500",
+          "label": "`500 Internal Server Error`",
+          "bin": "server"
+        },
+        {
+          "id": "s503",
+          "label": "`503 Service Unavailable`",
+          "bin": "server"
+        }
       ],
       "explanation": "**2** worked. **4** means the request was the problem (404: nothing there; 403: not yours to see), and **5** means the server failed (500: an error inside it; 503: busy or down).",
       "hint": "Ignore the words for a moment and read only the first digit of each code.",
@@ -87,24 +194,37 @@
       "id": "curl-headers",
       "type": "terminal",
       "difficulty": "core",
+      "teaches": [
+        "curl",
+        "http-headers",
+        "redirect"
+      ],
+      "uses": [],
       "prompt": "`curl -I` (a capital **I**) shows just the status code and labelled lines called **headers**. A **3** code means \"moved\", and `Location` gives the new address.\n\nRun `curl -I http://example.com/old-news`. Where has it moved?",
       "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
       "commands": [
         {
           "command": "curl -I http://example.com/",
-          "aliases": ["curl -I http://example.com", "curl -I example.com"],
+          "aliases": [
+            "curl -I http://example.com",
+            "curl -I example.com"
+          ],
           "description": "Get the response headers for the home page",
           "output": "HTTP/1.1 200 OK\nContent-Type: text/html; charset=UTF-8\nContent-Length: 1256\nDate: Tue, 29 Sep 2026 10:20:15 GMT\nServer: nginx"
         },
         {
           "command": "curl -I http://example.com/old-news",
-          "aliases": ["curl -I example.com/old-news"],
+          "aliases": [
+            "curl -I example.com/old-news"
+          ],
           "description": "Get the response headers for /old-news",
           "output": "HTTP/1.1 301 Moved Permanently\nLocation: http://example.com/news\nContent-Type: text/html\nContent-Length: 169\nDate: Tue, 29 Sep 2026 10:20:21 GMT\nServer: nginx"
         },
         {
           "command": "curl -I http://example.com/missing",
-          "aliases": ["curl -I example.com/missing"],
+          "aliases": [
+            "curl -I example.com/missing"
+          ],
           "description": "Get the response headers for /missing",
           "output": "HTTP/1.1 404 Not Found\nContent-Type: text/html\nContent-Length: 153\nDate: Tue, 29 Sep 2026 10:20:27 GMT\nServer: nginx"
         }
@@ -112,7 +232,11 @@
       "success": {
         "type": "answer",
         "question": "Where has /old-news moved to?",
-        "accepted": ["http://example.com/news", "example.com/news", "/news"]
+        "accepted": [
+          "http://example.com/news",
+          "example.com/news",
+          "/news"
+        ]
       },
       "explanation": "`/old-news` gave **301 Moved Permanently**, and its `Location` line says `http://example.com/news`. A [[browser]] follows that by itself.",
       "hint": "Run it on `/old-news`, then find the line starting with `Location`.",
@@ -122,9 +246,15 @@
       "id": "error-500",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "uses": [
+        "status-code-classes"
+      ],
       "prompt": "A page shows **500 Internal Server Error**. What does that say about your own connection?",
       "options": [
-        { "id": "server-problem", "text": "It works: a reply came, so the server's at fault" },
+        {
+          "id": "server-problem",
+          "text": "It works: a reply came, so the server's at fault"
+        },
         {
           "id": "wifi",
           "text": "It's broken: your Wi-Fi dropped out mid-request",
@@ -149,6 +279,12 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "http",
+        "get-post",
+        "status-code-classes",
+        "redirect"
+      ],
       "title": "Recap",
       "body": "- **HTTP**: the [[browser]] requests, the [[server]] responds.\n- **GET** fetches things; **POST** sends your data to the server.\n- Status codes: **2** fine, **3** moved, **4** request problem, **5** server problem.\n\nNext: keeping all of this private with [[HTTPS]]."
     }

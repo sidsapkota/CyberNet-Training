@@ -10,7 +10,10 @@
       "id": "seen-before",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A dog spotter scores **100%** on photos it trained on, answers included. Does that prove it's good?",
+      "uses": [
+        "overfitting"
+      ],
+      "prompt": "A model can simply remember photos it has seen. A dog spotter scores **100%** on the photos it trained on. Does that prove it's good?",
       "options": [
         {
           "id": "no-memory",
@@ -34,12 +37,20 @@
       ],
       "correctOptionId": "no-memory",
       "hint": "Imagine a school test where you'd seen every question and answer the day before.",
-      "explanation": "A test it has already seen only checks its **memory**. To see what it really learned, test it on photos it has **never seen**."
+      "explanation": "A test it has already seen only checks its **memory**. To see what it really learned, test it on photos it has **never seen**.",
+      "teaches": [
+        "overfitting"
+      ]
     },
     {
       "id": "train-and-test",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "test-examples",
+        "accuracy",
+        "fair-test"
+      ],
       "title": "Keep some examples aside",
       "body": "So people split their examples. **Training examples** are for learning. **Test examples** are kept aside: the model never sees them while it learns.\n\n**Accuracy** is the share of test examples it gets right: 8 out of 10 is 80%. A **fair test** uses new, realistic examples, easy and hard."
     },
@@ -47,6 +58,9 @@
       "id": "forty-photos",
       "type": "numeric_input",
       "difficulty": "core",
+      "uses": [
+        "accuracy"
+      ],
       "prompt": "A model is tested on **10** new photos and gets **7** right. What is its accuracy?",
       "base": "decimal",
       "answer": 70,
@@ -59,6 +73,12 @@
       "id": "too-good",
       "type": "multiple_choice",
       "difficulty": "core",
+      "teaches": [
+        "overfitting"
+      ],
+      "uses": [
+        "overfitting"
+      ],
       "prompt": "Models can memorise training photos instead of learning. One scores **100%** on training, **60%** on new photos. Why?",
       "options": [
         {
@@ -89,6 +109,10 @@
       "id": "fair-or-unfair",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "fair-test",
+        "test-examples"
+      ],
       "prompt": "Is each one a **fair** test of how the model will really do, or an **unfair** one?",
       "bins": [
         {
@@ -140,6 +164,9 @@
       "id": "pick-the-test",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "uses": [
+        "fair-test"
+      ],
       "prompt": "A plant model will check gardeners' phone photos in sun, shade and rain. Which test is **fairest**?",
       "options": [
         {
@@ -170,6 +197,9 @@
       "id": "weather-model",
       "type": "train_model",
       "difficulty": "core",
+      "uses": [
+        "label"
+      ],
       "prompt": "Teach the model: label each day by what really happened.",
       "model": {
         "kind": "nearest",
@@ -286,6 +316,11 @@
       "id": "cloudy-dry",
       "type": "train_model",
       "difficulty": "challenge",
+      "uses": [
+        "training-data",
+        "only-knows-its-examples",
+        "nearest-example"
+      ],
       "prompt": "Fix the [[model]]'s mistake.",
       "model": {
         "kind": "nearest",
@@ -420,6 +455,11 @@
       "id": "testing-recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "test-examples",
+        "accuracy",
+        "overfitting"
+      ],
       "title": "Recap",
       "body": "- Keep **test examples** aside: the model never learns from them.\n- **Accuracy** is the share it gets right: 8 of 10 is 80%.\n- Perfect on training, poor on new examples? It memorised.\n\nNext: when a model is unfair to some people."
     }

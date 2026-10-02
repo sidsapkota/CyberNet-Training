@@ -10,6 +10,10 @@
       "id": "label-the-fruit",
       "type": "train_model",
       "difficulty": "core",
+      "teaches": [
+        "model"
+      ],
+      "uses": [],
       "prompt": "Teach the computer (the **model**): tap **Apple** or **Banana** for each fruit.",
       "model": {
         "kind": "nearest",
@@ -110,6 +114,13 @@
       "id": "examples-labels-models",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "training-data",
+        "label",
+        "model",
+        "only-knows-its-examples",
+        "nearest-example"
+      ],
       "title": "What just happened",
       "body": "You made **training data**: examples, each with a **label** saying what it is. From them the computer built a **model**: its way of guessing labels for new things.\n\nEvery apple it saw was red, so the yellow apple sat nearest the bananas."
     },
@@ -117,6 +128,10 @@
       "id": "best-fix",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "training-data",
+        "only-knows-its-examples"
+      ],
       "prompt": "What would help this model most with yellow apples?",
       "options": [
         {
@@ -147,6 +162,11 @@
       "id": "choose-the-data",
       "type": "train_model",
       "difficulty": "core",
+      "uses": [
+        "training-data",
+        "only-knows-its-examples",
+        "nearest-example"
+      ],
       "prompt": "Fix the [[model]]'s mistake.",
       "model": {
         "kind": "nearest",
@@ -272,6 +292,14 @@
       "id": "steps-of-learning",
       "type": "drag_to_order",
       "difficulty": "core",
+      "teaches": [
+        "test-before-use"
+      ],
+      "uses": [
+        "training-data",
+        "label",
+        "model"
+      ],
       "prompt": "Put the steps of teaching a computer in order, first to last.",
       "items": [
         {
@@ -303,6 +331,13 @@
       "id": "three-fruits",
       "type": "train_model",
       "difficulty": "challenge",
+      "teaches": [
+        "three-nearest"
+      ],
+      "uses": [
+        "label",
+        "three-nearest"
+      ],
       "prompt": "It copies its **3 closest** examples. Label the fruit.",
       "model": {
         "kind": "nearest",
@@ -431,6 +466,10 @@
       "id": "green-pear",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "uses": [
+        "model",
+        "only-knows-its-examples"
+      ],
       "prompt": "The model knows only apple and banana, and passed every test. Will it name a **green pear** right?",
       "options": [
         {
@@ -461,6 +500,12 @@
       "id": "patterns-recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "training-data",
+        "label",
+        "model",
+        "only-knows-its-examples"
+      ],
       "title": "Recap",
       "body": "- **Training data** is examples, each with a **label** saying what it is.\n- The computer finds patterns and builds a **model** to guess new things.\n- It only knows what it was shown, so use varied examples.\n\nNext: what AI can't do."
     }

@@ -9,12 +9,28 @@
       "id": "dns-job",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "dns",
+        "routers-use-ip"
+      ],
       "prompt": "You type `example.org` into your browser. What must happen before any packet goes to the site?",
       "options": [
-        { "id": "names-to-addresses", "text": "DNS turns the name into an IP address" },
-        { "id": "routing", "text": "Routers read the name to choose a route" },
-        { "id": "encrypt", "text": "The site encrypts its name so nobody can read it" },
-        { "id": "private", "text": "Your router gives example.org a private address" }
+        {
+          "id": "names-to-addresses",
+          "text": "DNS turns the name into an IP address"
+        },
+        {
+          "id": "routing",
+          "text": "Routers read the name to choose a route"
+        },
+        {
+          "id": "encrypt",
+          "text": "The site encrypts its name so nobody can read it"
+        },
+        {
+          "id": "private",
+          "text": "Your router gives example.org a private address"
+        }
       ],
       "correctOptionId": "names-to-addresses",
       "explanation": "Routers deliver by **IP address**, not by name, so your device first asks **DNS** for example.org's address, like a contacts app. Only then can packets go."
@@ -23,12 +39,29 @@
       "id": "controlled-by-example-org",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "owner-controls-left",
+        "domain-name-parts",
+        "names-read-right-to-left"
+      ],
       "prompt": "Which of these names is controlled by whoever registered **example.org**?",
       "options": [
-        { "id": "news-subdomain", "text": "news.example.org" },
-        { "id": "org-in-middle", "text": "example.org.news.example.com" },
-        { "id": "hyphen", "text": "example-org.example.net" },
-        { "id": "org-then-net", "text": "news.example.org.example.net" }
+        {
+          "id": "news-subdomain",
+          "text": "news.example.org"
+        },
+        {
+          "id": "org-in-middle",
+          "text": "example.org.news.example.com"
+        },
+        {
+          "id": "hyphen",
+          "text": "example-org.example.net"
+        },
+        {
+          "id": "org-then-net",
+          "text": "news.example.org.example.net"
+        }
       ],
       "correctOptionId": "news-subdomain",
       "explanation": "Read from the right: only `news.example.org` ends in **example.org**. The others end in `example.com` or `example.net`, whatever words they contain."
@@ -37,12 +70,34 @@
       "id": "server-jobs",
       "type": "match_pairs",
       "difficulty": "core",
+      "uses": [
+        "resolver",
+        "root-server",
+        "tld-server",
+        "authoritative-server"
+      ],
       "prompt": "Nobody has looked up example.com lately. Match each DNS server to what it would \"say\".",
       "pairs": [
-        { "id": "resolver", "left": "Resolver", "right": "\"Leave it with me, I'll find out.\"" },
-        { "id": "root", "left": "Root server", "right": "\"Not me, but here are the .com servers.\"" },
-        { "id": "tld", "left": "TLD server", "right": "\"Ask example.com's own server.\"" },
-        { "id": "authoritative", "left": "Authoritative server", "right": "\"example.com is at 198.51.100.10.\"" }
+        {
+          "id": "resolver",
+          "left": "Resolver",
+          "right": "\"Leave it with me, I'll find out.\""
+        },
+        {
+          "id": "root",
+          "left": "Root server",
+          "right": "\"Not me, but here are the .com servers.\""
+        },
+        {
+          "id": "tld",
+          "left": "TLD server",
+          "right": "\"Ask example.com's own server.\""
+        },
+        {
+          "id": "authoritative",
+          "left": "Authoritative server",
+          "right": "\"example.com is at 198.51.100.10.\""
+        }
       ],
       "explanation": "The **resolver** asks for you, **root** points to the `.com` servers, **TLD** to example.com's own server, and only the **authoritative** server gives the real answer."
     },
@@ -50,12 +105,28 @@
       "id": "ttl-move-in-time",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "ttl",
+        "dns-cache"
+      ],
       "prompt": "A site moves to a new address in 10 minutes, and its TTL is **3,600**.\n\nWill devices that just looked it up switch right away?",
       "options": [
-        { "id": "no-hour", "text": "No: they may use the old answer for up to an hour" },
-        { "id": "yes-updates", "text": "Yes: every cache updates the moment the site moves" },
-        { "id": "yes-ten", "text": "Yes: the TTL runs out before the 10 minutes do" },
-        { "id": "no-forever", "text": "No: they keep the old answer until restarted" }
+        {
+          "id": "no-hour",
+          "text": "No: they may use the old answer for up to an hour"
+        },
+        {
+          "id": "yes-updates",
+          "text": "Yes: every cache updates the moment the site moves"
+        },
+        {
+          "id": "yes-ten",
+          "text": "Yes: the TTL runs out before the 10 minutes do"
+        },
+        {
+          "id": "no-forever",
+          "text": "No: they keep the old answer until restarted"
+        }
       ],
       "correctOptionId": "no-hour",
       "explanation": "3,600 seconds is **one hour**, longer than the 10 minutes, and nothing tells caches a site moved. But answers aren't kept forever, which is why owners lower the TTL before a move."
@@ -64,12 +135,28 @@
       "id": "after-cname",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "cname",
+        "a-record"
+      ],
       "prompt": "Your browser looks up `shop.example.org`. The answer is a **CNAME** pointing to `example.org`. What happens next?",
       "options": [
-        { "id": "look-up-target", "text": "It looks up example.org to get an actual address" },
-        { "id": "connect-name", "text": "It connects to the name example.org straight away" },
-        { "id": "give-up", "text": "It gives up, because the answer contained no address" },
-        { "id": "ask-mx", "text": "It asks for shop.example.org's MX record instead" }
+        {
+          "id": "look-up-target",
+          "text": "It looks up example.org to get an actual address"
+        },
+        {
+          "id": "connect-name",
+          "text": "It connects to the name example.org straight away"
+        },
+        {
+          "id": "give-up",
+          "text": "It gives up, because the answer contained no address"
+        },
+        {
+          "id": "ask-mx",
+          "text": "It asks for shop.example.org's MX record instead"
+        }
       ],
       "correctOptionId": "look-up-target",
       "explanation": "A **CNAME** holds a name, and you can't connect to a name, so the lookup carries on with `example.org` to its **A** record. MX records are for email."
@@ -78,12 +165,18 @@
       "id": "lookup-example-org",
       "type": "terminal",
       "difficulty": "core",
+      "uses": [
+        "nslookup",
+        "ipv4-address"
+      ],
       "prompt": "Run `nslookup example.org` and find its **IPv4** address.",
       "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
       "commands": [
         {
           "command": "nslookup example.org",
-          "aliases": ["nslookup example.org."],
+          "aliases": [
+            "nslookup example.org."
+          ],
           "description": "Ask DNS for the address of example.org",
           "output": "Server:\t\t127.0.0.53\nAddress:\t127.0.0.53#53\n\nNon-authoritative answer:\nName:\texample.org\nAddress: 203.0.113.80\nName:\texample.org\nAddress: 2001:db8::80"
         }
@@ -91,7 +184,9 @@
       "success": {
         "type": "answer",
         "question": "What is example.org's IPv4 address?",
-        "accepted": ["203.0.113.80"]
+        "accepted": [
+          "203.0.113.80"
+        ]
       },
       "explanation": "It's `203.0.113.80`. `2001:db8::80` is its IPv6 address, and `127.0.0.53` at the top is the DNS helper that answered."
     },
@@ -99,12 +194,28 @@
       "id": "web-and-email",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "a-record",
+        "mx-record"
+      ],
       "prompt": "Visits to `example.org` and email to `hello@example.org` go to different machines. How does DNS do that?",
       "options": [
-        { "id": "two-records", "text": "An A record for the site, an MX record for email" },
-        { "id": "cname-email", "text": "A CNAME record sends email to the website server" },
-        { "id": "no-dns", "text": "Email skips DNS and finds its server another way" },
-        { "id": "two-domains", "text": "DNS holds one answer, so email needs a second domain" }
+        {
+          "id": "two-records",
+          "text": "An A record for the site, an MX record for email"
+        },
+        {
+          "id": "cname-email",
+          "text": "A CNAME record sends email to the website server"
+        },
+        {
+          "id": "no-dns",
+          "text": "Email skips DNS and finds its server another way"
+        },
+        {
+          "id": "two-domains",
+          "text": "DNS holds one answer, so email needs a second domain"
+        }
       ],
       "correctOptionId": "two-records",
       "explanation": "One name can hold several **records**: **A** gives the site's address and **MX** names the mail server. A CNAME is just an alias."

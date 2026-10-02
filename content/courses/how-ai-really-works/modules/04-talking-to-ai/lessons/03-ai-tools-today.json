@@ -11,6 +11,14 @@
       "id": "which-apps-use-ai",
       "type": "sort_bins",
       "difficulty": "core",
+      "teaches": [
+        "learning-from-examples"
+      ],
+      "uses": [
+        "rules-based-program",
+        "learning-from-examples",
+        "everyday-ai-apps"
+      ],
       "prompt": "AI guesses from learned patterns. Does each one **use AI**, or follow **fixed steps** someone wrote?",
       "bins": [
         {
@@ -62,6 +70,12 @@
       "id": "kind-of-tool",
       "type": "match_pairs",
       "difficulty": "core",
+      "teaches": [
+        "kinds-of-ai-tools"
+      ],
+      "uses": [
+        "kinds-of-ai-tools"
+      ],
       "prompt": "A **chat assistant** types replies, an **image generator** makes pictures, a **voice assistant** talks. Which suits each job?",
       "pairs": [
         {
@@ -93,6 +107,13 @@
       "id": "best-ai",
       "type": "scenario",
       "difficulty": "core",
+      "teaches": [
+        "chat-assistant-products"
+      ],
+      "uses": [
+        "language-model",
+        "hallucination"
+      ],
       "prompt": "Chat assistants include **ChatGPT** (OpenAI), **Claude** (Anthropic), **Copilot** (Microsoft) and **Gemini** (Google). Some also search the web or make pictures.",
       "start": "claim",
       "steps": [
@@ -128,6 +149,12 @@
       "id": "rules-and-ages",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "app-age-rules",
+        "ask-parent-before-signing-up",
+        "think-before-uploading-photos",
+        "school-ai-rules"
+      ],
       "title": "Age rules and good habits",
       "body": "Every AI app has its own rules, including **who can use it**. Some say 18 or older; some allow 13 with a parent's OK. Rules differ by country, and they change.\n\n- **Check the app's rules**, and **ask a parent or carer** before signing up.\n- **Think twice before uploading photos** of you or friends.\n- **Follow your school's AI rules.**"
     },
@@ -135,6 +162,11 @@
       "id": "selfie-app",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "app-age-rules",
+        "ask-parent-before-signing-up",
+        "think-before-uploading-photos"
+      ],
       "prompt": "A new AI app promises to turn your selfie into a cartoon.",
       "start": "sign-up",
       "steps": [
@@ -170,6 +202,10 @@
       "id": "school-or-ask",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "school-ai-rules",
+        "learn-not-do-work"
+      ],
       "prompt": "For schoolwork, is each use of an AI tool **usually fine**, or one to **check with your teacher first**?",
       "bins": [
         {
@@ -221,6 +257,13 @@
       "id": "always-true",
       "type": "sort_bins",
       "difficulty": "challenge",
+      "uses": [
+        "hallucination",
+        "one-word-at-a-time",
+        "language-model",
+        "chat-assistant-products",
+        "knowledge-cutoff"
+      ],
       "prompt": "Is each one true of **every** AI chat assistant, or only **some** of them (or none)?",
       "bins": [
         {
@@ -277,6 +320,12 @@
       "id": "tools-recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "hallucination",
+        "everyday-ai-apps",
+        "app-age-rules",
+        "ask-parent-before-signing-up"
+      ],
       "title": "Recap",
       "body": "- Every chat assistant writes likely words, so any can be wrong.\n- AI is also inside everyday apps: maps, photos, keyboards.\n- Check each app's age rules, and ask a parent or carer.\n\nNext: the module quiz."
     }

@@ -10,6 +10,10 @@
       "id": "cat-astronaut",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "generative-ai",
+        "kinds-of-ai-tools"
+      ],
       "title": "A cat astronaut, in seconds",
       "body": "Type \"a cat in a space suit, floating past the Moon, as a watercolour\" into an image tool, and seconds later there it is. Nobody drew it.\n\nAI that makes new things (pictures, text, music, voices) is called **generative AI**. Chatbots are one kind; image tools are another."
     },
@@ -17,6 +21,12 @@
       "id": "prompt-words",
       "type": "match_pairs",
       "difficulty": "core",
+      "teaches": [
+        "image-model-captions"
+      ],
+      "uses": [
+        "prompt"
+      ],
       "prompt": "An image model learned from captioned pictures. Match each word in a picture [[prompt]] to what it changes.",
       "pairs": [
         {
@@ -48,6 +58,12 @@
       "id": "noise-steps",
       "type": "drag_to_order",
       "difficulty": "core",
+      "teaches": [
+        "image-from-static"
+      ],
+      "uses": [
+        "image-from-static"
+      ],
       "prompt": "Image tools start from **random static** and clear it step by step: colour, then shapes, then detail. Order the stages.",
       "items": [
         {
@@ -79,7 +95,11 @@
       "id": "same-prompt-twice",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "You type the **exact same** prompt into an image tool twice. What will you most likely get?",
+      "uses": [
+        "image-from-static",
+        "random-start-varies"
+      ],
+      "prompt": "Each picture starts from new random static. You type the **exact same** prompt into an image tool twice. What will you most likely get?",
       "options": [
         {
           "id": "same",
@@ -103,12 +123,21 @@
       ],
       "correctOptionId": "different",
       "hint": "Think of every picture's first stage. Is it ever the same twice?",
-      "explanation": "Each picture starts from **different random static**, so you get **two different pictures**, both matching your words."
+      "explanation": "Each picture starts from **different random static**, so you get **two different pictures**, both matching your words.",
+      "teaches": [
+        "random-start-varies"
+      ]
     },
     {
       "id": "clue-or-not",
       "type": "sort_bins",
       "difficulty": "core",
+      "teaches": [
+        "ai-image-giveaways"
+      ],
+      "uses": [
+        "ai-image-giveaways"
+      ],
       "prompt": "AI pictures **sometimes** have give-aways that real photos rarely do. Is each a **possible clue**, or **not a clue**?",
       "bins": [
         {
@@ -160,6 +189,9 @@
       "id": "no-mistakes",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "ai-image-giveaways"
+      ],
       "prompt": "You check a picture carefully: normal hands, readable signs, shadows all fine. What can you conclude?",
       "options": [
         {
@@ -190,6 +222,10 @@
       "id": "where-it-learned",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "uses": [
+        "image-model-captions",
+        "training-data"
+      ],
       "prompt": "Nobody gave an image model rules about paint. How did it learn what \"watercolour\" looks like?",
       "options": [
         {
@@ -220,6 +256,12 @@
       "id": "pictures-recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "image-model-captions",
+        "image-from-static",
+        "random-start-varies",
+        "no-giveaway-proves-nothing"
+      ],
       "title": "Recap",
       "body": "- Image models learned from millions of captioned pictures.\n- They clear random static step by step, so pictures differ.\n- Give-aways are clues, but finding none proves nothing.\n\nNext: fake voices and faces."
     }

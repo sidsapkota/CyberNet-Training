@@ -9,12 +9,29 @@
       "id": "port-picks-program",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "port",
+        "ip-port-notation",
+        "port-443-https"
+      ],
       "prompt": "A server runs a plain website on port 80 and a secure one on 443. Which program gets a packet for `198.51.100.10:443`?",
       "options": [
-        { "id": "secure", "text": "The secure website, because it says port 443" },
-        { "id": "plain", "text": "The plain website: all web packets hit port 80 first" },
-        { "id": "both", "text": "Both websites, and each keeps the parts it needs" },
-        { "id": "free", "text": "Whichever website program is less busy" }
+        {
+          "id": "secure",
+          "text": "The secure website, because it says port 443"
+        },
+        {
+          "id": "plain",
+          "text": "The plain website: all web packets hit port 80 first"
+        },
+        {
+          "id": "both",
+          "text": "Both websites, and each keeps the parts it needs"
+        },
+        {
+          "id": "free",
+          "text": "Whichever website program is less busy"
+        }
       ],
       "correctOptionId": "secure",
       "explanation": "The IP address finds the server and the **port** picks the program: 443 is the secure website's door."
@@ -23,12 +40,29 @@
       "id": "reply-port",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "netstat",
+        "ephemeral-port",
+        "ip-port-notation"
+      ],
       "prompt": "Your laptop's `netstat -n` shows two tabs:\n\n```\nLocal Address          Foreign Address\n192.168.1.42:51544     198.51.100.10:443\n192.168.1.42:51547     203.0.113.80:443\n```\n\nWhere does a reply for port **51547** go?",
       "options": [
-        { "id": "second-tab", "text": "To the tab talking to 203.0.113.80" },
-        { "id": "first-tab", "text": "To the 198.51.100.10 tab, as it opened first" },
-        { "id": "both-tabs", "text": "To both tabs, since both talk to port 443" },
-        { "id": "server", "text": "Back out, since 51547 is a server's port" }
+        {
+          "id": "second-tab",
+          "text": "To the tab talking to 203.0.113.80"
+        },
+        {
+          "id": "first-tab",
+          "text": "To the 198.51.100.10 tab, as it opened first"
+        },
+        {
+          "id": "both-tabs",
+          "text": "To both tabs, since both talk to port 443"
+        },
+        {
+          "id": "server",
+          "text": "Back out, since 51547 is a server's port"
+        }
       ],
       "correctOptionId": "second-tab",
       "explanation": "51547 is your laptop's temporary port for the conversation with `203.0.113.80`, so that tab gets it. Both servers use 443, which is why your side needs a different port for each conversation."
@@ -37,12 +71,27 @@
       "id": "handshake-order",
       "type": "drag_to_order",
       "difficulty": "core",
+      "uses": [
+        "tcp-handshake"
+      ],
       "prompt": "A phone opens a TCP connection to upload a high score. Put the messages in order.",
       "items": [
-        { "id": "syn", "label": "Phone sends SYN" },
-        { "id": "syn-ack", "label": "Server sends SYN-ACK" },
-        { "id": "ack", "label": "Phone sends ACK" },
-        { "id": "data", "label": "Phone sends the high score" }
+        {
+          "id": "syn",
+          "label": "Phone sends SYN"
+        },
+        {
+          "id": "syn-ack",
+          "label": "Server sends SYN-ACK"
+        },
+        {
+          "id": "ack",
+          "label": "Phone sends ACK"
+        },
+        {
+          "id": "data",
+          "label": "Phone sends the high score"
+        }
       ],
       "explanation": "The phone asks (**SYN**), the server agrees and checks back (**SYN-ACK**), and the phone confirms (**ACK**). Only then is the connection open for the score."
     },
@@ -50,12 +99,28 @@
       "id": "game-protocol",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "tcp",
+        "udp"
+      ],
       "prompt": "A game sends player positions 30 times a second, and a late update is useless. Which fits better?",
       "options": [
-        { "id": "udp", "text": "UDP, because it doesn't stop to resend lost updates" },
-        { "id": "tcp", "text": "TCP, because every single update must arrive" },
-        { "id": "tcp-order", "text": "TCP, because the updates must be put back in order" },
-        { "id": "udp-resend", "text": "UDP, because it resends lost updates faster than TCP" }
+        {
+          "id": "udp",
+          "text": "UDP, because it doesn't stop to resend lost updates"
+        },
+        {
+          "id": "tcp",
+          "text": "TCP, because every single update must arrive"
+        },
+        {
+          "id": "tcp-order",
+          "text": "TCP, because the updates must be put back in order"
+        },
+        {
+          "id": "udp-resend",
+          "text": "UDP, because it resends lost updates faster than TCP"
+        }
       ],
       "correctOptionId": "udp",
       "explanation": "When fresh beats complete, **UDP** fits: a lost update is simply replaced by the next. TCP would pause to resend it, making the game lag."
@@ -64,12 +129,27 @@
       "id": "nat-table",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "nat-table"
+      ],
       "prompt": "Two phones at home video-call the same server, and every reply reaches your router's one public address.\n\nHow does it know which phone each reply is for?",
       "options": [
-        { "id": "port-mapping", "text": "It gave each call its own public port in its NAT table" },
-        { "id": "server-private", "text": "The server adds each phone's private address" },
-        { "id": "send-both", "text": "It sends every reply to both phones to sort out" },
-        { "id": "one-call", "text": "It can't, so only one call works at a time" }
+        {
+          "id": "port-mapping",
+          "text": "It gave each call its own public port in its NAT table"
+        },
+        {
+          "id": "server-private",
+          "text": "The server adds each phone's private address"
+        },
+        {
+          "id": "send-both",
+          "text": "It sends every reply to both phones to sort out"
+        },
+        {
+          "id": "one-call",
+          "text": "It can't, so only one call works at a time"
+        }
       ],
       "correctOptionId": "port-mapping",
       "explanation": "The router gives each conversation a **different public port** in its **NAT table**, so each reply goes to the right phone. The server never sees the private addresses."
@@ -78,12 +158,34 @@
       "id": "protocol-jobs",
       "type": "match_pairs",
       "difficulty": "core",
+      "uses": [
+        "imap",
+        "smtp",
+        "dns",
+        "tcp-resend"
+      ],
       "prompt": "Match each job to the protocol that does it.",
       "pairs": [
-        { "id": "imap", "left": "Read mail that's kept on a server", "right": "IMAP" },
-        { "id": "smtp", "left": "Pass an email between mail servers", "right": "SMTP" },
-        { "id": "dns", "left": "Turn example.org into an address", "right": "DNS" },
-        { "id": "tcp", "left": "Resend lost pieces of a download", "right": "TCP" }
+        {
+          "id": "imap",
+          "left": "Read mail that's kept on a server",
+          "right": "IMAP"
+        },
+        {
+          "id": "smtp",
+          "left": "Pass an email between mail servers",
+          "right": "SMTP"
+        },
+        {
+          "id": "dns",
+          "left": "Turn example.org into an address",
+          "right": "DNS"
+        },
+        {
+          "id": "tcp",
+          "left": "Resend lost pieces of a download",
+          "right": "TCP"
+        }
       ],
       "explanation": "**IMAP** reads mail kept on a server, **SMTP** sends mail on its way, **DNS** looks up names, and **TCP** resends anything lost, so a download arrives complete."
     },
@@ -91,12 +193,28 @@
       "id": "unwrap-order",
       "type": "drag_to_order",
       "difficulty": "core",
+      "uses": [
+        "protocol-layers",
+        "link-layer"
+      ],
       "prompt": "A web server takes the wrappers off your request one at a time. Order them, first opened at the top.",
       "items": [
-        { "id": "link", "label": "Ethernet: carried it to this device" },
-        { "id": "ip", "label": "IP: the addresses" },
-        { "id": "tcp", "label": "TCP: which program, pieces in order" },
-        { "id": "http", "label": "HTTP: the request for the page" }
+        {
+          "id": "link",
+          "label": "Ethernet: carried it to this device"
+        },
+        {
+          "id": "ip",
+          "label": "IP: the addresses"
+        },
+        {
+          "id": "tcp",
+          "label": "TCP: which program, pieces in order"
+        },
+        {
+          "id": "http",
+          "label": "HTTP: the request for the page"
+        }
       ],
       "explanation": "They come off in reverse: **Ethernet** (outside) first, then **IP**, then **TCP**, and finally the **HTTP** request, the letter at the centre."
     }

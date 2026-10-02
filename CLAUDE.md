@@ -228,7 +228,7 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - `links`: `{from, to}`, undirected.
   - `validPaths`: every accepted route, each starting at `source`, ending at `destination`, following
     links and never repeating a node.
-  - Narrow screens rotate wide layouts 90°, so keep networks small.
+  - Never rotated: phones keep the layout with shorter rows (92px), so keep networks small (at most 4 columns and 3 rows fit 360×560).
   - Wrong routes animate the packet up to the first wrong hop.
 - **`terminal`:**
   - `commands` (1–12): `{ command, aliases?, output (printed verbatim), description? (shown by help) }`.
@@ -1689,6 +1689,21 @@ A learner should know what to do within **3 seconds** of seeing a card.
   cards and quizzes can't rely on a challenge card. `load.test.ts` checks the scene part of this
   automatically (screws, `*-cover` parts and the laptop `panel` explain themselves, so teardowns
   can use them unexplored); check the rest by reading the lesson in order.
+- **Prior knowledge only (owner, 2 Oct 2026): every question must be answerable using only what the
+  learner has seen earlier in that module, or in an earlier module of the same course. No outside
+  knowledge required, ever.** (So Bits and Binary can't ask about IP addresses: they're taught in
+  module 2.) Enforced by concept tags: every card lists the concepts it `teaches` (an explainer, a
+  reveal, or a prompt that explains the idea itself) and every graded card the concepts it `uses`
+  (kebab-case ids, scoped to the course; only things a beginner wouldn't know without the course,
+  never everyday knowledge). `conceptProblems` (`src/lib/content/concepts.ts`, run by
+  `concepts.test.ts`) walks each course in order and fails when a concept is used before an earlier
+  core card (or the card itself) teaches it, or is never taught; bonus cards may lean on bonus cards,
+  nothing else may. A new or changed card must update its tags. The audit and fixes:
+  `docs/plans/prior-knowledge-audit.md`.
+- **Every option on screen (owner, 2 Oct 2026):** every control in a card (choices, drag items,
+  bins, switches, scene parts, answer boxes) must be visible without scrolling at 360×560 and
+  360×640, so nobody scrolls mid-drag or hunts for an option. `npm run e2e:fit-audit` fails if any
+  is below the fold (page overflow alone, like a long prompt, is still reported).
 - **Glossary (tap to define):** `content/glossary.json` is shared by every course: `{ id, term,
   full?, definition }`. The definition is **one plain sentence** (≤180; `isOneSentence`).
   Abbreviations carry `full` (`needsFullName`, tested): the popup shows "CPU = Central Processing

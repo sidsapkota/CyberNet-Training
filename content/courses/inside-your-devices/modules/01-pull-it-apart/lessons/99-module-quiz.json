@@ -9,34 +9,69 @@
       "id": "q-unplug-first",
       "type": "hotspot",
       "difficulty": "core",
+      "uses": [
+        "battery-connector-first",
+        "battery-connector",
+        "storage"
+      ],
       "prompt": "Swapping an SSD? Tap what's **unplugged first**.",
       "scene": "laptop",
       "view": "open",
       "mode": "tap",
-      "targets": ["battery-connector"],
+      "targets": [
+        "battery-connector"
+      ],
       "explanation": "The **battery connector** comes out first, so no part has power while the SSD is swapped. Only then is it safe to touch the SSD, the RAM or anything else."
     },
     {
       "id": "q-tap-ram",
       "type": "hotspot",
       "difficulty": "core",
+      "uses": [
+        "full-ram-slows-device",
+        "ram"
+      ],
       "prompt": "This laptop lags with lots of apps open. Tap the part that's **full**.",
       "scene": "laptop",
       "view": "open",
       "mode": "tap",
-      "targets": ["ram"],
+      "targets": [
+        "ram"
+      ],
       "explanation": "Open apps live in **RAM**, the stick with a row of chips. When too many are open, RAM fills up and the laptop lags. Storage (the long, narrow card) only fills up with saved files."
     },
     {
       "id": "q-part-jobs",
       "type": "match_pairs",
       "difficulty": "core",
+      "uses": [
+        "cpu",
+        "ram",
+        "storage",
+        "fan"
+      ],
       "prompt": "Match each part to its job.",
       "pairs": [
-        { "id": "cpu", "left": "CPU", "right": "Follows instructions" },
-        { "id": "ram", "left": "RAM", "right": "Holds what's open now" },
-        { "id": "storage", "left": "Storage", "right": "Keeps files when off" },
-        { "id": "fan", "left": "Fan", "right": "Blows heat out" }
+        {
+          "id": "cpu",
+          "left": "CPU",
+          "right": "Follows instructions"
+        },
+        {
+          "id": "ram",
+          "left": "RAM",
+          "right": "Holds what's open now"
+        },
+        {
+          "id": "storage",
+          "left": "Storage",
+          "right": "Keeps files when off"
+        },
+        {
+          "id": "fan",
+          "left": "Fan",
+          "right": "Blows heat out"
+        }
       ],
       "explanation": "The **CPU** does the work, **RAM** is the desk for what's open, **storage** keeps things for later, and the **fan** keeps the CPU cool."
     },
@@ -44,13 +79,42 @@
       "id": "q-sort-ram-storage",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "ram",
+        "storage"
+      ],
       "prompt": "In **RAM** or in **storage**?",
-      "bins": [{ "id": "ram", "label": "RAM" }, { "id": "storage", "label": "Storage" }],
+      "bins": [
+        {
+          "id": "ram",
+          "label": "RAM"
+        },
+        {
+          "id": "storage",
+          "label": "Storage"
+        }
+      ],
       "items": [
-        { "id": "video-playing", "label": "A live video call", "bin": "ram" },
-        { "id": "saved-homework", "label": "A saved report", "bin": "storage" },
-        { "id": "open-tabs", "label": "Open browser tabs", "bin": "ram" },
-        { "id": "installed-game", "label": "An installed game", "bin": "storage" }
+        {
+          "id": "video-playing",
+          "label": "A live video call",
+          "bin": "ram"
+        },
+        {
+          "id": "saved-homework",
+          "label": "A saved report",
+          "bin": "storage"
+        },
+        {
+          "id": "open-tabs",
+          "label": "The app you're using now",
+          "bin": "ram"
+        },
+        {
+          "id": "installed-game",
+          "label": "An installed game",
+          "bin": "storage"
+        }
       ],
       "explanation": "Things in use right now are in **RAM**. Saved and installed things stay in **storage**, even when the device is off."
     },
@@ -58,6 +122,10 @@
       "id": "q-close-apps-download",
       "type": "true_false",
       "difficulty": "core",
+      "uses": [
+        "close-apps-frees-ram",
+        "storage"
+      ],
       "prompt": "Closing your open apps makes room for a big download.",
       "answer": false,
       "explanation": "**False.** Closing apps frees **RAM**. A download is saved in **storage**, so making room means deleting files you don't need (or have backed up)."
@@ -66,11 +134,23 @@
       "id": "q-restart-wipes",
       "type": "fill_gap",
       "difficulty": "core",
+      "uses": [
+        "ram-wiped-at-power-off"
+      ],
       "prompt": "Restarting a phone wipes its ___, but your saved photos stay.",
       "options": [
-        { "id": "ram", "text": "RAM" },
-        { "id": "storage", "text": "storage" },
-        { "id": "battery", "text": "battery" }
+        {
+          "id": "ram",
+          "text": "RAM"
+        },
+        {
+          "id": "storage",
+          "text": "storage"
+        },
+        {
+          "id": "battery",
+          "text": "battery"
+        }
       ],
       "correctOptionId": "ram",
       "explanation": "Switching off wipes **RAM**, the desk for what's open. Saved photos live in **storage**, which keeps everything with the power off."
@@ -79,11 +159,23 @@
       "id": "q-cores-help",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "cores-need-splittable-jobs"
+      ],
       "prompt": "Which job gets **faster** with more CPU cores?",
       "options": [
-        { "id": "photos", "text": "Adding filters to 300 separate photos" },
-        { "id": "treasure", "text": "A puzzle where each step needs the last one" },
-        { "id": "storage", "text": "Opening one big file that can't be split" }
+        {
+          "id": "photos",
+          "text": "Adding filters to 300 separate photos"
+        },
+        {
+          "id": "treasure",
+          "text": "A puzzle where each step needs the last one"
+        },
+        {
+          "id": "storage",
+          "text": "Opening one big file that can't be split"
+        }
       ],
       "correctOptionId": "photos",
       "explanation": "Separate photos can be shared between cores. A chain of steps has to go in order, and a job that can't be split runs on one core, however many there are."
@@ -92,11 +184,23 @@
       "id": "q-throttling",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "throttling"
+      ],
       "prompt": "Mid-game, a laptop gets very hot, then suddenly runs slower. Why?",
       "options": [
-        { "id": "throttle", "text": "The hot CPU is slowing itself down to stay safe" },
-        { "id": "storage-full", "text": "The game has filled up all of the storage" },
-        { "id": "ram-melting", "text": "The fan has stopped working for good" }
+        {
+          "id": "throttle",
+          "text": "The hot CPU is slowing itself down to stay safe"
+        },
+        {
+          "id": "storage-full",
+          "text": "The game has filled up all of the storage"
+        },
+        {
+          "id": "ram-melting",
+          "text": "The fan has stopped working for good"
+        }
       ],
       "correctOptionId": "throttle",
       "explanation": "Too much heat makes the CPU **throttle**: it slows itself down to protect itself. Clear vents and a clean fan help it stay at full speed."
