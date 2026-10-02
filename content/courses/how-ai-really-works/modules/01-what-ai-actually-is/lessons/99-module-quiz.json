@@ -8,6 +8,11 @@
       "id": "q-rules-or-learning",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "rules-based-program",
+        "learning-from-examples",
+        "everyday-ai-apps"
+      ],
       "prompt": "Does each one **learn from examples**, or **follow rules** someone wrote?",
       "bins": [
         {
@@ -47,6 +52,11 @@
       "id": "q-sports-balls",
       "type": "train_model",
       "difficulty": "core",
+      "uses": [
+        "training-data",
+        "only-knows-its-examples",
+        "nearest-example"
+      ],
       "prompt": "Fix the model's mistake.",
       "model": {
         "kind": "nearest",
@@ -154,6 +164,9 @@
       "id": "q-daylight-dogs",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "only-knows-its-examples"
+      ],
       "prompt": "A dog spotter learned only from **daylight** photos. What will it most likely get wrong?",
       "options": [
         {
@@ -180,6 +193,9 @@
       "id": "q-skipped-test",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "test-before-use"
+      ],
       "prompt": "A café trained a burnt-toast spotter on labelled photos, used it at once, and it calls dark rye burnt. Why?",
       "options": [
         {
@@ -206,6 +222,10 @@
       "id": "q-check-it",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "ai-prediction",
+        "check-trusted-source"
+      ],
       "prompt": "You're writing quiz-night questions with an AI helper.",
       "start": "the-fact",
       "steps": [
@@ -240,6 +260,9 @@
       "id": "q-who-decides",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "people-decisions-need-a-person"
+      ],
       "prompt": "A company uses AI to sort 500 job applications. Who should make the final call?",
       "options": [
         {
@@ -266,26 +289,32 @@
       "id": "q-words",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "An app sorts photos into cats and dogs. Match each part of it to its word.",
+      "uses": [
+        "training-data",
+        "label",
+        "model",
+        "ai-prediction"
+      ],
+      "prompt": "A cats-and-dogs photo sorter: match each part to its word.",
       "pairs": [
         {
           "id": "data",
-          "left": "500 cat and dog photos to learn from",
+          "left": "500 photos it learns from",
           "right": "Training data"
         },
         {
           "id": "label",
-          "left": "The word \"cat\" written on one photo",
+          "left": "\"cat\" written on one photo",
           "right": "Label"
         },
         {
           "id": "model",
-          "left": "The program that sorts new photos itself",
+          "left": "The program that sorts new photos",
           "right": "Model"
         },
         {
           "id": "prediction",
-          "left": "\"Dog\": its best guess about a new photo",
+          "left": "\"Dog\": its guess for a new photo",
           "right": "Prediction"
         }
       ],

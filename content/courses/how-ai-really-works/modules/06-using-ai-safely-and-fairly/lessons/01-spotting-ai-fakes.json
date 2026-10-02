@@ -10,6 +10,11 @@
       "id": "two-hundred-reviews",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "fake-reviews",
+        "bots",
+        "misinformation"
+      ],
       "title": "200 five-star reviews",
       "body": "A brand-new skateboard shop opens online. By morning it has 200 five-star reviews, all calling the boards \"amazing\".\n\nReal customers don't work that fast. With AI, anyone can make **fake reviews**, fake news and **bots** (accounts that post automatically) in seconds. False information that spreads is called misinformation."
     },
@@ -17,6 +22,13 @@
       "id": "review-check",
       "type": "sort_bins",
       "difficulty": "core",
+      "teaches": [
+        "fake-review-signs"
+      ],
+      "uses": [
+        "fake-reviews",
+        "fake-review-signs"
+      ],
       "prompt": "Fake reviews often look like **one source pretending to be many**. Is each sign **suspicious** or **normal**?",
       "bins": [
         {
@@ -68,6 +80,13 @@
       "id": "real-or-suspicious-review",
       "type": "sort_bins",
       "difficulty": "core",
+      "teaches": [
+        "fake-review-signs"
+      ],
+      "uses": [
+        "fake-review-signs",
+        "how-to-check-a-picture"
+      ],
       "prompt": "Real reviews mention **specific details**; fakes are **vague and over the top**. Does each **look real**, or **suspicious**?",
       "bins": [
         {
@@ -87,12 +106,7 @@
         },
         {
           "id": "late-delivery",
-          "label": "\"Took 3 weeks to come. Good board.\"",
-          "bin": "real"
-        },
-        {
-          "id": "runs-small",
-          "label": "\"The helmet runs small: size up\"",
+          "label": "\"Took 3 weeks. Good board.\"",
           "bin": "real"
         },
         {
@@ -104,11 +118,6 @@
           "id": "great-great",
           "label": "\"Great product. Great quality. Great.\"",
           "bin": "suspicious"
-        },
-        {
-          "id": "new-account",
-          "label": "5 stars from an account made today",
-          "bin": "suspicious"
         }
       ],
       "hint": "Could the review be written without ever touching the product?",
@@ -119,7 +128,12 @@
       "id": "inside-or-outside",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Shocking posts get shared before they're checked, and fakes look polished. Is each check **outside** the post, or **inside**?",
+      "teaches": [
+        "shocking-posts-spread",
+        "check-outside-the-post"
+      ],
+      "uses": [],
+      "prompt": "Shocking posts spread fast, and fakes look polished. Is each check **outside** the post, or **inside**?",
       "bins": [
         {
           "id": "outside",
@@ -138,27 +152,27 @@
         },
         {
           "id": "trusted-news",
-          "label": "Look for it on trusted news",
+          "label": "Look for trusted news",
           "bin": "outside"
         },
         {
           "id": "who-runs",
-          "label": "Find out who runs the account",
+          "label": "Find who runs the account",
           "bin": "outside"
         },
         {
           "id": "reread",
-          "label": "Read it again, more slowly",
+          "label": "Read it again slowly",
           "bin": "inside"
         },
         {
           "id": "professional",
-          "label": "Judge how professional it looks",
+          "label": "Judge how polished it looks",
           "bin": "inside"
         },
         {
           "id": "photo-quality",
-          "label": "Check how sharp the photos are",
+          "label": "Check photo sharpness",
           "bin": "inside"
         }
       ],
@@ -170,6 +184,9 @@
       "id": "why-feelings",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "uses": [
+        "shocking-posts-spread"
+      ],
       "prompt": "All four of these are fake. Which one is **most likely** to be shared before anyone checks it?",
       "options": [
         {
@@ -200,6 +217,10 @@
       "id": "chocolate-cure",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "check-outside-the-post",
+        "check-trusted-source"
+      ],
       "prompt": "A site you've never heard of says chocolate cures colds, quoting \"Dr Sam Lee, a top scientist\". Best first move?",
       "options": [
         {
@@ -230,6 +251,9 @@
       "id": "the-bot",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "bots"
+      ],
       "prompt": "Under a video about a new game, an account replies to dozens of comments within a minute.",
       "start": "replies",
       "steps": [
@@ -265,6 +289,12 @@
       "id": "fakes-recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "fake-reviews",
+        "bots",
+        "fake-review-signs",
+        "check-outside-the-post"
+      ],
       "title": "Recap",
       "body": "- AI makes fake reviews, articles and bots fast and cheap.\n- Warning signs: floods at once, vague gushing, brand-new accounts.\n- Strong feeling? Stop, and check **outside** the post.\n\nNext: keeping your private stuff private."
     }

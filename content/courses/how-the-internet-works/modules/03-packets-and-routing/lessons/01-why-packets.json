@@ -7,12 +7,34 @@
   "icon": "package",
   "cards": [
     {
+      "id": "whats-in-a-packet",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "packet",
+        "packets-take-turns",
+        "payload",
+        "source-address",
+        "destination-address",
+        "sequence-number",
+        "tcp-resend"
+      ],
+      "title": "Numbered postcards",
+      "body": "So the internet chops data into **packets** that **take turns**. Each is like a numbered postcard: data (the **payload**) plus a label with the **source** address (from), the **destination** (to) and, usually, a **sequence number**. With **TCP** rules, a lost packet is resent alone."
+    },
+    {
       "id": "film-or-game",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "packets-take-turns"
+      ],
       "prompt": "A film streams on your Wi-Fi while you play an online game.\n\nIf the film came as **one giant piece**, what would happen to your game?",
       "options": [
-        { "id": "game-waits", "text": "It would freeze until the whole film had arrived" },
+        {
+          "id": "game-waits",
+          "text": "It would freeze until the whole film had arrived"
+        },
         {
           "id": "side-by-side",
           "text": "Nothing: the Wi-Fi carries both side by side",
@@ -34,22 +56,37 @@
       "hint": "Picture one enormous lorry on a single-lane road: what happens to the cars behind it?"
     },
     {
-      "id": "whats-in-a-packet",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "Numbered postcards",
-      "body": "So the internet chops data into **packets** that **take turns**. Each is like a numbered postcard: data (the **payload**) plus a label with the **source** address (from), the **destination** (to) and, usually, a **sequence number**. With **TCP** rules, a lost packet is resent alone."
-    },
-    {
       "id": "packet-parts",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Here's one [[packet]] of a selfie you're sending. Match each part to what it's for.",
+      "uses": [
+        "payload",
+        "source-address",
+        "destination-address",
+        "sequence-number"
+      ],
+      "prompt": "One [[packet]] of a selfie you're sending: what does each part do?",
       "pairs": [
-        { "id": "source", "left": "From: `192.168.1.20`", "right": "Where the reply goes back to" },
-        { "id": "destination", "left": "To: `198.51.100.10`", "right": "Where the packet is heading" },
-        { "id": "sequence", "left": "Piece #3", "right": "Where it fits when the selfie is rebuilt" },
-        { "id": "payload", "left": "A strip of the selfie's pixels", "right": "The actual data being carried" }
+        {
+          "id": "source",
+          "left": "From: `192.168.1.20`",
+          "right": "Where replies go"
+        },
+        {
+          "id": "destination",
+          "left": "To: `198.51.100.10`",
+          "right": "Where it's heading"
+        },
+        {
+          "id": "sequence",
+          "left": "Piece #3",
+          "right": "Where it fits in the selfie"
+        },
+        {
+          "id": "payload",
+          "left": "A strip of the selfie's pixels",
+          "right": "The data itself"
+        }
       ],
       "explanation": "**From** is the source, so replies go there, and **To** is where it's heading. **#3** puts the selfie back in order, and the pixels are the **payload**, the actual data.",
       "hint": "Think of the postcard: who it's from, who it's to, its number and its bit of the story.",
@@ -59,6 +96,9 @@
       "id": "count-packets",
       "type": "numeric_input",
       "difficulty": "core",
+      "uses": [
+        "packet"
+      ],
       "prompt": "A **6,000-[[byte]]** message goes in [[packets|packet]] carrying **1,500 bytes** of data each. How many packets?",
       "base": "decimal",
       "answer": 4,
@@ -71,12 +111,28 @@
       "id": "message-journey",
       "type": "drag_to_order",
       "difficulty": "core",
+      "uses": [
+        "packet",
+        "sequence-number"
+      ],
       "prompt": "Put a message's journey in order.",
       "items": [
-        { "id": "split", "label": "The message is split into small pieces" },
-        { "id": "label", "label": "Each piece gets addresses and a number" },
-        { "id": "travel", "label": "The packets travel across the network" },
-        { "id": "rebuild", "label": "Receiver puts it back together by number" }
+        {
+          "id": "split",
+          "label": "The message is split into small pieces"
+        },
+        {
+          "id": "label",
+          "label": "Each piece gets addresses and a number"
+        },
+        {
+          "id": "travel",
+          "label": "The packets travel across the network"
+        },
+        {
+          "id": "rebuild",
+          "label": "Receiver puts it back together by number"
+        }
       ],
       "explanation": "The data is **split** first, then each piece gets its addresses and sequence number. Only after the packets arrive can the receiver rebuild the message in order.",
       "hint": "A thing must exist before it's labelled, and pieces must arrive before they're rebuilt.",
@@ -86,9 +142,16 @@
       "id": "why-packets",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "packets-take-turns",
+        "tcp-resend"
+      ],
       "prompt": "Why does the internet split data into [[packets|packet]] instead of one long stream?",
       "options": [
-        { "id": "share-and-resend", "text": "Connections are shared, and TCP resends just a lost piece" },
+        {
+          "id": "share-and-resend",
+          "text": "Connections are shared, and TCP resends just a lost piece"
+        },
         {
           "id": "smaller",
           "text": "Pieces make the files smaller, so they travel faster",
@@ -113,9 +176,16 @@
       "id": "lost-packet",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "uses": [
+        "tcp-resend",
+        "sequence-number"
+      ],
       "prompt": "A file comes in 10 packets using [[TCP]] rules, and **packet 7** gets lost. What happens?",
       "options": [
-        { "id": "resend-7", "text": "The receiver spots the gap, and only 7 is resent" },
+        {
+          "id": "resend-7",
+          "text": "The receiver spots the gap, and only 7 is resent"
+        },
         {
           "id": "restart",
           "text": "The whole file is sent again from the start",
@@ -140,6 +210,12 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "packet",
+        "sequence-number",
+        "packets-take-turns",
+        "tcp-resend"
+      ],
       "title": "Recap",
       "body": "- Data travels in small pieces called **packets**.\n- Each carries data plus addresses and a **sequence number**.\n- Packets take turns; with **TCP**, a lost one is resent alone."
     }

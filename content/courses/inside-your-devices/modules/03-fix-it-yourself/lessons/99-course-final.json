@@ -9,6 +9,12 @@
       "id": "q-label-laptop",
       "type": "hotspot",
       "difficulty": "core",
+      "uses": [
+        "heat-pipe",
+        "battery-connector",
+        "motherboard",
+        "ram"
+      ],
       "prompt": "Label these four parts inside the laptop.",
       "scene": "laptop",
       "view": "open",
@@ -37,13 +43,32 @@
       "id": "q-phone-safe-order",
       "type": "drag_to_order",
       "difficulty": "core",
+      "uses": [
+        "phone-open-order",
+        "battery-connector-first"
+      ],
       "prompt": "A repair shop is swapping a phone camera. Put the steps in a **safe** order.",
       "items": [
-        { "id": "soften", "label": "Soften the glue on the back cover" },
-        { "id": "lift-back", "label": "Lift off the back cover" },
-        { "id": "lift-bracket", "label": "Lift off the battery connector's bracket" },
-        { "id": "unplug", "label": "Unplug the battery" },
-        { "id": "swap-camera", "label": "Take out the broken camera" }
+        {
+          "id": "soften",
+          "label": "Soften the glue on the back cover"
+        },
+        {
+          "id": "lift-back",
+          "label": "Lift off the back cover"
+        },
+        {
+          "id": "lift-bracket",
+          "label": "Lift off the battery connector's bracket"
+        },
+        {
+          "id": "unplug",
+          "label": "Unplug the battery"
+        },
+        {
+          "id": "swap-camera",
+          "label": "Take out the broken camera"
+        }
       ],
       "explanation": "The battery is **unplugged before** the camera, or any other part, is touched. Repair shops use special tools and training: never try this at home."
     },
@@ -51,7 +76,10 @@
       "id": "q-make-room-in-ram",
       "type": "simulator",
       "difficulty": "core",
-      "prompt": "You need **Maps** for directions, with your **music** still playing. Get the phone running smoothly.",
+      "uses": [
+        "close-apps-frees-ram"
+      ],
+      "prompt": "Get the phone running smoothly, with **Maps** open for directions and your **music** still playing.",
       "model": "memory",
       "params": {
         "ramGb": 6,
@@ -76,11 +104,6 @@
             "id": "video-call",
             "label": "Video call",
             "gb": 1.5
-          },
-          {
-            "id": "browser",
-            "label": "Web browser",
-            "gb": 1
           }
         ]
       },
@@ -106,12 +129,6 @@
           "id": "video-call",
           "kind": "toggle",
           "label": "Video call",
-          "initial": true
-        },
-        {
-          "id": "browser",
-          "kind": "toggle",
-          "label": "Web browser",
           "initial": true
         }
       ],
@@ -155,12 +172,20 @@
           }
         ]
       },
-      "explanation": "Maps didn't fit in RAM alongside everything else. Closing the game (or the video call and the browser) makes room."
+      "explanation": "Maps didn't fit in RAM alongside everything else. Closing the game (or the video call) makes room."
     },
     {
       "id": "q-whats-struggling",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "full-ram-slows-device",
+        "tabs-use-ram",
+        "storage",
+        "throttling",
+        "fan-roars-when-hot",
+        "vents"
+      ],
       "prompt": "What's most likely causing each problem?",
       "bins": [
         {
@@ -179,12 +204,7 @@
       "items": [
         {
           "id": "too-many-apps",
-          "label": "Slow when lots of apps are open at once",
-          "bin": "ram"
-        },
-        {
-          "id": "tabs",
-          "label": "Everything lags with 40 tabs open",
+          "label": "Slow with lots of apps open",
           "bin": "ram"
         },
         {
@@ -193,18 +213,13 @@
           "bin": "storage"
         },
         {
-          "id": "download-fails",
-          "label": "A big download stops, saying it's full",
-          "bin": "storage"
-        },
-        {
           "id": "fan-roaring",
-          "label": "Fan roaring, then the laptop slows down",
+          "label": "Fan roaring, then it slows",
           "bin": "heat"
         },
         {
           "id": "on-bed",
-          "label": "Laptop slows down only when on a cushion",
+          "label": "Slows only when on a cushion",
           "bin": "heat"
         }
       ],
@@ -214,6 +229,11 @@
       "id": "q-no-charge",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "cables-wear-out",
+        "no-metal-or-water-in-port",
+        "repair-safety"
+      ],
       "prompt": "Your tablet won't charge.",
       "start": "first",
       "steps": [
@@ -248,6 +268,9 @@
       "id": "q-stretch-battery",
       "type": "simulator",
       "difficulty": "core",
+      "uses": [
+        "low-power-mode"
+      ],
       "prompt": "A theme park day with **location on** for the map. Make the battery last **at least 10 hours**.",
       "model": "battery",
       "params": {
@@ -323,6 +346,10 @@
       "id": "q-fix-it-loop",
       "type": "drag_to_order",
       "difficulty": "core",
+      "uses": [
+        "fix-it-loop",
+        "backup"
+      ],
       "prompt": "Your camera says **\"Storage full\"**. Put what you do in fix-it-loop order.",
       "items": [
         {
@@ -348,6 +375,10 @@
       "id": "q-disguised-file",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "last-dot-rule",
+        "exe-runs-when-opened"
+      ],
       "prompt": "A download is called `game-skins.jpg.exe`. What is it?",
       "options": [
         {

@@ -10,9 +10,19 @@
       "id": "why-ipv6",
       "type": "multiple_choice",
       "difficulty": "core",
+      "teaches": [
+        "ipv4-shortage"
+      ],
+      "uses": [
+        "ipv4-32-bits",
+        "nat"
+      ],
       "prompt": "The free supply of [[IPv4]] addresses ran out in the 2010s, and [[NAT]] is only a workaround.\n\nWhat would **really** fix the shortage?",
       "options": [
-        { "id": "running-out", "text": "A new kind of address with far more bits" },
+        {
+          "id": "running-out",
+          "text": "A new kind of address with far more bits"
+        },
         {
           "id": "too-slow",
           "text": "Switching devices off at night to share addresses",
@@ -32,6 +42,13 @@
       "id": "ipv6-format",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "ipv6-address",
+        "dual-stack"
+      ],
+      "uses": [
+        "hex"
+      ],
       "title": "128 bits, written in hex",
       "body": "That fix is **IPv6**: **128-[[bit]]** addresses, four times as long as [[IPv4]]. Most devices have both.\n\nIt's written in [[hex]]: 8 groups of 4 digits, split by colons. `2001:0db8:0000:0000:0000:0000:0000:0001` shortens to `2001:db8::1`, where `::` stands for a run of zero groups."
     },
@@ -39,6 +56,10 @@
       "id": "bits-per-group",
       "type": "numeric_input",
       "difficulty": "core",
+      "uses": [
+        "ipv6-address",
+        "hex-digit-4-bits"
+      ],
       "prompt": "Each group in an [[IPv6]] address has 4 [[hex]] digits. How many **bits** is one group?",
       "base": "decimal",
       "answer": 16,
@@ -51,6 +72,9 @@
       "id": "hex-digits-total",
       "type": "numeric_input",
       "difficulty": "challenge",
+      "uses": [
+        "ipv6-address"
+      ],
       "prompt": "Written out in full, how many [[hex]] digits does an [[IPv6]] address have?",
       "base": "decimal",
       "answer": 32,
@@ -63,13 +87,39 @@
       "id": "spot-the-type",
       "type": "match_pairs",
       "difficulty": "core",
+      "uses": [
+        "ipv4-address",
+        "ipv6-address",
+        "binary",
+        "hex"
+      ],
       "prompt": "Match each value to what it is.",
       "pairs": [
-        { "id": "ipv4", "left": "`192.0.2.1`", "right": "An IPv4 address" },
-        { "id": "ipv6", "left": "`2001:db8::1`", "right": "An IPv6 address" },
-        { "id": "name", "left": "`example.com`", "right": "A website name" },
-        { "id": "binary", "left": "`11000000`", "right": "8 bits in binary" },
-        { "id": "hex", "left": "`C8`", "right": "A number in hex" }
+        {
+          "id": "ipv4",
+          "left": "`192.0.2.1`",
+          "right": "An IPv4 address"
+        },
+        {
+          "id": "ipv6",
+          "left": "`2001:db8::1`",
+          "right": "An IPv6 address"
+        },
+        {
+          "id": "name",
+          "left": "`example.com`",
+          "right": "A website name"
+        },
+        {
+          "id": "binary",
+          "left": "`11000000`",
+          "right": "8 bits in binary"
+        },
+        {
+          "id": "hex",
+          "left": "`C8`",
+          "right": "A number in hex"
+        }
       ],
       "explanation": "IPv4 uses decimal numbers with **dots**, IPv6 hex groups with **colons**. `example.com` is a name, `11000000` is 8 bits, and `C8` has a hex letter.",
       "hint": "Is each value split by dots or colons, and which digits or letters does it use?",
@@ -79,9 +129,16 @@
       "id": "both-at-once",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "ipv6-address",
+        "dual-stack"
+      ],
       "prompt": "A laptop lists two addresses: `192.168.1.42` and `2001:db8:1:2::42`. What's going on?",
       "options": [
-        { "id": "both", "text": "It has an IPv4 and an IPv6 address, and uses either" },
+        {
+          "id": "both",
+          "text": "It has an IPv4 and an IPv6 address, and uses either"
+        },
         {
           "id": "hex-copy",
           "text": "The second is just the first rewritten in hex",
@@ -101,9 +158,18 @@
       "id": "no-more-sharing",
       "type": "multiple_choice",
       "difficulty": "core",
+      "teaches": [
+        "ipv6-plenty"
+      ],
+      "uses": [
+        "nat"
+      ],
       "prompt": "[[IPv6]] has enough addresses for every device on Earth, many times over. Which [[IPv4]] workaround isn't needed now?",
       "options": [
-        { "id": "nat", "text": "A whole home sharing one public address" },
+        {
+          "id": "nat",
+          "text": "A whole home sharing one public address"
+        },
         {
           "id": "routers",
           "text": "Home routers linking homes to the internet",
@@ -123,6 +189,10 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "ipv6-address",
+        "dual-stack"
+      ],
       "title": "Recap",
       "body": "- **IPv6** fixes the shortage with **128-[[bit]]** addresses.\n- They're 8 groups of [[hex]] digits, split by colons.\n- Most devices use IPv4 and IPv6 side by side."
     }

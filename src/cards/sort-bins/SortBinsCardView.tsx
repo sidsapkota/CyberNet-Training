@@ -13,6 +13,27 @@ import {
 } from "@dnd-kit/core";
 import { LayoutGroup, motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
+
+const TIP_KEY = "cybernet.tip.sortTap";
+
+/** "Tap an item, then a box, or drag it.": shown until the learner's first sort on this device (like the drag tip), so it stops taking room once learned. */
+function useFirstSortTip() {
+  const [show] = useState(() => {
+    try {
+      return localStorage.getItem(TIP_KEY) !== "1";
+    } catch {
+      return true; // storage blocked: keep showing it
+    }
+  });
+  const done = () => {
+    try {
+      localStorage.setItem(TIP_KEY, "1");
+    } catch {
+      // ignore
+    }
+  };
+  return { show, done };
+}
 import { CheckIcon, XIcon } from "@/components/ui/icons";
 import { useFeedback } from "@/lib/feedback";
 import { PRESS_SPRING } from "@/lib/motion";
@@ -66,7 +87,7 @@ function ItemChip({
       disabled={locked}
       onClick={onTap}
       style={{ opacity: isDragging ? 0.35 : 1, touchAction: "none" }}
-      className={`inline-flex min-h-11 max-w-full items-center gap-1.5 rounded-control border-2 px-3 py-1.5 text-left text-small font-semibold [overflow-wrap:anywhere] transition-colors disabled:cursor-default ${tone}`}
+      className={`inline-flex min-h-11 max-w-full items-center gap-1.5 rounded-control border-2 px-2.5 py-1 text-left text-small leading-snug font-semibold [overflow-wrap:anywhere] transition-colors disabled:cursor-default sm:px-3 sm:py-1.5 ${tone}`}
     >
       {result === "correct" && <CheckIcon className="size-4 shrink-0 text-success" strokeWidth={2.5} />}
       {result === "incorrect" && <XIcon className="size-4 shrink-0 text-danger" strokeWidth={2.5} />}
@@ -82,6 +103,7 @@ function Bin({
   canDrop,
   onPlace,
   selectedLabel,
+  stacked = false,
 }: {
   id: string;
   label: string;
@@ -89,6 +111,8 @@ function Bin({
   canDrop: boolean;
   onPlace: () => void;
   selectedLabel: string | null;
+  /** Three bins stack on phones: each bin's label and its items share a row, to save height. */
+  stacked?: boolean;
 }) {
   const { setNodeRef, isOver } = useDroppable({ id });
   return (
@@ -96,7 +120,7 @@ function Bin({
       ref={setNodeRef}
       data-drop-bin
       aria-label={label}
-      className={`flex min-h-16 flex-col rounded-card sm:min-h-32 border-2 border-dashed p-2 transition-colors ${
+      className={`flex min-h-12 rounded-card border-2 border-dashed p-1 transition-colors sm:min-h-32 sm:flex-col sm:p-2 ${stacked ? "flex-row flex-wrap items-center gap-x-1.5 max-sm:p-0.5" : "flex-col"} ${
         isOver || canDrop ? "border-accent-ink bg-accent-soft" : "border-line-strong bg-surface-raised"
       }`}
     >
@@ -110,7 +134,7 @@ function Bin({
       >
         {label}
       </button>
-      <div className="mt-1 flex flex-1 flex-wrap content-start gap-1.5">{children}</div>
+      <div className={`flex flex-1 flex-wrap content-start gap-1.5 sm:mt-1 ${stacked ? "py-0.5" : ""}`}>{children}</div>
     </section>
   );
 }
@@ -123,12 +147,14 @@ export function SortBinsCardView({ card, answer, onAnswerChange, status }: CardC
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }));
   const items = trayOrder(card);
   const byId = new Map(card.items.map((i) => [i.id, i]));
+  const tip = useFirstSortTip();
 
   // Try again sending wrong items back to the tray is the card's `retryAnswer` (keepCorrect).
 
   function place(itemId: string, binId: string) {
     if (binId === TRAY) onAnswerChange(unplaceItem(answer, itemId));
     else {
+      tip.done();
       onAnswerChange(placeItem(answer, itemId, binId));
       feedback.play("snap");
       feedback.haptic("tap");
@@ -168,7 +194,7 @@ export function SortBinsCardView({ card, answer, onAnswerChange, status }: CardC
   return (
     <div>
       <CardPrompt>{card.prompt}</CardPrompt>
-      <p className="mt-2 text-small text-ink-muted">Tap an item, then a box, or drag it.</p>
+      {tip.show && status === "answering" && <p className="mt-2 text-small text-ink-muted">Tap an item, then a box, or drag it.</p>}
 
       <DndContext id={`dnd-${card.id}`} sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd} onDragCancel={() => setDragging(null)}>
         <LayoutGroup id={card.id}>
@@ -176,7 +202,7 @@ export function SortBinsCardView({ card, answer, onAnswerChange, status }: CardC
             {tray.map(chip)}
           </TrayZone>
           {/* Three bins stack on phones, so item names never squeeze into ~100px columns. */}
-          <div className={`mt-2 grid gap-2 sm:mt-4 ${card.bins.length === 3 ? "grid-cols-1 sm:grid-cols-3" : "grid-cols-2"}`}>
+          <div className={`mt-2 grid sm:mt-4 sm:gap-2 ${card.bins.length === 3 ? "grid-cols-1 gap-1.5 sm:grid-cols-3" : "grid-cols-2 gap-2"}`}>
             {card.bins.map((bin) => (
               <Bin
                 key={bin.id}
@@ -185,6 +211,7 @@ export function SortBinsCardView({ card, answer, onAnswerChange, status }: CardC
                 canDrop={!locked && selected !== null}
                 onPlace={() => selected && place(selected, bin.id)}
                 selectedLabel={selectedLabel}
+                stacked={card.bins.length === 3}
               >
                 {items.filter((i) => answer[i.id] === bin.id).map(chip)}
               </Bin>
@@ -216,10 +243,10 @@ function TrayZone({ children, empty, locked }: { children: React.ReactNode; empt
       ref={setNodeRef}
       aria-label="Items to sort"
       role="group"
-      className={`mt-2 flex min-h-14 flex-wrap gap-2 rounded-card p-1.5 sm:mt-5 sm:p-2 transition-colors ${isOver ? "bg-surface-raised" : ""}`}
+      className={`mt-2 grid min-h-14 grid-cols-2 content-start gap-1.5 rounded-card p-1 sm:mt-5 sm:flex sm:flex-wrap sm:gap-2 sm:p-2 transition-colors ${isOver ? "bg-surface-raised" : ""}`}
     >
       {children}
-      {empty && !locked && <span className="self-center px-1 text-small text-ink-faint">All sorted. Press Check.</span>}
+      {empty && !locked && <span className="col-span-2 self-center px-1 text-small text-ink-faint">All sorted. Press Check.</span>}
     </div>
   );
 }

@@ -9,6 +9,10 @@
       "id": "q-hacked",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "account-take-over",
+        "two-step-sign-in"
+      ],
       "prompt": "Your shopping account. Sign of a take-over, or normal?",
       "bins": [
         {
@@ -48,6 +52,10 @@
       "id": "q-music-takeover",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "first-steps-after-hack",
+        "recovery-email"
+      ],
       "prompt": "Your music app is playing songs you never picked.",
       "start": "start",
       "steps": [
@@ -100,6 +108,12 @@
       "id": "q-where",
       "type": "match_pairs",
       "difficulty": "core",
+      "uses": [
+        "contact-bank",
+        "report-to-scamwatch",
+        "call-000",
+        "idcare"
+      ],
       "prompt": "Match each problem to where to go.",
       "pairs": [
         {
@@ -129,6 +143,11 @@
       "id": "q-voice-message",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "voice-clone",
+        "deepfake-red-flags",
+        "call-back-on-known-number"
+      ],
       "prompt": "A new number's voice message sounds like your aunt: \"Lost my phone! Buy gift cards and send the codes, quick.\"",
       "start": "start",
       "steps": [
@@ -163,6 +182,12 @@
       "id": "q-strong-or-easy",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "passphrase",
+        "song-lines-guessed-early",
+        "names-and-years-guessed-early",
+        "length-makes-strong"
+      ],
       "prompt": "Strong, or easy to guess?",
       "bins": [
         {
@@ -202,6 +227,10 @@
       "id": "q-two-step",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "two-step-sign-in",
+        "authenticator-app"
+      ],
       "prompt": "Your password leaked, but you use two-step sign-in with codes from a phone app. What else would an attacker need?",
       "options": [
         {
@@ -224,6 +253,9 @@
       "id": "q-code",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "never-share-sign-in-code"
+      ],
       "prompt": "Your cousin's account: \"I entered you in a giveaway! Send me the code you're about to get.\"",
       "start": "start",
       "steps": [
@@ -258,6 +290,10 @@
       "id": "q-trusted",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "trusted-adult",
+        "not-your-fault"
+      ],
       "prompt": "Someone in a game keeps sending you nasty messages, and it's upsetting you. What's always a good first step?",
       "options": [
         {

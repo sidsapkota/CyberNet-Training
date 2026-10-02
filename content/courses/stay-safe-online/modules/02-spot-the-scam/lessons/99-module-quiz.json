@@ -9,6 +9,11 @@
       "id": "q-email-labels",
       "type": "hotspot",
       "difficulty": "core",
+      "uses": [
+        "fake-sender-address",
+        "rushing-is-a-scam-sign",
+        "hidden-link"
+      ],
       "prompt": "Label three warning signs in this email.",
       "scene": "email",
       "mode": "label",
@@ -32,6 +37,11 @@
       "id": "q-phish-or-fine",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "never-share-sign-in-code",
+        "scam-text-signs",
+        "rushing-is-a-scam-sign"
+      ],
       "prompt": "Phishing, or probably fine?",
       "bins": [
         {
@@ -71,6 +81,10 @@
       "id": "q-parcel-text",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "scam-text-signs",
+        "official-app-check"
+      ],
       "prompt": "A text: **\"Missed delivery. Pay $2.50 in 1 hour: parcels-fee.example\"**",
       "start": "start",
       "steps": [
@@ -105,6 +119,12 @@
       "id": "q-bank-call",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "never-share-sign-in-code",
+        "scam-call-signs",
+        "name-proves-nothing",
+        "call-back-on-known-number"
+      ],
       "prompt": "A caller from \"Your Bank's fraud team\" asks you to read out the code just texted to you.",
       "start": "start",
       "steps": [
@@ -139,6 +159,11 @@
       "id": "q-padlock-pin",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "padlock-not-proof",
+        "companies-never-ask-for-secrets",
+        "fake-sites-copy-looks"
+      ],
       "prompt": "A page you opened from a text has a padlock, and it asks for your **card PIN**.",
       "start": "start",
       "steps": [
@@ -173,6 +198,10 @@
       "id": "q-addresses",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "domain-owner",
+        "lookalike-domain"
+      ],
       "prompt": "Really Your Bank's (`yourbank.example`)?",
       "bins": [
         {
@@ -212,6 +241,10 @@
       "id": "q-gift-cards",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "gift-cards-scam-payment",
+        "scam-text-signs"
+      ],
       "prompt": "A message says you've won, and asks you to pay a fee in gift cards. What is it?",
       "options": [
         {

@@ -8,6 +8,9 @@
       "id": "q-halfway",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "image-from-static"
+      ],
       "prompt": "You pause an AI image tool halfway through \"a lighthouse in a storm\". What would you most likely see?",
       "options": [
         {
@@ -34,6 +37,10 @@
       "id": "q-perfect-picture",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "no-giveaway-proves-nothing",
+        "reverse-image-search"
+      ],
       "prompt": "A picture of a famous footballer at a small local café is spreading. Hands, signs and shadows all look fine.",
       "start": "checked",
       "steps": [
@@ -68,6 +75,9 @@
       "id": "q-clues",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "ai-image-giveaways"
+      ],
       "prompt": "Is each one a **possible clue** that a picture is AI-made, or **not a clue**?",
       "bins": [
         {
@@ -107,6 +117,10 @@
       "id": "q-no-label",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "watermark",
+        "no-label-proves-nothing"
+      ],
       "prompt": "A viral picture has no watermark. Your friend says that proves it's real. Are they right?",
       "options": [
         {
@@ -133,6 +147,10 @@
       "id": "q-principal",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "situation-clues",
+        "check-with-real-person"
+      ],
       "prompt": "A video of your principal says school's closed tomorrow. It's spreading in a chat started by someone you don't know.",
       "start": "the-video",
       "steps": [
@@ -167,6 +185,9 @@
       "id": "q-help-harm",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "consent-to-fake"
+      ],
       "prompt": "Is each use of face and voice AI **helpful** or **harmful**?",
       "bins": [
         {
@@ -206,26 +227,32 @@
       "id": "q-name-it",
       "type": "match_pairs",
       "difficulty": "core",
+      "uses": [
+        "generative-ai",
+        "deepfake",
+        "voice-clone",
+        "watermark"
+      ],
       "prompt": "Match each situation to the right term.",
       "pairs": [
         {
           "id": "generative",
-          "left": "An app turns your words into a painting",
+          "left": "Words turned into a painting",
           "right": "Generative AI"
         },
         {
           "id": "deepfake",
-          "left": "Video of a real singer saying fake words",
+          "left": "A real singer saying fake words",
           "right": "Deepfake"
         },
         {
           "id": "clone",
-          "left": "An AI call sounding just like your aunt",
+          "left": "An AI call sounding like your aunt",
           "right": "Voice clone"
         },
         {
           "id": "watermark",
-          "left": "Hidden data saying AI made a picture",
+          "left": "Hidden data saying AI made it",
           "right": "Watermark"
         }
       ],

@@ -10,6 +10,10 @@
       "id": "pencil-sum",
       "type": "numeric_input",
       "difficulty": "core",
+      "teaches": [
+        "check-ai-maths"
+      ],
+      "uses": [],
       "prompt": "A chatbot says \"3 boxes of 24 pencils is **62** pencils.\" Check its maths: how many is it really?",
       "base": "decimal",
       "answer": 72,
@@ -21,6 +25,11 @@
       "id": "four-checks",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "check-trusted-source",
+        "check-ai-maths",
+        "knowledge-cutoff"
+      ],
       "title": "Four ways to check",
       "body": "Chatbots can sound sure and be wrong. Check:\n\n- **Facts and dates:** find them in a trusted source.\n- **Sources:** open and read each one.\n- **Maths:** work it out yourself.\n- **News and \"latest\":** a model learned from text up to a certain date. Unless it searches the web, it may not know what's happened since."
     },
@@ -28,6 +37,10 @@
       "id": "moon-distance",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "check-trusted-source",
+        "asking-ai-doesnt-verify"
+      ],
       "prompt": "The chatbot writes: \"The Moon is about 38,000 km from Earth, about 3 days away by spacecraft.\"",
       "start": "the-number",
       "steps": [
@@ -63,6 +76,9 @@
       "id": "latest-phone",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "knowledge-cutoff"
+      ],
       "prompt": "A chatbot says the newest model of a phone \"came out last month\". What's the **main** reason to check?",
       "options": [
         {
@@ -93,6 +109,12 @@
       "id": "learn-or-do",
       "type": "sort_bins",
       "difficulty": "core",
+      "teaches": [
+        "learn-not-do-work"
+      ],
+      "uses": [
+        "learn-not-do-work"
+      ],
       "prompt": "Using AI to **learn** is great; letting it **do your work** and handing that in isn't. Which is each one?",
       "bins": [
         {
@@ -144,12 +166,17 @@
       "id": "claim-and-check",
       "type": "match_pairs",
       "difficulty": "challenge",
+      "uses": [
+        "check-trusted-source",
+        "check-ai-maths",
+        "knowledge-cutoff"
+      ],
       "prompt": "Match each thing a chatbot told you to the **best** way to check it.",
       "pairs": [
         {
           "id": "date",
           "left": "A date in history",
-          "right": "Look it up in a textbook or museum site"
+          "right": "A textbook or museum site"
         },
         {
           "id": "sum",
@@ -159,12 +186,12 @@
         {
           "id": "link",
           "left": "A link it gave as its source",
-          "right": "Open it and read what it says"
+          "right": "Open it and read it"
         },
         {
           "id": "news",
           "left": "Last week's football score",
-          "right": "Check a dated news website"
+          "right": "A dated news website"
         }
       ],
       "hint": "Use the four checks. Which one fits each kind of claim?",
@@ -175,28 +202,31 @@
       "id": "friends-essay",
       "type": "scenario",
       "difficulty": "challenge",
+      "uses": [
+        "learn-not-do-work"
+      ],
       "prompt": "Your friend shows you an essay a chatbot wrote for them, due tomorrow.",
       "start": "the-essay",
       "steps": [
         {
           "id": "the-essay",
-          "text": "\"I'm handing this in as mine. It's fine, everyone does it.\" What do you say?",
+          "text": "\"I'm handing this in as mine. Everyone does it.\" What do you say?",
           "choices": [
             {
               "id": "say-nothing",
-              "text": "\"OK, but at least read it through before you hand it in\"",
+              "text": "OK, but read it before handing it in",
               "consequence": "It's still the chatbot's work handed in as theirs. That may break school rules, and they miss the learning.",
               "outcome": "fail"
             },
             {
               "id": "suggest",
-              "text": "\"Check the AI rules. Use it to plan, then write your own\"",
+              "text": "Check the AI rules; plan with it, write your own",
               "consequence": "Good: you didn't lecture, you gave them an honest way to use it.",
               "outcome": "success"
             },
             {
               "id": "reword",
-              "text": "\"Add a few sentences of your own so it's partly yours\"",
+              "text": "Add a few sentences so it's partly yours",
               "consequence": "Most of it is still the chatbot's work. A few extra sentences don't change that.",
               "outcome": "fail"
             }
@@ -210,6 +240,12 @@
       "id": "checking-recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "check-trusted-source",
+        "check-ai-maths",
+        "knowledge-cutoff",
+        "learn-not-do-work"
+      ],
       "title": "Recap",
       "body": "- Check facts in a trusted source, and do the maths yourself.\n- A model learned up to a certain date: be careful with \"latest\".\n- Use AI to learn, not to do your work.\n\nNext: the AI tools around today."
     }

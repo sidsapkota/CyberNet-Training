@@ -9,6 +9,10 @@
       "id": "q-share-or-private",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "keep-locating-info-private",
+        "security-question"
+      ],
       "prompt": "New public profile: share, or keep private?",
       "bins": [
         {
@@ -48,6 +52,9 @@
       "id": "q-quiz-post",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "security-question"
+      ],
       "prompt": "\"Reply with your childhood street and first pet's name to get your elf name!\" Your uncle replied. What's the risk?",
       "options": [
         {
@@ -70,6 +77,9 @@
       "id": "q-permissions",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "app-permission"
+      ],
       "prompt": "Does the app need it?",
       "bins": [
         {
@@ -109,6 +119,10 @@
       "id": "q-stranger",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "block-and-report",
+        "trusted-adult"
+      ],
       "prompt": "Someone you only know from a game chat says they want to send you a gift.",
       "start": "start",
       "steps": [
@@ -137,6 +151,10 @@
       "id": "q-wi-fi",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "mobile-data-for-banking",
+        "fake-hotspot"
+      ],
       "prompt": "What's the safest way to check your bank account at a café?",
       "options": [
         {
@@ -159,6 +177,9 @@
       "id": "q-settings",
       "type": "match_pairs",
       "difficulty": "core",
+      "uses": [
+        "privacy-settings"
+      ],
       "prompt": "Match each problem to the privacy setting that fixes it.",
       "pairs": [
         {

@@ -7,12 +7,33 @@
   "icon": "square-terminal",
   "cards": [
     {
+      "id": "many-answers",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "dns-record",
+        "a-record",
+        "aaaa-record",
+        "cname",
+        "mx-record"
+      ],
+      "title": "One name, many answers",
+      "body": "DNS keeps each kind of answer in its own **record**:\n\n- **A**: the website's [[IPv4]] address (an **AAAA** record holds its [[IPv6]] address).\n- **CNAME**: an alias, meaning \"look up this other name instead\".\n- **MX**: where the domain's **email** goes.\n\nWhen you look something up, you ask for one kind of record."
+    },
+    {
       "id": "one-or-several",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "dns",
+        "dns-record"
+      ],
       "prompt": "Your club's `example.org` needs a website address and somewhere for email.\n\nDoes [[DNS]] give one answer per name, or several?",
       "options": [
-        { "id": "several", "text": "Several: one name holds answers for different jobs" },
+        {
+          "id": "several",
+          "text": "Several: one name holds answers for different jobs"
+        },
         {
           "id": "one-address",
           "text": "One: each name has one IP address for everything",
@@ -34,22 +55,39 @@
       "hint": "How many addresses came back from your first `nslookup`?"
     },
     {
-      "id": "many-answers",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "One name, many answers",
-      "body": "DNS keeps each kind of answer in its own **record**:\n\n- **A**: the website's [[IPv4]] address (an **AAAA** record holds its [[IPv6]] address).\n- **CNAME**: an alias, meaning \"look up this other name instead\".\n- **MX**: where the domain's **email** goes.\n\nWhen you look something up, you ask for one kind of record."
-    },
-    {
       "id": "match-records",
       "type": "match_pairs",
       "difficulty": "core",
+      "uses": [
+        "a-record",
+        "aaaa-record",
+        "cname",
+        "mx-record",
+        "ipv4-address",
+        "ipv6-address"
+      ],
       "prompt": "Each record holds one kind of answer for example.com. Match each record to a value it could hold.",
       "pairs": [
-        { "id": "a", "left": "A: the site's IPv4 address", "right": "`198.51.100.10`" },
-        { "id": "aaaa", "left": "AAAA: the site's IPv6 address", "right": "`2001:db8::10`" },
-        { "id": "cname", "left": "CNAME for www: an alias", "right": "`example.com`" },
-        { "id": "mx", "left": "MX: where email goes", "right": "`mail.example.com`" }
+        {
+          "id": "a",
+          "left": "A: the site's IPv4 address",
+          "right": "`198.51.100.10`"
+        },
+        {
+          "id": "aaaa",
+          "left": "AAAA: the site's IPv6 address",
+          "right": "`2001:db8::10`"
+        },
+        {
+          "id": "cname",
+          "left": "CNAME for www: an alias",
+          "right": "`example.com`"
+        },
+        {
+          "id": "mx",
+          "left": "MX: where email goes",
+          "right": "`mail.example.com`"
+        }
       ],
       "explanation": "**A** holds an IPv4 address (dots) and **AAAA** an IPv6 one (colons). **CNAME** holds another *name* (`www` is an alias for `example.com`), and **MX** names the mail [[server]].",
       "hint": "Dots, colons or a name? Of the two names, which sounds like a place for email?",
@@ -59,9 +97,15 @@
       "id": "record-for-email",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "mx-record"
+      ],
       "prompt": "The club site `example.org` loads fine. Which extra record lets mail to `hello@example.org` arrive?",
       "options": [
-        { "id": "mx", "text": "An MX record naming the club's mail server" },
+        {
+          "id": "mx",
+          "text": "An MX record naming the club's mail server"
+        },
         {
           "id": "a",
           "text": "A second A record with the website's address again",
@@ -86,12 +130,18 @@
       "id": "dig-cname",
       "type": "terminal",
       "difficulty": "core",
+      "uses": [
+        "dig",
+        "cname"
+      ],
       "prompt": "Run `dig www.example.com`. This time the answer has two lines.",
       "intro": "Simulated Linux terminal, with dig's output shortened to just the answer. Type help to see the commands you can use here.",
       "commands": [
         {
           "command": "dig www.example.com",
-          "aliases": ["dig www.example.com."],
+          "aliases": [
+            "dig www.example.com."
+          ],
           "description": "Look up www.example.com and show the answer",
           "output": ";; ANSWER SECTION:\nwww.example.com.\t1800\tIN\tCNAME\texample.com.\nexample.com.\t\t1800\tIN\tA\t198.51.100.10"
         }
@@ -99,7 +149,10 @@
       "success": {
         "type": "answer",
         "question": "www.example.com is an alias for which name?",
-        "accepted": ["example.com", "example.com."]
+        "accepted": [
+          "example.com",
+          "example.com."
+        ]
       },
       "explanation": "Line 1 is a **CNAME**: `www.example.com` is an alias for `example.com`. The [[resolver]] followed it to example.com's **A** record, `198.51.100.10`.",
       "hint": "Look at the line with `CNAME` in it: the name at its end is what it points to.",
@@ -109,13 +162,33 @@
       "id": "follow-cname",
       "type": "drag_to_order",
       "difficulty": "core",
+      "uses": [
+        "cname",
+        "a-record",
+        "dns-lookup"
+      ],
       "prompt": "Put the steps in order for a [[browser]] opening `www.example.com`.",
       "items": [
-        { "id": "ask-www", "label": "Look up www.example.com" },
-        { "id": "get-alias", "label": "Get a CNAME: an alias for example.com" },
-        { "id": "ask-a", "label": "Look up the A record for example.com" },
-        { "id": "get-address", "label": "Get the address 198.51.100.10" },
-        { "id": "connect", "label": "Connect to 198.51.100.10" }
+        {
+          "id": "ask-www",
+          "label": "Look up www.example.com"
+        },
+        {
+          "id": "get-alias",
+          "label": "Get a CNAME: an alias for example.com"
+        },
+        {
+          "id": "ask-a",
+          "label": "Look up the A record for example.com"
+        },
+        {
+          "id": "get-address",
+          "label": "Get the address 198.51.100.10"
+        },
+        {
+          "id": "connect",
+          "label": "Connect to 198.51.100.10"
+        }
       ],
       "explanation": "A CNAME holds a name, not an address, so the lookup carries on with **example.com** to its **A** record. Only then can the browser connect.",
       "hint": "A CNAME holds a name, and you can't connect without a real address.",
@@ -125,6 +198,11 @@
       "id": "lookalikes",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "uses": [
+        "owner-controls-left",
+        "domain-name-parts",
+        "names-read-right-to-left"
+      ],
       "prompt": "A message says \"Log in to your example.com account\". Which link really belongs to **example.com**?",
       "options": [
         {
@@ -137,8 +215,15 @@
           "text": "example.com.account-check.example.org",
           "nudge": "It starts with the right words, but what does it end with? The right-hand end decides."
         },
-        { "id": "hyphen", "text": "example-com.example.org", "nudge": "A hyphen makes a new name, and this one ends in a different domain." },
-        { "id": "real", "text": "login.example.com" }
+        {
+          "id": "hyphen",
+          "text": "example-com.example.org",
+          "nudge": "A hyphen makes a new name, and this one ends in a different domain."
+        },
+        {
+          "id": "real",
+          "text": "login.example.com"
+        }
       ],
       "correctOptionId": "real",
       "explanation": "`login.example.com` ends in **example.com**, so its owner controls it. `examp1e.com` uses a **1** for an **l**, and the other two end in **example.org**: scammers rely on lookalikes, so always check the right-hand end.",
@@ -148,6 +233,14 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "dns-record",
+        "a-record",
+        "cname",
+        "mx-record",
+        "nslookup",
+        "dig"
+      ],
       "title": "Recap",
       "body": "- One name can hold several **records**, one for each job.\n- **A** gives an address, **CNAME** an alias, **MX** the mail server.\n- `nslookup` and `dig` let you ask [[DNS]] questions yourself."
     }

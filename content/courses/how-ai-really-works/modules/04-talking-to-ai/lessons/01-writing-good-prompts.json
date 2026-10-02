@@ -10,6 +10,13 @@
       "id": "vague-or-clear",
       "type": "sort_bins",
       "difficulty": "core",
+      "teaches": [
+        "prompt",
+        "clear-prompt"
+      ],
+      "uses": [
+        "clear-prompt"
+      ],
       "prompt": "What you type is a **prompt**. Is each one **vague**, or **clear** about what it wants and what shape?",
       "bins": [
         {
@@ -61,12 +68,18 @@
       "id": "what-a-prompt-needs",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "goal-context-format"
+      ],
       "title": "What a good prompt says",
       "body": "A chatbot writes likely words to follow **your** text, so the more you say, the better it aims. Say:\n\n- **The goal:** what you want done.\n- **The context:** who it's for, what you already have.\n- **The format:** how long, what shape.\n\nAsk \"Tell me about dogs\" when you wanted puppy tips? Enjoy 2,000 words on poodle history."
     },
     {
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "goal-context-format"
+      ],
       "bins": [
         {
           "id": "goal",
@@ -90,28 +103,18 @@
           "bin": "goal"
         },
         {
-          "id": "magnets",
-          "label": "Plan some dinners",
-          "bin": "goal"
-        },
-        {
           "id": "brother",
-          "label": "It's for my little brother",
+          "label": "It's for my brother",
           "bin": "context"
         },
         {
           "id": "read-ch1",
-          "label": "I've already read chapter 1",
+          "label": "I've read chapter 1",
           "bin": "context"
         },
         {
           "id": "rhyme",
           "label": "As a rhyme",
-          "bin": "format"
-        },
-        {
-          "id": "table",
-          "label": "In a table",
           "bin": "format"
         }
       ],
@@ -123,6 +126,9 @@
       "id": "whats-missing",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "goal-context-format"
+      ],
       "prompt": "**\"Write a summary of the water cycle.\"** has a goal. What would improve it **most**?",
       "options": [
         {
@@ -153,6 +159,11 @@
       "id": "improve-the-prompt",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "goal-context-format",
+        "temperature-not-knowledge",
+        "check-trusted-source"
+      ],
       "prompt": "You're giving a 1-minute talk about octopuses at your nature club.",
       "start": "first-try",
       "steps": [
@@ -206,6 +217,14 @@
       "id": "include-or-leave-out",
       "type": "sort_bins",
       "difficulty": "core",
+      "teaches": [
+        "chats-may-be-stored",
+        "keep-private-details-out"
+      ],
+      "uses": [
+        "keep-private-details-out",
+        "goal-context-format"
+      ],
       "prompt": "Paste in your notes, but keep private details out: chats may be stored. Should each go **in** or be **left out**?",
       "bins": [
         {
@@ -225,27 +244,27 @@
         },
         {
           "id": "length",
-          "label": "How long the answer should be",
+          "label": "How long it should be",
           "bin": "in"
         },
         {
           "id": "notes",
-          "label": "The notes you want summarised",
+          "label": "The notes to summarise",
           "bin": "in"
         },
         {
           "id": "address",
-          "label": "Your home address, for a local answer",
+          "label": "Your home address",
           "bin": "out"
         },
         {
           "id": "password",
-          "label": "Your email password, to sort your inbox",
+          "label": "Your email password",
           "bin": "out"
         },
         {
           "id": "friend-message",
-          "label": "A friend's private message to you",
+          "label": "A friend's private message",
           "bin": "out"
         }
       ],
@@ -257,6 +276,9 @@
       "id": "boring-list",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "uses": [
+        "goal-context-format"
+      ],
       "prompt": "\"Give me facts about sharks\" got a long, boring list. Which **one** change helps **most**?",
       "options": [
         {
@@ -287,6 +309,13 @@
       "id": "no-answers-please",
       "type": "scenario",
       "difficulty": "challenge",
+      "teaches": [
+        "long-chat-loses-start"
+      ],
+      "uses": [
+        "clear-prompt",
+        "long-chat-loses-start"
+      ],
       "prompt": "You want a chatbot to quiz you on your history notes.",
       "start": "first-quiz",
       "steps": [
@@ -346,6 +375,12 @@
       "id": "prompts-recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "prompt",
+        "goal-context-format",
+        "keep-private-details-out",
+        "long-chat-loses-start"
+      ],
       "title": "Recap",
       "body": "- A good **prompt** says the **goal**, the **context** and the **format**.\n- Paste in your notes or drafts, never private details.\n- Long chat? It can lose the start, so repeat your instructions.\n\nNext: checking AI's work."
     }

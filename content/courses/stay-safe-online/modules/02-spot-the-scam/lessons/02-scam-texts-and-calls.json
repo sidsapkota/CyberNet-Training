@@ -10,6 +10,13 @@
       "id": "sounds-like-cousin",
       "type": "scenario",
       "difficulty": "core",
+      "teaches": [
+        "voice-clone",
+        "family-safe-word"
+      ],
+      "uses": [
+        "family-safe-word"
+      ],
       "prompt": "A call sounds exactly like your cousin. (A computer can copy a voice: a [[voice clone|voice-clone]].)",
       "start": "start",
       "steps": [
@@ -39,7 +46,7 @@
         },
         {
           "id": "next-time",
-          "text": "How could you check a call like that next time?",
+          "text": "How could you check a call like that next time? (A **family safe word** is a secret word only your family knows.)",
           "choices": [
             {
               "id": "birthday",
@@ -69,6 +76,9 @@
       "id": "knows-my-name",
       "type": "true_false",
       "difficulty": "core",
+      "uses": [
+        "name-proves-nothing"
+      ],
       "prompt": "A caller who knows your name must be real.",
       "answer": false,
       "explanation": "False. Names, schools and even voices can be found or copied online. Check by calling back on a number you already know.",
@@ -79,6 +89,11 @@
       "id": "in-your-pocket",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "scam-text-signs",
+        "scam-call-signs",
+        "gift-cards-scam-payment"
+      ],
       "title": "Scam texts and calls",
       "body": "Scam **texts** often ask for a **small fee**, set a **deadline** and add a strange **link**.\n\nScam **callers** may say they're your bank or the police. Hang up if they want a **code**, a **password**, **gift cards**, **secrecy** or **control of your computer**."
     },
@@ -86,6 +101,11 @@
       "id": "hang-up-or-ok",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "scam-call-signs",
+        "never-share-sign-in-code",
+        "gift-cards-scam-payment"
+      ],
       "prompt": "Hang up, or that's OK?",
       "bins": [
         {
@@ -127,6 +147,9 @@
       "id": "spot-the-text",
       "type": "hotspot",
       "difficulty": "core",
+      "uses": [
+        "scam-text-signs"
+      ],
       "prompt": "You're expecting a parcel. Tap the **three** scam signs in the **new** text.",
       "scene": "text-message",
       "mode": "tap",
@@ -143,6 +166,9 @@
       "id": "free-coins",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "companies-never-ask-for-secrets"
+      ],
       "prompt": "A website promises **10,000 free coins** for your favourite game.",
       "start": "start",
       "steps": [
@@ -172,6 +198,10 @@
       "id": "always-a-sign",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "gift-cards-scam-payment",
+        "scam-text-signs"
+      ],
       "prompt": "Which is **always** a warning sign?",
       "options": [
         {
@@ -197,6 +227,10 @@
       "id": "boss-new-number",
       "type": "scenario",
       "difficulty": "challenge",
+      "uses": [
+        "gift-cards-scam-payment",
+        "scam-call-signs"
+      ],
       "prompt": "A text arrives from a number you don't know.",
       "start": "start",
       "steps": [
@@ -232,6 +266,11 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "scam-text-signs",
+        "official-app-check",
+        "call-back-on-known-number"
+      ],
       "title": "Recap",
       "body": "- A **fee**, a **deadline** and a **link**? Check in the company's **official app**.\n- Calls: **hang up and call back** on a number you know.\n- **Try this:** save your bank's real number in your contacts."
     }

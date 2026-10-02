@@ -10,11 +10,34 @@
       "id": "url-parts-jobs",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "You type `https://www.example.com/news` and press Enter.\n\nMatch each part of this address, the **URL**, to what your [[browser]] does with it.",
+      "teaches": [
+        "url"
+      ],
+      "uses": [
+        "https",
+        "tls",
+        "port-443-https",
+        "dns",
+        "get-post",
+        "url-path"
+      ],
+      "prompt": "You type `https://www.example.com/news`. Match each part of the **URL** to what your [[browser]] does.",
       "pairs": [
-        { "id": "scheme", "left": "`https`", "right": "Encrypt everything with TLS, on port 443" },
-        { "id": "host", "left": "`www.example.com`", "right": "Turn it into an IP address with DNS" },
-        { "id": "path", "left": "`/news`", "right": "Ask the server for that page with GET" }
+        {
+          "id": "scheme",
+          "left": "`https`",
+          "right": "Encrypt with TLS, on port 443"
+        },
+        {
+          "id": "host",
+          "left": "`www.example.com`",
+          "right": "Find its IP address with DNS"
+        },
+        {
+          "id": "path",
+          "left": "`/news`",
+          "right": "Ask the server for that page"
+        }
       ],
       "explanation": "The **scheme** picks the [[protocol]] (`https` is HTTP inside TLS), DNS turns the **host** into an address, and the **path** goes in the GET request.",
       "hint": "One part picks the protocol, one is a name that needs looking up, and one says which page.",
@@ -24,12 +47,18 @@
       "id": "step-dns",
       "type": "terminal",
       "difficulty": "core",
+      "uses": [
+        "nslookup",
+        "ipv4-address"
+      ],
       "prompt": "**Step 1: [[DNS]].** Run `nslookup www.example.com` to find the [[IP address]] the [[browser]] needs.",
       "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
       "commands": [
         {
           "command": "nslookup www.example.com",
-          "aliases": ["nslookup www.example.com."],
+          "aliases": [
+            "nslookup www.example.com."
+          ],
           "description": "Ask DNS for the address of www.example.com",
           "output": "Server:\t\t127.0.0.53\nAddress:\t127.0.0.53#53\n\nNon-authoritative answer:\nwww.example.com\tcanonical name = example.com.\nName:\texample.com\nAddress: 198.51.100.10\nName:\texample.com\nAddress: 2001:db8::10"
         }
@@ -37,7 +66,9 @@
       "success": {
         "type": "answer",
         "question": "Which IPv4 address will the browser connect to?",
-        "accepted": ["198.51.100.10"]
+        "accepted": [
+          "198.51.100.10"
+        ]
       },
       "explanation": "It's `198.51.100.10`: the `canonical name` line is a CNAME, so these are example.com's addresses. There's an [[IPv6]] one too, and the answer likely came from a [[cache]] or a quick [[resolver]] trip.",
       "hint": "The `Server` lines at the top are the helper: look under the answer for the site's address.",
@@ -47,28 +78,99 @@
       "id": "step-route",
       "type": "packet_path",
       "difficulty": "core",
-      "prompt": "**Step 2:** TCP's first message, \"Can we talk?\", goes to `198.51.100.10:443`.\n\nSend it from the laptop to the web [[server]].",
+      "uses": [],
+      "prompt": "**Step 2:** TCP's \"Can we talk?\" goes to `198.51.100.10:443`. Send it to the web [[server]].",
       "nodes": [
-        { "id": "laptop", "kind": "device", "label": "Laptop", "address": "192.168.1.20", "col": 0, "row": 1 },
-        { "id": "tv", "kind": "device", "label": "Smart TV", "address": "192.168.1.31", "col": 0, "row": 2 },
-        { "id": "home", "kind": "router", "label": "Home router (public IP)", "address": "203.0.113.7", "col": 1, "row": 1 },
-        { "id": "isp-a", "kind": "router", "label": "ISP router A", "address": "203.0.113.1", "col": 2, "row": 0 },
-        { "id": "isp-b", "kind": "router", "label": "ISP router B", "address": "203.0.113.2", "col": 2, "row": 2 },
-        { "id": "server", "kind": "server", "label": "example.com", "address": "198.51.100.10", "col": 3, "row": 1 }
+        {
+          "id": "laptop",
+          "kind": "device",
+          "label": "Laptop",
+          "address": "192.168.1.20",
+          "col": 0,
+          "row": 1
+        },
+        {
+          "id": "tv",
+          "kind": "device",
+          "label": "Smart TV",
+          "address": "192.168.1.31",
+          "col": 0,
+          "row": 2
+        },
+        {
+          "id": "home",
+          "kind": "router",
+          "label": "Home router (public IP)",
+          "address": "203.0.113.7",
+          "col": 1,
+          "row": 1
+        },
+        {
+          "id": "isp-a",
+          "kind": "router",
+          "label": "ISP router A",
+          "address": "203.0.113.1",
+          "col": 2,
+          "row": 0
+        },
+        {
+          "id": "isp-b",
+          "kind": "router",
+          "label": "ISP router B",
+          "address": "203.0.113.2",
+          "col": 2,
+          "row": 2
+        },
+        {
+          "id": "server",
+          "kind": "server",
+          "label": "example.com",
+          "address": "198.51.100.10",
+          "col": 3,
+          "row": 1
+        }
       ],
       "links": [
-        { "from": "laptop", "to": "home" },
-        { "from": "tv", "to": "home" },
-        { "from": "home", "to": "isp-a" },
-        { "from": "home", "to": "isp-b" },
-        { "from": "isp-a", "to": "server" },
-        { "from": "isp-b", "to": "server" }
+        {
+          "from": "laptop",
+          "to": "home"
+        },
+        {
+          "from": "tv",
+          "to": "home"
+        },
+        {
+          "from": "home",
+          "to": "isp-a"
+        },
+        {
+          "from": "home",
+          "to": "isp-b"
+        },
+        {
+          "from": "isp-a",
+          "to": "server"
+        },
+        {
+          "from": "isp-b",
+          "to": "server"
+        }
       ],
       "source": "laptop",
       "destination": "server",
       "validPaths": [
-        ["laptop", "home", "isp-a", "server"],
-        ["laptop", "home", "isp-b", "server"]
+        [
+          "laptop",
+          "home",
+          "isp-a",
+          "server"
+        ],
+        [
+          "laptop",
+          "home",
+          "isp-b",
+          "server"
+        ]
       ],
       "explanation": "Either ISP router works: each picks a good next [[hop]]. On the way out, the home router's **NAT** swapped `192.168.1.20` for its public `203.0.113.7`, the only address the server sees.",
       "hint": "Every packet from home leaves through the home router first, then any links to the server.",
@@ -78,7 +180,13 @@
       "id": "step-curl",
       "type": "terminal",
       "difficulty": "core",
-      "prompt": "**Steps 1 to 4 at once:** run `curl -v https://www.example.com/news` and watch each step go by.\n\nWhich **port** did it connect to?",
+      "teaches": [
+        "tls-after-tcp"
+      ],
+      "uses": [
+        "port"
+      ],
+      "prompt": "**Steps 1 to 4 at once:** run `curl -v https://www.example.com/news`.",
       "intro": "Simulated Linux terminal (curl's output shortened). Type help to see the commands you can use here.",
       "commands": [
         {
@@ -90,7 +198,10 @@
       "success": {
         "type": "answer",
         "question": "Which port did curl connect to?",
-        "accepted": ["443", "port 443"]
+        "accepted": [
+          "443",
+          "port 443"
+        ]
       },
       "explanation": "`Connected to … port 443`: port **443**, the [[HTTPS]] port. From the top you can see DNS, the TCP connection, the TLS [[certificate]] check, the [[encrypted|encryption]] `GET /news` and the `200` reply.",
       "hint": "Find the line that starts `Connected to`. The port is at the end of that line.",
@@ -100,6 +211,16 @@
       "id": "page-rebuilt",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "page-rebuild"
+      ],
+      "uses": [
+        "nat",
+        "public-address",
+        "sequence-number",
+        "tls",
+        "html"
+      ],
       "title": "Rebuilding the page",
       "body": "The reply's **packets** come back [[hop]] by hop to your router's [[public address]]. **NAT** passes them to your laptop, **TCP** reorders them by [[sequence numbers|sequence-number]] and asks again for lost ones, and **TLS** decrypts them.\n\nYour [[browser]] then reads the [[HTML]], fetches its pictures and draws the page."
     },
@@ -107,15 +228,41 @@
       "id": "whole-journey",
       "type": "drag_to_order",
       "difficulty": "core",
+      "uses": [
+        "dns",
+        "tcp-handshake",
+        "tls-handshake",
+        "tls-after-tcp",
+        "get-post",
+        "status-code",
+        "page-rebuild"
+      ],
       "prompt": "Put the whole journey in order, from pressing Enter to seeing the page.",
       "items": [
-        { "id": "dns", "label": "DNS turns the name into 198.51.100.10" },
-        { "id": "tcp", "label": "TCP handshake on port 443" },
-        { "id": "tls", "label": "TLS handshake: keys and certificate" },
-        { "id": "get", "label": "Browser sends an encrypted GET /news" },
-        { "id": "response", "label": "Server replies 200 OK with the HTML" },
-        { "id": "reassemble", "label": "TCP reorders packets, TLS decrypts" },
-        { "id": "draw", "label": "Browser fetches pictures, draws the page" }
+        {
+          "id": "dns",
+          "label": "DNS finds 198.51.100.10"
+        },
+        {
+          "id": "tcp",
+          "label": "TCP handshake on port 443"
+        },
+        {
+          "id": "tls",
+          "label": "TLS handshake"
+        },
+        {
+          "id": "get",
+          "label": "Encrypted GET /news"
+        },
+        {
+          "id": "response",
+          "label": "Server replies 200 OK"
+        },
+        {
+          "id": "draw",
+          "label": "Browser draws the page"
+        }
       ],
       "explanation": "Find the address (**DNS**), connect (**TCP**), secure it (**TLS**), ask (**GET**), get **200 OK**, rebuild and decrypt, then draw. All of it travelled as **packets** of **bits**, [[hop]] by hop, through your [[router]]'s **NAT**.",
       "hint": "You need an address to connect, a connection to secure, and security before you ask.",
@@ -125,12 +272,34 @@
       "id": "which-step-failed",
       "type": "match_pairs",
       "difficulty": "challenge",
-      "prompt": "When a page won't load, the error says which step failed. Match each error to its step.",
+      "uses": [
+        "dns",
+        "tcp-handshake",
+        "certificate",
+        "status-code-classes"
+      ],
+      "prompt": "Each error says which step failed. Match them.",
       "pairs": [
-        { "id": "not-found", "left": "Server not found", "right": "The DNS lookup failed" },
-        { "id": "timed-out", "left": "Connection timed out", "right": "Nothing answered the TCP handshake" },
-        { "id": "not-private", "left": "Your connection is not private", "right": "The TLS certificate check failed" },
-        { "id": "404", "left": "404 Not Found", "right": "The server has no page at that path" }
+        {
+          "id": "not-found",
+          "left": "Server not found",
+          "right": "DNS lookup failed"
+        },
+        {
+          "id": "timed-out",
+          "left": "Connection timed out",
+          "right": "No reply to the TCP handshake"
+        },
+        {
+          "id": "not-private",
+          "left": "Your connection is not private",
+          "right": "TLS certificate check failed"
+        },
+        {
+          "id": "404",
+          "left": "404 Not Found",
+          "right": "No page at that path"
+        }
       ],
       "explanation": "**Server not found** is DNS failing, and **timed out** means \"Can we talk?\" got no reply. **Not private** is a failed certificate check, and **404** means everything worked up to [[HTTP]], but that path is empty.",
       "hint": "Each error comes from a different step: finding the address, opening the connection, checking the certificate, or asking for the page.",
@@ -140,29 +309,110 @@
       "id": "route-the-reply",
       "type": "packet_path",
       "difficulty": "challenge",
-      "prompt": "The [[server]] replies to your [[router]]'s [[public address]], `203.0.113.7`, but **Router A is down**.\n\nRoute the reply back to the laptop.",
+      "uses": [
+        "public-address",
+        "nat"
+      ],
+      "prompt": "The [[server]] replies to your [[router]] at `203.0.113.7`, but **Router A is down**. Route it to the laptop.",
       "nodes": [
-        { "id": "phone", "kind": "device", "label": "Phone", "address": "192.168.1.21", "col": 0, "row": 0 },
-        { "id": "laptop", "kind": "device", "label": "Laptop", "address": "192.168.1.20", "col": 0, "row": 1 },
-        { "id": "home", "kind": "router", "label": "Home router (NAT)", "address": "203.0.113.7", "col": 1, "row": 1 },
-        { "id": "rc", "kind": "router", "label": "Router C", "address": "203.0.113.3", "col": 1, "row": 2 },
-        { "id": "ra", "kind": "router", "label": "Router A", "address": "203.0.113.1", "col": 2, "row": 0, "down": true },
-        { "id": "rb", "kind": "router", "label": "Router B", "address": "203.0.113.2", "col": 2, "row": 2 },
-        { "id": "server", "kind": "server", "label": "example.com", "address": "198.51.100.10", "col": 3, "row": 1 }
+        {
+          "id": "phone",
+          "kind": "device",
+          "label": "Phone",
+          "address": "192.168.1.21",
+          "col": 0,
+          "row": 1
+        },
+        {
+          "id": "laptop",
+          "kind": "device",
+          "label": "Laptop",
+          "address": "192.168.1.20",
+          "col": 0,
+          "row": 0
+        },
+        {
+          "id": "home",
+          "kind": "router",
+          "label": "Home router (NAT)",
+          "address": "203.0.113.7",
+          "col": 1,
+          "row": 0
+        },
+        {
+          "id": "rc",
+          "kind": "router",
+          "label": "Router C",
+          "address": "203.0.113.3",
+          "col": 1,
+          "row": 1
+        },
+        {
+          "id": "ra",
+          "kind": "router",
+          "label": "Router A",
+          "address": "203.0.113.1",
+          "col": 2,
+          "row": 0,
+          "down": true
+        },
+        {
+          "id": "rb",
+          "kind": "router",
+          "label": "Router B",
+          "address": "203.0.113.2",
+          "col": 2,
+          "row": 1
+        },
+        {
+          "id": "server",
+          "kind": "server",
+          "label": "example.com",
+          "address": "198.51.100.10",
+          "col": 3,
+          "row": 0
+        }
       ],
       "links": [
-        { "from": "server", "to": "ra" },
-        { "from": "server", "to": "rb" },
-        { "from": "ra", "to": "home" },
-        { "from": "rb", "to": "rc" },
-        { "from": "rc", "to": "home" },
-        { "from": "home", "to": "laptop" },
-        { "from": "home", "to": "phone" }
+        {
+          "from": "server",
+          "to": "ra"
+        },
+        {
+          "from": "server",
+          "to": "rb"
+        },
+        {
+          "from": "ra",
+          "to": "home"
+        },
+        {
+          "from": "rb",
+          "to": "rc"
+        },
+        {
+          "from": "rc",
+          "to": "home"
+        },
+        {
+          "from": "home",
+          "to": "laptop"
+        },
+        {
+          "from": "home",
+          "to": "phone"
+        }
       ],
       "source": "server",
       "destination": "laptop",
       "validPaths": [
-        ["server", "rb", "rc", "home", "laptop"]
+        [
+          "server",
+          "rb",
+          "rc",
+          "home",
+          "laptop"
+        ]
       ],
       "explanation": "With Router A down, the reply goes **B → C → home router**: routes needn't match both ways. **NAT** then checks its notes and passes it to the laptop, not the phone.",
       "hint": "A down router passes nothing on; at home, only the device that asked should get the reply.",
@@ -172,6 +422,14 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "dns",
+        "packet",
+        "tcp",
+        "tls",
+        "http",
+        "nat"
+      ],
       "title": "Recap: How the Internet Works",
       "body": "- **DNS** finds the address; **packets** travel router to router.\n- **TCP** connects reliably, **TLS** encrypts, **HTTP** asks and answers.\n- It's all **bits**, going out and back through your router's **NAT**.\n\nTake the final quiz to finish the course. Next time a page loads, you'll know what just happened."
     }

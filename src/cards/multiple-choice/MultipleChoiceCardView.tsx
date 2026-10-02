@@ -48,7 +48,7 @@ export function MultipleChoiceCardView({
   return (
     <div>
       <CardPrompt id={promptId}>{card.prompt}</CardPrompt>
-      <div role="radiogroup" aria-labelledby={promptId} className="mt-4 grid gap-2 sm:mt-8 sm:gap-2.5">
+      <div role="radiogroup" aria-labelledby={promptId} className="mt-3 grid gap-1.5 sm:mt-8 sm:gap-2.5">
         {options.map((option, i) => {
           const selected = answer === option.id;
           const tone: Tone = !selected
@@ -67,11 +67,11 @@ export function MultipleChoiceCardView({
               disabled={locked}
               onClick={() => onAnswerChange(option.id)}
               whileTap={locked ? undefined : { scale: 0.985 }}
-              className={`flex min-h-12 w-full items-center gap-3 rounded-control border-2 px-3 py-2.5 text-left text-body font-medium sm:min-h-14 sm:gap-3.5 sm:px-3.5 sm:py-3 sm:text-lead transition-colors duration-150 disabled:cursor-default ${toneClasses[tone]} ${locked && !selected ? "opacity-55" : ""}`}
+              className={`flex min-h-11 w-full items-center gap-2.5 rounded-control border-2 px-3 py-1.5 text-left text-small leading-snug font-medium sm:min-h-14 sm:leading-normal sm:gap-3.5 sm:px-3.5 sm:py-3 sm:text-lead transition-colors duration-150 disabled:cursor-default ${toneClasses[tone]} ${locked && !selected ? "opacity-55" : ""}`}
             >
               <span
                 aria-hidden="true"
-                className={`grid size-7 shrink-0 place-items-center rounded-sm border-2 font-mono text-small sm:size-8 font-semibold transition-colors ${badgeClasses[tone]}`}
+                className={`grid size-6 shrink-0 place-items-center rounded-sm border-2 font-mono text-caption sm:size-8 sm:text-small font-semibold transition-colors ${badgeClasses[tone]}`}
               >
                 {tone === "correct" ? (
                   <CheckIcon className="size-4" strokeWidth={2.5} />

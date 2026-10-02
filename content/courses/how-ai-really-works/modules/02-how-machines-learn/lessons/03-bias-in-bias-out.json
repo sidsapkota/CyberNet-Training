@@ -10,6 +10,11 @@
       "id": "slang-checker",
       "type": "train_model",
       "difficulty": "core",
+      "uses": [
+        "word-vote",
+        "training-data",
+        "only-knows-its-examples"
+      ],
       "prompt": "Fix the checker's mistake.",
       "model": {
         "kind": "word-vote"
@@ -109,6 +114,9 @@
       "id": "what-bias-is",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "bias"
+      ],
       "title": "Bias in, bias out",
       "body": "When training data leaves some people out, or has far more of some, the model works better for some people than others. That's **bias**.\n\nUsually nobody means it: a voice assistant trained mostly on one accent understands that accent best."
     },
@@ -116,6 +124,10 @@
       "id": "club-filter",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "bias",
+        "people-decisions-need-a-person"
+      ],
       "prompt": "A sports club wants to sort new sign-ups with a model.",
       "start": "the-plan",
       "steps": [
@@ -151,6 +163,9 @@
       "id": "where-bias-comes-from",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "bias"
+      ],
       "prompt": "Where does bias in a model usually come from?",
       "options": [
         {
@@ -181,6 +196,14 @@
       "id": "fixes-that-help",
       "type": "sort_bins",
       "difficulty": "core",
+      "teaches": [
+        "test-with-many-groups"
+      ],
+      "uses": [
+        "bias",
+        "test-with-many-groups",
+        "people-decisions-need-a-person"
+      ],
       "prompt": "Testing with **many kinds of people** catches bias. A model works worse for some: does each idea help?",
       "bins": [
         {
@@ -232,6 +255,14 @@
       "id": "accents",
       "type": "scenario",
       "difficulty": "challenge",
+      "teaches": [
+        "per-group-accuracy"
+      ],
+      "uses": [
+        "bias",
+        "accuracy",
+        "test-with-many-groups"
+      ],
       "prompt": "A company is choosing a voice assistant to answer its phone line.",
       "start": "the-trial",
       "steps": [
@@ -267,26 +298,32 @@
       "id": "problem-and-fix",
       "type": "match_pairs",
       "difficulty": "challenge",
+      "uses": [
+        "bias",
+        "word-vote",
+        "per-group-accuracy",
+        "people-decisions-need-a-person"
+      ],
       "prompt": "Match each problem to the best next step.",
       "pairs": [
         {
           "id": "slang",
           "left": "Misreads slang as mean",
-          "right": "Add messages that use slang kindly"
+          "right": "Add kind slang messages"
         },
         {
           "id": "one-school",
-          "left": "Trained on one suburb only",
-          "right": "Retrain with sign-ups from many suburbs"
+          "left": "Trained on one suburb",
+          "right": "Retrain with many suburbs"
         },
         {
           "id": "accents",
-          "left": "95% overall, worse for some accents",
-          "right": "Check the accuracy for each group"
+          "left": "Worse for some accents",
+          "right": "Check each group's accuracy"
         },
         {
           "id": "decisions",
-          "left": "Makes decisions about people",
+          "left": "Decides things about people",
           "right": "Keep a person checking"
         }
       ],
@@ -298,6 +335,11 @@
       "id": "bias-recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "bias",
+        "test-with-many-groups",
+        "people-decisions-need-a-person"
+      ],
       "title": "Recap",
       "body": "- **Bias**: a model works better for some people than others.\n- It usually comes from gaps in the training data.\n- Fix the data, test with everyone, keep a person checking.\n\nIt's never the fault of the people it gets wrong."
     }

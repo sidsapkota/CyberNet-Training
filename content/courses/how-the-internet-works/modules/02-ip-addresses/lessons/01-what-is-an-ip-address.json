@@ -10,9 +10,13 @@
       "id": "ip-purpose",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [],
       "prompt": "The post office finds one home among millions. How does a message find **your friend's** phone online?",
       "options": [
-        { "id": "delivery", "text": "It's sent to the phone's own number, like an address" },
+        {
+          "id": "delivery",
+          "text": "It's sent to the phone's own number, like an address"
+        },
         {
           "id": "by-name",
           "text": "It's found by its owner's name, like \"Sam's phone\"",
@@ -32,13 +36,25 @@
       "id": "finding-one-device",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "ip-address",
+        "protocol",
+        "ipv4-address",
+        "octet",
+        "byte-max-255"
+      ],
       "title": "IP addresses",
       "body": "That number is an **IP address** (Internet Protocol address). A **protocol** is a set of rules devices agree to follow.\n\nThe common kind, **IPv4**, is four numbers with dots, like `192.0.2.44`. Each number is an [[octet]]: 8 [[bits|bit]], so 0 to 255."
     },
     {
       "id": "make-192",
       "type": "binary_toggle",
-      "difficulty": "core",
+      "difficulty": "challenge",
+      "uses": [
+        "octet",
+        "binary-place-values",
+        "decimal-to-binary"
+      ],
       "prompt": "The first [[octet]] of `192.0.2.44` is **192**. Build it in [[binary]].",
       "target": 192,
       "explanation": "128 fits in 192, leaving 64, then 64 fits. So 192 = 128 + 64: `11000000`.",
@@ -46,16 +62,75 @@
       "nudge": "Add up the bits that are on: from the left, take each value that still fits."
     },
     {
+      "id": "valid-ip",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "uses": [
+        "ipv4-address",
+        "octet",
+        "byte-max-255"
+      ],
+      "prompt": "Which of these is a **valid** IPv4 address?",
+      "options": [
+        {
+          "id": "has-256",
+          "text": "192.168.1.256",
+          "nudge": "An octet is one byte, and a byte only holds 0 to 255."
+        },
+        {
+          "id": "valid",
+          "text": "10.0.0.254"
+        },
+        {
+          "id": "has-300",
+          "text": "172.16.300.1",
+          "nudge": "Check every part: each is one byte, so none can go above 255."
+        },
+        {
+          "id": "three-parts",
+          "text": "192.0.2",
+          "nudge": "Count the parts: an IPv4 address always has four numbers."
+        }
+      ],
+      "correctOptionId": "valid",
+      "explanation": "`10.0.0.254` has four numbers, each from 0 to 255. The others have a number above 255 (an octet is one byte), or only three numbers.",
+      "hint": "Two things to check: there are four numbers, and each one is a byte (0 to 255)."
+    },
+    {
       "id": "octets-in-binary",
       "type": "match_pairs",
       "difficulty": "challenge",
+      "uses": [
+        "octet",
+        "binary-place-values"
+      ],
       "prompt": "Match each [[octet]] to its [[binary]] pattern.",
       "pairs": [
-        { "id": "o255", "left": "`255`", "right": "`11111111`" },
-        { "id": "o128", "left": "`128`", "right": "`10000000`" },
-        { "id": "o10", "left": "`10`", "right": "`00001010`" },
-        { "id": "o1", "left": "`1`", "right": "`00000001`" },
-        { "id": "o0", "left": "`0`", "right": "`00000000`" }
+        {
+          "id": "o255",
+          "left": "`255`",
+          "right": "`11111111`"
+        },
+        {
+          "id": "o128",
+          "left": "`128`",
+          "right": "`10000000`"
+        },
+        {
+          "id": "o10",
+          "left": "`10`",
+          "right": "`00001010`"
+        },
+        {
+          "id": "o1",
+          "left": "`1`",
+          "right": "`00000001`"
+        },
+        {
+          "id": "o0",
+          "left": "`0`",
+          "right": "`00000000`"
+        }
       ],
       "explanation": "`255` is every bit on and `0` every bit off. `128` is only the biggest bit, `1` only the smallest, and `10` is 8 + 2.",
       "hint": "From the left, the [[bits|bit]] are worth 128, 64, 32, 16, 8, 4, 2 and 1: add up the 1s.",
@@ -65,6 +140,10 @@
       "id": "ipv4-bits",
       "type": "numeric_input",
       "difficulty": "core",
+      "uses": [
+        "ipv4-address",
+        "octet"
+      ],
       "prompt": "Underneath the dots, `192.0.2.44` is:\n\n`11000000.00000000.00000010.00101100`\n\nHow many [[bits|bit]] is the whole address?",
       "base": "decimal",
       "answer": 32,
@@ -77,7 +156,13 @@
       "id": "read-ipconfig",
       "type": "terminal",
       "difficulty": "core",
-      "prompt": "In a **terminal** you type **commands** (instructions) and press Enter.\n\nRun `ipconfig`, then type this computer's **IPv4 address** in the box below.",
+      "teaches": [
+        "terminal"
+      ],
+      "uses": [
+        "ipv4-address"
+      ],
+      "prompt": "In a **terminal** you type **commands** (instructions) and press Enter. Run `ipconfig`.",
       "promptLabel": "C:\\Users\\learner>",
       "intro": "Microsoft Windows [simulated Command Prompt]\nType help to see the commands you can use here.",
       "commands": [
@@ -90,7 +175,9 @@
       "success": {
         "type": "answer",
         "question": "What is this computer's IPv4 address?",
-        "accepted": ["192.168.1.42"]
+        "accepted": [
+          "192.168.1.42"
+        ]
       },
       "explanation": "The **IPv4 Address** line shows `192.168.1.42`. **Default Gateway** is your home **router**, your [[network]]'s link to the internet, and **Subnet Mask** describes the network's size: neither is this computer.",
       "hint": "Run `ipconfig`, then look for the line labelled **IPv4 Address**.",
@@ -100,9 +187,19 @@
       "id": "enough-for-everyone",
       "type": "multiple_choice",
       "difficulty": "core",
+      "teaches": [
+        "ipv4-32-bits",
+        "ipv4-count"
+      ],
+      "uses": [
+        "ipv4-address"
+      ],
       "prompt": "32 [[bits|bit]] give about **4.3 billion** addresses, and Earth has **8 billion** people. Can every device have its own?",
       "options": [
-        { "id": "not-enough", "text": "No: there are more devices than addresses" },
+        {
+          "id": "not-enough",
+          "text": "No: there are more devices than addresses"
+        },
         {
           "id": "plenty",
           "text": "Yes: 4.3 billion is plenty, as many never go online",
@@ -122,6 +219,13 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "ip-address",
+        "ipv4-address",
+        "octet",
+        "ipv4-32-bits",
+        "ipv4-count"
+      ],
       "title": "Recap",
       "body": "- An **IP address** tells the [[network]] where data should go.\n- **IPv4** is four [[octets|octet]] of 8 [[bits|bit]]: 32 bits.\n- About 4.3 billion addresses isn't enough for every device."
     }

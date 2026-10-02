@@ -51,7 +51,7 @@ Strong passwords, passphrases and two-step sign-in.
 
 **Key facts**
 
-- *Words it teaches:* A **passphrase** is four or more **random** words, like `otter planet brick soup`: never a song line or quote.
+- *Words it teaches:* A **passphrase** is four or more **random** words, like `otter planet brick soup`: never a song line or quote. Guessers try **common passwords** like `password123`, **names and years**, and **swaps** like `@` for `a` first.
 - *Recap:* **Length** wins: a **passphrase** is four or more **random** words. Give every account its **own** password.
 
 **Best interactive cards**
@@ -68,12 +68,12 @@ Strong passwords, passphrases and two-step sign-in.
 
 **Key facts**
 
-- *Words it teaches:* **Two-step sign-in** asks for your password **plus** a second proof, like your phone. A **passkey** signs you in with your face, fingerprint or PIN, and fake sites can't use it. An **authenticator app** makes fresh codes on your phone, safer than codes sent by text.
+- *Words it teaches:* **Two-step sign-in** asks for your password **plus** a second proof, like your phone. A **passkey** signs you in with your face, fingerprint or PIN: the strongest kind, since fake sites can't use it. An **authenticator app** makes fresh codes on your phone, safer than codes sent by text.
 - *Recap:* **Two-step sign-in** adds a second proof, so a stolen password isn't enough. **Never share a sign-in code.** One you didn't ask for?
 
 **Best interactive cards**
 
-- Choose what happens: **Nobody real ever asks you to send a sign-in code.**
+- Choose what happens: A **sign-in code** is sent when someone types your password. **Nobody real ever asks you to send one.**
 - Choose what happens: A music app only offers **text codes** for two-step sign-in.
 - Choose what happens: You saved **backup codes** when you set up two-step. Then your phone falls in a lake.
 
@@ -337,8 +337,8 @@ Meet the operating system, the apps it manages, and the files it keeps.
 **Best interactive cards**
 
 - Choose what happens: Music, a game and a message ping all want the **speaker** at once.
-- Simulator: This **task manager** lists each **process** (a running program). End the one hogging the CPU; keep music and browser open, and never end **System** (the OS).
-- Simulator: One app keeps grabbing RAM (a **memory leak**). Slide time to **40 min or more**, then end it. Keep the music on.
+- Simulator: The **task manager** lists each **process** (running program). End the CPU hog. Keep music, the browser and **System** (the OS).
+- Simulator: Slide time to **40 min**, then end the app that keeps grabbing RAM (a **memory leak**). Keep the music.
 
 #### Files and Folders
 
@@ -379,8 +379,8 @@ Fix slow, full and flat devices with a simple loop, safely.
 **Best interactive cards**
 
 - Choose what happens: Your laptop got slower all afternoon. Let's find out which part is struggling.
-- Simulator: Free up at least **15 GB** on this full phone, but **keep your photos and essay**.
-- Simulator: An update needs **12 GB free**. Delete what's saved elsewhere; keep **only copies**.
+- Simulator: Free up **15 GB** or more. Keep your photos and essay.
+- Simulator: Free **12 GB** for an update. Keep your **only copies**.
 
 #### Power Problems
 
@@ -396,7 +396,7 @@ Fix slow, full and flat devices with a simple loop, safely.
 **Best interactive cards**
 
 - Simulator: No charger on a long trip: last **at least 8 hours** with **music** on. (**Low power mode** saves energy.)
-- Choose what happens: Your phone won't charge. Tip: cables wear out more often than phones, and **metal or water** can damage a port.
+- Choose what happens: Your phone won't charge. Tip: cables wear out more often than phones, and **metal or water** can damage the charging port.
 - Choose what happens: You're gaming on your bed with the phone plugged in.
 
 #### Module quiz (8 questions)
@@ -569,8 +569,8 @@ Next-word guessing, temperature, and why chatbots make things up.
 
 **Best interactive cards**
 
-- Next word: Chatbots have a **temperature** setting. Slide it until **mat** has at least an **80%** chance.
-- Next word: Now make it more surprising: slide until **no word** has more than a **45%** chance.
+- Next word: Chatbots have a **temperature** setting: slide it until **mat** has at least **80%**.
+- Next word: More surprising now: slide until **no word** is above **45%**.
 - Sort into groups: **One right answer**? Use a low temperature. Want **variety**? Go higher. Sort each job.
 
 #### Made-Up Answers
@@ -709,7 +709,7 @@ How AI makes pictures and voices, deepfakes, and checking what's real.
 
 **Key facts**
 
-- *How to check a picture:* **Find where it first appeared**: search with the picture itself. **Look for trusted news** showing it, ideally from other angles.
+- *How to check a picture:* **Find where it first appeared**: search with the picture. **Look for trusted news** showing it, ideally from other angles.
 - *Recap:* Check before sharing, and say when **your** pictures are AI.
 
 **Best interactive cards**
@@ -760,7 +760,7 @@ Spot AI-made fakes, keep your private stuff private, and use AI honestly.
 **Best interactive cards**
 
 - Sort into groups: Chats may be **saved**, **read** or **used for training**, and friends' things aren't yours to share. Type it, or keep it private?
-- Choose what happens: Apps ask for permissions, and you choose. This recipe-to-shopping-list app asks for your **contacts** and **location**.
+- Choose what happens: Apps ask for permissions, and you choose: allow only what an app needs for its job. This recipe-to-shopping-list app asks for your **contacts** and **location**.
 - Choose what happens: It's late, you're feeling really down, and you've been telling an AI chatbot about it for an hour.
 
 **Surprising facts**
@@ -818,7 +818,6 @@ Discover how computers store everything using just 0s and 1s, and why internet a
 **Surprising facts**
 
 - Each place is worth **double** the one to its right: the switches pictured read `10110010`, so 128 + 32 + 16 + 2 = **178**.
-- A **byte** is 8 bits, so IPv4 parts go 0 to 255.
 
 #### Bytes, File Sizes and Hex
 
@@ -865,7 +864,7 @@ Learn how every device gets an address, how a whole home shares one, and why the
 
 - Binary switches: The first octet of `192.0.2.44` is **192**. Build it in binary.
 - Match pairs: Match each octet to its binary pattern.
-- Terminal: In a **terminal** you type **commands** (instructions) and press Enter. Run `ipconfig`, then type this computer's **IPv4 address** in the box below.
+- Terminal: In a **terminal** you type **commands** (instructions) and press Enter. Run `ipconfig`.
 
 **Surprising facts**
 
@@ -932,7 +931,7 @@ See how data is chopped into packets, passed from router to router, and rebuilt 
 
 **Best interactive cards**
 
-- Match pairs: Here's one packet of a selfie you're sending. Match each part to what it's for.
+- Match pairs: One packet of a selfie you're sending: what does each part do?
 - Number answer: A **6,000-byte** message goes in packets carrying **1,500 bytes** of data each. How many packets?
 - Put in order: Put a message's journey in order.
 
@@ -949,8 +948,8 @@ See how data is chopped into packets, passed from router to router, and rebuilt 
 
 **Best interactive cards**
 
-- Route a packet: Get your packet from the **laptop** to the **web server** by following the lines. There's more than one way.
-- Terminal: **Traceroute** lists each router on the way to a website, one numbered line per hop. Run `traceroute example.com`. What is **hop 1**'s address?
+- Route a packet: Get the packet from the **laptop** to the **web server** along the lines. More than one way works.
+- Terminal: **Traceroute** lists each router on the way, one numbered line per hop. Run `traceroute example.com`.
 - Route a packet: **Router 2 is down.** Find a route from the **laptop** to the **web server** that avoids it.
 
 #### Different Roads, Same Destination
@@ -966,9 +965,9 @@ See how data is chopped into packets, passed from router to router, and rebuilt 
 
 **Best interactive cards**
 
-- Route a packet: The cable from **Router A** straight to the web server is cut, so it's gone from the map. Get the packet there another way.
+- Route a packet: The cable from **Router A** to the server is cut (it's gone from the map). Get the packet there another way.
 - Match pairs: Match each problem to how the internet deals with it.
-- Terminal: Yesterday's traceroute is saved at the top. Run `traceroute example.com` and compare each numbered hop. Which one changed?
+- Terminal: Run `traceroute example.com` and compare its hops with yesterday's traceroute, above.
 
 #### Module quiz (7 questions)
 
@@ -1014,7 +1013,7 @@ Find out how a name like example.com becomes an address, through a chain of serv
 
 - Put in order: Nobody has looked up example.com lately. Put the lookup steps in order.
 - Match pairs: Match each DNS server to its job.
-- Terminal: `dig` is another DNS tool. Run `dig example.com` and find the **TTL**: the number just after the name.
+- Terminal: `dig` is another DNS tool. Run `dig example.com`: the **TTL** is the number just after the name.
 
 #### DNS Records and Tools
 
@@ -1054,8 +1053,8 @@ Discover how one address runs many services, how TCP and UDP deliver data, and t
 
 **Best interactive cards**
 
-- Terminal: Your laptop's end uses a temporary port, like `51544`. In `netstat -n`, **Local Address** is your end and **Foreign Address** is the other. Run it: which port on `198.51.100.10` is the laptop connected to?
-- Put in order: Your router's **NAT** swaps your private address and port for its public one and a port it picks, noting the pair in a **NAT table**. Put the steps in order.
+- Terminal: Your end uses a temporary port, like `51544`. In `netstat -n`, **Local Address** is your end; **Foreign Address** is the other. Run it.
+- Put in order: **NAT** swaps your private address and port for the router's public one and a port it picks, noting the pair in a **NAT table**. Order the steps.
 - Number answer: The router's NAT table says: `203.0.113.7:40001` → `192.168.1.20:51000` `203.0.113.7:40002` → `192.168.1.21:51000` A reply arrives for `203.0.113.7:40002`. Which device gets it? Type the **last number** of its private…
 
 **Surprising facts**
@@ -1075,7 +1074,7 @@ Discover how one address runs many services, how TCP and UDP deliver data, and t
 
 **Best interactive cards**
 
-- Sort into groups: **TCP** is a tracked parcel: lost pieces are resent and put back in order. **UDP** is a postcard: quick, but nothing is checked or resent. Which suits each job?
+- Sort into groups: **TCP** is a tracked parcel: lost pieces are resent, in order. **UDP** is a postcard: quick, nothing resent, so it suits **live** things, where late data is useless.
 - Put in order: Before sending data, TCP checks both sides can hear each other with three messages: the **three-way handshake**. Put them in order.
 - Match pairs: Match each activity to the reason it's delivered that way.
 
@@ -1092,9 +1091,9 @@ Discover how one address runs many services, how TCP and UDP deliver data, and t
 
 **Best interactive cards**
 
-- Put in order: A page request travels like a letter in nested wrappers, each following its own rules: a **protocol**. Order them from the **letter in the middle** to the **outside wrapper**.
-- Sort into groups: **HTTPS** fetches web pages securely, **DNS** turns names into addresses, and **SMTP** and **IMAP** handle email. Which protocol does each job?
-- Put in order: **SMTP** sends mail on its way (app to provider, and server to server). **IMAP** lets an app read mail kept on a server. Put your email to `hello@example.org` in order.
+- Put in order: Like a letter in nested wrappers, each layer follows its own **protocol**; the outside one is Wi-Fi or a cable, to the next device. Order them from the **letter in the middle** outwards.
+- Sort into groups: **HTTPS** fetches pages, **DNS** turns names into addresses, **SMTP** and **IMAP** handle email. Which does each job?
+- Put in order: **SMTP** sends mail on its way; **IMAP** lets an app read mail kept on a server. Order your email to `hello@example.org`.
 
 #### Module quiz (7 questions)
 
@@ -1118,8 +1117,8 @@ Put it all together: follow one web page from the moment you press Enter to the 
 **Best interactive cards**
 
 - Sort into groups: **GET** means "please give me this"; **POST** means "please take this data". Which does your browser use for each?
-- Sort into groups: A response's **status code** starts with a digit that says how it went: **2** all fine, **4** a problem with the request (like a missing page), **5** a problem on the server. Sort these responses.
-- Terminal: `curl -I` (a capital **I**) shows just the status code and labelled lines called **headers**. A **3** code means "moved", and `Location` gives the new address. Run `curl -I http://example.com/old-news`. Where has it…
+- Sort into groups: A **status code**'s first digit says how it went: **2** fine, **4** a problem with the request, **5** a problem on the server.
+- Terminal: `curl -I` (capital **I**) shows the status code and labelled lines (**headers**). A **3** code means "moved"; `Location` gives the new address. Run `curl -I http://example.com/old-news`.
 
 #### HTTPS and the Padlock
 
@@ -1135,8 +1134,8 @@ Put it all together: follow one web page from the moment you press Enter to the 
 **Best interactive cards**
 
 - Match pairs: Match each thing you want to the part of HTTPS that does it.
-- Tap the picture: A padlock means the connection is encrypted and the server owns the **name in the address**, nothing about who runs it. Tap the **one** thing here that the padlock vouches for.
-- Match pairs: A certificate must be in date, issued for the name you visited, and from an authority your browser trusts. Match each warning to what went wrong.
+- Tap the picture: A padlock means encrypted, and that the server owns the **name in the address**, nothing about who runs it. Tap the **one** thing it vouches for.
+- Match pairs: A certificate must be in date, for the name you visited, and from an authority your browser trusts. Match each warning.
 
 #### What Happens When You Type a URL
 
@@ -1152,8 +1151,8 @@ Put it all together: follow one web page from the moment you press Enter to the 
 **Best interactive cards**
 
 - Terminal: **Step 1: DNS.** Run `nslookup www.example.com` to find the IP address the browser needs.
-- Route a packet: **Step 2:** TCP's first message, "Can we talk?", goes to `198.51.100.10:443`. Send it from the laptop to the web server.
-- Route a packet: The server replies to your router's public address, `203.0.113.7`, but **Router A is down**. Route the reply back to the laptop.
+- Route a packet: **Step 2:** TCP's "Can we talk?" goes to `198.51.100.10:443`. Send it to the web server.
+- Route a packet: The server replies to your router at `203.0.113.7`, but **Router A is down**. Route it to the laptop.
 
 #### Module quiz (8 questions)
 

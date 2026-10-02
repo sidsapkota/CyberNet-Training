@@ -71,10 +71,10 @@ export function TerminalCardView({
       <CardPrompt>{card.prompt}</CardPrompt>
 
       <div
-        className="mt-6 overflow-hidden rounded-card border border-screen-line bg-screen text-on-screen"
+        className="mt-3 overflow-hidden rounded-card border border-screen-line bg-screen text-on-screen sm:mt-6"
         onClick={() => inputRef.current?.focus()}
       >
-        <div className="flex items-center gap-2 border-b border-screen-line px-3 py-2">
+        <div className="flex items-center gap-2 border-b border-screen-line px-3 py-2 [@media(max-height:620px)]:py-1">
           <TerminalIcon className="size-4 text-on-screen-muted" />
           <span className="font-mono text-caption tracking-wider text-on-screen-muted uppercase">Terminal</span>
           <span className="ml-auto rounded-sm border border-screen-line px-1.5 font-mono text-[0.65rem] tracking-wider text-on-screen-muted uppercase">
@@ -87,7 +87,9 @@ export function TerminalCardView({
           role="log"
           aria-live="polite"
           aria-label="Terminal output"
-          className="max-h-[min(60dvh,28rem)] min-h-40 overflow-auto px-3 py-3 font-mono text-small leading-relaxed whitespace-pre"
+          // Phones: about a third of the screen (the output scrolls inside), so the command line and the
+          // answer box stay in view.
+          className="max-h-[min(28dvh,28rem)] min-h-28 [@media(max-height:700px)]:max-h-[24dvh] [@media(max-height:700px)]:min-h-24 overflow-auto px-3 py-2 font-mono text-small leading-relaxed whitespace-pre sm:max-h-[min(60dvh,28rem)] sm:min-h-40 sm:py-3"
         >
           {/* Intros of 3+ lines are saved output (keep the columns); shorter ones are prose (wrap). */}
           {card.intro && (
@@ -145,12 +147,12 @@ export function TerminalCardView({
           )}
         </div>
       </div>
-      <p className="mt-2 text-caption text-ink-faint">
+      <p className="mt-2 hidden text-caption text-ink-faint sm:block">
         Type <code className="font-mono">help</code> to see the commands. <kbd className="font-mono">↑</kbd> repeats earlier ones.
       </p>
 
       {card.success.type === "answer" && (
-        <div className="mt-6">
+        <div className="mt-3 sm:mt-6">
           <label htmlFor={answerId} className="block font-semibold text-ink">
             {card.success.question}
           </label>
@@ -164,7 +166,7 @@ export function TerminalCardView({
             autoCorrect="off"
             autoCapitalize="off"
             spellCheck={false}
-            className={`mt-2 min-h-12 w-full max-w-sm rounded-control border-2 bg-surface px-3 font-mono text-lead text-ink outline-none transition-colors read-only:cursor-default ${
+            className={`mt-2 min-h-12 [@media(max-height:620px)]:mt-1.5 [@media(max-height:620px)]:min-h-11 w-full max-w-sm rounded-control border-2 bg-surface px-3 font-mono text-lead text-ink outline-none transition-colors read-only:cursor-default ${
               status === "correct"
                 ? "border-success bg-success-soft"
                 : status === "incorrect"

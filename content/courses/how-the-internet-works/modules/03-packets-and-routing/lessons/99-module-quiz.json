@@ -9,12 +9,27 @@
       "id": "update-and-call",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "packets-take-turns"
+      ],
       "prompt": "A huge game update downloads on your Wi-Fi during your video call, yet the call keeps working. Why?",
       "options": [
-        { "id": "take-turns", "text": "Both travel as small packets that take turns" },
-        { "id": "call-first", "text": "The download pauses itself until your call ends" },
-        { "id": "two-wifis", "text": "Wi-Fi gives each device its own internet line" },
-        { "id": "one-piece", "text": "The update comes in one piece so fast it's instant" }
+        {
+          "id": "take-turns",
+          "text": "Both travel as small packets that take turns"
+        },
+        {
+          "id": "call-first",
+          "text": "The download pauses itself until your call ends"
+        },
+        {
+          "id": "two-wifis",
+          "text": "Wi-Fi gives each device its own internet line"
+        },
+        {
+          "id": "one-piece",
+          "text": "The update comes in one piece so fast it's instant"
+        }
       ],
       "correctOptionId": "take-turns",
       "explanation": "All data travels as small **packets** that take turns, so the call's packets slip in between the download's. One giant piece would make the call wait."
@@ -23,12 +38,35 @@
       "id": "packet-info",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Which part of a packet is used in each situation?",
+      "uses": [
+        "destination-address",
+        "source-address",
+        "sequence-number",
+        "payload",
+        "routing-table"
+      ],
+      "prompt": "Which part of a packet is used for each?",
       "pairs": [
-        { "id": "destination", "left": "A router picks which way to send it", "right": "Destination address" },
-        { "id": "source", "left": "A server works out where to reply", "right": "Source address" },
-        { "id": "sequence", "left": "Rebuilding a jumbled message", "right": "Sequence number" },
-        { "id": "payload", "left": "Your app shows the next bit of film", "right": "Payload" }
+        {
+          "id": "destination",
+          "left": "A router picks a way to send it",
+          "right": "Destination address"
+        },
+        {
+          "id": "source",
+          "left": "A server works out where to reply",
+          "right": "Source address"
+        },
+        {
+          "id": "sequence",
+          "left": "Rebuilding a jumbled message",
+          "right": "Sequence number"
+        },
+        {
+          "id": "payload",
+          "left": "Your app shows the next bit of film",
+          "right": "Payload"
+        }
       ],
       "explanation": "Routers use the **destination address**, replies go to the **source address**, the **sequence number** places each piece, and the **payload** is the data itself."
     },
@@ -36,30 +74,111 @@
       "id": "long-way-round",
       "type": "packet_path",
       "difficulty": "core",
-      "prompt": "One router on this map is **down** today. Get the packet from the **laptop** to the **web server**.",
+      "uses": [],
+      "prompt": "One router is **down** today. Get the packet from the **laptop** to the **web server**.",
       "nodes": [
-        { "id": "laptop", "kind": "device", "label": "Laptop", "address": "192.168.1.20", "col": 0, "row": 1 },
-        { "id": "home", "kind": "router", "label": "Home router", "address": "192.168.1.1", "col": 1, "row": 1 },
-        { "id": "rd", "kind": "router", "label": "Router D", "address": "203.0.113.4", "col": 2, "row": 0 },
-        { "id": "ra", "kind": "router", "label": "Router A", "address": "203.0.113.1", "col": 2, "row": 1, "down": true },
-        { "id": "rb", "kind": "router", "label": "Router B", "address": "203.0.113.2", "col": 2, "row": 2 },
-        { "id": "server", "kind": "server", "label": "Web server", "address": "198.51.100.10", "col": 3, "row": 1 },
-        { "id": "rc", "kind": "router", "label": "Router C", "address": "198.51.100.1", "col": 3, "row": 2 }
+        {
+          "id": "laptop",
+          "kind": "device",
+          "label": "Laptop",
+          "address": "192.168.1.20",
+          "col": 0,
+          "row": 1
+        },
+        {
+          "id": "home",
+          "kind": "router",
+          "label": "Home router",
+          "address": "192.168.1.1",
+          "col": 1,
+          "row": 1
+        },
+        {
+          "id": "rd",
+          "kind": "router",
+          "label": "Router D",
+          "address": "203.0.113.4",
+          "col": 2,
+          "row": 0
+        },
+        {
+          "id": "ra",
+          "kind": "router",
+          "label": "Router A",
+          "address": "203.0.113.1",
+          "col": 2,
+          "row": 1,
+          "down": true
+        },
+        {
+          "id": "rb",
+          "kind": "router",
+          "label": "Router B",
+          "address": "203.0.113.2",
+          "col": 2,
+          "row": 2
+        },
+        {
+          "id": "server",
+          "kind": "server",
+          "label": "Web server",
+          "address": "198.51.100.10",
+          "col": 3,
+          "row": 1
+        },
+        {
+          "id": "rc",
+          "kind": "router",
+          "label": "Router C",
+          "address": "198.51.100.1",
+          "col": 3,
+          "row": 2
+        }
       ],
       "links": [
-        { "from": "laptop", "to": "home" },
-        { "from": "home", "to": "ra" },
-        { "from": "ra", "to": "server" },
-        { "from": "home", "to": "rd" },
-        { "from": "rd", "to": "ra" },
-        { "from": "home", "to": "rb" },
-        { "from": "rb", "to": "rc" },
-        { "from": "rc", "to": "server" }
+        {
+          "from": "laptop",
+          "to": "home"
+        },
+        {
+          "from": "home",
+          "to": "ra"
+        },
+        {
+          "from": "ra",
+          "to": "server"
+        },
+        {
+          "from": "home",
+          "to": "rd"
+        },
+        {
+          "from": "rd",
+          "to": "ra"
+        },
+        {
+          "from": "home",
+          "to": "rb"
+        },
+        {
+          "from": "rb",
+          "to": "rc"
+        },
+        {
+          "from": "rc",
+          "to": "server"
+        }
       ],
       "source": "laptop",
       "destination": "server",
       "validPaths": [
-        ["laptop", "home", "rb", "rc", "server"]
+        [
+          "laptop",
+          "home",
+          "rb",
+          "rc",
+          "server"
+        ]
       ],
       "explanation": "Router A is down, and Router D's only onward link goes back into it. The working route is the long one: **home router → Router B → Router C → web server**."
     },
@@ -67,12 +186,27 @@
       "id": "next-step-only",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "routing-table"
+      ],
       "prompt": "A router in Sydney gets a packet for London, about 20 hops away. What does it need to know?",
       "options": [
-        { "id": "next", "text": "Only which neighbour to pass it to next" },
-        { "id": "whole-route", "text": "Every router from Sydney to London, in advance" },
-        { "id": "contents", "text": "What's inside, to decide if it's worth sending" },
-        { "id": "ask-sender", "text": "Nothing: it asks the sender which way to go" }
+        {
+          "id": "next",
+          "text": "Only which neighbour to pass it to next"
+        },
+        {
+          "id": "whole-route",
+          "text": "Every router from Sydney to London, in advance"
+        },
+        {
+          "id": "contents",
+          "text": "What's inside, to decide if it's worth sending"
+        },
+        {
+          "id": "ask-sender",
+          "text": "Nothing: it asks the sender which way to go"
+        }
       ],
       "correctOptionId": "next",
       "explanation": "No router plans the whole trip: each checks its **routing table** and passes the packet to the right neighbour, like signposts. The next router does the same, hop by hop."
@@ -81,6 +215,9 @@
       "id": "resend-count",
       "type": "numeric_input",
       "difficulty": "core",
+      "uses": [
+        "tcp-resend"
+      ],
       "prompt": "A photo is sent with TCP as packets 1 to 8. Packets **1, 3, 4, 7 and 8** arrive. How many packets must be sent again?",
       "base": "decimal",
       "answer": 3,
@@ -91,12 +228,19 @@
       "id": "traceroute-first-hop",
       "type": "terminal",
       "difficulty": "core",
+      "uses": [
+        "traceroute",
+        "traceroute-lines",
+        "traceroute-stars"
+      ],
       "prompt": "Run `traceroute example.org`. How many **routers** do your packets pass through?",
       "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
       "commands": [
         {
           "command": "traceroute example.org",
-          "aliases": ["traceroute www.example.org"],
+          "aliases": [
+            "traceroute www.example.org"
+          ],
           "description": "List each router between you and example.org",
           "output": "traceroute to example.org (203.0.113.80), 30 hops max, 60 byte packets\n 1  10.0.0.1 (10.0.0.1)  2.114 ms  2.051 ms  2.020 ms\n 2  198.51.100.1 (198.51.100.1)  8.772 ms  8.730 ms  8.701 ms\n 3  * * *\n 4  203.0.113.1 (203.0.113.1)  16.448 ms  16.402 ms  16.371 ms\n 5  example.org (203.0.113.80)  17.036 ms  16.990 ms  16.958 ms"
         }
@@ -104,7 +248,10 @@
       "success": {
         "type": "answer",
         "question": "How many routers are between you and example.org?",
-        "accepted": ["4", "four"]
+        "accepted": [
+          "4",
+          "four"
+        ]
       },
       "explanation": "Hops 1 to 4 are routers and hop 5 is example.org itself: **4**. Hop 3's `* * *` is a router that didn't reply, and hops 4 and 5 prove packets got past it."
     },
@@ -112,12 +259,27 @@
       "id": "reorder-packets",
       "type": "drag_to_order",
       "difficulty": "core",
+      "uses": [
+        "sequence-number"
+      ],
       "prompt": "Put these jumbled photo packets back in order.",
       "items": [
-        { "id": "p1", "label": "#1 THE" },
-        { "id": "p2", "label": "#2 PHOTO" },
-        { "id": "p3", "label": "#3 ARRIVED" },
-        { "id": "p4", "label": "#4 SAFELY" }
+        {
+          "id": "p1",
+          "label": "#1 THE"
+        },
+        {
+          "id": "p2",
+          "label": "#2 PHOTO"
+        },
+        {
+          "id": "p3",
+          "label": "#3 ARRIVED"
+        },
+        {
+          "id": "p4",
+          "label": "#4 SAFELY"
+        }
       ],
       "explanation": "By sequence number they read *THE PHOTO ARRIVED SAFELY*. The order they arrive in doesn't matter: the numbers say where each belongs."
     }

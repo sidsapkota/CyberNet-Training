@@ -10,6 +10,7 @@
       "id": "speaker-turns",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [],
       "prompt": "Music, a game and a message ping all want the **speaker** at once.",
       "start": "who-decides",
       "steps": [
@@ -45,6 +46,14 @@
       "id": "the-operating-system",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "operating-system",
+        "os-cpu-turns",
+        "os-shares-ram",
+        "os-keeps-apps-apart",
+        "os-talks-to-hardware",
+        "hardware"
+      ],
       "title": "The operating system",
       "body": "That main program is the **operating system** (**OS**), the referee:\n\n- It gives apps quick turns on the [[CPU]], so they seem to run at once.\n- It shares out [[RAM]] and keeps apps out of each other's data.\n- It talks to the **hardware** (screen, keyboard, Wi-Fi) for them."
     },
@@ -52,15 +61,54 @@
       "id": "os-or-app",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "os-cpu-turns",
+        "os-shares-ram",
+        "os-keeps-apps-apart",
+        "os-talks-to-hardware"
+      ],
       "prompt": "Whose job is it: the **operating system's**, or an **app's**?",
-      "bins": [{ "id": "os", "label": "Operating system" }, { "id": "app", "label": "An app" }],
+      "bins": [
+        {
+          "id": "os",
+          "label": "Operating system"
+        },
+        {
+          "id": "app",
+          "label": "An app"
+        }
+      ],
       "items": [
-        { "id": "cpu-turns", "label": "Decide which app uses the CPU next", "bin": "os" },
-        { "id": "share-ram", "label": "Share out RAM between open apps", "bin": "os" },
-        { "id": "hardware", "label": "Talk to the keyboard, screen and Wi-Fi", "bin": "os" },
-        { "id": "keep-apart", "label": "Stop apps reading each other's data", "bin": "os" },
-        { "id": "filter", "label": "Add a funny filter to a selfie", "bin": "app" },
-        { "id": "score", "label": "Keep score in a game", "bin": "app" }
+        {
+          "id": "cpu-turns",
+          "label": "Decide which app uses the CPU next",
+          "bin": "os"
+        },
+        {
+          "id": "share-ram",
+          "label": "Share out RAM between open apps",
+          "bin": "os"
+        },
+        {
+          "id": "hardware",
+          "label": "Talk to the keyboard, screen and Wi-Fi",
+          "bin": "os"
+        },
+        {
+          "id": "keep-apart",
+          "label": "Stop apps reading each other's data",
+          "bin": "os"
+        },
+        {
+          "id": "filter",
+          "label": "Add a funny filter to a selfie",
+          "bin": "app"
+        },
+        {
+          "id": "score",
+          "label": "Keep score in a game",
+          "bin": "app"
+        }
       ],
       "explanation": "The **OS** manages what every app shares: CPU time, RAM, hardware and safety. **Apps** each do one job for you.",
       "hint": "Is it about sharing something every app needs, or one job an app does for you?",
@@ -70,36 +118,119 @@
       "id": "end-the-frozen-app",
       "type": "simulator",
       "difficulty": "core",
-      "prompt": "This **task manager** lists each **process** (a running program). End the one hogging the [[CPU]]; keep music and [[browser]] open, and never end **System** (the OS).",
+      "teaches": [
+        "task-manager",
+        "process",
+        "never-end-system"
+      ],
+      "uses": [
+        "cpu"
+      ],
+      "prompt": "The **task manager** lists each **process** (running program). End the [[CPU]] hog. Keep music, the browser and **System** (the OS).",
       "model": "task-manager",
       "params": {
         "ramGb": 8,
         "processes": [
-          { "id": "music", "label": "Music player", "kind": "app", "cpu": 4, "ramGb": 0.4 },
-          { "id": "browser", "label": "Web browser", "kind": "app", "cpu": 10, "ramGb": 1.5 },
-          { "id": "drawing", "label": "Drawing app", "kind": "app", "cpu": 85, "ramGb": 1.2 },
-          { "id": "updater", "label": "Updater", "kind": "background", "cpu": 3, "ramGb": 0.2 },
-          { "id": "system", "label": "System", "kind": "system", "cpu": 6, "ramGb": 1.5 }
+          {
+            "id": "music",
+            "label": "Music player",
+            "kind": "app",
+            "cpu": 4,
+            "ramGb": 0.4
+          },
+          {
+            "id": "browser",
+            "label": "Web browser",
+            "kind": "app",
+            "cpu": 10,
+            "ramGb": 1.5
+          },
+          {
+            "id": "drawing",
+            "label": "Drawing app",
+            "kind": "app",
+            "cpu": 85,
+            "ramGb": 1.2
+          },
+          {
+            "id": "system",
+            "label": "System",
+            "kind": "system",
+            "cpu": 6,
+            "ramGb": 1.5
+          }
         ]
       },
       "controls": [
-        { "id": "end-music", "kind": "button", "label": "End Music player", "doneLabel": "Music player ended" },
-        { "id": "end-browser", "kind": "button", "label": "End Web browser", "doneLabel": "Web browser ended" },
-        { "id": "end-drawing", "kind": "button", "label": "End Drawing app", "doneLabel": "Drawing app ended" },
-        { "id": "end-updater", "kind": "button", "label": "End Updater", "doneLabel": "Updater ended" },
-        { "id": "end-system", "kind": "button", "label": "End System", "doneLabel": "System ended" }
+        {
+          "id": "end-music",
+          "kind": "button",
+          "label": "End Music player",
+          "doneLabel": "Music player ended"
+        },
+        {
+          "id": "end-browser",
+          "kind": "button",
+          "label": "End Web browser",
+          "doneLabel": "Web browser ended"
+        },
+        {
+          "id": "end-drawing",
+          "kind": "button",
+          "label": "End Drawing app",
+          "doneLabel": "Drawing app ended"
+        },
+        {
+          "id": "end-system",
+          "kind": "button",
+          "label": "End System",
+          "doneLabel": "System ended"
+        }
       ],
       "outputs": [
-        { "id": "smooth", "kind": "device", "label": "Laptop", "frame": "laptop" },
-        { "id": "cpu", "kind": "bar", "label": "CPU in use" },
-        { "id": "processes", "kind": "list", "label": "Running" }
+        {
+          "id": "smooth",
+          "kind": "device",
+          "label": "Laptop",
+          "frame": "laptop"
+        },
+        {
+          "id": "cpu",
+          "kind": "bar",
+          "label": "CPU in use"
+        },
+        {
+          "id": "processes",
+          "kind": "list",
+          "label": "Running"
+        }
       ],
       "goal": {
         "all": [
-          { "target": "output", "id": "smooth", "op": ">=", "value": 0.9 },
-          { "target": "output", "id": "crashed", "op": "==", "value": 0 },
-          { "target": "control", "id": "end-music", "op": "==", "value": false },
-          { "target": "control", "id": "end-browser", "op": "==", "value": false }
+          {
+            "target": "output",
+            "id": "smooth",
+            "op": ">=",
+            "value": 0.9
+          },
+          {
+            "target": "output",
+            "id": "crashed",
+            "op": "==",
+            "value": 0
+          },
+          {
+            "target": "control",
+            "id": "end-music",
+            "op": "==",
+            "value": false
+          },
+          {
+            "target": "control",
+            "id": "end-browser",
+            "op": "==",
+            "value": false
+          }
         ]
       },
       "explanation": "The **drawing app** was hogging 85% of the CPU, so ending it fixed the freeze. Ending **System** would have crashed the laptop.",
@@ -110,37 +241,111 @@
       "id": "memory-leak",
       "type": "simulator",
       "difficulty": "challenge",
-      "prompt": "One app keeps grabbing [[RAM]] (a **memory leak**). Slide time to **40 min or more**, then end it. Keep the music on.",
+      "teaches": [
+        "memory-leak"
+      ],
+      "uses": [
+        "ram",
+        "task-manager",
+        "never-end-system"
+      ],
+      "prompt": "Slide time to **40 min**, then end the app that keeps grabbing [[RAM]] (a **memory leak**). Keep the music.",
       "model": "task-manager",
       "params": {
         "ramGb": 8,
         "processes": [
-          { "id": "music", "label": "Music player", "kind": "app", "cpu": 3, "ramGb": 0.4 },
-          { "id": "browser", "label": "Web browser", "kind": "app", "cpu": 8, "ramGb": 1.5 },
-          { "id": "chat", "label": "Chat app", "kind": "app", "cpu": 5, "ramGb": 0.5, "leakGbPerMin": 0.15 },
-          { "id": "sync", "label": "File sync", "kind": "background", "cpu": 2, "ramGb": 0.2 },
-          { "id": "system", "label": "System", "kind": "system", "cpu": 6, "ramGb": 1.5 }
+          {
+            "id": "music",
+            "label": "Music player",
+            "kind": "app",
+            "cpu": 3,
+            "ramGb": 0.4
+          },
+          {
+            "id": "chat",
+            "label": "Chat app",
+            "kind": "app",
+            "cpu": 5,
+            "ramGb": 0.5,
+            "leakGbPerMin": 0.15
+          },
+          {
+            "id": "system",
+            "label": "System",
+            "kind": "system",
+            "cpu": 6,
+            "ramGb": 1.5
+          }
         ]
       },
       "controls": [
-        { "id": "minutes", "kind": "slider", "label": "Time", "min": 0, "max": 60, "step": 10, "unit": " min" },
-        { "id": "end-music", "kind": "button", "label": "End Music player", "doneLabel": "Music player ended" },
-        { "id": "end-browser", "kind": "button", "label": "End Web browser", "doneLabel": "Web browser ended" },
-        { "id": "end-chat", "kind": "button", "label": "End Chat app", "doneLabel": "Chat app ended" },
-        { "id": "end-sync", "kind": "button", "label": "End File sync", "doneLabel": "File sync ended" },
-        { "id": "end-system", "kind": "button", "label": "End System", "doneLabel": "System ended" }
+        {
+          "id": "minutes",
+          "kind": "slider",
+          "label": "Time",
+          "min": 0,
+          "max": 60,
+          "step": 10,
+          "unit": " min"
+        },
+        {
+          "id": "end-music",
+          "kind": "button",
+          "label": "End Music player",
+          "doneLabel": "Music player ended"
+        },
+        {
+          "id": "end-chat",
+          "kind": "button",
+          "label": "End Chat app",
+          "doneLabel": "Chat app ended"
+        },
+        {
+          "id": "end-system",
+          "kind": "button",
+          "label": "End System",
+          "doneLabel": "System ended"
+        }
       ],
       "outputs": [
-        { "id": "smooth", "kind": "device", "label": "Laptop", "frame": "laptop" },
-        { "id": "ramUsed", "kind": "meter", "label": "RAM apps want (laptop has 8 GB)", "unit": "GB" },
-        { "id": "processes", "kind": "list", "label": "Running" }
+        {
+          "id": "smooth",
+          "kind": "device",
+          "label": "Laptop",
+          "frame": "laptop"
+        },
+        {
+          "id": "processes",
+          "kind": "list",
+          "label": "Running"
+        }
       ],
       "goal": {
         "all": [
-          { "target": "control", "id": "minutes", "op": ">=", "value": 40 },
-          { "target": "output", "id": "smooth", "op": ">=", "value": 0.9 },
-          { "target": "output", "id": "crashed", "op": "==", "value": 0 },
-          { "target": "control", "id": "end-music", "op": "==", "value": false }
+          {
+            "target": "control",
+            "id": "minutes",
+            "op": ">=",
+            "value": 40
+          },
+          {
+            "target": "output",
+            "id": "smooth",
+            "op": ">=",
+            "value": 0.9
+          },
+          {
+            "target": "output",
+            "id": "crashed",
+            "op": "==",
+            "value": 0
+          },
+          {
+            "target": "control",
+            "id": "end-music",
+            "op": "==",
+            "value": false
+          }
         ]
       },
       "explanation": "The **chat app** grew by 0.15 GB a minute, to 6.5 GB after 40 minutes. Ending or restarting it gives the RAM back.",
@@ -151,6 +356,16 @@
       "id": "update-time",
       "type": "scenario",
       "difficulty": "core",
+      "teaches": [
+        "update",
+        "bug",
+        "security-hole",
+        "dont-interrupt-updates"
+      ],
+      "uses": [
+        "ram-wiped-at-power-off",
+        "storage"
+      ],
       "prompt": "**Updates** fix mistakes (**bugs**) and weak spots attackers use (**security holes**). You're mid-essay.",
       "start": "prompt",
       "steps": [
@@ -204,6 +419,12 @@
       "id": "fake-virus-popup",
       "type": "scenario",
       "difficulty": "challenge",
+      "teaches": [
+        "web-page-cant-see-files"
+      ],
+      "uses": [
+        "task-manager"
+      ],
       "prompt": "Your screen flashes red. Good to know: a web page can't see what's on your laptop.",
       "start": "popup",
       "steps": [
@@ -257,6 +478,12 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "operating-system",
+        "task-manager",
+        "never-end-system",
+        "save-before-restart"
+      ],
       "title": "Recap",
       "body": "- The **OS** is the referee: it shares out CPU, RAM and hardware.\n- Frozen app? End its process in the task manager, never System.\n- Save your work, then let updates finish.\n\nNext: where your files actually live."
     }

@@ -11,6 +11,14 @@
       "id": "which-apps-use-ai",
       "type": "sort_bins",
       "difficulty": "core",
+      "teaches": [
+        "learning-from-examples"
+      ],
+      "uses": [
+        "rules-based-program",
+        "learning-from-examples",
+        "everyday-ai-apps"
+      ],
       "prompt": "AI guesses from learned patterns. Does each one **use AI**, or follow **fixed steps** someone wrote?",
       "bins": [
         {
@@ -25,32 +33,27 @@
       "items": [
         {
           "id": "photo-search",
-          "label": "A photo app finding pictures of your dog",
+          "label": "Photo app finding your dog",
           "bin": "ai"
         },
         {
           "id": "traffic",
-          "label": "A map predicting traffic on your way",
-          "bin": "ai"
-        },
-        {
-          "id": "captions",
-          "label": "Live captions on a video as people talk",
+          "label": "Map predicting traffic",
           "bin": "ai"
         },
         {
           "id": "keyboard",
-          "label": "Your keyboard suggesting the next word",
+          "label": "Keyboard suggesting a word",
           "bin": "ai"
         },
         {
           "id": "calculator",
-          "label": "A calculator adding up a bill",
+          "label": "Calculator adding a bill",
           "bin": "fixed"
         },
         {
           "id": "alarm",
-          "label": "An alarm going off at 7:00",
+          "label": "Alarm at 7:00",
           "bin": "fixed"
         }
       ],
@@ -62,27 +65,28 @@
       "id": "kind-of-tool",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "A **chat assistant** types replies, an **image generator** makes pictures, a **voice assistant** talks. Which suits each job?",
+      "teaches": [
+        "kinds-of-ai-tools"
+      ],
+      "uses": [
+        "kinds-of-ai-tools"
+      ],
+      "prompt": "A **chat assistant** types, an **image generator** draws, a **voice assistant** talks. Which suits each job?",
       "pairs": [
         {
           "id": "chat",
-          "left": "Ideas for a birthday party, typed out",
+          "left": "Birthday ideas, typed out",
           "right": "Chat assistant"
         },
         {
           "id": "image",
-          "left": "A picture of a dragon for a poster",
+          "left": "A dragon picture for a poster",
           "right": "Image generator"
         },
         {
           "id": "voice",
-          "left": "A timer while your hands are floury",
+          "left": "A timer while you bake",
           "right": "Voice assistant"
-        },
-        {
-          "id": "translate",
-          "left": "A menu in a language you can't read",
-          "right": "Translation app"
         }
       ],
       "hint": "What do you give the tool, and what do you need back?",
@@ -93,28 +97,35 @@
       "id": "best-ai",
       "type": "scenario",
       "difficulty": "core",
+      "teaches": [
+        "chat-assistant-products"
+      ],
+      "uses": [
+        "language-model",
+        "hallucination"
+      ],
       "prompt": "Chat assistants include **ChatGPT** (OpenAI), **Claude** (Anthropic), **Copilot** (Microsoft) and **Gemini** (Google). Some also search the web or make pictures.",
       "start": "claim",
       "steps": [
         {
           "id": "claim",
-          "text": "Your friend says: \"My AI app is the best. It's never wrong.\" What's the most accurate reply?",
+          "text": "A friend says: \"My AI app is the best. It's never wrong.\" Best reply?",
           "choices": [
             {
               "id": "agree",
-              "text": "\"If it's the best, you don't need to check it\"",
+              "text": "If it's the best, no need to check",
               "consequence": "Even a very good model writes likely words, not checked facts. Any of them can be wrong.",
               "outcome": "fail"
             },
             {
               "id": "all-can",
-              "text": "\"Any chatbot can be wrong, so check what matters\"",
+              "text": "Any chatbot can be wrong: check what matters",
               "consequence": "Right: they're all language models, so any of them can hallucinate.",
               "outcome": "success"
             },
             {
               "id": "newest",
-              "text": "\"Use the newest version: it doesn't make mistakes\"",
+              "text": "Use the newest one: it makes no mistakes",
               "consequence": "Newer models can be better, but they still pick likely words and still make mistakes.",
               "outcome": "fail"
             }
@@ -128,6 +139,12 @@
       "id": "rules-and-ages",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "app-age-rules",
+        "ask-parent-before-signing-up",
+        "think-before-uploading-photos",
+        "school-ai-rules"
+      ],
       "title": "Age rules and good habits",
       "body": "Every AI app has its own rules, including **who can use it**. Some say 18 or older; some allow 13 with a parent's OK. Rules differ by country, and they change.\n\n- **Check the app's rules**, and **ask a parent or carer** before signing up.\n- **Think twice before uploading photos** of you or friends.\n- **Follow your school's AI rules.**"
     },
@@ -135,6 +152,11 @@
       "id": "selfie-app",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "app-age-rules",
+        "ask-parent-before-signing-up",
+        "think-before-uploading-photos"
+      ],
       "prompt": "A new AI app promises to turn your selfie into a cartoon.",
       "start": "sign-up",
       "steps": [
@@ -170,6 +192,10 @@
       "id": "school-or-ask",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "school-ai-rules",
+        "learn-not-do-work"
+      ],
       "prompt": "For schoolwork, is each use of an AI tool **usually fine**, or one to **check with your teacher first**?",
       "bins": [
         {
@@ -221,6 +247,13 @@
       "id": "always-true",
       "type": "sort_bins",
       "difficulty": "challenge",
+      "uses": [
+        "hallucination",
+        "one-word-at-a-time",
+        "language-model",
+        "chat-assistant-products",
+        "knowledge-cutoff"
+      ],
       "prompt": "Is each one true of **every** AI chat assistant, or only **some** of them (or none)?",
       "bins": [
         {
@@ -239,11 +272,6 @@
           "bin": "every"
         },
         {
-          "id": "tokens",
-          "label": "Writes its reply one word at a time",
-          "bin": "every"
-        },
-        {
           "id": "learned",
           "label": "Learned from lots of text",
           "bin": "every"
@@ -251,11 +279,6 @@
         {
           "id": "search",
           "label": "Can search the web",
-          "bin": "some"
-        },
-        {
-          "id": "pictures",
-          "label": "Can make pictures",
           "bin": "some"
         },
         {
@@ -277,6 +300,12 @@
       "id": "tools-recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "hallucination",
+        "everyday-ai-apps",
+        "app-age-rules",
+        "ask-parent-before-signing-up"
+      ],
       "title": "Recap",
       "body": "- Every chat assistant writes likely words, so any can be wrong.\n- AI is also inside everyday apps: maps, photos, keyboards.\n- Check each app's age rules, and ask a parent or carer.\n\nNext: the module quiz."
     }

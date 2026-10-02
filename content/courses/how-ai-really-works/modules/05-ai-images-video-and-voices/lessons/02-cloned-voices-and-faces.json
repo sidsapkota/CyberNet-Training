@@ -10,6 +10,10 @@
       "id": "help-or-harm",
       "type": "sort_bins",
       "difficulty": "core",
+      "teaches": [
+        "ai-can-fake-people"
+      ],
+      "uses": [],
       "prompt": "AI can fake a real person's **voice** or **video**. Is each use **helpful** or **harmful**?",
       "bins": [
         {
@@ -24,32 +28,27 @@
       "items": [
         {
           "id": "dubbing",
-          "label": "Dubbing a film, with the actors' OK",
+          "label": "Dubbing a film, actors agreed",
           "bin": "helpful"
         },
         {
           "id": "voice-back",
-          "label": "Giving back a voice someone lost",
-          "bin": "helpful"
-        },
-        {
-          "id": "museum",
-          "label": "A museum guide in 10 languages, with OK",
+          "label": "Giving back a lost voice",
           "bin": "helpful"
         },
         {
           "id": "grandma",
-          "label": "A fake call that sounds like Grandma",
+          "label": "Fake call sounding like Grandma",
           "bin": "harmful"
         },
         {
           "id": "classmate",
-          "label": "A fake video to embarrass a classmate",
+          "label": "Fake video to embarrass a classmate",
           "bin": "harmful"
         },
         {
           "id": "celebrity-ad",
-          "label": "A fake singer advert selling a product",
+          "label": "Fake singer advert",
           "bin": "harmful"
         }
       ],
@@ -61,6 +60,12 @@
       "id": "deepfakes-and-clones",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "deepfake",
+        "voice-clone",
+        "voice-clone-learned-from-many",
+        "deepfake-law"
+      ],
       "title": "Fake faces and voices",
       "body": "A fake video or picture of a real person is a **deepfake**; a **voice clone** copies their voice. Most tools learn from many voices, then copy one from a short clip.\n\nIn Australia, sharing fake sexual images of a real person without their consent is a serious crime, and fake sexual images of anyone under 18 are always illegal."
     },
@@ -68,6 +73,9 @@
       "id": "short-clip",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "voice-clone-learned-from-many"
+      ],
       "prompt": "Why can a [[voice clone|voice-clone]] sometimes be made from just a short clip of someone talking?",
       "options": [
         {
@@ -98,22 +106,28 @@
       "id": "teacher-video",
       "type": "scenario",
       "difficulty": "core",
+      "teaches": [
+        "consent-to-fake"
+      ],
+      "uses": [
+        "consent-to-fake"
+      ],
       "prompt": "Your friend found a face-swap app. Faking a real person without **permission** can hurt them and spread far.",
       "start": "the-idea",
       "steps": [
         {
           "id": "the-idea",
-          "text": "\"Let's make a video of our coach dancing badly and saying silly things. It's just a joke!\" What do you say?",
+          "text": "\"Let's make a video of our coach dancing badly. It's just a joke!\" What do you say?",
           "choices": [
             {
               "id": "tiny-label",
-              "text": "\"Only if we put 'FAKE' in tiny letters at the end\"",
+              "text": "Only with 'FAKE' in tiny letters",
               "consequence": "Your coach never agreed, and a tiny label is easy to miss or crop off. It can still spread and hurt them.",
               "outcome": "fail"
             },
             {
               "id": "small-group",
-              "text": "\"OK, but we'll only send it to two friends\"",
+              "text": "OK, but only send it to two friends",
               "consequence": "Two friends can share it with anyone. You can't control a video once it's sent.",
               "outcome": "fail"
             },
@@ -133,7 +147,14 @@
       "id": "video-or-situation",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Clues can be **in the video** or **in the situation**, which often tells more. Best check: the real person, another way.",
+      "teaches": [
+        "situation-clues",
+        "check-with-real-person"
+      ],
+      "uses": [
+        "situation-clues"
+      ],
+      "prompt": "Clues are **in the video** or **in the situation**, which tells more. Best check: the real person, another way.",
       "bins": [
         {
           "id": "video",
@@ -184,6 +205,10 @@
       "id": "concert-tickets",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "situation-clues",
+        "check-with-real-person"
+      ],
       "prompt": "A video shows a famous singer: \"1,000 free concert tickets! Click the link in the next hour.\"",
       "start": "the-video",
       "steps": [
@@ -219,25 +244,29 @@
       "id": "voice-call-check",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "Your uncle gets an upset call that sounds just like you, asking for money fast. What's **best** for him to do?",
+      "uses": [
+        "voice-clone",
+        "check-with-real-person"
+      ],
+      "prompt": "A call that sounds just like you asks your uncle for money, fast. What's **best** for him to do?",
       "options": [
         {
           "id": "call-back",
-          "text": "Hang up, then call you on the number he already has"
+          "text": "Hang up and call you on your usual number"
         },
         {
           "id": "listen",
-          "text": "Listen closely for a flat or robotic voice first",
+          "text": "Listen for a flat, robotic voice first",
           "nudge": "A good clone can sound perfect. Which check doesn't rely on this call?"
         },
         {
           "id": "small-amount",
-          "text": "Send a small amount first, to see if it's really you",
+          "text": "Send a little first, to test it",
           "nudge": "Money sent to a faker is gone. How could he check without paying?"
         },
         {
           "id": "say-name",
-          "text": "Ask the caller to say his name, to prove it's you",
+          "text": "Ask the caller to say his name",
           "nudge": "Whoever called knows his name. Which check goes outside this call?"
         }
       ],
@@ -249,6 +278,13 @@
       "id": "voices-recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "deepfake",
+        "voice-clone",
+        "consent-to-fake",
+        "situation-clues",
+        "check-with-real-person"
+      ],
       "title": "Recap",
       "body": "- AI can fake a real person: **deepfakes** and **voice clones**.\n- Never fake a real person without their permission.\n- Situation clues beat video clues: check with the real person.\n\nIf someone fakes **you**, it's not your fault. Report it at esafety.gov.au, and tell a trusted adult. More in Stay Safe Online's free lesson **Deepfake Scams and Fakes**."
     }

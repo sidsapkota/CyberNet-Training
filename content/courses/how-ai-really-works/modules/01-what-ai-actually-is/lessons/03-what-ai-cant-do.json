@@ -10,6 +10,12 @@
       "id": "homework-helper",
       "type": "scenario",
       "difficulty": "core",
+      "teaches": [
+        "ai-prediction"
+      ],
+      "uses": [
+        "ai-prediction"
+      ],
       "prompt": "AI answers are **predictions**: best guesses, not checked facts. You're using one to write about your town's bridge.",
       "start": "the-date",
       "steps": [
@@ -63,6 +69,9 @@
       "id": "why-confidently-wrong",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "ai-prediction"
+      ],
       "prompt": "A chatbot calmly says a film came out in 2009, but it was 2011. Why can AI sound sure yet be wrong?",
       "options": [
         {
@@ -93,6 +102,11 @@
       "id": "if-a-chat-upsets-you",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "chatbot-not-a-person",
+        "trusted-adult",
+        "help-services"
+      ],
       "title": "A program, not a person",
       "body": "A chatbot can sound caring, but can't notice if you're not OK.\n\nIf something's worrying you, talk to a **trusted adult** or a friend. In Australia, call **Kids Helpline (1800 55 1800)**, free, any time, up to age 25, or **Lifeline (13 11 14)**, any time, for anyone. In danger right now? Call **000**."
     },
@@ -100,6 +114,9 @@
       "id": "photo-tag",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "ai-prediction"
+      ],
       "prompt": "Your photo app sorts pictures by who's in them.",
       "start": "the-tag",
       "steps": [
@@ -135,6 +152,12 @@
       "id": "ai-or-person",
       "type": "sort_bins",
       "difficulty": "core",
+      "teaches": [
+        "people-decisions-need-a-person"
+      ],
+      "uses": [
+        "people-decisions-need-a-person"
+      ],
       "prompt": "Small jobs are fine for AI; big decisions about people need a **person**. Sort each job.",
       "bins": [
         {
@@ -186,6 +209,11 @@
       "id": "limits",
       "type": "match_pairs",
       "difficulty": "challenge",
+      "uses": [
+        "only-knows-its-examples",
+        "ai-prediction",
+        "people-decisions-need-a-person"
+      ],
       "prompt": "Match each AI limit to an example of it.",
       "pairs": [
         {
@@ -196,17 +224,17 @@
         {
           "id": "confident",
           "left": "Sounds sure when wrong",
-          "right": "Gives the wrong year, confidently"
+          "right": "Wrong year, said confidently"
         },
         {
           "id": "faces",
           "left": "Can mislabel people",
-          "right": "Tags your friend as someone else"
+          "right": "Tags your friend wrongly"
         },
         {
           "id": "responsible",
           "left": "Can't be responsible",
-          "right": "An AI decides a student's punishment"
+          "right": "Decides a punishment"
         }
       ],
       "hint": "Each example is from this module. Which limit explains what went wrong?",
@@ -217,6 +245,13 @@
       "id": "cant-do-recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "ai-prediction",
+        "check-trusted-source",
+        "people-decisions-need-a-person",
+        "trusted-adult",
+        "help-services"
+      ],
       "title": "Recap",
       "body": "- AI gives **predictions**, not facts. Check important things.\n- Big decisions about people need a person.\n- Worried? Talk to a trusted adult, Kids Helpline (1800 55 1800) or Lifeline (13 11 14).\n\nNext: the module quiz."
     }

@@ -27,8 +27,10 @@ const KIND: Record<NetworkNodeKind, { Icon: ComponentType<{ className?: string }
   internet: { Icon: InternetIcon, name: "the internet" },
 };
 
-/** Row height in px: node (48) + label + optional address. */
+/** Row height in px: node (48) + label + optional address. Phones use shorter rows (taller with addresses). */
 const ROW_H = 120;
+const ROW_H_NARROW = 80;
+const ROW_H_NARROW_ADDRESSES = 104;
 /** Node centre offset from the top of its row. */
 const NODE_Y = 28;
 const HOP_SECONDS = 0.22;
@@ -53,13 +55,16 @@ export function PacketPathCardView({
     () => false,
   );
   const locked = status !== "answering";
-  const layout = layoutNetwork(card, narrow);
+  // Never rotated: a 4-column network fits a phone at about 82px a column, while rotating it made
+  // 4 tall rows that pushed the stops below the fold. Phones get shorter rows instead.
+  const layout = layoutNetwork(card, false);
+  const rowH = !narrow ? ROW_H : card.nodes.some((n) => n.address) ? ROW_H_NARROW_ADDRESSES : ROW_H_NARROW;
   const placed = new Map(layout.nodes.map((n) => [n.id, n]));
   const byId = new Map(card.nodes.map((n) => [n.id, n]));
 
   const xPct = (id: string) => (((placed.get(id)?.col ?? 0) + 0.5) / layout.cols) * 100;
-  const yPx = (id: string) => (placed.get(id)?.row ?? 0) * ROW_H + NODE_Y;
-  const height = layout.rows * ROW_H;
+  const yPx = (id: string) => (placed.get(id)?.row ?? 0) * rowH + NODE_Y;
+  const height = layout.rows * rowH;
 
   const finished = answer.at(-1) === card.destination;
   const wrongAt = locked ? firstWrongHop(card, answer) : null;
@@ -86,18 +91,48 @@ export function PacketPathCardView({
     return { stroke: "var(--color-accent-ink)", width: 3, dash: undefined };
   }
 
+  const routeButtons = (iconOnly: boolean) => (
+    <>
+      <button
+        type="button"
+        data-keyboard-passthrough
+        disabled={answer.length <= 1}
+        onClick={() => onAnswerChange(answer.slice(0, -1))}
+        aria-label={iconOnly ? "Undo" : undefined}
+        className={`inline-flex min-h-11 items-center justify-center gap-1 rounded-control text-small font-semibold text-ink-muted hover:bg-surface-raised hover:text-ink disabled:opacity-40 ${iconOnly ? "min-w-11" : "px-2.5"}`}
+      >
+        <UndoIcon className="size-4" />
+        {!iconOnly && " Undo"}
+      </button>
+      <button
+        type="button"
+        data-keyboard-passthrough
+        disabled={answer.length <= 1}
+        onClick={() => onAnswerChange([card.source])}
+        aria-label={iconOnly ? "Reset" : undefined}
+        className={`inline-flex min-h-11 items-center justify-center gap-1 rounded-control text-small font-semibold text-ink-muted hover:bg-surface-raised hover:text-ink disabled:opacity-40 ${iconOnly ? "min-w-11" : "px-2.5"}`}
+      >
+        <RetryIcon className="size-4" />
+        {!iconOnly && " Reset"}
+      </button>
+    </>
+  );
+
   return (
     <div>
       <CardPrompt>{card.prompt}</CardPrompt>
-      <p className="mt-2 text-small text-ink-muted">
-        Tap the next stop along a line, starting from <strong className="font-semibold text-ink">{byId.get(card.source)?.label}</strong>.
-        Tap the last stop again to undo.
-      </p>
+      {/* Undo and Reset sit beside the instruction on phones (icons, named for screen readers), so they stay on screen. */}
+      <div className="mt-2 flex items-center gap-2">
+        <p className="min-w-0 flex-1 text-small text-ink-muted">
+          Tap each next stop along a line, from <strong className="font-semibold text-ink">{byId.get(card.source)?.label}</strong>.
+        </p>
+        {!locked && <div className="flex gap-1 sm:hidden">{routeButtons(true)}</div>}
+      </div>
 
       <div
         role="group"
         aria-label="Network diagram"
-        className="relative mt-6 w-full rounded-card border border-line bg-surface"
+        className="relative mt-3 w-full rounded-card border border-line bg-surface sm:mt-6"
         style={{ height: height + 8 }}
       >
         <svg
@@ -166,7 +201,7 @@ export function PacketPathCardView({
                 aria-label={`${node.label}${node.address ? `, ${node.address}` : ""}, ${name}${
                   role ? `, ${role}` : ""
                 }${downNote}, ${state}${isWrong ? ", wrong stop" : ""}`}
-                className={`relative grid size-12 place-items-center rounded-node border-2 transition-colors disabled:cursor-default ${tone}`}
+                className={`relative grid size-11 place-items-center rounded-node border-2 transition-colors disabled:cursor-default sm:size-12 ${tone}`}
               >
                 <Icon className="size-5" />
                 {down && !isWrong && (
@@ -230,34 +265,13 @@ export function PacketPathCardView({
         )}
       </div>
 
-      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
-        <p className="min-w-0 flex-1 font-mono text-small text-ink-muted" aria-live="polite">
+      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 max-sm:mt-0">
+        <p className="min-w-0 flex-1 font-mono text-small text-ink-muted max-sm:sr-only" aria-live="polite">
           <span className="text-ink-faint">route: </span>
           {answer.map((id) => byId.get(id)?.label ?? id).join(" → ")}
           {!finished && !locked && " → …"}
         </p>
-        {!locked && (
-          <div className="flex gap-1">
-            <button
-              type="button"
-              data-keyboard-passthrough
-              disabled={answer.length <= 1}
-              onClick={() => onAnswerChange(answer.slice(0, -1))}
-              className="inline-flex min-h-11 items-center gap-1 rounded-control px-2.5 text-small font-semibold text-ink-muted hover:bg-surface-raised hover:text-ink disabled:opacity-40"
-            >
-              <UndoIcon className="size-4" /> Undo
-            </button>
-            <button
-              type="button"
-              data-keyboard-passthrough
-              disabled={answer.length <= 1}
-              onClick={() => onAnswerChange([card.source])}
-              className="inline-flex min-h-11 items-center gap-1 rounded-control px-2.5 text-small font-semibold text-ink-muted hover:bg-surface-raised hover:text-ink disabled:opacity-40"
-            >
-              <RetryIcon className="size-4" /> Reset
-            </button>
-          </div>
-        )}
+        {!locked && <div className="hidden gap-1 sm:flex">{routeButtons(false)}</div>}
       </div>
 
       <CardStatusNote

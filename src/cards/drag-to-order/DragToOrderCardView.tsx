@@ -61,7 +61,7 @@ function SortableItem({
       ref={setNodeRef}
       data-drag-item
       style={{ transform: CSS.Translate.toString(transform), transition }}
-      className={`relative flex touch-manipulation items-center gap-3 rounded-control border-2 px-3 py-3 select-none ${tone} ${
+      className={`relative flex min-h-11 touch-manipulation items-center gap-3 rounded-control border-2 px-3 py-1.5 select-none sm:py-3 ${tone} ${
         isDragging ? "z-10 scale-[1.02]" : ""
       } ${locked ? "" : "cursor-grab active:cursor-grabbing"} transition-[border-color,background-color,box-shadow]`}
       {...attributes}
@@ -76,7 +76,7 @@ function SortableItem({
         {position}
       </span>
       <span
-        className={`flex-1 font-medium ${BINARY_LIKE.test(label) ? "font-mono text-lead tracking-wide" : "text-body"}`}
+        className={`flex-1 font-medium leading-snug ${BINARY_LIKE.test(label) ? "font-mono text-body tracking-wide sm:text-lead" : "text-small sm:text-body"}`}
       >
         <InlineText>{label}</InlineText>
       </span>
@@ -150,7 +150,7 @@ export function DragToOrderCardView({
     <div>
       <CardPrompt>{card.prompt}</CardPrompt>
       {tip.show && status === "answering" && (
-        <p className="mt-3 flex items-center gap-2 text-small font-semibold text-ink">
+        <p className="mt-2 flex items-center gap-2 text-small font-semibold text-ink sm:mt-3">
           <GripIcon className="size-4 shrink-0 text-ink-muted" />
           {tip.touch ? "Press and hold an item, then drag it." : "Drag an item to move it."}
         </p>
@@ -178,7 +178,8 @@ export function DragToOrderCardView({
           {/* While an item is held, Enter drops it instead of checking the answer. */}
           <ol
             // The trace linking the position nodes, drawn behind the items.
-            className="relative mt-8 grid gap-2.5 before:absolute before:top-6 before:bottom-6 before:left-[27px] before:w-0.5 before:bg-line"
+            // Compact on phones: every item fits on screen with the prompt, so nobody scrolls mid-drag.
+            className="relative mt-3 grid gap-1.5 before:absolute before:top-6 before:bottom-6 before:left-[27px] before:w-0.5 before:bg-line sm:mt-8 sm:gap-2.5"
             data-keyboard-passthrough={dragging ? "" : undefined}
           >
             {answer.map((id, i) => (

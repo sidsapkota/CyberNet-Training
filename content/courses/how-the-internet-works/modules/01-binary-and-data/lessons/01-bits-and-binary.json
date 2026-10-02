@@ -10,6 +10,11 @@
       "id": "make-5",
       "type": "binary_toggle",
       "difficulty": "core",
+      "teaches": [
+        "bit",
+        "binary-place-values"
+      ],
+      "uses": [],
       "prompt": "Computers hold billions of tiny switches, each **off** (0) or **on** (1). On switches add up the numbers above them.\n\nTap switches to make **5**.",
       "target": 5,
       "explanation": "4 + 1 = 5, so the 4 and the 1 are on and the rest are off: `00000101`.",
@@ -20,14 +25,30 @@
       "id": "switches-and-bits",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "bit",
+        "binary",
+        "binary-place-values"
+      ],
       "title": "You just counted in binary",
       "body": "Each switch is a **bit**: 0 for off, 1 for on. Counting with only 0 and 1 is **binary**. Each place is worth **double** the one to its right: the switches pictured read `10110010`, so 128 + 32 + 16 + 2 = **178**.",
-      "image": { "src": "/illustrations/switches.svg", "alt": "A row of eight switches reading 10110010. Switches that are on are labelled 1, and switches that are off are labelled 0.", "width": 640, "height": 240 }
+      "image": {
+        "src": "/illustrations/switches.svg",
+        "alt": "A row of eight switches reading 10110010. Switches that are on are labelled 1, and switches that are off are labelled 0.",
+        "width": 640,
+        "height": 240
+      }
     },
     {
       "id": "make-42",
       "type": "binary_toggle",
       "difficulty": "core",
+      "teaches": [
+        "decimal-to-binary"
+      ],
+      "uses": [
+        "binary-place-values"
+      ],
       "prompt": "Now make **42**. Tip: switch on the biggest place that fits, then work down.",
       "target": 42,
       "explanation": "32 fits in 42, leaving 10. Then 8 fits, leaving 2, then 2 fits. So 42 = 32 + 8 + 2: `00101010`.",
@@ -38,12 +59,27 @@
       "id": "order-binary",
       "type": "drag_to_order",
       "difficulty": "core",
+      "uses": [
+        "binary-place-values"
+      ],
       "prompt": "Drag these [[binary]] numbers into order, **smallest** at the top.",
       "items": [
-        { "id": "three", "label": "00000011" },
-        { "id": "six", "label": "00000110" },
-        { "id": "nine", "label": "00001001" },
-        { "id": "sixteen", "label": "00010000" }
+        {
+          "id": "three",
+          "label": "00000011"
+        },
+        {
+          "id": "six",
+          "label": "00000110"
+        },
+        {
+          "id": "nine",
+          "label": "00001001"
+        },
+        {
+          "id": "sixteen",
+          "label": "00010000"
+        }
       ],
       "explanation": "`00000011` is 3, `00000110` is 6, `00001001` is 9 and `00010000` is 16. One [[bit]] further left beats all the bits to its right put together.",
       "hint": "Turn each one into an ordinary number by adding up its places that are on.",
@@ -53,6 +89,10 @@
       "id": "make-200",
       "type": "binary_toggle",
       "difficulty": "challenge",
+      "uses": [
+        "binary-place-values",
+        "decimal-to-binary"
+      ],
       "prompt": "Ready for a harder one? Make **200**.",
       "target": 200,
       "explanation": "128 fits, leaving 72. 64 fits, leaving 8, and 32 and 16 are too big. 8 fits, so 200 = 128 + 64 + 8: `11001000`.",
@@ -63,57 +103,68 @@
       "id": "largest-byte",
       "type": "numeric_input",
       "difficulty": "core",
-      "prompt": "8 [[bits|bit]] make a **byte**. Each extra bit doubles the patterns (2, 4, 8…), so a byte has **256**.\n\nWhat's the **largest** number a byte can hold?",
+      "teaches": [
+        "byte",
+        "byte-256-patterns",
+        "byte-max-255",
+        "bits-double-patterns"
+      ],
+      "uses": [
+        "binary-place-values"
+      ],
+      "prompt": "A **byte** is 8 [[bits|bit]]. Each extra bit **doubles** the on/off patterns (2, 4, 8…), so a byte has **256** patterns. The first is `00000000`, which is 0.\n\nWhat's the **largest** number a byte can hold?",
       "base": "decimal",
       "answer": 255,
-      "hint": "The largest number has every bit on: add up all eight places.",
+      "hint": "The patterns are numbered from 0. If there are 256 of them, what number is the last one?",
       "explanation": "Every bit on: 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1 = **255**. There are 256 patterns, but one is 0, so counting ends at 255.",
-      "nudge": "The pattern count isn't the largest number, because one pattern is 0: switch every bit on and add up."
-    },
-    {
-      "id": "valid-ip",
-      "type": "multiple_choice",
-      "difficulty": "core",
-      "prompt": "Devices online have addresses. An **IPv4 address** is four numbers with dots, like `192.168.1.10`, each one byte (an **octet**).\n\nWhich of these is **valid**?",
-      "options": [
-        { "id": "has-256", "text": "192.168.1.256", "nudge": "An octet is one byte, and a byte only holds 0 to 255." },
-        { "id": "valid", "text": "10.0.0.254" },
-        {
-          "id": "has-300",
-          "text": "172.16.300.1",
-          "nudge": "Check every part: each is one byte, so none can go above 255."
-        },
-        { "id": "three-parts", "text": "192.0.2", "nudge": "Count the parts: an IPv4 address always has four numbers." }
-      ],
-      "correctOptionId": "valid",
-      "explanation": "`10.0.0.254` has four parts, all from 0 to 255. 256 and 300 don't fit in a byte, and `192.0.2` has only three parts.",
-      "hint": "Does it have four parts, and is every part from 0 to 255?"
+      "nudge": "Counting starts at 0, not 1: the 256 patterns are 0, 1, 2 and so on. Which number is the last?"
     },
     {
       "id": "ten-bit-octet",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "If each part used **10 [[bits|bit]]** instead of 8, what would the largest number be?",
+      "uses": [
+        "byte-max-255",
+        "binary-place-values"
+      ],
+      "prompt": "A byte's 8 [[bits|bit]] reach **255**. With **10 bits** instead, what's the **largest** number you could make?",
       "options": [
-        { "id": "one-thousand", "text": "1,000", "nudge": "Binary doubles, not tens: start at 256 patterns for 8 bits and double once per extra bit." },
-        { "id": "ten-twenty-three", "text": "1,023" },
+        {
+          "id": "one-thousand",
+          "text": "1,000",
+          "nudge": "Binary doubles, not tens: start at 256 patterns for 8 bits and double once per extra bit."
+        },
+        {
+          "id": "ten-twenty-three",
+          "text": "1,023"
+        },
         {
           "id": "ten-twenty-four",
           "text": "1,024",
-          "nudge": "That's the number of patterns: 8 bits make 256 patterns, but the largest is 255."
+          "nudge": "That's how many patterns 10 bits make. Counting starts at 0, so the largest is one less."
         },
-        { "id": "twenty-forty-seven", "text": "2,047", "nudge": "8 bits give 256 patterns, and 10 bits is only two more doublings." }
+        {
+          "id": "twenty-forty-seven",
+          "text": "2,047",
+          "nudge": "8 bits give 256 patterns, and 10 bits is only two more doublings."
+        }
       ],
       "correctOptionId": "ten-twenty-three",
       "explanation": "8 bits give 256 patterns, 9 give 512 and 10 give 1,024. Counting from 0, the largest is **1,023**, just as 8 bits top out at 255.",
-      "hint": "Double the patterns once for each extra bit, then remember counting starts at 0."
+      "hint": "Each extra bit doubles the patterns: 8 bits make 256. Double for each extra bit, then remember counting starts at 0."
     },
     {
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "bit",
+        "binary",
+        "byte",
+        "byte-max-255"
+      ],
       "title": "Recap",
-      "body": "- A **bit** is one switch: 0 for off, 1 for on.\n- To read **binary**, add up the places that are on.\n- A **byte** is 8 bits, so IPv4 parts go 0 to 255."
+      "body": "- A **bit** is one switch: 0 for off, 1 for on.\n- To read **binary**, add up the places that are on.\n- A **byte** is 8 bits: it holds 0 to 255."
     }
   ]
 }

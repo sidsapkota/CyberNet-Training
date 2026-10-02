@@ -42,7 +42,8 @@ export const memoryModel: SimulatorModel<z.infer<typeof MemoryParams>> = {
       smooth: round(1 - lagFromMemory(used, ram), 2),
       apps: [
         { id: "system", label: "System", value: clamp(p.systemGb / ram), detail: `${p.systemGb} GB`, state: "system" },
-        ...open.map((a): ListItem => ({ id: a.id, label: a.label, value: clamp(a.gb / ram), detail: `${a.gb} GB` })),
+        // Closed apps stay listed (crossed out), so each app keeps its row.
+        ...p.apps.map((a): ListItem => (open.includes(a) ? { id: a.id, label: a.label, value: clamp(a.gb / ram), detail: `${a.gb} GB` } : { id: a.id, label: a.label, value: 0, detail: "closed", state: "off" })),
       ],
     };
   },

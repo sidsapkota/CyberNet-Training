@@ -10,6 +10,9 @@
       "id": "whose-poster",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "honest-ai-use"
+      ],
       "title": "Whose poster is it?",
       "body": "In a town poster competition, one entrant types a prompt and gets an amazing poster in seconds. Another spends a week painting theirs.\n\nUsing AI is often fine. Hiding it usually isn't. **Say how you used it**, **follow the rules** (and ask when you're not sure), and **don't claim AI's work as yours**."
     },
@@ -17,6 +20,9 @@
       "id": "honest-or-not",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "honest-ai-use"
+      ],
       "prompt": "Is each one **honest**, or **not honest**?",
       "bins": [
         {
@@ -68,6 +74,9 @@
       "id": "spelling-only",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "honest-ai-use"
+      ],
       "prompt": "Your teacher says no AI for an essay. You want to use AI just to fix your spelling. What should you do?",
       "options": [
         {
@@ -98,6 +107,13 @@
       "id": "inspired-by-an-artist",
       "type": "multiple_choice",
       "difficulty": "core",
+      "teaches": [
+        "ai-trained-on-artists-work"
+      ],
+      "uses": [
+        "honest-ai-use",
+        "ai-trained-on-artists-work"
+      ],
       "prompt": "AI learned from artists' work, often without asking. You make an AI poster in one illustrator's style. **Fairest** move?",
       "options": [
         {
@@ -128,6 +144,14 @@
       "id": "captain-picker",
       "type": "scenario",
       "difficulty": "core",
+      "teaches": [
+        "ask-who-is-left-out"
+      ],
+      "uses": [
+        "ask-who-is-left-out",
+        "bias",
+        "people-decisions-need-a-person"
+      ],
       "prompt": "When AI picks people, ask who it might leave out. Your club wants AI to pick captains by who talks most at training.",
       "start": "the-plan",
       "steps": [
@@ -163,6 +187,11 @@
       "id": "fair-move",
       "type": "match_pairs",
       "difficulty": "challenge",
+      "uses": [
+        "honest-ai-use",
+        "people-decisions-need-a-person",
+        "ai-trained-on-artists-work"
+      ],
       "prompt": "Match each situation to the fair thing to do.",
       "pairs": [
         {
@@ -194,16 +223,20 @@
       "id": "friends-story",
       "type": "scenario",
       "difficulty": "challenge",
+      "uses": [
+        "honest-ai-use",
+        "trusted-adult"
+      ],
       "prompt": "Your friend's story wins a writing prize. You know a chatbot wrote most of it.",
       "start": "after",
       "steps": [
         {
           "id": "after",
-          "text": "The competition rules said \"your own work only\". What's the fairest thing to do?",
+          "text": "The rules said \"your own work only\". What's fairest?",
           "choices": [
             {
               "id": "announce",
-              "text": "Tell the other entrants, since it's unfair on them",
+              "text": "Tell the other entrants",
               "consequence": "It is unfair on them, but this could embarrass your friend before they can put it right.",
               "outcome": "fail"
             },
@@ -215,7 +248,7 @@
             },
             {
               "id": "nothing",
-              "text": "Say nothing: it's the judges' job to spot AI writing",
+              "text": "Say nothing: spotting AI is the judges' job",
               "consequence": "Judges can't always tell, and others did their own work, so staying quiet isn't fair.",
               "outcome": "fail"
             }
@@ -229,6 +262,13 @@
       "id": "course-recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "learning-from-examples",
+        "bias",
+        "hallucination",
+        "check-outside-the-post",
+        "honest-ai-use"
+      ],
       "title": "You know how AI really works",
       "body": "- AI learns **patterns from examples**: only as good, and fair, as its data.\n- Chatbots pick **likely words**, not checked facts: check what matters.\n- Fakes are cheap: check **outside** the post, and use AI **openly**.\n\nNext: the course final."
     }

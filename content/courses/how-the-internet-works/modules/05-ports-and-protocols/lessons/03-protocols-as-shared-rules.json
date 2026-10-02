@@ -10,12 +10,33 @@
       "id": "order-layers",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "A page request travels like a letter in nested wrappers, each following its own rules: a **protocol**.\n\nOrder them from the **letter in the middle** to the **outside wrapper**.",
+      "teaches": [
+        "protocol-layers",
+        "link-layer"
+      ],
+      "uses": [
+        "tcp",
+        "transport-in-ip",
+        "link-layer"
+      ],
+      "prompt": "Like a letter in nested wrappers, each layer follows its own **protocol**; the outside one is Wi-Fi or a cable, to the next device. Order them from the **letter in the middle** outwards.",
       "items": [
-        { "id": "http", "label": "HTTP: the request for the page" },
-        { "id": "tcp", "label": "TCP: the right program, reliably" },
-        { "id": "ip", "label": "IP: addresses for the right computer" },
-        { "id": "link", "label": "Wi-Fi or Ethernet: to the next device" }
+        {
+          "id": "http",
+          "label": "HTTP: the page request"
+        },
+        {
+          "id": "tcp",
+          "label": "TCP: the right program, reliably"
+        },
+        {
+          "id": "ip",
+          "label": "IP: the right computer"
+        },
+        {
+          "id": "link",
+          "label": "Wi-Fi or Ethernet: next device"
+        }
       ],
       "explanation": "The **HTTP** request is the letter; **TCP** wraps it for the right program, **IP** for the right computer, and **Wi-Fi or Ethernet** (wired) carries it one step. At the other end they come off in reverse.",
       "hint": "The request is the letter; the outside is whatever physically carries it to the next device.",
@@ -25,6 +46,10 @@
       "id": "what-is-a-protocol",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "protocol",
+        "open-standards"
+      ],
       "title": "How strangers understand each other",
       "body": "Your phone, your [[router]] and a website's [[server]] come from different makers, yet understand each other. They follow the same **protocols**: rules for how messages look, their order, and what to do when things go wrong.\n\nThe rules are published free, so anyone can build things that work together."
     },
@@ -32,19 +57,51 @@
       "id": "which-protocol-job",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "**HTTPS** fetches web pages securely, **DNS** turns names into addresses, and **SMTP** and **IMAP** handle email.\n\nWhich protocol does each job?",
+      "teaches": [
+        "https",
+        "smtp",
+        "imap"
+      ],
+      "uses": [
+        "dns",
+        "mx-record"
+      ],
+      "prompt": "**HTTPS** fetches pages, **DNS** turns names into addresses, **SMTP** and **IMAP** handle email. Which does each job?",
       "bins": [
-        { "id": "https", "label": "HTTPS" },
-        { "id": "dns", "label": "DNS" },
-        { "id": "email", "label": "SMTP or IMAP" }
+        {
+          "id": "https",
+          "label": "HTTPS"
+        },
+        {
+          "id": "dns",
+          "label": "DNS"
+        },
+        {
+          "id": "email",
+          "label": "SMTP or IMAP"
+        }
       ],
       "items": [
-        { "id": "recipe", "label": "Loading a recipe page", "bin": "https" },
-        { "id": "bank", "label": "Logging in to your bank's website", "bin": "https" },
-        { "id": "site-address", "label": "Finding the address for example.org", "bin": "dns" },
-        { "id": "mail-server", "label": "Finding where example.org's email goes", "bin": "dns" },
-        { "id": "send-gran", "label": "Emailing Gran a birthday message", "bin": "email" },
-        { "id": "inbox", "label": "Checking your inbox on a new phone", "bin": "email" }
+        {
+          "id": "recipe",
+          "label": "Loading a recipe",
+          "bin": "https"
+        },
+        {
+          "id": "site-address",
+          "label": "Finding example.org",
+          "bin": "dns"
+        },
+        {
+          "id": "send-gran",
+          "label": "Emailing Gran",
+          "bin": "email"
+        },
+        {
+          "id": "inbox",
+          "label": "Reading your inbox",
+          "bin": "email"
+        }
       ],
       "explanation": "Pages come with **HTTPS**, and looking up names is **DNS**, including where a domain's email goes (its MX record). Sending and reading mail use **SMTP** and **IMAP**.",
       "hint": "Ask what each job really is: fetching a page, looking something up, or moving or reading an email?",
@@ -54,13 +111,36 @@
       "id": "email-journey",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "**SMTP** sends mail on its way (app to provider, and server to server). **IMAP** lets an app read mail kept on a server.\n\nPut your email to `hello@example.org` in order.",
+      "teaches": [
+        "smtp",
+        "imap"
+      ],
+      "uses": [
+        "mx-record",
+        "dns"
+      ],
+      "prompt": "**SMTP** sends mail on its way; **IMAP** lets an app read mail kept on a server. Order your email to `hello@example.org`.",
       "items": [
-        { "id": "press-send", "label": "You press Send in your email app" },
-        { "id": "to-provider", "label": "App sends it to your provider (SMTP)" },
-        { "id": "mx", "label": "Provider looks up the MX record (DNS)" },
-        { "id": "server-to-server", "label": "Provider sends it to example.org (SMTP)" },
-        { "id": "read", "label": "Recipient's app fetches it (IMAP)" }
+        {
+          "id": "press-send",
+          "label": "You press Send"
+        },
+        {
+          "id": "to-provider",
+          "label": "App hands it to your provider (SMTP)"
+        },
+        {
+          "id": "mx",
+          "label": "Provider looks up the MX record (DNS)"
+        },
+        {
+          "id": "server-to-server",
+          "label": "Provider sends it on (SMTP)"
+        },
+        {
+          "id": "read",
+          "label": "Their app fetches it (IMAP)"
+        }
       ],
       "explanation": "SMTP carries the email **twice**, and in between DNS's **MX record** says where example.org's mail goes. The recipient then reads it with **IMAP**: one email, three protocols.",
       "hint": "SMTP carries it twice; before the second trip, your provider must find where to send it.",
@@ -70,9 +150,16 @@
       "id": "between-servers",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "imap",
+        "smtp"
+      ],
       "prompt": "Ana reads an email in her phone's app; in her laptop's app, it's already marked read.\n\nWhich protocol makes that work?",
       "options": [
-        { "id": "imap", "text": "IMAP: her mail stays on the server for every app" },
+        {
+          "id": "imap",
+          "text": "IMAP: her mail stays on the server for every app"
+        },
         {
           "id": "smtp",
           "text": "SMTP: it copies each email to all her devices",
@@ -97,12 +184,21 @@
       "id": "port-8080",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "A developer runs a website at `http://example.com:8080`, not on the usual port 80. How can that work?",
+      "uses": [
+        "port",
+        "port-80-http",
+        "ip-port-notation",
+        "hex"
+      ],
+      "prompt": "A website runs at `http://example.com:8080`, not the usual port 80. How can that work?",
       "options": [
-        { "id": "convention", "text": "Port 80 is a custom, not a law: :8080 says which door" },
+        {
+          "id": "convention",
+          "text": "Port 80 is a habit: :8080 names the door"
+        },
         {
           "id": "hex",
-          "text": "8080 is 80 written in hex, so it's the same port",
+          "text": "8080 is 80 written in hex",
           "nudge": "80 and 8080 are different ports, and hex isn't involved: what does `:8080` tell the browser?"
         },
         {
@@ -124,8 +220,15 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "protocol",
+        "protocol-layers",
+        "smtp",
+        "imap",
+        "link-layer"
+      ],
       "title": "Recap",
-      "body": "- A **protocol** is a shared set of rules for one job.\n- Protocols wrap like envelopes: [[HTTP]] inside [[TCP]] inside IP.\n- Email: **SMTP** sends it, **IMAP** reads it.\n\nTake the quiz to unlock the final module: The Web."
+      "body": "- A **protocol** is a shared set of rules for one job.\n- Protocols wrap like envelopes: [[HTTP]] inside [[TCP]] inside IP, inside Wi-Fi or a cable.\n- Email: **SMTP** sends it, **IMAP** reads it.\n\nTake the quiz to unlock the final module: The Web."
     }
   ]
 }

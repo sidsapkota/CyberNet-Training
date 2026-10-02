@@ -10,6 +10,13 @@
       "id": "bits-in-five-bytes",
       "type": "numeric_input",
       "difficulty": "core",
+      "teaches": [
+        "data-in-bytes",
+        "letter-one-byte"
+      ],
+      "uses": [
+        "byte"
+      ],
       "prompt": "Data is measured in [[bytes|byte]], like water in litres. One letter of text is about 1 byte.\n\nHow many **bits** are in **5 bytes**?",
       "base": "decimal",
       "answer": 40,
@@ -22,13 +29,32 @@
       "id": "order-sizes",
       "type": "drag_to_order",
       "difficulty": "core",
+      "teaches": [
+        "size-units"
+      ],
+      "uses": [],
       "prompt": "Each bigger unit is **1,000 times** the last (*kilo* means a thousand): **bytes → KB → MB → GB → TB**.\n\nDrag the sizes into order, **smallest** at the top.",
       "items": [
-        { "id": "bytes-800", "label": "800 bytes" },
-        { "id": "kb-900", "label": "900 KB" },
-        { "id": "mb-2", "label": "2 MB" },
-        { "id": "gb-1-5", "label": "1.5 GB" },
-        { "id": "tb-1", "label": "1 TB" }
+        {
+          "id": "bytes-800",
+          "label": "800 bytes"
+        },
+        {
+          "id": "kb-900",
+          "label": "900 KB"
+        },
+        {
+          "id": "mb-2",
+          "label": "2 MB"
+        },
+        {
+          "id": "gb-1-5",
+          "label": "1.5 GB"
+        },
+        {
+          "id": "tb-1",
+          "label": "1 TB"
+        }
       ],
       "explanation": "Compare units first: 900 KB is less than 1 MB, so it's smaller than 2 MB even though 900 is bigger than 2. 1.5 GB is 1,500 MB, and 1 TB is 1,000 GB.",
       "hint": "Compare the units first, then the numbers.",
@@ -38,6 +64,9 @@
       "id": "photo-in-kb",
       "type": "numeric_input",
       "difficulty": "core",
+      "uses": [
+        "size-units"
+      ],
       "prompt": "A photo is **3 [[MB|megabyte]]**. How many **KB** is that?",
       "base": "decimal",
       "answer": 3000,
@@ -50,12 +79,32 @@
       "id": "typical-sizes",
       "type": "match_pairs",
       "difficulty": "core",
+      "uses": [
+        "size-units",
+        "letter-one-byte"
+      ],
       "prompt": "Match each thing to its typical size.",
       "pairs": [
-        { "id": "letter", "left": "One letter of plain text", "right": "About 1 byte" },
-        { "id": "photo", "left": "A photo from a phone", "right": "A few MB" },
-        { "id": "film", "left": "A two-hour film in HD", "right": "A few GB" },
-        { "id": "phone", "left": "A phone's whole storage", "right": "Tens to hundreds of GB" }
+        {
+          "id": "letter",
+          "left": "One letter of plain text",
+          "right": "About 1 byte"
+        },
+        {
+          "id": "photo",
+          "left": "A photo from a phone",
+          "right": "A few MB"
+        },
+        {
+          "id": "film",
+          "left": "A two-hour film in HD",
+          "right": "A few GB"
+        },
+        {
+          "id": "phone",
+          "left": "A phone's whole storage",
+          "right": "Tens to hundreds of GB"
+        }
       ],
       "explanation": "A letter of text is about 1 byte, a phone photo a few MB and an HD film a few GB. A phone holds tens to hundreds of GB: thousands of photos.",
       "hint": "Put the four things in size order first, then match them in the same order.",
@@ -65,9 +114,18 @@
       "id": "shrinking-drive",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "teaches": [
+        "windows-1024"
+      ],
+      "uses": [
+        "size-units"
+      ],
       "prompt": "Windows counts storage in steps of 1,024, not 1,000. Why does a new **500 GB** drive show only **465 GB**?",
       "options": [
-        { "id": "counting", "text": "Windows counts the same bytes in bigger steps" },
+        {
+          "id": "counting",
+          "text": "Windows counts the same bytes in bigger steps"
+        },
         {
           "id": "hidden-files",
           "text": "35 GB is hidden system files Windows doesn't show",
@@ -92,6 +150,10 @@
       "id": "meet-hex",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "hex",
+        "hex-digit-4-bits"
+      ],
       "title": "Hex: a shorthand for binary",
       "body": "Long rows of 0s and 1s are easy to misread, so people often write [[bytes|byte]] in **hex**: 16 digits, 0–9 then A–F for 10 to 15.\n\nOne hex digit is exactly 4 [[bits|bit]], so a byte is two hex digits: `11111111` is `FF`. Colour codes like `#FF0000` are hex."
     },
@@ -99,6 +161,14 @@
       "id": "hex-2a",
       "type": "numeric_input",
       "difficulty": "core",
+      "teaches": [
+        "binary-to-hex"
+      ],
+      "uses": [
+        "hex",
+        "hex-digit-4-bits",
+        "binary-place-values"
+      ],
       "prompt": "42 is `00101010`: split it into `0010` and `1010`. Each group of 4 [[bits|bit]] (places 8, 4, 2, 1) is one hex digit.\n\nWhat is 42 in hex?",
       "base": "hex",
       "answer": 42,
@@ -110,9 +180,17 @@
       "id": "why-ff-biggest",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "uses": [
+        "hex",
+        "hex-digit-4-bits",
+        "byte-max-255"
+      ],
       "prompt": "Why is `FF` the biggest number you can write with two hex digits?",
       "options": [
-        { "id": "all-bits-on", "text": "F is the top digit, so FF is all 8 bits on: 255" },
+        {
+          "id": "all-bits-on",
+          "text": "F is the top digit, so FF is all 8 bits on: 255"
+        },
         {
           "id": "f-for-full",
           "text": "F means \"full\", a code that marks a byte's end",
@@ -137,6 +215,13 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "byte",
+        "letter-one-byte",
+        "size-units",
+        "hex",
+        "hex-digit-4-bits"
+      ],
       "title": "Recap",
       "body": "- A **byte** is 8 bits; one letter of text is about 1 byte.\n- KB, MB, GB, TB: each is 1,000 times the last.\n- **Hex** uses 0–9 and A–F; one hex digit is 4 bits."
     }

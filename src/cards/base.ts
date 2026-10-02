@@ -10,10 +10,21 @@ export type Difficulty = z.infer<typeof Difficulty>;
 
 export const nonEmpty = z.string().trim().min(1);
 
+/**
+ * A concept a course teaches or relies on: kebab-case, scoped to the course (`bit`, `byte-max-255`,
+ * `ipv4-address`). See src/lib/content/concepts.ts: a card may only use what an earlier core card
+ * in the same course (or its own prompt) has taught.
+ */
+export const ConceptId = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, "concepts are kebab-case");
+
 /** Fields every card has. */
 export const cardBase = {
   id: CardId,
   difficulty: Difficulty,
+  /** Concepts this card teaches (an explainer, a reveal, or a prompt that explains an idea itself). */
+  teaches: z.array(ConceptId).max(8).optional(),
+  /** Concepts the learner must already know to answer or follow this card (never outside knowledge). */
+  uses: z.array(ConceptId).max(8).optional(),
 };
 
 /**

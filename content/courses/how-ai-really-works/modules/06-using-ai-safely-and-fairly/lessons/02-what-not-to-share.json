@@ -10,6 +10,15 @@
       "id": "type-or-keep",
       "type": "sort_bins",
       "difficulty": "core",
+      "teaches": [
+        "chats-may-be-stored",
+        "friends-info-not-yours"
+      ],
+      "uses": [
+        "chats-may-be-stored",
+        "friends-info-not-yours",
+        "keep-private-details-out"
+      ],
       "prompt": "Chats may be **saved**, **read** or **used for training**, and friends' things aren't yours to share. Type it, or keep it private?",
       "bins": [
         {
@@ -28,11 +37,6 @@
           "bin": "fine"
         },
         {
-          "id": "story",
-          "label": "A made-up story idea",
-          "bin": "fine"
-        },
-        {
           "id": "volcano",
           "label": "A question about volcanoes",
           "bin": "fine"
@@ -45,11 +49,6 @@
         {
           "id": "password",
           "label": "A password, to \"keep it safe\"",
-          "bin": "private"
-        },
-        {
-          "id": "friend-photo",
-          "label": "A photo of your friend",
           "bin": "private"
         },
         {
@@ -66,6 +65,10 @@
       "id": "grandma-letter",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "chats-may-be-stored",
+        "keep-private-details-out"
+      ],
       "prompt": "Your letter to Grandma includes your home address. What's the **safest** way to get AI help with it?",
       "options": [
         {
@@ -96,7 +99,15 @@
       "id": "app-permissions",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "Apps ask for [[permissions|app-permission]], and you choose. This recipe-to-shopping-list app asks for your **contacts** and **location**.",
+      "teaches": [
+        "app-permissions",
+        "least-permission"
+      ],
+      "uses": [
+        "app-permissions",
+        "least-permission"
+      ],
+      "prompt": "Apps ask for [[permissions|app-permission]], and you choose: allow only what an app needs for its job. This recipe-to-shopping-list app asks for your **contacts** and **location**.",
       "start": "ask",
       "steps": [
         {
@@ -131,6 +142,9 @@
       "id": "needs-it",
       "type": "sort_bins",
       "difficulty": "challenge",
+      "uses": [
+        "app-permissions"
+      ],
       "prompt": "An AI maths-help app asks for these. Does it **need** each one for its job, or **not need** it?",
       "bins": [
         {
@@ -150,7 +164,7 @@
         },
         {
           "id": "camera-once",
-          "label": "Camera, to photo one problem you pick",
+          "label": "Camera, for one problem you pick",
           "bin": "needs"
         },
         {
@@ -160,17 +174,12 @@
         },
         {
           "id": "location",
-          "label": "Your location, all the time",
-          "bin": "doesnt"
-        },
-        {
-          "id": "gallery",
-          "label": "Every photo in your gallery",
+          "label": "Location, all the time",
           "bin": "doesnt"
         },
         {
           "id": "mic",
-          "label": "Your microphone, always on",
+          "label": "Microphone, always on",
           "bin": "doesnt"
         }
       ],
@@ -182,6 +191,11 @@
       "id": "not-a-person",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "chatbot-not-a-person",
+        "trusted-adult",
+        "help-services"
+      ],
       "title": "A program, not a person",
       "body": "AI \"friend\" apps sound kind, but they can't notice if you're not OK or get help for you.\n\nIf something's worrying you, talk to a **trusted adult** or a friend. In Australia, call **Kids Helpline (1800 55 1800)**, free, any time, up to age 25, or **Lifeline (13 11 14)**, any time, for anyone. In danger right now? Call **000**."
     },
@@ -189,6 +203,11 @@
       "id": "feeling-down",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "chatbot-not-a-person",
+        "trusted-adult",
+        "help-services"
+      ],
       "prompt": "It's late, you're feeling really down, and you've been telling an AI chatbot about it for an hour.",
       "start": "late",
       "steps": [
@@ -224,6 +243,10 @@
       "id": "best-friend-app",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "uses": [
+        "chatbot-not-a-person",
+        "chats-may-be-stored"
+      ],
       "prompt": "An AI chat app says: \"I'm your best friend, and I'll always keep your secrets.\" What's true?",
       "options": [
         {
@@ -254,6 +277,13 @@
       "id": "sharing-recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "chats-may-be-stored",
+        "keep-private-details-out",
+        "least-permission",
+        "trusted-adult",
+        "help-services"
+      ],
       "title": "Recap",
       "body": "- Chats may be saved, read or used for training.\n- Keep private things private; allow only the permissions an app needs.\n- Worried? Talk to a trusted adult, Kids Helpline (1800 55 1800) or Lifeline (13 11 14).\n\nNext: using AI fairly and honestly."
     }

@@ -64,7 +64,10 @@ design QA script checks it. On phones, the binary bits wrap to two rows of four 
 drag to order picks items up with a short press and hold, so a swipe over the list still scrolls. Its
 first-time tip ("Press and hold an item, then drag it.", or "Drag an item to move it." with a
 mouse) shows until the learner's first drag (per device). Sort bins with three bins stack on
-phones, so item names never squeeze into narrow columns.
+phones, so item names never squeeze into narrow columns; each stacked bin keeps its label and its
+items on one row, and the tray is two columns. On short screens (max-height 620px, such as an
+in-app browser) a card's question steps down from 20px to body size, and terminal output boxes get
+shorter (24dvh up to 700px tall); the output scrolls inside its box.
 
 All of `build`, `lint`, `test` and `typecheck` must pass with zero errors and warnings.
 
@@ -229,7 +232,10 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - `links`: `{from, to}`, undirected.
   - `validPaths`: every accepted route, each starting at `source`, ending at `destination`, following
     links and never repeating a node.
-  - Narrow screens rotate wide layouts 90°, so keep networks small.
+  - Never rotated: phones keep the layout with shorter rows (80px, or 104px when nodes show
+    addresses), so keep networks small (at most 4 columns and 2 rows with addresses fit 360×560).
+    On phones Undo and Reset are icon buttons beside the instruction, and the route readout is for
+    screen readers only (the numbered stops show the order).
   - Wrong routes animate the packet up to the first wrong hop.
 - **`terminal`:**
   - `commands` (1–12): `{ command, aliases?, output (printed verbatim), description? (shown by help) }`.
@@ -321,6 +327,12 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - The `device` output is a phone or laptop mockup that stutters as `smooth` drops, with its state
     always in text too. On phones it sits beside the other outputs (drawn a little smaller), and two
     or more meters without a device sit side by side, so the controls stay on a phone screen.
+  - **Controls on list rows:** a control for one row of a `list` output sits on that row, not in
+    a grid below: `end-<row>` (a button: the task manager's "End"), `delete-<row>` (a switch:
+    storage's "Delete") or a switch whose id is the row's id (an app on or off; the `memory` model
+    lists closed apps as crossed-out "closed" rows, so each keeps its switch). Beside a list, number
+    and bar tiles share a row on phones (numbers on one line), the device shows only its status (in
+    the list's header), and a remaining slider comes first. Keep lists to about 5 rows.
   - Answers are ready once a control changes. The server re-grades by running the same model.
 - **`scenario`:** steps tell the story as you go; a picked **ending** is just selected (it can be
   changed) and its consequence and outcome show **after Check**. Try again takes the failed ending
@@ -1717,6 +1729,21 @@ A learner should know what to do within **3 seconds** of seeing a card.
   cards and quizzes can't rely on a challenge card. `load.test.ts` checks the scene part of this
   automatically (screws, `*-cover` parts and the laptop `panel` explain themselves, so teardowns
   can use them unexplored); check the rest by reading the lesson in order.
+- **Prior knowledge only (owner, 2 Oct 2026): every question must be answerable using only what the
+  learner has seen earlier in that module, or in an earlier module of the same course. No outside
+  knowledge required, ever.** (So Bits and Binary can't ask about IP addresses: they're taught in
+  module 2.) Enforced by concept tags: every card lists the concepts it `teaches` (an explainer, a
+  reveal, or a prompt that explains the idea itself) and every graded card the concepts it `uses`
+  (kebab-case ids, scoped to the course; only things a beginner wouldn't know without the course,
+  never everyday knowledge). `conceptProblems` (`src/lib/content/concepts.ts`, run by
+  `concepts.test.ts`) walks each course in order and fails when a concept is used before an earlier
+  core card (or the card itself) teaches it, or is never taught; bonus cards may lean on bonus cards,
+  nothing else may. A new or changed card must update its tags. The audit and fixes:
+  `docs/plans/prior-knowledge-audit.md`.
+- **Every option on screen (owner, 2 Oct 2026):** every control in a card (choices, drag items,
+  bins, switches, scene parts, answer boxes) must be visible without scrolling at 360×560 and
+  360×640, so nobody scrolls mid-drag or hunts for an option. `npm run e2e:fit-audit` fails if any
+  is below the fold (page overflow alone, like a long prompt, is still reported).
 - **Glossary (tap to define):** `content/glossary.json` is shared by every course: `{ id, term,
   full?, definition }`. The definition is **one plain sentence** (≤180; `isOneSentence`).
   Abbreviations carry `full` (`needsFullName`, tested): the popup shows "CPU = Central Processing

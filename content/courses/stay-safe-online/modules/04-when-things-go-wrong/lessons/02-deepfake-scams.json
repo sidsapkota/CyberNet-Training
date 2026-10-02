@@ -10,6 +10,10 @@
       "id": "grandma-call",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "voice-clone",
+        "call-back-on-known-number"
+      ],
       "prompt": "A call from an unknown number sounds just like your grandma.",
       "start": "the-call",
       "steps": [
@@ -69,6 +73,9 @@
       "id": "sounds-exactly",
       "type": "true_false",
       "difficulty": "core",
+      "uses": [
+        "voice-clone"
+      ],
       "prompt": "If a voice sounds exactly like someone you know, it must be them.",
       "answer": false,
       "explanation": "False. AI can copy a voice from a few seconds of video. Check by calling the number you already have.",
@@ -79,6 +86,12 @@
       "id": "fake-voices-and-faces",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "voice-clone",
+        "deepfake",
+        "deepfake-red-flags",
+        "call-back-on-known-number"
+      ],
       "title": "Fake voices and faces",
       "body": "AI can copy a voice from real recordings, sometimes just a few seconds of video posted online: a **voice clone**. A faked video or picture is a **deepfake**. You can't always tell by looking or listening.\n\nThe red flags still work: **hurry**, **keep it secret**, **money, gift cards or codes**, and **a new number**.\n\n**What to do:** hang up or stop replying. Contact them on the number **you already have**, or ask a trusted adult."
     },
@@ -86,6 +99,9 @@
       "id": "flag-or-normal",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "deepfake-red-flags"
+      ],
       "prompt": "Red flag, or normal?",
       "bins": [
         {
@@ -127,6 +143,13 @@
       "id": "safe-word-check",
       "type": "multiple_choice",
       "difficulty": "core",
+      "teaches": [
+        "family-safe-word"
+      ],
+      "uses": [
+        "voice-clone",
+        "call-back-on-known-number"
+      ],
       "prompt": "A caller sounds like your brother, can't say your **family safe word** (a secret emergency word) and is rushing you. What now?",
       "options": [
         {
@@ -152,6 +175,12 @@
       "id": "if-someone-fakes-you",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "not-your-fault",
+        "dont-share-private-image",
+        "dont-pay-scammers",
+        "save-evidence"
+      ],
       "title": "If someone fakes you",
       "body": "If someone makes or shares a fake picture or video of you, even a fake nude or sexual image, it's **not your fault**, and you won't be in trouble for asking for help.\n\n**Tell a trusted adult.** **Don't share it**, even to show someone, and **don't pay** or send anything. **Save evidence**: screenshot the messages, account name and web address, never the image itself."
     },
@@ -159,6 +188,11 @@
       "id": "do-or-dont",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "save-evidence",
+        "dont-share-private-image",
+        "trusted-adult"
+      ],
       "prompt": "Do, or don't?",
       "bins": [
         {
@@ -200,6 +234,10 @@
       "id": "where-to-report-a-fake",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "report-to-esafety",
+        "report-to-accce"
+      ],
       "title": "Where to report a fake",
       "body": "**Report** a fake image of you to the app, and to the government's **eSafety Commissioner** (esafety.gov.au/report), which can help get fake nude or sexual images taken down.\n\n**Under 18**, and someone threatens to share it or asks you for sexual images or money? Also report to the **ACCCE** (Australian Centre to Counter Child Exploitation): accce.gov.au/report."
     },
@@ -207,6 +245,11 @@
       "id": "fake-image-report",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "report-to-esafety",
+        "report-to-accce",
+        "not-your-fault"
+      ],
       "prompt": "Jo needs to report a fake picture.",
       "start": "start",
       "steps": [
@@ -242,6 +285,11 @@
       "id": "best-check",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "uses": [
+        "deepfake",
+        "never-share-sign-in-code",
+        "call-back-on-known-number"
+      ],
       "prompt": "Your friend's account video-calls and asks for the code you just got. Face and voice look right. What's **best**?",
       "options": [
         {
@@ -267,6 +315,11 @@
       "id": "coach-video",
       "type": "scenario",
       "difficulty": "challenge",
+      "uses": [
+        "deepfake",
+        "deepfake-red-flags",
+        "trusted-adult"
+      ],
       "prompt": "A video message from an account with your coach's face.",
       "start": "the-message",
       "steps": [
@@ -302,6 +355,13 @@
       "id": "deepfake-recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "call-back-on-known-number",
+        "save-evidence",
+        "family-safe-word",
+        "kids-helpline",
+        "lifeline"
+      ],
       "title": "Recap",
       "body": "- AI can fake voices and faces: hang up, then check on the number you already have.\n- A fake of you is never your fault: tell, save evidence, report.\n- **Try this:** agree a family safe word tonight.\n\nWant to talk? In Australia: **Kids Helpline** 1800 55 1800 (up to 25) or **Lifeline** 13 11 14, any time."
     }

@@ -10,16 +10,27 @@
       "id": "looks-just-like",
       "type": "true_false",
       "difficulty": "core",
-      "prompt": "A link in a text opens a page that looks just like your bank's. If it looks right, it's safe.",
+      "uses": [
+        "fake-sites-copy-looks"
+      ],
+      "prompt": "Scammers can copy any logo. A link in a text opens a page that looks just like your bank's. If it looks right, it's safe.",
       "answer": false,
       "explanation": "False. A fake site can copy every logo and colour. Only the **address** shows who really owns the page.",
       "hint": "What's easy to copy on a web page, and what isn't?",
-      "nudge": "Logos and colours are easy to copy. Something else tells you who owns the page."
+      "nudge": "Logos and colours are easy to copy. Something else tells you who owns the page.",
+      "teaches": [
+        "fake-sites-copy-looks"
+      ]
     },
     {
       "id": "read-the-address",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "fake-sites-copy-looks",
+        "domain-owner",
+        "lookalike-domain"
+      ],
       "title": "Read the address",
       "body": "A fake site can copy a logo, but not the real address. The **owner** is the name just before the **last ending** (like `.example`). Ignore anything after a `/`.\n\n- `login.yourbank.example/help`: Your Bank's.\n- `yourbank.example.login-check.example`: owned by **login-check.example**.\n- `yourbank-secure.example`: a [[lookalike|lookalike-domain]]."
     },
@@ -27,6 +38,10 @@
       "id": "bank-or-not",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "domain-owner",
+        "lookalike-domain"
+      ],
       "prompt": "Really Your Bank's (`yourbank.example`)?",
       "bins": [
         {
@@ -68,6 +83,9 @@
       "id": "meet-padlock",
       "type": "reveal",
       "difficulty": "core",
+      "teaches": [
+        "encryption-padlock"
+      ],
       "show": {
         "kind": "term",
         "term": "encryption"
@@ -78,6 +96,9 @@
       "id": "padlock-means",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "encryption-padlock"
+      ],
       "prompt": "This page has a padlock and wants your PIN. What does the padlock prove?",
       "options": [
         {
@@ -103,6 +124,15 @@
       "id": "spot-the-site",
       "type": "hotspot",
       "difficulty": "core",
+      "teaches": [
+        "companies-never-ask-for-secrets"
+      ],
+      "uses": [
+        "domain-owner",
+        "rushing-is-a-scam-sign",
+        "encryption-padlock",
+        "fake-sites-copy-looks"
+      ],
       "prompt": "Your Bank is `yourbank.example` and **never** asks for your PIN. Tap **every** warning sign.",
       "scene": "fake-website",
       "mode": "tap",
@@ -119,6 +149,14 @@
       "id": "manager-stays-quiet",
       "type": "scenario",
       "difficulty": "core",
+      "teaches": [
+        "manager-fills-only-real-site"
+      ],
+      "uses": [
+        "password-manager",
+        "go-there-yourself",
+        "official-app-check"
+      ],
       "prompt": "Your **password manager** only fills in on the real site.",
       "start": "start",
       "steps": [
@@ -166,6 +204,10 @@
       "id": "typed-it-in",
       "type": "scenario",
       "difficulty": "core",
+      "uses": [
+        "change-stolen-password",
+        "call-back-on-known-number"
+      ],
       "prompt": "Oops. Before you noticed, you typed your bank password and card number into a fake site.",
       "start": "start",
       "steps": [
@@ -213,6 +255,10 @@
       "id": "real-address",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "uses": [
+        "domain-owner",
+        "lookalike-domain"
+      ],
       "prompt": "Which address really belongs to Your Bank (`yourbank.example`)?",
       "options": [
         {
@@ -243,6 +289,10 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "domain-owner",
+        "padlock-not-proof"
+      ],
       "title": "Recap",
       "body": "- The **owner** is the name just before the very last ending.\n- A **padlock only means encrypted**: scam sites can have one.\n- **Try this:** bookmark the real sign-in pages you use."
     }

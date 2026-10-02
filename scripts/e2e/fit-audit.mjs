@@ -46,8 +46,31 @@ try {
         await page.getByText("How to play", { exact: true }).waitFor({ state: "hidden", timeout: 3000 }).catch(() => {});
         await page.waitForTimeout(250);
         const over = await page.evaluate(() => Math.max(0, document.documentElement.scrollHeight - window.innerHeight));
-        const row = { viewport: vp.name, course, lesson: lesson.id, kind: lesson.kind, card: i + 1, id: card.id, type: card.type + (card.mode ? `:${card.mode}` : ""), over };
+        // Every control in the card (choices, drag items, bins, switches, scene parts, answer boxes)
+        // must be on screen between the player's header and footer without scrolling: nobody should
+        // have to scroll mid-drag or hunt for an option. This check fails the run.
+        const hidden = await page.evaluate(() => {
+          const stage = document.querySelector("[data-card-stage]");
+          if (!stage) return [];
+          const top = document.querySelector("header")?.getBoundingClientRect().bottom ?? 0;
+          const bottom = document.querySelector("[data-player-footer]")?.getBoundingClientRect().top ?? window.innerHeight;
+          const controls = [...stage.querySelectorAll("button, input, textarea, select, [role=button], [role=radio], [role=switch], [role=checkbox], [role=option]")]
+            // Inline glossary terms are words in a sentence, not options.
+            .filter((el) => !el.closest("[data-glossary-term]"))
+            .filter((el) => {
+              const r = el.getBoundingClientRect();
+              return r.width > 0 && r.height > 0 && getComputedStyle(el).visibility !== "hidden";
+            });
+          return controls
+            .filter((el) => {
+              const r = el.getBoundingClientRect();
+              return r.bottom > bottom + 1 || r.top < top - 1;
+            })
+            .map((el) => (el.getAttribute("aria-label") || el.textContent || el.tagName).replace(/\s+/g, " ").trim().slice(0, 40));
+        });
+        const row = { viewport: vp.name, course, lesson: lesson.id, kind: lesson.kind, card: i + 1, id: card.id, type: card.type + (card.mode ? `:${card.mode}` : ""), over, hidden };
         report.push(row);
+        if (hidden.length > 0) console.log(`✗✗ ${vp.name} ${lesson.id} #${i + 1} ${card.id} (${row.type}): ${hidden.length} control(s) need scrolling: ${hidden.slice(0, 3).join(" | ")}`);
         if (over > 4) {
           console.log(`✗ ${vp.name} ${lesson.id} #${i + 1} ${card.id} (${row.type}): ${over}px below the fold`);
           if (vp.name === (process.env.SHOT_VP ?? "640")) await page.screenshot({ path: path.join(OUT, `${lesson.id}-${i + 1}.png`), fullPage: true });
@@ -67,4 +90,12 @@ for (const vp of VIEWPORTS) {
   const byType = {};
   for (const r of bad) byType[r.type] = (byType[r.type] ?? 0) + 1;
   console.log("  by type:", JSON.stringify(byType));
+  const hiddenCards = rows.filter((r) => r.hidden.length > 0);
+  console.log(`  ${hiddenCards.length} card(s) need scrolling to reach a control (a choice, drag item, bin, switch, part or answer box)`);
+}
+// A control below the fold fails the run; page overflow alone (a long prompt, say) is reported.
+const failing = report.filter((r) => r.hidden.length > 0).length;
+if (failing > 0) {
+  console.log(`\n✗ ${failing} card view(s) hide a control below the fold. Every option must be visible without scrolling.`);
+  process.exit(1);
 }

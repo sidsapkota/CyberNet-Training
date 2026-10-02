@@ -10,6 +10,13 @@
       "id": "the-shark",
       "type": "scenario",
       "difficulty": "core",
+      "teaches": [
+        "reverse-image-search"
+      ],
+      "uses": [
+        "reverse-image-search",
+        "no-giveaway-proves-nothing"
+      ],
       "prompt": "After a storm, a friend sends a picture of a shark in a flooded street. You can search with a picture itself.",
       "start": "first-look",
       "steps": [
@@ -63,13 +70,26 @@
       "id": "how-to-check-a-picture",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "how-to-check-a-picture",
+        "likes-prove-nothing",
+        "label-your-ai-content",
+        "no-label-proves-nothing"
+      ],
       "title": "How to check a picture",
-      "body": "- **Find where it first appeared**: search with the picture itself.\n- **Look for trusted news** showing it, ideally from other angles.\n- **Check the account**: is it new? Lots of shocking posts?\n- **Check the details**: do the place, weather and date fit?\n\nLikes, sharpness and who sent it prove nothing. If **you** post an AI picture, say it's AI."
+      "body": "- **Find where it first appeared**: search with the picture.\n- **Look for trusted news** showing it, ideally from other angles.\n- **Check the account**: is it new? Lots of shocking posts?\n- **Check the details**: do the place, weather and date fit?\n\nLikes, sharpness, who sent it and a missing AI label prove nothing. If **you** post an AI picture, say it's AI."
     },
     {
       "id": "no-label",
       "type": "multiple_choice",
       "difficulty": "core",
+      "teaches": [
+        "watermark"
+      ],
+      "uses": [
+        "watermark",
+        "no-label-proves-nothing"
+      ],
       "prompt": "A [[watermark]], seen or hidden in the file, can mark AI pictures. This has none, and no AI label. What does that tell you?",
       "options": [
         {
@@ -100,6 +120,12 @@
       "id": "clue-or-myth",
       "type": "sort_bins",
       "difficulty": "core",
+      "uses": [
+        "how-to-check-a-picture",
+        "likes-prove-nothing",
+        "watermark",
+        "no-label-proves-nothing"
+      ],
       "prompt": "Does each one **help** you tell if a picture is real, or is it a **myth**?",
       "bins": [
         {
@@ -156,6 +182,11 @@
       "id": "strongest-sign",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "how-to-check-a-picture",
+        "likes-prove-nothing",
+        "no-label-proves-nothing"
+      ],
       "prompt": "Which is the **strongest** sign that a dramatic picture is real?",
       "options": [
         {
@@ -186,6 +217,9 @@
       "id": "crown-dog",
       "type": "scenario",
       "difficulty": "challenge",
+      "uses": [
+        "label-your-ai-content"
+      ],
       "prompt": "You made a funny AI picture of your dog wearing a crown, sitting on a throne.",
       "start": "posting",
       "steps": [
@@ -221,6 +255,7 @@
       "id": "shared-too-soon",
       "type": "scenario",
       "difficulty": "challenge",
+      "uses": [],
       "prompt": "You shared a picture of snow on a summer beach to your group chat. Now you find out it was made with AI.",
       "start": "found-out",
       "steps": [
@@ -274,6 +309,11 @@
       "id": "who-made-recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "no-label-proves-nothing",
+        "how-to-check-a-picture",
+        "label-your-ai-content"
+      ],
       "title": "Recap",
       "body": "- An AI label is good evidence; no label proves nothing.\n- Check where it first appeared, trusted news, the account, details.\n- Check before sharing, and say when **your** pictures are AI.\n\nNext: the module quiz."
     }

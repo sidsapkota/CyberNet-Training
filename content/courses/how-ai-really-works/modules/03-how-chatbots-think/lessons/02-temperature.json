@@ -10,7 +10,13 @@
       "id": "make-it-predictable",
       "type": "next_word",
       "difficulty": "core",
-      "prompt": "Chatbots have a **temperature** setting. Slide it until **mat** has at least an **80%** chance.",
+      "teaches": [
+        "temperature"
+      ],
+      "uses": [
+        "word-chances"
+      ],
+      "prompt": "Chatbots have a **temperature** setting: slide it until **mat** has at least **80%**.",
       "context": "The cat sat on the",
       "candidates": [
         {
@@ -43,6 +49,9 @@
       "id": "what-temperature-does",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "temperature-effect"
+      ],
       "title": "Turning the dial",
       "body": "**Temperature** changes how the model uses its chances.\n\n- **Low:** the likeliest word gets even likelier. Predictable.\n- **1:** the chances stay as learned.\n- **High:** the chances even out. Surprising, sometimes nonsense.\n\nThe top word always stays on top. When one word has nearly all the chance, even a fairly high temperature usually picks it."
     },
@@ -50,7 +59,10 @@
       "id": "even-it-out",
       "type": "next_word",
       "difficulty": "core",
-      "prompt": "Now make it more surprising: slide until **no word** has more than a **45%** chance.",
+      "uses": [
+        "temperature-effect"
+      ],
+      "prompt": "More surprising now: slide until **no word** is above **45%**.",
       "context": "The cat sat on the",
       "candidates": [
         {
@@ -82,6 +94,10 @@
       "id": "cold-ten-times",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "temperature-effect",
+        "chance-as-frequency"
+      ],
       "prompt": "\"mat\" has 60% at temperature 1. You turn it right **down** and run it **10** times. What happens?",
       "options": [
         {
@@ -112,6 +128,10 @@
       "id": "story-or-sum",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "temperature-effect",
+        "word-chances"
+      ],
       "prompt": "Same temperature: two story ideas come out different, but \"2 + 2\" gives 4 both times. Why?",
       "options": [
         {
@@ -142,6 +162,12 @@
       "id": "low-or-high",
       "type": "sort_bins",
       "difficulty": "core",
+      "teaches": [
+        "temperature-use-cases"
+      ],
+      "uses": [
+        "temperature-use-cases"
+      ],
       "prompt": "**One right answer**? Use a low temperature. Want **variety**? Go higher. Sort each job.",
       "bins": [
         {
@@ -193,25 +219,28 @@
       "id": "cold-but-wrong",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "A model's top pick for Australia's capital is **Sydney** (really Canberra). You turn temperature right down. What happens?",
+      "uses": [
+        "temperature-effect"
+      ],
+      "prompt": "A model's top pick for Australia's capital is **Sydney** (it's Canberra). You turn the temperature right down. What happens?",
       "options": [
         {
           "id": "sydney",
-          "text": "It says \"Sydney\" almost every time, wrong or not"
+          "text": "It says \"Sydney\" nearly every time"
         },
         {
           "id": "canberra",
-          "text": "It switches to \"Canberra\": low means more careful",
+          "text": "It switches to \"Canberra\": low is careful",
           "nudge": "Temperature never changes the order of the words. Which is on top?"
         },
         {
           "id": "more-canberra",
-          "text": "It says \"Canberra\" more: low favours true answers",
+          "text": "It says \"Canberra\" more: low favours truth",
           "nudge": "Low temperature favours the top word, whatever it is. Is it true here?"
         },
         {
           "id": "mix",
-          "text": "It says each city about equally: the chances even out",
+          "text": "It says each city about equally",
           "nudge": "Evening out is what a high temperature does. What does a low one do?"
         }
       ],
@@ -223,6 +252,11 @@
       "id": "temperature-recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "temperature-effect",
+        "temperature-use-cases",
+        "temperature-not-knowledge"
+      ],
       "title": "Recap",
       "body": "- **Temperature** changes how a model picks; the order never changes.\n- Low: predictable, for one right answer. High: variety, then nonsense.\n- It changes how it picks, never what it knows.\n\nNext: why chatbots sometimes make things up."
     }

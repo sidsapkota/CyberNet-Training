@@ -7,12 +7,33 @@
   "icon": "search",
   "cards": [
     {
+      "id": "resolver-trip",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "dns-cache",
+        "resolver",
+        "root-server",
+        "tld-server",
+        "authoritative-server"
+      ],
+      "title": "The resolver's trip",
+      "body": "If the answer isn't in your **cache**, your device asks a **resolver**: a [[server]] that hunts for answers for you. It asks from general to specific:\n\n1. A **root server** points to the `.com` servers.\n2. A **[[TLD]] server** points to example.com's server.\n3. That **authoritative server** holds the real answer."
+    },
+    {
       "id": "fastest-place",
       "type": "multiple_choice",
       "difficulty": "core",
+      "uses": [
+        "dns-lookup",
+        "dns-cache"
+      ],
       "prompt": "You opened `example.com` a minute ago and need its [[IP address]] again. Where's the **fastest** place to find it?",
       "options": [
-        { "id": "own-memory", "text": "In your device's memory of recent answers" },
+        {
+          "id": "own-memory",
+          "text": "In your device's memory of recent answers"
+        },
         {
           "id": "website-server",
           "text": "By asking the server that runs example.com",
@@ -34,24 +55,42 @@
       "hint": "You asked this exact question a minute ago: where might the answer still be?"
     },
     {
-      "id": "resolver-trip",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "The resolver's trip",
-      "body": "If the answer isn't in your **cache**, your device asks a **resolver**: a [[server]] that hunts for answers for you. It asks from general to specific:\n\n1. A **root server** points to the `.com` servers.\n2. A **[[TLD]] server** points to example.com's server.\n3. That **authoritative server** holds the real answer."
-    },
-    {
       "id": "lookup-steps",
       "type": "drag_to_order",
       "difficulty": "core",
+      "uses": [
+        "dns-cache",
+        "resolver",
+        "root-server",
+        "tld-server",
+        "authoritative-server"
+      ],
       "prompt": "Nobody has looked up example.com lately. Put the lookup steps in order.",
       "items": [
-        { "id": "cache", "label": "Your device checks its own cache" },
-        { "id": "ask-resolver", "label": "Your device asks a resolver" },
-        { "id": "root", "label": "Resolver asks a root server about .com" },
-        { "id": "tld", "label": "Resolver asks a .com server where to go" },
-        { "id": "authoritative", "label": "Resolver asks the authoritative server" },
-        { "id": "answer", "label": "Answer comes back; caches keep copies" }
+        {
+          "id": "cache",
+          "label": "Device checks its cache"
+        },
+        {
+          "id": "ask-resolver",
+          "label": "Device asks a resolver"
+        },
+        {
+          "id": "root",
+          "label": "Resolver asks a root server"
+        },
+        {
+          "id": "tld",
+          "label": "Resolver asks a .com server"
+        },
+        {
+          "id": "authoritative",
+          "label": "Resolver asks the authoritative server"
+        },
+        {
+          "id": "answer",
+          "label": "Answer comes back, cached"
+        }
       ],
       "explanation": "Your device checks its **cache** first. Then the resolver goes general to specific: **root**, **TLD**, then the **authoritative** server, which holds the real address; copies are saved for next time.",
       "hint": "Start with the check that never leaves your device, then go from general to specific.",
@@ -61,12 +100,35 @@
       "id": "server-roles",
       "type": "match_pairs",
       "difficulty": "core",
+      "uses": [
+        "resolver",
+        "root-server",
+        "tld-server",
+        "authoritative-server",
+        "dns-cache"
+      ],
       "prompt": "Match each [[DNS]] server to its job.",
       "pairs": [
-        { "id": "resolver", "left": "Resolver", "right": "Asks for you and caches the answers" },
-        { "id": "root", "left": "Root server", "right": "Knows where to find each TLD's servers" },
-        { "id": "tld", "left": "TLD server", "right": "Knows who's in charge of each domain" },
-        { "id": "authoritative", "left": "Authoritative server", "right": "Holds a domain's real records" }
+        {
+          "id": "resolver",
+          "left": "Resolver",
+          "right": "Asks for you and caches the answers"
+        },
+        {
+          "id": "root",
+          "left": "Root server",
+          "right": "Knows where to find each TLD's servers"
+        },
+        {
+          "id": "tld",
+          "left": "TLD server",
+          "right": "Knows who's in charge of each domain"
+        },
+        {
+          "id": "authoritative",
+          "left": "Authoritative server",
+          "right": "Holds a domain's real records"
+        }
       ],
       "explanation": "The **resolver** works for you; **root** points to TLD servers, **TLD** servers point to each domain's authoritative server, and that holds the real answer. Caches only keep *copies*.",
       "hint": "Only one server holds the real records; the others ask for you or point the way.",
@@ -76,6 +138,10 @@
       "id": "ttl-minutes",
       "type": "numeric_input",
       "difficulty": "core",
+      "teaches": [
+        "ttl"
+      ],
+      "uses": [],
       "prompt": "Every [[DNS]] answer has a **TTL** (time to live): how many **seconds** it may stay in a [[cache]] before it's looked up again.\n\nHow many **minutes** is a TTL of **3,600**?",
       "base": "decimal",
       "answer": 60,
@@ -88,12 +154,22 @@
       "id": "read-dig-ttl",
       "type": "terminal",
       "difficulty": "core",
-      "prompt": "`dig` is another [[DNS]] tool. Run `dig example.com` and find the **TTL**: the number just after the name.",
+      "teaches": [
+        "dig"
+      ],
+      "uses": [
+        "ttl"
+      ],
+      "prompt": "`dig` is another [[DNS]] tool. Run `dig example.com`: the **TTL** is the number just after the name.",
       "intro": "Simulated Linux terminal, with dig's output shortened to just the answer. Type help to see the commands you can use here.",
       "commands": [
         {
           "command": "dig example.com",
-          "aliases": ["dig example.com.", "dig example.com a", "dig a example.com"],
+          "aliases": [
+            "dig example.com.",
+            "dig example.com a",
+            "dig a example.com"
+          ],
           "description": "Look up example.com and show the answer",
           "output": ";; ANSWER SECTION:\nexample.com.\t\t1800\tIN\tA\t198.51.100.10"
         }
@@ -101,7 +177,12 @@
       "success": {
         "type": "answer",
         "question": "What is the TTL of this answer, in seconds?",
-        "accepted": ["1800", "1,800", "1800 seconds", "1,800 seconds"]
+        "accepted": [
+          "1800",
+          "1,800",
+          "1800 seconds",
+          "1,800 seconds"
+        ]
       },
       "explanation": "The line reads: the name, the **TTL** (1,800 seconds, or 30 minutes), `IN A` (an internet address answer), then the [[IP address]]. The dot in `example.com.` is how dig writes a full name.",
       "hint": "Under `;; ANSWER SECTION:`, look at the number right after the name.",
@@ -111,11 +192,26 @@
       "id": "when-new-address",
       "type": "multiple_choice",
       "difficulty": "challenge",
+      "uses": [
+        "ttl",
+        "dns-cache"
+      ],
       "prompt": "At **11:50** you look up a site (TTL **3,600**). At **12:00** it moves to a new [[IP address]].\n\nWhen can you be sure you'll use the new one?",
       "options": [
-        { "id": "1250", "text": "By 12:50" },
-        { "id": "1200", "text": "Straight away at 12:00", "nudge": "Nothing tells your cache the site moved: it keeps the old answer until the TTL runs out." },
-        { "id": "1300", "text": "By 13:00", "nudge": "The TTL started at your lookup, not when the site moved." },
+        {
+          "id": "1250",
+          "text": "By 12:50"
+        },
+        {
+          "id": "1200",
+          "text": "Straight away at 12:00",
+          "nudge": "Nothing tells your cache the site moved: it keeps the old answer until the TTL runs out."
+        },
+        {
+          "id": "1300",
+          "text": "By 13:00",
+          "nudge": "The TTL started at your lookup, not when the site moved."
+        },
         {
           "id": "never",
           "text": "Never: the old address is cached forever",
@@ -130,6 +226,14 @@
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
+      "teaches": [
+        "dns-cache",
+        "resolver",
+        "root-server",
+        "tld-server",
+        "authoritative-server",
+        "ttl"
+      ],
       "title": "Recap",
       "body": "- Your device checks its **cache**, then asks a **resolver**.\n- The resolver asks root, TLD, then the **authoritative** server.\n- Answers stay cached for their **TTL**, counted in seconds."
     }

@@ -22,6 +22,7 @@ export function GlossaryTerm({ id, children }: { id: string; children: ReactNode
         <button
           type="button"
           data-keyboard-passthrough
+          data-glossary-term
           className="inline cursor-help rounded-sm text-left font-[inherit] text-inherit underline decoration-accent-ink decoration-dotted decoration-2 underline-offset-4 hover:bg-accent-soft"
         >
           {children}
