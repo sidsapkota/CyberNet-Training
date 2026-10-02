@@ -33,7 +33,9 @@ npm run lint              # eslint . (Next 16 removed `next lint`)
 npm test                  # vitest run
 npm run typecheck         # next typegen && tsc --noEmit
 npm run validate-content  # validate every JSON file under /content
-npm run export:content    # write docs/content-export.md (lesson summaries for videos; no quiz answers)
+npm run export:content    # write WEBSITE-CONTENT-FOR-AI.md: the ONE file the owner gives another AI to
+                          # draft videos (briefing + every lesson; no quiz answers). Run after any content
+                          # change; prebuild runs it too, and a test fails if it's stale. Keep no other copy.
 npm run brand:assets      # regenerate logo SVGs + favicon from src/components/brand/geometry.ts
 npm run brand:mascot      # regenerate public/brand/mascot/<expression>.svg from the Mascot parts
 npm run check:supabase    # verify the Supabase URL + publishable key in .env.local (health check)

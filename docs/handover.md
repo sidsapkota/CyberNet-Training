@@ -44,6 +44,6 @@ Stay Safe Online → How AI Really Works → How the Internet Works → the rest
 - **Live Stripe keys are in Production only.** Never click a plan button on production.
 - **Windows editing:** files are CRLF in the working tree; Node string replaces must normalise line endings (or use the editor tools). PowerShell `Set-Content` mangles UTF-8.
 - **Worktrees:** `C:\cnf` is the rollout worktree (dev server on 3002), `C:\cnp` the old pilot one. `C:\cnwt` holds old uncommitted SSO edits; leave it. Remove `node_modules` junctions with `cmd /c rmdir`, never `Remove-Item -Recurse`.
-- **Content:** never rename a published lesson or card id, and never reuse a removed id. Run `npm run export:content` after any content change (a test checks it). Help numbers use non-breaking spaces. Help information must be in core cards.
+- **Content:** never rename a published lesson or card id, and never reuse a removed id. Run `npm run export:content` after any content change: it rewrites `WEBSITE-CONTENT-FOR-AI.md` (repo root), the one file the owner gives another AI to draft videos (the build regenerates it and a test fails if it's stale; `docs/content-export.md` is gone). Help numbers use non-breaking spaces. Help information must be in core cards.
 - **Server actions run one at a time per page;** e2e scripts must wait for the database write, not a fixed delay.
 - **Deploy status:** `https://api.github.com/repos/sidsapkota/CyberNet-Training/commits/<sha>/statuses`.

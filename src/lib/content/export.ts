@@ -5,8 +5,11 @@ import type { LoadedContent } from "./load";
 import type { Lesson } from "./schema";
 
 /**
- * The content export (`npm run export:content` → `docs/content-export.md`): a plain summary of every
- * course for planning videos and posts. Pure, so it's tested without the file system.
+ * The content export (`npm run export:content` → `WEBSITE-CONTENT-FOR-AI.md` at the repo root): the one
+ * file the owner hands to another AI so it knows what's on the website and can draft videos and
+ * posts. It starts with a briefing (audience, tone, safety rules), then every course. Rebuilt on every
+ * `npm run build`, and a test fails if it falls behind /content. Pure, so it's tested without the file
+ * system.
  *
  * It only reads what learners see before answering: explainer text and card prompts. It never
  * includes quiz cards, correct answers, explanations, hints or nudges.
@@ -84,15 +87,20 @@ export function truncate(text: string, max = MAX_PROMPT): string {
   return `${cut.slice(0, Math.max(cut.lastIndexOf(" "), max / 2)).replace(/[\s,;:.]+$/, "")}…`;
 }
 
-/** The sentences that name an idea in bold: the lesson's key facts, up to two per explainer. */
+/**
+ * The lesson's key facts: the words it teaches ("tap to learn" cards, one sentence each), then the
+ * sentences that name an idea in bold, up to two per explainer.
+ */
 export function keyFacts(lesson: Lesson): { title: string; facts: string[] }[] {
-  return lesson.cards.flatMap((card) => {
+  const words = lesson.cards.flatMap((card) => (card.type === "reveal" ? [plainText(card.sentence)] : []));
+  const explained = lesson.cards.flatMap((card) => {
     if (card.type !== "explainer") return [];
     const facts = sentences(card.body)
       .filter((s) => s.includes("**"))
       .slice(0, KEY_FACTS_PER_EXPLAINER);
     return facts.length ? [{ title: card.title, facts }] : [];
   });
+  return [...(words.length ? [{ title: "Words it teaches", facts: words }] : []), ...explained];
 }
 
 /** Explainer sentences with big numbers or "actually"-style surprises, not already key facts. */
@@ -131,24 +139,56 @@ export function taggedLink(lessonId: string): string {
   return `${new URL(DEFAULT_SITE_URL).host}/from/<platform>/${lessonId}`;
 }
 
+const LEVEL: Record<string, string> = {
+  easy: "Easy: feels like a game, very little reading",
+  medium: "Medium: simple cause and effect, a little prediction",
+  hard: "Hard: how it really works underneath, still beginner-friendly",
+};
+
+/** What the other AI needs to know before it drafts anything. */
+const BRIEFING = [
+  "# CyberNet Training: website content for AI",
+  "",
+  "**Give this whole file to an AI before asking it to draft videos or posts.** It's generated from the",
+  "lessons themselves and rebuilt every time the website is built, so it always matches what's live on",
+  "https://cybernettraining.com. Don't edit it by hand.",
+  "",
+  "## Briefing for the AI",
+  "",
+  "- **What it is:** CyberNet Training, a free-to-start website of short, hands-on lessons on how tech works:",
+  "  staying safe online, what's inside phones and laptops, how AI works, and how the internet works.",
+  "  Lessons are made of interactive cards (sort, drag, tap a picture, take a device apart, train a tiny model).",
+  "- **Audience:** \"For ages 13+. No experience needed.\" Write for a curious 13-year-old and an adult alike:",
+  "  plain words, short sentences, light humour where it fits, never childish. Australian English spelling.",
+  "- **Use only what's in this file.** Don't invent facts, numbers or features. If something isn't here,",
+  "  say so rather than guess. It teaches understanding, never exam or certificate prep.",
+  "- **Tease, don't spoil:** \"Best interactive cards\" are questions learners answer on the site. Pose them",
+  "  as a challenge (\"Can you…?\") and send viewers to the lesson; never give the answer. Quizzes aren't",
+  "  in this file on purpose.",
+  "- **Safety rules:**",
+  "  - Online safety is defence only: how to spot and stop scams, never how to run one. Examples use made-up",
+  "    names (\"Your Bank\", \"Parcels\") and `.example` addresses, never real companies or real scam sites.",
+  "  - Never show or describe opening a real phone or laptop: the lessons are simulations, and a damaged",
+  "    battery can catch fire. Point to a repair shop.",
+  "  - Help lines, word for word: **Kids Helpline 1800 55 1800** (ages 5 to 25) always with **Lifeline 13 11 14**",
+  "    (anyone in Australia, any time); **000** in an emergency. Calm and kind: it's never the viewer's fault.",
+  "  - No real brands, apart from the one AI lesson (\"AI Tools Today\") that names real products.",
+  "- **Honest marketing:** no fake urgency, countdowns or guilt. Pro is a paid subscription with a 7-day free",
+  "  trial; under-18s should ask a parent or guardian before subscribing.",
+  "- **Links:** use each lesson's tagged link and replace `<platform>` with one lower-case word for the",
+  "  platform or video (`tiktok`, `youtube`, `tiktok-ram`), so we can see where visitors came from. Lessons",
+  "  marked \"no account needed\" work straight from a video; other free lessons ask for a free account, and",
+  "  Pro lessons need Pro.",
+  "",
+  "## What's on the website",
+  "",
+];
+
 export function renderContentExport(content: LoadedContent): string {
-  const out: string[] = [
-    "# Content export",
-    "",
-    "Generated by `npm run export:content` from `/content`. Don't edit by hand; run the script again after content changes.",
-    "",
-    "For planning videos and posts. It only uses what learners see before answering (explainers and card prompts):",
-    "**no quiz questions or answers**, and no explanations, hints or nudges.",
-    "",
-    "**Tagged links:** replace `<platform>` with one lower-case word per platform or video (`tiktok`, `youtube`, `tiktok-ram`),",
-    "so Vercel Analytics shows where visitors came from. Visitors without an account can play each course's first lesson",
-    "and the help lessons; other free lessons ask them to make a free account, and Pro lessons to upgrade. Link to lessons marked",
-    "\"no account needed\" where you can.",
-    "",
-  ];
+  const out: string[] = [...BRIEFING];
 
   for (const course of content.courses) {
-    out.push(`## ${course.title}`, "", course.description, "");
+    out.push(`## ${course.title}`, "", course.description, "", `- **Level:** ${LEVEL[course.level] ?? course.level}`, "");
     for (const mod of course.modules) {
       out.push(`### Module ${mod.order}: ${mod.title} (${mod.access === "pro" ? "Pro" : "Free"})`, "", mod.description, "");
       for (const outline of mod.lessons) {
@@ -159,7 +199,17 @@ export function renderContentExport(content: LoadedContent): string {
           out.push(`#### Module quiz (${questions} question${questions === 1 ? "" : "s"})`, "", "Not exported, so the answers stay secret.", "");
           continue;
         }
-        out.push(`#### ${lesson.title}`, "", `- **Access:** ${accessLabel(lesson)}`, `- **Link:** \`${taggedLink(lesson.id)}\``, "");
+        out.push(
+          `#### ${lesson.title}`,
+          "",
+          ...(lesson.kind === "lesson" ? [`- **What you learn:** ${lesson.about}`] : []),
+          `- **Access:** ${accessLabel(lesson)}`,
+          `- **Link:** \`${taggedLink(lesson.id)}\``,
+          ...(lesson.kind === "lesson" && lesson.lastChecked
+            ? [`- **Facts last checked:** ${lesson.lastChecked} (real products change: check again before posting)`]
+            : []),
+          "",
+        );
 
         const facts = keyFacts(lesson);
         if (facts.length) {

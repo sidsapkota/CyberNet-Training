@@ -39,13 +39,28 @@ describe("content export", () => {
     }
   });
 
+  it("starts with a briefing for the AI that drafts videos, with the safety rules and help lines", () => {
+    expect(doc.startsWith("# CyberNet Training: website content for AI")).toBe(true);
+    for (const rule of ["For ages 13+", "Use only what's in this file", "never give the answer", "defence only", "Kids Helpline 1800 55 1800", "Lifeline 13 11 14", "000"]) {
+      expect(doc).toContain(rule);
+    }
+  });
+
+  it("includes each lesson's one-line summary and the words its tap-to-learn cards teach", () => {
+    for (const lesson of content.lessons.values()) {
+      if (lesson.kind !== "lesson") continue;
+      expect(doc).toContain(`- **What you learn:** ${lesson.about}`);
+      for (const card of lesson.cards) if (card.type === "reveal") expect(doc).toContain(plainText(card.sentence));
+    }
+  });
+
   it("contains no keys or env values", () => {
     expect(doc).not.toMatch(/sb_secret_|sb_publishable_|sk_(live|test)_|whsec_|re_[A-Za-z0-9]{8}|SUPABASE_|STRIPE_|CRON_SECRET/);
   });
 
   it("is up to date with /content", async () => {
     const fs = await import("node:fs");
-    expect(fs.readFileSync("docs/content-export.md", "utf8").replace(/\r\n/g, "\n")).toBe(doc);
+    expect(fs.readFileSync("WEBSITE-CONTENT-FOR-AI.md", "utf8").replace(/\r\n/g, "\n")).toBe(doc);
   });
 });
 

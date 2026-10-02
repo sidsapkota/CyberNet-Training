@@ -6,7 +6,7 @@
   "scripts": {
     "predev": "tsx scripts/print-lan-urls.ts",
     "dev": "next dev",
-    "prebuild": "npm run validate-content",
+    "prebuild": "npm run validate-content && npm run export:content",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
