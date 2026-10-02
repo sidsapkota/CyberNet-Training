@@ -229,14 +229,14 @@ Open up a laptop and a phone, and meet the parts that make them work.
 
 **Key facts**
 
-- *Before we open anything:* Everything you open here is a **simulation**, so tap away. **Leave opening real devices to a repair shop.** It can break parts or end the warranty, and a damaged battery can **catch fire**.
+- *Before we open anything:* Everything you open here is a **simulation**, so tap away. Real devices are different: **leave opening them to a repair shop**.
 - *Recap:* Repairers **unplug the battery first**.
 
 **Best interactive cards**
 
-- Explore the picture: Phones, laptops and games consoles look different outside, but inside they share the **same few parts**. Here's a laptop with its bottom panel off. **Tap each part** to find out what it does.
-- Take it apart: Now open a laptop yourself. Take out the **four screws**, lift off the **bottom panel**, then **unplug the battery** before touching anything else. (Real laptops often have more screws, and clips too.)
-- Take it apart: Now a phone. Phones are **glued shut**. Open this one in four steps: **soften the glue**, lift off the back, lift off the **bracket** over the battery connector (its two tiny screws are already out), then **unplug the…
+- Take it apart: Open it: **screws**, then the **panel**, then **unplug the battery**.
+- Tap the picture: Put each job on its part.
+- Take it apart: This phone is **glued shut**. Open it and **unplug the battery**.
 
 #### Memory vs Storage
 
@@ -245,14 +245,13 @@ Open up a laptop and a phone, and meet the parts that make them work.
 
 **Key facts**
 
-- *The desk and the cupboard:* That's because a device has two kinds of space, both measured in gigabytes (**GB**). **RAM** is the desk: fast but small.
 - *Recap:* **RAM** is the fast desk for what's open. **Storage** keeps apps and files until you delete them.
 
 **Best interactive cards**
 
-- Simulator: This phone has **4 GB of RAM**. When the open apps need more than that, it starts to lag. Play the **racing game** with your **music** still on, and get it running **smoothly**. (The phone's own system always needs…
-- Choose what happens: You're about to take a photo of a rainbow, and a message pops up.
-- Simulator: You're choosing a new laptop for video editing. More RAM costs more money. Pick the **smallest** amount of RAM that runs everything **smoothly**.
+- Simulator: Run the **racing game** and the **music** on this 4 GB phone, with no lag.
+- Choose what happens: You're about to photograph a rainbow, and a message pops up.
+- Choose what happens: Your phone has **40 GB of free storage**, but something's wrong.
 
 #### Meet the CPU
 
@@ -261,16 +260,16 @@ Open up a laptop and a phone, and meet the parts that make them work.
 
 **Key facts**
 
-- *More cooks in the kitchen:* More cores only help when a job **splits into pieces that don't wait for each other**.
-- *Recap:* **GHz** is speed: 2 GHz is about 2 billion steps a second. **Cores** only help with jobs that split into pieces.
+- *More cooks in the kitchen:* Cores are the same: they only help when a job **splits into pieces** that don't wait for each other.
+- *Recap:* **GHz** is clock speed: more GHz, more steps a second. **Cores** only help with jobs that split into pieces.
 
 **Best interactive cards**
 
-- Simulator: Most CPUs have several **cores**: separate workers that each follow their own steps. Saving your finished video takes too long. Add cores until it finishes in **3 seconds or less**.
-- Tap the picture: Hard work makes the CPU hot. A CPU that gets too hot **slows itself down** to stay safe: that's called **throttling**. Tap the **CPU** and the **two parts** that carry its heat away.
-- Simulator: This laptop is on a blanket, its fan is clogged with dust, and it's working as hard as it can, so it's slowing down. Get it back to its full **3 GHz** without lowering the **load** (how hard it's working).
+- Simulator: Saving this video takes 12 seconds. Add cores to get it to **3 seconds or less**.
+- Tap the picture: Tap the **CPU** and the **two parts** that cool it.
+- Simulator: This laptop is throttling on a blanket, with a dusty fan. Get it back to **3 GHz**.
 
-#### Module quiz (7 questions)
+#### Module quiz (8 questions)
 
 Not exported, so the answers stay secret.
 
@@ -390,9 +389,9 @@ What counts as AI, how it learns from examples, and where it goes wrong.
 
 **Best interactive cards**
 
-- Train a model: Label each fruit as an apple or a banana. The computer then guesses new fruits from the **closest** example.
-- Train a model: Choose which examples to train on, so the model gets **every** test fruit right.
-- Train a model: This model goes with the most common label of the **3 nearest** examples. Label the fruit, then Check.
+- Train a model: Teach the computer (the **model**): tap **Apple** or **Banana** for each fruit.
+- Train a model: Fix the model's mistake.
+- Train a model: It copies its **3 closest** examples. Label the fruit.
 
 #### What AI Can't Do
 
@@ -434,9 +433,9 @@ Training data, fair tests, and how bias sneaks in.
 
 **Best interactive cards**
 
-- Train a model: Label each message **spam** or **not spam**, then Check to train the model and test it.
-- Train a model: Choose which examples to train on, so the model gets **both** test messages right.
-- Train a model: One fruit has the wrong label. Choose examples so this nearest-example model gets **both** tests right.
+- Train a model: Teach the spam filter: tap **Spam** or **Not spam** for each message.
+- Train a model: Fix the spam filter's mistake.
+- Train a model: One example has the wrong label.
 
 #### Testing a Model
 
@@ -451,8 +450,8 @@ Training data, fair tests, and how bias sneaks in.
 **Best interactive cards**
 
 - Sort into groups: Is each one a **fair** test of how the model will really do, or an **unfair** one?
-- Train a model: Label each training day from what really happened, then see how the model does on **4 new test days**.
-- Train a model: Add training days so the model gets **all 4** test days right.
+- Train a model: Teach the model: label each day by what really happened.
+- Train a model: Fix the model's mistake.
 
 **Surprising facts**
 
@@ -470,7 +469,7 @@ Training data, fair tests, and how bias sneaks in.
 
 **Best interactive cards**
 
-- Train a model: This kind-or-mean checker calls **"That game was sick!"** mean. Choose examples so it gets **all 3** tests right.
+- Train a model: Fix the checker's mistake.
 - Choose what happens: A sports club wants to sort new sign-ups with a model.
 - Choose what happens: A company is choosing a voice assistant to answer its phone line.
 

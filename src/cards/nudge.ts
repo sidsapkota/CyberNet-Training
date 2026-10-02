@@ -5,7 +5,7 @@ import type { InteractiveCard } from "./schema";
  * the card's. Undefined means the player falls back to a generic "have another go". Pure.
  */
 export function nudgeFor(card: InteractiveCard, answer: unknown): string | undefined {
-  if (card.type === "multiple_choice") {
+  if (card.type === "multiple_choice" || card.type === "fill_gap") {
     const picked = card.options.find((o) => o.id === answer);
     if (picked?.nudge) return picked.nudge;
   }

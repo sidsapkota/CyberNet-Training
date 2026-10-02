@@ -200,7 +200,7 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
 | `simulator` | `model`, `params`, `controls[]` (toggle/slider/button), `outputs[]` (meter/bar/timer/device/list), `goal.all[]` | `{controlId: value}` | every goal condition holds |
 | `scenario` | `start`, `steps[] {id, text, choices[] {id, text, consequence, next \| outcome}}` | choice ids in order | the last choice's outcome is `success` |
 | `sort_bins` | `bins[]` (2–3), `items[] {id, label, bin}` (4–10) | `{itemId: binId}` | every item in its bin |
-| `train_model` | `model` (`nearest` + `k` 1/3 + `x`/`y` axes, or `word-vote`), `labels[]` (2–3), `examples[] {id, text, x?, y?, label, given?}` (4–12), `tests[] {id, text, x?, y?, truth}` (1–4), `task` (`label`, or `include` + `start[]`) | `{labels: {exampleId: labelId}, included: exampleId[]}` | label: every example labelled right; include: the model gets every test right |
+| `train_model` | `model` (`nearest` + `k` 1/3 + `scene`: `fruit`/`ball`/`weather`/`daynight`, or `word-vote`), `labels[]` (2–3), `examples[] {id, text, x?, y?, label, given?}` (3–12; at most 4 not `given`), `tests[] {id, text, x?, y?, truth}` (1–3), `task` (`label`, or `fix` + `action` `add`/`remove`) | `{labels: {exampleId: labelId}, included: [exampleId?]}` | label: every example labelled right; fix: the one change makes the model get every test right |
 | `next_word` | `context`, `candidates[] {word, p}` (3–6, sum 1), `temperature {min, max, start, step}`, `goal` (`pick` + `word`, or `probability` + `word?`, `atLeast?`, `atMost?`) | `{temperature, pick}` | pick: the likeliest word; probability: the goal holds at that temperature |
 
 - **`multiple_choice`:** options are shown in a stable shuffle per card (`displayOptions`), so the
@@ -343,19 +343,28 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
 - **`sort_bins`:** tap an item then a bin, or drag (dnd-kit). Snap sound; wrong items go back to the
   tray after Try again.
 - **`train_model`** (AI course): learners teach a tiny model and see it make mistakes. The models
-  (`src/cards/train-model/model.ts`) are pure and deterministic: `nearest` (points on a 0–10 chart;
-  the nearest example's label, or the majority of the 3 nearest) and `word-vote` (each word of 3+
-  letters votes for the labels it was seen with; a tie is "Not sure"). No ML libraries, no
-  randomness, nothing run from content.
-  - **`label` goal:** label every example that isn't `given`; graded on the labels only. After
-    Check the model trains on them and shows its guesses. The schema requires that, trained on the
-    true labels, it gets at least one test **wrong** (the lesson) and one right.
-  - **`include` goal:** tick which examples to train on; the model's guesses update live, but
-    whether each is right (and the truth) shows only after Check; correct when **every**
-    test is guessed right (one target alone could be "solved" by training on a single example).
-    The schema checks it starts unsolved and that some choice works (every subset is tried).
-  - The chart is display only; learners act on the 44px rows under it. Labels have a shape each
-    (circle, square, triangle), never colour alone. Try again clears only wrong labels.
+  (`src/cards/train-model/model.ts`) are pure and deterministic: `nearest` (items have a place, x
+  and y from 0 to 10; the nearest example's label, or the majority of the 3 nearest) and
+  `word-vote` (each word of 3+ letters votes for the labels it was seen with; a tie is "Not sure").
+  No ML libraries, no randomness, nothing run from content.
+  - **Real pictures, never a chart** (zero-confusion rule): `pictures.tsx` draws each item from
+    its name and data: fruit (apple, banana or lemon from the name; colour red → yellow from y,
+    size words), balls (tennis or basketball from the name; size from x), weather (cloud and damp
+    air from x and y) and day/night scenes (brightness, sky or indoors). Word-vote items are chat
+    bubbles. Colours are the fixed `--color-pic-*` tokens on navy tiles. `given` examples show as
+    small pictures in "It learned from", grouped by label; each label has a shape (circle, square,
+    triangle) as well as its word, never colour alone.
+  - **`fix` goal** (problem first, one action): the top box shows the test the model gets wrong
+    and "Model's guess: Banana ✗", with the other tests under "Also:". The learner makes ONE
+    change from 2–4 tiles, nothing pre-selected: `add` one example, or `remove` one (e.g. the
+    mislabelled one; its label shows as a sticker on the picture). The guess flips at once as they
+    tap (`GuessChip`, a short flip; still under reduced motion); right/wrong shows after Check.
+    The schema checks the model starts wrong, some single change fixes every test, and not every
+    choice does (a real choice). Try again takes the pick off.
+  - **`label` goal:** at most 4 items to label (2×2 picture tiles, label buttons on each; full-width
+    rows with shape buttons for 3 labels). After Check the model trains on them and its guesses
+    show first, under the prompt. The schema requires that, trained on the true labels, it gets at
+    least one test **wrong** (the lesson) and one right. Try again clears only wrong labels.
 - **`next_word`** (AI course): pre-written chances for the next word, reshaped by temperature
   (`p^(1/T)`, rescaled; the same as dividing scores by T before softmax; the order of the words
   never changes). Nothing is generated live.

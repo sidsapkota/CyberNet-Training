@@ -170,20 +170,11 @@
       "id": "weather-model",
       "type": "train_model",
       "difficulty": "core",
-      "prompt": "Label each training day from what really happened, then see how the model does on **4 new test days**.",
+      "prompt": "Teach the model: label each day by what really happened.",
       "model": {
         "kind": "nearest",
         "k": 1,
-        "x": {
-          "label": "Cloud",
-          "low": "Clear",
-          "high": "Cloudy"
-        },
-        "y": {
-          "label": "Air",
-          "low": "Dry",
-          "high": "Damp"
-        }
+        "scene": "weather"
       },
       "labels": [
         {
@@ -192,7 +183,7 @@
         },
         {
           "id": "dry",
-          "text": "No rain"
+          "text": "Dry"
         }
       ],
       "examples": [
@@ -205,28 +196,12 @@
           "given": true
         },
         {
-          "id": "w2",
-          "text": "Grey, drizzly afternoon: it rained",
-          "x": 8,
-          "y": 8.5,
-          "label": "rain",
-          "given": false
-        },
-        {
           "id": "w3",
           "text": "Thick cloud, wet air: it rained",
           "x": 9.5,
           "y": 7.5,
           "label": "rain",
-          "given": false
-        },
-        {
-          "id": "w4",
-          "text": "Heavy cloud, damp evening: it rained",
-          "x": 7.5,
-          "y": 9,
-          "label": "rain",
-          "given": false
+          "given": true
         },
         {
           "id": "d1",
@@ -237,24 +212,40 @@
           "given": true
         },
         {
+          "id": "d3",
+          "text": "A few clouds, dry air: no rain",
+          "x": 3,
+          "y": 1.5,
+          "label": "dry",
+          "given": true
+        },
+        {
+          "id": "w2",
+          "text": "Drizzly afternoon: rained",
+          "x": 8,
+          "y": 8.5,
+          "label": "rain",
+          "given": false
+        },
+        {
+          "id": "w4",
+          "text": "Cloudy, damp evening: rained",
+          "x": 7.5,
+          "y": 9,
+          "label": "rain",
+          "given": false
+        },
+        {
           "id": "d2",
-          "text": "Sunny, crisp afternoon: no rain",
+          "text": "Sunny afternoon: stayed dry",
           "x": 2,
           "y": 2.5,
           "label": "dry",
           "given": false
         },
         {
-          "id": "d3",
-          "text": "A few clouds, dry air: no rain",
-          "x": 3,
-          "y": 1.5,
-          "label": "dry",
-          "given": false
-        },
-        {
           "id": "d4",
-          "text": "Blue sky, slightly damp air: no rain",
+          "text": "Blue sky, damp air: stayed dry",
           "x": 1.5,
           "y": 3.5,
           "label": "dry",
@@ -282,13 +273,6 @@
           "x": 8.5,
           "y": 3.5,
           "truth": "dry"
-        },
-        {
-          "id": "t4",
-          "text": "Some cloud, quite damp",
-          "x": 6,
-          "y": 7,
-          "truth": "rain"
         }
       ],
       "task": {
@@ -296,26 +280,17 @@
       },
       "hint": "Each training day says what really happened: use that, not your own guess.",
       "nudge": "Read the end of each training day again: it says whether it rained.",
-      "explanation": "Your labels were right. It got **3 of 4** test days right, but called the **cloudy but dry day** rain: every cloudy day it learned from was rainy."
+      "explanation": "Your labels were right. It got **2 of 3** new days right, but called the **cloudy but dry day** rain: every cloudy day it learned from was rainy."
     },
     {
       "id": "cloudy-dry",
       "type": "train_model",
       "difficulty": "challenge",
-      "prompt": "Add training days so the model gets **all 4** test days right.",
+      "prompt": "Fix the [[model]]'s mistake.",
       "model": {
         "kind": "nearest",
         "k": 1,
-        "x": {
-          "label": "Cloud",
-          "low": "Clear",
-          "high": "Cloudy"
-        },
-        "y": {
-          "label": "Air",
-          "low": "Dry",
-          "high": "Damp"
-        }
+        "scene": "weather"
       },
       "labels": [
         {
@@ -324,7 +299,7 @@
         },
         {
           "id": "dry",
-          "text": "No rain"
+          "text": "Dry"
         }
       ],
       "examples": [
@@ -333,94 +308,91 @@
           "text": "Stormy, damp morning: it rained",
           "x": 9,
           "y": 9,
-          "label": "rain"
+          "label": "rain",
+          "given": true
         },
         {
           "id": "w2",
           "text": "Grey, drizzly afternoon: it rained",
           "x": 8,
           "y": 8.5,
-          "label": "rain"
+          "label": "rain",
+          "given": true
         },
         {
           "id": "w3",
           "text": "Thick cloud, wet air: it rained",
           "x": 9.5,
           "y": 7.5,
-          "label": "rain"
+          "label": "rain",
+          "given": true
         },
         {
           "id": "w4",
           "text": "Heavy cloud, damp evening: it rained",
           "x": 7.5,
           "y": 9,
-          "label": "rain"
+          "label": "rain",
+          "given": true
         },
         {
           "id": "d1",
           "text": "Clear, dry morning: no rain",
           "x": 1,
           "y": 1,
-          "label": "dry"
+          "label": "dry",
+          "given": true
         },
         {
           "id": "d2",
           "text": "Sunny, crisp afternoon: no rain",
           "x": 2,
           "y": 2.5,
-          "label": "dry"
+          "label": "dry",
+          "given": true
         },
         {
           "id": "d3",
           "text": "A few clouds, dry air: no rain",
           "x": 3,
           "y": 1.5,
-          "label": "dry"
+          "label": "dry",
+          "given": true
         },
         {
           "id": "d4",
           "text": "Blue sky, slightly damp air: no rain",
           "x": 1.5,
           "y": 3.5,
-          "label": "dry"
+          "label": "dry",
+          "given": true
         },
         {
           "id": "x1",
-          "text": "Overcast, dry evening: no rain",
+          "text": "Overcast, dry evening",
           "x": 8.5,
           "y": 2,
-          "label": "dry"
+          "label": "dry",
+          "given": false
         },
         {
           "id": "x2",
-          "text": "Sunny, dry noon: no rain",
+          "text": "Sunny, dry noon",
           "x": 1,
           "y": 0.5,
-          "label": "dry"
+          "label": "dry",
+          "given": false
         },
         {
           "id": "x3",
-          "text": "Cloudy, damp night: no rain",
+          "text": "Cloudy, damp night",
           "x": 6.5,
           "y": 8.5,
-          "label": "dry"
+          "label": "dry",
+          "given": false
         }
       ],
       "tests": [
-        {
-          "id": "t1",
-          "text": "Dark clouds, damp air",
-          "x": 8.5,
-          "y": 8,
-          "truth": "rain"
-        },
-        {
-          "id": "t2",
-          "text": "Bright, dry day",
-          "x": 2,
-          "y": 2,
-          "truth": "dry"
-        },
         {
           "id": "t3",
           "text": "Cloudy but dry day",
@@ -437,20 +409,11 @@
         }
       ],
       "task": {
-        "goal": "include",
-        "start": [
-          "w1",
-          "w2",
-          "w3",
-          "w4",
-          "d1",
-          "d2",
-          "d3",
-          "d4"
-        ]
+        "goal": "fix",
+        "action": "add"
       },
-      "hint": "Which test day did it get wrong? Look for a new training day that's like it.",
-      "nudge": "Find a new day like the test it gets wrong, and check the others still pass.",
+      "hint": "Which new day is like the day it gets wrong?",
+      "nudge": "Find a day like the problem day, and check the others still pass.",
       "explanation": "It had never seen a **cloudy but dry** day, so \"Overcast, dry evening\" fills that gap. The cloudy, damp night sits next to a rainy test day, so it breaks that one."
     },
     {

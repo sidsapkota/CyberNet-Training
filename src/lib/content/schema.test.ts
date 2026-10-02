@@ -107,6 +107,7 @@ describe("toLessonOutline", () => {
       cardCount: 2,
       coreCardIds: ["intro"],
       photoCount: 0,
+      coreSeconds: expect.any(Number),
       icon: "binary",
     });
   });

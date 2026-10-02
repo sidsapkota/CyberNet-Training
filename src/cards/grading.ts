@@ -18,6 +18,8 @@ import { gradeTeardown } from "./teardown/grade";
 import { gradeTerminal } from "./terminal/grade";
 import { gradeNextWord } from "./next-word/grade";
 import { gradeTrainModel } from "./train-model/grade";
+import { gradeTrueFalse } from "./true-false/grade";
+import { gradeFillGap } from "./fill-gap/grade";
 import type { GradeResult } from "./types";
 
 type Graders = {
@@ -39,6 +41,8 @@ const GRADERS = {
   sort_bins: gradeSortBins,
   train_model: gradeTrainModel,
   next_word: gradeNextWord,
+  true_false: gradeTrueFalse,
+  fill_gap: gradeFillGap,
 } satisfies Graders;
 
 /**

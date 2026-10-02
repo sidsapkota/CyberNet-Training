@@ -298,18 +298,34 @@ function SortDemo() {
   );
 }
 
+/** train_model: the problem fruit with the model's guess (a banana shape); tapping the golden apple flips it to an apple. */
 function TrainDemo() {
   const kf = useKf();
+  const red = "var(--color-pic-red)";
+  const yellow = "var(--color-pic-yellow)";
+  const apple = (x: number, y: number, fill: string) => (
+    <g>
+      <circle cx={x} cy={y} r={9} fill={fill} />
+      <path d={`M${x} ${y - 9}v-4`} stroke="var(--color-pic-stem)" strokeWidth={2} strokeLinecap="round" />
+    </g>
+  );
   return (
     <>
-      <circle cx={40} cy={30} r={7} fill={C.ink} />
-      <circle cx={60} cy={44} r={7} fill={C.ink} />
-      <rect x={154} y={56} width={14} height={14} rx={2} fill={C.ink} />
-      <rect x={176} y={40} width={14} height={14} rx={2} fill={C.ink} />
-      <motion.circle cx={84} cy={30} r={7} stroke={C.ink} strokeWidth={2} strokeDasharray="3 2" {...kf({ fill: ["none", "none", C.ink, C.ink] }, [0, 0.35, 0.4, 1])} />
-      <path d="M120 72 l10 -10 10 10 -10 10Z" fill={C.box} stroke={C.edge} strokeWidth={1.5} />
-      <motion.circle cx={130} cy={72} r={4} fill={C.ink} {...kf({ opacity: [0, 0, 1, 1] }, [0, 0.7, 0.75, 1])} />
-      <Finger points={[{ x: 84, y: 30, t: 0.35 }]} taps={[0.35]} />
+      {/* The problem: a yellow apple the model calls a banana. */}
+      <rect x={20} y={8} width={130} height={36} rx={6} fill={C.box} stroke={C.edge} strokeWidth={1.5} />
+      <rect x={28} y={13} width={26} height={26} rx={4} fill="var(--color-screen)" />
+      {apple(41, 28, `color-mix(in oklab, ${yellow} 80%, ${red})`)}
+      <motion.path d="M70 20q4 12 16 12" stroke={yellow} strokeWidth={5} strokeLinecap="round" fill="none" {...kf({ opacity: [1, 1, 0, 0] }, [0, 0.5, 0.56, 1])} />
+      <motion.circle cx={78} cy={26} r={7} fill={C.ok} {...kf({ opacity: [0, 0, 1, 1], scale: [0.4, 0.4, 1, 1] }, [0, 0.5, 0.6, 1])} />
+      {/* Three examples to add; the golden apple fixes it. */}
+      {[0, 1, 2].map((i) => (
+        <rect key={i} x={36 + i * 58} y={56} width={46} height={36} rx={6} fill={C.box} stroke={C.edge} strokeWidth={1.5} />
+      ))}
+      <motion.rect x={36} y={56} width={46} height={36} rx={6} fill="none" stroke={C.ring} strokeWidth={2.5} {...kf({ opacity: [0, 0, 1, 1] }, [0, 0.42, 0.46, 1])} />
+      {apple(59, 76, yellow)}
+      {apple(117, 76, red)}
+      <path d="M163 68q4 14 18 14" stroke={yellow} strokeWidth={5} strokeLinecap="round" fill="none" />
+      <Finger points={[{ x: 59, y: 76, t: 0.42 }]} taps={[0.42]} />
     </>
   );
 }

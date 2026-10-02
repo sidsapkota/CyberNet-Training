@@ -47,6 +47,9 @@ const TYPE_LABEL: Record<CardType, string> = {
   sort_bins: "Sort into groups",
   train_model: "Train a model",
   next_word: "Next word",
+  reveal: "Tap to learn",
+  true_false: "True or false",
+  fill_gap: "Fill the gap",
 };
 
 const PICKS_PER_LESSON = 3;

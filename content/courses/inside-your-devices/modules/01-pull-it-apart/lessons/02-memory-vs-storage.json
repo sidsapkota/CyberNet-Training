@@ -7,57 +7,68 @@
   "icon": "memory-stick",
   "cards": [
     {
+      "id": "meet-ram-the-desk",
+      "type": "reveal",
+      "difficulty": "core",
+      "prompt": "Tap the word.",
+      "show": { "kind": "term", "term": "ram" },
+      "sentence": "**RAM** is like a desk: fast, but wiped clean when the power goes off."
+    },
+    {
+      "id": "meet-storage-the-cupboard",
+      "type": "reveal",
+      "difficulty": "core",
+      "prompt": "Tap the word.",
+      "show": { "kind": "term", "term": "storage" },
+      "sentence": "**Storage** is like a cupboard: it keeps your apps, photos and saved files, even with the power off."
+    },
+    {
       "id": "still-there-after-off",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Your laptop's battery dies without warning. When you charge it and switch it back on, what's **still there**? Think about what was **saved** and what was only **open**.",
+      "prompt": "Power cut! What's **still there**?",
       "bins": [{ "id": "still", "label": "Still there" }, { "id": "gone", "label": "Gone" }],
       "items": [
-        { "id": "saved-photo", "label": "A photo you saved last week", "bin": "still" },
-        { "id": "installed-app", "label": "An app you installed", "bin": "still" },
-        { "id": "downloaded-song", "label": "A song you downloaded", "bin": "still" },
-        { "id": "unsaved-essay", "label": "An essay you hadn't saved yet", "bin": "gone" },
-        { "id": "unsaved-level", "label": "A half-played game level, not saved", "bin": "gone" },
-        { "id": "unsaved-drawing", "label": "A drawing you'd started but hadn't saved", "bin": "gone" }
+        { "id": "saved-photo", "label": "Saved photo", "bin": "still" },
+        { "id": "installed-app", "label": "Installed app", "bin": "still" },
+        { "id": "unsaved-essay", "label": "Unsaved essay", "bin": "gone" },
+        { "id": "unsaved-level", "label": "Unsaved game", "bin": "gone" }
       ],
       "explanation": "Saved and installed things live in **storage**, which keeps them with the power off. Anything that was only open lived in **RAM**, which is wiped when the power goes. (That's why many apps save your work for you every few minutes.)",
       "hint": "For each one, ask: was it saved or installed, or was it only open on the screen?",
       "nudge": "Saving is what keeps things safe. Anything that was only open, and never saved, doesn't survive the power going off."
     },
     {
-      "id": "desk-and-cupboard",
-      "type": "explainer",
+      "id": "meet-gigabytes",
+      "type": "reveal",
       "difficulty": "core",
-      "title": "The desk and the cupboard",
-      "body": "That's because a device has two kinds of space, both measured in gigabytes (**GB**).\n\n**RAM** is the desk: fast but small. It holds whatever is open right now, and it's **cleared when the power goes off**.\n\n**Storage** is the cupboard: bigger and slower. It keeps apps, photos and saved files until you delete them."
+      "prompt": "Tap the word.",
+      "show": { "kind": "term", "term": "gigabyte" },
+      "sentence": "Both are measured in **gigabytes (GB)**, and storage usually has many times more than RAM."
     },
     {
       "id": "fill-the-ram",
       "type": "simulator",
       "difficulty": "core",
-      "prompt": "This phone has **4 [[GB|gigabyte]] of RAM**. When the open apps need more than that, it starts to lag. Play the **racing game** with your **music** still on, and get it running **smoothly**. (The phone's own system always needs some RAM too.)",
+      "prompt": "Run the **racing game** and the **music** on this 4 GB phone, with no lag.",
       "model": "memory",
       "params": {
         "ramGb": 4,
         "systemGb": 1.5,
         "apps": [
           { "id": "music", "label": "Music", "gb": 0.3 },
-          { "id": "browser", "label": "Web browser", "gb": 0.8 },
           { "id": "video-call", "label": "Video call", "gb": 1.2 },
           { "id": "game", "label": "Racing game", "gb": 2 }
         ]
       },
       "controls": [
         { "id": "music", "kind": "toggle", "label": "Music", "initial": true },
-        { "id": "browser", "kind": "toggle", "label": "Web browser", "initial": true },
         { "id": "video-call", "kind": "toggle", "label": "Video call", "initial": true },
         { "id": "game", "kind": "toggle", "label": "Racing game" }
       ],
       "outputs": [
         { "id": "smooth", "kind": "device", "label": "Phone", "frame": "phone" },
-        { "id": "used", "kind": "meter", "label": "RAM in use (of 4 GB)", "unit": "GB" },
-        { "id": "usedPct", "kind": "bar", "label": "RAM used" },
-        { "id": "apps", "kind": "list", "label": "What's in RAM" }
+        { "id": "usedPct", "kind": "bar", "label": "RAM used (of 4 GB)" }
       ],
       "goal": {
         "all": [
@@ -66,9 +77,19 @@
           { "target": "output", "id": "smooth", "op": ">=", "value": 0.9 }
         ]
       },
-      "explanation": "Every open app needs room in **RAM**. With the game added, the apps needed 5.8 GB, more than the phone's 4 GB, so it lagged. Closing the [[browser]] and the video call made room for the game and the music. (A laptop with full RAM slows down instead, as it shuffles things out to storage.)",
-      "hint": "Every open app takes room in RAM. The game and the music must stay on, so which apps don't you need?",
-      "nudge": "If it still lags, the open apps need more room than the phone's 4 GB of RAM. Keep the game and music on, and close what you don't need."
+      "explanation": "Every open app needs room in **RAM**, and the phone's own system needs some too. With the game on, everything needed 5 GB, more than the phone's 4 GB, so it lagged. Closing the video call made room. (A laptop with full RAM slows down instead, as it shuffles things out to storage.)",
+      "hint": "Every open app takes room in RAM. The game and the music must stay on, so which app don't you need?",
+      "nudge": "Still lagging? The open apps need more than 4 GB. Keep the game and music on, and close the other one."
+    },
+    {
+      "id": "apps-need-ram",
+      "type": "true_false",
+      "difficulty": "core",
+      "prompt": "Every app you open takes up some room in RAM.",
+      "answer": true,
+      "explanation": "**True.** Each open app needs space on the desk. Open too many, and RAM fills up and the device lags.",
+      "hint": "Think about what happened to the RAM bar when you turned the game on.",
+      "nudge": "Look back at the phone: what happened to the RAM bar each time an app went on?"
     },
     {
       "id": "real-ram",
@@ -81,7 +102,7 @@
         "width": 3594,
         "height": 1779
       },
-      "caption": "A laptop RAM stick (8 GB). The gold contacts along the bottom plug into a slot. In phones and many thin laptops, the RAM chips are soldered straight onto the board instead.",
+      "caption": "A laptop RAM stick (8 GB). Phones and many thin laptops solder their RAM on instead.",
       "credit": {
         "author": "D-Kuru",
         "licence": "CC BY-SA 4.0",
@@ -91,28 +112,10 @@
       }
     },
     {
-      "id": "what-fits",
-      "type": "sort_bins",
-      "difficulty": "core",
-      "prompt": "Downloads are saved in **[[storage]]**. Your laptop has **20 [[GB|gigabyte]] free**. Sort each download: does it fit on its own?",
-      "bins": [{ "id": "fits", "label": "Fits" }, { "id": "too-big", "label": "Won't fit" }],
-      "items": [
-        { "id": "film", "label": "A film (4 GB)", "bin": "fits" },
-        { "id": "album", "label": "A music album (0.2 GB)", "bin": "fits" },
-        { "id": "puzzle-game", "label": "A puzzle game (15 GB)", "bin": "fits" },
-        { "id": "space-game", "label": "A space game (21 GB)", "bin": "too-big" },
-        { "id": "tv-series", "label": "A whole TV series (25 GB)", "bin": "too-big" },
-        { "id": "racing-game", "label": "A huge racing game (60 GB)", "bin": "too-big" }
-      ],
-      "explanation": "Anything up to 20 GB fits. The 21 GB game misses by just 1 GB, and the series and the racing game are far too big. [[RAM]] makes no difference: a download needs free storage.",
-      "hint": "Compare each size with the 20 GB you have free.",
-      "nudge": "Only free storage counts here. Anything bigger than 20 GB won't fit, even if it's only a little bigger."
-    },
-    {
       "id": "storage-full",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "You're about to take a photo of a rainbow, and a message pops up.",
+      "prompt": "You're about to photograph a rainbow, and a message pops up.",
       "start": "message",
       "steps": [
         {
@@ -128,7 +131,7 @@
             {
               "id": "ram",
               "text": "RAM space",
-              "consequence": "RAM only holds what's running right now. A photo you *save* goes to storage, and that's what's full.",
+              "consequence": "RAM only holds what's open right now. A photo you *save* goes to storage, and that's what's full.",
               "outcome": "fail"
             }
           ]
@@ -152,7 +155,7 @@
             {
               "id": "restart",
               "text": "Restart the phone",
-              "consequence": "Restarting clears RAM, but every file in storage is still there. It's still full.",
+              "consequence": "Restarting wipes RAM, but every file in storage is still there. It's still full.",
               "outcome": "fail"
             }
           ]
@@ -162,81 +165,60 @@
       "hint": "The message appeared when you tried to save a photo. Which kind of space keeps saved files?"
     },
     {
+      "id": "download-needs-storage",
+      "type": "fill_gap",
+      "difficulty": "core",
+      "prompt": "A film you download needs free space in ___.",
+      "options": [
+        { "id": "storage", "text": "storage" },
+        {
+          "id": "ram",
+          "text": "RAM",
+          "nudge": "RAM only holds what's open right now, and it's wiped at power off. A download is kept for later."
+        },
+        {
+          "id": "cpu",
+          "text": "the CPU",
+          "nudge": "The CPU follows instructions; it doesn't keep files. Where do saved things live?"
+        }
+      ],
+      "correctOptionId": "storage",
+      "explanation": "Downloads are saved in **storage**, so they need free storage space. How much RAM you have makes no difference.",
+      "hint": "A download has to still be there tomorrow. Where do saved files live?",
+      "nudge": "A download has to survive switching off. Which kind of space keeps things?"
+    },
+    {
       "id": "why-restart-helps",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A laptop has been on for weeks and feels slow. Why does restarting it often help?",
+      "prompt": "A laptop on for weeks feels slow. Why does a restart help?",
       "options": [
-        { "id": "clears-ram", "text": "It empties RAM, clearing out what apps left behind" },
+        { "id": "clears-ram", "text": "It wipes RAM clean" },
         {
           "id": "deletes-files",
-          "text": "It clears out old files you no longer need from storage",
-          "nudge": "Restarting doesn't touch storage: every file is still there afterwards. Think about which space is cleared when the power goes off."
+          "text": "It deletes old files",
+          "nudge": "Restarting doesn't touch storage: every file is still there afterwards. Which space is wiped when the power goes off?"
         },
         {
           "id": "faster-cpu",
-          "text": "It resets the CPU so it can run at a higher speed again",
+          "text": "It makes the CPU faster",
           "nudge": "A restart doesn't change the CPU at all. Think about the desk: what happens to it when the power goes off?"
-        },
-        {
-          "id": "more-ram",
-          "text": "It gives the laptop more RAM than it had before",
-          "nudge": "The amount of RAM is fixed by the parts inside, so a restart can't add any. Think about what happens to what's already in it."
         }
       ],
       "correctOptionId": "clears-ram",
-      "explanation": "Turning off clears **RAM**, including leftovers from apps that didn't tidy up after themselves. Your files in **storage** stay exactly where they were, and the amount of RAM never changes.",
-      "hint": "Which kind of space does a restart affect?"
-    },
-    {
-      "id": "choose-the-ram",
-      "type": "simulator",
-      "difficulty": "challenge",
-      "prompt": "You're choosing a new laptop for video editing. More [[RAM]] costs more money. Pick the **smallest** amount of RAM that runs everything **smoothly**.",
-      "model": "memory",
-      "params": {
-        "ramGb": 4,
-        "systemGb": 2,
-        "apps": [
-          { "id": "editor", "label": "Video editor", "gb": 3 },
-          { "id": "browser", "label": "Web browser", "gb": 1.5 },
-          { "id": "music", "label": "Music", "gb": 0.5 }
-        ]
-      },
-      "controls": [
-        { "id": "ramGb", "kind": "slider", "label": "RAM", "min": 2, "max": 16, "step": 2, "unit": " GB" },
-        { "id": "editor", "kind": "toggle", "label": "Video editor", "initial": true },
-        { "id": "browser", "kind": "toggle", "label": "Web browser", "initial": true },
-        { "id": "music", "kind": "toggle", "label": "Music", "initial": true }
-      ],
-      "outputs": [
-        { "id": "smooth", "kind": "device", "label": "Laptop", "frame": "laptop" },
-        { "id": "usedPct", "kind": "bar", "label": "RAM used" },
-        { "id": "used", "kind": "meter", "label": "RAM needed", "unit": "GB" }
-      ],
-      "goal": {
-        "all": [
-          { "target": "control", "id": "editor", "op": "==", "value": true },
-          { "target": "control", "id": "browser", "op": "==", "value": true },
-          { "target": "control", "id": "music", "op": "==", "value": true },
-          { "target": "output", "id": "smooth", "op": ">=", "value": 0.9 },
-          { "target": "control", "id": "ramGb", "op": "<=", "value": 8 }
-        ]
-      },
-      "explanation": "The system and the three apps need 2 + 3 + 1.5 + 0.5 = **7 [[GB|gigabyte]]**. The smallest choice that fits is **8 GB**. Anything more works too, but costs more than you need.",
-      "hint": "Keep all three apps open. Watch the RAM needed meter, then find the smallest amount of RAM that fits it.",
-      "nudge": "All three apps must stay open. Too little RAM and it lags; too much costs more than you need. Look for the smallest setting that runs smoothly."
+      "explanation": "Turning off wipes **RAM**, including leftovers from apps that didn't tidy up after themselves. Your files in **storage** stay exactly where they were, and the CPU's speed doesn't change.",
+      "hint": "Which kind of space is wiped when the power goes off?"
     },
     {
       "id": "apps-keep-reloading",
       "type": "scenario",
       "difficulty": "challenge",
-      "prompt": "Your phone has **40 [[GB|gigabyte]] of free storage**, but something's wrong.",
+      "prompt": "Your phone has **40 GB of free storage**, but something's wrong.",
       "start": "symptom",
       "steps": [
         {
           "id": "symptom",
-          "text": "Every time you switch back to the game, it **starts loading from scratch**, and the music app keeps stopping. What's running short?",
+          "text": "Your game keeps **reloading from scratch**, and the music keeps stopping. What's running short?",
           "choices": [
             {
               "id": "short-ram",
@@ -247,7 +229,7 @@
             {
               "id": "short-storage",
               "text": "Storage",
-              "consequence": "There's 40 GB free, so storage isn't the problem. Apps reloading is a sign the **workspace** is full.",
+              "consequence": "There's 40 GB free, so storage isn't the problem. Apps reloading is a sign the **desk** is full.",
               "outcome": "fail"
             }
           ]
@@ -278,14 +260,14 @@
         }
       ],
       "explanation": "Apps that keep **reloading** are a sign of full **RAM**, not full storage. Closing apps you aren't using gives the others room. Deleting files only frees storage.",
-      "hint": "Notice there's 40 GB of storage free. Think back to what a phone does when its desk gets full."
+      "hint": "Notice there's 40 GB of storage free. Think back to what happened when the phone's RAM got too full."
     },
     {
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- **RAM** is the fast desk for what's open. Power off clears it.\n- **Storage** keeps apps and files until you delete them.\n- Full RAM? Close apps. Full storage? Delete files you've [[backed up|backup]].\n\nNext: the [[CPU]], the part that does the work."
+      "body": "- **RAM** is the fast desk for what's open. Power off wipes it.\n- **Storage** keeps apps and files until you delete them.\n- Full RAM? Close apps. Full storage? Delete files you've [[backed up|backup]].\n\nNext: the [[CPU]], the part that does the work."
     }
   ]
 }
