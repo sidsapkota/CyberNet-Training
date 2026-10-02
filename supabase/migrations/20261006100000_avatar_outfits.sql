@@ -1,9 +1,26 @@
 -- Avatars v2 (step 1 of 2, before the code ships; additive only, so the live code keeps working).
 -- An outfit is up to 5 item ids (one per slot) from the fixed list in code (src/lib/rewards/items.ts).
--- Only the server writes it (secret key), after checking the learner owns every item.
+-- Learners can't write it: authenticated has no table-level UPDATE on profiles and no update policy
+-- (checked against the live database before applying), so only the server writes it, with the
+-- secret key, after checking every item is unlocked (Pro items need Pro) and one per slot
+-- (`setOutfit` → `validOutfit`). check:rls proves a learner can't write it directly.
+-- One transaction: the leaderboard never sees league_standings() missing.
+begin;
+
+-- The shape of an outfit: at most 5 ids, each database-safe, no NULLs (array_to_string would skip
+-- them) and no duplicates. Pure, so it can back a check constraint.
+create function public.outfit_shape_ok(outfit text[])
+returns boolean
+language sql immutable strict set search_path = '' as $$
+  select cardinality(outfit) <= 5
+     and array_position(outfit, null) is null
+     and (select count(distinct x) from unnest(outfit) as x) = cardinality(outfit)
+     and coalesce((select bool_and(x ~ '^[a-z0-9-]{1,40}$') from unnest(outfit) as x), true)
+$$;
+
 alter table public.profiles
   add column outfit text[] not null default '{}'
-  check (cardinality(outfit) <= 5 and array_to_string(outfit, ',') ~ '^([a-z0-9-]{1,40}(,[a-z0-9-]{1,40})*)?$');
+  constraint profiles_outfit_shape check (public.outfit_shape_ok(outfit));
 
 -- Leaderboards show the outfit too (item ids from the fixed list; nothing personal). Same function
 -- as 20261005100000 plus one column; the return type changes, so it's dropped and recreated.
@@ -42,3 +59,5 @@ language sql stable security definer set search_path = '' as $$
 $$;
 revoke all on function public.league_standings() from public, anon;
 grant execute on function public.league_standings() to authenticated;
+
+commit;

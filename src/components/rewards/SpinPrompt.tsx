@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { claimSpinsAction, getRewardsAction } from "@/app/actions/rewards";
 import { Button } from "@/components/ui/Button";
 import { useAuth } from "@/lib/auth/AuthProvider";
-import { ownedItems, spinCounts } from "@/lib/rewards/rules";
+import { effectiveOutfit, ownedItems, spinCounts } from "@/lib/rewards/rules";
 import { Avatar } from "./Avatar";
 import { RewardSpin } from "./RewardSpin";
 
@@ -20,6 +20,7 @@ export function SpinPrompt() {
   const [waiting, setWaiting] = useState(0);
   const [owned, setOwned] = useState<Set<string> | null>(null);
   const [outfit, setOutfit] = useState<string[]>([]);
+  const [pro, setPro] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -32,7 +33,8 @@ export function SpinPrompt() {
         if (cancelled) return;
         const has = ownedItems(state.won, state.hasPro, state.milestones);
         setOwned(has);
-        setOutfit(state.outfit);
+        setOutfit(effectiveOutfit(state.outfit, state.hasPro));
+        setPro(state.hasPro);
         setWaiting(spinCounts(n, has).ready);
       })
       .catch(() => {});
@@ -58,7 +60,7 @@ export function SpinPrompt() {
   }
   return (
     <div className="mt-6 flex items-center gap-3 rounded-card border border-accent-ink bg-accent-soft p-4 text-left">
-      <Avatar outfit={outfit} size={44} />
+      <Avatar outfit={outfit} pro={pro} frame={false} size={44} />
       <div className="min-w-0 flex-1">
         <p className="font-semibold">You earned a spin</p>
         <p className="text-small text-ink-muted">Every spin wins something for your avatar.</p>

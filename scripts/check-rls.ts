@@ -178,7 +178,12 @@ async function main() {
     record("The database rejects a badly shaped username", Boolean(badShape.error));
 
     // Avatars and rewards: cosmetic, but only the server writes them.
-    record("A can't set their own outfit directly", blocked(await a.client.from("profiles").update({ outfit: ["crown", "cape"] }).eq("id", a.id).select()));
+    // A is a free learner: equipping the Pro crown straight through the API must fail (only the
+    // server writes outfits, after checking each item is unlocked).
+    record("A (free) can't equip the Pro crown directly", blocked(await a.client.from("profiles").update({ outfit: ["crown"] }).eq("id", a.id).select()));
+    record("A can't write any outfit directly, even free items", blocked(await a.client.from("profiles").update({ outfit: ["cap"] }).eq("id", a.id).select()));
+    const outfitAfter = (await admin.from("profiles").select("outfit").eq("id", a.id).single()).data?.outfit ?? null;
+    record("…and A's outfit is unchanged", Array.isArray(outfitAfter) && outfitAfter.length === 0, JSON.stringify(outfitAfter));
     record("A can't give themselves a reward item", blocked(await a.client.from("reward_items_owned").insert({ user_id: a.id, item_id: "beanie", source: "spin" }).select()));
     record("A can't give themselves a spin", blocked(await a.client.from("reward_spins").insert({ user_id: a.id, earned_for: "streak:7" }).select()));
     await admin.from("reward_items_owned").insert([{ user_id: a.id, item_id: "beanie", source: "spin" }, { user_id: b.id, item_id: "visor", source: "spin" }]);
@@ -191,6 +196,12 @@ async function main() {
     record("The database rejects a badly shaped outfit item", Boolean(badOutfit.error));
     const longOutfit = await admin.from("profiles").update({ outfit: ["cap", "glasses", "scarf", "hoodie", "cape", "beanie"] }).eq("id", a.id).select();
     record("The database rejects an outfit of more than 5 items", Boolean(longOutfit.error));
+    const dupeOutfit = await admin.from("profiles").update({ outfit: ["cap", "cap"] }).eq("id", a.id).select();
+    record("The database rejects duplicate outfit items", Boolean(dupeOutfit.error));
+    const nullOutfit = await admin.from("profiles").update({ outfit: ["cap", null] as unknown as string[] }).eq("id", a.id).select();
+    record("The database rejects a NULL outfit item", Boolean(nullOutfit.error));
+    const goodOutfit = await admin.from("profiles").update({ outfit: ["cap", "glasses"] }).eq("id", a.id).select();
+    record("The server can save a well-formed outfit", !goodOutfit.error);
     const badSpin = await admin.from("reward_spins").insert({ user_id: a.id, earned_for: "bought:1" }).select();
     record("Spins can only be earned for modules, courses or streaks", Boolean(badSpin.error));
 

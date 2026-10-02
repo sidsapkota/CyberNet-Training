@@ -41,7 +41,7 @@ export function RewardsView() {
     return (
       <RewardSpin
         owned={owned}
-        outfit={state.outfit}
+        outfit={effectiveOutfit(state.outfit, state.hasPro)}
         onDone={() => {
           setSpinning(false);
           reload();

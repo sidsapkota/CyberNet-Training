@@ -17,6 +17,7 @@ import { Avatar } from "./Avatar";
  * result straight away under reduced motion. Earned by learning, never bought. Only offered while
  * there's an unowned spin item left (`spinCounts`), so every spin wins.
  */
+/** `outfit` is what the learner wears now, already through `effectiveOutfit` (no Pro items without Pro). */
 export function RewardSpin({ owned, outfit, onDone }: { owned: ReadonlySet<string>; outfit: readonly string[]; onDone: (waiting: number) => void }) {
   const reduce = useReducedMotion();
   const feedback = useFeedback();

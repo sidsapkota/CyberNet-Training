@@ -12,6 +12,7 @@ import { DeleteIcon, SignOutIcon } from "@/components/ui/icons";
 import { trackEvent } from "@/lib/analytics";
 import { takeSignupLesson } from "@/lib/auth/afterSignIn";
 import { useAuth } from "@/lib/auth/AuthProvider";
+import { usePro } from "@/lib/pro/ProProvider";
 import { Avatar } from "@/components/rewards/Avatar";
 import { UsernameForm } from "./UsernameForm";
 import { AvatarPanel } from "@/components/rewards/RewardsView";
@@ -38,6 +39,7 @@ export function AccountPanel({
 }) {
   const router = useRouter();
   const { auth, refreshProfile, signOut } = useAuth();
+  const { hasPro } = usePro();
   const [saved, setSaved] = useState(username);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [pending, startTransition] = useTransition();
@@ -61,7 +63,7 @@ export function AccountPanel({
   return (
     <div className="mx-auto max-w-lesson space-y-5">
       <div className="flex items-center gap-4">
-        <Avatar outfit={auth.status === "signed-in" ? auth.outfit : null} size={56} />
+        <Avatar outfit={auth.status === "signed-in" ? auth.outfit : null} pro={hasPro} size={56} />
         <div className="min-w-0">
           <h1 className="truncate text-headline font-semibold">{saved ?? "Your account"}</h1>
           {email && <p className="truncate text-small text-ink-muted">{email}</p>}

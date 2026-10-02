@@ -723,6 +723,7 @@ export type Database = {
           used: number
         }[]
       }
+      outfit_shape_ok: { Args: { outfit: string[] }; Returns: boolean }
       record_mistake: {
         Args: { p_card: string; p_lesson: string; p_user: string }
         Returns: undefined
