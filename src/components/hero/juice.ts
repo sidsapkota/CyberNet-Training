@@ -1,6 +1,6 @@
 "use client";
 /**
- * Prototype "juice" for /dev/hero: sounds through Howler (synthesised in the browser, so there are
+ * "Juice" for the hero interactions (3D phone, packet race, fruit trainer): sounds through Howler (synthesised in the browser, so there are
  * still no audio files to license), a tiny vibration, brand colours from the theme tokens, a
  * slow-device check for the fallbacks, and the marks the perf script reads (window.__hero).
  */

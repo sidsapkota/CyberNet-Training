@@ -13,9 +13,9 @@ const Loading = () => (
 );
 // Each hero is its own chunk, loaded only when chosen (nothing on other pages).
 const HEROES = {
-  phone: { title: "3D phone", Component: dynamic(() => import("./Phone3D"), { ssr: false, loading: Loading }) },
-  race: { title: "Packet race", Component: dynamic(() => import("./PacketRace"), { ssr: false, loading: Loading }) },
-  fruit: { title: "Train the model", Component: dynamic(() => import("./FruitTrainer"), { ssr: false, loading: Loading }) },
+  phone: { title: "3D phone", Component: dynamic(() => import("@/components/hero/Phone3D"), { ssr: false, loading: Loading }) },
+  race: { title: "Packet race", Component: dynamic(() => import("@/components/hero/PacketRace"), { ssr: false, loading: Loading }) },
+  fruit: { title: "Train the model", Component: dynamic(() => import("@/components/hero/FruitTrainer"), { ssr: false, loading: Loading }) },
 } as const;
 type HeroId = keyof typeof HEROES;
 

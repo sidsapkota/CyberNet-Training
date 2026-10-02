@@ -1,5 +1,6 @@
 "use client";
 
+import { See3D } from "@/components/hero/See3D";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import { CheckIcon } from "@/components/ui/icons";
@@ -61,6 +62,8 @@ export function HotspotExploreView({ card, answer, onAnswerChange }: CardCompone
         <SceneStage
           ref={stageRef}
           sceneId={card.scene}
+          // The phone can also be explored in 3D (optional; loaded only on tap).
+          status={card.scene === "phone" ? <See3D /> : undefined}
           hidden={hidden}
           calloutAt={activePart && partHalf(card.scene, activePart.box) === "bottom" ? "top" : "bottom"}
           pick={{ parts, onPick: tap }}
