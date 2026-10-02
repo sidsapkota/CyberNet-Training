@@ -1,32 +1,34 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
-import { getRewardsAction, setAvatarAction } from "@/app/actions/rewards";
+import { useEffect, useRef, useState } from "react";
+import { getRewardsAction, setOutfitAction } from "@/app/actions/rewards";
 import { NetworkMark } from "@/components/network/NetworkMark";
-import { Button, ButtonLink } from "@/components/ui/Button";
-import { CheckIcon, ProIcon } from "@/components/ui/icons";
+import { ButtonLink } from "@/components/ui/Button";
 import { useAuth } from "@/lib/auth/AuthProvider";
-import { REWARD_ITEMS } from "@/lib/rewards/items";
-import { effectiveAvatar, ownedItems } from "@/lib/rewards/rules";
+import { effectiveOutfit, ownedItems, spinCounts, wearItem } from "@/lib/rewards/rules";
 import { Avatar } from "./Avatar";
+import { AvatarStudio } from "./AvatarStudio";
 import { RewardSpin } from "./RewardSpin";
 
 type State = Awaited<ReturnType<typeof getRewardsAction>>;
-const HOW = { starter: "Starter", spin: "From a spin", pro: "With Pro" } as const;
 
 function useRewards() {
   const [state, setState] = useState<State | null>(null);
   const reload = () => void getRewardsAction().then(setState).catch(() => {});
   useEffect(reload, []);
-  return { state, reload };
+  return { state, setState, reload };
 }
 
-/** /account/rewards: every item (so it's never a mystery box), what you own, how each is earned. */
+/** /account/rewards, the avatar page: dress the mascot, see every item and how it's earned, spin. */
 export function RewardsView() {
-  const { state, reload } = useRewards();
+  const { state, setState, reload } = useRewards();
   const { refreshProfile } = useAuth();
   const [spinning, setSpinning] = useState(false);
-  const [pending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
+  const [pop, setPop] = useState<string | null>(null);
+  const [wave, setWave] = useState(0);
+  const saving = useRef(0);
+
   if (!state) {
     return (
       <div className="grid min-h-[50dvh] place-items-center">
@@ -34,12 +36,12 @@ export function RewardsView() {
       </div>
     );
   }
-  const owned = ownedItems(state.won, state.hasPro);
-  const wearing = effectiveAvatar(state.avatar, state.hasPro);
+  const owned = ownedItems(state.won, state.hasPro, state.milestones);
   if (spinning) {
     return (
       <RewardSpin
         owned={owned}
+        outfit={state.outfit}
         onDone={() => {
           setSpinning(false);
           reload();
@@ -47,90 +49,59 @@ export function RewardsView() {
       />
     );
   }
+
+  function wear(itemId: string) {
+    if (!state) return;
+    const before = state.outfit;
+    const next = wearItem(effectiveOutfit(before, state.hasPro), itemId);
+    const putOn = next.includes(itemId);
+    setError(null);
+    setPop(putOn ? itemId : null);
+    if (putOn) setWave((w) => w + 1);
+    setState({ ...state, outfit: next });
+    const ticket = ++saving.current;
+    void setOutfitAction(next)
+      .then(async (result) => {
+        if (!result.ok) throw new Error("refused");
+        if (ticket === saving.current) await refreshProfile();
+      })
+      .catch(() => {
+        if (ticket !== saving.current) return;
+        setState((s) => (s ? { ...s, outfit: before } : s));
+        setError("Couldn't save that. Please try again.");
+      });
+  }
+
   return (
-    <div>
-      <h1 className="text-headline font-semibold">Rewards</h1>
-      <p className="text-ink-muted">Earn spins by learning. Every item is listed here.</p>
-      {state.waiting > 0 && (
-        <Button className="mt-4 w-full" onClick={() => setSpinning(true)}>
-          {state.waiting === 1 ? "1 spin waiting" : `${state.waiting} spins waiting`}
-        </Button>
-      )}
-      <ul className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-4">
-        {REWARD_ITEMS.map((item) => {
-          const has = owned.has(item.id);
-          const on = wearing === item.id;
-          return (
-            <li key={item.id}>
-              <button
-                type="button"
-                disabled={!has || pending}
-                aria-pressed={on}
-                aria-label={`${item.name}: ${has ? (on ? "wearing" : "tap to wear") : HOW[item.source].toLowerCase()}`}
-                onClick={() =>
-                  startTransition(async () => {
-                    await setAvatarAction(item.id);
-                    await refreshProfile();
-                    reload();
-                  })
-                }
-                className={`relative flex min-h-11 w-full flex-col items-center gap-1 rounded-card border-2 p-2 text-center ${on ? "border-accent-ink" : "border-line"} bg-surface ${has ? "" : "opacity-45"}`}
-              >
-                {item.source === "pro" && <ProIcon className="absolute top-1.5 left-1.5 size-4 text-accent-ink" />}
-                {has && (
-                  <span className="absolute top-1.5 right-1.5 grid size-4 place-items-center rounded-node bg-success text-on-success">
-                    <CheckIcon className="size-3" strokeWidth={3} />
-                  </span>
-                )}
-                <Avatar avatar={item.id} pro frame={false} className="size-11" />
-                <span className="text-caption leading-tight text-ink">{item.name}</span>
-                <span className="text-caption text-ink-faint">{HOW[item.source]}</span>
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-      <p className="mt-4 text-small text-ink-muted">Spins: finishing a module, finishing a course, and 7, 30 and 100-day streaks. Never bought.</p>
-    </div>
+    <AvatarStudio
+      data={{ outfit: state.outfit, owned, waiting: state.waiting, hasPro: state.hasPro }}
+      onWear={wear}
+      onSpin={() => setSpinning(true)}
+      error={error}
+      pop={pop}
+      wave={wave}
+    />
   );
 }
 
-/** The avatar picker on /account: what you can wear now, and a way to the full list. */
+/** On /account: your avatar, and the way to the avatar page (with spins ready or saved). */
 export function AvatarPanel({ className }: { className: string }) {
-  const { state, reload } = useRewards();
-  const { refreshProfile } = useAuth();
-  const [pending, startTransition] = useTransition();
+  const { state } = useRewards();
   if (!state) return null;
-  const owned = ownedItems(state.won, state.hasPro);
-  const wearing = effectiveAvatar(state.avatar, state.hasPro);
+  const { ready, saved } = spinCounts(state.waiting, ownedItems(state.won, state.hasPro, state.milestones));
   return (
-    <section className={className} aria-labelledby="avatar-title">
-      <h2 id="avatar-title" className="font-semibold">
-        Your avatar
-      </h2>
-      <div className="mt-3 grid grid-cols-5 gap-2">
-        {REWARD_ITEMS.filter((i) => owned.has(i.id)).map((item) => (
-          <button
-            key={item.id}
-            type="button"
-            aria-pressed={wearing === item.id}
-            aria-label={`Wear ${item.name}`}
-            disabled={pending}
-            onClick={() =>
-              startTransition(async () => {
-                await setAvatarAction(item.id);
-                await refreshProfile();
-                reload();
-              })
-            }
-            className={`grid min-h-11 place-items-center rounded-control border-2 p-1 ${wearing === item.id ? "border-accent-ink" : "border-transparent"}`}
-          >
-            <Avatar avatar={item.id} pro frame={false} className="size-10" />
-          </button>
-        ))}
+    <section className={`${className} flex items-center gap-4`} aria-labelledby="avatar-title">
+      <Avatar outfit={state.outfit} pro={state.hasPro} frame={false} size={64} />
+      <div className="min-w-0 flex-1">
+        <h2 id="avatar-title" className="font-semibold">
+          Your avatar
+        </h2>
+        <p className="truncate text-small text-ink-muted">
+          {ready > 0 ? `${ready} ${ready === 1 ? "spin" : "spins"} to use` : saved > 0 ? `${saved} ${saved === 1 ? "spin" : "spins"} saved for new items` : "Dress up your mascot"}
+        </p>
       </div>
-      <ButtonLink href="/account/rewards" variant="ghost" className="mt-2 w-full">
-        {state.waiting > 0 ? `See all rewards · ${state.waiting} spin${state.waiting === 1 ? "" : "s"} waiting` : "See all rewards"}
+      <ButtonLink href="/account/rewards" variant="secondary">
+        Change
       </ButtonLink>
     </section>
   );

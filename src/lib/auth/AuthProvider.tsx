@@ -21,8 +21,8 @@ export type AuthState =
       email: string | null;
       /** The public username (null until chosen). */
       username: string | null;
-      /** The avatar item id (src/lib/rewards/items.ts). */
-      avatar: string;
+      /** The avatar outfit: item ids from src/lib/rewards/items.ts, one per slot. */
+      outfit: string[];
       /** Confirmed 13 or older (accounts are 13+). Unconfirmed accounts see a one-time prompt. */
       ageConfirmed: boolean;
     };
@@ -51,9 +51,9 @@ function supabaseConfigured(): boolean {
 async function loadProfile(
   client: SupabaseClient<Database>,
   userId: string,
-): Promise<{ username: string | null; avatar: string; ageConfirmed: boolean }> {
-  const { data } = await client.from("profiles").select("username, avatar, age_confirmed").eq("id", userId).maybeSingle();
-  return { username: data?.username ?? null, avatar: data?.avatar ?? "mascot", ageConfirmed: data?.age_confirmed ?? false };
+): Promise<{ username: string | null; outfit: string[]; ageConfirmed: boolean }> {
+  const { data } = await client.from("profiles").select("username, outfit, age_confirmed").eq("id", userId).maybeSingle();
+  return { username: data?.username ?? null, outfit: data?.outfit ?? [], ageConfirmed: data?.age_confirmed ?? false };
 }
 
 /**
@@ -81,15 +81,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       // Defer Supabase calls out of the callback (supabase-js recommends not awaiting inside it).
       setTimeout(() => {
-        void loadProfile(client, user.id).then(({ username, avatar, ageConfirmed }) =>
+        void loadProfile(client, user.id).then(({ username, outfit, ageConfirmed }) =>
           setAuth((current) =>
             current.status === "signed-in" &&
             current.userId === user.id &&
             current.username === username &&
-            current.avatar === avatar &&
+            current.outfit.join() === outfit.join() &&
             current.ageConfirmed === ageConfirmed
               ? current
-              : { status: "signed-in", userId: user.id, email: user.email ?? null, username, avatar, ageConfirmed },
+              : { status: "signed-in", userId: user.id, email: user.email ?? null, username, outfit, ageConfirmed },
           ),
         );
       }, 0);

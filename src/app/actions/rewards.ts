@@ -7,7 +7,7 @@
 import { z } from "zod";
 import { requireUser } from "@/lib/auth/server";
 import { getEntitlement } from "@/lib/pro/server";
-import { claimSpins, getRewards, type RewardsState, setAvatar, spinReward, type SpinResult } from "@/lib/rewards/server";
+import { claimSpins, getRewards, type RewardsState, setOutfit, spinReward, type SpinResult } from "@/lib/rewards/server";
 
 export async function getRewardsAction(): Promise<RewardsState & { hasPro: boolean }> {
   const user = await requireUser();
@@ -28,9 +28,11 @@ export async function spinRewardAction(): Promise<SpinResult> {
   return spinReward(user.id, (await getEntitlement(user)).hasPro);
 }
 
-export async function setAvatarAction(itemId: string): Promise<{ ok: boolean }> {
+const Outfit = z.array(z.string().regex(/^[a-z0-9-]{1,40}$/)).max(5);
+
+export async function setOutfitAction(outfit: string[]): Promise<{ ok: boolean }> {
   const user = await requireUser();
-  const parsed = z.string().regex(/^[a-z0-9-]{1,40}$/).safeParse(itemId);
+  const parsed = Outfit.safeParse(outfit);
   if (!parsed.success) return { ok: false };
-  return setAvatar(user.id, parsed.data, (await getEntitlement(user)).hasPro);
+  return setOutfit(user.id, parsed.data, (await getEntitlement(user)).hasPro);
 }

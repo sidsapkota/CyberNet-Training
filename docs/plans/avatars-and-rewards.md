@@ -1,8 +1,12 @@
 # Plan: avatars v2 (the mascot, dressed up)
 
-Status: **plan for approval** (owner, 2 Oct 2026). Nothing built yet. Art direction:
-`docs/brand/avatars.png` (the sheet is at `public/brand/avatars.png` now, which would serve it to the
-public; I'll move it to `docs/brand/`, reference only, never shipped).
+Status: **approved and built on `avatars-v2`** (owner, 2 Oct 2026); migration 1 waits for the owner's
+approval before it's applied. Art direction: `docs/brand/avatars.png` (moved from `public/`, reference
+only, never shipped). Screenshots: `docs/plans/avatars/` (`node scripts/e2e/avatar-shots.mjs`).
+
+**Owner's changes on approval:** saved spins show on the avatar page as "N spins saved for new items";
+migration 2 only retires the old items (both reward tables had 0 rows, so nothing to hand back); new
+accounts start with the 3 free items, and the sign-up screen shows the mascot wearing one.
 
 **What stays from v1 (live):** spins earned only by learning (finish a module, finish a course,
 7/30/100-day streaks), the server picks with equal chance, every spin wins, no money, no rarity
@@ -116,14 +120,9 @@ revoke all on function public.league_standings() from public, anon;
 grant execute on function public.league_standings() to authenticated;
 ```
 
-**2. After the new code is live (data clean-up).**
+**2. After the new code is live (retire v1 items).**
 ```sql
--- v1 items are retired. Spins already used on them are handed back, so learners spin again on the new
--- list (nobody loses a spin), and the old item rows go.
-update public.reward_spins
-  set spun_at = null, item_id = null
-  where item_id is not null
-    and item_id not in ('beanie', 'headband', 'headset', 'visor');
+-- Both reward tables had 0 rows on 2 Oct 2026: nothing to hand back.
 delete from public.reward_items_owned
   where item_id not in ('beanie', 'headband', 'headset', 'visor');
 -- profiles.avatar is unused from here; drop it in a later migration with display_name.
@@ -149,10 +148,3 @@ delete from public.reward_items_owned
   saved spins, the server refuses items you don't own; e2e at 360px (equip, locked tile, spin).
 - Screenshots before merging: the avatar page at 360×560 and desktop, the 12-item grid, and the 24/32px
   strip. Then `docs/handover.md`.
-
-## Questions
-
-1. The unlock table above: OK? (In particular crown and cape as Pro, jetpack at a 30-day streak.)
-2. Spins with only 4 spin items, kept "saved for new items" once they're all won: OK, or put the
-   scarf and jetpack in the spin pool instead of tying them to streaks?
-3. Retire v1's items and hand back the spins used on them (as in migration 2): OK?

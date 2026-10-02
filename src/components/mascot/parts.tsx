@@ -45,6 +45,17 @@ export interface MascotSlots {
   head?: (children: ReactNode) => ReactNode;
   /** Drawn on top of the face, in the head's 64-unit coordinates (for the security scan). */
   headOverlay?: (pose: MascotPose) => ReactNode;
+  /** Avatar outfit layers (avatars v2). Without them the drawing is unchanged. */
+  outfit?: {
+    /** Behind everything, in viewBox units (cape, jetpack). */
+    behind?: ReactNode;
+    /** Over the torso, in viewBox units (hoodie, jetpack straps). */
+    torso?: ReactNode;
+    /** Over the neck, after the head, in viewBox units (scarf). */
+    neck?: ReactNode;
+    /** On the head, after the face, in the head's 64-unit coordinates (face and head items). */
+    head?: ReactNode;
+  };
 }
 
 interface PartProps {
@@ -211,6 +222,7 @@ export function Head(props: PartProps & { slots: MascotSlots }) {
       ))}
       {(slots.eyes ?? identity)(<Eyes pose={pose} palette={palette} glow={glow} />)}
       <path d={MOUTH_PATH} fill="none" stroke={palette.line} strokeWidth={1.3} strokeLinecap="round" />
+      {slots.outfit?.head}
       {slots.headOverlay?.(pose)}
     </g>,
   );
@@ -225,12 +237,15 @@ export function MascotFigure({ pose, palette, glow, slots = {} }: PartProps & { 
   const front = ([0, 1] as const).filter((i) => pose.arms[i].front);
   return (
     <g>
+      {slots.outfit?.behind}
       <Legs pose={pose} palette={palette} glow={glow} />
       {back.map((i) => (
         <g key={i}>{arm(i)}</g>
       ))}
       <Body pose={pose} palette={palette} glow={glow} />
+      {slots.outfit?.torso}
       <Head pose={pose} palette={palette} glow={glow} slots={slots} />
+      {slots.outfit?.neck}
       {front.map((i) => (
         <g key={i}>{arm(i)}</g>
       ))}

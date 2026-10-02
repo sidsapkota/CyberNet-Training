@@ -438,6 +438,7 @@ export type Database = {
           display_name: string | null
           id: string
           learning_mode: string
+          outfit: string[]
           sound_enabled: boolean
           time_zone: string | null
           time_zone_changed_at: string | null
@@ -454,6 +455,7 @@ export type Database = {
           display_name?: string | null
           id: string
           learning_mode?: string
+          outfit?: string[]
           sound_enabled?: boolean
           time_zone?: string | null
           time_zone_changed_at?: string | null
@@ -470,6 +472,7 @@ export type Database = {
           display_name?: string | null
           id?: string
           learning_mode?: string
+          outfit?: string[]
           sound_enabled?: boolean
           time_zone?: string | null
           time_zone_changed_at?: string | null
@@ -698,6 +701,7 @@ export type Database = {
           avatar: string
           handle: string
           is_me: boolean
+          outfit: string[]
           pro: boolean
           rank: number
           tier: string

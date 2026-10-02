@@ -2,19 +2,22 @@
 
 import { useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { setAvatarAction, spinRewardAction } from "@/app/actions/rewards";
+import { setOutfitAction, spinRewardAction } from "@/app/actions/rewards";
+import { MascotAvatar } from "@/components/mascot/outfit/MascotAvatar";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { useFeedback } from "@/lib/feedback";
 import { itemById, SPIN_POOL } from "@/lib/rewards/items";
+import { wearItem } from "@/lib/rewards/rules";
 import { Avatar } from "./Avatar";
 
 /**
  * The reward spin (every spin wins). A ring of nodes lights in sequence (our loading motif) and
  * lands on the prize the server picked; no near misses, no odds, no "rare". About 1.2 s; the
- * result straight away under reduced motion. Earned by learning, never bought.
+ * result straight away under reduced motion. Earned by learning, never bought. Only offered while
+ * there's an unowned spin item left (`spinCounts`), so every spin wins.
  */
-export function RewardSpin({ owned, onDone }: { owned: ReadonlySet<string>; onDone: (waiting: number) => void }) {
+export function RewardSpin({ owned, outfit, onDone }: { owned: ReadonlySet<string>; outfit: readonly string[]; onDone: (waiting: number) => void }) {
   const reduce = useReducedMotion();
   const feedback = useFeedback();
   const { refreshProfile } = useAuth();
@@ -59,14 +62,16 @@ export function RewardSpin({ owned, onDone }: { owned: ReadonlySet<string>; onDo
     const item = itemById(won.id)!;
     return (
       <div className="flex flex-col items-center text-center">
-        <Avatar avatar={won.id} className="size-36" />
+        <span className="grid place-items-center rounded-card bg-screen px-6 py-3">
+          <MascotAvatar outfit={[won.id]} size={160} pop={reduce ? null : won.id} wave={reduce ? 0 : 1} />
+        </span>
         <h2 className="mt-5 text-headline font-semibold">{item.name}</h2>
         <p className="text-ink-muted">New for your avatar.</p>
         <div className="mt-6 w-full space-y-1">
           <Button
             className="w-full"
             onClick={async () => {
-              await setAvatarAction(won.id);
+              await setOutfitAction(wearItem(outfit, won.id));
               await refreshProfile();
               onDone(won.waiting);
             }}
@@ -93,12 +98,12 @@ export function RewardSpin({ owned, onDone }: { owned: ReadonlySet<string>; onDo
           const angle = (i / ring.length) * Math.PI * 2 - Math.PI / 2;
           return (
             <span key={id} className="absolute" style={{ left: 124 + Math.cos(angle) * r - 26, top: 124 + Math.sin(angle) * r - 26 }}>
-              <Avatar avatar={id} className={`size-[52px] transition-shadow ${lit === i ? "shadow-glow" : "opacity-80"}`} />
+              <Avatar outfit={[id]} size={52} className={`transition-shadow ${lit === i ? "shadow-glow" : "opacity-80"}`} />
             </span>
           );
         })}
         <span className="absolute top-1/2 left-1/2 grid size-[78px] -translate-x-1/2 -translate-y-1/2 place-items-center">
-          <Avatar avatar="mascot" className="size-[78px]" />
+          <Avatar outfit={[]} size={78} />
         </span>
       </div>
       {error && (
@@ -110,7 +115,7 @@ export function RewardSpin({ owned, onDone }: { owned: ReadonlySet<string>; onDo
         Spin
       </Button>
       <ButtonLink href="/account/rewards" variant="ghost" className="mt-1 w-full">
-        See all rewards
+        See every item
       </ButtonLink>
       <p className="mt-1 text-caption text-ink-faint">Earned by learning. Never bought.</p>
     </div>

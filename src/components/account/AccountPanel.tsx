@@ -61,7 +61,7 @@ export function AccountPanel({
   return (
     <div className="mx-auto max-w-lesson space-y-5">
       <div className="flex items-center gap-4">
-        <Avatar avatar={auth.status === "signed-in" ? auth.avatar : null} className="size-14" />
+        <Avatar outfit={auth.status === "signed-in" ? auth.outfit : null} size={56} />
         <div className="min-w-0">
           <h1 className="truncate text-headline font-semibold">{saved ?? "Your account"}</h1>
           {email && <p className="truncate text-small text-ink-muted">{email}</p>}

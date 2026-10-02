@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
-import { Mascot } from "@/components/mascot/Mascot";
+import { MascotAvatar } from "@/components/mascot/outfit/MascotAvatar";
+import { Avatar } from "@/components/rewards/Avatar";
 import { StreakIcon } from "@/components/streak/StreakIcon";
 import { Button, ButtonLink } from "@/components/ui/Button";
-import { AnyDeviceIcon, LeaguesIcon, ModulesIcon } from "@/components/ui/icons";
+import { LeaguesIcon, ModulesIcon } from "@/components/ui/icons";
 import { trackEvent } from "@/lib/analytics";
 import { rememberSignupLesson } from "@/lib/auth/afterSignIn";
 import { useAuth } from "@/lib/auth/AuthProvider";
@@ -51,8 +52,9 @@ export function SignUpGate({
   if (!available) return null;
   const Heading = variant === "page" ? "h1" : "h2";
   const perks = [
-    { icon: <StreakIcon lit={false} className="size-5" />, text: "Your XP and streak, saved" },
-    { icon: <AnyDeviceIcon className="size-5" />, text: "Your progress on any device" },
+    { icon: <StreakIcon lit={false} className="size-5" />, text: "Your XP and streak, on any device" },
+    // Every account starts with the free avatar items (avatars v2): the mascot wears one here.
+    { icon: <Avatar outfit={["cap"]} size={36} frame={false} className="border-0" />, text: "Your own avatar to dress up", bare: true },
     { icon: <ModulesIcon className="size-5" />, text: "Any lesson in any course, 3 new a day" },
     { icon: <LeaguesIcon className="size-5" />, text: leagues === "open" ? "Weekly leagues" : "Weekly leagues (opening soon)" },
   ];
@@ -62,7 +64,7 @@ export function SignUpGate({
       aria-labelledby={`signup-gate-${lessonId}`}
       className={`mx-auto flex w-full max-w-sm flex-col items-center text-center ${variant === "inline" ? "mt-8 rounded-card border border-line bg-surface p-5" : ""}`}
     >
-      {variant === "page" && <Mascot expression="presenting" size={130} idle />}
+      {variant === "page" && <MascotAvatar outfit={["cap"]} size={130} wave={1} label="The CyberNet mascot in a backwards cap, waving" />}
       <Heading id={`signup-gate-${lessonId}`} className={`font-semibold text-balance ${variant === "page" ? "mt-5 text-title" : "text-lead"}`}>
         Create a free account to keep going.
       </Heading>
@@ -70,7 +72,7 @@ export function SignUpGate({
       <ul className="mt-5 w-full space-y-2 text-left">
         {perks.map((perk) => (
           <li key={perk.text} className="flex min-h-10 items-center gap-3 text-body">
-            <span className="grid size-9 shrink-0 place-items-center rounded-control bg-surface-raised text-ink-muted">{perk.icon}</span>
+            {"bare" in perk ? perk.icon : <span className="grid size-9 shrink-0 place-items-center rounded-control bg-surface-raised text-ink-muted">{perk.icon}</span>}
             {perk.text}
           </li>
         ))}

@@ -178,17 +178,19 @@ async function main() {
     record("The database rejects a badly shaped username", Boolean(badShape.error));
 
     // Avatars and rewards: cosmetic, but only the server writes them.
-    record("A can't set their own avatar directly", blocked(await a.client.from("profiles").update({ avatar: "pro-crown" }).eq("id", a.id).select()));
-    record("A can't give themselves a reward item", blocked(await a.client.from("reward_items_owned").insert({ user_id: a.id, item_id: "badge-rocket", source: "spin" }).select()));
+    record("A can't set their own outfit directly", blocked(await a.client.from("profiles").update({ outfit: ["crown", "cape"] }).eq("id", a.id).select()));
+    record("A can't give themselves a reward item", blocked(await a.client.from("reward_items_owned").insert({ user_id: a.id, item_id: "beanie", source: "spin" }).select()));
     record("A can't give themselves a spin", blocked(await a.client.from("reward_spins").insert({ user_id: a.id, earned_for: "streak:7" }).select()));
-    await admin.from("reward_items_owned").insert([{ user_id: a.id, item_id: "badge-rocket", source: "spin" }, { user_id: b.id, item_id: "badge-globe", source: "spin" }]);
+    await admin.from("reward_items_owned").insert([{ user_id: a.id, item_id: "beanie", source: "spin" }, { user_id: b.id, item_id: "visor", source: "spin" }]);
     await admin.from("reward_spins").insert([{ user_id: a.id, earned_for: "streak:7" }, { user_id: b.id, earned_for: "streak:7" }]);
     const myItems = await a.client.from("reward_items_owned").select("user_id, item_id");
     const mySpins = await a.client.from("reward_spins").select("user_id");
     record("A reads only their own reward items and spins", !myItems.error && (myItems.data ?? []).length === 1 && (myItems.data ?? []).every((r) => r.user_id === a.id) && (mySpins.data ?? []).every((r) => r.user_id === a.id));
-    record("A can't use a spin themselves", blocked(await a.client.from("reward_spins").update({ spun_at: new Date().toISOString(), item_id: "badge-map" }).eq("user_id", a.id).select()));
-    const badAvatar = await admin.from("profiles").update({ avatar: "Not An Item!" }).eq("id", a.id).select();
-    record("The database rejects a badly shaped avatar id", Boolean(badAvatar.error));
+    record("A can't use a spin themselves", blocked(await a.client.from("reward_spins").update({ spun_at: new Date().toISOString(), item_id: "headset" }).eq("user_id", a.id).select()));
+    const badOutfit = await admin.from("profiles").update({ outfit: ["Not An Item!"] }).eq("id", a.id).select();
+    record("The database rejects a badly shaped outfit item", Boolean(badOutfit.error));
+    const longOutfit = await admin.from("profiles").update({ outfit: ["cap", "glasses", "scarf", "hoodie", "cape", "beanie"] }).eq("id", a.id).select();
+    record("The database rejects an outfit of more than 5 items", Boolean(longOutfit.error));
     const badSpin = await admin.from("reward_spins").insert({ user_id: a.id, earned_for: "bought:1" }).select();
     record("Spins can only be earned for modules, courses or streaks", Boolean(badSpin.error));
 
@@ -285,10 +287,10 @@ async function main() {
     const standingsA = await a.client.rpc("league_standings");
     const rowsA = standingsA.data ?? [];
     record(
-      "A sees their own league: usernames, avatars, tier, weekly XP and Pro only",
+      "A sees their own league: usernames, outfits, tier, weekly XP and Pro only",
       !standingsA.error &&
         rowsA.length === 2 &&
-        rowsA.every((r) => Object.keys(r).sort().join() === "avatar,handle,is_me,pro,rank,tier,weekly_xp") &&
+        rowsA.every((r) => Object.keys(r).sort().join() === "avatar,handle,is_me,outfit,pro,rank,tier,weekly_xp") &&
         rowsA[0]?.handle === `RlsBee${lt}` && rowsA[0]?.weekly_xp === weekXp(b.id) && rowsA[1]?.weekly_xp === weekXp(a.id) && rowsA[1]?.is_me === true,
       standingsA.error?.message ?? JSON.stringify(rowsA),
     );

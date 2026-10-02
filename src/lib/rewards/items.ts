@@ -1,75 +1,51 @@
 /**
- * Avatar items: a fixed list (the database stores only ids). Cosmetic only. No photos, ever:
- * mascot heads with an accessory and a tile colour, and tech badges. Every item is visible on the
- * Rewards page, with how it's earned.
- * - `starter`: everyone has them.
+ * Avatar items (avatars v2): accessories for the mascot, one per slot. A fixed list; the database
+ * stores only ids. Cosmetic only, never photos. Every item is visible on the avatar page with how
+ * it's earned (art direction: docs/brand/avatars.png).
+ * - `free`: everyone has them from the start.
  * - `spin`: won from reward spins (earned by learning, never bought).
- * - `pro`: unlocked while the learner has Pro (never from a spin, so paying never changes a spin).
+ * - `milestone`: unlocked for good by a streak or a finished course (worked out from progress).
+ * - `pro`: worn while the learner has Pro (never from a spin, so paying never changes a spin).
  */
-export type Tone = "navy" | "cyan" | "mint" | "amber" | "coral" | "raised";
-export type Accessory = "none" | "cap" | "headphones" | "glasses" | "scarf" | "crown";
-export type BadgeIcon =
-  | "shield" | "chip" | "terminal" | "wifi" | "router" | "rocket" | "satellite" | "key" | "cloud" | "globe"
-  | "bot" | "gamepad" | "music" | "camera" | "bug" | "puzzle" | "telescope" | "lightbulb" | "server" | "compass" | "map";
+export const SLOTS = ["head", "face", "neck", "body", "back"] as const;
+export type Slot = (typeof SLOTS)[number];
+export const SLOT_LABEL: Record<Slot, string> = { head: "Head", face: "Face", neck: "Neck", body: "Body", back: "Back" };
 
-export interface RewardItem {
+export type Milestone = { kind: "streak"; days: 7 | 30 } | { kind: "course" };
+
+export interface AvatarItem {
   id: string;
   name: string;
-  source: "starter" | "spin" | "pro";
-  tone: Tone;
-  look: { kind: "mascot"; accessory: Accessory } | { kind: "badge"; icon: BadgeIcon };
-  /** The one animated item (Pro's trace frame): two beats, then still. */
-  animated?: boolean;
+  slot: Slot;
+  source: "free" | "spin" | "milestone" | "pro";
+  milestone?: Milestone;
 }
 
-const mascot = (id: string, name: string, source: RewardItem["source"], tone: Tone, accessory: Accessory = "none"): RewardItem => ({ id, name, source, tone, look: { kind: "mascot", accessory } });
-const badge = (id: string, name: string, source: RewardItem["source"], tone: Tone, icon: BadgeIcon): RewardItem => ({ id, name, source, tone, look: { kind: "badge", icon } });
-
-export const REWARD_ITEMS: readonly RewardItem[] = [
-  // Starters
-  mascot("mascot", "Mascot", "starter", "navy"),
-  mascot("mascot-cyan", "Bright mascot", "starter", "cyan"),
-  badge("badge-shield", "Shield", "starter", "navy", "shield"),
-  badge("badge-chip", "Chip", "starter", "raised", "chip"),
-  badge("badge-terminal", "Terminal", "starter", "navy", "terminal"),
-  badge("badge-wifi", "Wi-Fi", "starter", "raised", "wifi"),
-  // From spins
-  mascot("mascot-mint", "Mint mascot", "spin", "mint"),
-  mascot("mascot-amber", "Amber mascot", "spin", "amber"),
-  mascot("mascot-coral", "Coral mascot", "spin", "coral"),
-  mascot("cap-navy", "Cap", "spin", "navy", "cap"),
-  mascot("cap-mint", "Mint cap", "spin", "mint", "cap"),
-  mascot("headphones-navy", "Headphones", "spin", "navy", "headphones"),
-  mascot("headphones-amber", "Amber headphones", "spin", "amber", "headphones"),
-  mascot("glasses-navy", "Glasses", "spin", "navy", "glasses"),
-  mascot("glasses-cyan", "Bright glasses", "spin", "cyan", "glasses"),
-  mascot("scarf-coral", "Scarf", "spin", "coral", "scarf"),
-  mascot("scarf-mint", "Mint scarf", "spin", "mint", "scarf"),
-  badge("badge-router", "Router", "spin", "navy", "router"),
-  badge("badge-rocket", "Rocket", "spin", "raised", "rocket"),
-  badge("badge-satellite", "Satellite", "spin", "navy", "satellite"),
-  badge("badge-key", "Key", "spin", "amber", "key"),
-  badge("badge-cloud", "Cloud", "spin", "cyan", "cloud"),
-  badge("badge-globe", "Globe", "spin", "mint", "globe"),
-  badge("badge-bot", "Robot", "spin", "raised", "bot"),
-  badge("badge-gamepad", "Gamepad", "spin", "coral", "gamepad"),
-  badge("badge-music", "Music", "spin", "mint", "music"),
-  badge("badge-camera", "Camera", "spin", "navy", "camera"),
-  badge("badge-bug", "Bug hunter", "spin", "amber", "bug"),
-  badge("badge-puzzle", "Puzzle", "spin", "cyan", "puzzle"),
-  badge("badge-telescope", "Telescope", "spin", "navy", "telescope"),
-  badge("badge-lightbulb", "Bright idea", "spin", "amber", "lightbulb"),
-  badge("badge-server", "Server", "spin", "raised", "server"),
-  badge("badge-compass", "Compass", "spin", "mint", "compass"),
-  badge("badge-map", "Map", "spin", "coral", "map"),
-  // With Pro
-  badge("pro-holo-shield", "Holo shield", "pro", "cyan", "shield"),
-  mascot("pro-crown", "Circuit crown", "pro", "navy", "crown"),
-  { ...mascot("pro-trace", "Trace frame", "pro", "navy"), animated: true },
+export const AVATAR_ITEMS: readonly AvatarItem[] = [
+  { id: "cap", name: "Backwards cap", slot: "head", source: "free" },
+  { id: "glasses", name: "Round glasses", slot: "face", source: "free" },
+  { id: "hoodie", name: "Hoodie", slot: "body", source: "free" },
+  { id: "beanie", name: "Beanie", slot: "head", source: "spin" },
+  { id: "headband", name: "Headband", slot: "head", source: "spin" },
+  { id: "headset", name: "Headset", slot: "head", source: "spin" },
+  { id: "visor", name: "VR visor", slot: "face", source: "spin" },
+  { id: "scarf", name: "Scarf", slot: "neck", source: "milestone", milestone: { kind: "streak", days: 7 } },
+  { id: "grad-cap", name: "Grad cap", slot: "head", source: "milestone", milestone: { kind: "course" } },
+  { id: "jetpack", name: "Jetpack", slot: "back", source: "milestone", milestone: { kind: "streak", days: 30 } },
+  { id: "crown", name: "Circuit crown", slot: "head", source: "pro" },
+  { id: "cape", name: "Cape", slot: "back", source: "pro" },
 ];
 
-export const DEFAULT_AVATAR = "mascot";
-export const itemById = (id: string | null | undefined): RewardItem | undefined => REWARD_ITEMS.find((i) => i.id === id);
-export const STARTER_IDS = REWARD_ITEMS.filter((i) => i.source === "starter").map((i) => i.id);
-export const SPIN_POOL = REWARD_ITEMS.filter((i) => i.source === "spin");
-export const PRO_IDS = REWARD_ITEMS.filter((i) => i.source === "pro").map((i) => i.id);
+export const itemById = (id: string | null | undefined): AvatarItem | undefined => AVATAR_ITEMS.find((i) => i.id === id);
+export const FREE_IDS = AVATAR_ITEMS.filter((i) => i.source === "free").map((i) => i.id);
+export const SPIN_POOL = AVATAR_ITEMS.filter((i) => i.source === "spin");
+export const PRO_IDS = AVATAR_ITEMS.filter((i) => i.source === "pro").map((i) => i.id);
+
+/** How an item is earned, in a few words (shown under a locked item's silhouette). */
+export function unlockLabel(item: AvatarItem): string {
+  if (item.source === "free") return "Free";
+  if (item.source === "spin") return "From a spin";
+  if (item.source === "pro") return "Pro";
+  if (item.milestone?.kind === "streak") return `${item.milestone.days}-day streak`;
+  return "Finish a course";
+}

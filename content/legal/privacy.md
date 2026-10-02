@@ -56,7 +56,7 @@ Accounts are for people **aged 13 or older**. When you sign in we keep:
 - **Cards you got wrong**, for "Review your mistakes": which card, how many times you've missed it, when, and when you got it right in a review. We never keep the wrong answer you gave in a lesson. We keep this for every account, so it's ready if you get CyberNet Pro; only Pro can review the cards. Resetting your progress clears it.
 - **When your learning happens, and your time zone**: the time of each moment you earn XP, and your device's time zone (for example "Australia/Sydney": it shows roughly which part of the world you're in, never your address or exact location). We use these **only** to work out your daily goal, your streak and your weekly league XP, so a day counts on your own calendar.
 - **Your settings**: Path or Explore mode, sound on or off, your daily goal, which "how to play" tips you've seen, and whether you show on leaderboards.
-- **Your rewards**: which avatar items you've won and which avatar you're wearing, and the reward spins you've earned (from finishing modules and courses, and streaks). Rewards are only for fun: they can't be bought and aren't worth anything.
+- **Your rewards**: which avatar items you've won and which items your avatar is wearing, and the reward spins you've earned (from finishing modules and courses, and streaks). Rewards are only for fun: they can't be bought and aren't worth anything.
 - **Your league details**: your tier, which league you're in each week and how you finished.
 - **That you confirmed you're 13 or older.** We only store "confirmed", never your date of birth.
 - **Which new lessons you open each day** (the lesson and the day, nothing else), because free accounts can open 3 new lessons a day, and **when you last changed your time zone** (it can change once a week, so the day can't be reset early).
@@ -70,7 +70,7 @@ We use this information only to run your account and save your progress across d
 
 If you have an account, you take part in weekly leagues of up to 30 learners. **What others in your league can see:**
 
-- your **username** (a made-up name, like "SwiftRouter42") and your **avatar** (a picture you chose from our own set, never a photo),
+- your **username** (a made-up name, like "SwiftRouter42") and your **avatar** (our mascot in the items you chose from our own set, never a photo),
 - your **tier** (Packet up to Quantum), your **XP this week**, and whether you have **Pro**.
 
 That's all. They never see your email, your real name, your other stats or where you are. Only learners in your own league that week see you, and only while they're signed in.

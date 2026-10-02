@@ -12,17 +12,22 @@ Last updated: 2 October 2026.
 - Lesson player: one Check flow, Try again keeps what's right, Back/forward (read-only), Listen in the header, Hint in the footer, bonus cards, mascot reactions and the security scan, `lesson_quit`.
 - Usernames are the one public identity (server-checked filters, 30-day changes). Avatars and rewards (spins for modules, courses and 7/30/100-day streaks; 3 Pro items). Daily goals and streaks; leagues (hidden until 20 learners earn XP in one week); certificates.
 - Feedback form stores each message and emails it to cybernettraining10@gmail.com (`FEEDBACK_INBOX`; switch to hello@ once ImprovMX forwarding works), at most 12 an hour.
-- **Learn before you do** (card types `reveal`, `true_false`, `fill_gap`; time-based lessons via `LEARN_FIRST_MODULES` in `src/lib/content/shape.ts`): Inside Your Devices module 1 (pilot) and, once `rollout-sso` merges, all of Stay Safe Online. The train_model redesign (pictures, problem first) and See it in 3D on the phone explore card are live.
+- **Learn before you do** (card types `reveal`, `true_false`, `fill_gap`; time-based lessons via `LEARN_FIRST_MODULES` in `src/lib/content/shape.ts`): Inside Your Devices module 1 (pilot) and all of Stay Safe Online. The train_model redesign (pictures, problem first) and See it in 3D on the phone explore card are live.
 - Functions run in **syd1** next to Supabase. Help lines: Kids Helpline with Lifeline (verified), eSafety, ACCCE, Scamwatch, IDCARE, ReportCyber, 000.
 
 ## 2. Rollout (owner, 2 Oct), in order
 
 Stay Safe Online → How AI Really Works → How the Internet Works → the rest of Inside Your Devices. Each course: add its modules to `LEARN_FIRST_MODULES` (3–5 min of core cards, ≥60% hands-on by time, ≥3 styles, a "Try this:" recap), the playbook (real-life opener, predict then play, wrong answers teach), the fixes in `docs/plans/zero-confusion-audit.md`, one short question per card, the packet race / fruit trainer where they fit (`src/components/hero/`; they'd need a small guided "play" card type), every card fitting 360×560 (`npm run e2e:fit-audit`; `SHOT_VP=560` saves screenshots at 560), a beginner audit (fresh agent, answers hidden), then merge when checks pass. No subagents unless a course is too big alone.
 
-- **`rollout-sso` (Stay Safe Online):** done and audited (105/105 right first time; fixes applied; see REVIEW.md "Learn-before-you-do rollout"). All 140 cards fit 360×640 and 360×560. Shared player changes: tighter phone spacing on choices, sorts, matches, scenarios and hotspots; simulator switches two to a row when there are 3+; readable scenes drawn between 1× and 1.25×; scene callouts always pinned inside the panel; the explore "All parts explored" chip removed (the line above says it). Gate: lint, typecheck, 1059 tests, build, design QA, Back/Listen, mascot; guest gate, Mistake review, pro-declined and plans on a local production build.
+- **Stay Safe Online:** live (merged 2 Oct), audited (105/105 right first time; fixes applied; see REVIEW.md "Learn-before-you-do rollout"). All 140 cards fit 360×640 and 360×560. Shared player changes: tighter phone spacing on choices, sorts, matches, scenarios and hotspots; simulator switches two to a row when there are 3+; readable scenes drawn between 1× and 1.25×; scene callouts always pinned inside the panel; the explore "All parts explored" chip removed (the line above says it). Gate: lint, typecheck, 1059 tests, build, design QA, Back/Listen, mascot; guest gate, Mistake review, pro-declined and plans on a local production build.
 - **Next: How AI Really Works** (18 lessons, 6 quizzes). Every lesson is under 3 min of core cards by the time rules and lacks a "Try this" line.
 
-## 3. Waiting on the owner
+## 3. In progress and queued (owner, 2 Oct)
+
+- **`avatars-v2` (built, not merged):** the avatar is the mascot dressed up: 12 accessories in 5 slots (free cap, glasses, hoodie; spin beanie, headband, headset, visor; scarf at 7 days, grad cap for a course, jetpack at 30 days; Pro crown and cape), the avatar page with slot tabs, saved spins, the capped mascot on the sign-up gate. Screenshots in `docs/plans/avatars/`. **Migration 1 (`20261006100000_avatar_outfits.sql`, adds `profiles.outfit`) needs the owner's approval before it's applied;** the branch can't merge before it (the code reads `outfit`). Migration 2 (retire v1 items) runs after the merge. Then `check:rls`, `e2e:rewards` and regenerated DB types.
+- **Next after avatars v2: `course-thumbnails`** (owner's brief, 2 Oct): one accent colour and one hero object per course (the mascot from avatars v2), same line weight, subtle hover/tap motion, used on the catalog and course headers, plus a template for future courses; side-by-side at desktop and 360×560 in light and dark before merging. Flag first: the suggested purple (AI) is reserved for the Quantum tier, and green (Stay Safe Online) is our "correct answer" colour.
+
+## 4. Waiting on the owner
 
 - `docs/plans/what-really-happens.md`: approved plan for a new Medium course; the build waits for the owner.
 - Drop the unused `profiles.display_name` and `league_players.handle*` columns: needs a migration (show the SQL first).
@@ -31,12 +36,12 @@ Stay Safe Online → How AI Really Works → How the Internet Works → the rest
 - Playtest with real learners (AI audits overstate beginner ability: the SSO audit got 105/105 and called some cards too easy).
 - Queue on hold: the Pro streak-freeze feature and a family plan. Don't build.
 
-## 4. Decisions (not in CLAUDE.md or REVIEW.md)
+## 5. Decisions (not in CLAUDE.md or REVIEW.md)
 
 - Every task on its own branch from `main` with a preview; merge only when checks pass; production checks after each merge, roll back on failure. Show migration SQL before applying it. Never ask for secrets.
 - `lesson_quit` data is still tiny: a hint, not proof.
 
-## 5. Gotchas
+## 6. Gotchas
 
 - **Previews can't run signed-in checks:** `SUPABASE_SECRET_KEY` is Production only, so secret-key flows return 500 on previews. Run design QA, Back/Listen and mascot against a dev server or preview (they need `/dev/cards`), and guest gate, Mistake review, plans and pro-declined against a local production build (`npx next start -p 3200`).
 - **Vercel's security checkpoint** once challenged this machine's IP after many automated runs (403s). If every production check fails at once, look at `X-Vercel-Mitigated` before rolling back.

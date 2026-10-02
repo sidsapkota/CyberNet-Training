@@ -28,8 +28,8 @@ export interface StandingRow {
   weeklyXp: number;
   pro: boolean;
   isMe: boolean;
-  /** Their avatar item id (an item from the fixed list; nothing personal). */
-  avatar: string;
+  /** Their avatar outfit (item ids from the fixed list; nothing personal). */
+  outfit: string[];
 }
 
 export interface WeekResult {
@@ -45,7 +45,7 @@ export interface MyLeague {
   week: string;
   timeZone: string;
   /** `handle` is the learner's public username. */
-  player: { handle: string; tier: Tier; showOnLeaderboards: boolean; avatar: string };
+  player: { handle: string; tier: Tier; showOnLeaderboards: boolean; outfit: string[] };
   /** This week's league, ranked; empty until the learner earns XP this week. */
   standings: StandingRow[];
   /** Last week's result, until the learner has seen it. */
@@ -78,7 +78,7 @@ export async function getMyLeagueAction(): Promise<MyLeague> {
       weeklyXp: r.weekly_xp,
       pro: r.pro,
       isMe: r.is_me,
-      avatar: r.avatar ?? "mascot",
+      outfit: r.outfit ?? [],
     })),
     result:
       last && isTier(last.from_tier) && isTier(last.to_tier)

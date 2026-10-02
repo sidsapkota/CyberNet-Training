@@ -59,6 +59,10 @@
   --color-mascot-pupil: #041937;
   --color-mascot-shine: #ffffff;
   --color-mascot-alert: #ff7a7a;
+  /* Avatar accessories (avatars v2): a lighter, brighter blue over a lighter navy, so they stand out
+     from the body. Line on the screen tile: 11.6:1; on the body fill: 9.4:1. */
+  --color-mascot-accessory: #8be3ff;
+  --color-mascot-accessory-fill: #224a80;
   /* League tier badges: fixed in both themes, always on their navy tile (like the mascot). */
   --color-tier-ground: #061630;
   --color-tier-line: #00c2ff;

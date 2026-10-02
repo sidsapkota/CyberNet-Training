@@ -1136,27 +1136,47 @@ Pro learners try the cards they got wrong again. Pure rules in `src/lib/progress
 Cosmetic only, never bought, never gambling-like. Pure rules in `src/lib/rewards/` (`items.ts`,
 `rules.ts`, tested), server code in `src/lib/rewards/server.ts` (vetted secret-key use), actions in
 `src/app/actions/rewards.ts`, UI in `src/components/rewards/`.
-- **Avatars:** chosen from a fixed list (`REWARD_ITEMS`), never uploaded, never a photo: mascot
-  heads (the logo shield, with a cap, headphones, glasses, scarf or crown) and tech badges (lucide
-  glyphs via `BadgeGlyph`) on brand tiles. `Avatar` draws one in a node (header, tab bar,
-  dashboard, `/account`, league rows and player cards, where the tier badge moves to a corner).
-  Starters belong to everyone; Pro items (Holo shield, Circuit crown, Trace frame, the only
-  animated one: two beats then still) unlock while the learner has Pro and fall back to the mascot
-  when Pro ends (`effectiveAvatar`).
+- **The avatar is the mascot, dressed up** (avatars v2; art direction `docs/brand/avatars.png`,
+  reference only; plan `docs/plans/avatars-and-rewards.md`). Never uploaded, never a photo.
+  `MascotAvatar` (`src/components/mascot/outfit/`) draws the waving `happy` mascot from the real
+  `Mascot` parts plus one SVG layer per accessory (`accessories.tsx`): head items in the head's
+  64-unit grid (they tilt with it), body items in the viewBox, through the `outfit` slots of
+  `MascotFigure` (behind, torso, neck, head; without them the drawing and static exports are
+  unchanged). Accessories use `--color-mascot-accessory` (lighter, brighter blue) over
+  `--color-mascot-accessory-fill`. `framing="bust"` crops head and shoulders for small circles;
+  `size` under 40px drops fine detail. `Avatar` puts the bust in a node (header 32px, tab bar 24px,
+  dashboard, `/account`, league rows 32px, player cards). Head and face items read at 24px; body
+  items show from about 48px (the hood and cape collar peek out beside the head).
+- **Slots:** one item per slot, at most 5 (`SLOTS`: head, face, neck, body, back). A new item
+  replaces its slot, tapping a worn item takes it off (`wearItem`), and `effectiveOutfit` drops
+  unknown ids, slot clashes and Pro items without Pro (the rest of the outfit stays).
+- **The 12 items and how they're earned** (`AVATAR_ITEMS`, `unlockLabel`, tested): free from the
+  start (backwards cap, round glasses, hoodie); from a spin (beanie, headband, headset, VR visor);
+  milestones, unlocked for good and worked out from progress, never stored (scarf at a 7-day
+  streak, grad cap for a finished course, jetpack at a 30-day streak); Pro, worn while Pro (circuit
+  crown, cape). The sign-up gate shows the mascot in the free cap ("Your own avatar to dress up").
+- **The avatar page** (`/account/rewards`, `AvatarStudio`): a big preview, slot tabs, item tiles
+  (locked ones are dim silhouettes with how to get them), saved on tap through `setOutfitAction`
+  (the server checks every item is owned, `validOutfit`) and reverted if the save fails. Putting an
+  item on pops it in (`PRESS_SPRING`) and plays the mascot's short wave; nothing moves under reduced
+  motion. `/dev/avatars` and `/dev/avatar-page` (dev only) show every item, the size strip and the
+  page with local data; `node scripts/e2e/avatar-shots.mjs` saves them to `docs/plans/avatars/`.
 - **Spins** are earned only by learning: finishing a module (its quiz passed), finishing a course
   (its final passed) and 7, 30 and 100-day streaks (longest streak). `claimSpins` derives them from
-  real progress and records each once (`reward_spins`, idempotent), on end screens and the Rewards
-  page. **Every spin wins:** the server picks, with equal chance, a spin item the learner doesn't own
-  (never a Pro item, so paying never changes a spin); a test keeps the spin pool at least as large
-  as every spin the courses can earn (add items when adding modules). No money, odds, "rare"
-  labels or near misses; the full list is always visible on `/account/rewards`.
-- **Where:** `SpinPrompt` on the lesson-complete and quiz-results screens ("You earned a spin"),
-  `RewardSpin` (a ring of nodes lights in sequence, ~1.2 s, the result at once under reduced
-  motion; "Wear it" / "Not now"), the Rewards page, and the avatar picker on `/account`. Never
-  inside a lesson.
-- **Data** (`20261005100000_avatars_and_rewards.sql`): `profiles.avatar`, `reward_items_owned`,
-  `reward_spins`; learners read their own rows only, the server writes (`check:rls`).
-  `league_standings()` returns the avatar id. `npm run e2e:rewards` checks the flow.
+  real progress and records each once (`reward_spins`, idempotent), on end screens and the avatar
+  page. **Every spin that's spun wins:** a spin is only offered while there's an unowned spin item
+  (`spinCounts`); the server picks one with equal chance (never a Pro item, so paying never changes
+  a spin). Spins earned after that are kept and shown as "N spins saved for new items" until items
+  are added; no filler prizes. No money, odds, "rare" labels or near misses; every item is always
+  listed.
+- **Where:** `SpinPrompt` on the lesson-complete and quiz-results screens ("You earned a spin",
+  only when one can win), `RewardSpin` (a ring of nodes lights in sequence, ~1.2 s, the result at
+  once under reduced motion; "Wear it" / "Not now"), the avatar page, and the "Your avatar" row on
+  `/account`. Never inside a lesson.
+- **Data:** `profiles.outfit` (text[], at most 5 database-safe ids; `20261006100000_avatar_outfits.sql`),
+  `reward_items_owned` (spin items won) and `reward_spins`; learners read their own rows only, the
+  server writes (`check:rls`). `league_standings()` returns the outfit. `profiles.avatar` (v1) is
+  unused, to be dropped with `display_name`. `npm run e2e:rewards` checks the flow.
 
 ## Daily lesson limit
 

@@ -4,13 +4,14 @@ import { useEffect, useState } from "react";
 import { claimSpinsAction, getRewardsAction } from "@/app/actions/rewards";
 import { Button } from "@/components/ui/Button";
 import { useAuth } from "@/lib/auth/AuthProvider";
-import { ownedItems } from "@/lib/rewards/rules";
+import { ownedItems, spinCounts } from "@/lib/rewards/rules";
 import { Avatar } from "./Avatar";
 import { RewardSpin } from "./RewardSpin";
 
 /**
  * On end screens (lesson complete, quiz results): records any spins just earned (a finished module
- * or course, a 7, 30 or 100-day streak) and, if one is waiting, offers it. Signed-in learners only;
+ * or course, a 7, 30 or 100-day streak) and, if one can win something, offers it (spins with nothing
+ * left to win stay saved for new items, shown on the avatar page). Signed-in learners only;
  * nothing shows otherwise. Never inside a lesson (minimalism guardrail).
  */
 export function SpinPrompt() {
@@ -18,6 +19,7 @@ export function SpinPrompt() {
   const signedIn = auth.status === "signed-in";
   const [waiting, setWaiting] = useState(0);
   const [owned, setOwned] = useState<Set<string> | null>(null);
+  const [outfit, setOutfit] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -28,8 +30,10 @@ export function SpinPrompt() {
         if (cancelled || n === 0) return;
         const state = await getRewardsAction();
         if (cancelled) return;
-        setOwned(ownedItems(state.won, state.hasPro));
-        setWaiting(n);
+        const has = ownedItems(state.won, state.hasPro, state.milestones);
+        setOwned(has);
+        setOutfit(state.outfit);
+        setWaiting(spinCounts(n, has).ready);
       })
       .catch(() => {});
     return () => {
@@ -43,9 +47,10 @@ export function SpinPrompt() {
       <div className="mt-6 rounded-card border border-line bg-surface p-5">
         <RewardSpin
           owned={owned}
+          outfit={outfit}
           onDone={(left) => {
             setOpen(false);
-            setWaiting(left);
+            setWaiting(Math.min(left, waiting - 1));
           }}
         />
       </div>
@@ -53,7 +58,7 @@ export function SpinPrompt() {
   }
   return (
     <div className="mt-6 flex items-center gap-3 rounded-card border border-accent-ink bg-accent-soft p-4 text-left">
-      <Avatar avatar="mascot" className="size-11" />
+      <Avatar outfit={outfit} size={44} />
       <div className="min-w-0 flex-1">
         <p className="font-semibold">You earned a spin</p>
         <p className="text-small text-ink-muted">Every spin wins something for your avatar.</p>

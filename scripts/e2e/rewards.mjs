@@ -1,9 +1,9 @@
 // Avatars and rewards end to end (throwaway account, deleted afterwards). Needs the secret key, so
 // run it against a local production build or production:
 //   E2E_BASE_URL=http://localhost:3100 npm run e2e:rewards
-// A passed module quiz and a 7-day streak earn 2 spins; the Rewards page shows them; a spin
-// always wins an unowned item the server picked; "Wear it" puts it in the header; a learner can't
-// wear an item they don't own. Screenshots at 360px in .e2e-shots/rewards-*.png.
+// Avatars v2: a passed module quiz and a 7-day streak earn 2 spins and the scarf; locked items show
+// how to get them; items in different slots wear together; a spin always wins an unowned spin item;
+// with every spin item owned, spins are saved for new items. Screenshots: .e2e-shots/rewards-*.png.
 import fs from "node:fs";
 import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
@@ -51,33 +51,46 @@ try {
   const link = await admin.auth.admin.generateLink({ type: "magiclink", email });
   await page.goto(`${BASE}/auth/callback?token_hash=${link.data.properties.hashed_token}&type=magiclink&next=/account/rewards`);
   await page.waitForURL((u) => u.pathname === "/account/rewards", { timeout: 60000 });
-  const waiting = page.getByRole("button", { name: /spins? waiting/ });
-  await waiting.waitFor({ timeout: 60000 });
-  record("A finished module and a 7-day streak earn 2 spins", /2 spins waiting/.test(await waiting.innerText()));
+  const spinButton = page.getByRole("button", { name: /^Spin/ });
+  await spinButton.waitFor({ timeout: 60000 });
+  record("A finished module and a 7-day streak earn 2 spins, ready to spin", (await spinButton.innerText()).trim() === "Spin (2)");
   const spins = (await admin.from("reward_spins").select("earned_for").eq("user_id", userId)).data ?? [];
   record("…recorded once each", spins.length === 2 && spins.some((s) => s.earned_for === "streak:7") && spins.some((s) => s.earned_for.startsWith("module:")), spins.map((s) => s.earned_for).join(", "));
-  await page.screenshot({ path: path.join(APP, ".e2e-shots", "rewards-page.png"), fullPage: true });
+  await page.getByRole("tab", { name: "Head" }).waitFor();
+  const crown = page.getByRole("button", { name: /Circuit crown, locked: Pro/ });
+  record("Locked items are listed with how to get them (the crown: Pro)", (await crown.count()) === 1 && (await crown.isDisabled()));
+  await page.getByRole("tab", { name: "Neck" }).click();
+  await page.getByRole("button", { name: /^Scarf, tap to wear/ }).click();
+  await page.getByRole("tab", { name: "Face" }).click();
+  await page.getByRole("button", { name: /^Round glasses, tap to wear/ }).click();
+  await page.waitForTimeout(2000);
+  const outfit1 = (await admin.from("profiles").select("outfit").eq("id", userId).single()).data?.outfit ?? [];
+  record("The 7-day scarf and the free glasses wear together (saved on the server)", outfit1.join() === "glasses,scarf", outfit1.join());
+  await page.screenshot({ path: path.join(APP, ".e2e-shots", "rewards-page.png") });
 
-  await waiting.click();
-  await page.getByRole("button", { name: "Spin" }).click();
+  await spinButton.click();
+  await page.getByRole("button", { name: "Spin", exact: true }).click();
   await page.getByRole("button", { name: "Wear it" }).waitFor({ timeout: 30000 });
   await page.screenshot({ path: path.join(APP, ".e2e-shots", "rewards-result.png") });
   const owned = (await admin.from("reward_items_owned").select("item_id, source").eq("user_id", userId)).data ?? [];
-  record("Every spin wins: one new item, from a spin", owned.length === 1 && owned[0].source === "spin", owned[0]?.item_id);
+  record("Every spin wins: one new spin item", owned.length === 1 && owned[0].source === "spin" && ["beanie", "headband", "headset", "visor"].includes(owned[0].item_id), owned[0]?.item_id);
   const used = (await admin.from("reward_spins").select("item_id").eq("user_id", userId).not("spun_at", "is", null)).data ?? [];
   record("…and the spin is used up", used.length === 1 && used[0].item_id === owned[0]?.item_id);
   await page.getByRole("button", { name: "Wear it" }).click();
-  await page.waitForTimeout(1500);
-  const avatar = (await admin.from("profiles").select("avatar").eq("id", userId).single()).data?.avatar;
-  record("Wear it saves the avatar", avatar === owned[0]?.item_id, avatar);
+  await page.waitForTimeout(2000);
+  const outfit2 = (await admin.from("profiles").select("outfit").eq("id", userId).single()).data?.outfit ?? [];
+  record("Wear it adds the prize to the outfit, keeping the rest", outfit2.includes(owned[0]?.item_id) && outfit2.includes("scarf"), outfit2.join());
 
-  // The server refuses items the learner doesn't own (the action is the only way to set it).
-  const state = await page.evaluate(async () => (await fetch("/account/rewards")).status);
-  record("The Rewards page still loads afterwards", state === 200);
+  // Every spin item owned: the last waiting spin and new ones are saved for new items, never spun.
+  await admin.from("reward_items_owned").upsert(["beanie", "headband", "headset", "visor"].map((item_id) => ({ user_id: userId, item_id, source: "spin" })), { onConflict: "user_id,item_id", ignoreDuplicates: true });
+  await page.goto(`${BASE}/account/rewards`);
+  const saved = page.getByText(/saved for new items/);
+  await saved.waitFor({ timeout: 60000 });
+  record("With nothing left to win, spins show as saved for new items (no Spin button)", /^1 spin saved for new items$/.test((await saved.innerText()).trim()) && (await spinButton.count()) === 0, await saved.innerText());
   await page.goto(`${BASE}/account`);
   await page.getByRole("heading", { name: "Your avatar" }).waitFor({ timeout: 60000 });
   await page.screenshot({ path: path.join(APP, ".e2e-shots", "rewards-account.png"), fullPage: true });
-  record("Account settings show the avatar picker", true);
+  record("Account settings link to the avatar page", (await page.getByRole("link", { name: "Change" }).count()) === 1);
 } catch (e) {
   console.error(e);
   results.push({ check: "no errors", ok: false });
