@@ -13,7 +13,7 @@
       "bins": [
         {
           "id": "hacked",
-          "label": "Sign of a take-over"
+          "label": "Take-over"
         },
         {
           "id": "normal",
@@ -23,22 +23,22 @@
       "items": [
         {
           "id": "alert",
-          "label": "An order you never placed",
+          "label": "An order you didn't place",
           "bin": "hacked"
         },
         {
           "id": "device",
-          "label": "A laptop you don't own, signed in",
+          "label": "A strange laptop signed in",
           "bin": "hacked"
         },
         {
           "id": "own",
-          "label": "A receipt for something you just bought",
+          "label": "A receipt for your purchase",
           "bin": "normal"
         },
         {
           "id": "change",
-          "label": "A code right after you tapped sign in",
+          "label": "A code as you sign in",
           "bin": "normal"
         }
       ],
@@ -48,28 +48,28 @@
       "id": "q-music-takeover",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "Your music app is playing songs you never picked. You can still sign in.",
+      "prompt": "Your music app is playing songs you never picked.",
       "start": "start",
       "steps": [
         {
           "id": "start",
-          "text": "What do you do first?",
+          "text": "You can still sign in. What first?",
           "choices": [
             {
               "id": "tell-change",
-              "text": "Tell a trusted adult, and make a new, strong password",
+              "text": "Tell an adult; make a new strong password",
               "consequence": "Good start: the old password no longer works.",
               "next": "recovery"
             },
             {
               "id": "wait",
-              "text": "Wait a week to see if it keeps happening",
+              "text": "Wait a week and see",
               "consequence": "Every day gives whoever is in your account more time.",
               "outcome": "fail"
             },
             {
               "id": "new-account",
-              "text": "Make a new account and forget the old one",
+              "text": "Start a new account, forget the old one",
               "consequence": "The attacker keeps the old account, and may try that password elsewhere.",
               "outcome": "fail"
             }
@@ -77,7 +77,7 @@
         },
         {
           "id": "recovery",
-          "text": "In the settings, the recovery email is one you've never seen. What now?",
+          "text": "The recovery email is one you've never seen. Now what?",
           "choices": [
             {
               "id": "remove",
@@ -104,22 +104,22 @@
       "pairs": [
         {
           "id": "card",
-          "left": "Someone used your card details online",
-          "right": "Your bank, straight away"
+          "left": "Your card used online",
+          "right": "Your bank, now"
         },
         {
           "id": "scam",
-          "left": "A fake parcel text to warn others about",
+          "left": "A scam text, to warn others",
           "right": "Scamwatch"
         },
         {
           "id": "danger",
-          "left": "Someone could get hurt right now",
+          "left": "Someone may get hurt now",
           "right": "Call 000"
         },
         {
           "id": "details",
-          "left": "Your passport details were stolen",
+          "left": "Passport details stolen",
           "right": "IDCARE"
         }
       ],
@@ -129,7 +129,7 @@
       "id": "q-voice-message",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "A new number's voice message sounds like your aunt: \"Lost my phone! Buy two gift cards and send me the codes, quick.\"",
+      "prompt": "A new number's voice message sounds like your aunt: \"Lost my phone! Buy gift cards and send the codes, quick.\"",
       "start": "start",
       "steps": [
         {
@@ -138,19 +138,19 @@
           "choices": [
             {
               "id": "known-number",
-              "text": "Call your aunt on the number you already have",
+              "text": "Call her usual number",
               "consequence": "She answers, confused: she never lost her phone. It was a voice clone.",
               "outcome": "success"
             },
             {
               "id": "buy",
-              "text": "Buy the cards: it's definitely her voice",
+              "text": "Buy them: it's her voice",
               "consequence": "Voices can be copied with AI. Gift card codes are hard to get back once sent.",
               "outcome": "fail"
             },
             {
               "id": "ask-new",
-              "text": "Reply to the new number to ask if it's really her",
+              "text": "Reply to ask if it's her",
               "consequence": "The new number belongs to whoever sent it, so of course they'll say yes.",
               "outcome": "fail"
             }
@@ -224,7 +224,7 @@
       "id": "q-code",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "Your cousin's account messages: \"I entered you in a giveaway! A code will arrive by text. Just send it to me.\"",
+      "prompt": "Your cousin's account: \"I entered you in a giveaway! Send me the code you're about to get.\"",
       "start": "start",
       "steps": [
         {
@@ -233,19 +233,19 @@
           "choices": [
             {
               "id": "dont",
-              "text": "Don't send it, and warn your cousin another way",
+              "text": "Don't send it; warn your cousin another way",
               "consequence": "Right: that code was for signing in to your account.",
               "outcome": "success"
             },
             {
               "id": "send",
-              "text": "Send it: it's your cousin's account",
+              "text": "Send it: it's your cousin",
               "consequence": "That code opens your account, and your cousin's account may have been taken over.",
               "outcome": "fail"
             },
             {
               "id": "send-then-change",
-              "text": "Send it, then change your password straight after",
+              "text": "Send it, then change your password",
               "consequence": "They could be in your account before you change anything. Never send a sign-in code.",
               "outcome": "fail"
             }

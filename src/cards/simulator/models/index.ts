@@ -280,6 +280,8 @@ export function describeDuration(seconds: number): string {
 const PasswordParams = z.object({
   /** How fast the guessing computer is. Illustrative: real speeds vary enormously. */
   guessesPerSecond: z.number().min(1).max(1e12).default(1e9),
+  /** The starting length (fixed, if the card has no `length` slider). */
+  length: z.number().int().min(4).max(24).default(8),
 });
 
 /**
@@ -290,10 +292,10 @@ const PasswordParams = z.object({
  */
 export const passwordModel: SimulatorModel<z.infer<typeof PasswordParams>> = {
   id: "password",
-  summary: "Slider `length`; toggles `lowercase`, `uppercase`, `digits`, `symbols`. Outputs the time to try every combination.",
+  summary: "Slider `length` (or a fixed `length` param); toggles `lowercase`, `uppercase`, `digits`, `symbols`. Outputs the time to try every combination.",
   params: PasswordParams,
-  inputs: () => ({
-    length: { type: "number", default: 8, min: 4, max: 24 },
+  inputs: (p) => ({
+    length: { type: "number", default: p.length, min: 4, max: 24 },
     lowercase: { type: "boolean", default: true },
     uppercase: { type: "boolean", default: false },
     digits: { type: "boolean", default: false },
@@ -301,7 +303,7 @@ export const passwordModel: SimulatorModel<z.infer<typeof PasswordParams>> = {
   }),
   outputs: () => ({ years: { type: "number" }, pool: { type: "number" }, strength: { type: "list" } }),
   run(inputs, p) {
-    const length = Math.round(clamp(num(inputs.length, 8), 1, 64));
+    const length = Math.round(clamp(num(inputs.length, p.length), 1, 64));
     const pool = (Object.keys(CHARACTER_SETS) as (keyof typeof CHARACTER_SETS)[])
       .filter((set) => bool(inputs[set], set === "lowercase"))
       .reduce((sum, set) => sum + CHARACTER_SETS[set], 0);

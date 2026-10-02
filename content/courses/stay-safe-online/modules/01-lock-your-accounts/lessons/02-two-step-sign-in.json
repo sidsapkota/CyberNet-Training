@@ -7,10 +7,20 @@
   "icon": "smartphone",
   "cards": [
     {
+      "id": "code-you-didnt-ask-for",
+      "type": "true_false",
+      "difficulty": "core",
+      "prompt": "A sign-in code arrives that you didn't ask for. Someone may have your password.",
+      "answer": true,
+      "explanation": "True. Sites send a code when someone types your password. If it wasn't you, someone else has it: change it.",
+      "hint": "When does a site send a sign-in code?",
+      "nudge": "A code only arrives when someone types your password. Was it you?"
+    },
+    {
       "id": "stranger-far-away",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Even a great password can be stolen. Could a **stranger far away** get each of these?",
+      "prompt": "Could a **stranger far away** get it?",
       "bins": [
         {
           "id": "yes",
@@ -25,11 +35,6 @@
         {
           "id": "leaked-password",
           "label": "A password stolen in a website hack",
-          "bin": "yes"
-        },
-        {
-          "id": "fake-site-password",
-          "label": "A password you typed into a fake website",
           "bin": "yes"
         },
         {
@@ -53,17 +58,20 @@
       "nudge": "Information can be copied from far away; things in your pocket, or part of your body, can't."
     },
     {
-      "id": "what-two-step-is",
-      "type": "explainer",
+      "id": "meet-two-step",
+      "type": "reveal",
       "difficulty": "core",
-      "title": "Two-step sign-in",
-      "body": "**Two-step sign-in** (or **two-factor**) asks for your password **plus** a second proof, like your phone or fingerprint. A stolen password alone can't get in.\n\nStrongest first:\n\n- A **[[passkey]]**: your device checks your fingerprint, face or PIN. Fake sites can't use it.\n- A code from an [[authenticator app]].\n- A **text code**: scammers can sometimes steal phone numbers."
+      "show": {
+        "kind": "term",
+        "term": "two-step-sign-in"
+      },
+      "sentence": "**Two-step sign-in** asks for your password **plus** a second proof, like your phone."
     },
     {
       "id": "the-code-text",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "Sites send a **sign-in code** when someone types your password. **Nobody real ever asks you to send one.**",
+      "prompt": "**Nobody real ever asks you to send a sign-in code.**",
       "start": "text",
       "steps": [
         {
@@ -107,10 +115,30 @@
       "hint": "Codes arrive when someone tries to sign in, and nobody real asks you for one."
     },
     {
+      "id": "meet-passkey",
+      "type": "reveal",
+      "difficulty": "core",
+      "show": {
+        "kind": "term",
+        "term": "passkey"
+      },
+      "sentence": "A **passkey** signs you in with your face, fingerprint or PIN, and fake sites can't use it."
+    },
+    {
+      "id": "meet-authenticator",
+      "type": "reveal",
+      "difficulty": "core",
+      "show": {
+        "kind": "term",
+        "term": "authenticator-app"
+      },
+      "sentence": "An **authenticator app** makes fresh codes on your phone, safer than codes sent by text."
+    },
+    {
       "id": "rank-proofs",
       "type": "drag_to_order",
       "difficulty": "core",
-      "prompt": "Put these ways to sign in in order, from **strongest** to **weakest**.",
+      "prompt": "Strongest to weakest: put them in order.",
       "items": [
         {
           "id": "passkey",
@@ -118,47 +146,47 @@
         },
         {
           "id": "app",
-          "label": "Password + authenticator app code"
+          "label": "Password + app code"
         },
         {
           "id": "sms",
-          "label": "Password + text message code"
+          "label": "Password + text code"
         },
         {
           "id": "password-only",
-          "label": "Password on its own"
+          "label": "Password alone"
         }
       ],
       "explanation": "A **passkey** is strongest, then an **authenticator app** code, then a **text code**. A password alone is weakest: one leak and it's open.",
-      "hint": "The ways to sign in were listed strongest first, and any second proof beats none.",
+      "hint": "Passkeys were strongest, then the authenticator app. Any second proof beats none.",
       "nudge": "Any second proof beats a password alone. Which second proof can scammers sometimes steal?"
     },
     {
       "id": "text-codes-only",
       "type": "scenario",
       "difficulty": "challenge",
-      "prompt": "A new music app only offers **text message codes** for two-step sign-in.",
+      "prompt": "A music app only offers **text codes** for two-step sign-in.",
       "start": "choose",
       "steps": [
         {
           "id": "choose",
-          "text": "Text codes are the weakest kind. Turn two-step sign-in on, or skip it?",
+          "text": "Text codes are the weakest kind. Turn it on?",
           "choices": [
             {
               "id": "turn-on",
-              "text": "Turn it on: a weaker second lock still beats having none",
+              "text": "Yes: a weak second lock beats none",
               "consequence": "Right. Anyone with just your password is now stuck without the code.",
               "outcome": "success"
             },
             {
               "id": "skip",
-              "text": "Skip it: text codes can be stolen, so they're not worth it",
+              "text": "No: text codes can be stolen",
               "consequence": "Stealing a phone number takes real work, and most attackers only have a password. A text code still stops them.",
               "outcome": "fail"
             },
             {
               "id": "wait",
-              "text": "Skip it for now, and wait until the app offers passkeys",
+              "text": "Not yet: wait for passkeys",
               "consequence": "That could take years, and until then your account has only one lock. Turn on what's offered now.",
               "outcome": "fail"
             }
@@ -172,7 +200,7 @@
       "id": "forty-accounts",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A **password manager** app remembers a strong, different password for every account. What's safest for Sam's 40 accounts?",
+      "prompt": "A **password manager** remembers a different strong password for every account. What's safest for Sam's 40 accounts?",
       "options": [
         {
           "id": "manager",
@@ -202,59 +230,54 @@
         {
           "id": "passphrase",
           "left": "Passphrase",
-          "right": "Four or more random words"
+          "right": "Four random words"
         },
         {
           "id": "manager",
           "left": "Password manager",
-          "right": "Remembers a password for each account"
+          "right": "Remembers your passwords"
         },
         {
           "id": "two-step",
           "left": "Two-step sign-in",
-          "right": "A second proof as well as your password"
+          "right": "A second proof at sign-in"
         },
         {
           "id": "passkey",
           "left": "Passkey",
-          "right": "Signs in with face, fingerprint or PIN"
-        },
-        {
-          "id": "code",
-          "left": "Sign-in code",
-          "right": "A one-time number sent at sign-in"
+          "right": "Face, fingerprint or PIN"
         }
       ],
       "explanation": "A **passphrase** is long and memorable, a **password manager** remembers your passwords, and **two-step**, **passkeys** and **codes** prove it's you. Never share a code.",
-      "hint": "Two of them are about remembering passwords, and three are about signing in.",
+      "hint": "Two are about remembering passwords, and two are about signing in.",
       "nudge": "Go through each one again: is it something you make up, an app, or a step when you sign in?"
     },
     {
       "id": "lost-phone",
       "type": "scenario",
       "difficulty": "challenge",
-      "prompt": "Two-step sign-in gives you **backup codes** to save, in case you lose your phone. Months later, it falls in a lake.",
+      "prompt": "You saved **backup codes** when you set up two-step. Then your phone falls in a lake.",
       "start": "start",
       "steps": [
         {
           "id": "start",
-          "text": "On a laptop, the site asks for the code from your authenticator app. What can you use?",
+          "text": "The site wants your app's code. What can you use?",
           "choices": [
             {
               "id": "backup",
-              "text": "One of the backup codes you saved when you set it up",
+              "text": "A backup code you saved",
               "consequence": "You're in. Now set two-step sign-in up again on your new phone.",
               "outcome": "success"
             },
             {
               "id": "turn-off",
-              "text": "Ask the website to switch two-step off for good",
+              "text": "Ask the site to turn two-step off",
               "consequence": "That leaves your account with one lock. Use the backup codes you saved.",
               "outcome": "fail"
             },
             {
               "id": "stranger",
-              "text": "Ask someone online who says they can get you in",
+              "text": "A stranger who says they can get you in",
               "consequence": "Anyone offering to get into accounts for you is a scammer.",
               "outcome": "fail"
             }
@@ -269,7 +292,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- **Two-step sign-in** adds a second proof, so a stolen password isn't enough.\n- **Never share a sign-in code.** An unexpected one? Change your password.\n- A **password manager** remembers every password and won't fill in fake sites.\n\nThat's your accounts locked. Next module: spotting scams."
+      "body": "- **Two-step sign-in** adds a second proof, so a stolen password isn't enough.\n- **Never share a sign-in code.** One you didn't ask for? Change your password.\n- **Try this:** turn on two-step sign-in for one account, with an adult."
     }
   ]
 }

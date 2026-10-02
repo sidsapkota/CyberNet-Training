@@ -248,7 +248,7 @@ describe("real content in /content", () => {
         // Scenarios and teardowns already answer each wrong move with its own feedback.
         if (card.type === "scenario" || card.type === "teardown") continue;
         const everyWrongOptionNudged =
-          card.type === "multiple_choice" && card.options.every((o) => o.id === card.correctOptionId || o.nudge);
+          (card.type === "multiple_choice" || card.type === "fill_gap") && card.options.every((o) => o.id === card.correctOptionId || o.nudge);
         expect(Boolean(card.nudge) || everyWrongOptionNudged, `${where} needs a nudge`).toBe(true);
       }
     }

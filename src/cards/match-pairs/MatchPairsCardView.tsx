@@ -137,7 +137,7 @@ export function MatchPairsCardView({
         Tap a left item, then its match.
       </p>
 
-      <div ref={containerRef} className="relative mt-6 grid grid-cols-2 gap-x-9 sm:gap-x-14">
+      <div ref={containerRef} className="relative mt-4 grid grid-cols-2 gap-x-9 sm:mt-6 sm:gap-x-14">
         <svg aria-hidden="true" className="pointer-events-none absolute inset-0 size-full overflow-visible">
           {Object.entries(answer).map(([leftId, rightId]) => {
             const a = ports[portKey("left", leftId)];
@@ -165,10 +165,10 @@ export function MatchPairsCardView({
             );
           })}
         </svg>
-        <div role="group" aria-label="Items to match" className="flex flex-col gap-2.5">
+        <div role="group" aria-label="Items to match" className="flex flex-col gap-2 sm:gap-2.5">
           {card.pairs.map((p) => renderItem("left", p.id))}
         </div>
-        <div role="group" aria-label="Possible matches" className="flex flex-col gap-2.5">
+        <div role="group" aria-label="Possible matches" className="flex flex-col gap-2 sm:gap-2.5">
           {rightOrder.map((id) => renderItem("right", id))}
         </div>
       </div>

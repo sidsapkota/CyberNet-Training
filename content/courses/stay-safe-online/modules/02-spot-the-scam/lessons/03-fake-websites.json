@@ -7,21 +7,31 @@
   "icon": "globe",
   "cards": [
     {
+      "id": "looks-just-like",
+      "type": "true_false",
+      "difficulty": "core",
+      "prompt": "A link in a text opens a page that looks just like your bank's. If it looks right, it's safe.",
+      "answer": false,
+      "explanation": "False. A fake site can copy every logo and colour. Only the **address** shows who really owns the page.",
+      "hint": "What's easy to copy on a web page, and what isn't?",
+      "nudge": "Logos and colours are easy to copy. Something else tells you who owns the page."
+    },
+    {
       "id": "read-the-address",
       "type": "explainer",
       "difficulty": "core",
       "title": "Read the address",
-      "body": "A fake site can copy a logo, but not the real address. The owner is the name just before the **very last ending** (like `.example`, `.com` or `.com.au`). Anything after a `/` is just a page.\n\n- `login.yourbank.example` is Your Bank's: only the owner can add things in front.\n- `yourbank.example.login-check.example` belongs to **login-check.example**.\n- `yourbank-secure.example` and `yourbnak.example` are [[lookalikes|lookalike-domain]]."
+      "body": "A fake site can copy a logo, but not the real address. The **owner** is the name just before the **very last ending** (like `.example` or `.com.au`).\n\n- `login.yourbank.example`: Your Bank's.\n- `yourbank.example.login-check.example`: owned by **login-check.example**.\n- `yourbank-secure.example`: a [[lookalike|lookalike-domain]]."
     },
     {
       "id": "bank-or-not",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Which addresses really belong to Your Bank (`yourbank.example`)?",
+      "prompt": "Really Your Bank's (`yourbank.example`)?",
       "bins": [
         {
           "id": "real",
-          "label": "Really Your Bank"
+          "label": "Your Bank"
         },
         {
           "id": "fake",
@@ -55,10 +65,20 @@
       "nudge": "Only the name just before the very last ending counts, and it must be exactly `yourbank`."
     },
     {
+      "id": "meet-padlock",
+      "type": "reveal",
+      "difficulty": "core",
+      "show": {
+        "kind": "term",
+        "term": "encryption"
+      },
+      "sentence": "A **padlock** means **encrypted**: nobody can read your data on its way to the site."
+    },
+    {
       "id": "padlock-means",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A padlock means **encrypted**: no one can read data on the way. This page has one and wants your PIN. What does it prove?",
+      "prompt": "This page has a padlock and wants your PIN. What does the padlock prove?",
       "options": [
         {
           "id": "encrypted",
@@ -83,7 +103,7 @@
       "id": "spot-the-site",
       "type": "hotspot",
       "difficulty": "core",
-      "prompt": "This came from a link in a text. Your Bank is `yourbank.example` and **never** asks for your PIN. Tap **every** warning sign.",
+      "prompt": "Your Bank is `yourbank.example` and **never** asks for your PIN. Tap **every** warning sign.",
       "scene": "fake-website",
       "mode": "tap",
       "targets": [
@@ -99,7 +119,7 @@
       "id": "manager-stays-quiet",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "A **password manager** only fills in on the real site. You tap a link in an email to sign in to your game.",
+      "prompt": "Your **password manager** only fills in on the real site.",
       "start": "start",
       "steps": [
         {
@@ -220,40 +240,11 @@
       "hint": "For each address, find the very last ending, then the name just before it."
     },
     {
-      "id": "label-the-site",
-      "type": "hotspot",
-      "difficulty": "challenge",
-      "prompt": "Label four things on this page.",
-      "scene": "fake-website",
-      "mode": "label",
-      "labels": [
-        {
-          "part": "site-address",
-          "label": "Wrong owner"
-        },
-        {
-          "part": "site-banner",
-          "label": "Rushing you"
-        },
-        {
-          "part": "site-pin",
-          "label": "Asks for your PIN"
-        },
-        {
-          "part": "site-padlock",
-          "label": "Only means encrypted"
-        }
-      ],
-      "explanation": "The address has the **wrong owner**, the banner is **rushing you**, the page **asks for your PIN**, and the padlock **only means encrypted**: it doesn't make the site real.",
-      "hint": "Match each label to one part of the page. One label is about something that looks reassuring but proves nothing.",
-      "nudge": "Each label is something you learned about fake sign-in pages. Take one at a time and find the part it describes."
-    },
-    {
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- The owner is the name **just before the very last ending**.\n- A **padlock only means encrypted**. Scam sites can have one.\n- Sign in through the **app, a bookmark or a typed address**.\n\nThat's scams covered. Next: keeping your private stuff private."
+      "body": "- The **owner** is the name just before the very last ending.\n- A **padlock only means encrypted**: scam sites can have one.\n- **Try this:** bookmark the real sign-in pages you use."
     }
   ]
 }

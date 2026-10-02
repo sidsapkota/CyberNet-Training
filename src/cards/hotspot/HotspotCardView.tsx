@@ -55,7 +55,7 @@ function TapMode({ card, answer, onAnswerChange, status, parts, hidden, locked, 
         </span>{" "}
         selected
       </p>
-      <div className="mt-4">
+      <div className="mt-3 sm:mt-4">
         <SceneStage
           sceneId={card.scene}
           hidden={hidden}
@@ -140,10 +140,11 @@ function LabelMode({ card, answer, onAnswerChange, parts, hidden, locked, onPlac
 
   return (
     <>
-      <p className="mt-2 text-small text-ink-muted">Pick a label, then tap its spot.</p>
+      {/* Short phones: the how-to-play panel teaches this, so the line gives its room to the scene. */}
+      <p className="mt-2 text-small text-ink-muted [@media(max-height:600px)]:sr-only">Pick a label, then tap its spot.</p>
       {/* The labels sit above the scene, so labels and spots are on screen together. */}
       {!locked && (
-        <div role="group" aria-label="Labels" className="mt-3 flex min-h-11 flex-wrap gap-2">
+        <div role="group" aria-label="Labels" className="mt-2 flex min-h-11 flex-wrap gap-1.5 sm:mt-3 sm:gap-2">
           {tray.map((i) => (
             <motion.button
               key={i}
@@ -156,7 +157,7 @@ function LabelMode({ card, answer, onAnswerChange, parts, hidden, locked, onPlac
                 if (pickedPart) place(pickedPart, i);
                 else setPickedLabel(pickedLabel === i ? null : i);
               }}
-              className={`min-h-11 rounded-control border-2 px-3 text-small font-semibold transition-colors ${
+              className={`min-h-11 rounded-control border-2 px-2 text-small font-semibold transition-colors sm:px-3 ${
                 pickedLabel === i ? "border-accent-ink bg-accent-soft text-ink shadow-glow" : "border-line-strong bg-surface text-ink hover:border-accent-ink"
               }`}
             >
@@ -166,7 +167,7 @@ function LabelMode({ card, answer, onAnswerChange, parts, hidden, locked, onPlac
           {tray.length === 0 && <span className="self-center text-small text-ink-faint">All labels placed. Press Check.</span>}
         </div>
       )}
-      <div className="mt-4">
+      <div className="mt-3 sm:mt-4">
         <SceneStage sceneId={card.scene} hidden={hidden}>
           {markers.map((part, n) => {
             const labelIndex = answer.placed[part.id];

@@ -51,10 +51,12 @@ export function overlayOrder<T extends { box: Box }>(parts: readonly T[]): T[] {
 const MIN_HEIGHT = 150;
 /**
  * Scenes that show their own text (an email, a text message, a web page, a file list): never shrunk
- * to fit, or their words become unreadable and their parts too small to tap apart. A card using one
- * that doesn't fit must be split (the fit audit lists it).
+ * below their own size (1 unit = 1px, what their text sizes were drawn for), or their words become
+ * unreadable and their parts too small to tap apart. They grow up to READABLE_MAX when there's room.
+ * A card using one that doesn't fit must be split (the fit audit lists it).
  */
 const READABLE = new Set<SceneId>(["file-browser", "email", "text-message", "fake-website"]);
+const READABLE_MAX = 1.25;
 /** Room kept under the scene: the page's bottom padding (the hint and Back live in the footer). */
 const BELOW = 28;
 
@@ -181,7 +183,7 @@ export function SceneStage({
             fitted.height !== null && shrink
               ? `min(100%, ${Math.round(fitted.height * ratio)}px)`
               : !shrink
-                ? `min(100%, ${Math.round(MAX_HEIGHT * ratio)}px)`
+                ? `min(100%, ${Math.round(Math.min(MAX_HEIGHT * ratio, scene.width * READABLE_MAX))}px, max(${scene.width}px, ${Math.round((fitted.height ?? MAX_HEIGHT) * ratio)}px))`
               : `min(100%, ${Math.round(MAX_HEIGHT * ratio)}px, calc((100dvh - ${RESERVED}) * ${ratio.toFixed(4)}))`,
         }}
       >

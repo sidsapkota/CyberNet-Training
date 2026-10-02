@@ -104,7 +104,15 @@ describe("battery", () => {
 });
 
 describe("password", () => {
-  const run = (inputs: Record<string, number | boolean>) => passwordModel.run(inputs, { guessesPerSecond: 1e9 });
+  const run = (inputs: Record<string, number | boolean>) => passwordModel.run(inputs, { guessesPerSecond: 1e9, length: 8 });
+
+  it("uses a fixed length param when the card has no length slider", () => {
+    const params = passwordModel.params.parse({ length: 10 });
+    expect(passwordModel.inputs(params).length?.default).toBe(10);
+    // 26^10 ≈ 1.4e14 guesses ≈ 1.6 days: short of 100 years until more kinds of characters are added.
+    expect(passwordModel.run({}, params).years).toBeLessThan(1);
+    expect(passwordModel.run({ uppercase: true, digits: true, symbols: true }, params).years).toBeGreaterThan(100);
+  });
 
   it("counts every combination of a random password: pool ^ length ÷ guesses per second", () => {
     // 26^8 ≈ 2.1e11 guesses at a billion a second ≈ 209 seconds.

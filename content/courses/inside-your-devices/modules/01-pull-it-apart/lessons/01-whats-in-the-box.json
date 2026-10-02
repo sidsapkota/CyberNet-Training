@@ -11,7 +11,12 @@
       "type": "reveal",
       "difficulty": "core",
       "prompt": "Tap the glowing part.",
-      "show": { "kind": "part", "scene": "laptop", "part": "battery", "view": "open" },
+      "show": {
+        "kind": "part",
+        "scene": "laptop",
+        "part": "battery",
+        "view": "open"
+      },
       "sentence": "This is the laptop's **battery**: it stores the energy that runs everything."
     },
     {
@@ -19,7 +24,12 @@
       "type": "reveal",
       "difficulty": "core",
       "prompt": "Tap the small plug.",
-      "show": { "kind": "part", "scene": "laptop", "part": "battery-connector", "view": "open" },
+      "show": {
+        "kind": "part",
+        "scene": "laptop",
+        "part": "battery-connector",
+        "view": "open"
+      },
       "sentence": "This is the **battery connector**: unplug it, and nothing inside gets power."
     },
     {
@@ -37,22 +47,49 @@
       "prompt": "Open it: **screws**, then the **panel**, then **unplug the battery**.",
       "scene": "laptop",
       "actions": [
-        { "id": "screw-1", "part": "screw-1", "verb": "unscrew", "nudge": "Unscrew this one first." },
-        { "id": "screw-2", "part": "screw-2", "verb": "unscrew", "nudge": "Unscrew this one first." },
-        { "id": "screw-3", "part": "screw-3", "verb": "unscrew", "nudge": "Unscrew this one first." },
-        { "id": "screw-4", "part": "screw-4", "verb": "unscrew", "nudge": "Unscrew this one first." },
+        {
+          "id": "screw-1",
+          "part": "screw-1",
+          "verb": "unscrew",
+          "nudge": "Unscrew this one first."
+        },
+        {
+          "id": "screw-2",
+          "part": "screw-2",
+          "verb": "unscrew",
+          "nudge": "Unscrew this one first."
+        },
+        {
+          "id": "screw-3",
+          "part": "screw-3",
+          "verb": "unscrew",
+          "nudge": "Unscrew this one first."
+        },
+        {
+          "id": "screw-4",
+          "part": "screw-4",
+          "verb": "unscrew",
+          "nudge": "Unscrew this one first."
+        },
         {
           "id": "panel",
           "part": "panel",
           "verb": "lift",
-          "after": ["screw-1", "screw-2", "screw-3", "screw-4"],
+          "after": [
+            "screw-1",
+            "screw-2",
+            "screw-3",
+            "screw-4"
+          ],
           "nudge": "The panel won't lift until all four screws are out."
         },
         {
           "id": "unplug",
           "part": "battery-connector",
           "verb": "unplug",
-          "after": ["panel"],
+          "after": [
+            "panel"
+          ],
           "nudge": "Lift the panel off first."
         }
       ],
@@ -64,7 +101,12 @@
       "type": "reveal",
       "difficulty": "core",
       "prompt": "Tap the big board.",
-      "show": { "kind": "part", "scene": "laptop", "part": "motherboard", "view": "open" },
+      "show": {
+        "kind": "part",
+        "scene": "laptop",
+        "part": "motherboard",
+        "view": "open"
+      },
       "sentence": "This is the **motherboard**: every part plugs into it, and its thin lines carry signals between them."
     },
     {
@@ -72,7 +114,12 @@
       "type": "reveal",
       "difficulty": "core",
       "prompt": "Tap the small shiny chip.",
-      "show": { "kind": "part", "scene": "laptop", "part": "cpu", "view": "open" },
+      "show": {
+        "kind": "part",
+        "scene": "laptop",
+        "part": "cpu",
+        "view": "open"
+      },
       "sentence": "This is the **CPU**, the brain: it follows the instructions that make your apps work."
     },
     {
@@ -80,7 +127,12 @@
       "type": "reveal",
       "difficulty": "core",
       "prompt": "Tap the stick with a row of chips.",
-      "show": { "kind": "part", "scene": "laptop", "part": "ram", "view": "open" },
+      "show": {
+        "kind": "part",
+        "scene": "laptop",
+        "part": "ram",
+        "view": "open"
+      },
       "sentence": "This is **RAM**, a fast workspace that holds the apps you have open right now."
     },
     {
@@ -88,7 +140,12 @@
       "type": "reveal",
       "difficulty": "core",
       "prompt": "Tap the long, narrow card.",
-      "show": { "kind": "part", "scene": "laptop", "part": "storage", "view": "open" },
+      "show": {
+        "kind": "part",
+        "scene": "laptop",
+        "part": "storage",
+        "view": "open"
+      },
       "sentence": "This is **storage** (an SSD): it keeps your photos, apps and files, even with the power off."
     },
     {
@@ -100,10 +157,22 @@
       "view": "open",
       "mode": "label",
       "labels": [
-        { "part": "cpu", "label": "Follows instructions" },
-        { "part": "ram", "label": "Holds open apps" },
-        { "part": "storage", "label": "Keeps your files" },
-        { "part": "battery", "label": "Stores energy" }
+        {
+          "part": "cpu",
+          "label": "Follows instructions"
+        },
+        {
+          "part": "ram",
+          "label": "Holds open apps"
+        },
+        {
+          "part": "storage",
+          "label": "Keeps your files"
+        },
+        {
+          "part": "battery",
+          "label": "Stores energy"
+        }
       ],
       "explanation": "The small shiny chip, the **CPU**, follows instructions. The **RAM** stick holds open apps, the long **SSD** keeps your files, and the **battery** stores energy. This laptop's RAM and SSD unclip, but many thin laptops have them **soldered** to the board instead.",
       "hint": "Use the clues: a small shiny chip, a stick with a row of chips, a long card with stripes, and a lightning bolt.",
@@ -138,13 +207,34 @@
       "view": "open",
       "mode": "explore",
       "parts": [
-        { "part": "cpu", "job": "The processor does the CPU's job, and the graphics too, in one chip." },
-        { "part": "ram", "job": "The RAM chip is soldered on, so it can't be swapped." },
-        { "part": "storage", "job": "The storage chip keeps your photos and apps when the phone is off." },
-        { "part": "battery", "job": "The battery fills most of the phone, so it can last all day." },
-        { "part": "battery-connector", "job": "The battery connector is unplugged first in every repair." },
-        { "part": "camera", "job": "The camera's lens looks out through the back cover." },
-        { "part": "charging-port", "job": "The charging port is open to the outside, so pocket fluff can get in." }
+        {
+          "part": "cpu",
+          "job": "The processor does the CPU's job, and the graphics too, in one chip."
+        },
+        {
+          "part": "ram",
+          "job": "The RAM chip is soldered on, so it can't be swapped."
+        },
+        {
+          "part": "storage",
+          "job": "The storage chip keeps your photos and apps when the phone is off."
+        },
+        {
+          "part": "battery",
+          "job": "The battery fills most of the phone, so it can last all day."
+        },
+        {
+          "part": "battery-connector",
+          "job": "The battery connector is unplugged first in every repair."
+        },
+        {
+          "part": "camera",
+          "job": "The camera's lens looks out through the back cover."
+        },
+        {
+          "part": "charging-port",
+          "job": "The charging port is open to the outside, so pocket fluff can get in."
+        }
       ],
       "explanation": "Same jobs as the laptop, packed tighter: the processor, [[RAM]] and [[storage]] chips are all soldered to one small board, so none of them can be swapped. The battery takes up most of the space."
     },
@@ -164,7 +254,10 @@
       "difficulty": "core",
       "prompt": "Before touching anything inside, repairers unplug the ___.",
       "options": [
-        { "id": "battery", "text": "battery" },
+        {
+          "id": "battery",
+          "text": "battery"
+        },
         {
           "id": "camera",
           "text": "camera",
@@ -189,26 +282,37 @@
       "scene": "phone",
       "view": "bracket-unscrewed",
       "actions": [
-        { "id": "heat", "part": "back-cover", "verb": "heat", "nudge": "Soften the glue on the back cover first." },
+        {
+          "id": "heat",
+          "part": "back-cover",
+          "verb": "heat",
+          "nudge": "Soften the glue on the back cover first."
+        },
         {
           "id": "cover",
           "part": "back-cover",
           "verb": "lift",
-          "after": ["heat"],
+          "after": [
+            "heat"
+          ],
           "nudge": "The glue is still hard. Soften it first."
         },
         {
           "id": "bracket",
           "part": "connector-cover",
           "verb": "lift",
-          "after": ["cover"],
+          "after": [
+            "cover"
+          ],
           "nudge": "Take the back cover off first."
         },
         {
           "id": "unplug",
           "part": "battery-connector",
           "verb": "unplug",
-          "after": ["bracket"],
+          "after": [
+            "bracket"
+          ],
           "nudge": "Lift the bracket off the connector first."
         }
       ],
@@ -224,7 +328,9 @@
       "scene": "phone",
       "view": "open",
       "mode": "tap",
-      "targets": ["storage"],
+      "targets": [
+        "storage"
+      ],
       "explanation": "Photos live in **storage**, which keeps everything when the power is off. The camera only takes them, and RAM only holds what's open right now.",
       "hint": "Your photos have to survive the phone being switched off. Which part keeps things when the power goes?",
       "nudge": "The camera takes photos, but it doesn't keep them. Which part keeps your files when the phone is off?"
@@ -234,7 +340,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- Phones and laptops share the same main parts.\n- The CPU follows instructions, RAM holds what's open, storage keeps files.\n- Repairers **unplug the battery first**. Leave real devices to them.\n\nNext: why RAM and storage are so different."
+      "body": "- Phones and laptops share the same main parts.\n- The CPU follows instructions, RAM holds what's open, storage keeps files.\n- Repairers **unplug the battery first**. Leave real devices to them.\n\nNext: why RAM and storage are so different.\n\n**Try this:** find your device's storage size in its settings (ask an adult if you're not sure where)."
     }
   ]
 }

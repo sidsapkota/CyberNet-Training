@@ -42,7 +42,7 @@ export function FillGapCardView({ card, answer, onAnswerChange, status }: CardCo
         </span>{" "}
         <Markdown className="inline [&>p]:inline">{after ?? ""}</Markdown>
       </div>
-      <div role="radiogroup" aria-labelledby={promptId} className="mt-8 flex flex-wrap gap-2.5">
+      <div role="radiogroup" aria-labelledby={promptId} className="mt-4 flex flex-wrap gap-2.5 sm:mt-8">
         {options.map((option) => {
           const selected = option.id === answer;
           return (

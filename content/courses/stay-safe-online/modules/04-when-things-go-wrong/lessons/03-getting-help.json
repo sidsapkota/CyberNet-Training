@@ -7,10 +7,27 @@
   "icon": "life-buoy",
   "cards": [
     {
+      "id": "too-embarrassed",
+      "type": "true_false",
+      "difficulty": "core",
+      "prompt": "A friend got scammed and is too embarrassed to tell anyone. It's their fault for falling for it.",
+      "answer": false,
+      "explanation": "False. Scams fool adults and experts too. **It's never your fault**, and telling someone is brave and smart.",
+      "hint": "Who do scams fool: only careless people, or anyone?",
+      "nudge": "Scammers are good at tricking everyone. The blame is theirs."
+    },
+    {
+      "id": "never-your-fault",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Never your fault",
+      "body": "Scams and online bullying happen to lots of people, even experts. **It's never your fault.** Scammers **count on embarrassment** to keep people quiet.\n\n**Save evidence** before you block: screenshot the messages, username, web address and date. A **private or nude image**? **Don't copy, save or share the image itself.** Write down the username and where it is, and report it."
+    },
+    {
       "id": "helps-or-worse",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Scams and online bullying happen to lots of people, even experts. **It's never your fault.** Scammers **count on embarrassment** to keep people quiet, so telling someone is brave and smart. **Evidence** makes reports easier to act on.\n\nHelps, or makes it worse?",
+      "prompt": "Helps, or makes it worse?",
       "bins": [
         {
           "id": "helps",
@@ -33,11 +50,6 @@
           "bin": "helps"
         },
         {
-          "id": "report",
-          "label": "Report and block the account",
-          "bin": "helps"
-        },
-        {
           "id": "insult",
           "label": "Reply with insults",
           "bin": "worse"
@@ -46,22 +58,24 @@
           "id": "pay",
           "label": "Pay a scammer to go away",
           "bin": "worse"
-        },
-        {
-          "id": "delete-all",
-          "label": "Delete everything before anyone sees it",
-          "bin": "worse"
         }
       ],
-      "explanation": "Evidence, a trusted adult and reporting all help. Replying with insults, paying a scammer (they usually ask for more) and deleting the evidence make things worse.",
+      "explanation": "Evidence and a trusted adult both help. Replying with insults, or paying a scammer (they usually ask for more), makes things worse.",
       "hint": "Which ones keep the evidence and get you help? Which ones give a scammer or bully what they want?",
       "nudge": "Anything that removes the evidence, or gives a scammer or bully what they want, makes it worse."
+    },
+    {
+      "id": "who-can-help",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Who can help",
+      "body": "A **trusted adult** is someone you feel safe with: a parent or carer, teacher, school counsellor or older relative. Outside your family, in Australia:\n\n- **Kids Helpline**, ages 5 to 25: **1800 55 1800**. Free, private, any time.\n- **Lifeline**, for anyone: **13 11 14**, any time."
     },
     {
       "id": "who-to-tell",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "A **trusted adult** is someone you feel safe with: a parent or carer, teacher, school counsellor or older relative. Outside your family, in Australia:\n\n- **Kids Helpline**, ages 5 to 25: **1800 55 1800**. Free, private, any time.\n- **Lifeline**, for anyone: **13 11 14**, any time.\n\nAli is worried about something online, but isn't ready to tell his family. What could he do?",
+      "prompt": "Ali is worried about something online, but isn't ready to tell his family. What could he do?",
       "options": [
         {
           "id": "helpline",
@@ -80,56 +94,20 @@
       ],
       "correctOptionId": "helpline",
       "explanation": "**Kids Helpline (1800 55 1800)** is free, private and open any time for ages 5 to 25, and **Lifeline (13 11 14)** is there any time too. A school counsellor is a trusted adult outside the family, so Ali doesn't have to wait or cope alone.",
-      "hint": "The prompt names some people outside the family who can help."
+      "hint": "The last card named people outside the family who can help."
     },
     {
       "id": "where-to-report",
       "type": "explainer",
       "difficulty": "core",
       "title": "Where to report in Australia",
-      "body": "Use the app's report button first. Then:\n\n- **eSafety Commissioner** (esafety.gov.au): serious [[cyberbullying]] of anyone under 18 that the app hasn't dealt with, adult cyber abuse, and a **private or nude image** of you shared or threatened (report that straight away).\n- **ACCCE**, the Australian Centre to Counter Child Exploitation (accce.gov.au/report): if you're **under 18** and someone pressures or threatens you with a private image. You won't be in trouble.\n- **Scamwatch** (scamwatch.gov.au): report a scam, to help warn others."
-    },
-    {
-      "id": "where-to-go",
-      "type": "match_pairs",
-      "difficulty": "core",
-      "prompt": "More places to go:\n\n- **Your bank, straight away**, if money or card details are involved.\n- **IDCARE** (idcare.org or 1800 595 160): free help to make a plan if your personal details were stolen.\n- **ReportCyber** (cyber.gov.au): report cybercrime to the police.\n- **In danger right now:** call **000**.\n\nMatch each problem to where to go.",
-      "pairs": [
-        {
-          "id": "bullying",
-          "left": "Bullying the app won't remove",
-          "right": "eSafety Commissioner"
-        },
-        {
-          "id": "warn",
-          "left": "A scam you want to warn others about",
-          "right": "Scamwatch"
-        },
-        {
-          "id": "card",
-          "left": "Money taken from your card",
-          "right": "Your bank, straight away"
-        },
-        {
-          "id": "details",
-          "left": "Your personal details were stolen",
-          "right": "IDCARE"
-        },
-        {
-          "id": "danger",
-          "left": "Someone is in danger right now",
-          "right": "Call 000"
-        }
-      ],
-      "explanation": "Serious bullying goes to **eSafety** once the app has had a chance; scams to **Scamwatch**; card problems to **your bank** straight away; stolen details to **IDCARE**; and danger right now is always **000**.",
-      "hint": "Look back at the list on the last card and in this prompt: what is each one for?",
-      "nudge": "Start with the one you're surest of. What is each service for?"
+      "body": "Report in the app first. Then:\n\n- **eSafety** (esafety.gov.au): serious [[cyberbullying]] of under-18s the app hasn't fixed, adult cyber abuse, and a **private or nude image** of you shared or threatened.\n- **ACCCE** (accce.gov.au/report): **under 18** and pressured or threatened over a private image. You won't be in trouble.\n- **Scamwatch** (scamwatch.gov.au): report a scam to warn others."
     },
     {
       "id": "group-chat",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "**Save evidence** before you block: screenshot the messages, username, web address and date. Then **block** and **report**.\n\nA **private or nude image**? **Don't copy, save or share the image itself.** Write down the username and where it is, and report it.\n\nNow, people in a group chat start posting mean messages about you.",
+      "prompt": "People in a group chat start posting mean messages about you.",
       "start": "start",
       "steps": [
         {
@@ -179,6 +157,44 @@
       "hint": "Think about the order: evidence and a trusted adult first, then reporting."
     },
     {
+      "id": "more-places",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "More places to go",
+      "body": "- **Your bank, straight away**, if money or card details are involved.\n- **IDCARE** (idcare.org or 1800 595 160): free help to make a plan if your personal details were stolen.\n- **ReportCyber** (cyber.gov.au): report cybercrime to the police.\n- **In danger right now:** call **000**."
+    },
+    {
+      "id": "where-to-go",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "prompt": "Match each problem to where to go.",
+      "pairs": [
+        {
+          "id": "bullying",
+          "left": "Bullying the app won't remove",
+          "right": "eSafety Commissioner"
+        },
+        {
+          "id": "card",
+          "left": "Money taken from your card",
+          "right": "Your bank, straight away"
+        },
+        {
+          "id": "details",
+          "left": "Your details were stolen",
+          "right": "IDCARE"
+        },
+        {
+          "id": "danger",
+          "left": "Danger right now",
+          "right": "Call 000"
+        }
+      ],
+      "explanation": "Serious bullying goes to **eSafety** once the app has had a chance; card problems to **your bank** straight away; stolen details to **IDCARE**; and danger right now is always **000**.",
+      "hint": "Look back at the last two cards: what is each one for?",
+      "nudge": "Start with the one you're surest of. What is each service for?"
+    },
+    {
       "id": "card-money",
       "type": "multiple_choice",
       "difficulty": "core",
@@ -207,28 +223,28 @@
       "id": "photo-threat",
       "type": "scenario",
       "difficulty": "challenge",
-      "prompt": "Someone you met online says they'll share a private photo of you unless you pay them. If this ever happens: **it is never your fault**, and you won't be in trouble.",
+      "prompt": "Someone threatens to share a private photo of you unless you pay. **It's never your fault**, and you won't be in trouble.",
       "start": "start",
       "steps": [
         {
           "id": "start",
-          "text": "You feel scared and embarrassed. What do you do?",
+          "text": "You feel scared. What do you do?",
           "choices": [
             {
               "id": "pay",
-              "text": "Pay them so it goes away",
+              "text": "Pay so it goes away",
               "consequence": "Paying usually leads to more demands, not fewer. It's never your fault, and help is there.",
               "outcome": "fail"
             },
             {
               "id": "delete-hide",
-              "text": "Delete everything and tell nobody",
+              "text": "Delete everything, tell nobody",
               "consequence": "You'd lose the evidence and face it alone. It's never your fault, and you don't have to deal with it by yourself.",
               "outcome": "fail"
             },
             {
               "id": "get-help",
-              "text": "Stop replying, tell a trusted adult, and report it",
+              "text": "Stop replying, tell an adult, report it",
               "consequence": "You did the right thing. Report it to the app and eSafety (which can help remove images), and if you're under 18, the ACCCE. Kids Helpline (1800 55 1800) and Lifeline (13 11 14) are there any time.",
               "outcome": "success"
             }
@@ -242,20 +258,20 @@
       "id": "danger-now",
       "type": "multiple_choice",
       "difficulty": "challenge",
-      "prompt": "Late at night, a friend messages: someone she met online knows where she lives, and is **on his way there now**. What first?",
+      "prompt": "Late at night, a friend messages: someone she met online is **on his way to her house now**. What first?",
       "options": [
         {
           "id": "call-000",
-          "text": "Call 000: she could be in danger right now"
+          "text": "Call 000: she may be in danger now"
         },
         {
           "id": "esafety",
-          "text": "Report it to eSafety: it started online",
+          "text": "Report it to eSafety",
           "nudge": "eSafety helps with online abuse, but it can't send help to her door."
         },
         {
           "id": "screenshot",
-          "text": "Screenshot the chat first, then report it",
+          "text": "Screenshot the chat first",
           "nudge": "Evidence matters, but not more than her safety right now."
         }
       ],
@@ -268,7 +284,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- **Never your fault:** tell an adult, Kids Helpline (1800 55 1800) or Lifeline (13 11 14).\n- Report in the app, then eSafety, Scamwatch, your bank or 000.\n- **Save evidence** first, but never a private image itself.\n\nThat's the course. You know the signs, the steps and where to get help."
+      "body": "- **Never your fault:** tell an adult, Kids Helpline (1800 55 1800) or Lifeline (13 11 14).\n- Report in the app, then eSafety, Scamwatch, your bank or 000.\n- **Try this:** save Kids Helpline and a trusted adult's number in your phone."
     }
   ]
 }

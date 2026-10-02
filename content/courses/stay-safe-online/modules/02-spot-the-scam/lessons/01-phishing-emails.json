@@ -10,16 +10,16 @@
       "id": "prize-email",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "An email pops up while you're busy.",
+      "prompt": "You've \"won\" a prize by email. What do you do?",
       "start": "start",
       "steps": [
         {
           "id": "start",
-          "text": "**\"Congratulations! You've won a games console! Click here within 1 hour to claim your prize.\"** You never entered a competition. What do you do?",
+          "text": "**\"You've won a games console! Claim it within 1 hour.\"** You never entered. What do you do?",
           "choices": [
             {
               "id": "click",
-              "text": "Click quickly, before the hour is up",
+              "text": "Click fast, before the hour ends",
               "consequence": "The rush is the trick. The link leads to a page that asks for your details or payment.",
               "outcome": "fail"
             },
@@ -31,7 +31,7 @@
             },
             {
               "id": "report",
-              "text": "Use your mail app's Report button, then delete it",
+              "text": "Report it, then delete it",
               "consequence": "No prize is lost, because there never was one. Reporting helps your mail app catch the next one.",
               "outcome": "success"
             }
@@ -42,23 +42,36 @@
       "hint": "You never entered a competition. So why would someone give you a prize, and why only one hour to claim it?"
     },
     {
-      "id": "something-fishy",
-      "type": "explainer",
+      "id": "meet-phishing",
+      "type": "reveal",
       "difficulty": "core",
-      "title": "Something fishy",
-      "body": "That was **phishing** (said \"fishing\"): a message pretending to be someone you trust, like your bank, school or a game. A prize you never entered, with a rush to claim it, is classic bait: **too good to be true**. Real prizes never cost money to claim either.\n\nTap through the next email to meet more warning signs."
+      "show": {
+        "kind": "term",
+        "term": "phishing"
+      },
+      "sentence": "**Phishing** is a message pretending to be someone you trust, to trick you."
+    },
+    {
+      "id": "asks-for-password",
+      "type": "true_false",
+      "difficulty": "core",
+      "prompt": "A real company might ask for your password by email.",
+      "answer": false,
+      "explanation": "False. Real companies never ask for passwords, codes, card numbers or PINs by email. Anyone who does is phishing.",
+      "hint": "Would your bank or school ever need your password?",
+      "nudge": "Real companies already run your account. They never need your password."
     },
     {
       "id": "meet-the-signs",
       "type": "hotspot",
       "difficulty": "core",
-      "prompt": "Your Bank's real emails come from **@yourbank.example**. **Tap each part** of this email to meet a warning sign.",
+      "prompt": "This email says it's from Your Bank. What gives it away?",
       "scene": "email",
       "mode": "explore",
       "parts": [
         {
           "part": "email-from",
-          "job": "Fake sender: anyone can type any name. The address after the @ is what counts. yourbank-help.example isn't Your Bank."
+          "job": "Fake sender: anyone can type any name. The address after the @ is what counts: Your Bank uses yourbank.example, not yourbank-help.example."
         },
         {
           "part": "email-subject",
@@ -101,18 +114,8 @@
           "bin": "phish"
         },
         {
-          "id": "prize",
-          "label": "\"You won a phone! Pay $5 postage\"",
-          "bin": "phish"
-        },
-        {
           "id": "hidden-link",
           "label": "A link to a different site than it says",
-          "bin": "phish"
-        },
-        {
-          "id": "card",
-          "label": "\"Dear Customer, send your card number\"",
           "bin": "phish"
         },
         {
@@ -134,7 +137,7 @@
       "id": "spot-the-signs",
       "type": "hotspot",
       "difficulty": "core",
-      "prompt": "Your Bank's emails come from **@yourbank.example**. Tap **every** warning sign here (the time and sign-off are fine).",
+      "prompt": "Tap **every** warning sign. (The time and sign-off are fine.)",
       "scene": "email",
       "mode": "tap",
       "targets": [
@@ -152,7 +155,7 @@
       "id": "knows-your-name",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "An email arrives that seems personal.",
+      "prompt": "This email uses your real name.",
       "start": "start",
       "steps": [
         {
@@ -231,7 +234,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- **Phishing** pretends to be someone you trust.\n- Check the **address after the @**, not the name.\n- Don't click: **go there yourself**, report it, tell an adult.\n\nNext: scams in texts and phone calls."
+      "body": "- **Phishing** pretends to be someone you trust.\n- Check the **address after the @**; don't click, **go there yourself**.\n- **Try this:** check the address after the @ on the next email you get."
     }
   ]
 }

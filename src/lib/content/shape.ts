@@ -21,7 +21,14 @@ import type { RegularLesson } from "./schema";
  * Modules rewritten for "learn before you do" (docs/plans/learn-before-you-do.md): their lessons
  * use the time-based rules below instead of the card count. Every course moves over in turn.
  */
-export const LEARN_FIRST_MODULES = new Set(["pull-it-apart"]);
+export const LEARN_FIRST_MODULES = new Set([
+  "pull-it-apart",
+  // Stay Safe Online (rollout 1)
+  "lock-your-accounts",
+  "spot-the-scam",
+  "guard-your-privacy",
+  "when-things-go-wrong",
+]);
 
 export const TIME_RULES = {
   /** Core cards: about 3–5 minutes (estimate.ts). */
@@ -110,6 +117,10 @@ export function lessonShapeProblems(lesson: RegularLesson, opts: { helpModule?: 
   else {
     const bullets = last.body.split("\n").filter((line) => /^\s*[-*]\s+/.test(line)).length;
     if (bullets > RULES.recapBullets) problems.push(`${last.id}: recap has ${bullets} bullets (at most ${RULES.recapBullets})`);
+  }
+  // Design playbook rule 7 (useful today): rolled-out lessons end with one real-life action.
+  if (LEARN_FIRST_MODULES.has(lesson.moduleId) && last?.type === "explainer" && !/\bTry this:/.test(last.body)) {
+    problems.push(`${last.id}: the recap needs a "Try this: …" line (one thing to do in real life)`);
   }
   return problems;
 }

@@ -145,12 +145,15 @@ function ControlView({
   value,
   locked,
   onChange,
+  compact = false,
 }: {
   card: SimulatorCard;
   control: SimulatorControl;
   value: number | boolean;
   locked: boolean;
   onChange: (v: number | boolean) => void;
+  /** Half-width switch on phones: the On/Off word is for screen readers only there (the knob shows it). */
+  compact?: boolean;
 }) {
   const id = useId();
   if (control.kind === "toggle") {
@@ -163,11 +166,11 @@ function ControlView({
         data-keyboard-passthrough
         disabled={locked}
         onClick={() => onChange(!on)}
-        className="flex min-h-12 w-full items-center justify-between gap-3 rounded-control border border-line bg-surface px-3 text-left text-small font-semibold text-ink disabled:cursor-default"
+        className={`flex min-h-12 w-full items-center justify-between rounded-control border border-line bg-surface px-3 text-left text-small font-semibold text-ink disabled:cursor-default ${compact ? "gap-2 py-1.5 sm:gap-3 sm:py-0" : "gap-3"}`}
       >
         {control.label}
         <span className="flex items-center gap-2">
-          <span className="font-mono text-caption text-ink-muted">{on ? "On" : "Off"}</span>
+          <span className={`font-mono text-caption text-ink-muted ${compact ? "max-sm:sr-only" : ""}`}>{on ? "On" : "Off"}</span>
           <span className={`relative h-6 w-10 rounded-node border-2 transition-colors ${on ? "border-accent-ink bg-accent" : "border-line-strong bg-surface-raised"}`}>
             <span className={`absolute top-0.5 size-4 rounded-node bg-surface shadow-card transition-[left] ${on ? "left-[18px]" : "left-0.5"}`} />
           </span>
@@ -178,7 +181,7 @@ function ControlView({
   if (control.kind === "slider") {
     const { min, max, step } = sliderRange(card, control);
     return (
-      <div className="rounded-control border border-line bg-surface px-3 py-2.5">
+      <div className="rounded-control border border-line bg-surface px-3 py-2 sm:py-2.5">
         <div className="flex items-baseline justify-between gap-2">
           <label htmlFor={id} className="text-small font-semibold text-ink">
             {control.label}
@@ -227,6 +230,7 @@ export function SimulatorCardView({ card, answer, onAnswerChange, status }: Card
   const outputs = runSimulator(card, answer);
   const device = card.outputs.filter((o) => o.kind === "device");
   const others = card.outputs.filter((o) => o.kind !== "device");
+  const compact = card.controls.filter((c) => c.kind === "toggle").length >= 3;
 
   return (
     <div>
@@ -246,7 +250,8 @@ export function SimulatorCardView({ card, answer, onAnswerChange, status }: Card
             </div>
           )}
         </section>
-        <section aria-label="Controls" className="space-y-2">
+        {/* Three or more switches sit two to a row on phones, so every control stays on screen. */}
+        <section aria-label="Controls" className={compact ? "grid grid-cols-2 gap-2 sm:grid-cols-1 [&>:not([role=switch])]:col-span-2 sm:[&>*]:col-span-1" : "space-y-2"}>
           {card.controls.map((control) => (
             <ControlView
               key={control.id}
@@ -255,6 +260,7 @@ export function SimulatorCardView({ card, answer, onAnswerChange, status }: Card
               value={answer[control.id] ?? initialValue(card, control)}
               locked={locked}
               onChange={(v) => onAnswerChange({ ...answer, [control.id]: v })}
+              compact={compact}
             />
           ))}
         </section>

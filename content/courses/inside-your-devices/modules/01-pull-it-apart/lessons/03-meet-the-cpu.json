@@ -11,7 +11,10 @@
       "type": "reveal",
       "difficulty": "core",
       "prompt": "Tap the word.",
-      "show": { "kind": "term", "term": "ghz" },
+      "show": {
+        "kind": "term",
+        "term": "ghz"
+      },
       "sentence": "**GHz** is a CPU's speed: its clock ticks billions of times a second, doing tiny steps of work."
     },
     {
@@ -29,7 +32,10 @@
       "type": "reveal",
       "difficulty": "core",
       "prompt": "Tap the word.",
-      "show": { "kind": "term", "term": "core" },
+      "show": {
+        "kind": "term",
+        "term": "core"
+      },
       "sentence": "A **core** is one worker inside the CPU, so a CPU with 4 cores can work on 4 things at once."
     },
     {
@@ -38,10 +44,43 @@
       "difficulty": "core",
       "prompt": "Saving this video takes 12 seconds. Add cores to get it to **3 seconds or less**.",
       "model": "cpu-cores",
-      "params": { "tasks": [{ "id": "export", "label": "Save a finished video", "work": 24, "splittable": true }] },
-      "controls": [{ "id": "cores", "kind": "slider", "label": "Cores", "min": 1, "max": 8, "step": 1 }],
-      "outputs": [{ "id": "seconds", "kind": "timer", "label": "Time to finish" }],
-      "goal": { "all": [{ "target": "output", "id": "seconds", "op": "<=", "value": 3 }] },
+      "params": {
+        "tasks": [
+          {
+            "id": "export",
+            "label": "Save a finished video",
+            "work": 24,
+            "splittable": true
+          }
+        ]
+      },
+      "controls": [
+        {
+          "id": "cores",
+          "kind": "slider",
+          "label": "Cores",
+          "min": 1,
+          "max": 8,
+          "step": 1
+        }
+      ],
+      "outputs": [
+        {
+          "id": "seconds",
+          "kind": "timer",
+          "label": "Time to finish"
+        }
+      ],
+      "goal": {
+        "all": [
+          {
+            "target": "output",
+            "id": "seconds",
+            "op": "<=",
+            "value": 3
+          }
+        ]
+      },
       "explanation": "A video is made of separate frames, so the work splits evenly between cores. One core takes 12 seconds, two take 6, and **four** take 3.",
       "hint": "This job splits evenly, so each extra core takes a share. Watch the timer as you add cores.",
       "nudge": "Keep adding cores and watch the timer. The job has to finish in 3 seconds or less."
@@ -58,12 +97,37 @@
       "type": "sort_bins",
       "difficulty": "core",
       "prompt": "Can more cores **share** this job?",
-      "bins": [{ "id": "split", "label": "Cores can share" }, { "id": "in-order", "label": "Step by step" }],
+      "bins": [
+        {
+          "id": "split",
+          "label": "Cores can share"
+        },
+        {
+          "id": "in-order",
+          "label": "Step by step"
+        }
+      ],
       "items": [
-        { "id": "photos", "label": "Resize photos", "bin": "split" },
-        { "id": "frames", "label": "Draw video frames", "bin": "split" },
-        { "id": "treasure", "label": "Clue-by-clue hunt", "bin": "in-order" },
-        { "id": "savings", "label": "Knit row by row", "bin": "in-order" }
+        {
+          "id": "photos",
+          "label": "Resize photos",
+          "bin": "split"
+        },
+        {
+          "id": "frames",
+          "label": "Draw video frames",
+          "bin": "split"
+        },
+        {
+          "id": "treasure",
+          "label": "Clue-by-clue hunt",
+          "bin": "in-order"
+        },
+        {
+          "id": "savings",
+          "label": "Knit row by row",
+          "bin": "in-order"
+        }
       ],
       "explanation": "Photos and frames are separate pieces, so each core can take some. A treasure hunt and a scarf knitted row by row **need the step before**, so extra cores just wait.",
       "hint": "For each job, ask: does every piece need the piece before it to be finished?",
@@ -74,7 +138,12 @@
       "type": "reveal",
       "difficulty": "core",
       "prompt": "Hard work makes the CPU hot. Tap the copper pipe.",
-      "show": { "kind": "part", "scene": "laptop", "part": "heat-pipe", "view": "open" },
+      "show": {
+        "kind": "part",
+        "scene": "laptop",
+        "part": "heat-pipe",
+        "view": "open"
+      },
       "sentence": "This **heat pipe** carries the CPU's heat away to metal fins by the vent."
     },
     {
@@ -82,7 +151,12 @@
       "type": "reveal",
       "difficulty": "core",
       "prompt": "Tap the round part with blades.",
-      "show": { "kind": "part", "scene": "laptop", "part": "fan", "view": "open" },
+      "show": {
+        "kind": "part",
+        "scene": "laptop",
+        "part": "fan",
+        "view": "open"
+      },
       "sentence": "The **fan** blows air through those fins and out of the vents, so the CPU stays cool."
     },
     {
@@ -90,7 +164,10 @@
       "type": "reveal",
       "difficulty": "core",
       "prompt": "Tap the word.",
-      "show": { "kind": "term", "term": "throttling" },
+      "show": {
+        "kind": "term",
+        "term": "throttling"
+      },
       "sentence": "**Throttling** is when a CPU gets too hot and slows itself down to stay safe."
     },
     {
@@ -101,7 +178,11 @@
       "scene": "laptop",
       "view": "open",
       "mode": "tap",
-      "targets": ["cpu", "heat-pipe", "fan"],
+      "targets": [
+        "cpu",
+        "heat-pipe",
+        "fan"
+      ],
       "explanation": "The **heat pipe** carries heat from the **CPU** to metal fins, and the **fan** blows air through them and out of the vents. If the vents are blocked, the heat stays in and the CPU throttles. Most phones have no fan: they spread the heat through their body, and throttle too.",
       "hint": "You need three parts. The CPU is the small shiny chip. What carries heat away from it, and what moves the air?",
       "nudge": "Tap all three: the CPU, the copper pipe that carries its heat, and the part that blows the air out."
@@ -131,7 +212,10 @@
       "difficulty": "core",
       "prompt": "On a soft blanket, the vents are blocked, so the CPU gets hot and ___.",
       "options": [
-        { "id": "slows", "text": "slows down" },
+        {
+          "id": "slows",
+          "text": "slows down"
+        },
         {
           "id": "speeds",
           "text": "speeds up",
@@ -156,14 +240,41 @@
       "model": "thermal",
       "params": {},
       "controls": [
-        { "id": "fan", "kind": "toggle", "label": "Clean the dusty fan" },
-        { "id": "ventsClear", "kind": "toggle", "label": "Move it off the blanket" }
+        {
+          "id": "fan",
+          "kind": "toggle",
+          "label": "Clean the dusty fan"
+        },
+        {
+          "id": "ventsClear",
+          "kind": "toggle",
+          "label": "Move it off the blanket"
+        }
       ],
       "outputs": [
-        { "id": "temp", "kind": "meter", "label": "CPU temperature", "unit": "°C" },
-        { "id": "ghz", "kind": "meter", "label": "Clock speed", "unit": "GHz" }
+        {
+          "id": "temp",
+          "kind": "meter",
+          "label": "CPU temperature",
+          "unit": "°C"
+        },
+        {
+          "id": "ghz",
+          "kind": "meter",
+          "label": "Clock speed",
+          "unit": "GHz"
+        }
       ],
-      "goal": { "all": [{ "target": "output", "id": "ghz", "op": ">=", "value": 3 }] },
+      "goal": {
+        "all": [
+          {
+            "target": "output",
+            "id": "ghz",
+            "op": ">=",
+            "value": 3
+          }
+        ]
+      },
       "explanation": "The blanket blocked the vents, and dust clogged the fan and its fins. With both fixed, the heat can escape, so the CPU stops throttling and runs at full speed. (Laptop fans switch on by themselves; dust is what stops them cooling well.) Cleaning a fan means opening the laptop, so ask an adult or a repair shop to do it.",
       "hint": "What's trapping the heat, and what's stopping the fan from moving air?",
       "nudge": "A hot [[CPU]] slows itself down. Fix everything that traps heat or stops the fan cooling."
@@ -184,7 +295,10 @@
           "text": "The 8-core laptop",
           "nudge": "Extra cores only help when a job can be split into pieces. This one can't, so how many cores actually work on it?"
         },
-        { "id": "same", "text": "Both finish together" }
+        {
+          "id": "same",
+          "text": "Both finish together"
+        }
       ],
       "correctOptionId": "same",
       "explanation": "A job that can't be split runs on **one core**, whichever laptop it's on. Each runs it on one core at 3 GHz, so they finish together. The 8-core laptop's extra cores only help with jobs that split.",
@@ -195,7 +309,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- **GHz** is clock speed: more GHz, more steps a second.\n- **Cores** only help with jobs that split into pieces.\n- A hot CPU **throttles**. The heat pipe and fan keep it cool.\n\nThat's the [[hardware]]. Next: the software in charge."
+      "body": "- **GHz** is clock speed: more GHz, more steps a second.\n- **Cores** only help with jobs that split into pieces.\n- A hot CPU **throttles**. The heat pipe and fan keep it cool.\n\nThat's the [[hardware]]. Next: the software in charge.\n\n**Try this:** use your laptop on a hard surface, not a bed, so its vents stay clear."
     }
   ]
 }

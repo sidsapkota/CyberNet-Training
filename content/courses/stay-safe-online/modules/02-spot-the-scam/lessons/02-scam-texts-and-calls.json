@@ -7,26 +7,19 @@
   "icon": "message-square-warning",
   "cards": [
     {
-      "id": "in-your-pocket",
-      "type": "explainer",
-      "difficulty": "core",
-      "title": "Scams in your pocket",
-      "body": "The same tricks as [[phishing]] emails come by **text** and **phone call**. Scam texts often ask for a **small fee**, set a **deadline** and add an **unfamiliar link**.\n\nCallers may say they're your bank or even the police. Hang up if they ask for a **sign-in code**, a **password**, **gift cards** or **secrecy**, or to **control your computer**."
-    },
-    {
       "id": "sounds-like-cousin",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "Your phone rings. It sounds exactly like your cousin. (Computers can now make a [[voice clone|voice-clone]] from a short clip.)",
+      "prompt": "A call sounds exactly like your cousin. (A computer can copy a voice: a [[voice clone|voice-clone]].)",
       "start": "start",
       "steps": [
         {
           "id": "start",
-          "text": "**\"It's me! I'm in trouble and need $200 in gift cards right now. Don't tell anyone!\"** What do you do?",
+          "text": "**\"I need $200 in gift cards now. Don't tell anyone!\"** What do you do?",
           "choices": [
             {
               "id": "buy",
-              "text": "Buy the gift cards. It's their voice",
+              "text": "Buy them: it's their voice",
               "consequence": "Voices can be copied, and gift cards are a favourite scam payment. The money would be gone.",
               "outcome": "fail"
             },
@@ -38,7 +31,7 @@
             },
             {
               "id": "call-back",
-              "text": "Hang up and call your cousin on their saved number",
+              "text": "Hang up and call their saved number",
               "consequence": "Your cousin answers, confused, and fine. It was a scam, and you stopped it.",
               "next": "next-time"
             }
@@ -46,23 +39,23 @@
         },
         {
           "id": "next-time",
-          "text": "Some families agree a secret **family safe word** for emergencies. What's the best way to check a call like that next time?",
+          "text": "How could you check a call like that next time?",
           "choices": [
             {
               "id": "birthday",
-              "text": "Ask the caller to say your birthday to prove who they are",
+              "text": "Ask them to say your birthday",
               "consequence": "Birthdays are often online, so a scammer may know yours.",
               "outcome": "fail"
             },
             {
               "id": "listen",
-              "text": "Listen closely: a copied voice always sounds a bit robotic",
+              "text": "Listen for a robotic voice",
               "consequence": "Copied voices can sound just like the real person. Your ears can't be sure.",
               "outcome": "fail"
             },
             {
               "id": "safe-word",
-              "text": "Agree a family safe word that's never posted anywhere",
+              "text": "Agree a family safe word",
               "consequence": "Now anyone in your family can ask for it. A copied voice won't know it.",
               "outcome": "success"
             }
@@ -71,6 +64,23 @@
       ],
       "explanation": "A familiar voice can be faked: **hang up and call back** on a number you know, and agree a **family safe word**. Secrecy and gift cards are warning signs.",
       "hint": "How can you reach your cousin in a way a scammer can't fake? And what could only your family know?"
+    },
+    {
+      "id": "knows-my-name",
+      "type": "true_false",
+      "difficulty": "core",
+      "prompt": "A caller who knows your name must be real.",
+      "answer": false,
+      "explanation": "False. Names, schools and even voices can be found or copied online. Check by calling back on a number you already know.",
+      "hint": "Where could a stranger find your name?",
+      "nudge": "Your name is easy to find online, so it proves nothing."
+    },
+    {
+      "id": "in-your-pocket",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Scam texts and calls",
+      "body": "Scam **texts** often ask for a **small fee**, set a **deadline** and add a strange **link**.\n\nScam **callers** may say they're your bank or the police. Hang up if they want a **code**, a **password**, **gift cards**, **secrecy** or **control of your computer**."
     },
     {
       "id": "hang-up-or-ok",
@@ -94,18 +104,8 @@
           "bin": "hang-up"
         },
         {
-          "id": "remote",
-          "label": "Caller wants to control your computer",
-          "bin": "hang-up"
-        },
-        {
           "id": "gift-cards",
           "label": "\"Pay in gift cards or be arrested\"",
-          "bin": "hang-up"
-        },
-        {
-          "id": "secret",
-          "label": "Caller says to keep it from your family",
           "bin": "hang-up"
         },
         {
@@ -127,7 +127,7 @@
       "id": "spot-the-text",
       "type": "hotspot",
       "difficulty": "core",
-      "prompt": "You're expecting a parcel, then this arrives. Tap the **three** scam-text signs in the **new** message.",
+      "prompt": "You're expecting a parcel. Tap the **three** scam signs in the **new** text.",
       "scene": "text-message",
       "mode": "tap",
       "targets": [
@@ -138,31 +138,6 @@
       "explanation": "It asks for a **small fee**, sets a **deadline** and links to `parcels-redelivery.example`. The sender name can be faked, so it blends in: check in the company's **official app** instead.",
       "hint": "In the new message, find what it wants you to pay, how long it gives you, and where it sends you.",
       "nudge": "Look for a fee, a deadline and a link in the new message, one at a time."
-    },
-    {
-      "id": "always-a-sign",
-      "type": "multiple_choice",
-      "difficulty": "core",
-      "prompt": "Some scams are **too good to be true**: free coins, a prize, an easy job paying lots. Which is **always** a warning sign?",
-      "options": [
-        {
-          "id": "fee-gift-cards",
-          "text": "Being asked to pay a fee in gift cards to claim a prize"
-        },
-        {
-          "id": "unsaved-number",
-          "text": "A text from a number that isn't saved in your phone",
-          "nudge": "New numbers can be fine: the dentist, a new classmate."
-        },
-        {
-          "id": "receipt",
-          "text": "A receipt email for an order you placed this morning",
-          "nudge": "A receipt for something you really bought is normal."
-        }
-      ],
-      "correctOptionId": "fee-gift-cards",
-      "explanation": "Real prizes never cost money to claim, and gift cards are a favourite scam payment. A new number or a real receipt can be normal.",
-      "hint": "What does a real prize cost to claim, and which payment were you told to hang up on?"
     },
     {
       "id": "free-coins",
@@ -194,31 +169,56 @@
       "hint": "Is this too good to be true? And who should ever see your password?"
     },
     {
+      "id": "always-a-sign",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "prompt": "Which is **always** a warning sign?",
+      "options": [
+        {
+          "id": "fee-gift-cards",
+          "text": "Being asked to pay a fee in gift cards to claim a prize"
+        },
+        {
+          "id": "unsaved-number",
+          "text": "A text from a number that isn't saved in your phone",
+          "nudge": "New numbers can be fine: the dentist, a new classmate."
+        },
+        {
+          "id": "receipt",
+          "text": "A receipt email for an order you placed this morning",
+          "nudge": "A receipt for something you really bought is normal."
+        }
+      ],
+      "correctOptionId": "fee-gift-cards",
+      "explanation": "Real prizes never cost money to claim, and gift cards are a favourite scam payment. A new number or a real receipt can be normal.",
+      "hint": "What does a real prize cost to claim, and which payment were you told to hang up on?"
+    },
+    {
       "id": "boss-new-number",
       "type": "scenario",
       "difficulty": "challenge",
-      "prompt": "You have a weekend job at a café. A text arrives from a number you don't know.",
+      "prompt": "A text arrives from a number you don't know.",
       "start": "start",
       "steps": [
         {
           "id": "start",
-          "text": "**\"Hi, it's your boss on my new number. Buy three $100 gift cards for a customer and text me the codes. Keep it quiet!\"** What do you do?",
+          "text": "**\"It's your boss, new number. Buy three $100 gift cards and text me the codes. Keep it quiet!\"** What do you do?",
           "choices": [
             {
               "id": "buy",
-              "text": "Buy them quickly. Your boss is busy and it sounds urgent",
+              "text": "Buy them: it sounds urgent",
               "consequence": "Gift cards, rushing and secrecy are all scam signs. Once you send the codes, the money is gone.",
               "outcome": "fail"
             },
             {
               "id": "reply",
-              "text": "Reply and ask if it's really them",
+              "text": "Reply: is it really you?",
               "consequence": "The reply goes to the scammer, who will happily say yes.",
               "outcome": "fail"
             },
             {
               "id": "call",
-              "text": "Call your boss on the number you already have",
+              "text": "Call your boss's usual number",
               "consequence": "Your boss has no idea what you mean. Scam stopped, and your boss warns the rest of the team.",
               "outcome": "success"
             }
@@ -233,7 +233,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- Texts with a **fee**, **deadline** and **link**? Check in the **official app**.\n- Calls: **hang up and call back** on a number you know.\n- Prizes that cost money to claim are **too good to be true**.\n\nNext: websites that copy the real thing."
+      "body": "- A **fee**, a **deadline** and a **link**? Check in the company's **official app**.\n- Calls: **hang up and call back** on a number you know.\n- **Try this:** save your bank's real number in your contacts."
     }
   ]
 }

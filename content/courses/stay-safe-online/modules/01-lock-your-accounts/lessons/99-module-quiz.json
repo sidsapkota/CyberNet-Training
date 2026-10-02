@@ -107,7 +107,7 @@
       "id": "q-reused",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "A shopping site had a data breach. You used that password for your email and music app too.",
+      "prompt": "A shopping site was hacked. You used that password for your email and music app too.",
       "start": "start",
       "steps": [
         {
@@ -116,19 +116,19 @@
           "choices": [
             {
               "id": "email",
-              "text": "Change your email password to a new, unique one",
+              "text": "Change your email password to a new one",
               "consequence": "Your email can reset everything else, so it comes first. Then give the others their own new passwords.",
               "outcome": "success"
             },
             {
               "id": "wait",
-              "text": "Wait and see if anything strange happens",
+              "text": "Wait and see what happens",
               "consequence": "Attackers try stolen passwords on other sites quickly.",
               "outcome": "fail"
             },
             {
               "id": "same",
-              "text": "Change all three to the same new password",
+              "text": "Change all three to one new password",
               "consequence": "Then one leak opens all three again.",
               "outcome": "fail"
             }
@@ -185,34 +185,34 @@
       "id": "q-hardest-account",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "Four friends protect their email in different ways.",
+      "prompt": "Whose email is **hardest** to break into?",
       "start": "start",
       "steps": [
         {
           "id": "start",
-          "text": "Whose account is **hardest** to break into?",
+          "text": "Four friends protect it in different ways.",
           "choices": [
             {
               "id": "passkey",
-              "text": "Ava's: she signs in with a passkey",
+              "text": "Ava: a passkey",
               "consequence": "Right. A passkey is the strongest way to sign in, and fake sites can't use it.",
               "outcome": "success"
             },
             {
               "id": "app",
-              "text": "Ben's: a password plus a code from an authenticator app",
+              "text": "Ben: password + app code",
               "consequence": "That's strong, but one way to sign in is stronger still, and fake sites can't use it.",
               "outcome": "fail"
             },
             {
               "id": "sms",
-              "text": "Cleo's: a password plus a code sent by text message",
+              "text": "Cleo: password + text code",
               "consequence": "Better than a password alone, but text codes are the weakest second proof.",
               "outcome": "fail"
             },
             {
               "id": "long",
-              "text": "Dev's: a very long passphrase, with nothing else",
+              "text": "Dev: a long passphrase, nothing else",
               "consequence": "A great passphrase, but with no second proof, one leak is enough to get in.",
               "outcome": "fail"
             }

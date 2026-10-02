@@ -28,7 +28,7 @@ export function TrueFalseCardView({ card, answer, onAnswerChange, status }: Card
   return (
     <div>
       <CardPrompt id={promptId}>{card.prompt}</CardPrompt>
-      <div role="radiogroup" aria-labelledby={promptId} className="mt-8 grid grid-cols-2 gap-3">
+      <div role="radiogroup" aria-labelledby={promptId} className="mt-4 grid grid-cols-2 gap-3 sm:mt-8">
         {CHOICES.map((choice) => {
           const selected = answer === choice.value;
           const tone = !selected

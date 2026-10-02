@@ -9,7 +9,7 @@
       "id": "q-share-or-private",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "You're setting up a new public profile. Fine to share, or keep private?",
+      "prompt": "New public profile: share, or keep private?",
       "bins": [
         {
           "id": "share",
@@ -23,27 +23,22 @@
       "items": [
         {
           "id": "hobby",
-          "label": "Your favourite hobby",
-          "bin": "share"
-        },
-        {
-          "id": "art",
-          "label": "A painting you made",
+          "label": "Favourite hobby",
           "bin": "share"
         },
         {
           "id": "school",
-          "label": "Your school's name",
+          "label": "School's name",
           "bin": "private"
         },
         {
           "id": "now",
-          "label": "Where you are right now",
+          "label": "Where you are now",
           "bin": "private"
         },
         {
           "id": "pet-name",
-          "label": "Your first pet's name",
+          "label": "First pet's name",
           "bin": "private"
         }
       ],
@@ -75,7 +70,7 @@
       "id": "q-permissions",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Does each app need that permission for its job?",
+      "prompt": "Does the app need it?",
       "bins": [
         {
           "id": "needs",
@@ -168,22 +163,22 @@
       "pairs": [
         {
           "id": "private",
-          "left": "Strangers can see all your posts",
+          "left": "Strangers see all your posts",
           "right": "Private account"
         },
         {
           "id": "messages",
-          "left": "People you don't know keep messaging you",
+          "left": "Strangers keep messaging",
           "right": "Messages from friends only"
         },
         {
           "id": "location",
-          "left": "An app shows people where you are",
+          "left": "An app shows where you are",
           "right": "Location sharing off"
         },
         {
           "id": "tags",
-          "left": "Photos of you appear without asking",
+          "left": "Tagged without asking",
           "right": "Tag review"
         }
       ],

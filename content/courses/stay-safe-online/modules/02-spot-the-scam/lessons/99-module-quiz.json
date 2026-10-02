@@ -9,7 +9,7 @@
       "id": "q-email-labels",
       "type": "hotspot",
       "difficulty": "core",
-      "prompt": "Your Bank emails from **@yourbank.example**. Label four warning signs in this email.",
+      "prompt": "Label three warning signs in this email.",
       "scene": "email",
       "mode": "label",
       "labels": [
@@ -22,15 +22,11 @@
           "label": "Rushing you"
         },
         {
-          "part": "email-greeting",
-          "label": "\"Dear Customer\""
-        },
-        {
           "part": "email-link",
           "label": "Hidden link"
         }
       ],
-      "explanation": "The address isn't `@yourbank.example` (**fake sender**), the subject is **rushing you**, it says **\"Dear Customer\"**, and the button is a **hidden link** to `yourbank-verify.example`."
+      "explanation": "The address isn't `@yourbank.example` (**fake sender**), the subject is **rushing you**, and the button is a **hidden link** to `yourbank-verify.example`."
     },
     {
       "id": "q-phish-or-fine",
@@ -75,28 +71,28 @@
       "id": "q-parcel-text",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "You're expecting a parcel. A text from \"Parcels\": **\"Missed delivery. Pay $2.50 within 1 hour: parcels-fee.example\"**",
+      "prompt": "A text: **\"Missed delivery. Pay $2.50 in 1 hour: parcels-fee.example\"**",
       "start": "start",
       "steps": [
         {
           "id": "start",
-          "text": "What do you do?",
+          "text": "You're expecting a parcel. What do you do?",
           "choices": [
             {
               "id": "pay",
-              "text": "Pay it. You really are waiting for a parcel",
+              "text": "Pay it: you are expecting one",
               "consequence": "The link leads to a fake page that keeps your card details.",
               "outcome": "fail"
             },
             {
               "id": "reply",
-              "text": "Reply to ask which parcel it is",
+              "text": "Reply to ask which parcel",
               "consequence": "The reply goes to the scammer and shows your number works.",
               "outcome": "fail"
             },
             {
               "id": "app",
-              "text": "Ignore the link and check in the Parcels app",
+              "text": "Check in the Parcels app instead",
               "consequence": "The app shows your parcel is on its way. No fee.",
               "outcome": "success"
             }
@@ -118,19 +114,19 @@
           "choices": [
             {
               "id": "read",
-              "text": "Read out the code so they can protect your account",
+              "text": "Read out the code",
               "consequence": "That code lets them sign in as you.",
               "outcome": "fail"
             },
             {
               "id": "name",
-              "text": "Ask them to say your full name first, to prove it",
+              "text": "Ask them to say your name first",
               "consequence": "Scammers can find names online. Knowing yours proves nothing.",
               "outcome": "fail"
             },
             {
               "id": "hang-up",
-              "text": "Hang up and call the number on the bank's website",
+              "text": "Hang up; call the bank's real number",
               "consequence": "The real bank says nobody called you. Scam stopped.",
               "outcome": "success"
             }
@@ -152,19 +148,19 @@
           "choices": [
             {
               "id": "type-pin",
-              "text": "Type the PIN in: the padlock shows the page is safe",
+              "text": "Type it: there's a padlock",
               "consequence": "A padlock only means encrypted. Your PIN goes safely to whoever runs the page, and that could be a scammer.",
               "outcome": "fail"
             },
             {
               "id": "check-logo",
-              "text": "Check the logo looks right, then type the PIN in",
+              "text": "Check the logo, then type it",
               "consequence": "A logo can be copied in minutes. And a bank never asks for your PIN on a website.",
               "outcome": "fail"
             },
             {
               "id": "close",
-              "text": "Close it: a bank never asks for your PIN on a website",
+              "text": "Close it: banks never ask for a PIN",
               "consequence": "Right. Padlock or not, a page asking for your PIN is a scam.",
               "outcome": "success"
             }
@@ -177,11 +173,11 @@
       "id": "q-addresses",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Your Bank is `yourbank.example`. Real, or not?",
+      "prompt": "Really Your Bank's (`yourbank.example`)?",
       "bins": [
         {
           "id": "real",
-          "label": "Really Your Bank"
+          "label": "Your Bank"
         },
         {
           "id": "fake",
@@ -201,7 +197,7 @@
         },
         {
           "id": "nested",
-          "label": "yourbank.example.secure-login.example",
+          "label": "yourbank.example.sign-in.example",
           "bin": "fake"
         },
         {

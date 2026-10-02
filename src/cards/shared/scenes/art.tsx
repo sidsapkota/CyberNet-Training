@@ -536,13 +536,13 @@ const TEXTS: Record<string, ReactNode> = {
 function TextMessageBase() {
   return (
     <>
-      <rect x={20} y={8} width={160} height={304} rx={26} fill={C.shell} stroke={C.edge} strokeWidth={2} />
-      <rect x={26} y={14} width={148} height={292} rx={22} fill={C.bg} />
+      <rect x={20} y={8} width={160} height={256} rx={26} fill={C.shell} stroke={C.edge} strokeWidth={2} />
+      <rect x={26} y={14} width={148} height={244} rx={22} fill={C.bg} />
       <path d="M26 60H174" stroke={C.edge} strokeWidth={0.75} opacity={0.6} />
       <Line x={40} y={30} size={7} fill={C.muted}>‹ Messages</Line>
       {/* The message box at the bottom (not tappable) */}
-      <rect x={34} y={274} width={132} height={20} rx={10} fill="none" stroke={C.edge} strokeWidth={0.75} />
-      <Line x={44} y={287} size={7.5} fill={C.muted}>Text message</Line>
+      <rect x={34} y={232} width={132} height={20} rx={10} fill="none" stroke={C.edge} strokeWidth={0.75} />
+      <Line x={44} y={245} size={7.5} fill={C.muted}>Text message</Line>
     </>
   );
 }

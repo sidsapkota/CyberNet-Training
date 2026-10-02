@@ -58,7 +58,7 @@ export function HotspotExploreView({ card, answer, onAnswerChange }: CardCompone
         explored
       </p>
 
-      <div className="mt-4">
+      <div className="mt-3 sm:mt-4">
         <SceneStage
           ref={stageRef}
           sceneId={card.scene}
@@ -121,7 +121,7 @@ export function HotspotExploreView({ card, answer, onAnswerChange }: CardCompone
       </p>
 
       {done && (
-        <div className="mt-4">
+        <div className="mt-3 sm:mt-4">
           <p className="inline-flex items-center gap-2 rounded-control bg-accent-soft px-3 py-1.5 text-small font-semibold text-accent-ink">
             <CheckIcon className="size-4" />
             All {total} parts explored

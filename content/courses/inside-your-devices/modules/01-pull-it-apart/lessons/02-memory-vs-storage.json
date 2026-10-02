@@ -11,7 +11,10 @@
       "type": "reveal",
       "difficulty": "core",
       "prompt": "Tap the word.",
-      "show": { "kind": "term", "term": "ram" },
+      "show": {
+        "kind": "term",
+        "term": "ram"
+      },
       "sentence": "**RAM** is like a desk: fast, but wiped clean when the power goes off."
     },
     {
@@ -19,7 +22,10 @@
       "type": "reveal",
       "difficulty": "core",
       "prompt": "Tap the word.",
-      "show": { "kind": "term", "term": "storage" },
+      "show": {
+        "kind": "term",
+        "term": "storage"
+      },
       "sentence": "**Storage** is like a cupboard: it keeps your apps, photos and saved files, even with the power off."
     },
     {
@@ -27,12 +33,37 @@
       "type": "sort_bins",
       "difficulty": "core",
       "prompt": "Power cut! What's **still there**?",
-      "bins": [{ "id": "still", "label": "Still there" }, { "id": "gone", "label": "Gone" }],
+      "bins": [
+        {
+          "id": "still",
+          "label": "Still there"
+        },
+        {
+          "id": "gone",
+          "label": "Gone"
+        }
+      ],
       "items": [
-        { "id": "saved-photo", "label": "Saved photo", "bin": "still" },
-        { "id": "installed-app", "label": "Installed app", "bin": "still" },
-        { "id": "unsaved-essay", "label": "Unsaved essay", "bin": "gone" },
-        { "id": "unsaved-level", "label": "Unsaved game", "bin": "gone" }
+        {
+          "id": "saved-photo",
+          "label": "Saved photo",
+          "bin": "still"
+        },
+        {
+          "id": "installed-app",
+          "label": "Installed app",
+          "bin": "still"
+        },
+        {
+          "id": "unsaved-essay",
+          "label": "Unsaved essay",
+          "bin": "gone"
+        },
+        {
+          "id": "unsaved-level",
+          "label": "Unsaved game",
+          "bin": "gone"
+        }
       ],
       "explanation": "Saved and installed things live in **storage**, which keeps them with the power off. Anything that was only open lived in **RAM**, which is wiped when the power goes. (That's why many apps save your work for you every few minutes.)",
       "hint": "For each one, ask: was it saved or installed, or was it only open on the screen?",
@@ -43,7 +74,10 @@
       "type": "reveal",
       "difficulty": "core",
       "prompt": "Tap the word.",
-      "show": { "kind": "term", "term": "gigabyte" },
+      "show": {
+        "kind": "term",
+        "term": "gigabyte"
+      },
       "sentence": "Both are measured in **gigabytes (GB)**, and storage usually has many times more than RAM."
     },
     {
@@ -56,25 +90,75 @@
         "ramGb": 4,
         "systemGb": 1.5,
         "apps": [
-          { "id": "music", "label": "Music", "gb": 0.3 },
-          { "id": "video-call", "label": "Video call", "gb": 1.2 },
-          { "id": "game", "label": "Racing game", "gb": 2 }
+          {
+            "id": "music",
+            "label": "Music",
+            "gb": 0.3
+          },
+          {
+            "id": "video-call",
+            "label": "Video call",
+            "gb": 1.2
+          },
+          {
+            "id": "game",
+            "label": "Racing game",
+            "gb": 2
+          }
         ]
       },
       "controls": [
-        { "id": "music", "kind": "toggle", "label": "Music", "initial": true },
-        { "id": "video-call", "kind": "toggle", "label": "Video call", "initial": true },
-        { "id": "game", "kind": "toggle", "label": "Racing game" }
+        {
+          "id": "music",
+          "kind": "toggle",
+          "label": "Music",
+          "initial": true
+        },
+        {
+          "id": "video-call",
+          "kind": "toggle",
+          "label": "Video call",
+          "initial": true
+        },
+        {
+          "id": "game",
+          "kind": "toggle",
+          "label": "Racing game"
+        }
       ],
       "outputs": [
-        { "id": "smooth", "kind": "device", "label": "Phone", "frame": "phone" },
-        { "id": "usedPct", "kind": "bar", "label": "RAM used (of 4 GB)" }
+        {
+          "id": "smooth",
+          "kind": "device",
+          "label": "Phone",
+          "frame": "phone"
+        },
+        {
+          "id": "usedPct",
+          "kind": "bar",
+          "label": "RAM used (of 4 GB)"
+        }
       ],
       "goal": {
         "all": [
-          { "target": "control", "id": "game", "op": "==", "value": true },
-          { "target": "control", "id": "music", "op": "==", "value": true },
-          { "target": "output", "id": "smooth", "op": ">=", "value": 0.9 }
+          {
+            "target": "control",
+            "id": "game",
+            "op": "==",
+            "value": true
+          },
+          {
+            "target": "control",
+            "id": "music",
+            "op": "==",
+            "value": true
+          },
+          {
+            "target": "output",
+            "id": "smooth",
+            "op": ">=",
+            "value": 0.9
+          }
         ]
       },
       "explanation": "Every open app needs room in **RAM**, and the phone's own system needs some too. With the game on, everything needed 5 GB, more than the phone's 4 GB, so it lagged. Closing the video call made room. (A laptop with full RAM slows down instead, as it shuffles things out to storage.)",
@@ -170,7 +254,10 @@
       "difficulty": "core",
       "prompt": "A film you download needs free space in ___.",
       "options": [
-        { "id": "storage", "text": "storage" },
+        {
+          "id": "storage",
+          "text": "storage"
+        },
         {
           "id": "ram",
           "text": "RAM",
@@ -193,7 +280,10 @@
       "difficulty": "core",
       "prompt": "A laptop on for weeks feels slow. Why does a restart help?",
       "options": [
-        { "id": "clears-ram", "text": "It wipes RAM clean" },
+        {
+          "id": "clears-ram",
+          "text": "It wipes RAM clean"
+        },
         {
           "id": "deletes-files",
           "text": "It deletes old files",
@@ -267,7 +357,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- **RAM** is the fast desk for what's open. Power off wipes it.\n- **Storage** keeps apps and files until you delete them.\n- Full RAM? Close apps. Full storage? Delete files you've [[backed up|backup]].\n\nNext: the [[CPU]], the part that does the work."
+      "body": "- **RAM** is the fast desk for what's open. Power off wipes it.\n- **Storage** keeps apps and files until you delete them.\n- Full RAM? Close apps. Full storage? Delete files you've [[backed up|backup]].\n\nNext: the [[CPU]], the part that does the work.\n\n**Try this:** close apps you aren't using, and see if your phone feels quicker."
     }
   ]
 }

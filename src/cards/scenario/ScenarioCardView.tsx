@@ -56,7 +56,7 @@ export function ScenarioCardView({ card, answer, onAnswerChange, status }: CardC
       <CardPrompt id={promptId}>{card.prompt}</CardPrompt>
 
       {pastSteps.length > 0 && (
-        <ol className="mt-5 space-y-2" aria-label="What's happened so far">
+        <ol className="mt-3 space-y-2 sm:mt-5" aria-label="What's happened so far">
           {pastSteps.map(({ step, choice }) => (
             <li key={step.id} className="rounded-card border border-line bg-surface-raised p-3 text-small">
               <p className="flex items-start gap-2 font-semibold text-ink">
@@ -76,12 +76,12 @@ export function ScenarioCardView({ card, answer, onAnswerChange, status }: CardC
             initial={enter}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: EASE_OUT_QUICK }}
-            className="mt-5"
+            className="mt-3 sm:mt-5"
             aria-labelledby={promptId}
           >
-            <Markdown className="text-body text-ink">{activeStep.text}</Markdown>
+            <Markdown className="text-small text-ink sm:text-body">{activeStep.text}</Markdown>
             {choices && (
-              <div className="mt-4 grid gap-2.5">
+              <div className="mt-3 grid gap-2 sm:mt-4 sm:gap-2.5">
                 {choices.map((choice, i) => {
                   const tried = failed.has(choice.id);
                   const isSelected = choice.id === selected;
@@ -93,7 +93,7 @@ export function ScenarioCardView({ card, answer, onAnswerChange, status }: CardC
                       aria-pressed={isSelected}
                       onClick={() => pick(choice.id)}
                       aria-label={`${choice.text}${tried ? ", already tried: didn't work" : ""}`}
-                      className={`flex min-h-12 items-center gap-3 rounded-control border-2 px-4 py-2.5 text-left text-body transition-colors ${
+                      className={`flex min-h-12 items-center gap-3 rounded-control border-2 px-3 py-2 text-left text-small sm:px-4 sm:py-2.5 sm:text-body transition-colors ${
                         tried
                           ? "cursor-not-allowed border-line bg-surface text-ink-faint line-through"
                           : isSelected

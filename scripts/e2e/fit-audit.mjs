@@ -50,7 +50,7 @@ try {
         report.push(row);
         if (over > 4) {
           console.log(`✗ ${vp.name} ${lesson.id} #${i + 1} ${card.id} (${row.type}): ${over}px below the fold`);
-          if (vp.name === "640") await page.screenshot({ path: path.join(OUT, `${lesson.id}-${i + 1}.png`), fullPage: true });
+          if (vp.name === (process.env.SHOT_VP ?? "640")) await page.screenshot({ path: path.join(OUT, `${lesson.id}-${i + 1}.png`), fullPage: true });
         }
       }
     }

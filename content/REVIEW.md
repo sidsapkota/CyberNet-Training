@@ -1413,6 +1413,38 @@ for a PIN, and comes after the padlock card; the hack sort defines a recovery em
 two-step explained inside Module 4 for guests; quiz copies replaced with new situations; the family
 safe word taught before it's tested; give-away hints and openings fixed.
 
+## Learn-before-you-do rollout (2 October 2026)
+
+The pilot style (Inside Your Devices module 1) applied to every lesson. **Where this section and
+older notes disagree, this section wins.** Learning goals are unchanged.
+- **Real-life opener:** every lesson starts with a one-tap `true_false` about an everyday moment
+  (`friend-taken-over`, `code-you-didnt-ask-for`, `asks-for-password`, `knows-my-name`,
+  `looks-just-like`, `old-photo`, `torch-contacts`, `weird-link-sent`, `sounds-exactly`,
+  `too-embarrassed`), and each wrong answer's explanation teaches the idea.
+- **Learn before you do:** new terms arrive as a one-sentence `reveal` card (term or icon) just
+  before the card that uses them (passphrase, two-step, passkey, authenticator app, phishing,
+  padlock, digital footprint, security question, app permission, "Only while using", public Wi-Fi,
+  take-over, recovery email). Cut as repeats: `length-wins`, `best-passphrase`, `what-two-step-is`,
+  `something-fishy`, `wet-cement`, `allow-or-not`, and the bonus `label-the-site` (`spot-the-site`
+  tests the same signs).
+- **"Try this" ending:** every recap ends with one thing to do in real life (checked by
+  `shape.ts` for learn-first modules).
+- **Help module split, never cut:** 4.2 and 4.3 help text now sits in shorter explainers
+  (`if-someone-fakes-you`, `where-to-report-a-fake`, `never-your-fault`, `who-can-help`,
+  `more-places`, `where-to-report`). Every service, number and URL is unchanged from the verified
+  list above, still in core cards of free Module 4, and Kids Helpline always sits with Lifeline.
+  `where-to-report` lost only "(report that straight away)"; it still lists eSafety for a private
+  image shared or threatened.
+- **One short question per card, and the 360×560 fit:** prompts, scenario steps, choices, match
+  sides and sort labels shortened with the same meaning and answers; sorts trimmed to 4 items
+  (`q-share-or-private` dropped "A painting you made"); `q-email-labels` labels 3 signs (sender,
+  subject, link); `meet-the-signs` now says in the sender's job that Your Bank uses
+  `yourbank.example`; `short-but-mixed` fixes the length at 10 (new `length` param on the password
+  model) and keeps 3 switches; the text-message scene is 48 units shorter (empty space under the
+  messages). All 139 cards fit 360×640 and 360×560 (`npm run e2e:fit-audit`).
+- **Checked:** 10 lowercase characters (26¹⁰ ≈ 1.4 × 10¹⁴) take about 1.6 days at a billion
+  guesses a second; with capitals, numbers and symbols (95¹⁰ ≈ 6 × 10¹⁹) about 1,900 years.
+
 ---
 
 ## Module 1: Lock Your Accounts (free)

@@ -7,10 +7,30 @@
   "icon": "footprints",
   "cards": [
     {
+      "id": "old-photo",
+      "type": "true_false",
+      "difficulty": "core",
+      "prompt": "A photo you posted and deleted years ago can still turn up today.",
+      "answer": true,
+      "explanation": "True. Anyone could have saved or screenshotted it while it was up. Posts can last, so choose what you share.",
+      "hint": "Could someone have saved it before you deleted it?",
+      "nudge": "Deleting it removes your copy, but not a screenshot someone took."
+    },
+    {
+      "id": "meet-footprint",
+      "type": "reveal",
+      "difficulty": "core",
+      "show": {
+        "kind": "term",
+        "term": "digital-footprint"
+      },
+      "sentence": "Your **digital footprint** is the trail of everything you post and do online."
+    },
+    {
       "id": "share-or-private",
       "type": "sort_bins",
       "difficulty": "core",
-      "prompt": "Would you be OK with a stranger seeing it? **Fine to share**, or **keep it private**?",
+      "prompt": "Share with strangers, or keep private?",
       "bins": [
         {
           "id": "share",
@@ -24,37 +44,22 @@
       "items": [
         {
           "id": "band",
-          "label": "Your favourite band",
+          "label": "Favourite band",
           "bin": "share"
         },
         {
           "id": "drawing",
-          "label": "A drawing you made",
+          "label": "Your drawing",
           "bin": "share"
-        },
-        {
-          "id": "pet-photo",
-          "label": "A photo of your pet (no name tag)",
-          "bin": "share"
-        },
-        {
-          "id": "uniform",
-          "label": "A selfie showing your school's name",
-          "bin": "private"
         },
         {
           "id": "address",
-          "label": "Your home address",
-          "bin": "private"
-        },
-        {
-          "id": "now",
-          "label": "Holiday photos while you're still away",
+          "label": "Home address",
           "bin": "private"
         },
         {
           "id": "phone",
-          "label": "Your phone number in your bio",
+          "label": "Phone number",
           "bin": "private"
         }
       ],
@@ -63,11 +68,14 @@
       "nudge": "Look at each one again: could it show where you live, go to school or are right now?"
     },
     {
-      "id": "wet-cement",
-      "type": "explainer",
+      "id": "meet-security-question",
+      "type": "reveal",
       "difficulty": "core",
-      "title": "Footprints in wet cement",
-      "body": "Everything you post adds to your **digital footprint**: the trail you leave online. Like footprints in wet cement, it can set hard. Posts can be screenshotted, even after you delete them.\n\nKeep these off public posts:\n\n- **Stuff that finds you:** address, phone, school, where you are now\n- **Stuff that unlocks you:** passwords, ID, [[security question|security-question]] answers (like your first pet)"
+      "show": {
+        "kind": "term",
+        "term": "security-question"
+      },
+      "sentence": "A **security question** (like your first pet) can reset an account, so keep its answer private."
     },
     {
       "id": "band-name-quiz",
@@ -102,7 +110,7 @@
       "id": "why-wait",
       "type": "multiple_choice",
       "difficulty": "core",
-      "prompt": "Mia wants to post her beach holiday photos **while she's still away**. Is that a problem?",
+      "prompt": "Mia wants to post holiday photos **while she's still away**. Is that a problem?",
       "options": [
         {
           "id": "away",
@@ -121,33 +129,33 @@
       ],
       "correctOptionId": "away",
       "explanation": "Posting while you're away tells people **where you are, and that you're not home**. Share the photos once you're back.",
-      "hint": "Look back at the \"stuff that finds you\" list. Which one is about right now?"
+      "hint": "What does a holiday photo say about where she is right now, and her home?"
     },
     {
       "id": "match-settings",
       "type": "match_pairs",
       "difficulty": "core",
-      "prompt": "Every app has **privacy settings**. Match each setting to what it does.",
+      "prompt": "Match each **privacy setting** to what it does.",
       "pairs": [
         {
           "id": "private",
           "left": "Private account",
-          "right": "Only approved followers see your posts"
+          "right": "Only followers see posts"
         },
         {
           "id": "messages",
           "left": "Messages from friends only",
-          "right": "Strangers can't message you directly"
+          "right": "Strangers can't message"
         },
         {
           "id": "location",
           "left": "Location sharing off",
-          "right": "Nobody can see where you are right now"
+          "right": "Nobody sees where you are"
         },
         {
           "id": "tags",
           "left": "Tag review",
-          "right": "You approve photos you're tagged in"
+          "right": "You approve tagged photos"
         }
       ],
       "explanation": "Each setting controls one thing: who sees your posts, who can message you, your location, or photos of you. Apps sometimes change settings in updates, so check them now and then.",
@@ -158,7 +166,7 @@
       "id": "friendly-stranger",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "Someone you only know from a game is really friendly. You can always **block**, **report** and tell a trusted adult.",
+      "prompt": "A friend from a game is really nice. (You can always **block**, **report** and tell a trusted adult.)",
       "start": "start",
       "steps": [
         {
@@ -187,7 +195,7 @@
       "id": "username-check",
       "type": "sort_bins",
       "difficulty": "challenge",
-      "prompt": "Is each username **safe**, or does it **give too much away**?",
+      "prompt": "Safe username, or gives too much away?",
       "bins": [
         {
           "id": "safe",
@@ -195,7 +203,7 @@
         },
         {
           "id": "too-much",
-          "label": "Gives too much away"
+          "label": "Too much"
         }
       ],
       "items": [
@@ -211,12 +219,12 @@
         },
         {
           "id": "full",
-          "label": "Mia_Jones_Brisbane2013",
+          "label": "MiaJones_Brisbane",
           "bin": "too-much"
         },
         {
           "id": "school",
-          "label": "Liam_at_Hillside_High",
+          "label": "Liam_HillsideHigh",
           "bin": "too-much"
         }
       ],
@@ -229,7 +237,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- Your **digital footprint** can last, so choose what you share.\n- Keep private anything that **finds you** or **unlocks you**.\n- Use **privacy settings**. Block, report and tell a trusted adult.\n\nNext: what your apps can see, and staying safe on public Wi-Fi."
+      "body": "- Your **digital footprint** can last: keep anything that **finds you** or **unlocks you** private.\n- Use **privacy settings**. Block, report and tell a trusted adult.\n- **Try this:** set one social account to private."
     }
   ]
 }

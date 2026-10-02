@@ -162,7 +162,7 @@ export const SCENES = {
     id: "text-message",
     description: "A text message thread from a sender named Parcels, with an older message and a new one.",
     width: 200,
-    height: 320,
+    height: 272,
     parts: [
       { id: "sms-sender", name: "Sender name: Parcels", box: { x: 34, y: 30, w: 132, h: 26 }, labelAt: { x: 154, y: 43 } },
       { id: "sms-earlier", name: "Monday: Your parcel is on its way. Track it in the Parcels app.", box: { x: 28, y: 76, w: 144, h: 50 }, labelAt: { x: 162, y: 100 } },

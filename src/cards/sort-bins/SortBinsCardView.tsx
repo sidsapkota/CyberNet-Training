@@ -96,7 +96,7 @@ function Bin({
       ref={setNodeRef}
       data-drop-bin
       aria-label={label}
-      className={`flex min-h-24 flex-col rounded-card sm:min-h-32 border-2 border-dashed p-2 transition-colors ${
+      className={`flex min-h-16 flex-col rounded-card sm:min-h-32 border-2 border-dashed p-2 transition-colors ${
         isOver || canDrop ? "border-accent-ink bg-accent-soft" : "border-line-strong bg-surface-raised"
       }`}
     >
@@ -176,7 +176,7 @@ export function SortBinsCardView({ card, answer, onAnswerChange, status }: CardC
             {tray.map(chip)}
           </TrayZone>
           {/* Three bins stack on phones, so item names never squeeze into ~100px columns. */}
-          <div className={`mt-4 grid gap-2 ${card.bins.length === 3 ? "grid-cols-1 sm:grid-cols-3" : "grid-cols-2"}`}>
+          <div className={`mt-2 grid gap-2 sm:mt-4 ${card.bins.length === 3 ? "grid-cols-1 sm:grid-cols-3" : "grid-cols-2"}`}>
             {card.bins.map((bin) => (
               <Bin
                 key={bin.id}
@@ -216,7 +216,7 @@ function TrayZone({ children, empty, locked }: { children: React.ReactNode; empt
       ref={setNodeRef}
       aria-label="Items to sort"
       role="group"
-      className={`mt-3 flex min-h-14 flex-wrap gap-2 rounded-card p-2 sm:mt-5 transition-colors ${isOver ? "bg-surface-raised" : ""}`}
+      className={`mt-2 flex min-h-14 flex-wrap gap-2 rounded-card p-1.5 sm:mt-5 sm:p-2 transition-colors ${isOver ? "bg-surface-raised" : ""}`}
     >
       {children}
       {empty && !locked && <span className="self-center px-1 text-small text-ink-faint">All sorted. Press Check.</span>}
