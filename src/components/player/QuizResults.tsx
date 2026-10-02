@@ -1,5 +1,6 @@
 "use client";
 
+import { SpinPrompt } from "@/components/rewards/SpinPrompt";
 import { motion } from "motion/react";
 import { DailyGoalSummary } from "@/components/streak/DailyGoalSummary";
 import { useEffect } from "react";
@@ -101,6 +102,7 @@ export function QuizResults({
         )}
 
         {attempt.passed && <DailyGoalSummary goalMetNow={goalMetNow} freezeEarned={freezeEarned} />}
+        <SpinPrompt />
         <div className="mx-auto mt-8 flex max-w-sm flex-col gap-2">
           {attempt.passed ? (
             <>

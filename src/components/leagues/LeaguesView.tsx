@@ -1,5 +1,6 @@
 "use client";
 
+import { Avatar } from "@/components/rewards/Avatar";
 import { motion, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { getMyLeagueAction, markResultSeenAction, type MyLeague, reportHandleAction, type StandingRow } from "@/app/actions/leagues";
@@ -122,7 +123,7 @@ function League({ league, courses, reload }: { league: MyLeague; courses: Course
       </div>
 
       <aside className="space-y-6">
-        <OwnCard handle={player.handle} tier={player.tier} courses={courses} />
+        <OwnCard handle={player.handle} avatar={player.avatar} tier={player.tier} courses={courses} />
         <LeagueSettings className={panel} showOnLeaderboards={player.showOnLeaderboards} onChange={reload} />
       </aside>
 
@@ -131,7 +132,7 @@ function League({ league, courses, reload }: { league: MyLeague; courses: Course
   );
 }
 
-function OwnCard({ handle, tier, courses }: { handle: string; tier: MyLeague["player"]["tier"]; courses: CourseOutline[] }) {
+function OwnCard({ handle, avatar, tier, courses }: { handle: string; avatar: string; tier: MyLeague["player"]["tier"]; courses: CourseOutline[] }) {
   const { snapshot } = useProgress();
   const daily = useDaily();
   const { hasPro } = usePro();
@@ -139,6 +140,7 @@ function OwnCard({ handle, tier, courses }: { handle: string; tier: MyLeague["pl
   return (
     <PlayerCard
       handle={handle}
+      avatar={avatar}
       tier={tier}
       pro={hasPro}
       stats={{ kind: "own", totalXp: stats?.totalXp ?? 0, streak: daily?.streak.current ?? 0, coursesCompleted: stats?.coursesCompleted ?? 0 }}
@@ -178,6 +180,7 @@ function Standings({ rows, tier, onOpen }: { rows: StandingRow[]; tier: MyLeague
               ) : (
                 <span className="size-4 shrink-0" aria-hidden="true" />
               )}
+              <Avatar avatar={row.avatar} pro={row.pro} frame={false} className="size-7" />
               <span className="min-w-0 flex-1 truncate font-semibold">
                 {row.handle}
                 {row.isMe && <span className="ml-2 text-caption font-semibold text-accent-ink">You</span>}
@@ -243,7 +246,7 @@ function PublicCardDialog({ row, onClose }: { row: StandingRow | null; onClose: 
               <XIcon className="size-5" />
             </button>
           </div>
-          <PlayerCard handle={row.handle} tier={row.tier} pro={row.pro} stats={{ kind: "public", weeklyXp: row.weeklyXp }} />
+          <PlayerCard handle={row.handle} avatar={row.avatar} tier={row.tier} pro={row.pro} stats={{ kind: "public", weeklyXp: row.weeklyXp }} />
 
           {!row.isMe && !reporting && !message && (
             <Button variant="ghost" className="mt-3 w-full" onClick={() => setReporting(true)}>

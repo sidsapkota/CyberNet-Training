@@ -430,6 +430,7 @@ export type Database = {
       profiles: {
         Row: {
           age_confirmed: boolean
+          avatar: string
           coach_seen: string[]
           created_at: string
           daily_goal: number
@@ -445,6 +446,7 @@ export type Database = {
         }
         Insert: {
           age_confirmed?: boolean
+          avatar?: string
           coach_seen?: string[]
           created_at?: string
           daily_goal?: number
@@ -460,6 +462,7 @@ export type Database = {
         }
         Update: {
           age_confirmed?: boolean
+          avatar?: string
           coach_seen?: string[]
           created_at?: string
           daily_goal?: number
@@ -505,6 +508,51 @@ export type Database = {
           score?: number
           user_id?: string
           xp?: number
+        }
+        Relationships: []
+      }
+      reward_items_owned: {
+        Row: {
+          item_id: string
+          source: string
+          unlocked_at: string
+          user_id: string
+        }
+        Insert: {
+          item_id: string
+          source: string
+          unlocked_at?: string
+          user_id: string
+        }
+        Update: {
+          item_id?: string
+          source?: string
+          unlocked_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      reward_spins: {
+        Row: {
+          earned_at: string
+          earned_for: string
+          item_id: string | null
+          spun_at: string | null
+          user_id: string
+        }
+        Insert: {
+          earned_at?: string
+          earned_for: string
+          item_id?: string | null
+          spun_at?: string | null
+          user_id: string
+        }
+        Update: {
+          earned_at?: string
+          earned_for?: string
+          item_id?: string | null
+          spun_at?: string | null
+          user_id?: string
         }
         Relationships: []
       }
@@ -647,6 +695,7 @@ export type Database = {
       league_standings: {
         Args: never
         Returns: {
+          avatar: string
           handle: string
           is_me: boolean
           pro: boolean

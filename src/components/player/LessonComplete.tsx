@@ -1,5 +1,6 @@
 "use client";
 
+import { SpinPrompt } from "@/components/rewards/SpinPrompt";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
@@ -119,6 +120,7 @@ export function LessonComplete({
         )}
 
         <DailyGoalSummary goalMetNow={goalMetNow} freezeEarned={freezeEarned} />
+        <SpinPrompt />
 
         {gateNext && next ? (
           <SignUpGate lessonId={lessonId} next={`/lesson/${next.id}`} xp={xpEarned} variant="inline" notNowHref={pathHref} />

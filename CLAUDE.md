@@ -1129,6 +1129,33 @@ Pro learners try the cards they got wrong again. Pure rules in `src/lib/progress
   quiz cards pay nothing. The finish screen counts what was fixed (mascot `celebrating`, or
   `thinking` if nothing was).
 
+## Avatars and rewards
+
+Cosmetic only, never bought, never gambling-like. Pure rules in `src/lib/rewards/` (`items.ts`,
+`rules.ts`, tested), server code in `src/lib/rewards/server.ts` (vetted secret-key use), actions in
+`src/app/actions/rewards.ts`, UI in `src/components/rewards/`.
+- **Avatars:** chosen from a fixed list (`REWARD_ITEMS`), never uploaded, never a photo: mascot
+  heads (the logo shield, with a cap, headphones, glasses, scarf or crown) and tech badges (lucide
+  glyphs via `BadgeGlyph`) on brand tiles. `Avatar` draws one in a node (header, tab bar,
+  dashboard, `/account`, league rows and player cards, where the tier badge moves to a corner).
+  Starters belong to everyone; Pro items (Holo shield, Circuit crown, Trace frame, the only
+  animated one: two beats then still) unlock while the learner has Pro and fall back to the mascot
+  when Pro ends (`effectiveAvatar`).
+- **Spins** are earned only by learning: finishing a module (its quiz passed), finishing a course
+  (its final passed) and 7, 30 and 100-day streaks (longest streak). `claimSpins` derives them from
+  real progress and records each once (`reward_spins`, idempotent), on end screens and the Rewards
+  page. **Every spin wins:** the server picks, with equal chance, a spin item the learner doesn't own
+  (never a Pro item, so paying never changes a spin); a test keeps the spin pool at least as large
+  as every spin the courses can earn (add items when adding modules). No money, odds, "rare"
+  labels or near misses; the full list is always visible on `/account/rewards`.
+- **Where:** `SpinPrompt` on the lesson-complete and quiz-results screens ("You earned a spin"),
+  `RewardSpin` (a ring of nodes lights in sequence, ~1.2 s, the result at once under reduced
+  motion; "Wear it" / "Not now"), the Rewards page, and the avatar picker on `/account`. Never
+  inside a lesson.
+- **Data** (`20261005100000_avatars_and_rewards.sql`): `profiles.avatar`, `reward_items_owned`,
+  `reward_spins`; learners read their own rows only, the server writes (`check:rls`).
+  `league_standings()` returns the avatar id. `npm run e2e:rewards` checks the flow.
+
 ## Daily lesson limit
 
 Free accounts open up to **3 new lessons a day** (quizzes count); Pro is unlimited. Rules in
