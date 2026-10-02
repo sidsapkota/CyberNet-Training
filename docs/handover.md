@@ -28,7 +28,7 @@ Last updated: 1 October 2026.
 
 ## 2. Open branches
 
-- `avatars-rewards` (owner approved 2 Oct; merge after checks): avatars (fixed list, never photos), reward spins for finished modules and courses and 7/30/100-day streaks (every spin wins, server-picked, never bought), 3 Pro-only items while Pro, Rewards page, avatar picker, avatars in leagues. SQL applied (`20261005100000_avatars_and_rewards.sql`); `check:rls` 99/99.
+- **Avatars and rewards live (2 Oct):** fixed avatar list (never photos), spins for finished modules and courses and 7/30/100-day streaks (every spin wins, server-picked, never bought), 3 Pro items while Pro, `/account/rewards`, avatar picker, avatars in the header and leagues. `check:rls` 99/99; production checks passed (rewards 7/7 and the rest).
 
 - `hero-prototypes` (**don't merge into lessons yet: owner reviews `/dev/hero` first**): 3D phone (React Three Fiber), packet race (Matter.js), train the model (gestures), with juice (Howler sprite of synthesised sounds, haptics), fallbacks and `npm run e2e:hero-perf`. Results and the recommendation (3D behind a "See it in 3D" button) are in `docs/plans/juice-and-heroes.md`.
 - `ldyd-pilot` now also has the **train_model redesign** (real pictures, problem first, one change, live flip in lessons, "?" until Check in quizzes; all 11 AI cards fit 360×560; beginner audit done and fixed) and `docs/plans/zero-confusion-audit.md` (all courses vs the zero-confusion rule and playbook: worst 25 cards, 26 lessons needing a real-life opener, "Try this" endings for every lesson). Before/after screenshots: `docs/plans/train-model/`. Follow-up: the train_model how-to-play demo still shows abstract dots.
