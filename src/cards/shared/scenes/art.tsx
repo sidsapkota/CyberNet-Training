@@ -467,7 +467,7 @@ const EMAIL: Record<string, ReactNode> = {
       <Line x={84} y={49} size={8} font={mono} fill={C.muted}>&lt;security@yourbank-help.example&gt;</Line>
     </g>
   ),
-  "email-date": <Line x={14} y={67} size={8} fill={C.muted}>Received today at 3:12 am</Line>,
+  "email-date": <Line x={14} y={67} size={8} fill={C.muted}>Received today at 9:12 am</Line>,
   "email-subject": (
     <Line x={14} y={90} size={10} weight={600}>
       URGENT: Your account will be closed in 24 hours

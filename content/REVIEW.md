@@ -1445,6 +1445,21 @@ older notes disagree, this section wins.** Learning goals are unchanged.
 - **Checked:** 10 lowercase characters (26¹⁰ ≈ 1.4 × 10¹⁴) take about 1.6 days at a billion
   guesses a second; with capitals, numbers and symbols (95¹⁰ ≈ 6 × 10¹⁹) about 1,900 years.
 
+**Beginner audit after the rollout (2 Oct 2026, fresh agent, 360×560, answers hidden):** 105/105
+right first time; tone calm, help info all in core cards, Kids Helpline always with Lifeline.
+Fixed: song lines were taught only in a bonus card but tested in quiz 1 and the final, so
+`meet-passphrase` now says "never a song line or quote" (with its own example, not the next card's
+answer) and `easy-or-hard` sorts "A line from a famous song" instead of `P@ssw0rd` (swaps come next);
+the address rule says to ignore anything after a `/` (and drops `.com.au`); the `rank-proofs` hint
+no longer gives the order; `spot-the-signs` no longer rules out the time and sign-off (the email now
+arrives at 9:12 am, so nothing odd), leaving 5 of 7 parts to find; block and report get their own
+reveal before `friendly-stranger`, whose prompt no longer hints the answer; the two-step opener is
+now "a password alone is enough?" (it asked about sign-in codes before two-step was taught);
+`username-check` explanation and hint match its items; "the official app" on a bank page; "the
+number on the back of your card"; plainer statement email; quiz 2's "probably fine" item is a club
+newsletter, not a lesson copy; help numbers never break across lines (non-breaking spaces); the
+email explore callout is pinned inside the scene (no page jump).
+
 ---
 
 ## Module 1: Lock Your Accounts (free)

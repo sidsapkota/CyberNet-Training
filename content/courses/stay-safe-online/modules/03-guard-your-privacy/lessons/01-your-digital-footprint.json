@@ -163,10 +163,20 @@
       "nudge": "Go through each setting again and ask who it keeps out, or what it hides."
     },
     {
+      "id": "meet-block-report",
+      "type": "reveal",
+      "difficulty": "core",
+      "show": {
+        "kind": "icon",
+        "icon": "shield-check"
+      },
+      "sentence": "In any app you can **block** and **report** someone, and you can always tell a trusted adult."
+    },
+    {
       "id": "friendly-stranger",
       "type": "scenario",
       "difficulty": "core",
-      "prompt": "A friend from a game is really nice. (You can always **block**, **report** and tell a trusted adult.)",
+      "prompt": "A friend from a game is really nice.",
       "start": "start",
       "steps": [
         {
@@ -228,8 +238,8 @@
           "bin": "too-much"
         }
       ],
-      "explanation": "A good username says nothing about who you are. `Mia_Jones_Brisbane2013` gives a full name, city and birth year; `Liam_at_Hillside_High` gives a name and school.",
-      "hint": "Look for a real name, a school, a place or a birth year inside each username.",
+      "explanation": "A good username says nothing about who you are. `MiaJones_Brisbane` gives a full name and city; `Liam_HillsideHigh` gives a name and school.",
+      "hint": "Look for a real name, a school or a place inside each username.",
       "nudge": "Check each one again: could it point to who you really are?"
     },
     {

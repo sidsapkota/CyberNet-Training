@@ -120,15 +120,8 @@ export function HotspotExploreView({ card, answer, onAnswerChange }: CardCompone
         {activePart ? `${activePart.name}. ${jobs.get(activePart.id) ?? ""} ${seen.size} of ${total} explored.` : ""}
       </p>
 
-      {done && (
-        <div className="mt-3 sm:mt-4">
-          <p className="inline-flex items-center gap-2 rounded-control bg-accent-soft px-3 py-1.5 text-small font-semibold text-accent-ink">
-            <CheckIcon className="size-4" />
-            All {total} parts explored
-          </p>
-          <Markdown className="mt-3 text-body text-ink">{card.explanation}</Markdown>
-        </div>
-      )}
+      {/* "Every part explored" is already in the line above the scene, so only the summary goes here. */}
+      {done && <Markdown className="mt-3 text-small text-ink sm:mt-4 sm:text-body">{card.explanation}</Markdown>}
     </div>
   );
 }

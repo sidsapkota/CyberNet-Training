@@ -144,7 +144,7 @@ export const SCENES = {
     height: 236,
     parts: [
       { id: "email-from", name: "From: Your Bank <security@yourbank-help.example>", box: { x: 10, y: 36, w: 300, h: 18 }, labelAt: { x: 296, y: 45 } },
-      { id: "email-date", name: "Received today at 3:12 am", box: { x: 10, y: 56, w: 300, h: 16 }, labelAt: { x: 296, y: 64 } },
+      { id: "email-date", name: "Received today at 9:12 am", box: { x: 10, y: 56, w: 300, h: 16 }, labelAt: { x: 296, y: 64 } },
       { id: "email-subject", name: "Subject: URGENT: Your account will be closed in 24 hours", box: { x: 10, y: 76, w: 300, h: 20 }, labelAt: { x: 296, y: 86 } },
       { id: "email-greeting", name: "Dear Customer,", box: { x: 10, y: 102, w: 300, h: 16 }, labelAt: { x: 296, y: 110 } },
       {

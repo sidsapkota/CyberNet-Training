@@ -146,9 +146,6 @@ export function SceneStage({
   const scene = getScene(sceneId)!;
   const ratio = scene.width / scene.height;
   const fitted = useFittedHeight(scene.simplified === true || Boolean(status));
-  // Wide scenes (laptop, email, web page) are short, so the callout fits below them, in view,
-  // without covering the scene; tall ones (phones) pin it inside the panel instead.
-  const wide = ratio >= 1.2;
   const shrink = !READABLE.has(sceneId);
   const { setNode } = fitted;
   const setRefs = useCallback(
@@ -204,12 +201,7 @@ export function SceneStage({
           />
         )}
       </div>
-      {callout && wide && (
-        <div data-scene-callout className="mt-3 min-h-16 rounded-control border border-line-strong bg-surface p-3 text-left">
-          {callout}
-        </div>
-      )}
-      {callout && !wide && (
+      {callout && (
         <div
           data-scene-callout
           className={`pointer-events-none absolute inset-x-2 z-10 rounded-control border border-line-strong bg-surface p-3 text-left shadow-lift sm:inset-x-3 ${

@@ -55,8 +55,8 @@
           "bin": "phish"
         },
         {
-          "id": "app",
-          "label": "@yourbank.example: \"Statement in app\"",
+          "id": "newsletter",
+          "label": "Your club's usual newsletter",
           "bin": "fine"
         },
         {
@@ -65,7 +65,7 @@
           "bin": "phish"
         }
       ],
-      "explanation": "Asking for codes, prize fees and deadlines are phishing signs. The real address sending you to the app is fine."
+      "explanation": "Asking for codes, prize fees and deadlines are phishing signs. A newsletter you always get, asking for nothing, is fine."
     },
     {
       "id": "q-parcel-text",

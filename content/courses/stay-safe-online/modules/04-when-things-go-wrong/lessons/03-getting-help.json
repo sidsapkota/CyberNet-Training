@@ -69,7 +69,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Who can help",
-      "body": "A **trusted adult** is someone you feel safe with: a parent or carer, teacher, school counsellor or older relative. Outside your family, in Australia:\n\n- **Kids Helpline**, ages 5 to 25: **1800 55 1800**. Free, private, any time.\n- **Lifeline**, for anyone: **13 11 14**, any time."
+      "body": "A **trusted adult** is someone you feel safe with: a parent or carer, teacher, school counsellor or older relative. Outside your family, in Australia:\n\n- **Kids Helpline**, ages 5 to 25: **1800 55 1800**. Free, private, any time.\n- **Lifeline**, for anyone: **13 11 14**, any time."
     },
     {
       "id": "who-to-tell",
@@ -93,7 +93,7 @@
         }
       ],
       "correctOptionId": "helpline",
-      "explanation": "**Kids Helpline (1800 55 1800)** is free, private and open any time for ages 5 to 25, and **Lifeline (13 11 14)** is there any time too. A school counsellor is a trusted adult outside the family, so Ali doesn't have to wait or cope alone.",
+      "explanation": "**Kids Helpline (1800 55 1800)** is free, private and open any time for ages 5 to 25, and **Lifeline (13 11 14)** is there any time too. A school counsellor is a trusted adult outside the family, so Ali doesn't have to wait or cope alone.",
       "hint": "The last card named people outside the family who can help."
     },
     {
@@ -161,7 +161,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "More places to go",
-      "body": "- **Your bank, straight away**, if money or card details are involved.\n- **IDCARE** (idcare.org or 1800 595 160): free help to make a plan if your personal details were stolen.\n- **ReportCyber** (cyber.gov.au): report cybercrime to the police.\n- **In danger right now:** call **000**."
+      "body": "- **Your bank, straight away**, if money or card details are involved.\n- **IDCARE** (idcare.org or 1800 595 160): free help to make a plan if your personal details were stolen.\n- **ReportCyber** (cyber.gov.au): report cybercrime to the police.\n- **In danger right now:** call **000**."
     },
     {
       "id": "where-to-go",
@@ -245,13 +245,13 @@
             {
               "id": "get-help",
               "text": "Stop replying, tell an adult, report it",
-              "consequence": "You did the right thing. Report it to the app and eSafety (which can help remove images), and if you're under 18, the ACCCE. Kids Helpline (1800 55 1800) and Lifeline (13 11 14) are there any time.",
+              "consequence": "You did the right thing. Report it to the app and eSafety (which can help remove images), and if you're under 18, the ACCCE. Kids Helpline (1800 55 1800) and Lifeline (13 11 14) are there any time.",
               "outcome": "success"
             }
           ]
         }
       ],
-      "explanation": "**It is never your fault**, and you won't be in trouble. **Don't pay**, and stop replying. Screenshot the messages and their profile (never the image itself), block them, and **tell a trusted adult**. Report it to the app and to **eSafety** (esafety.gov.au/report), and if you're **under 18**, to the **ACCCE** (accce.gov.au/report) too. Anyone in danger right now: **000**. To talk to someone any time: **Kids Helpline** (free, 1800 55 1800) or **Lifeline** (13 11 14).",
+      "explanation": "**It is never your fault**, and you won't be in trouble. **Don't pay**, and stop replying. Screenshot the messages and their profile (never the image itself), block them, and **tell a trusted adult**. Report it to the app and to **eSafety** (esafety.gov.au/report), and if you're **under 18**, to the **ACCCE** (accce.gov.au/report) too. Anyone in danger right now: **000**. To talk to someone any time: **Kids Helpline** (free, 1800 55 1800) or **Lifeline** (13 11 14).",
       "hint": "Look back at where to report a threat about a private image (including for under-18s), and who to tell."
     },
     {
@@ -284,7 +284,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- **Never your fault:** tell an adult, Kids Helpline (1800 55 1800) or Lifeline (13 11 14).\n- Report in the app, then eSafety, Scamwatch, your bank or 000.\n- **Try this:** save Kids Helpline and a trusted adult's number in your phone."
+      "body": "- **Never your fault:** tell an adult, Kids Helpline (1800 55 1800) or Lifeline (13 11 14).\n- Report in the app, then eSafety, Scamwatch, your bank or 000.\n- **Try this:** save Kids Helpline and a trusted adult's number in your phone."
     }
   ]
 }

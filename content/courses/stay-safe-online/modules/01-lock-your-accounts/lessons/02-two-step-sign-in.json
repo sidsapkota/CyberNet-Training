@@ -7,14 +7,14 @@
   "icon": "smartphone",
   "cards": [
     {
-      "id": "code-you-didnt-ask-for",
+      "id": "password-is-enough",
       "type": "true_false",
       "difficulty": "core",
-      "prompt": "A sign-in code arrives that you didn't ask for. Someone may have your password.",
-      "answer": true,
-      "explanation": "True. Sites send a code when someone types your password. If it wasn't you, someone else has it: change it.",
-      "hint": "When does a site send a sign-in code?",
-      "nudge": "A code only arrives when someone types your password. Was it you?"
+      "prompt": "If someone learns your password, they can always get into your account.",
+      "answer": false,
+      "explanation": "False, if the account asks for a **second proof** too, like a code on your phone. Then a password alone isn't enough.",
+      "hint": "Could an account ask for something more than the password?",
+      "nudge": "Some accounts ask for a second proof after the password. Without it, the password isn't enough."
     },
     {
       "id": "stranger-far-away",
@@ -158,7 +158,7 @@
         }
       ],
       "explanation": "A **passkey** is strongest, then an **authenticator app** code, then a **text code**. A password alone is weakest: one leak and it's open.",
-      "hint": "Passkeys were strongest, then the authenticator app. Any second proof beats none.",
+      "hint": "Which proofs could a scammer far away steal, and which can't they get?",
       "nudge": "Any second proof beats a password alone. Which second proof can scammers sometimes steal?"
     },
     {

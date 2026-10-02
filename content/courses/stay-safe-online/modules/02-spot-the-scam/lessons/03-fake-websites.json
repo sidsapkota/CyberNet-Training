@@ -21,7 +21,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Read the address",
-      "body": "A fake site can copy a logo, but not the real address. The **owner** is the name just before the **very last ending** (like `.example` or `.com.au`).\n\n- `login.yourbank.example`: Your Bank's.\n- `yourbank.example.login-check.example`: owned by **login-check.example**.\n- `yourbank-secure.example`: a [[lookalike|lookalike-domain]]."
+      "body": "A fake site can copy a logo, but not the real address. The **owner** is the name just before the **last ending** (like `.example`). Ignore anything after a `/`.\n\n- `login.yourbank.example/help`: Your Bank's.\n- `yourbank.example.login-check.example`: owned by **login-check.example**.\n- `yourbank-secure.example`: a [[lookalike|lookalike-domain]]."
     },
     {
       "id": "bank-or-not",
@@ -146,7 +146,7 @@
           "choices": [
             {
               "id": "close",
-              "text": "Close it, then use the game's app or type the address",
+              "text": "Close it, then use the official app or type the address",
               "consequence": "Safe. If there was really something to sign in for, you'll see it there.",
               "outcome": "success"
             },
@@ -199,7 +199,7 @@
             },
             {
               "id": "card-number",
-              "text": "The number on the card, or on the bank's official website",
+              "text": "The number on the back of your card, or the bank's website",
               "consequence": "The bank can stop the card before anyone uses it.",
               "outcome": "success"
             }

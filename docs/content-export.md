@@ -94,7 +94,7 @@ Phishing emails, scam texts and calls, and fake websites.
 
 **Key facts**
 
-- *Read the address:* The **owner** is the name just before the **very last ending** (like `.example` or `.com.au`). `yourbank.example.login-check.example`: owned by **login-check.example**.
+- *Read the address:* The **owner** is the name just before the **last ending** (like `.example`). `yourbank.example.login-check.example`: owned by **login-check.example**.
 - *Recap:* The **owner** is the name just before the very last ending. A **padlock only means encrypted**: scam sites can have one.
 
 **Best interactive cards**
@@ -124,7 +124,7 @@ Your digital footprint, app permissions and public Wi-Fi.
 
 - Sort into groups: Share with strangers, or keep private?
 - Choose what happens: A fun quiz is going around on social media.
-- Choose what happens: A friend from a game is really nice. (You can always **block**, **report** and tell a trusted adult.)
+- Choose what happens: A friend from a game is really nice.
 
 #### Apps and Public Wi-Fi
 

@@ -120,7 +120,7 @@
         },
         {
           "id": "statement",
-          "label": "@yourbank.example: \"Statement in app\"",
+          "label": "Your Bank: \"Statement ready in the app\"",
           "bin": "fine"
         },
         {
@@ -137,7 +137,7 @@
       "id": "spot-the-signs",
       "type": "hotspot",
       "difficulty": "core",
-      "prompt": "Tap **every** warning sign. (The time and sign-off are fine.)",
+      "prompt": "Tap **every** warning sign in this email.",
       "scene": "email",
       "mode": "tap",
       "targets": [

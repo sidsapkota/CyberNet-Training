@@ -183,7 +183,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "A program, not a person",
-      "body": "AI \"friend\" apps sound kind, but they can't notice if you're not OK or get help for you.\n\nIf something's worrying you, talk to a **trusted adult** or a friend. In Australia, call **Kids Helpline (1800 55 1800)**, free, any time, up to age 25, or **Lifeline (13 11 14)**, any time, for anyone. In danger right now? Call **000**."
+      "body": "AI \"friend\" apps sound kind, but they can't notice if you're not OK or get help for you.\n\nIf something's worrying you, talk to a **trusted adult** or a friend. In Australia, call **Kids Helpline (1800 55 1800)**, free, any time, up to age 25, or **Lifeline (13 11 14)**, any time, for anyone. In danger right now? Call **000**."
     },
     {
       "id": "feeling-down",
@@ -205,7 +205,7 @@
             {
               "id": "real-person",
               "text": "Talk to a trusted adult, or call Kids Helpline",
-              "consequence": "Good call. Real people can listen properly and help. Kids Helpline (1800 55 1800) and Lifeline (13 11 14) answer any time.",
+              "consequence": "Good call. Real people can listen properly and help. Kids Helpline (1800 55 1800) and Lifeline (13 11 14) answer any time.",
               "outcome": "success"
             },
             {
@@ -218,7 +218,7 @@
         }
       ],
       "hint": "Look back at what a chatbot can't do for you.",
-      "explanation": "A chatbot can't notice you're not OK or get help. **Talk to a trusted adult or a friend, or call Kids Helpline (1800 55 1800) or Lifeline (13 11 14)**, any time."
+      "explanation": "A chatbot can't notice you're not OK or get help. **Talk to a trusted adult or a friend, or call Kids Helpline (1800 55 1800) or Lifeline (13 11 14)**, any time."
     },
     {
       "id": "best-friend-app",
@@ -255,7 +255,7 @@
       "type": "explainer",
       "difficulty": "core",
       "title": "Recap",
-      "body": "- Chats may be saved, read or used for training.\n- Keep private things private; allow only the permissions an app needs.\n- Worried? Talk to a trusted adult, Kids Helpline (1800 55 1800) or Lifeline (13 11 14).\n\nNext: using AI fairly and honestly."
+      "body": "- Chats may be saved, read or used for training.\n- Keep private things private; allow only the permissions an app needs.\n- Worried? Talk to a trusted adult, Kids Helpline (1800 55 1800) or Lifeline (13 11 14).\n\nNext: using AI fairly and honestly."
     }
   ]
 }
