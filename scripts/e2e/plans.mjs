@@ -108,7 +108,7 @@ try {
     const after = await page.locator("[aria-live=polite]").first().innerText();
     record("…the monthly switch changes the price", before !== after && /a month/.test(after), `${before} → ${after}`);
     record("…Free says Start free", (await page.getByRole("link", { name: "Start free" }).count()) === 1);
-    record("…a three-question FAQ", (await page.locator("details").count()) === 3);
+    record("…a three-question FAQ", (await page.locator("section[aria-labelledby=pro-faq] details").count()) === 3);
     record("…no sideways scrolling", !(await sideways(page)));
     const proH = (await page.locator("section[aria-labelledby=plan-pro]").boundingBox())?.height ?? 0;
     const freeH = (await page.locator("section[aria-labelledby=plan-free]").boundingBox())?.height ?? 0;
