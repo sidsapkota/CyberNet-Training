@@ -42,11 +42,6 @@
           "bin": "tcp"
         },
         {
-          "id": "chat-photo",
-          "label": "Sending a photo in a chat",
-          "bin": "tcp"
-        },
-        {
           "id": "cloud-save",
           "label": "Saving a document to the cloud",
           "bin": "tcp"
@@ -59,11 +54,6 @@
         {
           "id": "race",
           "label": "Your car's position in a racing game",
-          "bin": "udp"
-        },
-        {
-          "id": "voice-chat",
-          "label": "Voice chat while gaming",
           "bin": "udp"
         }
       ],

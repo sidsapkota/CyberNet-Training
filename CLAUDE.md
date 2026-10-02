@@ -228,7 +228,7 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - `links`: `{from, to}`, undirected.
   - `validPaths`: every accepted route, each starting at `source`, ending at `destination`, following
     links and never repeating a node.
-  - Never rotated: phones keep the layout with shorter rows (92px), so keep networks small (at most 4 columns and 3 rows fit 360×560).
+  - Never rotated: phones keep the layout with shorter rows (80px), so keep networks small (at most 4 columns and 3 rows fit 360×560).
   - Wrong routes animate the packet up to the first wrong hop.
 - **`terminal`:**
   - `commands` (1–12): `{ command, aliases?, output (printed verbatim), description? (shown by help) }`.

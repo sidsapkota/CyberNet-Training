@@ -126,7 +126,7 @@
       "uses": [
         "cpu"
       ],
-      "prompt": "This **task manager** lists each **process** (a running program). End the one hogging the [[CPU]]; keep music and [[browser]] open, and never end **System** (the OS).",
+      "prompt": "The **task manager** lists each **process** (running program). End the [[CPU]] hog. Keep music, the browser and **System** (the OS).",
       "model": "task-manager",
       "params": {
         "ramGb": 8,
@@ -151,13 +151,6 @@
             "kind": "app",
             "cpu": 85,
             "ramGb": 1.2
-          },
-          {
-            "id": "updater",
-            "label": "Updater",
-            "kind": "background",
-            "cpu": 3,
-            "ramGb": 0.2
           },
           {
             "id": "system",
@@ -186,12 +179,6 @@
           "kind": "button",
           "label": "End Drawing app",
           "doneLabel": "Drawing app ended"
-        },
-        {
-          "id": "end-updater",
-          "kind": "button",
-          "label": "End Updater",
-          "doneLabel": "Updater ended"
         },
         {
           "id": "end-system",
@@ -262,7 +249,7 @@
         "task-manager",
         "never-end-system"
       ],
-      "prompt": "One app keeps grabbing [[RAM]] (a **memory leak**). Slide time to **40 min or more**, then end it. Keep the music on.",
+      "prompt": "Slide time to **40 min**, then end the app that keeps grabbing [[RAM]] (a **memory leak**). Keep the music.",
       "model": "task-manager",
       "params": {
         "ramGb": 8,
@@ -275,26 +262,12 @@
             "ramGb": 0.4
           },
           {
-            "id": "browser",
-            "label": "Web browser",
-            "kind": "app",
-            "cpu": 8,
-            "ramGb": 1.5
-          },
-          {
             "id": "chat",
             "label": "Chat app",
             "kind": "app",
             "cpu": 5,
             "ramGb": 0.5,
             "leakGbPerMin": 0.15
-          },
-          {
-            "id": "sync",
-            "label": "File sync",
-            "kind": "background",
-            "cpu": 2,
-            "ramGb": 0.2
           },
           {
             "id": "system",
@@ -322,22 +295,10 @@
           "doneLabel": "Music player ended"
         },
         {
-          "id": "end-browser",
-          "kind": "button",
-          "label": "End Web browser",
-          "doneLabel": "Web browser ended"
-        },
-        {
           "id": "end-chat",
           "kind": "button",
           "label": "End Chat app",
           "doneLabel": "Chat app ended"
-        },
-        {
-          "id": "end-sync",
-          "kind": "button",
-          "label": "End File sync",
-          "doneLabel": "File sync ended"
         },
         {
           "id": "end-system",
@@ -352,12 +313,6 @@
           "kind": "device",
           "label": "Laptop",
           "frame": "laptop"
-        },
-        {
-          "id": "ramUsed",
-          "kind": "meter",
-          "label": "RAM apps want (laptop has 8 GB)",
-          "unit": "GB"
         },
         {
           "id": "processes",

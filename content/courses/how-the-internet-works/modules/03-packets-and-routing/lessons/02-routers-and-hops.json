@@ -11,7 +11,7 @@
       "type": "packet_path",
       "difficulty": "core",
       "uses": [],
-      "prompt": "Get your [[packet]] from the **laptop** to the **web [[server]]** by following the lines. There's more than one way.",
+      "prompt": "Get the [[packet]] from the **laptop** to the **web [[server]]** along the lines. More than one way works.",
       "nodes": [
         {
           "id": "laptop",
@@ -135,26 +135,26 @@
         "router",
         "server"
       ],
-      "prompt": "Routers work **between** networks; inside one network, a **switch** joins the devices. A **server** is a computer that hands things out. Match each job to its device.",
+      "prompt": "A **router** links networks, a **switch** joins devices inside one, and a **server** hands things out. Match each job.",
       "pairs": [
         {
           "id": "router",
-          "left": "Sends the office's data to the internet",
+          "left": "Office data out to the internet",
           "right": "Router"
         },
         {
           "id": "switch",
-          "left": "Sends a file from laptop to printer",
+          "left": "A file from laptop to printer",
           "right": "Switch"
         },
         {
           "id": "server",
-          "left": "Hands out web pages to anyone who asks",
+          "left": "Web pages for anyone who asks",
           "right": "Server"
         },
         {
           "id": "laptop",
-          "left": "Where you type the email first",
+          "left": "Where you type the email",
           "right": "Laptop"
         }
       ],
@@ -172,7 +172,7 @@
       "uses": [
         "hop"
       ],
-      "prompt": "**Traceroute** lists each router on the way to a website, one numbered line per [[hop]].\n\nRun `traceroute example.com`. What is **hop 1**'s address?",
+      "prompt": "**Traceroute** lists each router on the way, one numbered line per [[hop]]. Run `traceroute example.com`.",
       "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
       "commands": [
         {

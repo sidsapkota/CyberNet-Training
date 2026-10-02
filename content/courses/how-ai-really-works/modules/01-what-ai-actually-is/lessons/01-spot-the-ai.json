@@ -169,32 +169,22 @@
       "items": [
         {
           "id": "heater-timer",
-          "label": "A heater on a timer",
+          "label": "Heater on a timer",
           "bin": "rules"
         },
         {
           "id": "heater-learns",
-          "label": "A heater that adapts to your routine",
+          "label": "Heater that learns your routine",
           "bin": "learns"
         },
         {
           "id": "enemy-path",
-          "label": "A game enemy on a set path",
+          "label": "Game enemy on a set path",
           "bin": "rules"
         },
         {
           "id": "enemy-trained",
-          "label": "An enemy that copies top players' moves",
-          "bin": "learns"
-        },
-        {
-          "id": "converter",
-          "label": "A cups-to-millilitres converter",
-          "bin": "rules"
-        },
-        {
-          "id": "dog-photos",
-          "label": "A photo app that finds dogs",
+          "label": "Enemy that copies top players",
           "bin": "learns"
         }
       ],

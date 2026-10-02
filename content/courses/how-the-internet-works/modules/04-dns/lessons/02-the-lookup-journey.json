@@ -69,19 +69,19 @@
       "items": [
         {
           "id": "cache",
-          "label": "Your device checks its own cache"
+          "label": "Device checks its cache"
         },
         {
           "id": "ask-resolver",
-          "label": "Your device asks a resolver"
+          "label": "Device asks a resolver"
         },
         {
           "id": "root",
-          "label": "Resolver asks a root server about .com"
+          "label": "Resolver asks a root server"
         },
         {
           "id": "tld",
-          "label": "Resolver asks a .com server where to go"
+          "label": "Resolver asks a .com server"
         },
         {
           "id": "authoritative",
@@ -89,7 +89,7 @@
         },
         {
           "id": "answer",
-          "label": "Answer comes back; caches keep copies"
+          "label": "Answer comes back, cached"
         }
       ],
       "explanation": "Your device checks its **cache** first. Then the resolver goes general to specific: **root**, **TLD**, then the **authoritative** server, which holds the real address; copies are saved for next time.",
@@ -160,7 +160,7 @@
       "uses": [
         "ttl"
       ],
-      "prompt": "`dig` is another [[DNS]] tool. Run `dig example.com` and find the **TTL**: the number just after the name.",
+      "prompt": "`dig` is another [[DNS]] tool. Run `dig example.com`: the **TTL** is the number just after the name.",
       "intro": "Simulated Linux terminal, with dig's output shortened to just the answer. Type help to see the commands you can use here.",
       "commands": [
         {

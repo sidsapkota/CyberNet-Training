@@ -176,7 +176,7 @@
         {
           "id": "date",
           "left": "A date in history",
-          "right": "Look it up in a textbook or museum site"
+          "right": "A textbook or museum site"
         },
         {
           "id": "sum",
@@ -186,12 +186,12 @@
         {
           "id": "link",
           "left": "A link it gave as its source",
-          "right": "Open it and read what it says"
+          "right": "Open it and read it"
         },
         {
           "id": "news",
           "left": "Last week's football score",
-          "right": "Check a dated news website"
+          "right": "A dated news website"
         }
       ],
       "hint": "Use the four checks. Which one fits each kind of claim?",
@@ -210,23 +210,23 @@
       "steps": [
         {
           "id": "the-essay",
-          "text": "\"I'm handing this in as mine. It's fine, everyone does it.\" What do you say?",
+          "text": "\"I'm handing this in as mine. Everyone does it.\" What do you say?",
           "choices": [
             {
               "id": "say-nothing",
-              "text": "\"OK, but at least read it through before you hand it in\"",
+              "text": "OK, but read it before handing it in",
               "consequence": "It's still the chatbot's work handed in as theirs. That may break school rules, and they miss the learning.",
               "outcome": "fail"
             },
             {
               "id": "suggest",
-              "text": "\"Check the AI rules. Use it to plan, then write your own\"",
+              "text": "Check the AI rules; plan with it, write your own",
               "consequence": "Good: you didn't lecture, you gave them an honest way to use it.",
               "outcome": "success"
             },
             {
               "id": "reword",
-              "text": "\"Add a few sentences of your own so it's partly yours\"",
+              "text": "Add a few sentences so it's partly yours",
               "consequence": "Most of it is still the chatbot's work. A few extra sentences don't change that.",
               "outcome": "fail"
             }

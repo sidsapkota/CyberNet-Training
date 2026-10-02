@@ -43,19 +43,19 @@ export function BinaryToggleCardView({
     <div>
       <CardPrompt>{card.prompt}</CardPrompt>
 
-      <div className="mt-8 grid grid-cols-2 gap-2.5">
-        <div className="rounded-card border border-line bg-surface px-4 py-3">
+      <div className="mt-3 grid grid-cols-2 gap-2 sm:mt-8 sm:gap-2.5">
+        <div className="rounded-card border border-line bg-surface px-3 py-1.5 sm:px-4 sm:py-3">
           <div className="text-caption font-semibold uppercase tracking-wider text-ink-faint">Target</div>
-          <div className="mt-1 font-mono text-display font-semibold tabular-nums">{card.target}</div>
+          <div className="font-mono text-headline font-semibold tabular-nums sm:mt-1 sm:text-display">{card.target}</div>
         </div>
         <div
-          className={`rounded-card border px-4 py-3 transition-colors ${
+          className={`rounded-card border px-3 py-1.5 transition-colors sm:px-4 sm:py-3 ${
             // Right or wrong only after Check.
             matches && status === "correct" ? "border-success bg-success-soft" : "border-line bg-surface"
           }`}
         >
           <div className="text-caption font-semibold uppercase tracking-wider text-ink-faint">Your number</div>
-          <div className="relative mt-1 flex h-11 items-center gap-2 overflow-hidden font-mono text-display font-semibold tabular-nums">
+          <div className="relative flex h-9 items-center gap-2 overflow-hidden font-mono text-headline font-semibold tabular-nums sm:mt-1 sm:h-11 sm:text-display">
             <AnimatePresence mode="popLayout" initial={false}>
               <motion.span
                 key={total}
@@ -81,12 +81,12 @@ export function BinaryToggleCardView({
       <div
         role="group"
         aria-label="Bits, from the 128s place down to the 1s place"
-        className="mt-6 grid grid-cols-4 gap-2 min-[430px]:grid-cols-8 min-[430px]:gap-1.5 sm:gap-2"
+        className="mt-3 grid grid-cols-4 gap-x-2 gap-y-1.5 min-[430px]:grid-cols-8 min-[430px]:gap-1.5 sm:mt-6 sm:gap-2"
       >
         {answer.map((on, i) => {
           const place = PLACE_VALUES[i] ?? 0;
           return (
-            <div key={place} className="flex flex-col items-center gap-1.5">
+            <div key={place} className="flex flex-col items-center gap-1 sm:gap-1.5">
               <span className="font-mono text-[0.7rem] font-medium text-ink-muted tabular-nums sm:text-caption">
                 {place}
               </span>
@@ -97,7 +97,7 @@ export function BinaryToggleCardView({
                 disabled={locked}
                 onClick={() => toggle(i)}
                 whileTap={locked ? undefined : { scale: 0.92 }}
-                className={`grid h-14 w-full place-items-center rounded-control border-2 font-mono text-title font-semibold transition-[background-color,border-color,box-shadow] duration-150 disabled:cursor-default sm:h-16 sm:text-headline ${
+                className={`grid h-12 w-full place-items-center rounded-control border-2 font-mono text-title font-semibold transition-[background-color,border-color,box-shadow] duration-150 disabled:cursor-default sm:h-16 sm:text-headline ${
                   on
                     ? onTileClasses(status)
                     : "border-line-strong bg-surface text-ink-faint hover:border-accent-ink hover:text-accent-ink"
@@ -121,7 +121,7 @@ export function BinaryToggleCardView({
         })}
       </div>
 
-      <p className="mt-5 text-center font-mono text-body text-ink-muted tabular-nums" aria-live="polite">
+      <p className="mt-3 text-center font-mono text-small text-ink-muted tabular-nums sm:mt-5 sm:text-body" aria-live="polite">
         {onValues.length === 0 ? (
           <>all off = 0</>
         ) : (

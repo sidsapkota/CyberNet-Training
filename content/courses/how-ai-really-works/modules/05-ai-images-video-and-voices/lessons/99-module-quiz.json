@@ -237,22 +237,22 @@
       "pairs": [
         {
           "id": "generative",
-          "left": "An app turns your words into a painting",
+          "left": "Words turned into a painting",
           "right": "Generative AI"
         },
         {
           "id": "deepfake",
-          "left": "Video of a real singer saying fake words",
+          "left": "A real singer saying fake words",
           "right": "Deepfake"
         },
         {
           "id": "clone",
-          "left": "An AI call sounding just like your aunt",
+          "left": "An AI call sounding like your aunt",
           "right": "Voice clone"
         },
         {
           "id": "watermark",
-          "left": "Hidden data saying AI made a picture",
+          "left": "Hidden data saying AI made it",
           "right": "Watermark"
         }
       ],

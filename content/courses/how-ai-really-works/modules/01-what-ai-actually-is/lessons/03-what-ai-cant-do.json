@@ -224,17 +224,17 @@
         {
           "id": "confident",
           "left": "Sounds sure when wrong",
-          "right": "Gives the wrong year, confidently"
+          "right": "Wrong year, said confidently"
         },
         {
           "id": "faces",
           "left": "Can mislabel people",
-          "right": "Tags your friend as someone else"
+          "right": "Tags your friend wrongly"
         },
         {
           "id": "responsible",
           "left": "Can't be responsible",
-          "right": "An AI decides a student's punishment"
+          "right": "Decides a punishment"
         }
       ],
       "hint": "Each example is from this module. Which limit explains what went wrong?",

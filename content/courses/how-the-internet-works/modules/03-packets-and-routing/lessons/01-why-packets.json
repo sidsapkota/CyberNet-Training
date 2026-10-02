@@ -65,27 +65,27 @@
         "destination-address",
         "sequence-number"
       ],
-      "prompt": "Here's one [[packet]] of a selfie you're sending. Match each part to what it's for.",
+      "prompt": "One [[packet]] of a selfie you're sending: what does each part do?",
       "pairs": [
         {
           "id": "source",
           "left": "From: `192.168.1.20`",
-          "right": "Where the reply goes back to"
+          "right": "Where replies go"
         },
         {
           "id": "destination",
           "left": "To: `198.51.100.10`",
-          "right": "Where the packet is heading"
+          "right": "Where it's heading"
         },
         {
           "id": "sequence",
           "left": "Piece #3",
-          "right": "Where it fits when the selfie is rebuilt"
+          "right": "Where it fits in the selfie"
         },
         {
           "id": "payload",
           "left": "A strip of the selfie's pixels",
-          "right": "The actual data being carried"
+          "right": "The data itself"
         }
       ],
       "explanation": "**From** is the source, so replies go there, and **To** is where it's heading. **#3** puts the selfie back in order, and the pixels are the **payload**, the actual data.",

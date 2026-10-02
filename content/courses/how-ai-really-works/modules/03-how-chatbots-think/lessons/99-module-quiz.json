@@ -231,12 +231,12 @@
       "pairs": [
         {
           "id": "lm",
-          "left": "Learned which words come next from text",
+          "left": "Learned what comes next from text",
           "right": "Language model"
         },
         {
           "id": "temperature",
-          "left": "A setting turned up for wilder ideas",
+          "left": "Turned up for wilder ideas",
           "right": "Temperature"
         },
         {
@@ -246,7 +246,7 @@
         },
         {
           "id": "chance",
-          "left": "\"mat\" gets 60%, \"sofa\" 20%, \"moon\" 5%",
+          "left": "\"mat\" 60%, \"sofa\" 20%",
           "right": "Chances for the next word"
         }
       ],

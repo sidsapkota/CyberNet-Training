@@ -192,7 +192,7 @@
         "owner-controls-left",
         "domain-name-parts"
       ],
-      "prompt": "Many UK names end in `.co.uk`: the TLD is `uk`, and `co.uk` is shared by millions of companies, like `.com`.\n\nWho controls `shop.example.co.uk`?",
+      "prompt": "In `.co.uk` names, `co.uk` is shared by millions of companies, like `.com`. Who controls `shop.example.co.uk`?",
       "options": [
         {
           "id": "example-owner",
@@ -200,17 +200,17 @@
         },
         {
           "id": "co-uk-owner",
-          "text": "Whoever runs co.uk, since it sits next to the TLD",
+          "text": "Whoever runs co.uk",
           "nudge": "`co.uk` is shared by millions, like `.com`: look one step further left."
         },
         {
           "id": "government",
-          "text": "The UK government, because it ends in uk",
+          "text": "The UK government",
           "nudge": "A country code shows where a name is registered, not who runs the site."
         },
         {
           "id": "shop-owner",
-          "text": "Whoever owns the shop part at the start",
+          "text": "Whoever owns \"shop\"",
           "nudge": "The leftmost part is a subdomain: its owner is whoever registered the domain to its right."
         }
       ],

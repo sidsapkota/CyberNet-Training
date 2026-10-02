@@ -45,11 +45,11 @@
         "payload",
         "routing-table"
       ],
-      "prompt": "Which part of a packet is used in each situation?",
+      "prompt": "Which part of a packet is used for each?",
       "pairs": [
         {
           "id": "destination",
-          "left": "A router picks which way to send it",
+          "left": "A router picks a way to send it",
           "right": "Destination address"
         },
         {
@@ -75,7 +75,7 @@
       "type": "packet_path",
       "difficulty": "core",
       "uses": [],
-      "prompt": "One router on this map is **down** today. Get the packet from the **laptop** to the **web server**.",
+      "prompt": "One router is **down** today. Get the packet from the **laptop** to the **web server**.",
       "nodes": [
         {
           "id": "laptop",

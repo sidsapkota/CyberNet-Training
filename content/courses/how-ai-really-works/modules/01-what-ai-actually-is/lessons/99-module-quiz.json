@@ -295,26 +295,26 @@
         "model",
         "ai-prediction"
       ],
-      "prompt": "An app sorts photos into cats and dogs. Match each part of it to its word.",
+      "prompt": "A cats-and-dogs photo sorter: match each part to its word.",
       "pairs": [
         {
           "id": "data",
-          "left": "500 cat and dog photos to learn from",
+          "left": "500 photos it learns from",
           "right": "Training data"
         },
         {
           "id": "label",
-          "left": "The word \"cat\" written on one photo",
+          "left": "\"cat\" written on one photo",
           "right": "Label"
         },
         {
           "id": "model",
-          "left": "The program that sorts new photos itself",
+          "left": "The program that sorts new photos",
           "right": "Model"
         },
         {
           "id": "prediction",
-          "left": "\"Dog\": its best guess about a new photo",
+          "left": "\"Dog\": its guess for a new photo",
           "right": "Prediction"
         }
       ],

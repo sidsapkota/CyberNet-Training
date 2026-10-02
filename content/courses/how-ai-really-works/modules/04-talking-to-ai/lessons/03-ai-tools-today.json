@@ -33,32 +33,27 @@
       "items": [
         {
           "id": "photo-search",
-          "label": "A photo app finding pictures of your dog",
+          "label": "Photo app finding your dog",
           "bin": "ai"
         },
         {
           "id": "traffic",
-          "label": "A map predicting traffic on your way",
-          "bin": "ai"
-        },
-        {
-          "id": "captions",
-          "label": "Live captions on a video as people talk",
+          "label": "Map predicting traffic",
           "bin": "ai"
         },
         {
           "id": "keyboard",
-          "label": "Your keyboard suggesting the next word",
+          "label": "Keyboard suggesting a word",
           "bin": "ai"
         },
         {
           "id": "calculator",
-          "label": "A calculator adding up a bill",
+          "label": "Calculator adding a bill",
           "bin": "fixed"
         },
         {
           "id": "alarm",
-          "label": "An alarm going off at 7:00",
+          "label": "Alarm at 7:00",
           "bin": "fixed"
         }
       ],
@@ -76,27 +71,22 @@
       "uses": [
         "kinds-of-ai-tools"
       ],
-      "prompt": "A **chat assistant** types replies, an **image generator** makes pictures, a **voice assistant** talks. Which suits each job?",
+      "prompt": "A **chat assistant** types, an **image generator** draws, a **voice assistant** talks. Which suits each job?",
       "pairs": [
         {
           "id": "chat",
-          "left": "Ideas for a birthday party, typed out",
+          "left": "Birthday ideas, typed out",
           "right": "Chat assistant"
         },
         {
           "id": "image",
-          "left": "A picture of a dragon for a poster",
+          "left": "A dragon picture for a poster",
           "right": "Image generator"
         },
         {
           "id": "voice",
-          "left": "A timer while your hands are floury",
+          "left": "A timer while you bake",
           "right": "Voice assistant"
-        },
-        {
-          "id": "translate",
-          "left": "A menu in a language you can't read",
-          "right": "Translation app"
         }
       ],
       "hint": "What do you give the tool, and what do you need back?",
@@ -119,23 +109,23 @@
       "steps": [
         {
           "id": "claim",
-          "text": "Your friend says: \"My AI app is the best. It's never wrong.\" What's the most accurate reply?",
+          "text": "A friend says: \"My AI app is the best. It's never wrong.\" Best reply?",
           "choices": [
             {
               "id": "agree",
-              "text": "\"If it's the best, you don't need to check it\"",
+              "text": "If it's the best, no need to check",
               "consequence": "Even a very good model writes likely words, not checked facts. Any of them can be wrong.",
               "outcome": "fail"
             },
             {
               "id": "all-can",
-              "text": "\"Any chatbot can be wrong, so check what matters\"",
+              "text": "Any chatbot can be wrong: check what matters",
               "consequence": "Right: they're all language models, so any of them can hallucinate.",
               "outcome": "success"
             },
             {
               "id": "newest",
-              "text": "\"Use the newest version: it doesn't make mistakes\"",
+              "text": "Use the newest one: it makes no mistakes",
               "consequence": "Newer models can be better, but they still pick likely words and still make mistakes.",
               "outcome": "fail"
             }
@@ -282,11 +272,6 @@
           "bin": "every"
         },
         {
-          "id": "tokens",
-          "label": "Writes its reply one word at a time",
-          "bin": "every"
-        },
-        {
           "id": "learned",
           "label": "Learned from lots of text",
           "bin": "every"
@@ -294,11 +279,6 @@
         {
           "id": "search",
           "label": "Can search the web",
-          "bin": "some"
-        },
-        {
-          "id": "pictures",
-          "label": "Can make pictures",
           "bin": "some"
         },
         {

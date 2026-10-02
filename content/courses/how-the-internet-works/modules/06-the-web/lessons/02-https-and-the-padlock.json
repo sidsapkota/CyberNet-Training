@@ -71,23 +71,23 @@
         "tls-after-tcp",
         "get-post"
       ],
-      "prompt": "TLS starts once TCP has connected, with its own [[handshake]]: keys are agreed, and the server shows its **certificate**, a digital ID proving it owns the name, issued by a **certificate authority** your [[browser]] trusts.\n\nPut the steps of loading an HTTPS page in order.",
+      "prompt": "Once TCP connects, TLS does its own [[handshake]]: keys are agreed and the server shows its **certificate**, a digital ID from a **certificate authority** your [[browser]] trusts. Order the steps.",
       "items": [
         {
           "id": "tcp",
-          "label": "TCP handshake: SYN, SYN-ACK, ACK"
+          "label": "TCP handshake"
         },
         {
           "id": "tls",
-          "label": "TLS handshake: keys and certificate"
+          "label": "TLS handshake: keys, certificate"
         },
         {
           "id": "request",
-          "label": "Browser sends an encrypted GET request"
+          "label": "Browser sends an encrypted GET"
         },
         {
           "id": "response",
-          "label": "Server sends an encrypted response"
+          "label": "Server sends an encrypted reply"
         }
       ],
       "explanation": "TCP opens the connection first, then the **TLS handshake** agrees keys and checks the certificate. Only then does any HTTP travel, all of it encrypted.",
@@ -108,23 +108,23 @@
       "pairs": [
         {
           "id": "encryption",
-          "left": "Stop the café reading your password",
+          "left": "Keep your password from the café",
           "right": "Encryption"
         },
         {
           "id": "certificate",
-          "left": "Prove the server really is example.com",
+          "left": "Prove it's really example.com",
           "right": "Its certificate"
         },
         {
           "id": "ca",
-          "left": "Vouch that a certificate is genuine",
+          "left": "Vouch a certificate is genuine",
           "right": "A certificate authority"
         },
         {
           "id": "padlock",
-          "left": "Check at a glance that you're encrypted",
-          "right": "The padlock icon"
+          "left": "See at a glance it's encrypted",
+          "right": "The padlock"
         }
       ],
       "explanation": "**Encryption** keeps what you send private, the **certificate** is the server's ID, a **certificate authority** vouches for it, and the **padlock** shows the connection is encrypted.",
@@ -139,7 +139,7 @@
         "padlock-meaning"
       ],
       "uses": [],
-      "prompt": "A padlock means the connection is encrypted and the server owns the **name in the address**, nothing about who runs it.\n\nTap the **one** thing here that the padlock vouches for.",
+      "prompt": "A padlock means encrypted, and that the server owns the **name in the address**, nothing about who runs it. Tap the **one** thing it vouches for.",
       "scene": "fake-website",
       "mode": "tap",
       "targets": [
@@ -194,25 +194,25 @@
         "https",
         "url-path"
       ],
-      "prompt": "HTTPS encrypts the whole request, path included. But every [[packet]] shows the server's [[IP address]], and the name usually shows in your [[DNS]] lookup.\n\nOn café Wi-Fi you change your password at `https://example.com/account/settings`. What can the café see?",
+      "prompt": "HTTPS hides the page and what you type, but not the site's [[IP address]] or your [[DNS]] lookup. On café Wi-Fi you open `https://example.com/account/settings`. What can the café see?",
       "options": [
         {
           "id": "site-only",
-          "text": "Which site you're on, but not the page or what you type"
+          "text": "The site, not the page or what you type"
         },
         {
           "id": "everything",
-          "text": "Everything, including your new password",
+          "text": "Everything, even your password",
           "nudge": "The address starts with `https`, so what you send is encrypted. The café can't read your new password."
         },
         {
           "id": "page-not-password",
-          "text": "The page /account/settings, but not the new password",
+          "text": "The page, but not your password",
           "nudge": "The path is part of the HTTP request, and with HTTPS the whole request is encrypted."
         },
         {
           "id": "nothing",
-          "text": "Nothing at all, not even which site you're on",
+          "text": "Nothing, not even the site",
           "nudge": "Packets still need an address on the outside to be delivered. What does that address give away?"
         }
       ],
@@ -228,22 +228,22 @@
         "certificate-checks"
       ],
       "uses": [],
-      "prompt": "A certificate must be in date, issued for the name you visited, and from an authority your [[browser]] trusts.\n\nMatch each warning to what went wrong.",
+      "prompt": "A certificate must be in date, for the name you visited, and from an authority your [[browser]] trusts. Match each warning.",
       "pairs": [
         {
           "id": "expired",
           "left": "Certificate has expired",
-          "right": "Its valid dates have run out"
+          "right": "Its dates have run out"
         },
         {
           "id": "mismatch",
           "left": "Name doesn't match",
-          "right": "It was issued for a different name"
+          "right": "It's for a different name"
         },
         {
           "id": "untrusted",
           "left": "Issuer isn't trusted",
-          "right": "No trusted authority vouches for it"
+          "right": "No trusted authority vouches"
         }
       ],
       "explanation": "Each warning means one check failed: the **dates**, the **name** or a **trusted issuer**. On a site where you'd log in or pay, don't click past it.",

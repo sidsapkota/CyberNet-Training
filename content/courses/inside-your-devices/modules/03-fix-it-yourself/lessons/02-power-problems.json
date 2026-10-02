@@ -157,7 +157,7 @@
         "no-metal-or-water-in-port"
       ],
       "uses": [],
-      "prompt": "Your phone won't charge. Tip: cables wear out more often than phones, and **metal or water** can damage a [[port]].",
+      "prompt": "Your phone won't charge. Tip: cables wear out more often than phones, and **metal or water** can damage the charging port.",
       "start": "first",
       "steps": [
         {
@@ -233,7 +233,7 @@
         "no-metal-or-water-in-port",
         "repair-safety"
       ],
-      "prompt": "This tablet's port looks fluffy. Is each idea **safe to try**, or could it **damage** it?",
+      "prompt": "Fluff in the tablet's port. Is each idea **safe to try**, or could it **damage** it?",
       "bins": [
         {
           "id": "safe",
@@ -251,18 +251,8 @@
           "bin": "safe"
         },
         {
-          "id": "another-socket",
-          "label": "Try another plug socket",
-          "bin": "safe"
-        },
-        {
           "id": "soft-brush",
-          "label": "Tablet off, adult uses a soft, dry brush",
-          "bin": "safe"
-        },
-        {
-          "id": "repair-shop",
-          "label": "Take it to a repair shop",
+          "label": "Tablet off, adult uses a soft brush",
           "bin": "safe"
         },
         {
@@ -271,17 +261,12 @@
           "bin": "unsafe"
         },
         {
-          "id": "paper-clip",
-          "label": "Scrape it out with a paper clip",
-          "bin": "unsafe"
-        },
-        {
           "id": "rinse",
           "label": "Rinse the port under the tap",
           "bin": "unsafe"
         }
       ],
-      "explanation": "Cables and sockets first, then something **soft and dry** with an adult, or a repair shop. **Metal** can cause a [[short circuit]], and **water** can ruin it.",
+      "explanation": "Cables and sockets first, then something **soft and dry** with an adult (or a repair shop). **Metal** can cause a [[short circuit]], and **water** can ruin it.",
       "hint": "Remember the two things that must never go in a port.",
       "nudge": "Pins and paper clips are metal, and water is just as risky."
     },

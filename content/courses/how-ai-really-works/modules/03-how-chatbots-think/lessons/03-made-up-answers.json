@@ -142,11 +142,6 @@
           "bin": "check"
         },
         {
-          "id": "quote",
-          "label": "A quote from a famous scientist",
-          "bin": "check"
-        },
-        {
           "id": "dose",
           "label": "How much medicine to take",
           "bin": "check"
@@ -164,11 +159,6 @@
         {
           "id": "rhyme",
           "label": "Words that rhyme with \"cat\"",
-          "bin": "fine"
-        },
-        {
-          "id": "title",
-          "label": "Names for a new team group chat",
           "bin": "fine"
         }
       ],
@@ -285,12 +275,12 @@
         },
         {
           "id": "source",
-          "left": "Says where a fact came from",
+          "left": "Names its source",
           "right": "Open the source and read it"
         },
         {
           "id": "medicine",
-          "left": "Answers a medicine question",
+          "left": "Answers about medicine",
           "right": "Ask a doctor or pharmacist"
         },
         {

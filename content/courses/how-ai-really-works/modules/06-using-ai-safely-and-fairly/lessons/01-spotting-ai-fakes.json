@@ -106,12 +106,7 @@
         },
         {
           "id": "late-delivery",
-          "label": "\"Took 3 weeks to come. Good board.\"",
-          "bin": "real"
-        },
-        {
-          "id": "runs-small",
-          "label": "\"The helmet runs small: size up\"",
+          "label": "\"Took 3 weeks. Good board.\"",
           "bin": "real"
         },
         {
@@ -122,11 +117,6 @@
         {
           "id": "great-great",
           "label": "\"Great product. Great quality. Great.\"",
-          "bin": "suspicious"
-        },
-        {
-          "id": "new-account",
-          "label": "5 stars from an account made today",
           "bin": "suspicious"
         }
       ],
@@ -143,7 +133,7 @@
         "check-outside-the-post"
       ],
       "uses": [],
-      "prompt": "Shocking posts get shared before they're checked, and fakes look polished. Is each check **outside** the post, or **inside**?",
+      "prompt": "Shocking posts spread fast, and fakes look polished. Is each check **outside** the post, or **inside**?",
       "bins": [
         {
           "id": "outside",
@@ -162,27 +152,27 @@
         },
         {
           "id": "trusted-news",
-          "label": "Look for it on trusted news",
+          "label": "Look for trusted news",
           "bin": "outside"
         },
         {
           "id": "who-runs",
-          "label": "Find out who runs the account",
+          "label": "Find who runs the account",
           "bin": "outside"
         },
         {
           "id": "reread",
-          "label": "Read it again, more slowly",
+          "label": "Read it again slowly",
           "bin": "inside"
         },
         {
           "id": "professional",
-          "label": "Judge how professional it looks",
+          "label": "Judge how polished it looks",
           "bin": "inside"
         },
         {
           "id": "photo-quality",
-          "label": "Check how sharp the photos are",
+          "label": "Check photo sharpness",
           "bin": "inside"
         }
       ],

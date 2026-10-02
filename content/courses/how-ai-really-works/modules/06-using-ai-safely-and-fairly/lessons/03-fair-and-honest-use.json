@@ -232,11 +232,11 @@
       "steps": [
         {
           "id": "after",
-          "text": "The competition rules said \"your own work only\". What's the fairest thing to do?",
+          "text": "The rules said \"your own work only\". What's fairest?",
           "choices": [
             {
               "id": "announce",
-              "text": "Tell the other entrants, since it's unfair on them",
+              "text": "Tell the other entrants",
               "consequence": "It is unfair on them, but this could embarrass your friend before they can put it right.",
               "outcome": "fail"
             },
@@ -248,7 +248,7 @@
             },
             {
               "id": "nothing",
-              "text": "Say nothing: it's the judges' job to spot AI writing",
+              "text": "Say nothing: spotting AI is the judges' job",
               "consequence": "Judges can't always tell, and others did their own work, so staying quiet isn't fair.",
               "outcome": "fail"
             }

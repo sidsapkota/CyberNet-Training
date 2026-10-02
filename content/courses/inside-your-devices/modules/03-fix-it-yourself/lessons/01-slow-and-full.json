@@ -184,7 +184,7 @@
         "backup",
         "gigabyte"
       ],
-      "prompt": "Free up at least **15 [[GB|gigabyte]]** on this full phone, but **keep your photos and essay**.",
+      "prompt": "Free up **15 [[GB|gigabyte]]** or more. Keep your photos and essay.",
       "model": "storage",
       "params": {
         "capacityGb": 64,
@@ -322,11 +322,6 @@
           "bin": "delete"
         },
         {
-          "id": "unused-app",
-          "label": "An app you haven't opened in a year",
-          "bin": "delete"
-        },
-        {
           "id": "blurry",
           "label": "Five blurry copies of the same photo",
           "bin": "delete"
@@ -334,11 +329,6 @@
         {
           "id": "only-copy",
           "label": "Your only copy of family photos",
-          "bin": "keep"
-        },
-        {
-          "id": "homework",
-          "label": "A report due next week",
           "bin": "keep"
         },
         {
@@ -420,7 +410,7 @@
         "cloud",
         "backup"
       ],
-      "prompt": "An [[update]] needs **12 GB free**. Delete what's saved elsewhere; keep **only copies**.",
+      "prompt": "An [[update]] needs **12 GB** free. Delete only what's saved elsewhere.",
       "model": "storage",
       "params": {
         "capacityGb": 34,
@@ -430,11 +420,6 @@
             "id": "photos",
             "label": "Photos (only copy)",
             "gb": 10
-          },
-          {
-            "id": "notes",
-            "label": "Notes (only copy)",
-            "gb": 0.2
           },
           {
             "id": "music",
@@ -450,11 +435,6 @@
             "id": "maps",
             "label": "Maps (can re-download)",
             "gb": 2
-          },
-          {
-            "id": "downloads",
-            "label": "Old setup files",
-            "gb": 1.5
           }
         ]
       },
@@ -463,11 +443,6 @@
           "id": "delete-photos",
           "kind": "toggle",
           "label": "Delete Photos"
-        },
-        {
-          "id": "delete-notes",
-          "kind": "toggle",
-          "label": "Delete Notes"
         },
         {
           "id": "delete-music",
@@ -483,11 +458,6 @@
           "id": "delete-maps",
           "kind": "toggle",
           "label": "Delete Maps"
-        },
-        {
-          "id": "delete-downloads",
-          "kind": "toggle",
-          "label": "Delete Old setup files"
         }
       ],
       "outputs": [
@@ -521,16 +491,10 @@
             "id": "delete-photos",
             "op": "==",
             "value": false
-          },
-          {
-            "target": "control",
-            "id": "delete-notes",
-            "op": "==",
-            "value": false
           }
         ]
       },
-      "explanation": "Music (in the cloud), backed-up videos and maps (re-downloadable) free enough. Photos and notes are **only copies**, so they stay.",
+      "explanation": "Music (in the cloud), backed-up videos and maps (re-downloadable) free enough. Your photos are the **only copy**, so they stay.",
       "hint": "Read each label: no adding up needed, the free space meter does the maths.",
       "nudge": "Keep the **only copy** files; look for ones in [[the cloud|cloud]], [[backed up|backup]] or re-downloadable."
     },

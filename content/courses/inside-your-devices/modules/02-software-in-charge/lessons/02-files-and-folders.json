@@ -195,17 +195,17 @@
       "items": [
         {
           "id": "offline-song",
-          "label": "A song downloaded to play offline",
+          "label": "A song saved to play offline",
           "bin": "device"
         },
         {
           "id": "laptop-drawing",
-          "label": "A drawing saved to the laptop's storage",
+          "label": "A drawing on the laptop",
           "bin": "device"
         },
         {
           "id": "shared-doc",
-          "label": "A shared doc you edit in a web browser",
+          "label": "A doc you edit in a browser",
           "bin": "cloud"
         },
         {
@@ -215,7 +215,7 @@
         },
         {
           "id": "online-save",
-          "label": "A game save kept in your online account",
+          "label": "A game save in your online account",
           "bin": "cloud"
         }
       ],

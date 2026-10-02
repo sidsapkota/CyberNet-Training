@@ -176,15 +176,15 @@
         "public-address",
         "private-address"
       ],
-      "prompt": "Your [[router]] is like a receptionist: requests leave from your public address, `203.0.113.7`, and it notes who asked. That's **NAT**.\n\nPut the steps in order.",
+      "prompt": "Your [[router]] works like a receptionist: requests leave from your public address, `203.0.113.7`, and it notes who asked. That's **NAT**. Order the steps.",
       "items": [
         {
           "id": "send",
-          "label": "Phone (192.168.1.21) sends a request"
+          "label": "Phone 192.168.1.21 sends a request"
         },
         {
           "id": "swap-out",
-          "label": "Router swaps in 203.0.113.7, takes notes"
+          "label": "Router swaps in 203.0.113.7"
         },
         {
           "id": "reply",
@@ -192,7 +192,7 @@
         },
         {
           "id": "swap-back",
-          "label": "Router checks notes and hands it back"
+          "label": "Router hands the reply back"
         }
       ],
       "explanation": "The request goes out first and gets the public address on the way. The server can only reply to `203.0.113.7`, and the router's notes send the reply back to the phone.",
@@ -248,22 +248,22 @@
       "pairs": [
         {
           "id": "private",
-          "left": "Your laptop's address on your home Wi-Fi",
-          "right": "A private address"
+          "left": "Laptop's address on home Wi-Fi",
+          "right": "Private address"
         },
         {
           "id": "public",
-          "left": "The address a website sees from you",
-          "right": "Your router's public address"
+          "left": "The address websites see",
+          "right": "Router's public address"
         },
         {
           "id": "nat",
-          "left": "Five devices at home sharing one address",
+          "left": "Five devices sharing one address",
           "right": "NAT"
         },
         {
           "id": "isp",
-          "left": "Who gave your home its public address",
+          "left": "Who gave your home its address",
           "right": "Your ISP"
         }
       ],

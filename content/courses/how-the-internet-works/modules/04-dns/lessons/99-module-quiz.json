@@ -76,17 +76,17 @@
         "tld-server",
         "authoritative-server"
       ],
-      "prompt": "Nobody has looked up example.com lately. Match each DNS server to what it would \"say\".",
+      "prompt": "No one has looked up example.com lately. Match each server to what it \"says\".",
       "pairs": [
         {
           "id": "resolver",
           "left": "Resolver",
-          "right": "\"Leave it with me, I'll find out.\""
+          "right": "\"Leave it with me.\""
         },
         {
           "id": "root",
           "left": "Root server",
-          "right": "\"Not me, but here are the .com servers.\""
+          "right": "\"Ask the .com servers.\""
         },
         {
           "id": "tld",
@@ -96,7 +96,7 @@
         {
           "id": "authoritative",
           "left": "Authoritative server",
-          "right": "\"example.com is at 198.51.100.10.\""
+          "right": "\"It's at 198.51.100.10.\""
         }
       ],
       "explanation": "The **resolver** asks for you, **root** points to the `.com` servers, **TLD** to example.com's own server, and only the **authoritative** server gives the real answer."

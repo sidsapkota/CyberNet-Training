@@ -309,21 +309,21 @@
         {
           "id": "slang",
           "left": "Misreads slang as mean",
-          "right": "Add messages that use slang kindly"
+          "right": "Add kind messages with slang"
         },
         {
           "id": "one-school",
-          "left": "Trained on one suburb only",
-          "right": "Retrain with sign-ups from many suburbs"
+          "left": "Trained on one suburb",
+          "right": "Retrain with many suburbs"
         },
         {
           "id": "accents",
           "left": "95% overall, worse for some accents",
-          "right": "Check the accuracy for each group"
+          "right": "Check accuracy for each group"
         },
         {
           "id": "decisions",
-          "left": "Makes decisions about people",
+          "left": "Decides things about people",
           "right": "Keep a person checking"
         }
       ],

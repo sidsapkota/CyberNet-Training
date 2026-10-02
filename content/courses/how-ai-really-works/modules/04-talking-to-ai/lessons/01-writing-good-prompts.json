@@ -103,11 +103,6 @@
           "bin": "goal"
         },
         {
-          "id": "magnets",
-          "label": "Plan some dinners",
-          "bin": "goal"
-        },
-        {
           "id": "brother",
           "label": "It's for my little brother",
           "bin": "context"
@@ -254,27 +249,27 @@
         },
         {
           "id": "length",
-          "label": "How long the answer should be",
+          "label": "How long it should be",
           "bin": "in"
         },
         {
           "id": "notes",
-          "label": "The notes you want summarised",
+          "label": "The notes to summarise",
           "bin": "in"
         },
         {
           "id": "address",
-          "label": "Your home address, for a local answer",
+          "label": "Your home address",
           "bin": "out"
         },
         {
           "id": "password",
-          "label": "Your email password, to sort your inbox",
+          "label": "Your email password",
           "bin": "out"
         },
         {
           "id": "friend-message",
-          "label": "A friend's private message to you",
+          "label": "A friend's private message",
           "bin": "out"
         }
       ],

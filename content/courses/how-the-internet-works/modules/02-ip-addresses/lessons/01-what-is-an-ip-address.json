@@ -162,7 +162,7 @@
       "uses": [
         "ipv4-address"
       ],
-      "prompt": "In a **terminal** you type **commands** (instructions) and press Enter.\n\nRun `ipconfig`, then type this computer's **IPv4 address** in the box below.",
+      "prompt": "In a **terminal** you type **commands** (instructions) and press Enter. Run `ipconfig`.",
       "promptLabel": "C:\\Users\\learner>",
       "intro": "Microsoft Windows [simulated Command Prompt]\nType help to see the commands you can use here.",
       "commands": [

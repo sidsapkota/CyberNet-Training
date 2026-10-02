@@ -147,7 +147,7 @@ export function TerminalCardView({
           )}
         </div>
       </div>
-      <p className="mt-2 text-caption text-ink-faint">
+      <p className="mt-2 hidden text-caption text-ink-faint sm:block">
         Type <code className="font-mono">help</code> to see the commands. <kbd className="font-mono">↑</kbd> repeats earlier ones.
       </p>
 

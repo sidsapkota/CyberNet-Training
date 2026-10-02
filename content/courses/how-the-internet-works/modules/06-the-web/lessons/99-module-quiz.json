@@ -88,23 +88,23 @@
         "tld-server",
         "authoritative-server"
       ],
-      "prompt": "Nobody on your network has looked up `shop.example.org`. Put the DNS lookup in order.",
+      "prompt": "No one nearby has looked up `shop.example.org`. Put the DNS lookup in order.",
       "items": [
         {
           "id": "cache",
-          "label": "Your device checks its cache: nothing"
+          "label": "Device checks its cache: nothing"
         },
         {
           "id": "resolver",
-          "label": "Your device asks a resolver"
+          "label": "Device asks a resolver"
         },
         {
           "id": "root",
-          "label": "Resolver asks a root server about .org"
+          "label": "Resolver asks a root server"
         },
         {
           "id": "tld",
-          "label": "Resolver asks a .org server where to go"
+          "label": "Resolver asks a .org server"
         },
         {
           "id": "authoritative",
@@ -159,11 +159,11 @@
         },
         {
           "id": "mine",
-          "label": "Problem with the request"
+          "label": "Request's problem"
         },
         {
           "id": "server",
-          "label": "The server's problem"
+          "label": "Server's problem"
         }
       ],
       "items": [
@@ -173,18 +173,8 @@
           "bin": "fine"
         },
         {
-          "id": "s202",
-          "label": "`202 Accepted`",
-          "bin": "fine"
-        },
-        {
           "id": "s400",
           "label": "`400 Bad Request`",
-          "bin": "mine"
-        },
-        {
-          "id": "s410",
-          "label": "`410 Gone`",
           "bin": "mine"
         },
         {

@@ -14,7 +14,7 @@ import type { NextWordAnswer, NextWordCard } from "./schema";
 function Bars({ card, temperature, highlight }: { card: NextWordCard; temperature: number; highlight: string | null }) {
   const shares = atTemperature(card.candidates, temperature);
   return (
-    <ul aria-label="Chance of each next word" className="mt-4 space-y-2">
+    <ul aria-label="Chance of each next word" className="mt-3 space-y-1 sm:mt-4 sm:space-y-2">
       {card.candidates.map((c, i) => (
         <li key={c.word} className="grid grid-cols-[minmax(4.5rem,auto)_1fr_3.75rem] items-center gap-3">
           <span className={`truncate text-body ${c.word === highlight ? "font-semibold text-ink" : "text-ink-muted"}`}>{c.word}</span>
@@ -45,7 +45,7 @@ export function NextWordCardView({ card, answer, onAnswerChange, status }: CardC
     <div>
       <CardPrompt id={`${id}-prompt`}>{card.prompt}</CardPrompt>
 
-      <p className="mt-5 rounded-card border border-line bg-surface-raised px-4 py-3 text-lead text-ink">
+      <p className="mt-3 rounded-card border border-line bg-surface-raised px-4 py-2 text-body text-ink sm:mt-5 sm:py-3 sm:text-lead">
         {card.context}{" "}
         <span className="inline-block min-w-16 border-b-2 border-dashed border-line-strong text-center font-semibold">
           {pickGoal && answer.pick ? answer.pick : <span className="sr-only">next word</span>}
@@ -92,7 +92,7 @@ export function NextWordCardView({ card, answer, onAnswerChange, status }: CardC
       ) : (
         <>
           <Bars card={card} temperature={answer.temperature} highlight={goalWord ?? null} />
-          <div className="mt-5 rounded-control border border-line bg-surface px-3 py-2.5">
+          <div className="mt-3 rounded-control border border-line bg-surface px-3 py-1.5 sm:mt-5 sm:py-2.5">
             <div className="flex items-baseline justify-between gap-2">
               <label htmlFor={`${id}-temperature`} className="text-small font-semibold text-ink">
                 Temperature
@@ -121,7 +121,7 @@ export function NextWordCardView({ card, answer, onAnswerChange, status }: CardC
               <span>Surprising</span>
             </div>
           </div>
-          <div className="mt-4">
+          <div className="mt-2 sm:mt-4">
             <Button variant="secondary" className="min-h-11 px-4 text-small" onClick={() => setSamples(true)}>
               Generate 5
             </Button>

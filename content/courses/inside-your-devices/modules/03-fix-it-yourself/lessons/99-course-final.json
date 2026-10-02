@@ -79,7 +79,7 @@
       "uses": [
         "close-apps-frees-ram"
       ],
-      "prompt": "You need **Maps** for directions, with your **music** still playing. Get the phone running smoothly.",
+      "prompt": "Get the phone running smoothly, with **Maps** open for directions and your **music** still playing.",
       "model": "memory",
       "params": {
         "ramGb": 6,
@@ -104,11 +104,6 @@
             "id": "video-call",
             "label": "Video call",
             "gb": 1.5
-          },
-          {
-            "id": "browser",
-            "label": "Web browser",
-            "gb": 1
           }
         ]
       },
@@ -134,12 +129,6 @@
           "id": "video-call",
           "kind": "toggle",
           "label": "Video call",
-          "initial": true
-        },
-        {
-          "id": "browser",
-          "kind": "toggle",
-          "label": "Web browser",
           "initial": true
         }
       ],
@@ -183,7 +172,7 @@
           }
         ]
       },
-      "explanation": "Maps didn't fit in RAM alongside everything else. Closing the game (or the video call and the browser) makes room."
+      "explanation": "Maps didn't fit in RAM alongside everything else. Closing the game (or the video call) makes room."
     },
     {
       "id": "q-whats-struggling",
@@ -215,12 +204,7 @@
       "items": [
         {
           "id": "too-many-apps",
-          "label": "Slow when lots of apps are open at once",
-          "bin": "ram"
-        },
-        {
-          "id": "tabs",
-          "label": "Everything lags with 40 tabs open",
+          "label": "Slow with lots of apps open",
           "bin": "ram"
         },
         {
@@ -229,18 +213,13 @@
           "bin": "storage"
         },
         {
-          "id": "download-fails",
-          "label": "A big download stops, saying it's full",
-          "bin": "storage"
-        },
-        {
           "id": "fan-roaring",
-          "label": "Fan roaring, then the laptop slows down",
+          "label": "Fan roaring, then it slows",
           "bin": "heat"
         },
         {
           "id": "on-bed",
-          "label": "Laptop slows down only when on a cushion",
+          "label": "Slows only when on a cushion",
           "bin": "heat"
         }
       ],

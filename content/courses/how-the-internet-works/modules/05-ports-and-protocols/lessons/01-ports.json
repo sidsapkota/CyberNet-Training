@@ -98,7 +98,7 @@
       "uses": [
         "ip-port-notation"
       ],
-      "prompt": "Your laptop's end uses a temporary [[port]], like `51544`. In `netstat -n`, **Local Address** is your end and **Foreign Address** is the other.\n\nRun it: which port on `198.51.100.10` is the laptop connected to?",
+      "prompt": "Your end uses a temporary [[port]], like `51544`. In `netstat -n`, **Local Address** is your end; **Foreign Address** is the other. Run it.",
       "promptLabel": "C:\\Users\\learner>",
       "intro": "Microsoft Windows [simulated Command Prompt]\nType help to see the commands you can use here.",
       "commands": [
@@ -137,7 +137,7 @@
         "private-address",
         "public-address"
       ],
-      "prompt": "Your [[router]]'s **NAT** swaps your private address and port for its public one and a port it picks, noting the pair in a **NAT table**.\n\nPut the steps in order.",
+      "prompt": "**NAT** swaps your private address and port for the router's public one and a port it picks, noting the pair in a **NAT table**. Order the steps.",
       "items": [
         {
           "id": "send",
@@ -153,7 +153,7 @@
         },
         {
           "id": "lookup",
-          "label": "Router looks up 40001: it's the laptop"
+          "label": "Router looks up 40001: the laptop"
         }
       ],
       "explanation": "The router rewrites the sender on the way **out** and records it, so the server replies to `203.0.113.7:40001`. The port then tells the router which device the reply is for.",
@@ -183,25 +183,25 @@
       "uses": [
         "nat-table"
       ],
-      "prompt": "Two laptops at home both use port **51000** for the same website. How does the [[router]] keep their replies apart?",
+      "prompt": "Two laptops at home both use port **51000** for one website. How does the [[router]] tell their replies apart?",
       "options": [
         {
           "id": "different-public-ports",
-          "text": "It gives each a different public port, like 40001"
+          "text": "Each gets its own public port, like 40001"
         },
         {
           "id": "one-fails",
-          "text": "It can't, so one fails until the other finishes",
+          "text": "It can't: one fails until the other ends",
           "nudge": "Many devices share one router fine: what does the router choose when it rewrites the sender?"
         },
         {
           "id": "send-both",
-          "text": "It sends every reply to both and lets them sort it",
+          "text": "It sends each reply to both laptops",
           "nudge": "The NAT table sends each reply to exactly one device: what could make the replies differ?"
         },
         {
           "id": "private-in-reply",
-          "text": "The server puts each private address in its reply",
+          "text": "The server adds the private address",
           "nudge": "The server never sees private addresses: the answer is in the router's own table."
         }
       ],

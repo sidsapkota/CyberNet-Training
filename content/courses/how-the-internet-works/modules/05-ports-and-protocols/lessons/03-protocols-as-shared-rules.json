@@ -19,11 +19,11 @@
         "transport-in-ip",
         "link-layer"
       ],
-      "prompt": "A page request travels like a letter in nested wrappers, each following its own rules: a **protocol**. The outside one is Wi-Fi or a cable, to the next device.\n\nOrder them from the **letter in the middle** to the **outside wrapper**.",
+      "prompt": "Like a letter in nested wrappers, each layer follows its own **protocol**; the outside one is Wi-Fi or a cable, to the next device. Order them from the **letter in the middle** outwards.",
       "items": [
         {
           "id": "http",
-          "label": "HTTP: the request for the page"
+          "label": "HTTP: the page request"
         },
         {
           "id": "tcp",
@@ -31,11 +31,11 @@
         },
         {
           "id": "ip",
-          "label": "IP: addresses for the right computer"
+          "label": "IP: the right computer"
         },
         {
           "id": "link",
-          "label": "Wi-Fi or Ethernet: to the next device"
+          "label": "Wi-Fi or Ethernet: next device"
         }
       ],
       "explanation": "The **HTTP** request is the letter; **TCP** wraps it for the right program, **IP** for the right computer, and **Wi-Fi or Ethernet** (wired) carries it one step. At the other end they come off in reverse.",
@@ -88,28 +88,18 @@
           "bin": "https"
         },
         {
-          "id": "bank",
-          "label": "Logging in to your bank's website",
-          "bin": "https"
-        },
-        {
           "id": "site-address",
-          "label": "Finding the address for example.org",
-          "bin": "dns"
-        },
-        {
-          "id": "mail-server",
-          "label": "Finding where example.org's email goes",
+          "label": "Finding example.org's address",
           "bin": "dns"
         },
         {
           "id": "send-gran",
-          "label": "Emailing Gran a birthday message",
+          "label": "Emailing Gran",
           "bin": "email"
         },
         {
           "id": "inbox",
-          "label": "Checking your inbox on a new phone",
+          "label": "Reading your inbox",
           "bin": "email"
         }
       ],
@@ -129,15 +119,15 @@
         "mx-record",
         "dns"
       ],
-      "prompt": "**SMTP** sends mail on its way (app to provider, and server to server). **IMAP** lets an app read mail kept on a server.\n\nPut your email to `hello@example.org` in order.",
+      "prompt": "**SMTP** sends mail on its way; **IMAP** lets an app read mail kept on a server. Order your email to `hello@example.org`.",
       "items": [
         {
           "id": "press-send",
-          "label": "You press Send in your email app"
+          "label": "You press Send"
         },
         {
           "id": "to-provider",
-          "label": "App sends it to your provider (SMTP)"
+          "label": "App hands it to your provider (SMTP)"
         },
         {
           "id": "mx",
@@ -145,11 +135,11 @@
         },
         {
           "id": "server-to-server",
-          "label": "Provider sends it to example.org (SMTP)"
+          "label": "Provider sends it on (SMTP)"
         },
         {
           "id": "read",
-          "label": "Recipient's app fetches it (IMAP)"
+          "label": "Their app fetches it (IMAP)"
         }
       ],
       "explanation": "SMTP carries the email **twice**, and in between DNS's **MX record** says where example.org's mail goes. The recipient then reads it with **IMAP**: one email, three protocols.",
@@ -200,15 +190,15 @@
         "ip-port-notation",
         "hex"
       ],
-      "prompt": "A developer runs a website at `http://example.com:8080`, not on the usual port 80. How can that work?",
+      "prompt": "A website runs at `http://example.com:8080`, not the usual port 80. How can that work?",
       "options": [
         {
           "id": "convention",
-          "text": "Port 80 is a custom, not a law: :8080 says which door"
+          "text": "Port 80 is a habit: :8080 names the door"
         },
         {
           "id": "hex",
-          "text": "8080 is 80 written in hex, so it's the same port",
+          "text": "8080 is 80 written in hex",
           "nudge": "80 and 8080 are different ports, and hex isn't involved: what does `:8080` tell the browser?"
         },
         {

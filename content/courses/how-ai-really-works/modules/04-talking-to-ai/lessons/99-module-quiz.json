@@ -93,12 +93,7 @@
         },
         {
           "id": "test",
-          "label": "I'm 12 and it's for a science test",
-          "bin": "context"
-        },
-        {
-          "id": "notes",
-          "label": "Here are my notes from class",
+          "label": "I'm 12; it's for a science test",
           "bin": "context"
         },
         {
@@ -108,7 +103,7 @@
         },
         {
           "id": "short",
-          "label": "No longer than one paragraph",
+          "label": "One paragraph at most",
           "bin": "format"
         }
       ],

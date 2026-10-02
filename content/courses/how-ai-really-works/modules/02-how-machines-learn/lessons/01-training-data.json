@@ -274,17 +274,12 @@
       "items": [
         {
           "id": "variety",
-          "label": "Messages from lots of different people",
+          "label": "Messages from many different people",
           "bin": "better"
         },
         {
           "id": "checked",
           "label": "Labels checked by a second person",
-          "bin": "better"
-        },
-        {
-          "id": "real",
-          "label": "Examples like the ones it will meet",
           "bin": "better"
         },
         {
@@ -300,11 +295,6 @@
         {
           "id": "one-school",
           "label": "Messages from just one office",
-          "bin": "problem"
-        },
-        {
-          "id": "rushed",
-          "label": "Labels done in a rush, never checked",
           "bin": "problem"
         }
       ],

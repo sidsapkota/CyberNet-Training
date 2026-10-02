@@ -139,7 +139,7 @@
         "status-code-classes"
       ],
       "uses": [],
-      "prompt": "A response's **status code** starts with a digit that says how it went: **2** all fine, **4** a problem with the request (like a missing page), **5** a problem on the server.\n\nSort these responses.",
+      "prompt": "A **status code**'s first digit says how it went: **2** fine, **4** a problem with the request (like a missing page), **5** a problem on the server. Sort these.",
       "bins": [
         {
           "id": "fine",
@@ -147,22 +147,17 @@
         },
         {
           "id": "mine",
-          "label": "Problem with the request"
+          "label": "Request's problem"
         },
         {
           "id": "server",
-          "label": "The server's problem"
+          "label": "Server's problem"
         }
       ],
       "items": [
         {
           "id": "s200",
           "label": "`200 OK`",
-          "bin": "fine"
-        },
-        {
-          "id": "s201",
-          "label": "`201 Created`",
           "bin": "fine"
         },
         {
@@ -200,7 +195,7 @@
         "redirect"
       ],
       "uses": [],
-      "prompt": "`curl -I` (a capital **I**) shows just the status code and labelled lines called **headers**. A **3** code means \"moved\", and `Location` gives the new address.\n\nRun `curl -I http://example.com/old-news`. Where has it moved?",
+      "prompt": "`curl -I` (capital **I**) shows the status code and labelled lines (**headers**). A **3** code means \"moved\"; `Location` gives the new address. Run `curl -I http://example.com/old-news`.",
       "intro": "Simulated Linux terminal. Type help to see the commands you can use here.",
       "commands": [
         {

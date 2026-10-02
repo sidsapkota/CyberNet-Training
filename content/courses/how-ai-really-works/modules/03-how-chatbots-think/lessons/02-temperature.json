@@ -16,7 +16,7 @@
       "uses": [
         "word-chances"
       ],
-      "prompt": "Chatbots have a **temperature** setting. Slide it until **mat** has at least an **80%** chance.",
+      "prompt": "Chatbots have a **temperature** setting: slide it until **mat** has at least **80%**.",
       "context": "The cat sat on the",
       "candidates": [
         {
@@ -62,7 +62,7 @@
       "uses": [
         "temperature-effect"
       ],
-      "prompt": "Now make it more surprising: slide until **no word** has more than a **45%** chance.",
+      "prompt": "More surprising now: slide until **no word** is above **45%**.",
       "context": "The cat sat on the",
       "candidates": [
         {
@@ -222,25 +222,25 @@
       "uses": [
         "temperature-effect"
       ],
-      "prompt": "A model's top pick for Australia's capital is **Sydney** (really Canberra). You turn temperature right down. What happens?",
+      "prompt": "A model's top pick for Australia's capital is **Sydney** (it's Canberra). You turn the temperature right down. What happens?",
       "options": [
         {
           "id": "sydney",
-          "text": "It says \"Sydney\" almost every time, wrong or not"
+          "text": "It says \"Sydney\" nearly every time"
         },
         {
           "id": "canberra",
-          "text": "It switches to \"Canberra\": low means more careful",
+          "text": "It switches to \"Canberra\": low is careful",
           "nudge": "Temperature never changes the order of the words. Which is on top?"
         },
         {
           "id": "more-canberra",
-          "text": "It says \"Canberra\" more: low favours true answers",
+          "text": "It says \"Canberra\" more: low favours truth",
           "nudge": "Low temperature favours the top word, whatever it is. Is it true here?"
         },
         {
           "id": "mix",
-          "text": "It says each city about equally: the chances even out",
+          "text": "It says each city about equally",
           "nudge": "Evening out is what a high temperature does. What does a low one do?"
         }
       ],

@@ -37,11 +37,6 @@
           "bin": "fine"
         },
         {
-          "id": "story",
-          "label": "A made-up story idea",
-          "bin": "fine"
-        },
-        {
           "id": "volcano",
           "label": "A question about volcanoes",
           "bin": "fine"
@@ -54,11 +49,6 @@
         {
           "id": "password",
           "label": "A password, to \"keep it safe\"",
-          "bin": "private"
-        },
-        {
-          "id": "friend-photo",
-          "label": "A photo of your friend",
           "bin": "private"
         },
         {
@@ -174,7 +164,7 @@
         },
         {
           "id": "camera-once",
-          "label": "Camera, to photo one problem you pick",
+          "label": "Camera, for one problem you pick",
           "bin": "needs"
         },
         {
@@ -184,17 +174,12 @@
         },
         {
           "id": "location",
-          "label": "Your location, all the time",
-          "bin": "doesnt"
-        },
-        {
-          "id": "gallery",
-          "label": "Every photo in your gallery",
+          "label": "Location, all the time",
           "bin": "doesnt"
         },
         {
           "id": "mic",
-          "label": "Your microphone, always on",
+          "label": "Microphone, always on",
           "bin": "doesnt"
         }
       ],

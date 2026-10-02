@@ -45,23 +45,23 @@
         "ephemeral-port",
         "ip-port-notation"
       ],
-      "prompt": "Your laptop's `netstat -n` shows two tabs:\n\n```\nLocal Address          Foreign Address\n192.168.1.42:51544     198.51.100.10:443\n192.168.1.42:51547     203.0.113.80:443\n```\n\nWhere does a reply for port **51547** go?",
+      "prompt": "`netstat -n` shows two tabs:\n\n```\nLocal Address          Foreign Address\n192.168.1.42:51544     198.51.100.10:443\n192.168.1.42:51547     203.0.113.80:443\n```\n\nWhere does a reply to port **51547** go?",
       "options": [
         {
           "id": "second-tab",
-          "text": "To the tab talking to 203.0.113.80"
+          "text": "To the 203.0.113.80 tab"
         },
         {
           "id": "first-tab",
-          "text": "To the 198.51.100.10 tab, as it opened first"
+          "text": "To the 198.51.100.10 tab: it opened first"
         },
         {
           "id": "both-tabs",
-          "text": "To both tabs, since both talk to port 443"
+          "text": "To both tabs: both use port 443"
         },
         {
           "id": "server",
-          "text": "Back out, since 51547 is a server's port"
+          "text": "Back out: 51547 is a server's port"
         }
       ],
       "correctOptionId": "second-tab",
@@ -168,12 +168,12 @@
       "pairs": [
         {
           "id": "imap",
-          "left": "Read mail that's kept on a server",
+          "left": "Read mail kept on a server",
           "right": "IMAP"
         },
         {
           "id": "smtp",
-          "left": "Pass an email between mail servers",
+          "left": "Pass email between servers",
           "right": "SMTP"
         },
         {
@@ -183,7 +183,7 @@
         },
         {
           "id": "tcp",
-          "left": "Resend lost pieces of a download",
+          "left": "Resend lost pieces",
           "right": "TCP"
         }
       ],

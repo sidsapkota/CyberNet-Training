@@ -25,7 +25,7 @@
       "type": "packet_path",
       "difficulty": "core",
       "uses": [],
-      "prompt": "The cable from **Router A** straight to the web [[server]] is cut, so it's gone from the map.\n\nGet the [[packet]] there another way.",
+      "prompt": "The cable from **Router A** to the [[server]] is cut (it's gone from the map). Get the [[packet]] there another way.",
       "nodes": [
         {
           "id": "laptop",
@@ -210,25 +210,25 @@
       "uses": [
         "tcp-resend"
       ],
-      "prompt": "On a video call, a lost packet makes the picture glitch, but the call doesn't wait for a resend. Why not?",
+      "prompt": "A lost packet makes a video call glitch, but the call doesn't wait for a resend. Why?",
       "options": [
         {
           "id": "live",
-          "text": "Waiting would lag the call; fresh data beats late data"
+          "text": "Waiting would lag it; fresh data beats late"
         },
         {
           "id": "no-packets",
-          "text": "Calls use one unbroken stream, not packets at all",
+          "text": "Calls are one stream, not packets",
           "nudge": "Everything online travels in packets, video calls included."
         },
         {
           "id": "never-lost",
-          "text": "Video packets are protected, so they're never lost",
+          "text": "Video packets are never lost",
           "nudge": "Any packet can go missing: the question says one did."
         },
         {
           "id": "too-big",
-          "text": "Video packets are too big to send a second time",
+          "text": "Video packets are too big to resend",
           "nudge": "Size isn't the reason: what happens to a live call while it waits?"
         }
       ],
@@ -244,7 +244,7 @@
         "traceroute",
         "hop"
       ],
-      "prompt": "Yesterday's [[traceroute]] is saved at the top.\n\nRun `traceroute example.com` and compare each numbered [[hop]]. Which one changed?",
+      "prompt": "Yesterday's [[traceroute]] is at the top. Run `traceroute example.com` and compare the [[hop|hop]]s.",
       "intro": "Saved from yesterday:\n\n$ traceroute example.com\ntraceroute to example.com (198.51.100.10), 30 hops max, 60 byte packets\n 1  192.168.1.1 (192.168.1.1)  1.912 ms  1.804 ms  1.765 ms\n 2  203.0.113.1 (203.0.113.1)  9.483 ms  9.412 ms  9.377 ms\n 3  203.0.113.65 (203.0.113.65)  11.207 ms  11.164 ms  11.122 ms\n 4  198.51.100.1 (198.51.100.1)  18.930 ms  18.842 ms  19.004 ms\n 5  example.com (198.51.100.10)  19.315 ms  19.271 ms  19.233 ms\n\nType help to see the commands you can use here.",
       "commands": [
         {
@@ -258,7 +258,7 @@
       ],
       "success": {
         "type": "answer",
-        "question": "What is the address of the router that's on today's route but wasn't on yesterday's?",
+        "question": "Which router's address is new today?",
         "accepted": [
           "203.0.113.129"
         ]

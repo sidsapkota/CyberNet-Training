@@ -167,25 +167,25 @@
       "uses": [
         "fair-test"
       ],
-      "prompt": "A plant model will check gardeners' phone photos in sun, shade and rain. Which test is **fairest**?",
+      "prompt": "A plant model will check gardeners' photos in sun, shade and rain. Which test is **fairest**?",
       "options": [
         {
           "id": "mixed-phones",
-          "text": "200 new phone photos from many gardens, in all weather"
+          "text": "200 new photos from many gardens, all weathers"
         },
         {
           "id": "pro-photos",
-          "text": "200 new photos taken by an expert, all in perfect light",
+          "text": "200 new expert photos, all in perfect light",
           "nudge": "They're new, but are they like the photos it will really meet?"
         },
         {
           "id": "training",
-          "text": "200 of its training photos, so the answers are known",
+          "text": "200 of its training photos, answers known",
           "nudge": "Test photos need known answers too. What's wrong with ones it learned from?"
         },
         {
           "id": "already-right",
-          "text": "200 new phone photos it's already known to get right",
+          "text": "200 new photos it already gets right",
           "nudge": "Picking photos it gets right decides the score before the test."
         }
       ],

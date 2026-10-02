@@ -29,7 +29,7 @@ const KIND: Record<NetworkNodeKind, { Icon: ComponentType<{ className?: string }
 
 /** Row height in px: node (48) + label + optional address. Phones use shorter rows. */
 const ROW_H = 120;
-const ROW_H_NARROW = 92;
+const ROW_H_NARROW = 80;
 /** Node centre offset from the top of its row. */
 const NODE_Y = 28;
 const HOP_SECONDS = 0.22;
@@ -169,7 +169,7 @@ export function PacketPathCardView({
                 aria-label={`${node.label}${node.address ? `, ${node.address}` : ""}, ${name}${
                   role ? `, ${role}` : ""
                 }${downNote}, ${state}${isWrong ? ", wrong stop" : ""}`}
-                className={`relative grid size-12 place-items-center rounded-node border-2 transition-colors disabled:cursor-default ${tone}`}
+                className={`relative grid size-11 place-items-center rounded-node border-2 transition-colors disabled:cursor-default sm:size-12 ${tone}`}
               >
                 <Icon className="size-5" />
                 {down && !isWrong && (

@@ -21,22 +21,22 @@
         "get-post",
         "url-path"
       ],
-      "prompt": "You type `https://www.example.com/news` and press Enter.\n\nMatch each part of this address, the **URL**, to what your [[browser]] does with it.",
+      "prompt": "You type `https://www.example.com/news`. Match each part of the **URL** to what your [[browser]] does.",
       "pairs": [
         {
           "id": "scheme",
           "left": "`https`",
-          "right": "Encrypt everything with TLS, on port 443"
+          "right": "Encrypt with TLS, on port 443"
         },
         {
           "id": "host",
           "left": "`www.example.com`",
-          "right": "Turn it into an IP address with DNS"
+          "right": "Find its IP address with DNS"
         },
         {
           "id": "path",
           "left": "`/news`",
-          "right": "Ask the server for that page with GET"
+          "right": "Ask the server for that page"
         }
       ],
       "explanation": "The **scheme** picks the [[protocol]] (`https` is HTTP inside TLS), DNS turns the **host** into an address, and the **path** goes in the GET request.",
@@ -79,7 +79,7 @@
       "type": "packet_path",
       "difficulty": "core",
       "uses": [],
-      "prompt": "**Step 2:** TCP's first message, \"Can we talk?\", goes to `198.51.100.10:443`.\n\nSend it from the laptop to the web [[server]].",
+      "prompt": "**Step 2:** TCP's \"Can we talk?\" goes to `198.51.100.10:443`. Send it to the web [[server]].",
       "nodes": [
         {
           "id": "laptop",
@@ -186,7 +186,7 @@
       "uses": [
         "port"
       ],
-      "prompt": "**Steps 1 to 4 at once:** run `curl -v https://www.example.com/news` and watch each step go by.\n\nWhich **port** did it connect to?",
+      "prompt": "**Steps 1 to 4 at once:** run `curl -v https://www.example.com/news`.",
       "intro": "Simulated Linux terminal (curl's output shortened). Type help to see the commands you can use here.",
       "commands": [
         {
@@ -241,7 +241,7 @@
       "items": [
         {
           "id": "dns",
-          "label": "DNS turns the name into 198.51.100.10"
+          "label": "DNS finds 198.51.100.10"
         },
         {
           "id": "tcp",
@@ -249,23 +249,19 @@
         },
         {
           "id": "tls",
-          "label": "TLS handshake: keys and certificate"
+          "label": "TLS handshake"
         },
         {
           "id": "get",
-          "label": "Browser sends an encrypted GET /news"
+          "label": "Encrypted GET /news"
         },
         {
           "id": "response",
-          "label": "Server replies 200 OK with the HTML"
-        },
-        {
-          "id": "reassemble",
-          "label": "TCP reorders packets, TLS decrypts"
+          "label": "Server replies 200 OK"
         },
         {
           "id": "draw",
-          "label": "Browser fetches pictures, draws the page"
+          "label": "Browser draws the page"
         }
       ],
       "explanation": "Find the address (**DNS**), connect (**TCP**), secure it (**TLS**), ask (**GET**), get **200 OK**, rebuild and decrypt, then draw. All of it travelled as **packets** of **bits**, [[hop]] by hop, through your [[router]]'s **NAT**.",
@@ -282,27 +278,27 @@
         "certificate",
         "status-code-classes"
       ],
-      "prompt": "When a page won't load, the error says which step failed. Match each error to its step.",
+      "prompt": "Each error says which step failed. Match them.",
       "pairs": [
         {
           "id": "not-found",
           "left": "Server not found",
-          "right": "The DNS lookup failed"
+          "right": "DNS lookup failed"
         },
         {
           "id": "timed-out",
           "left": "Connection timed out",
-          "right": "Nothing answered the TCP handshake"
+          "right": "No reply to the TCP handshake"
         },
         {
           "id": "not-private",
           "left": "Your connection is not private",
-          "right": "The TLS certificate check failed"
+          "right": "TLS certificate check failed"
         },
         {
           "id": "404",
           "left": "404 Not Found",
-          "right": "The server has no page at that path"
+          "right": "No page at that path"
         }
       ],
       "explanation": "**Server not found** is DNS failing, and **timed out** means \"Can we talk?\" got no reply. **Not private** is a failed certificate check, and **404** means everything worked up to [[HTTP]], but that path is empty.",
@@ -317,7 +313,7 @@
         "public-address",
         "nat"
       ],
-      "prompt": "The [[server]] replies to your [[router]]'s [[public address]], `203.0.113.7`, but **Router A is down**.\n\nRoute the reply back to the laptop.",
+      "prompt": "The [[server]] replies to your [[router]] at `203.0.113.7`, but **Router A is down**. Route it to the laptop.",
       "nodes": [
         {
           "id": "phone",
@@ -325,7 +321,7 @@
           "label": "Phone",
           "address": "192.168.1.21",
           "col": 0,
-          "row": 0
+          "row": 1
         },
         {
           "id": "laptop",
@@ -333,7 +329,7 @@
           "label": "Laptop",
           "address": "192.168.1.20",
           "col": 0,
-          "row": 1
+          "row": 0
         },
         {
           "id": "home",
@@ -341,7 +337,7 @@
           "label": "Home router (NAT)",
           "address": "203.0.113.7",
           "col": 1,
-          "row": 1
+          "row": 0
         },
         {
           "id": "rc",
@@ -349,7 +345,7 @@
           "label": "Router C",
           "address": "203.0.113.3",
           "col": 1,
-          "row": 2
+          "row": 1
         },
         {
           "id": "ra",
@@ -366,7 +362,7 @@
           "label": "Router B",
           "address": "203.0.113.2",
           "col": 2,
-          "row": 2
+          "row": 1
         },
         {
           "id": "server",
@@ -374,7 +370,7 @@
           "label": "example.com",
           "address": "198.51.100.10",
           "col": 3,
-          "row": 1
+          "row": 0
         }
       ],
       "links": [

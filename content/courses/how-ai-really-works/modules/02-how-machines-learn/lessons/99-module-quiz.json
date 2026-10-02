@@ -237,22 +237,22 @@
       "pairs": [
         {
           "id": "test",
-          "left": "Photos hidden from it while it learns",
+          "left": "Photos hidden while it learns",
           "right": "Test examples"
         },
         {
           "id": "accuracy",
-          "left": "It got 9 of 10 new photos right: 90%",
+          "left": "9 of 10 new photos right: 90%",
           "right": "Accuracy"
         },
         {
           "id": "overfitting",
-          "left": "Perfect on training, poor on new photos",
+          "left": "Perfect on training, poor on new",
           "right": "Memorising, not learning"
         },
         {
           "id": "bias",
-          "left": "Understands one accent well, not others",
+          "left": "Gets one accent right, not others",
           "right": "Bias"
         }
       ],
