@@ -5,6 +5,7 @@ import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import type { Database } from "@/lib/supabase/database.types";
 import {
   earlyGrantEligible,
+  type FounderRecord,
   type GrantRecord,
   hasPro,
   newEarlyGrant,
@@ -14,6 +15,7 @@ import {
   type SubscriptionRecord,
   type SubscriptionStatus,
 } from "./entitlement";
+import { type FounderPurchase, founderPurchaseOf } from "./founder";
 import { getStripe, getStripeEnv } from "./stripe";
 import { type StripeSubscriptionLike, toSubscriptionRow } from "./webhook";
 
@@ -55,6 +57,8 @@ export interface Entitlement {
   status: ProStatus;
   subscriptions: SubscriptionRecord[];
   grant: GrantRecord | null;
+  /** A live (unrefunded) Founding Member seat. */
+  founder: FounderRecord | null;
 }
 
 /**
@@ -63,11 +67,13 @@ export interface Entitlement {
  */
 export async function getEntitlement(user: { id: string; createdAt: string | null }, now = new Date()): Promise<Entitlement> {
   const admin = createSupabaseAdminClient();
-  const [subs, grantRow] = await Promise.all([
+  const [subs, grantRow, seat] = await Promise.all([
     admin.from("subscriptions").select("*").eq("user_id", user.id),
     admin.from("pro_grants").select("*").eq("user_id", user.id).maybeSingle(),
+    admin.from("founding_members").select("purchased_at").eq("user_id", user.id).is("refunded_at", null).maybeSingle(),
   ]);
-  if (subs.error || grantRow.error) throw new Error(`Couldn't check Pro: ${(subs.error ?? grantRow.error)!.message}`);
+  if (subs.error || grantRow.error || seat.error) throw new Error(`Couldn't check Pro: ${(subs.error ?? grantRow.error ?? seat.error)!.message}`);
+  const founder: FounderRecord | null = seat.data ? { purchasedAt: seat.data.purchased_at } : null;
   let grant = grantFromRow(grantRow.data);
   if (!grant && earlyGrantEligible(user.createdAt, proLaunchAt(), now)) {
     const { data, error } = await admin
@@ -79,8 +85,14 @@ export async function getEntitlement(user: { id: string; createdAt: string | nul
   }
   const subscriptions = (subs.data ?? []).map(subscriptionFromRow);
   // The Pro frame on league cards follows the same entitlement (cosmetic only).
-  after(() => stampProCosmetic(user.id, subscriptions, grant, now));
-  return { hasPro: hasPro(subscriptions, grant, now), status: proStatus(subscriptions, grant, now), subscriptions, grant };
+  after(() => stampProCosmetic(user.id, subscriptions, grant, now, founder));
+  return {
+    hasPro: hasPro(subscriptions, grant, now, founder),
+    status: proStatus(subscriptions, grant, now, founder),
+    subscriptions,
+    grant,
+    founder,
+  };
 }
 
 export class ProRequiredError extends Error {
@@ -171,16 +183,62 @@ export async function syncSubscription(subscriptionId: string, userId: string): 
 }
 
 /**
- * After Checkout: if the session is this learner's and complete, save the subscription now, so
- * the welcome page is right even before the webhook arrives. False for anyone else's session.
+ * After Checkout: if the session is this learner's and complete, save the subscription (or claim
+ * the founding seat) now, so the welcome page is right even before the webhook arrives. False for
+ * anyone else's session.
  */
 export async function syncCheckoutSession(userId: string, sessionId: string): Promise<boolean> {
-  if (!/^cs_(test_)?[A-Za-z0-9]+$/.test(sessionId)) return false;
+  if (!/^cs_(test_|live_)?[A-Za-z0-9]+$/.test(sessionId)) return false;
   const session = await getStripe().checkout.sessions.retrieve(sessionId);
-  if (session.client_reference_id !== userId || session.mode !== "subscription" || session.status !== "complete") return false;
+  if (session.client_reference_id !== userId || session.status !== "complete") return false;
+  if (session.mode === "payment") {
+    const purchase = founderPurchaseOf(session as unknown as Record<string, unknown>);
+    if (!purchase || purchase.userId !== userId) return false;
+    await claimFounderSeat(purchase);
+    return true;
+  }
+  if (session.mode !== "subscription") return false;
   const subscriptionId = typeof session.subscription === "string" ? session.subscription : session.subscription?.id;
   if (subscriptionId) await syncSubscription(subscriptionId, userId);
   return true;
+}
+
+// ── Founding Member ───────────────────────────────────────────────────────────
+
+/** Records a paid founding seat (idempotent per Checkout session; the database decides). */
+export async function claimFounderSeat(p: FounderPurchase): Promise<void> {
+  const { error } = await createSupabaseAdminClient().rpc("claim_founder_seat", {
+    p_user: p.userId,
+    p_session: p.sessionId,
+    p_payment: p.paymentIntentId,
+    p_amount: p.amountTotal,
+    p_currency: p.currency,
+  });
+  if (error) throw new Error(`Couldn't record the founding seat: ${error.message}`);
+}
+
+/** A full refund: the seat ends and is free again. The learner, or null if it wasn't a founding payment. */
+export async function refundFounderSeat(paymentIntentId: string): Promise<string | null> {
+  const { data, error } = await createSupabaseAdminClient().rpc("refund_founder_seat", { p_payment: paymentIntentId });
+  if (error) throw new Error(`Couldn't refund the founding seat: ${error.message}`);
+  return data ?? null;
+}
+
+/**
+ * Holds a seat for a new Checkout session: the learner's earlier founding sessions are expired in
+ * Stripe first (so only one can ever be paid), then the database holds the seat or refuses.
+ */
+export async function holdFounderSeat(userId: string, sessionId: string, expiresAt: Date): Promise<boolean> {
+  const admin = createSupabaseAdminClient();
+  const { data: old, error: oldError } = await admin.from("founder_holds").select("checkout_session_id").eq("user_id", userId);
+  if (oldError) throw new Error(`Couldn't read seat holds: ${oldError.message}`);
+  for (const h of old ?? []) {
+    if (h.checkout_session_id === sessionId) continue;
+    await getStripe().checkout.sessions.expire(h.checkout_session_id).catch(() => undefined); // already paid or expired
+  }
+  const { data, error } = await admin.rpc("reserve_founder_seat", { p_user: userId, p_session: sessionId, p_expires: expiresAt.toISOString() });
+  if (error) throw new Error(`Couldn't hold a founding seat: ${error.message}`);
+  return data === true;
 }
 
 /** On account deletion: deleting the Stripe customer cancels any subscription straight away. */

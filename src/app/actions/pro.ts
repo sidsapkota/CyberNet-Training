@@ -11,8 +11,9 @@ import { requireUser, requireUserId } from "@/lib/auth/server";
 import type { Plan } from "@/lib/pro/env";
 import { type ProInterval, proIntervals, type ProStatus, trialEligible } from "@/lib/pro/entitlement";
 import { DAILY_LESSON_LIMIT, type DailyLessons, limitDay } from "@/lib/pro/dailyLimit";
-import { ensureStripeCustomer, getEntitlement, stripeCustomerFor } from "@/lib/pro/server";
-import { getStripe, getStripeEnv } from "@/lib/pro/stripe";
+import { FOUNDER_METADATA } from "@/lib/pro/founder";
+import { ensureStripeCustomer, getEntitlement, holdFounderSeat, stripeCustomerFor } from "@/lib/pro/server";
+import { founderPriceId, getStripe, getStripeEnv } from "@/lib/pro/stripe";
 import { returnOrigin } from "@/lib/pro/urls";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
@@ -44,7 +45,7 @@ export async function getMyProAction(): Promise<MyPro> {
   return {
     hasPro: entitlement.hasPro,
     status: entitlement.status,
-    intervals: proIntervals(entitlement.subscriptions, entitlement.grant),
+    intervals: proIntervals(entitlement.subscriptions, entitlement.grant, entitlement.founder),
     trialEligible: trialEligible(entitlement.subscriptions),
     available: getStripeEnv() !== null,
   };
@@ -84,6 +85,7 @@ export async function startCheckoutAction(plan: Plan): Promise<Result> {
 
   const entitlement = await getEntitlement(user);
   if (entitlement.status.kind === "subscription") return { error: "You already have Pro. You can manage it on your account page." };
+  if (entitlement.status.kind === "founder") return { error: "You're a Founding Member: you already have Pro for life." };
 
   const customer = await ensureStripeCustomer(user.id);
   const base = await origin();
@@ -100,6 +102,48 @@ export async function startCheckoutAction(plan: Plan): Promise<Result> {
     success_url: `${base}/pro/welcome?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${base}/pro`,
   });
+  if (!session.url) return { error: "Stripe didn't return a checkout page. Please try again." };
+  return { url: session.url };
+}
+
+/** Stripe's shortest Checkout life is 30 minutes; the seat is held for exactly as long. */
+const FOUNDER_CHECKOUT_MS = 31 * 60 * 1000;
+
+/**
+ * Starts Stripe Checkout for a Founding Member seat: one payment (payment mode, no subscription,
+ * no trial), lifetime Pro. Refused while the offer is off, to anyone with a subscription or a seat,
+ * and when every seat is sold or held in someone's checkout (the database decides, under a lock).
+ */
+export async function startFounderCheckoutAction(): Promise<Result> {
+  const user = await requireUser();
+  const price = founderPriceId();
+  if (!price) return { error: "The Founding Member offer isn't available." };
+  const admin = createSupabaseAdminClient();
+  const { data: profile } = await admin.from("profiles").select("age_confirmed").eq("id", user.id).maybeSingle();
+  if (!profile?.age_confirmed) return { error: "Please confirm you're 13 or older first (on your account page)." };
+
+  const entitlement = await getEntitlement(user);
+  if (entitlement.status.kind === "founder") return { error: "You're already a Founding Member." };
+  if (entitlement.status.kind === "subscription") return { error: "You already have Pro. You can manage it on your account page." };
+
+  const customer = await ensureStripeCustomer(user.id);
+  const base = await origin();
+  const expiresAt = new Date(Date.now() + FOUNDER_CHECKOUT_MS);
+  const session = await getStripe().checkout.sessions.create({
+    mode: "payment",
+    customer,
+    client_reference_id: user.id,
+    line_items: [{ price, quantity: 1 }],
+    metadata: { ...FOUNDER_METADATA, user_id: user.id },
+    payment_intent_data: { metadata: { ...FOUNDER_METADATA, user_id: user.id } },
+    expires_at: Math.floor(expiresAt.getTime() / 1000),
+    success_url: `${base}/pro/welcome?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${base}/pro`,
+  });
+  if (!(await holdFounderSeat(user.id, session.id, expiresAt))) {
+    await getStripe().checkout.sessions.expire(session.id).catch(() => undefined);
+    return { error: "Every founding spot is taken or in someone's checkout right now. Spots in checkout free up within 30 minutes." };
+  }
   if (!session.url) return { error: "Stripe didn't return a checkout page. Please try again." };
   return { url: session.url };
 }

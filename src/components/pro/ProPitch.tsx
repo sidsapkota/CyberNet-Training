@@ -6,7 +6,8 @@ import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Mascot } from "@/components/mascot/Mascot";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { CertificateIcon, MistakesIcon, UnlimitedIcon } from "@/components/ui/icons";
-import { type EventTarget as AnalyticsTarget, trackEvent, trackProDeclined } from "@/lib/analytics";
+import { type EventTarget as AnalyticsTarget, trackEvent, trackProDeclined, trackWith } from "@/lib/analytics";
+import { founderEventData } from "@/lib/pro/founder";
 import {
   type DeclineReason,
   type DeclineSource,
@@ -17,6 +18,7 @@ import {
 import type { Plan } from "@/lib/pro/env";
 import type { PitchPrices } from "@/lib/pro/pricing";
 import { DeclinedQuestion } from "./DeclinedQuestion";
+import { FounderButton, SeatsLeft, useVisibleFounderOffer } from "./Founder";
 import { PlanButton } from "./PlanButton";
 
 /** What Pro adds, one line each (the extra streak freeze is listed on /pro). */
@@ -53,6 +55,9 @@ export function usePitchPrices(given: PitchPrices | null | undefined): PitchPric
  *
  * With `declineSource`, "Not now" first asks "What's stopping you?" in the same place (at most once
  * a week per device), then carries on to where it was going.
+ *
+ * While the Founding Member offer is on (and this learner may see it), its button is the main one,
+ * with the real comparison and counter; the plans with the 7-day trial are one small link away.
  */
 export function ProPitch({
   headline,
@@ -85,6 +90,16 @@ export function ProPitch({
   const [plan, setPlan] = useState<Plan>("annual");
   const [showSample, setShowSample] = useState(false);
   const viewed = useRef(false);
+  const founderOffer = useVisibleFounderOffer();
+  const [plansInstead, setPlansInstead] = useState(false);
+  const founder = plansInstead ? null : founderOffer;
+  const screen = declineSource === "limit" ? "limit" : "paywall";
+  const founderViewed = useRef(false);
+  useEffect(() => {
+    if (!founder || founderViewed.current) return;
+    founderViewed.current = true;
+    trackWith("founder_viewed", founderEventData(screen));
+  }, [founder, screen]);
   const Heading = headingLevel === 1 ? "h1" : "h2";
 
   useEffect(() => {
@@ -145,6 +160,14 @@ export function ProPitch({
         ))}
       </motion.ul>
 
+      {founder ? (
+        <motion.div {...rise(3)} className="mt-3 w-full">
+          <p className="font-semibold text-balance">{founder.headline}</p>
+          <p className="text-caption text-ink-muted">
+            {founder.comparison} <SeatsLeft offer={founder} className="inline" />
+          </p>
+        </motion.div>
+      ) : (
       <motion.div {...rise(3)} className="mt-3 w-full">
         <p className="min-h-6 text-body" aria-live="polite">
           {prices === undefined ? (
@@ -178,19 +201,38 @@ export function ProPitch({
           </button>
         )}
       </motion.div>
+      )}
 
       <motion.div {...rise(4)} className="mt-1 w-full">
-        {prices && <PlanButton key={plan} plan={plan} label="Go unlimited with Pro" primary big />}
-        {"href" in notNow ? (
-          <ButtonLink href={notNow.href} variant="ghost" className="mt-1 w-full" onClick={onNotNow}>
-            Not now
-          </ButtonLink>
+        {founder ? (
+          <div className="mt-2">
+            <FounderButton offer={founder} screen={screen} big />
+          </div>
         ) : (
-          <Button variant="ghost" className="mt-1 w-full" onClick={onNotNow}>
-            Not now
-          </Button>
+          prices && <PlanButton key={plan} plan={plan} label="Go unlimited with Pro" primary big />
         )}
-        <p className="mt-1 text-caption text-ink-muted">Ask a parent or guardian before subscribing.</p>
+        {/* With the founding offer, the trial is a small link beside "Not now" (one row, so it fits a short phone). */}
+        <div className={founder ? "mt-1 grid grid-cols-2 gap-2" : ""}>
+          {founder && (
+            <button
+              type="button"
+              onClick={() => setPlansInstead(true)}
+              className="min-h-11 rounded-control px-2 text-small font-semibold text-accent-ink underline-offset-2 hover:underline"
+            >
+              Or try 7 days free
+            </button>
+          )}
+          {"href" in notNow ? (
+            <ButtonLink href={notNow.href} variant="ghost" className={founder ? "w-full" : "mt-1 w-full"} onClick={onNotNow}>
+              Not now
+            </ButtonLink>
+          ) : (
+            <Button variant="ghost" className={founder ? "w-full" : "mt-1 w-full"} onClick={onNotNow}>
+              Not now
+            </Button>
+          )}
+        </div>
+        {!founder && <p className="mt-1 text-caption text-ink-muted">Ask a parent or guardian before subscribing.</p>}
         {sample && !showSample && (
           <button
             type="button"

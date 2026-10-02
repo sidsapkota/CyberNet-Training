@@ -113,6 +113,13 @@ describe("Server Actions that write with the secret key", () => {
       const rel = path.relative(ROOT, file).replace(/\\/g, "/");
       if (/^src\/lib\/(pro|leagues|certificates)\/server\.ts$/.test(rel)) continue;
       if (rel.startsWith("src/app/api/cron/")) continue;
+      // Stripe's webhook has no user: Stripe's signature is its authority, checked before anything else.
+      if (rel === "src/app/api/stripe/webhook/route.ts") {
+        const verify = source.indexOf("constructEvent(");
+        expect(verify, "the webhook must verify Stripe's signature").toBeGreaterThan(0);
+        expect(verify, "the signature is checked before any database work").toBeLessThan(source.indexOf("createSupabaseAdminClient()"));
+        continue;
+      }
       expect(source.trimStart().startsWith('"use client"'), file).toBe(false);
       expect(source, `${file} must get the user from the verified session`).toMatch(/await requireUser(Id)?\(\)/);
     }

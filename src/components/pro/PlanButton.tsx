@@ -49,6 +49,13 @@ export function PlanButton({
       </Button>
     );
   }
+  if (pro.status.kind === "founder") {
+    return (
+      <Button variant="secondary" className={size} disabled>
+        You have lifetime Pro
+      </Button>
+    );
+  }
   if (pro.status.kind === "subscription") {
     return (
       <Button

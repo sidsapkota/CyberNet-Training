@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { FounderCard, ParentPitch } from "@/components/pro/Founder";
 import { PlansCards, PlansHeading } from "@/components/pro/PlansCards";
 import { ChevronDownIcon } from "@/components/ui/icons";
 import { annualSaving, formatPrice, pitchPrices } from "@/lib/pro/pricing";
@@ -42,10 +43,18 @@ export default async function ProPage() {
       {/* On a 360×640 phone the Pro card's button is in view without scrolling. */}
       <section aria-labelledby="plans-title" className="mx-auto max-w-3xl">
         <PlansHeading />
+        {/* The Founding Member offer comes first while it's on (it renders nothing otherwise). */}
+        <div className="mt-4 empty:hidden">
+          <FounderCard />
+        </div>
         <div className="mt-4">
           <PlansCards prices={prices ? pitchPrices(prices.monthly, prices.annual) : null} source="auto" />
         </div>
       </section>
+
+      <div className="mx-auto mt-8 max-w-3xl">
+        <ParentPitch />
+      </div>
 
       {prices && (
         <p className="mx-auto mt-8 max-w-3xl text-small text-ink-muted">

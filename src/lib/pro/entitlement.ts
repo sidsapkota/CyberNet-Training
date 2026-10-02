@@ -7,7 +7,8 @@
  * - a subscription that's `trialing`, `active` or `past_due` (Stripe is still retrying a failed
  *   payment; up to about two weeks, then it cancels) whose paid period hasn't ended, allowing a short grace
  *   for the renewal webhook to arrive; or
- * - an early-user grant that hasn't expired.
+ * - an early-user grant that hasn't expired; or
+ * - a Founding Member seat (a one-off payment) that hasn't been refunded: no end date.
  */
 
 export type SubscriptionStatus =
@@ -40,6 +41,11 @@ export interface GrantRecord {
   thankedAt: string | null;
 }
 
+/** A Founding Member seat that hasn't been refunded (refunded seats are never passed in). */
+export interface FounderRecord {
+  purchasedAt: string;
+}
+
 /** Statuses that give Pro (while the period lasts). */
 export const PRO_STATUSES: readonly SubscriptionStatus[] = ["trialing", "active", "past_due"];
 /** How long after a period's end access continues while the renewal is confirmed. */
@@ -60,8 +66,8 @@ export function grantGivesPro(g: GrantRecord | null, now: Date): boolean {
   return ms(g.startsAt) <= t && t < ms(g.expiresAt);
 }
 
-export function hasPro(subs: readonly SubscriptionRecord[], grant: GrantRecord | null, now: Date): boolean {
-  return subs.some((s) => subscriptionGivesPro(s, now)) || grantGivesPro(grant, now);
+export function hasPro(subs: readonly SubscriptionRecord[], grant: GrantRecord | null, now: Date, founder: FounderRecord | null = null): boolean {
+  return founder !== null || subs.some((s) => subscriptionGivesPro(s, now)) || grantGivesPro(grant, now);
 }
 
 /** The 7-day trial is for first-time subscribers: accounts that have never had a subscription. */
@@ -72,6 +78,7 @@ export function trialEligible(subs: readonly SubscriptionRecord[]): boolean {
 export type ProStatus =
   | { kind: "none"; hadSubscription: boolean }
   | { kind: "grant"; expiresAt: string; thanked: boolean }
+  | { kind: "founder"; purchasedAt: string }
   | {
       kind: "subscription";
       status: "trialing" | "active" | "past_due";
@@ -82,8 +89,12 @@ export type ProStatus =
       cancelling: boolean;
     };
 
-/** What to show the learner about their Pro. A live subscription wins over the grant. */
-export function proStatus(subs: readonly SubscriptionRecord[], grant: GrantRecord | null, now: Date): ProStatus {
+/**
+ * What to show the learner about their Pro. A live subscription wins over the grant; a founding
+ * seat wins over both (it's lifetime; checkout refuses it to anyone with a subscription anyway).
+ */
+export function proStatus(subs: readonly SubscriptionRecord[], grant: GrantRecord | null, now: Date, founder: FounderRecord | null = null): ProStatus {
+  if (founder) return { kind: "founder", purchasedAt: founder.purchasedAt };
   const live = subs
     .filter((s) => subscriptionGivesPro(s, now))
     .sort((a, b) => ms(b.startedAt) - ms(a.startedAt))[0];
@@ -107,8 +118,10 @@ export function proStatus(subs: readonly SubscriptionRecord[], grant: GrantRecor
  * Until when the learner has Pro, for the cosmetic Pro frame on league cards (null: no Pro now).
  * The latest end among the subscriptions and grant that give Pro right now.
  */
-export function proCosmeticUntil(subs: readonly SubscriptionRecord[], grant: GrantRecord | null, now: Date): string | null {
+export function proCosmeticUntil(subs: readonly SubscriptionRecord[], grant: GrantRecord | null, now: Date, founder: FounderRecord | null = null): string | null {
   const ends: number[] = [];
+  // Lifetime, but stamped a week ahead and renewed on each visit, so a refunded seat's frame fades.
+  if (founder) ends.push(now.getTime() + FOUNDER_COSMETIC_MS);
   for (const s of subs) {
     if (!subscriptionGivesPro(s, now)) continue;
     const end = ms(s.currentPeriodEnd);
@@ -117,6 +130,8 @@ export function proCosmeticUntil(subs: readonly SubscriptionRecord[], grant: Gra
   if (grant && grantGivesPro(grant, now)) ends.push(ms(grant.expiresAt));
   return ends.length ? new Date(Math.max(...ends)).toISOString() : null;
 }
+
+export const FOUNDER_COSMETIC_MS = 7 * 24 * 60 * 60 * 1000;
 
 export const FREE_MAX_FREEZES = 2;
 export const PRO_MAX_FREEZES = 3;
@@ -127,9 +142,10 @@ export interface ProInterval {
   end: number | null;
 }
 
-/** When the learner had Pro: each paid (or trial) subscription's life, and the grant. */
-export function proIntervals(subs: readonly SubscriptionRecord[], grant: GrantRecord | null): ProInterval[] {
+/** When the learner had Pro: each paid (or trial) subscription's life, the grant, and a founding seat. */
+export function proIntervals(subs: readonly SubscriptionRecord[], grant: GrantRecord | null, founder: FounderRecord | null = null): ProInterval[] {
   const out: ProInterval[] = [];
+  if (founder) out.push({ start: ms(founder.purchasedAt), end: null });
   for (const s of subs) {
     if (s.status === "incomplete" || s.status === "incomplete_expired") continue;
     const start = ms(s.startedAt);

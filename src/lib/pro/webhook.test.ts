@@ -36,6 +36,8 @@ function fakes(stripe: Record<string, StripeSubscriptionLike> = {}) {
   const rows = new Map<string, SubscriptionRow>();
   const customers = new Map<string, string>(); // customer → user
   const reminders: string[] = []; // "user:subscription"
+  const seats = new Map<string, { user: string; payment: string; refunded: boolean }>(); // session → seat
+  const changed: string[] = [];
   const deps: WebhookDeps = {
     isProcessed: async (id) => processed.has(id),
     markProcessed: async (id, type) => void processed.set(id, type),
@@ -44,9 +46,19 @@ function fakes(stripe: Record<string, StripeSubscriptionLike> = {}) {
     linkCustomer: async (user, customer) => void customers.set(customer, user),
     userForCustomer: async (customer) => customers.get(customer) ?? null,
     sendTrialReminder: async (user, sub) => void reminders.push(`${user}:${sub.id}`),
+    claimFounderSeat: async (p) => {
+      if (!seats.has(p.sessionId)) seats.set(p.sessionId, { user: p.userId, payment: p.paymentIntentId, refunded: false });
+    },
+    refundFounderSeat: async (payment) => {
+      const seat = [...seats.values()].find((x) => x.payment === payment && !x.refunded);
+      if (!seat) return null;
+      seat.refunded = true;
+      return seat.user;
+    },
+    proChanged: async (user) => void changed.push(user),
     now: () => NOW,
   };
-  return { deps, processed, rows, customers, stripe, reminders };
+  return { deps, processed, rows, customers, stripe, reminders, seats, changed };
 }
 
 const event = (id: string, type: string, object: Record<string, unknown>): StripeEventLike => ({ id, type, data: { object } });
@@ -133,11 +145,12 @@ describe("handleStripeEvent", () => {
     expect(f.processed.has("evt_7")).toBe(true);
   });
 
-  it("ignores events it doesn't handle, and one-off payments", async () => {
+  it("ignores events it doesn't handle, and one-off payments that aren't founding seats", async () => {
     const f = fakes();
-    expect(await handleStripeEvent(event("evt_8", "charge.refunded", {}), f.deps)).toBe("ignored");
+    expect(await handleStripeEvent(event("evt_8", "payment_intent.created", {}), f.deps)).toBe("ignored");
     await handleStripeEvent(event("evt_9", "checkout.session.completed", { mode: "payment", client_reference_id: USER }), f.deps);
     expect(f.rows.size).toBe(0);
+    expect(f.seats.size).toBe(0);
   });
 
   it("never trusts a client reference that isn't an account id", async () => {
@@ -203,5 +216,42 @@ describe("parseStripeEnv", () => {
   it("treats no settings at all as 'Pro not set up'", () => {
     expect(stripeNotConfigured({})).toBe(true);
     expect(stripeNotConfigured({ priceMonthly: "price_m" })).toBe(false);
+  });
+});
+
+describe("Founding Member (one-off payment)", () => {
+  const paid = { id: "cs_test_F1", mode: "payment", payment_status: "paid", metadata: { offer: "founder" }, client_reference_id: USER, customer: "cus_A", payment_intent: "pi_F1", amount_total: 2900, currency: "aud" };
+
+  it("a paid founding session claims the seat, once", async () => {
+    const f = fakes();
+    expect(await handleStripeEvent(event("evt_f1", "checkout.session.completed", paid), f.deps)).toBe("processed");
+    expect(await handleStripeEvent(event("evt_f1", "checkout.session.completed", paid), f.deps)).toBe("duplicate");
+    expect([...f.seats.entries()]).toEqual([["cs_test_F1", { user: USER, payment: "pi_F1", refunded: false }]]);
+    expect(f.rows.size).toBe(0); // no subscription involved
+  });
+
+  it("ignores unpaid sessions, other payment sessions and sessions without a learner", async () => {
+    const f = fakes();
+    await handleStripeEvent(event("evt_a", "checkout.session.completed", { ...paid, payment_status: "unpaid" }), f.deps);
+    await handleStripeEvent(event("evt_b", "checkout.session.completed", { ...paid, metadata: {} }), f.deps);
+    await handleStripeEvent(event("evt_c", "checkout.session.completed", { ...paid, client_reference_id: "not-a-user" }), f.deps);
+    await handleStripeEvent(event("evt_d", "checkout.session.completed", { ...paid, mode: "subscription", subscription: null }), f.deps);
+    expect(f.seats.size).toBe(0);
+  });
+
+  it("a full refund ends the seat (freeing it) and refreshes the learner's Pro; a partial refund doesn't", async () => {
+    const f = fakes();
+    await handleStripeEvent(event("evt_f1", "checkout.session.completed", paid), f.deps);
+    await handleStripeEvent(event("evt_r1", "charge.refunded", { id: "ch_1", payment_intent: "pi_F1", refunded: false, amount_refunded: 500 }), f.deps);
+    expect(f.seats.get("cs_test_F1")?.refunded).toBe(false);
+    await handleStripeEvent(event("evt_r2", "charge.refunded", { id: "ch_1", payment_intent: "pi_F1", refunded: true, amount_refunded: 2900 }), f.deps);
+    expect(f.seats.get("cs_test_F1")?.refunded).toBe(true);
+    expect(f.changed).toEqual([USER]);
+  });
+
+  it("a refund of anything else changes nothing", async () => {
+    const f = fakes();
+    expect(await handleStripeEvent(event("evt_r", "charge.refunded", { id: "ch_9", payment_intent: "pi_other", refunded: true }), f.deps)).toBe("processed");
+    expect(f.changed).toEqual([]);
   });
 });

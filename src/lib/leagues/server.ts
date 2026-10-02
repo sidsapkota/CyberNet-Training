@@ -5,7 +5,7 @@ import "server-only";
  * trusts the browser: weekly XP is always summed from xp_events, which only the server writes.
  */
 import { addDays, dayStart, localDay } from "@/lib/progress/daily";
-import { proCosmeticUntil, type GrantRecord, type SubscriptionRecord } from "@/lib/pro/entitlement";
+import { proCosmeticUntil, type FounderRecord, type GrantRecord, type SubscriptionRecord } from "@/lib/pro/entitlement";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { CONTACT_EMAIL, SITE_NAME } from "@/lib/site";
 import { BAND_WEEKS, LEAGUE_CAP, LEAGUE_TIME_ZONE, REPORTS_PER_DAY } from "./config";
@@ -127,8 +127,8 @@ export async function leaguesOpenedAt(admin: Admin): Promise<string | null> {
 }
 
 /** Keeps the Pro cosmetic flag in step with the learner's Pro (only if they have a player row). */
-export async function stampProCosmetic(userId: string, subs: readonly SubscriptionRecord[], grant: GrantRecord | null, now = new Date()): Promise<void> {
-  const until = proCosmeticUntil(subs, grant, now);
+export async function stampProCosmetic(userId: string, subs: readonly SubscriptionRecord[], grant: GrantRecord | null, now = new Date(), founder: FounderRecord | null = null): Promise<void> {
+  const until = proCosmeticUntil(subs, grant, now, founder);
   const { error } = await createSupabaseAdminClient().from("league_players").update({ pro_cosmetic_until: until }).eq("user_id", userId);
   if (error) console.error("Leagues: couldn't stamp the Pro cosmetic", error.message);
 }

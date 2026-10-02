@@ -476,6 +476,59 @@ async function main() {
     const anonMiss = await anonMistakes.rpc("record_mistake", { p_user: a.id, p_lesson: "rls-lesson-one", p_card: "card-a" });
     record("Only the server can call record_mistake", Boolean(userMiss.error && anonMiss.error));
 
+    // Founding Member: the counter is public (numbers only); only the server holds, claims and
+    // refunds seats; learners read only their own seat; a claim is idempotent; a full house refuses
+    // the next buyer; a refund frees the seat. (Test rows go with the test users at the end.)
+    const anonSeats = createClient<Database>(env.url, env.publishableKey, noSession);
+    const seatsNow = async () => (await anonSeats.rpc("founder_seats")).data?.[0];
+    const before = await seatsNow();
+    record("Anyone can read the founding seats counter (numbers only)", before?.total === 50, JSON.stringify(before));
+    const soon = new Date(Date.now() + 30 * 60_000).toISOString();
+    const userHold = await b.client.rpc("reserve_founder_seat", { p_user: b.id, p_session: "cs_test_rlsUser", p_expires: soon });
+    const anonHold = await anonSeats.rpc("reserve_founder_seat", { p_user: b.id, p_session: "cs_test_rlsAnon", p_expires: soon });
+    const userClaim = await b.client.rpc("claim_founder_seat", { p_user: b.id, p_session: "cs_test_rlsUser", p_payment: "pi_rlsUser", p_amount: 2900, p_currency: "aud" });
+    const userRefund = await b.client.rpc("refund_founder_seat", { p_payment: "pi_rlsUser" });
+    record("Only the server can hold, claim or refund a founding seat", Boolean(userHold.error && anonHold.error && userClaim.error && userRefund.error));
+    const held = await admin.rpc("reserve_founder_seat", { p_user: b.id, p_session: "cs_test_rlsB1", p_expires: soon });
+    const claim1 = await admin.rpc("claim_founder_seat", { p_user: b.id, p_session: "cs_test_rlsB1", p_payment: "pi_rlsB1", p_amount: 2900, p_currency: "aud" });
+    const claim2 = await admin.rpc("claim_founder_seat", { p_user: b.id, p_session: "cs_test_rlsB1", p_payment: "pi_rlsB1", p_amount: 2900, p_currency: "aud" });
+    const bSeats = (await admin.from("founding_members").select("id").eq("user_id", b.id)).data ?? [];
+    const secondHold = await admin.rpc("reserve_founder_seat", { p_user: b.id, p_session: "cs_test_rlsB2", p_expires: soon });
+    const afterClaim = await seatsNow();
+    record(
+      "A paid seat is claimed once (a repeat claim changes nothing), and its owner can't hold another",
+      held.data === true && claim1.data === true && claim2.data === true && bSeats.length === 1 && secondHold.data === false && afterClaim?.sold === (before?.sold ?? 0) + 1,
+      JSON.stringify({ held: held.data ?? held.error?.message, claim1: claim1.data ?? claim1.error?.message, seats: bSeats.length, again: secondHold.data, afterClaim }),
+    );
+    const ownSeat = await b.client.from("founding_members").select("user_id");
+    const theirSeat = await a.client.from("founding_members").select("user_id").eq("user_id", b.id);
+    record("Learners read only their own founding seat", !ownSeat.error && (ownSeat.data ?? []).length === 1 && (theirSeat.data ?? []).length === 0);
+    record(
+      "Learners can't add, change or remove founding seats or holds",
+      blocked(await a.client.from("founding_members").insert({ user_id: a.id, checkout_session_id: "cs_test_rlsForged", amount_total: 0, currency: "aud" }).select()) &&
+        blocked(await b.client.from("founding_members").update({ refunded_at: null }).eq("user_id", b.id).select()) &&
+        blocked(await b.client.from("founding_members").delete().eq("user_id", b.id).select()) &&
+        blocked(await a.client.from("founder_holds").insert({ checkout_session_id: "cs_test_rlsForged", user_id: a.id, expires_at: soon }).select()) &&
+        blocked(await a.client.from("founder_holds").select("*")),
+    );
+    // Fill every remaining seat with holds (learner a's test sessions), then a new buyer is refused.
+    const full = await seatsNow();
+    const free = Math.max(0, (full?.total ?? 50) - (full?.sold ?? 0) - (full?.held ?? 0));
+    const fillers = Array.from({ length: free }, (_, i) => ({ checkout_session_id: `cs_test_rlsFill${i}`, user_id: a.id, expires_at: soon }));
+    const filled = fillers.length ? await admin.from("founder_holds").insert(fillers) : { error: null };
+    const refused = await admin.rpc("reserve_founder_seat", { p_user: c.id, p_session: "cs_test_rlsC1", p_expires: soon });
+    await admin.from("founder_holds").delete().eq("user_id", a.id);
+    record("With every seat sold or held, the next buyer is refused", !filled.error && refused.data === false, filled.error?.message ?? String(refused.data ?? refused.error?.message));
+    const refundedUser = await admin.rpc("refund_founder_seat", { p_payment: "pi_rlsB1" });
+    const refundAgain = await admin.rpc("refund_founder_seat", { p_payment: "pi_rlsB1" });
+    const afterRefund = await seatsNow();
+    record(
+      "A refund ends the seat and frees it (once)",
+      refundedUser.data === b.id && refundAgain.data === null && afterRefund?.sold === before?.sold,
+      JSON.stringify({ refunded: refundedUser.data ?? refundedUser.error?.message, afterRefund }),
+    );
+    record("Signed-out visitors can't list Founding Members", Boolean((await anonSeats.rpc("league_founders")).error));
+
     // Signed-out visitors see nothing.
     const anon = createClient<Database>(env.url, env.publishableKey, noSession);
     let anonClean = true;
@@ -483,7 +536,7 @@ async function main() {
       "profiles", "card_completions", "lesson_completions", "quiz_attempts", "xp_events", "goal_days",
       "subscriptions", "pro_grants", "stripe_customers", "stripe_events",
       "league_players", "leagues", "league_members", "league_results", "league_weeks", "league_state", "handle_reports",
-      "certificates", "lesson_opens", "card_mistakes",
+      "certificates", "lesson_opens", "card_mistakes", "founding_members", "founder_holds",
     ] as const) {
       const r = await anon.from(table).select("*");
       if (!r.error && (r.data ?? []).length > 0) anonClean = false;
@@ -526,6 +579,7 @@ async function main() {
     for (const table of [
       "card_completions", "lesson_completions", "quiz_attempts", "xp_events", "goal_days",
       "subscriptions", "pro_grants", "stripe_customers", "league_players", "league_members", "league_results", "certificates", "lesson_opens", "card_mistakes",
+      "founding_members", "founder_holds",
     ] as const) {
       const r = await admin.from(table).select("user_id").in("user_id", [a.id, b.id, c.id]);
       leftovers += (r.data ?? []).length;

@@ -5,6 +5,7 @@ import { useAuth } from "@/lib/auth/AuthProvider";
 import { DAILY_LESSON_LIMIT } from "@/lib/pro/dailyLimit";
 import { proLine } from "@/lib/pro/describe";
 import { usePro } from "@/lib/pro/ProProvider";
+import { FounderBadge } from "./Founder";
 import { ProBadge } from "./ProBadge";
 
 /**
@@ -23,7 +24,7 @@ export function ManageProPanel({ className }: { className: string }) {
         <h2 id="pro-heading" className="font-semibold">
           Your plan
         </h2>
-        {hasPro ? <ProBadge size="sm" lit /> : <span className="text-small text-ink-muted">Free</span>}
+        {pro.status.kind === "founder" ? <FounderBadge lit /> : hasPro ? <ProBadge size="sm" lit /> : <span className="text-small text-ink-muted">Free</span>}
       </div>
       <p className="mt-1 text-small text-ink-muted">
         {hasPro || (pro.status.kind === "none" && pro.status.hadSubscription) ? proLine(pro.status) : `${DAILY_LESSON_LIMIT} new lessons a day, every course.`}

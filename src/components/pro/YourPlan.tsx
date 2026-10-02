@@ -10,6 +10,7 @@ import { proLine } from "@/lib/pro/describe";
 import { PRO_BENEFITS } from "@/lib/pro/plans";
 import { usePro } from "@/lib/pro/ProProvider";
 import { PlansCards } from "./PlansCards";
+import { FounderBadge } from "./Founder";
 import { ProBadge } from "./ProBadge";
 import { usePitchPrices } from "./ProPitch";
 
@@ -40,7 +41,7 @@ export function YourPlan() {
             <h2 id="your-plan-name" className="text-title font-semibold">
               Pro
             </h2>
-            <ProBadge lit />
+            {pro.status.kind === "founder" ? <FounderBadge lit /> : <ProBadge lit />}
           </div>
           <p className="mt-1 text-ink-muted">{proLine(pro.status)}</p>
           <h3 className="mt-5 font-semibold">Included</h3>

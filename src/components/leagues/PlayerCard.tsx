@@ -1,5 +1,6 @@
 import { Avatar } from "@/components/rewards/Avatar";
 import type { ReactNode } from "react";
+import { FounderBadge } from "@/components/pro/Founder";
 import { ProBadge } from "@/components/pro/ProBadge";
 import { StreakIcon } from "@/components/streak/StreakIcon";
 import { CoursesDoneIcon, XpIcon } from "@/components/ui/icons";
@@ -16,10 +17,27 @@ export type CardStats =
  * learners get the cosmetic frame (a cyan trace with nodes and one travelling light) and the Pro
  * badge; free learners' cards use the same layout with a clean outline.
  */
-export function PlayerCard({ handle, tier, pro, outfit, stats, className = "" }: { handle: string; tier: Tier; pro: boolean; outfit: readonly string[]; stats: CardStats; className?: string }) {
+export function PlayerCard({
+  handle,
+  tier,
+  pro,
+  founder = false,
+  outfit,
+  stats,
+  className = "",
+}: {
+  handle: string;
+  tier: Tier;
+  pro: boolean;
+  /** A Founding Member: the badge under their tier. */
+  founder?: boolean;
+  outfit: readonly string[];
+  stats: CardStats;
+  className?: string;
+}) {
   return (
     <article
-      aria-label={`Player card: ${handle}, ${TIER_NAMES[tier]} tier${pro ? ", Pro" : ""}`}
+      aria-label={`Player card: ${handle}, ${TIER_NAMES[tier]} tier${founder ? ", Founding Member" : ""}${pro ? ", Pro" : ""}`}
       className={`relative rounded-card border-2 bg-surface p-5 ${pro ? "border-transparent" : "border-line-strong"} ${className}`}
     >
       {pro && <ProFrame />}
@@ -34,6 +52,7 @@ export function PlayerCard({ handle, tier, pro, outfit, stats, className = "" }:
         </span>
         <p className="mt-3 max-w-full truncate text-lead font-semibold">{handle}</p>
         <p className="mt-0.5 text-small text-ink-muted">{TIER_NAMES[tier]} tier</p>
+        {founder && <FounderBadge className="mt-2" />}
       </div>
       <dl className="mt-4 space-y-2">
         {stats.kind === "own" ? (

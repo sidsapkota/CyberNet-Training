@@ -4,6 +4,7 @@ import { Mascot } from "@/components/mascot/Mascot";
 import { ChevronDownIcon, HandsOnIcon, HintIcon, LessonTimeIcon, SafeIcon } from "@/components/ui/icons";
 import type { CourseOutline } from "@/lib/content/schema";
 import { AUDIENCE } from "@/lib/site";
+import { ParentPitch } from "@/components/pro/Founder";
 import { LandingCta } from "./LandingCta";
 
 const COUNT_WORDS: Record<number, string> = { 2: "Two", 3: "Three", 4: "Four", 5: "Five" };
@@ -120,6 +121,9 @@ export function Landing({
             </Link>
           </li>
         </ul>
+        <div className="mt-4">
+          <ParentPitch headingLevel={3} />
+        </div>
       </section>
 
       {/* FAQ */}

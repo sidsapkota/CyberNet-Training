@@ -27,6 +27,8 @@ export interface StandingRow {
   tier: Tier;
   weeklyXp: number;
   pro: boolean;
+  /** A Founding Member (the badge). */
+  founder: boolean;
   isMe: boolean;
   /** Their avatar outfit (item ids from the fixed list; nothing personal). */
   outfit: string[];
@@ -62,10 +64,14 @@ export async function getMyLeagueAction(): Promise<MyLeague> {
 
   // The learner's own session: RLS and the standings function decide what's visible.
   const supabase = await createSupabaseServerClient();
-  const [standings, result] = await Promise.all([
+  const [standings, result, founders] = await Promise.all([
     supabase.rpc("league_standings"),
     supabase.from("league_results").select("week, rank, weekly_xp, from_tier, to_tier").is("seen_at", null).order("week", { ascending: false }).limit(1),
+    supabase.rpc("league_founders"),
   ]);
+  // The badge is extra: if it can't load, the league still shows.
+  if (founders.error) console.error("Leagues: couldn't load Founding Members", founders.error.message);
+  const founderHandles = new Set((founders.data ?? []).map((f) => f.handle));
   if (standings.error) throw new Error(`Couldn't load your league: ${standings.error.message}`);
   if (result.error) throw new Error(`Couldn't load last week's result: ${result.error.message}`);
   const last = result.data?.[0];
@@ -77,6 +83,7 @@ export async function getMyLeagueAction(): Promise<MyLeague> {
       tier: isTier(r.tier) ? r.tier : "packet",
       weeklyXp: r.weekly_xp,
       pro: r.pro,
+      founder: founderHandles.has(r.handle),
       isMe: r.is_me,
       outfit: r.outfit ?? [],
     })),

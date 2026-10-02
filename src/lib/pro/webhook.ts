@@ -7,9 +7,12 @@
  * - **Order doesn't matter:** for anything about a subscription, the latest state is fetched from
  *   Stripe and saved, whatever the event said. An old event arriving late just re-saves the
  *   current truth.
- * - Only subscriptions (mode "subscription") are handled; nothing else is ever charged.
+ * - Subscriptions (mode "subscription"), and the Founding Member one-off payment (mode "payment",
+ *   our metadata): a paid session claims the seat (idempotent), and a full refund
+ *   (charge.refunded) ends it and frees the seat.
  */
 import type { SubscriptionStatus } from "./entitlement";
+import { type FounderPurchase, founderPurchaseOf, fullyRefundedPayment } from "./founder";
 import { shouldRemindTrial } from "./trialReminder";
 
 /** The fields of a Stripe Subscription we use (API 2026-08-26: the period lives on the item). */
@@ -65,6 +68,12 @@ export interface WebhookDeps {
    * idempotency key, so a retried event never sends twice).
    */
   sendTrialReminder(userId: string, sub: StripeSubscriptionLike): Promise<void>;
+  /** Records a paid founding seat (idempotent per Checkout session). */
+  claimFounderSeat(purchase: FounderPurchase): Promise<void>;
+  /** Ends the founding seat paid by this payment; the learner, or null if it isn't one. */
+  refundFounderSeat(paymentIntentId: string): Promise<string | null>;
+  /** The learner's Pro changed outside a subscription (refreshes the cosmetic Pro frame). */
+  proChanged(userId: string): Promise<void>;
   now(): Date;
 }
 
@@ -130,6 +139,7 @@ export const HANDLED_EVENTS = [
   "customer.subscription.trial_will_end",
   "invoice.payment_failed",
   "invoice.paid",
+  "charge.refunded",
 ] as const;
 
 export async function handleStripeEvent(event: StripeEventLike, deps: WebhookDeps): Promise<WebhookOutcome> {
@@ -148,6 +158,16 @@ export async function handleStripeEvent(event: StripeEventLike, deps: WebhookDep
       userHint = ref;
       if (customer) await deps.linkCustomer(ref, customer);
     }
+  }
+
+  if (event.type === "checkout.session.completed") {
+    const purchase = founderPurchaseOf(event.data.object);
+    if (purchase) await deps.claimFounderSeat(purchase);
+  }
+  if (event.type === "charge.refunded") {
+    const payment = fullyRefundedPayment(event.data.object);
+    const userId = payment ? await deps.refundFounderSeat(payment) : null;
+    if (userId) await deps.proChanged(userId);
   }
 
   const subscriptionId = subscriptionIdOf(event);

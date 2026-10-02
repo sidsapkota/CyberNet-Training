@@ -34,6 +34,11 @@ export type AnalyticsEvent =
   | "plans_viewed"
   | "plan_selected"
   | "teaser_played"
+  // Founding Member: the offer was on screen, its button was pressed (both with the screen, from
+  // founderEventData), and a seat was bought (on /pro/welcome, after the server confirmed it).
+  | "founder_viewed"
+  | "founder_clicked"
+  | "founder_purchased"
   | "checkout_started"
   | "trial_started"
   | "subscribed"
@@ -160,7 +165,7 @@ export function trackProDeclined(data: Record<string, string>): void {
 }
 
 /** An event whose data was already checked by its own pure function. Never throws. */
-export function trackWith(name: "pro_declined" | "plans_viewed" | "plan_selected", data: Record<string, string>): void {
+export function trackWith(name: "pro_declined" | "plans_viewed" | "plan_selected" | "founder_viewed" | "founder_clicked", data: Record<string, string>): void {
   try {
     ensureAnalyticsQueue();
     track(name, data);

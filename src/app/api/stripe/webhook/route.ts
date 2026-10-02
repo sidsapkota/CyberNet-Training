@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { claimFounderSeat, getEntitlement, refundFounderSeat } from "@/lib/pro/server";
 import { getStripe, getStripeEnv } from "@/lib/pro/stripe";
 import { handleStripeEvent, type StripeEventLike, type StripeSubscriptionLike, type WebhookDeps } from "@/lib/pro/webhook";
 import { trialReminderEmail } from "@/lib/pro/trialReminder";
@@ -87,6 +88,12 @@ export async function POST(request: Request) {
         body: JSON.stringify({ from: `${SITE_NAME} <noreply@cybernettraining.com>`, to: [email], ...message }),
       });
       if (!response.ok) throw new Error(`Resend refused the trial reminder (${response.status})`);
+    },
+    claimFounderSeat,
+    refundFounderSeat,
+    async proChanged(userId) {
+      // Re-reads the learner's Pro, which re-stamps the cosmetic Pro frame (a refunded seat's goes).
+      await getEntitlement({ id: userId, createdAt: null });
     },
     now: () => new Date(),
   };

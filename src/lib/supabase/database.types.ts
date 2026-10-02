@@ -150,6 +150,57 @@ export type Database = {
         }
         Relationships: []
       }
+      founder_holds: {
+        Row: {
+          checkout_session_id: string
+          expires_at: string
+          user_id: string
+        }
+        Insert: {
+          checkout_session_id: string
+          expires_at: string
+          user_id: string
+        }
+        Update: {
+          checkout_session_id?: string
+          expires_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      founding_members: {
+        Row: {
+          amount_total: number
+          checkout_session_id: string
+          currency: string
+          id: number
+          payment_intent_id: string | null
+          purchased_at: string
+          refunded_at: string | null
+          user_id: string
+        }
+        Insert: {
+          amount_total: number
+          checkout_session_id: string
+          currency: string
+          id?: never
+          payment_intent_id?: string | null
+          purchased_at?: string
+          refunded_at?: string | null
+          user_id: string
+        }
+        Update: {
+          amount_total?: number
+          checkout_session_id?: string
+          currency?: string
+          id?: never
+          payment_intent_id?: string | null
+          purchased_at?: string
+          refunded_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       goal_days: {
         Row: {
           day: string
@@ -681,9 +732,27 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      claim_founder_seat: {
+        Args: {
+          p_amount: number
+          p_currency: string
+          p_payment: string
+          p_session: string
+          p_user: string
+        }
+        Returns: boolean
+      }
       finalize_league_week: {
         Args: { p_results: Json; p_week: string }
         Returns: undefined
+      }
+      founder_seats: {
+        Args: never
+        Returns: {
+          held: number
+          sold: number
+          total: number
+        }[]
       }
       join_league: {
         Args: {
@@ -694,6 +763,12 @@ export type Database = {
           p_week: string
         }
         Returns: string
+      }
+      league_founders: {
+        Args: never
+        Returns: {
+          handle: string
+        }[]
       }
       league_standings: {
         Args: never
@@ -727,6 +802,11 @@ export type Database = {
       record_mistake: {
         Args: { p_card: string; p_lesson: string; p_user: string }
         Returns: undefined
+      }
+      refund_founder_seat: { Args: { p_payment: string }; Returns: string }
+      reserve_founder_seat: {
+        Args: { p_expires: string; p_session: string; p_user: string }
+        Returns: boolean
       }
       verify_certificate: {
         Args: { p_id: string }

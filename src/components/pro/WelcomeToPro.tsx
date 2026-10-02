@@ -10,6 +10,7 @@ import { Button, ButtonLink } from "@/components/ui/Button";
 import { celebrate } from "@/lib/celebrate";
 import { useFeedback } from "@/lib/feedback";
 import { usePro } from "@/lib/pro/ProProvider";
+import { FounderBadge, trackFounderPurchased } from "./Founder";
 import { ProBadge } from "./ProBadge";
 import { markProCelebrated } from "./ProCelebration";
 import { useAuth } from "@/lib/auth/AuthProvider";
@@ -37,11 +38,17 @@ export function WelcomeToPro({ confirmed }: { confirmed: boolean }) {
   const { auth } = useAuth();
   const userId = auth.status === "signed-in" ? auth.userId : null;
   useEffect(() => {
-    if (confirmed && userId && !pro.loading && pro.status.kind === "subscription") markProCelebrated(userId, currentProStart(pro.intervals, Date.now()));
+    if (confirmed && userId && !pro.loading && (pro.status.kind === "subscription" || pro.status.kind === "founder")) markProCelebrated(userId, currentProStart(pro.intervals, Date.now()));
   }, [confirmed, userId, pro]);
 
   const trialEnd = !pro.loading && pro.status.kind === "subscription" && pro.status.trialEnd ? pro.status.trialEnd : null;
   const subscription = !pro.loading && pro.status.kind === "subscription" ? pro.status.status : null;
+  const founder = !pro.loading && pro.status.kind === "founder";
+
+  // The founding purchase, once the server has confirmed it (this tab).
+  useEffect(() => {
+    if (confirmed && founder) trackFounderPurchased();
+  }, [confirmed, founder]);
 
   // The funnel: a trial or a paid start, once per checkout (this tab).
   useEffect(() => {
@@ -92,8 +99,9 @@ export function WelcomeToPro({ confirmed }: { confirmed: boolean }) {
         transition={{ delay: reduceMotion ? 0 : 0.4, duration: reduceMotion ? 0 : 0.3 }}
         className="mt-8 w-full"
       >
-        <ProBadge />
-        <h1 className="mt-3 text-headline font-semibold text-balance">Welcome to Pro</h1>
+        {founder ? <FounderBadge lit /> : <ProBadge />}
+        <h1 className="mt-3 text-headline font-semibold text-balance">{founder ? "Welcome, Founding Member" : "Welcome to Pro"}</h1>
+        {founder && <p className="mt-2 font-semibold">You have lifetime Pro, for as long as CyberNet Training runs. Thank you for backing us early.</p>}
         <p className="mt-2 text-ink-muted">Lessons are unlimited every day, your mistakes are ready to review, certificates are yours to earn, and you can hold an extra streak freeze.</p>
         {trialEnd && (
           <p className="mt-3 text-small text-ink-muted">
@@ -102,8 +110,8 @@ export function WelcomeToPro({ confirmed }: { confirmed: boolean }) {
         )}
         <div className="mt-8 flex flex-col gap-2">
           <Button onClick={keepLearning}>Keep learning</Button>
-          <ButtonLink href="/account" variant="ghost">
-            Manage subscription
+          <ButtonLink href={founder ? "/account/plan" : "/account"} variant="ghost">
+            {founder ? "Your plan" : "Manage subscription"}
           </ButtonLink>
         </div>
       </motion.div>

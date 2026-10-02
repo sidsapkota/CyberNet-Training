@@ -20,6 +20,7 @@ import { usePro } from "@/lib/pro/ProProvider";
 import { staggerDelay } from "@/lib/motion";
 import { LeagueResult } from "./LeagueResult";
 import { LeagueSettings } from "./LeagueSettings";
+import { LogoMark } from "@/components/brand/Logo";
 import { PlayerCard } from "./PlayerCard";
 import { TierBadge } from "./TierBadge";
 
@@ -135,7 +136,7 @@ function League({ league, courses, reload }: { league: MyLeague; courses: Course
 function OwnCard({ handle, outfit, tier, courses }: { handle: string; outfit: string[]; tier: MyLeague["player"]["tier"]; courses: CourseOutline[] }) {
   const { snapshot } = useProgress();
   const daily = useDaily();
-  const { hasPro } = usePro();
+  const { pro, hasPro } = usePro();
   const stats = snapshot ? learnerStats(snapshot, courses) : null;
   return (
     <PlayerCard
@@ -143,6 +144,7 @@ function OwnCard({ handle, outfit, tier, courses }: { handle: string; outfit: st
       outfit={outfit}
       tier={tier}
       pro={hasPro}
+      founder={!pro.loading && pro.status.kind === "founder"}
       stats={{ kind: "own", totalXp: stats?.totalXp ?? 0, streak: daily?.streak.current ?? 0, coursesCompleted: stats?.coursesCompleted ?? 0 }}
     />
   );
@@ -156,7 +158,7 @@ function Standings({ rows, tier, onOpen }: { rows: StandingRow[]; tier: MyLeague
     <ol aria-label="This week's league" className="mt-6 space-y-1.5">
       {rows.map((row, i) => {
         const zone = zoneOf(row.rank, size, tier, row.weeklyXp);
-        const label = `${row.rank}, ${row.isMe ? "you, " : ""}${row.handle}${row.pro ? ", Pro" : ""}, ${row.weeklyXp} XP${zone === "up" ? ", promotion zone" : zone === "down" ? ", demotion zone" : ""}`;
+        const label = `${row.rank}, ${row.isMe ? "you, " : ""}${row.handle}${row.founder ? ", Founding Member" : ""}${row.pro ? ", Pro" : ""}, ${row.weeklyXp} XP${zone === "up" ? ", promotion zone" : zone === "down" ? ", demotion zone" : ""}`;
         return (
           <li key={row.handle}>
             {up > 0 && row.rank === up + 1 && <ZoneDivider kind="up" />}
@@ -186,6 +188,7 @@ function Standings({ rows, tier, onOpen }: { rows: StandingRow[]; tier: MyLeague
                 {row.isMe && <span className="ml-2 text-caption font-semibold text-accent-ink">You</span>}
               </span>
               {/* The full Pro badge is on the card; rows keep the gem so long usernames fit at 360px. */}
+              {row.founder && <LogoMark variant="mono" className="size-4 shrink-0 text-ink-muted" />}
               {row.pro && <ProIcon className="size-4 shrink-0 text-ink-muted" />}
               <span className="font-mono font-semibold tabular-nums">
                 {row.weeklyXp.toLocaleString("en-AU")} <span className="text-caption text-ink-faint">XP</span>
@@ -246,7 +249,7 @@ function PublicCardDialog({ row, onClose }: { row: StandingRow | null; onClose: 
               <XIcon className="size-5" />
             </button>
           </div>
-          <PlayerCard handle={row.handle} outfit={row.outfit} tier={row.tier} pro={row.pro} stats={{ kind: "public", weeklyXp: row.weeklyXp }} />
+          <PlayerCard handle={row.handle} outfit={row.outfit} tier={row.tier} pro={row.pro} founder={row.founder} stats={{ kind: "public", weeklyXp: row.weeklyXp }} />
 
           {!row.isMe && !reporting && !message && (
             <Button variant="ghost" className="mt-3 w-full" onClick={() => setReporting(true)}>
