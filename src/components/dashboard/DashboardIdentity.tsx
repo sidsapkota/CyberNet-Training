@@ -18,7 +18,7 @@ export function DashboardIdentity() {
   const name = auth.username ?? FALLBACK_NAME;
   return (
     <div className="mb-4 flex items-center gap-3">
-      <UserNode name={auth.username} pro={hasPro} className="size-9 text-small" />
+      <UserNode avatar={auth.avatar} pro={hasPro} className="size-9" />
       <p className="min-w-0 flex-1 truncate font-semibold">{name}</p>
       {hasPro ? (
         <Link href="/account/plan" aria-label="Your plan: Pro" className="inline-flex min-h-11 items-center rounded-control px-1">
