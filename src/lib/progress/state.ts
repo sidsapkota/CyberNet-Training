@@ -152,11 +152,63 @@ export function getCurrentLesson(state: CourseState): LessonState | null {
   return null;
 }
 
-/** Completed lessons and quizzes out of all of them. */
-export function courseProgress(state: CourseState): { completed: number; total: number; fraction: number } {
+export interface CourseProgress {
+  /** Finished lessons plus passed quizzes, out of all of them (the course is done when they match). */
+  completed: number;
+  total: number;
+  lessonsFinished: number;
+  lessonsTotal: number;
+  quizzesPassed: number;
+  quizzesTotal: number;
+  /** Core cards done, out of every core card (a passed quiz counts all its questions). */
+  cardsDone: number;
+  cardsTotal: number;
+  /**
+   * 0 to 1, for rings and bars: cards done out of all cards, so it moves with every card. Never 1
+   * until every lesson is finished and every quiz passed (doing all the cards isn't finishing).
+   */
+  fraction: number;
+}
+
+/** The most a course's fraction can show before it's really finished: rounds to 99%, never 100%. */
+export const UNFINISHED_MAX = 0.99;
+
+export function courseProgress(state: CourseState): CourseProgress {
   const all = state.modules.flatMap((m) => m.lessons);
+  const lessons = all.filter((l) => l.lesson.kind === "lesson");
+  const quizzes = all.filter((l) => l.lesson.kind === "quiz");
   const completed = all.filter((l) => l.status === "completed").length;
-  return { completed, total: all.length, fraction: all.length === 0 ? 0 : completed / all.length };
+  let cardsDone = 0;
+  let cardsTotal = 0;
+  for (const item of all) {
+    const cards = item.lesson.coreCardIds.length;
+    cardsTotal += cards;
+    // Quiz answers aren't card completions: a quiz counts once it's passed.
+    cardsDone += item.status === "completed" ? cards : item.lesson.kind === "lesson" ? Math.min(item.completedCoreCards, cards) : 0;
+  }
+  const finished = all.length > 0 && completed === all.length;
+  const raw = cardsTotal === 0 ? 0 : cardsDone / cardsTotal;
+  return {
+    completed,
+    total: all.length,
+    lessonsFinished: lessons.filter((l) => l.status === "completed").length,
+    lessonsTotal: lessons.length,
+    quizzesPassed: quizzes.filter((l) => l.status === "completed").length,
+    quizzesTotal: quizzes.length,
+    cardsDone,
+    cardsTotal,
+    fraction: finished ? 1 : Math.min(raw, UNFINISHED_MAX),
+  };
+}
+
+/** The counts beside a ring: lessons finished and quizzes passed, apart ("2/9 lessons · 0/3 quizzes"). */
+export function progressCounts(p: Pick<CourseProgress, "lessonsFinished" | "lessonsTotal" | "quizzesPassed" | "quizzesTotal">): string {
+  return `${p.lessonsFinished}/${p.lessonsTotal} lessons · ${p.quizzesPassed}/${p.quizzesTotal} ${p.quizzesTotal === 1 ? "quiz" : "quizzes"}`;
+}
+
+/** Whole-number percent for a progress fraction: 100 only when it's really 1. */
+export function progressPercent(fraction: number): number {
+  return fraction >= 1 ? 100 : Math.min(99, Math.round(fraction * 100));
 }
 
 /** True once the learner has done anything at all (drives the first-visit welcome). */

@@ -19,6 +19,8 @@ import {
   computeCourseState,
   type CourseState,
   courseProgress,
+  progressCounts,
+  progressPercent,
   getBlockingLesson,
   getCurrentLesson,
   type ModuleState,
@@ -170,11 +172,12 @@ export function CoursePath({ course }: { course: CourseOutline }) {
 
 function MobileHeader({ state }: { state: CourseState }) {
   const { fraction } = courseProgress(state);
+  const percent = progressPercent(fraction);
   return (
     <div className="lg:hidden">
       <div className="flex items-center gap-3">
-        <ProgressRing value={fraction} size={48} stroke={5} label={`${Math.round(fraction * 100)}% complete`}>
-          <span className="font-mono text-[0.7rem] font-semibold tabular-nums">{Math.round(fraction * 100)}%</span>
+        <ProgressRing value={fraction} size={48} stroke={5} label={`${percent}% complete`}>
+          <span className="font-mono text-[0.7rem] font-semibold tabular-nums">{percent}%</span>
         </ProgressRing>
         <div className="min-w-0">
           <p className="truncate text-title font-semibold" aria-hidden="true">
@@ -189,9 +192,10 @@ function MobileHeader({ state }: { state: CourseState }) {
 }
 
 function SidePanel({ state }: { state: CourseState }) {
-  const { completed, total, fraction } = courseProgress(state);
+  const progress = courseProgress(state);
+  const { fraction } = progress;
   const current = getCurrentLesson(state);
-  const percent = Math.round(fraction * 100);
+  const percent = progressPercent(fraction);
   return (
     <div className="sticky top-24 space-y-4">
       <div className="overflow-hidden rounded-card border border-line bg-surface shadow-card">
@@ -203,7 +207,7 @@ function SidePanel({ state }: { state: CourseState }) {
           <div>
             <p className="font-semibold">{percent === 100 ? "Complete" : "Your progress"}</p>
             <p className="font-mono text-caption text-ink-faint">
-              {completed}/{total} · {state.completedModules}/{state.modules.length} modules
+              {progressCounts(progress)}
             </p>
           </div>
         </div>

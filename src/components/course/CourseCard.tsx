@@ -6,7 +6,7 @@ import { CourseCover } from "@/components/illustrations/CourseCover";
 import type { CourseOutline } from "@/lib/content/schema";
 import { EASE_OUT_QUICK, PRESS_SPRING } from "@/lib/motion";
 import { useProgress } from "@/lib/progress/ProgressProvider";
-import { computeCourseState, courseProgress, hasAnyProgress } from "@/lib/progress/state";
+import { computeCourseState, courseProgress, hasAnyProgress, progressPercent } from "@/lib/progress/state";
 import { CourseLevel } from "./CourseLevel";
 
 /**
@@ -17,7 +17,7 @@ export function CourseCard({ course, startHere = false }: { course: CourseOutlin
   const { snapshot } = useProgress();
   const reduceMotion = useReducedMotion();
   const progress = snapshot ? courseProgress(computeCourseState(snapshot, course)) : null;
-  const percent = progress ? Math.round(progress.fraction * 100) : 0;
+  const percent = progress ? progressPercent(progress.fraction) : 0;
   const newcomer = startHere && snapshot !== null && !hasAnyProgress(snapshot);
 
   return (

@@ -109,7 +109,7 @@ describe("computeCourseState: Explore mode", () => {
     ]);
     const state = computeCourseState(snapshot, twoModuleCourse(), "explore");
     expect(state.completedModules).toBe(1);
-    expect(courseProgress(state)).toEqual({ completed: 2, total: 5, fraction: 0.4 });
+    expect(courseProgress(state)).toMatchObject({ completed: 2, total: 5, fraction: 0.4 });
   });
 
   it("uses the learner's saved mode when none is passed", () => {

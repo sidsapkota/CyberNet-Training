@@ -10,8 +10,8 @@ import type { ProgressSnapshot } from "./types";
 export interface ActivityDay {
   /** Local calendar date, "YYYY-MM-DD". */
   date: string;
-  /** Lessons completed plus module quizzes passed on that day. */
-  count: number;
+  /** XP earned that day: cards, lessons, quizzes and practice (the same ledger as the daily goal and streak). */
+  xp: number;
 }
 
 /** "YYYY-MM-DD" for a moment, in the viewer's local time zone. */
@@ -23,35 +23,30 @@ export function localDateKey(date: Date): string {
 }
 
 /**
- * Completions per local day for the last `days` days, oldest first, ending today. A lesson counts
- * once, on the day it was first completed; a quiz counts once, on the day it was first passed.
- * Failed quiz attempts and replays don't count.
+ * XP per day for the last `days` days, oldest first, ending today, from the XP ledger
+ * (`snapshot.xpEvents`): the same record the daily goal and streak use, so a day with a met goal
+ * always has a bar. Each event counts on the day it was dated with when it happened.
  */
 export function dailyActivity(snapshot: ProgressSnapshot, now: Date, days = 14): ActivityDay[] {
   const window: ActivityDay[] = [];
   for (let i = days - 1; i >= 0; i--) {
     const day = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
-    window.push({ date: localDateKey(day), count: 0 });
+    window.push({ date: localDateKey(day), xp: 0 });
   }
   const byDate = new Map(window.map((d) => [d.date, d]));
-
-  const stamps = [
-    ...Object.values(snapshot.lessons).map((l) => l.completedAt),
-    ...Object.values(snapshot.quizzes).flatMap((q) => (q.passedAt ? [q.passedAt] : [])),
-  ];
-  for (const stamp of stamps) {
-    const at = new Date(stamp);
-    if (Number.isNaN(at.getTime())) continue;
-    const day = byDate.get(localDateKey(at));
-    if (day) day.count += 1;
+  for (const event of snapshot.xpEvents) {
+    const day = byDate.get(event.day);
+    if (day && event.xp > 0) day.xp += event.xp;
   }
   return window;
 }
 
 export interface LearnerStats {
   totalXp: number;
-  /** Regular lessons completed (quizzes are counted as modules). */
+  /** Regular lessons finished (counted apart from quizzes). */
   lessonsCompleted: number;
+  /** Quizzes passed (module quizzes and course finals). */
+  quizzesPassed: number;
   modulesCompleted: number;
   /** Courses with every module complete (shown on the learner's league card). */
   coursesCompleted: number;
@@ -60,6 +55,7 @@ export interface LearnerStats {
 /** Totals across the given courses. Progress for lessons no longer in the content is ignored. */
 export function learnerStats(snapshot: ProgressSnapshot, courses: readonly CourseOutline[]): LearnerStats {
   let lessonsCompleted = 0;
+  let quizzesPassed = 0;
   let modulesCompleted = 0;
   let coursesCompleted = 0;
   for (const course of courses) {
@@ -68,7 +64,8 @@ export function learnerStats(snapshot: ProgressSnapshot, courses: readonly Cours
     if (course.modules.length > 0 && state.completedModules === course.modules.length) coursesCompleted++;
     for (const mod of state.modules) {
       lessonsCompleted += mod.lessons.filter((l) => l.lesson.kind === "lesson" && l.status === "completed").length;
+      quizzesPassed += mod.lessons.filter((l) => l.lesson.kind === "quiz" && l.status === "completed").length;
     }
   }
-  return { totalXp: snapshot.totalXp, lessonsCompleted, modulesCompleted, coursesCompleted };
+  return { totalXp: snapshot.totalXp, lessonsCompleted, quizzesPassed, modulesCompleted, coursesCompleted };
 }

@@ -19,6 +19,8 @@ import {
   computeCourseState,
   type CourseState,
   courseProgress,
+  progressCounts,
+  progressPercent,
   getCurrentLesson,
   hasAnyProgress,
 } from "@/lib/progress/state";
@@ -75,7 +77,7 @@ export function Dashboard({ courses }: { courses: CourseOutline[] }) {
 
   const states = courses.map((course) => computeCourseState(snapshot, course, undefined, hasPro || available));
   const focus =
-    states.find((s) => getCurrentLesson(s) && courseProgress(s).completed > 0) ??
+    states.find((s) => getCurrentLesson(s) && courseProgress(s).cardsDone > 0) ??
     states.find((s) => getCurrentLesson(s)) ??
     states[0]!;
   const stats = learnerStats(snapshot, courses);
@@ -96,7 +98,7 @@ export function Dashboard({ courses }: { courses: CourseOutline[] }) {
           <div className="grid h-full grid-cols-3 gap-3 lg:grid-cols-1">
             <Stat Icon={XpIcon} value={stats.totalXp} label="XP" accent />
             <Stat Icon={LessonsIcon} value={stats.lessonsCompleted} label="Lessons" />
-            <Stat Icon={ModulesIcon} value={stats.modulesCompleted} label="Modules" />
+            <Stat Icon={ModulesIcon} value={stats.quizzesPassed} label="Quizzes" />
           </div>
         </Rise>
         <Rise index={2} className="lg:col-span-2">
@@ -221,8 +223,8 @@ function parseDay(date: string): Date {
 
 function Activity({ days }: { days: ActivityDay[] }) {
   const reduceMotion = useReducedMotion();
-  const max = Math.max(1, ...days.map((d) => d.count));
-  const total = days.reduce((sum, d) => sum + d.count, 0);
+  const max = Math.max(1, ...days.map((d) => d.xp));
+  const total = days.reduce((sum, d) => sum + d.xp, 0);
 
   return (
     <section aria-labelledby="activity-title" className={`${panel} h-full p-5`}>
@@ -230,20 +232,20 @@ function Activity({ days }: { days: ActivityDay[] }) {
         <h2 id="activity-title" className="text-lead font-semibold">
           Activity
         </h2>
-        <p className="font-mono text-caption text-ink-faint">Last 2 weeks · {total}</p>
+        <p className="font-mono text-caption text-ink-faint">Last 2 weeks · {total} XP</p>
       </div>
-      <ol className="mt-5 grid h-32 grid-cols-14 items-end gap-1.5 sm:gap-2" aria-label="Lessons completed per day">
+      <ol className="mt-5 grid h-32 grid-cols-14 items-end gap-1.5 sm:gap-2" aria-label="XP earned per day">
         {days.map((day, i) => {
           const date = parseDay(day.date);
           const isToday = i === days.length - 1;
-          const height = day.count === 0 ? 0 : Math.max(12, (day.count / max) * 100);
+          const height = day.xp === 0 ? 0 : Math.max(12, (day.xp / max) * 100);
           return (
             <li key={day.date} className="flex h-full flex-col items-center justify-end gap-2">
               <span className="sr-only">
-                {LONG_DATE.format(date)}: {day.count} {day.count === 1 ? "completion" : "completions"}
+                {LONG_DATE.format(date)}: {day.xp} XP
               </span>
               <div aria-hidden="true" className="flex w-full flex-1 items-end justify-center">
-                {day.count === 0 ? (
+                {day.xp === 0 ? (
                   <span className="size-1.5 rounded-node bg-line-strong" />
                 ) : (
                   <motion.span
@@ -277,17 +279,17 @@ function CourseRings({ states }: { states: CourseState[] }) {
       </h2>
       <ul className="mt-4 space-y-4">
         {states.map((state) => {
-          const { completed, total, fraction } = courseProgress(state);
-          const percent = Math.round(fraction * 100);
+          const progress = courseProgress(state);
+          const percent = progressPercent(progress.fraction);
           return (
             <li key={state.course.id} className="flex items-center gap-4">
-              <ProgressRing value={fraction} size={64} label={`${state.course.title}: ${percent}% complete`}>
+              <ProgressRing value={progress.fraction} size={64} label={`${state.course.title}: ${percent}% complete`}>
                 <span className="font-mono text-small font-semibold tabular-nums">{percent}%</span>
               </ProgressRing>
               <div className="min-w-0">
                 <p className="truncate font-semibold">{state.course.title}</p>
                 <p className="font-mono text-caption text-ink-faint">
-                  {completed}/{total} · {state.completedModules}/{state.modules.length} modules
+                  {progressCounts(progress)}
                 </p>
               </div>
             </li>
