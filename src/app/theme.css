@@ -67,9 +67,21 @@
   --color-tier-ground: #061630;
   --color-tier-line: #00c2ff;
   --color-tier-fill: #0b5577; /* Router, Firewall: cyan on it 3.9:1; clearly lighter than the tile */
-  /* Purple belongs to the Quantum badge alone (7.3:1 on its navy tile, in both themes). Never use
-     it anywhere else. */
+  /* Purple belongs to the Quantum badge (7.3:1 on its navy tile, in both themes) and, as a deeper
+     violet, to How AI Really Works' identity (below). Nowhere else. */
   --color-quantum: #b392ff;
+  /* Course identity colours (owner, 2 Oct 2026): only on a course's thumbnail art, its level dots
+     and its progress bar, never inside lessons or answer feedback (so emerald is never "correct").
+     `-art` is fixed for the always-navy art panel; the plain token follows the theme for dots and
+     bars on surfaces. Contrast: art on screen 4.3–10.8:1; light values 4.7–7.1:1 on canvas/surface. */
+  --color-course-safe: light-dark(#047857, #10b981);
+  --color-course-safe-art: #10b981;
+  --color-course-devices: light-dark(#b45309, #fbbf24);
+  --color-course-devices-art: #fbbf24;
+  --color-course-ai: light-dark(#6d28d9, #8b5cf6);
+  --color-course-ai-art: #8b5cf6;
+  --color-course-internet: light-dark(#006e9e, #00c2ff);
+  --color-course-internet-art: #00c2ff;
   --drop-shadow-quantum: 0 0 6px rgb(179 146 255 / 0.65);
   /* The Pro card frame (a Brand exception): its glow and travelling light. */
   --drop-shadow-pro: 0 0 6px rgb(0 194 255 / 0.55);
@@ -194,6 +206,78 @@
       opacity: 0.25;
     }
     30% {
+      opacity: 1;
+    }
+  }
+
+  /* Course thumbnails: one short move on hover or tap (never a loop; nothing under reduced motion). */
+  --animate-cover-swing: cover-swing 0.9s var(--ease-out-quick);
+  --animate-cover-zip: cover-zip 1.4s var(--ease-out-quick);
+  --animate-cover-tilt: cover-tilt 0.8s var(--ease-out-quick);
+  --animate-cover-blink: cover-blink 0.8s ease-in-out;
+
+  /* The phishing hook swings in, hits the shield and bounces back. */
+  @keyframes cover-swing {
+    0%,
+    100% {
+      transform: rotate(0deg);
+    }
+    35% {
+      transform: rotate(-9deg);
+    }
+    55% {
+      transform: rotate(7deg);
+    }
+    78% {
+      transform: rotate(-2deg);
+    }
+  }
+
+  /* The envelope zips along its path over the globe, then is back at the start. */
+  @keyframes cover-zip {
+    0% {
+      transform: translate(0, 0);
+      opacity: 1;
+    }
+    45% {
+      transform: translate(86px, -41px);
+    }
+    80% {
+      transform: translate(171px, -35px);
+      opacity: 1;
+    }
+    88% {
+      transform: translate(185px, -30px);
+      opacity: 0;
+    }
+    89% {
+      transform: translate(0, 0);
+      opacity: 0;
+    }
+    100% {
+      transform: translate(0, 0);
+      opacity: 1;
+    }
+  }
+
+  /* The picture card is held up a little higher, for the robot to see. */
+  @keyframes cover-tilt {
+    0%,
+    100% {
+      transform: rotate(0deg) translateY(0);
+    }
+    45% {
+      transform: rotate(-6deg) translateY(-5px);
+    }
+  }
+
+  /* The learning robot's antenna light: one bright blink as it takes the card in. */
+  @keyframes cover-blink {
+    0%,
+    100% {
+      opacity: 0.55;
+    }
+    40% {
       opacity: 1;
     }
   }

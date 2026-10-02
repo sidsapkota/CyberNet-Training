@@ -648,7 +648,7 @@ src/components/mistakes/ Mistake review: dashboard card (count), review player (
 src/components/leagues/  tier badges, player card, leagues page view, result screen, settings
 src/lib/leagues/         league rules (week, grouping, settling), server code, config
 src/lib/usernames/       usernames: safety check and word lists, generator, change rule, server code
-src/components/illustrations/ course covers (CourseCover registry, keyed by course id)
+src/components/illustrations/ course thumbnails (CourseCover: the template, one cover per course id)
 src/components/mascot/   the mascot: geometry + palette, poses, SVG parts, <Mascot>
 src/components/ui/       Button, Markdown, icons (lucide wrappers), CountUp, ProgressRing, ThemeToggle
 src/lib/content/         schemas, fs loader (load.ts), server accessors (server.ts)
@@ -1322,15 +1322,22 @@ text pairing meets WCAG AA (≥ 4.5:1), and UI outlines meet 3:1.
 **Rules:**
 - **Cyan means interactive or progress, and nothing else.** That covers buttons, focus, current and
   lit nodes, lit connections, XP and "lesson complete". It never goes on headings, icons used as
-  decoration, or illustration chrome.
+  decoration, or illustration chrome. (A course card's progress bar takes that course's identity
+  colour instead: see Course thumbnails.)
 - **Fills vs strokes:** use `accent` for fills and `accent-ink` for text, strokes and rings. Bright
   cyan on white is only 2:1.
 - **Correct is mint (`success`), not cyan,** so "right" and "interactive" are never confused.
 - **Glow (`shadow-glow`)** is only for lit cyan nodes and the primary button. **One exception:** Pro
   identity: the Pro player card's frame (`drop-shadow-pro`), a member's node ring and lit
   `ProBadge`, and the Pro plan card (`shadow-pro-card`). Nowhere else.
-- **Purple belongs to the Quantum tier badge alone** (`--color-quantum`, `drop-shadow-quantum`;
-  7.3:1 on the badge's navy tile, which is navy in both themes). Never use it anywhere else.
+- **Purple belongs to the Quantum tier badge** (`--color-quantum`, a lilac, `drop-shadow-quantum`;
+  7.3:1 on the badge's navy tile, which is navy in both themes) **and, as a deeper violet, to How AI
+  Really Works' identity** (`--color-course-ai`, owner, 2 Oct 2026). Nowhere else.
+- **Course identity colours** (`--color-course-{safe,devices,ai,internet}` for surfaces in both
+  themes, `-art` fixed for the navy art panel; `src/lib/content/courseTheme.ts`): Stay Safe Online
+  emerald, Inside Your Devices amber, How AI Really Works violet, How the Internet Works cyan. Only
+  on a course's thumbnail art, its level dots and its course-card progress bar, **never inside
+  lessons or answer feedback** (so emerald never reads as "correct").
 - **Never raw hex in components.** If you need a new colour, add a token (both themes) and check
   its contrast.
 
@@ -1372,9 +1379,33 @@ text pairing meets WCAG AA (≥ 4.5:1), and UI outlines meet 3:1.
   when the value changes.
 - **Module complete:** one short confetti burst in brand colours on the quiz pass screen
   (`celebrate()`).
-- **The only loops** are the course path's current-node pulse (2.4s), the loading sequence, the slow moving
-  part on course covers (the packet, the sliding RAM stick), and the light travelling round the Pro
-  player card's frame (`animate-pro-trace`, 7s). Mainframe's lights are static dots.
+- **The only loops** are the course path's current-node pulse (2.4s), the loading sequence and the
+  light travelling round the Pro player card's frame (`animate-pro-trace`, 7s). Mainframe's lights
+  are static dots. Course thumbnails move once on hover, focus or tap, never on a loop.
+
+### Course thumbnails
+`CourseCover` (`src/components/illustrations/CourseCover.tsx`; owner's brief, 2 Oct 2026) draws each
+course's thumbnail: on the catalog and dashboard cards, the course path's side panel (desktop) and a
+banner at the top of the course page (phones). **Every course follows the template** at the top of
+that file, future ones included:
+- One big hero object you recognise in under a second, not a diagram: Stay Safe Online, the mascot
+  holding up a shield (the logo's own) as a phishing hook bounces off it; Inside Your Devices, a phone
+  pulled apart into floating layers (screen, battery, board with chip); How AI Really Works, the
+  mascot showing a picture card to a small robot that's learning; How the Internet Works, an envelope
+  on a dotted route over a simple globe.
+- A 320 × 180 viewBox on the navy `screen` panel (both themes), no dot grid or extra decoration.
+  `ART.stroke` (2) for every line, round caps and joins, rounded corners. Outlines in the light
+  accessory blue, fills in the mascot's navy; the course colour only on the hero detail.
+- The mascot is the real avatars v2 one (`MascotFigure` via `CoverMascot`), so thumbnails and
+  avatars match.
+- One short move on hover, keyboard focus or tap of the nearest `group` (the card): the hook swings
+  and bounces off, the layers spread, the card is held higher and the robot's light blinks, the
+  envelope zips along its route. `motion-safe:` classes and the `cover-*` keyframes in theme.css;
+  nothing under reduced motion. Class names are written out in full (Tailwind can't see built ones).
+- A new course adds its cover to `COVERS`, an accent in `courseTheme.ts` and a token pair;
+  `courseTheme.test.ts` fails until it has both, and checks no two courses share a colour.
+- `/dev/thumbnails` (dev only) shows the four cards side by side;
+  `node scripts/e2e/thumbnail-shots.mjs` saves review screenshots to `docs/plans/thumbnails/`.
 - **`prefers-reduced-motion`:** every animation must render its final state instantly. Use
   `useReducedMotion()` for motion components; CSS keyframes are neutralised in `globals.css`.
 

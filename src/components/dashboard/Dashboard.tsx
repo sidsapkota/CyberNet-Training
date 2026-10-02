@@ -145,7 +145,7 @@ function ContinueHero({ state }: { state: CourseState }) {
   const restIsPro = !current && state.modules.some((m) => m.needsPro && m.status !== "completed");
 
   return (
-    <section aria-labelledby="continue-title" className={`${panel} flex h-full flex-col overflow-hidden md:flex-row`}>
+    <section aria-labelledby="continue-title" className={`${panel} group flex h-full flex-col overflow-hidden md:flex-row`}>
       <CourseCover
         courseId={course.id}
         title={course.title}

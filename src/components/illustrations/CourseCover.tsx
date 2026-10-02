@@ -1,384 +1,210 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
-import type { ComponentType } from "react";
+import { type ReactNode, useId } from "react";
+import { HUB, NODES, SHIELD_PATH } from "@/components/brand/geometry";
+import { MASCOT_TOKENS } from "@/components/mascot/geometry";
+import { GlowFilter, MascotFigure } from "@/components/mascot/parts";
+import { MASCOT_POSES } from "@/components/mascot/poses";
 import { NetworkMark } from "@/components/network/NetworkMark";
+import { ACCENT_ART, courseAccent } from "@/lib/content/courseTheme";
 
 /*
- * Course covers: geometric network illustrations drawn for the always-navy `screen` panel.
- * Every line is horizontal, vertical or 45°, like the logo and the circuit traces. The only
- * motion is a packet travelling along the lit route (a static frame under reduced motion).
+ * Course thumbnails (owner, 2 Oct 2026): one big hero object per course that you recognise in under
+ * a second, on the always-navy panel, in the course's identity colour (src/lib/content/courseTheme.ts).
+ *
+ * THE TEMPLATE (every course, including future ones like "What Really Happens When…"):
+ * - A 320 × 180 viewBox on the navy `screen` panel; no dot grid, no extra decoration: one idea.
+ * - Lines: `ART.stroke` (2) everywhere, round caps and joins, rounded corners (rx 3–12). Outlines in
+ *   the light accessory blue (`ART.line`), fills in the mascot's navy (`ART.fill`, `ART.raised`).
+ * - The course's colour (`accent`) only on the hero detail (the shield, the battery and chip, the
+ *   card and the learning link, the envelope and its route).
+ * - The mascot, when it appears, is the real avatars v2 mascot (`CoverMascot`, scale ~0.62).
+ * - One short motion on hover, focus or tap of the parent's `group` class: a `MOVE_*` class (the
+ *   `cover-*` keyframes in theme.css) or `motion-safe:` transitions; never a loop, nothing under
+ *   reduced motion. Class names are written out in full so Tailwind generates them.
+ * - Register it in `COVERS` and give the course an accent and a token pair; a test checks both.
  */
 
 const VIEW_W = 320;
 const VIEW_H = 180;
 
-type Point = readonly [number, number];
+export const ART = {
+  stroke: 2,
+  line: "var(--color-mascot-accessory)",
+  fill: "var(--color-mascot-body)",
+  raised: "var(--color-mascot-accessory-fill)",
+} as const;
 
-/** Timeline positions (0 to 1) for keyframes along a polyline, proportional to distance. */
-function keyTimes(route: readonly Point[]): number[] {
-  const lengths = route.slice(1).map(([x, y], i) => {
-    const [px, py] = route[i] as Point;
-    return Math.hypot(x - px, y - py);
-  });
-  const total = lengths.reduce((a, b) => a + b, 0);
-  let run = 0;
-  return [0, ...lengths.map((l) => (run += l) / total)];
+const outline = { fill: ART.fill, stroke: ART.line, strokeWidth: ART.stroke, strokeLinejoin: "round" as const, strokeLinecap: "round" as const };
+const stroke = (color: string, width: number = ART.stroke) => ({ fill: "none", stroke: color, strokeWidth: width, strokeLinecap: "round" as const, strokeLinejoin: "round" as const });
+
+/* One short move on hover, keyboard focus or a tap of the card around the cover (its `group`). */
+const MOVE_SWING = "motion-safe:group-hover:animate-cover-swing motion-safe:group-focus-visible:animate-cover-swing motion-safe:group-active:animate-cover-swing";
+const MOVE_ZIP = "motion-safe:group-hover:animate-cover-zip motion-safe:group-focus-visible:animate-cover-zip motion-safe:group-active:animate-cover-zip";
+const MOVE_TILT = "motion-safe:group-hover:animate-cover-tilt motion-safe:group-focus-visible:animate-cover-tilt motion-safe:group-active:animate-cover-tilt";
+const MOVE_BLINK = "motion-safe:group-hover:animate-cover-blink motion-safe:group-focus-visible:animate-cover-blink motion-safe:group-active:animate-cover-blink";
+const SPREAD = "motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-out";
+const SPREAD_BACK = "motion-safe:group-hover:translate-x-3 motion-safe:group-focus-visible:translate-x-3 motion-safe:group-active:translate-x-3";
+const SPREAD_MIDDLE = "motion-safe:group-hover:translate-x-1 motion-safe:group-focus-visible:translate-x-1 motion-safe:group-active:translate-x-1";
+const SPREAD_FRONT = "motion-safe:group-hover:-translate-x-3 motion-safe:group-focus-visible:-translate-x-3 motion-safe:group-active:-translate-x-3";
+
+interface CoverProps {
+  accent: string;
+  glow: string;
 }
 
-/**
- * Always the same element, so the server HTML never depends on the reduced-motion setting (covers
- * are server-rendered on the landing page). Under reduced motion it jumps to a still frame instead.
- */
-function Packet({ route, duration }: { route: readonly Point[]; duration: number }) {
-  const reduceMotion = useReducedMotion();
-  const middle = route[Math.floor(route.length / 2)] as Point;
+/** The real mascot (the waving pose), placed and scaled in the cover. */
+function CoverMascot({ x, y, scale, glow }: { x: number; y: number; scale: number; glow: string }) {
   return (
-    <motion.circle
-      r={4.5}
-      fill="var(--color-screen-accent)"
-      initial={{ cx: middle[0], cy: middle[1], opacity: 1 }}
-      animate={
-        reduceMotion
-          ? { cx: middle[0], cy: middle[1], opacity: 1 }
-          : {
-              cx: route.map((p) => p[0]),
-              cy: route.map((p) => p[1]),
-              opacity: route.map((_, i) => (i === 0 || i === route.length - 1 ? 0 : 1)),
-            }
-      }
-      transition={
-        reduceMotion
-          ? { duration: 0 }
-          : { duration, ease: "linear", times: keyTimes(route), repeat: Infinity, repeatDelay: 1.2 }
-      }
-    />
-  );
-}
-
-function DotGrid() {
-  const dots = [];
-  for (let x = 16; x < VIEW_W; x += 24) {
-    for (let y = 18; y < VIEW_H; y += 24) dots.push(<circle key={`${x}-${y}`} cx={x} cy={y} r={1} />);
-  }
-  return <g fill="var(--color-screen-line)">{dots}</g>;
-}
-
-/* ── How the Internet Works: an octagonal globe of circuit traces, laptop to server ──────── */
-
-const CX = 160;
-const CY = 90;
-const R = 62;
-/** Half an octagon side for circumradius-ish R with 45° corners: R · tan(22.5°). */
-const H = 25.7;
-
-const GLOBE: Point[] = [
-  [CX - H, CY - R],
-  [CX + H, CY - R],
-  [CX + R, CY - H],
-  [CX + R, CY + H],
-  [CX + H, CY + R],
-  [CX - H, CY + R],
-  [CX - R, CY + H],
-  [CX - R, CY - H],
-];
-
-const ROUTE: Point[] = [
-  [40, 142],
-  [58, 142],
-  [86, 114],
-  [CX - 30, 114],
-  [CX - 30, 66],
-  [CX + 30, 66],
-  [CX + R, 66],
-  [240, 66],
-  [256, 50],
-  [282, 50],
-];
-
-const poly = (points: readonly Point[]) => points.map((p) => p.join(",")).join(" ");
-
-function InternetCover() {
-  const lines = "var(--color-on-screen-muted)";
-  const lit = "var(--color-screen-accent)";
-  const junctions: Point[] = [
-    [CX - 30, 66],
-    [CX + 30, 66],
-    [CX - 30, 114],
-    [CX + 30, 114],
-    [CX, 90],
-    [CX, CY - R],
-    [CX, CY + R],
-    [CX - R, 90],
-    [CX + R, 90],
-  ];
-
-  return (
-    <>
-      <DotGrid />
-      {/* Globe outline, latitudes and meridians */}
-      <g fill="none" stroke={lines} strokeWidth={1.5} strokeLinejoin="round" opacity={0.7}>
-        <polygon points={poly(GLOBE)} />
-        <path d={`M${CX - R} ${CY - 24}H${CX + R}M${CX - R} ${CY}H${CX + R}M${CX - R} ${CY + 24}H${CX + R}`} />
-        <path d={`M${CX} ${CY - R}V${CY + R}M${CX - 30} ${CY - 57.7}V${CY + 57.7}M${CX + 30} ${CY - 57.7}V${CY + 57.7}`} />
-      </g>
-      {/* The lit route */}
-      <polyline points={poly(ROUTE)} fill="none" stroke={lit} strokeWidth={2.5} strokeLinejoin="round" strokeLinecap="round" />
-      {/* Junction nodes */}
-      {junctions.map(([x, y]) => {
-        const onRoute = ROUTE.some(([rx, ry]) => rx === x && ry === y);
-        return (
-          <circle
-            key={`${x}-${y}`}
-            cx={x}
-            cy={y}
-            r={onRoute ? 5 : 4}
-            fill={onRoute ? lit : "var(--color-screen)"}
-            stroke={onRoute ? lit : lines}
-            strokeWidth={1.5}
-          />
-        );
-      })}
-      {/* Laptop */}
-      <g transform="translate(40 142)">
-        <circle r={15} fill="var(--color-screen)" stroke={lit} strokeWidth={2} />
-        <rect x={-7} y={-5} width={14} height={9} rx={1.5} fill="none" stroke="var(--color-on-screen)" strokeWidth={1.5} />
-        <path d="M-9 6H9" stroke="var(--color-on-screen)" strokeWidth={1.5} strokeLinecap="round" />
-      </g>
-      {/* Server */}
-      <g transform="translate(282 50)">
-        <circle r={15} fill="var(--color-screen)" stroke={lit} strokeWidth={2} />
-        <path
-          d="M-6 -6H6V-1H-6ZM-6 1H6V6H-6Z"
-          fill="none"
-          stroke="var(--color-on-screen)"
-          strokeWidth={1.5}
-          strokeLinejoin="round"
-        />
-      </g>
-      <Packet route={ROUTE} duration={4.2} />
-    </>
-  );
-}
-
-/* ── How AI Really Works: examples flow into a model, which writes the next token ────────── */
-
-const AI_ROUTE: Point[] = [
-  [40, 90],
-  [110, 90],
-  [150, 90],
-  [170, 70],
-  [206, 70],
-];
-
-function AiCover() {
-  const lines = "var(--color-on-screen-muted)";
-  const lit = "var(--color-screen-accent)";
-  // Three example nodes feed a model hub along 45° and level traces.
-  const inputs: Point[] = [
-    [40, 50],
-    [40, 90],
-    [40, 130],
-  ];
-  return (
-    <>
-      <DotGrid />
-      <g fill="none" stroke={lines} strokeWidth={1.5} strokeLinejoin="round" strokeLinecap="round" opacity={0.7}>
-        <path d="M40 50H70L110 90M40 130H70L110 90" />
-        {/* The model's inside: a small grid of connections */}
-        <path d="M110 90L130 70H150L170 90M110 90L130 110H150L170 90M130 70V110M150 70V110" />
-      </g>
-      {/* The lit path: one example through the model to the next token */}
-      <polyline points={poly(AI_ROUTE)} fill="none" stroke={lit} strokeWidth={2.5} strokeLinejoin="round" strokeLinecap="round" />
-      {inputs.map(([x, y]) => (
-        <circle key={`${x}-${y}`} cx={x} cy={y} r={y === 90 ? 5 : 4} fill={y === 90 ? lit : "var(--color-screen)"} stroke={y === 90 ? lit : lines} strokeWidth={1.5} />
-      ))}
-      {[
-        [130, 70],
-        [150, 70],
-        [130, 110],
-        [150, 110],
-      ].map(([x, y]) => (
-        <circle key={`${x}-${y}`} cx={x} cy={y} r={3.5} fill="var(--color-screen)" stroke={lines} strokeWidth={1.5} />
-      ))}
-      {/* The model hub */}
-      <circle cx={110} cy={90} r={9} fill="var(--color-screen)" stroke={lit} strokeWidth={2.5} />
-      <circle cx={110} cy={90} r={3} fill={lit} />
-      {/* Speech bubble: tokens written so far, and the next one being picked */}
-      <path
-        d="M200 44H282A10 10 0 0 1 292 54V112A10 10 0 0 1 282 122H222L208 136V122H200A10 10 0 0 1 190 112V54A10 10 0 0 1 200 44Z"
-        fill="var(--color-screen)"
-        stroke={lines}
-        strokeWidth={1.5}
-        strokeLinejoin="round"
-      />
-      <g fill="var(--color-on-screen-muted)" opacity={0.85}>
-        <rect x={204} y={64} width={26} height={12} rx={3} />
-        <rect x={236} y={64} width={18} height={12} rx={3} />
-        <rect x={204} y={84} width={34} height={12} rx={3} />
-        <rect x={244} y={84} width={22} height={12} rx={3} />
-      </g>
-      {/* The next token: an outline, still being chosen */}
-      <rect x={204} y={104} width={28} height={10} rx={3} fill="none" stroke={lit} strokeWidth={2} strokeDasharray="4 3" />
-      <Packet route={AI_ROUTE} duration={3.6} />
-    </>
-  );
-}
-
-/* ── Registry ─────────────────────────────────────────────────────────────────────────── */
-
-/* ── Inside Your Devices: an exploded view, layers pulled apart along 45° guides ─────────── */
-
-/** One layer of the exploded device, drawn as a rounded slab. */
-function Slab({ x, y, w, h, fill }: { x: number; y: number; w: number; h: number; fill: string }) {
-  return <rect x={x} y={y} width={w} height={h} rx={8} fill={fill} stroke="var(--color-scene-edge)" strokeWidth={1.5} />;
-}
-
-function RamStick() {
-  const reduceMotion = useReducedMotion();
-  const stick = (
-    <g>
-      <rect x={150} y={78} width={58} height={14} rx={2} fill="var(--color-scene-part)" stroke="var(--color-screen-accent)" strokeWidth={1.5} />
-      {[0, 1, 2, 3].map((i) => (
-        <rect key={i} x={155 + i * 13} y={81} width={9} height={8} rx={1} fill="var(--color-scene-shell)" />
-      ))}
+    <g transform={`translate(${x} ${y}) scale(${scale})`}>
+      <MascotFigure pose={MASCOT_POSES.happy} palette={MASCOT_TOKENS} glow={glow} />
     </g>
   );
-  // Slides out along its 45° guide and back, slowly: the one moving part. Same element either
-  // way (no server/client mismatch); under reduced motion it stays put.
-  return (
-    <motion.g
-      animate={reduceMotion ? { x: 0, y: 0 } : { x: [0, 16, 16, 0], y: [0, -16, -16, 0] }}
-      transition={
-        reduceMotion
-          ? { duration: 0 }
-          : { duration: 5, times: [0, 0.35, 0.65, 1], ease: "easeInOut", repeat: Infinity, repeatDelay: 1.5 }
-      }
-    >
-      {stick}
-    </motion.g>
-  );
 }
 
-function DevicesCover() {
-  const guide = "var(--color-screen-accent)";
+/* ── Stay Safe Online: the mascot holds up a shield; a phishing hook bounces off it ──────── */
+
+function SafeOnlineCover({ accent, glow }: CoverProps) {
+  const s = 1.18;
+  const [shieldX, shieldY] = [170 - 32 * s, 92 - 32.5 * s];
   return (
     <>
-      <DotGrid />
-      {/* 45° guide lines joining the layers' corners */}
-      <g stroke={guide} strokeWidth={1} strokeDasharray="3 4" opacity={0.55}>
-        <path d="M76 150L136 90M226 150L286 90M76 100L136 40" />
-      </g>
-      {/* Back to front: bottom panel, motherboard with battery, then the parts */}
-      <Slab x={76} y={100} w={150} h={50} fill="var(--color-scene-panel)" />
-      <g>
-        {[96, 110, 124, 138].map((x) => (
-          <rect key={x} x={x + 40} y={112} width={6} height={26} rx={3} fill="var(--color-scene-shell)" />
+      <CoverMascot x={152} y={20} scale={0.64} glow={glow} />
+      {/* The shield (the logo's own), held up in the waving hand. */}
+      <g transform={`translate(${shieldX} ${shieldY}) scale(${s})`}>
+        <path d={SHIELD_PATH} fill={ART.fill} stroke={accent} strokeWidth={(ART.stroke * 1.4) / s} strokeLinejoin="round" />
+        <g stroke={accent} strokeWidth={ART.stroke / s} strokeLinecap="round">
+          {NODES.map((n, i) => (
+            <path key={i} d={`M${HUB.x} ${HUB.y}L${n.x} ${n.y}`} />
+          ))}
+        </g>
+        <circle cx={HUB.x} cy={HUB.y} r={4.6} fill={accent} />
+        {NODES.map((n, i) => (
+          <circle key={i} cx={n.x} cy={n.y} r={3.2} fill={accent} />
         ))}
       </g>
-      <Slab x={106} y={70} w={150} h={50} fill="var(--color-scene-board)" />
-      <rect x={200} y={76} width={48} height={38} rx={4} fill="var(--color-scene-panel)" stroke="var(--color-scene-edge)" strokeWidth={1} />
-      <path d="M224 88V100M218 94H230" stroke="var(--color-on-screen-muted)" strokeWidth={2} strokeLinecap="round" />
-      <path d="M114 108H150L160 98" stroke="var(--color-screen-line)" strokeWidth={1.5} fill="none" />
-      <Slab x={136} y={40} w={150} h={50} fill="transparent" />
-      {/* CPU chip lifted above its socket */}
-      <rect x={118} y={78} width={24} height={24} rx={3} fill="var(--color-scene-part)" stroke="var(--color-on-screen-muted)" />
-      <rect x={124} y={84} width={12} height={12} rx={2} fill="var(--color-scene-panel)" />
-      {/* Storage chip */}
-      <rect x={170} y={52} width={34} height={14} rx={2} fill="var(--color-scene-part)" stroke="var(--color-scene-edge)" />
-      <RamStick />
-      {/* Screws floating free */}
-      {[
-        [56, 132],
-        [246, 64],
-        [300, 28],
-      ].map(([x, y]) => (
-        <g key={`${x}-${y}`}>
-          <circle cx={x} cy={y} r={5} fill="var(--color-scene-edge)" />
-          <path d={`M${x! - 2.5} ${y}H${x! + 2.5}M${x} ${y! - 2.5}V${y! + 2.5}`} stroke="var(--color-scene-shell)" strokeWidth={1.4} strokeLinecap="round" />
-        </g>
-      ))}
+      {/* The hook on its line, glancing off the shield's edge. */}
+      <g className={MOVE_SWING} style={{ transformBox: "view-box", transformOrigin: "84px -6px" }}>
+        <path d="M84 -6L126 64" {...stroke(ART.line, 1.5)} />
+        <path d="M126 64V80A7 7 0 0 1 112 80V76" {...stroke(ART.line)} />
+        <path d="M112 76L109 81" {...stroke(ART.line)} />
+      </g>
+      {/* Where it hit: two short marks, nothing more. */}
+      <path d="M137 70L143 66M136 79L143 79" {...stroke(accent, 1.6)} />
     </>
   );
 }
 
-/* ── Stay Safe Online: a padlock hub, joined to a message, an email and a key ────────────── */
+/* ── Inside Your Devices: a phone pulled apart into floating layers ──────────────────────── */
 
-function SafeOnlineCover() {
-  const trace = "var(--color-screen-line)";
-  const lit = "var(--color-screen-accent)";
-  const node = (cx: number, cy: number) => (
-    <circle cx={cx} cy={cy} r={22} fill="var(--color-screen)" stroke="var(--color-scene-edge)" strokeWidth={2} />
-  );
+function DevicesCover({ accent }: CoverProps) {
   return (
     <>
-      <DotGrid />
-      {/* 45° traces from the hub to three nodes; the key's trace is lit (your accounts, locked) */}
-      <g fill="none" strokeWidth={3} strokeLinejoin="round">
-        <path d="M160 90L112 42H72" stroke={trace} />
-        <path d="M160 90L208 42H248" stroke={trace} />
-        <path d="M160 90L208 138H248" stroke={lit} />
+      {/* Back: the board, with the processor chip. */}
+      <g className={`${SPREAD} ${SPREAD_BACK}`}>
+        <rect x={176} y={44} width={64} height={112} rx={12} {...outline} />
+        <rect x={197} y={70} width={22} height={22} rx={3} fill={ART.raised} stroke={accent} strokeWidth={ART.stroke} />
+        <path d="M201 66V70M208 66V70M215 66V70M201 92V96M208 92V96M215 92V96M193 74H197M193 81H197M193 88H197M219 74H223M219 81H223M219 88H223" {...stroke(accent, 1.5)} />
+        <rect x={190} y={110} width={14} height={10} rx={2} {...stroke(ART.line, 1.5)} />
+        <rect x={210} y={110} width={14} height={10} rx={2} {...stroke(ART.line, 1.5)} />
       </g>
-      {/* Email */}
-      {node(72, 42)}
-      <g fill="none" stroke="var(--color-on-screen-muted)" strokeWidth={1.75} strokeLinejoin="round">
-        <rect x={60} y={34} width={24} height={16} rx={2} />
-        <path d="M60 36L72 45L84 36" />
+      {/* Middle: the battery, with its bolt. */}
+      <g className={`${SPREAD} ${SPREAD_MIDDLE}`}>
+        <rect x={130} y={34} width={64} height={112} rx={12} {...outline} />
+        <rect x={142} y={52} width={40} height={76} rx={6} fill={ART.raised} stroke={ART.line} strokeWidth={ART.stroke} />
+        <path d="M165 68L152 92H162L158 112L172 86H162Z" fill={accent} stroke={accent} strokeWidth={1} strokeLinejoin="round" />
       </g>
-      {/* Message */}
-      {node(248, 42)}
-      <path
-        d="M237 33H259A3 3 0 0 1 262 36V47A3 3 0 0 1 259 50H246L240 55V50H237A3 3 0 0 1 234 47V36A3 3 0 0 1 237 33Z"
-        fill="none"
-        stroke="var(--color-on-screen-muted)"
-        strokeWidth={1.75}
-        strokeLinejoin="round"
-      />
-      {/* Key */}
-      <circle cx={248} cy={138} r={22} fill="var(--color-screen)" stroke={lit} strokeWidth={2} />
-      <g fill="none" stroke="var(--color-on-screen)" strokeWidth={1.75} strokeLinecap="round">
-        <circle cx={241} cy={138} r={5} />
-        <path d="M246 138H258M254 138V142M258 138V141" />
+      {/* Front: the screen. */}
+      <g className={`${SPREAD} ${SPREAD_FRONT}`}>
+        <rect x={84} y={24} width={64} height={112} rx={12} {...outline} />
+        <rect x={90} y={34} width={52} height={92} rx={6} fill={ART.raised} />
+        <circle cx={116} cy={29} r={1.6} fill={ART.line} />
+        <path d="M98 44L112 58" {...stroke(ART.line, 1.5)} />
       </g>
-      {/* Padlock hub */}
-      <circle cx={160} cy={90} r={30} fill="var(--color-screen)" stroke={lit} strokeWidth={2.5} />
-      <path d="M150 88V81A10 10 0 0 1 170 81V88" fill="none" stroke="var(--color-on-screen)" strokeWidth={2.5} />
-      <rect x={145} y={87} width={30} height={22} rx={4} fill="var(--color-on-screen)" />
-      <circle cx={160} cy={96} r={2.5} fill="var(--color-screen)" />
-      <path d="M160 97V102" stroke="var(--color-screen)" strokeWidth={2} strokeLinecap="round" />
     </>
   );
 }
 
-const COVERS: Record<string, ComponentType> = {
-  "how-the-internet-works": InternetCover,
-  "inside-your-devices": DevicesCover,
+/* ── How AI Really Works: the mascot shows a picture card to a small robot that's learning ─ */
+
+function AiCover({ accent, glow }: CoverProps) {
+  return (
+    <>
+      <CoverMascot x={40} y={24} scale={0.62} glow={glow} />
+      {/* What the robot takes in: dots from the card to its head. */}
+      <path d="M86 58Q150 26 208 78" {...stroke(accent, 2)} strokeDasharray="0.1 7" />
+      {/* The picture card (an apple on it), held up in the waving hand. */}
+      <g className={MOVE_TILT} style={{ transformBox: "view-box", transformOrigin: "70px 104px" }}>
+        <g transform="rotate(-6 60 77)">
+          <rect x={42} y={54} width={36} height={46} rx={5} fill={ART.raised} stroke={accent} strokeWidth={ART.stroke} />
+          <path d="M60 70C55 66 49 68 49 75C49 82 55 88 58 88C59 88 60 87 60 87C60 87 61 88 62 88C65 88 71 82 71 75C71 68 65 66 60 70Z" {...stroke(ART.line, 1.6)} />
+          <path d="M60 70C60 66 61 64 63 63" {...stroke(ART.line, 1.6)} />
+        </g>
+      </g>
+      {/* The little robot: square head, antenna light in the course colour, eyes on the card. */}
+      <g>
+        <path d="M238 78V66" {...stroke(ART.line)} />
+        <circle cx={238} cy={63} r={3.6} fill={accent} filter={`url(#${glow})`} className={MOVE_BLINK} />
+        <rect x={214} y={78} width={48} height={38} rx={10} {...outline} />
+        <circle cx={228} cy={95} r={4.5} fill={ART.line} />
+        <circle cx={248} cy={95} r={4.5} fill={ART.line} />
+        <circle cx={226.6} cy={94} r={1.8} fill={ART.fill} />
+        <circle cx={246.6} cy={94} r={1.8} fill={ART.fill} />
+        <rect x={222} y={120} width={32} height={28} rx={6} {...outline} />
+        <path d="M222 128L212 136M254 128L264 136M230 148V156M246 148V156" {...stroke(ART.line)} />
+      </g>
+    </>
+  );
+}
+
+/* ── How the Internet Works: an envelope zipping along a route over a simple globe ───────── */
+
+function InternetCover({ accent }: CoverProps) {
+  return (
+    <>
+      {/* The globe: an outline, one meridian, the equator and two lines of latitude. */}
+      <circle cx={160} cy={98} r={56} {...outline} />
+      <ellipse cx={160} cy={98} rx={22} ry={56} {...stroke(ART.line)} />
+      <path d="M104 98H216M111 72H209M111 124H209" {...stroke(ART.line)} />
+      {/* The route over the top, ending in a node. */}
+      <path d="M30 140C90 20 230 20 290 70" {...stroke(accent, 2)} strokeDasharray="0.1 7" />
+      <circle cx={290} cy={70} r={4} fill={accent} />
+      {/* The envelope, on its way. */}
+      <g className={MOVE_ZIP}>
+        <g transform="translate(74 82)">
+          <rect x={-15} y={-10} width={30} height={20} rx={3} fill={ART.fill} stroke={accent} strokeWidth={ART.stroke} />
+          <path d="M-15 -8L0 3L15 -8" {...stroke(accent)} />
+        </g>
+      </g>
+    </>
+  );
+}
+
+const COVERS: Record<string, (props: CoverProps) => ReactNode> = {
   "stay-safe-online": SafeOnlineCover,
+  "inside-your-devices": DevicesCover,
   "how-ai-really-works": AiCover,
+  "how-the-internet-works": InternetCover,
 };
 
-/** Cover for a course. Courses without a custom cover get the logo network on the grid. */
-export function CourseCover({
-  courseId,
-  title,
-  className = "",
-}: {
-  courseId: string;
-  title: string;
-  className?: string;
-}) {
+export const COVER_COURSE_IDS = Object.keys(COVERS);
+
+/**
+ * A course's thumbnail on the navy panel. Its one motion runs on hover, focus or tap of the nearest
+ * `group` (the course card, the path's side panel, the course header). A course without its own
+ * cover gets the logo network.
+ */
+export function CourseCover({ courseId, title, className = "" }: { courseId: string; title: string; className?: string }) {
   const Cover = COVERS[courseId];
+  const glow = `cover-glow-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
   return (
     <div className={`relative overflow-hidden bg-screen ${className}`}>
       {Cover ? (
-        <svg
-          viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
-          preserveAspectRatio="xMidYMid slice"
-          role="img"
-          aria-label={`${title}: illustration`}
-          className="absolute inset-0 size-full"
-        >
-          <Cover />
+        <svg viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} preserveAspectRatio="xMidYMid meet" role="img" aria-label={`${title}: illustration`} className="absolute inset-0 size-full">
+          <defs>
+            <GlowFilter id={glow} />
+          </defs>
+          <Cover accent={ACCENT_ART[courseAccent(courseId)]} glow={glow} />
         </svg>
       ) : (
         <div className="absolute inset-0 grid place-items-center">

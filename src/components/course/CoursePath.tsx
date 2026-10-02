@@ -145,7 +145,10 @@ export function CoursePath({ course }: { course: CourseOutline }) {
       <div>
         <MobileHeader state={state} />
         <h1 className="sr-only lg:not-sr-only lg:text-headline lg:font-semibold">{course.title}</h1>
-        <CourseLevel level={course.level} className="mt-1 hidden lg:inline-flex" />
+        {/* Desktop only (phones show it in MobileHeader): the wrapper hides it, so the badge's own inline-flex can't win. */}
+        <div className="mt-1 hidden lg:block">
+          <CourseLevel level={course.level} courseId={course.id} />
+        </div>
         <div className="mt-4 space-y-10 lg:mt-8">
           {state.modules.map((mod, m) => (
             <ModulePath
@@ -175,6 +178,10 @@ function MobileHeader({ state }: { state: CourseState }) {
   const percent = progressPercent(fraction);
   return (
     <div className="lg:hidden">
+      {/* The course's art on phones too (the side panel has it on desktop); a tap plays its one move. */}
+      <div className="group mb-4 overflow-hidden rounded-card border border-line">
+        <CourseCover courseId={state.course.id} title={state.course.title} className="aspect-[16/6]" />
+      </div>
       <div className="flex items-center gap-3">
         <ProgressRing value={fraction} size={48} stroke={5} label={`${percent}% complete`}>
           <span className="font-mono text-[0.7rem] font-semibold tabular-nums">{percent}%</span>
@@ -183,7 +190,7 @@ function MobileHeader({ state }: { state: CourseState }) {
           <p className="truncate text-title font-semibold" aria-hidden="true">
             {state.course.title}
           </p>
-          <CourseLevel level={state.course.level} />
+          <CourseLevel level={state.course.level} courseId={state.course.id} />
         </div>
       </div>
       <ModeToggle className="mt-4" />
@@ -198,7 +205,7 @@ function SidePanel({ state }: { state: CourseState }) {
   const percent = progressPercent(fraction);
   return (
     <div className="sticky top-24 space-y-4">
-      <div className="overflow-hidden rounded-card border border-line bg-surface shadow-card">
+      <div className="group overflow-hidden rounded-card border border-line bg-surface shadow-card">
         <CourseCover courseId={state.course.id} title={state.course.title} className="aspect-[16/9]" />
         <div className="flex items-center gap-4 p-4">
           <ProgressRing value={fraction} size={64} label={`${percent}% complete`}>

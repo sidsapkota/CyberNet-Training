@@ -24,7 +24,7 @@ Stay Safe Online → How AI Really Works → How the Internet Works → the rest
 
 ## 3. In progress and queued (owner, 2 Oct)
 
-- **Next: `course-thumbnails`** (owner's brief, 2 Oct): one accent colour and one hero object per course (the mascot from avatars v2), same line weight, subtle hover/tap motion, used on the catalog and course headers, plus a template for future courses; side-by-side at desktop and 360×560 in light and dark before merging. Flag first: the suggested purple (AI) is reserved for the Quantum tier, and green (Stay Safe Online) is our "correct answer" colour.
+- **`course-thumbnails` (built, waiting for the owner's review before merging):** one hero object and one identity colour per course (Stay Safe Online emerald: the mascot's shield deflecting a phishing hook; Inside Your Devices amber: a phone in floating layers; How AI Really Works violet: the mascot showing a card to a learning robot; How the Internet Works cyan: an envelope over a globe), on the art, the level dots and the course-card bar; one move on hover/tap, none under reduced motion; the template at the top of `CourseCover.tsx` (a test makes every course follow it). Owner chose violet (purple rule updated) and emerald (identity only, never in lessons). Screenshots in `docs/plans/thumbnails/` (`node scripts/e2e/thumbnail-shots.mjs`). Also fixes the course page showing the level line twice on phones.
 
 ## 4. Waiting on the owner
 

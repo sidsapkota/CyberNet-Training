@@ -1,3 +1,4 @@
+import { ACCENT_CLASSES, courseAccent } from "@/lib/content/courseTheme";
 import type { CourseLevel as Level } from "@/lib/content/schema";
 
 const LEVELS: Record<Level, { dots: 1 | 2 | 3; word: string }> = {
@@ -8,15 +9,17 @@ const LEVELS: Record<Level, { dots: 1 | 2 | 3; word: string }> = {
 
 /**
  * A course's level: 1–3 filled dots (small nodes, in the network's style) and the word, so it's
- * never shape or colour alone. Not cyan: a level isn't something to tap.
+ * never shape or colour alone. Not cyan: a level isn't something to tap. With `courseId`, the filled
+ * dots take the course's identity colour (src/lib/content/courseTheme.ts).
  */
-export function CourseLevel({ level, className = "" }: { level: Level; className?: string }) {
+export function CourseLevel({ level, courseId, className = "" }: { level: Level; courseId?: string; className?: string }) {
   const { dots, word } = LEVELS[level];
+  const filled = courseId ? ACCENT_CLASSES[courseAccent(courseId)].dot : "border-ink bg-ink";
   return (
     <span className={`inline-flex items-center gap-1.5 text-small text-ink-muted ${className}`}>
       <span aria-hidden="true" className="inline-flex items-center gap-1">
         {[1, 2, 3].map((n) => (
-          <span key={n} className={`size-2 rounded-node border ${n <= dots ? "border-ink bg-ink" : "border-line-strong bg-transparent"}`} />
+          <span key={n} className={`size-2 rounded-node border ${n <= dots ? filled : "border-line-strong bg-transparent"}`} />
         ))}
       </span>
       <span>

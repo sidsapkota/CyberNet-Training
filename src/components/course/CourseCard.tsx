@@ -7,6 +7,7 @@ import type { CourseOutline } from "@/lib/content/schema";
 import { EASE_OUT_QUICK, PRESS_SPRING } from "@/lib/motion";
 import { useProgress } from "@/lib/progress/ProgressProvider";
 import { computeCourseState, courseProgress, hasAnyProgress, progressPercent } from "@/lib/progress/state";
+import { ACCENT_CLASSES, courseAccent } from "@/lib/content/courseTheme";
 import { CourseLevel } from "./CourseLevel";
 
 /**
@@ -32,7 +33,7 @@ export function CourseCard({ course, startHere = false }: { course: CourseOutlin
         <div className="flex flex-1 flex-col gap-3 p-4">
           <div>
             <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
-              <CourseLevel level={course.level} />
+              <CourseLevel level={course.level} courseId={course.id} />
               {newcomer && (
                 <span className="rounded-sm border border-accent-ink px-2 py-0.5 font-mono text-caption font-semibold tracking-widest text-accent-ink uppercase">
                   Start here
@@ -45,7 +46,7 @@ export function CourseCard({ course, startHere = false }: { course: CourseOutlin
           <div className="mt-auto flex items-center gap-3" aria-label={`${percent}% complete`}>
             <div className="h-2 flex-1 overflow-hidden rounded-sm bg-line">
               <motion.div
-                className="h-full rounded-sm bg-accent"
+                className={`h-full rounded-sm ${ACCENT_CLASSES[courseAccent(course.id)].bar}`}
                 initial={{ width: "0%" }}
                 animate={{ width: `${percent}%` }}
                 transition={reduceMotion ? { duration: 0 } : { duration: 0.8, delay: 0.2, ease: EASE_OUT_QUICK }}
