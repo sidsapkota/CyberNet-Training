@@ -66,7 +66,7 @@
         "dns",
         "mx-record"
       ],
-      "prompt": "**HTTPS** fetches web pages securely, **DNS** turns names into addresses, and **SMTP** and **IMAP** handle email.\n\nWhich protocol does each job?",
+      "prompt": "**HTTPS** fetches pages, **DNS** turns names into addresses, **SMTP** and **IMAP** handle email. Which does each job?",
       "bins": [
         {
           "id": "https",
@@ -84,12 +84,12 @@
       "items": [
         {
           "id": "recipe",
-          "label": "Loading a recipe page",
+          "label": "Loading a recipe",
           "bin": "https"
         },
         {
           "id": "site-address",
-          "label": "Finding example.org's address",
+          "label": "Finding example.org",
           "bin": "dns"
         },
         {

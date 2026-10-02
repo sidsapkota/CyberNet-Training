@@ -19,7 +19,7 @@
         "tcp-resend",
         "live-data-skips-resend"
       ],
-      "prompt": "**TCP** is a tracked parcel: lost pieces are resent and put back in order. **UDP** is a postcard: quick, nothing checked or resent, so it suits **live** things, where late data is useless.\n\nWhich suits each job?",
+      "prompt": "**TCP** is a tracked parcel: lost pieces are resent, in order. **UDP** is a postcard: quick, nothing resent, so it suits **live** things, where late data is useless.",
       "bins": [
         {
           "id": "tcp",
@@ -33,7 +33,7 @@
       "items": [
         {
           "id": "download",
-          "label": "Downloading a game update",
+          "label": "Downloading a game",
           "bin": "tcp"
         },
         {
@@ -43,7 +43,7 @@
         },
         {
           "id": "cloud-save",
-          "label": "Saving a document to the cloud",
+          "label": "Saving to the cloud",
           "bin": "tcp"
         },
         {
@@ -53,7 +53,7 @@
         },
         {
           "id": "race",
-          "label": "Your car's position in a racing game",
+          "label": "Your car's position in a race",
           "bin": "udp"
         }
       ],

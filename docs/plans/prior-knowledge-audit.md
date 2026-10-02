@@ -86,3 +86,22 @@ now says in its prompt that face unlock learned from photos.
 - **Glossary (fixed):** IYD 3.2 `wont-charge` marked `[[port]]`, whose definition is the networking port; it now says "the charging port" with no mark.
 - **Predict-first openers** (the playbook's "predict, then learn") still open lessons, but each now
   gives the clue it needs in its own prompt, so a beginner can reason it out rather than guess.
+
+## Every option on screen (360×560)
+
+**The rule (owner):** every option in a card is visible without scrolling at 360×560 (and 360×640).
+`npm run e2e:fit-audit` now fails (exit 1) when any control in a card (choice, drag item, bin,
+switch, scene part, answer box) sits below the fold; page overflow alone is only reported.
+
+**Before:** 267 card views hid a control. **After:** none, across all 614 cards in 4 courses.
+
+How:
+- **Layout (phones only; desktop unchanged):** tighter options, drag items, pairs and bins (all
+  still 44px tap targets); sort trays in two columns, 3-bin sorts with label and items on one row;
+  packet paths never rotated, with Undo and Reset beside the instruction; simulator controls on
+  their list rows (End, Delete, an app's switch) instead of a second list below; on short screens
+  (≤620px tall) the question steps down to body size and terminal boxes get shorter.
+- **Content:** shorter prompts and labels with the same meaning and answers; a few long sorts,
+  drags and lists lost one repeated item. Every change is listed in `content/REVIEW.md`.
+
+Screenshots: `.e2e-shots/bits/` (the drag card and cards 6–7 of Bits and Binary at 360×560).

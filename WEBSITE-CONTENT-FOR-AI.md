@@ -338,7 +338,7 @@ Meet the operating system, the apps it manages, and the files it keeps.
 
 - Choose what happens: Music, a game and a message ping all want the **speaker** at once.
 - Simulator: The **task manager** lists each **process** (running program). End the CPU hog. Keep music, the browser and **System** (the OS).
-- Simulator: One app keeps grabbing RAM (a **memory leak**). Slide time to **40 min or more**, then end it. Keep the music on.
+- Simulator: Slide time to **40 min**, then end the app that keeps grabbing RAM (a **memory leak**). Keep the music.
 
 #### Files and Folders
 
@@ -379,8 +379,8 @@ Fix slow, full and flat devices with a simple loop, safely.
 **Best interactive cards**
 
 - Choose what happens: Your laptop got slower all afternoon. Let's find out which part is struggling.
-- Simulator: Free up at least **15 GB** on this full phone, but **keep your photos and essay**.
-- Simulator: An update needs **12 GB free**. Delete what's saved elsewhere; keep **only copies**.
+- Simulator: Free up **15 GB** or more. Keep your photos and essay.
+- Simulator: Free **12 GB** for an update. Keep your **only copies**.
 
 #### Power Problems
 
@@ -967,7 +967,7 @@ See how data is chopped into packets, passed from router to router, and rebuilt 
 
 - Route a packet: The cable from **Router A** to the server is cut (it's gone from the map). Get the packet there another way.
 - Match pairs: Match each problem to how the internet deals with it.
-- Terminal: Yesterday's traceroute is at the top. Run `traceroute example.com` and compare the hops.
+- Terminal: Run `traceroute example.com` and compare its hops with yesterday's traceroute, above.
 
 #### Module quiz (7 questions)
 
@@ -1074,7 +1074,7 @@ Discover how one address runs many services, how TCP and UDP deliver data, and t
 
 **Best interactive cards**
 
-- Sort into groups: **TCP** is a tracked parcel: lost pieces are resent and put back in order. **UDP** is a postcard: quick, nothing checked or resent, so it suits **live** things, where late data is useless. Which suits each job?
+- Sort into groups: **TCP** is a tracked parcel: lost pieces are resent, in order. **UDP** is a postcard: quick, nothing resent, so it suits **live** things, where late data is useless.
 - Put in order: Before sending data, TCP checks both sides can hear each other with three messages: the **three-way handshake**. Put them in order.
 - Match pairs: Match each activity to the reason it's delivered that way.
 
@@ -1092,7 +1092,7 @@ Discover how one address runs many services, how TCP and UDP deliver data, and t
 **Best interactive cards**
 
 - Put in order: Like a letter in nested wrappers, each layer follows its own **protocol**; the outside one is Wi-Fi or a cable, to the next device. Order them from the **letter in the middle** outwards.
-- Sort into groups: **HTTPS** fetches web pages securely, **DNS** turns names into addresses, and **SMTP** and **IMAP** handle email. Which protocol does each job?
+- Sort into groups: **HTTPS** fetches pages, **DNS** turns names into addresses, **SMTP** and **IMAP** handle email. Which does each job?
 - Put in order: **SMTP** sends mail on its way; **IMAP** lets an app read mail kept on a server. Order your email to `hello@example.org`.
 
 #### Module quiz (7 questions)
@@ -1117,7 +1117,7 @@ Put it all together: follow one web page from the moment you press Enter to the 
 **Best interactive cards**
 
 - Sort into groups: **GET** means "please give me this"; **POST** means "please take this data". Which does your browser use for each?
-- Sort into groups: A **status code**'s first digit says how it went: **2** fine, **4** a problem with the request (like a missing page), **5** a problem on the server. Sort these.
+- Sort into groups: A **status code**'s first digit says how it went: **2** fine, **4** a problem with the request, **5** a problem on the server.
 - Terminal: `curl -I` (capital **I**) shows the status code and labelled lines (**headers**). A **3** code means "moved"; `Location` gives the new address. Run `curl -I http://example.com/old-news`.
 
 #### HTTPS and the Padlock

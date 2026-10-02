@@ -47,7 +47,34 @@ fall in IETF-reserved space.
 
 ---
 
-## train_model redesign (2 Oct 2026, zero-confusion rule)
+## Prior knowledge and every option on screen (2 Oct 2026)
+
+**Prior knowledge:** every card is tagged with what it `teaches` and `uses`; `concepts.test.ts`
+fails if a question needs something not taught earlier (by a core card). 42 problems were fixed;
+the list, worst first, is in `docs/plans/prior-knowledge-audit.md`. Bits and Binary: the "valid
+IP address" question moved to What Is an IP Address? (after IPv4 is taught), card 8 now asks
+about a byte with 10 bits, and "make a byte" says what the 256 patterns are.
+
+**Every option on screen (360×560):** `e2e:fit-audit` now fails when any control needs scrolling.
+To fit, wording got shorter across all four courses (prompts, item labels, match pairs) with the
+same meaning, the same answers and nothing new taught. Where a list was too long, one item went
+(each was a repeat of an idea another item still tests):
+- How AI Really Works: 6-item sorts and drags cut to 4–5 (`helpful-or-problem`,
+  `goal-context-format`, `include-or-leave-out` kept 6 with short labels, `check-or-fine`,
+  `which-apps-use-ai`, `always-true`, `help-or-harm`, `real-or-suspicious-review`,
+  `type-or-keep`, `needs-it`); match pairs at most 4 (`kind-of-tool` lost "translation").
+- How the Internet Works: `whose-problem` lost `403 Forbidden` (404 still shows a request
+  problem); `first-digit-final` lost `410 Gone`; `route-the-reply` is laid out on 2 rows (same
+  nodes and links); `route-changed` shows only yesterday's 5 hops; `certificate-warnings` and
+  `url-parts-jobs` have 3 pairs.
+- Inside Your Devices: `safe-for-the-port` lost "Take it to a repair shop" (the explanation still
+  names it); `room-for-update` lost Notes and "Old setup files" (Photos still teaches "only copy";
+  12 GB is reached by deleting music and videos); `memory-leak` (bonus) lost the browser and file
+  sync rows and its total tile (the chat app's row shows the leak, the status shows the lag);
+  `end-the-frozen-app` lost the Updater row; `q-make-room-in-ram` lost the browser (closing the
+  game, or the video call, still makes room).
+
+
 
 All 11 `train_model` cards: real pictures instead of a chart (fruit, balls, sky, day/night scenes,
 chat bubbles), problem first ("Model's guess: Banana ✗"), one change from 2–4 tiles with nothing

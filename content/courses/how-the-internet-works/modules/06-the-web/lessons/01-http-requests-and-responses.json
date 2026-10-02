@@ -139,7 +139,7 @@
         "status-code-classes"
       ],
       "uses": [],
-      "prompt": "A **status code**'s first digit says how it went: **2** fine, **4** a problem with the request (like a missing page), **5** a problem on the server. Sort these.",
+      "prompt": "A **status code**'s first digit says how it went: **2** fine, **4** a problem with the request, **5** a problem on the server.",
       "bins": [
         {
           "id": "fine",
@@ -166,22 +166,17 @@
           "bin": "mine"
         },
         {
-          "id": "s403",
-          "label": "`403 Forbidden`",
-          "bin": "mine"
-        },
-        {
           "id": "s500",
-          "label": "`500 Internal Server Error`",
+          "label": "`500 Server Error`",
           "bin": "server"
         },
         {
           "id": "s503",
-          "label": "`503 Service Unavailable`",
+          "label": "`503 Unavailable`",
           "bin": "server"
         }
       ],
-      "explanation": "**2** worked. **4** means the request was the problem (404: nothing there; 403: not yours to see), and **5** means the server failed (500: an error inside it; 503: busy or down).",
+      "explanation": "**2** worked. **4** means the request was the problem (404: nothing there), and **5** means the server failed (500: an error inside it; 503: busy or down).",
       "hint": "Ignore the words for a moment and read only the first digit of each code.",
       "nudge": "Some words sound alarming, but only the first digit decides."
     },

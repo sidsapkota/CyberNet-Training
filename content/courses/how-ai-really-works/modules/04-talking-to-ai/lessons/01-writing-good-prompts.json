@@ -104,22 +104,17 @@
         },
         {
           "id": "brother",
-          "label": "It's for my little brother",
+          "label": "It's for my brother",
           "bin": "context"
         },
         {
           "id": "read-ch1",
-          "label": "I've already read chapter 1",
+          "label": "I've read chapter 1",
           "bin": "context"
         },
         {
           "id": "rhyme",
           "label": "As a rhyme",
-          "bin": "format"
-        },
-        {
-          "id": "table",
-          "label": "In a table",
           "bin": "format"
         }
       ],

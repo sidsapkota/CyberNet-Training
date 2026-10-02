@@ -63,7 +63,10 @@ design QA script checks it. On phones, the binary bits wrap to two rows of four 
 drag to order picks items up with a short press and hold, so a swipe over the list still scrolls. Its
 first-time tip ("Press and hold an item, then drag it.", or "Drag an item to move it." with a
 mouse) shows until the learner's first drag (per device). Sort bins with three bins stack on
-phones, so item names never squeeze into narrow columns.
+phones, so item names never squeeze into narrow columns; each stacked bin keeps its label and its
+items on one row, and the tray is two columns. On short screens (max-height 620px, such as an
+in-app browser) a card's question steps down from 20px to body size, and terminal output boxes get
+shorter (24dvh up to 700px tall); the output scrolls inside its box.
 
 All of `build`, `lint`, `test` and `typecheck` must pass with zero errors and warnings.
 
@@ -228,7 +231,10 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - `links`: `{from, to}`, undirected.
   - `validPaths`: every accepted route, each starting at `source`, ending at `destination`, following
     links and never repeating a node.
-  - Never rotated: phones keep the layout with shorter rows (80px), so keep networks small (at most 4 columns and 3 rows fit 360×560).
+  - Never rotated: phones keep the layout with shorter rows (80px, or 104px when nodes show
+    addresses), so keep networks small (at most 4 columns and 2 rows with addresses fit 360×560).
+    On phones Undo and Reset are icon buttons beside the instruction, and the route readout is for
+    screen readers only (the numbered stops show the order).
   - Wrong routes animate the packet up to the first wrong hop.
 - **`terminal`:**
   - `commands` (1–12): `{ command, aliases?, output (printed verbatim), description? (shown by help) }`.
@@ -320,6 +326,12 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - The `device` output is a phone or laptop mockup that stutters as `smooth` drops, with its state
     always in text too. On phones it sits beside the other outputs (drawn a little smaller), and two
     or more meters without a device sit side by side, so the controls stay on a phone screen.
+  - **Controls on list rows:** a control for one row of a `list` output sits on that row, not in
+    a grid below: `end-<row>` (a button: the task manager's "End"), `delete-<row>` (a switch:
+    storage's "Delete") or a switch whose id is the row's id (an app on or off; the `memory` model
+    lists closed apps as crossed-out "closed" rows, so each keeps its switch). Beside a list, number
+    and bar tiles share a row on phones (numbers on one line), the device shows only its status (in
+    the list's header), and a remaining slider comes first. Keep lists to about 5 rows.
   - Answers are ready once a control changes. The server re-grades by running the same model.
 - **`scenario`:** steps tell the story as you go; a picked **ending** is just selected (it can be
   changed) and its consequence and outcome show **after Check**. Try again takes the failed ending

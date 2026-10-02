@@ -151,7 +151,7 @@
       "uses": [
         "status-code-classes"
       ],
-      "prompt": "You haven't seen these codes before. Sort each: did it work, or where was the problem?",
+      "prompt": "New codes! Did each work, or where was the problem?",
       "bins": [
         {
           "id": "fine",

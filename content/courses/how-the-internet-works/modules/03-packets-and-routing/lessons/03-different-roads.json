@@ -244,8 +244,8 @@
         "traceroute",
         "hop"
       ],
-      "prompt": "Yesterday's [[traceroute]] is at the top. Run `traceroute example.com` and compare the [[hop|hop]]s.",
-      "intro": "Saved from yesterday:\n\n$ traceroute example.com\ntraceroute to example.com (198.51.100.10), 30 hops max, 60 byte packets\n 1  192.168.1.1 (192.168.1.1)  1.912 ms  1.804 ms  1.765 ms\n 2  203.0.113.1 (203.0.113.1)  9.483 ms  9.412 ms  9.377 ms\n 3  203.0.113.65 (203.0.113.65)  11.207 ms  11.164 ms  11.122 ms\n 4  198.51.100.1 (198.51.100.1)  18.930 ms  18.842 ms  19.004 ms\n 5  example.com (198.51.100.10)  19.315 ms  19.271 ms  19.233 ms\n\nType help to see the commands you can use here.",
+      "prompt": "Run `traceroute example.com` and compare its [[hop|hop]]s with yesterday's [[traceroute]], above.",
+      "intro": "Yesterday:\n$ traceroute example.com\n 1  192.168.1.1 (192.168.1.1)  1.912 ms  1.804 ms  1.765 ms\n 2  203.0.113.1 (203.0.113.1)  9.483 ms  9.412 ms  9.377 ms\n 3  203.0.113.65 (203.0.113.65)  11.207 ms  11.164 ms  11.122 ms\n 4  198.51.100.1 (198.51.100.1)  18.930 ms  18.842 ms  19.004 ms\n 5  example.com (198.51.100.10)  19.315 ms  19.271 ms  19.233 ms",
       "commands": [
         {
           "command": "traceroute example.com",

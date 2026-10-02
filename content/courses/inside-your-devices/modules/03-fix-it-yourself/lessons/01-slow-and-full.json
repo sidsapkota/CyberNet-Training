@@ -410,7 +410,7 @@
         "cloud",
         "backup"
       ],
-      "prompt": "An [[update]] needs **12 GB** free. Delete only what's saved elsewhere.",
+      "prompt": "Free **12 GB** for an [[update]]. Keep your **only copies**.",
       "model": "storage",
       "params": {
         "capacityGb": 34,
@@ -423,17 +423,17 @@
           },
           {
             "id": "music",
-            "label": "Music (also in cloud)",
+            "label": "Music (in the cloud)",
             "gb": 5
           },
           {
             "id": "old-videos",
-            "label": "Old videos (backed up)",
+            "label": "Videos (backed up)",
             "gb": 4
           },
           {
             "id": "maps",
-            "label": "Maps (can re-download)",
+            "label": "Maps (can redownload)",
             "gb": 2
           }
         ]
@@ -466,11 +466,6 @@
           "kind": "meter",
           "label": "Free space",
           "unit": "GB"
-        },
-        {
-          "id": "usedPct",
-          "kind": "bar",
-          "label": "Storage used"
         },
         {
           "id": "files",

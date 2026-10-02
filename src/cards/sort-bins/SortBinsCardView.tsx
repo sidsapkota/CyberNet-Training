@@ -103,6 +103,7 @@ function Bin({
   canDrop,
   onPlace,
   selectedLabel,
+  stacked = false,
 }: {
   id: string;
   label: string;
@@ -110,6 +111,8 @@ function Bin({
   canDrop: boolean;
   onPlace: () => void;
   selectedLabel: string | null;
+  /** Three bins stack on phones: each bin's label and its items share a row, to save height. */
+  stacked?: boolean;
 }) {
   const { setNodeRef, isOver } = useDroppable({ id });
   return (
@@ -117,7 +120,7 @@ function Bin({
       ref={setNodeRef}
       data-drop-bin
       aria-label={label}
-      className={`flex min-h-14 flex-col rounded-card border-2 border-dashed p-1 transition-colors sm:min-h-32 sm:p-2 ${
+      className={`flex min-h-12 rounded-card border-2 border-dashed p-1 transition-colors sm:min-h-32 sm:flex-col sm:p-2 ${stacked ? "flex-row flex-wrap items-center gap-x-1.5 max-sm:p-0.5" : "flex-col"} ${
         isOver || canDrop ? "border-accent-ink bg-accent-soft" : "border-line-strong bg-surface-raised"
       }`}
     >
@@ -131,7 +134,7 @@ function Bin({
       >
         {label}
       </button>
-      <div className="flex flex-1 flex-wrap content-start gap-1.5 sm:mt-1">{children}</div>
+      <div className={`flex flex-1 flex-wrap content-start gap-1.5 sm:mt-1 ${stacked ? "py-0.5" : ""}`}>{children}</div>
     </section>
   );
 }
@@ -199,7 +202,7 @@ export function SortBinsCardView({ card, answer, onAnswerChange, status }: CardC
             {tray.map(chip)}
           </TrayZone>
           {/* Three bins stack on phones, so item names never squeeze into ~100px columns. */}
-          <div className={`mt-2 grid gap-2 sm:mt-4 ${card.bins.length === 3 ? "grid-cols-1 sm:grid-cols-3" : "grid-cols-2"}`}>
+          <div className={`mt-2 grid sm:mt-4 sm:gap-2 ${card.bins.length === 3 ? "grid-cols-1 gap-1.5 sm:grid-cols-3" : "grid-cols-2 gap-2"}`}>
             {card.bins.map((bin) => (
               <Bin
                 key={bin.id}
@@ -208,6 +211,7 @@ export function SortBinsCardView({ card, answer, onAnswerChange, status }: CardC
                 canDrop={!locked && selected !== null}
                 onPlace={() => selected && place(selected, bin.id)}
                 selectedLabel={selectedLabel}
+                stacked={card.bins.length === 3}
               >
                 {items.filter((i) => answer[i.id] === bin.id).map(chip)}
               </Bin>

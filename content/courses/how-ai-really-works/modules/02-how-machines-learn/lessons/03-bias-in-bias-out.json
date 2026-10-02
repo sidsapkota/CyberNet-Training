@@ -309,7 +309,7 @@
         {
           "id": "slang",
           "left": "Misreads slang as mean",
-          "right": "Add kind messages with slang"
+          "right": "Add kind slang messages"
         },
         {
           "id": "one-school",
@@ -318,8 +318,8 @@
         },
         {
           "id": "accents",
-          "left": "95% overall, worse for some accents",
-          "right": "Check accuracy for each group"
+          "left": "Worse for some accents",
+          "right": "Check each group's accuracy"
         },
         {
           "id": "decisions",
