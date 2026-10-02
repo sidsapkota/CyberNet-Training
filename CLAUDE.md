@@ -56,6 +56,7 @@ npm run e2e:fit-audit     # every card at 360x640 and 360x560: does it fit witho
 npm run e2e:dashboard-numbers # cards done, no lesson finished: header XP, Activity XP bars and rings
                           # (throwaway account; secret key, so a local production build or production)
 npm run e2e:player-flow   # before/after screenshots: a hotspot card and the wrong-answer flow (SHOTS_TAG=)
+npm run e2e:founder       # Founding Member: /pro, paywall, dashboard line, badge, refund, events (360x560 + desktop)
 ```
 
 Tap targets are at least **44px** everywhere (inline text links and glossary terms excepted); the
@@ -1032,6 +1033,33 @@ Sandbox setup: `docs/stripe-checklist.md`. `PRO_LAUNCH_AT` in Production marks t
 - **End-to-end:** with `stripe listen` forwarding to the dev server, a scratch Playwright script
   runs real Checkout and portal pages with test cards and test clocks (monthly with trial, annual
   without, portal cancel, a failed renewal, the grant expiring); see the checklist's step 10.
+
+## Founding Member
+
+A one-off payment for lifetime Pro ("for as long as CyberNet Training runs", never "forever"), for
+the first 50 buyers. **Behind `FOUNDER_OFFER=on`** (plus `STRIPE_PRICE_FOUNDER`, a one-off price):
+off, `/api/pro/founder` answers null and nothing shows. Plan and owner steps:
+`docs/plans/founding-member.md`. Rules in `src/lib/pro/founder.ts` (pure, tested), UI in
+`src/components/pro/Founder.tsx`.
+- **Honest numbers:** the counter is the database's (`founder_seats()`, never cached), and the
+  headline and comparison ("Lifetime Pro for A$29, less than 4 months of the monthly plan" / "A
+  year of monthly is A$95.88. This is A$29, once.") are worked out from Stripe's live prices
+  (`founderCopy`). Never a "was" price, timer or fake scarcity; at 50 it disappears.
+- **Seats:** `startFounderCheckoutAction` (payment mode, 31-minute session) holds a seat
+  (`reserve_founder_seat`, under a lock: sold + held < 50); the webhook's
+  `checkout.session.completed` (and `/pro/welcome`) claims it for a paid session with our
+  metadata (idempotent); a **full** `charge.refunded` ends it and frees the seat. An unrefunded
+  seat is Pro with no end date (`proStatus` kind `founder`).
+- **Shown to** guests, free accounts and early-user grant holders; never subscribers or founders.
+  First on `/pro` (`/pricing` redirects there), the main button in `ProPitch` (trial one link
+  away), one dismissible dashboard line. "Under 18? Ask a parent before buying." under every button.
+- **Badge** (`FounderBadge`: the logo's shield and the words): dashboard, account, Your plan,
+  player cards and leaderboard rows (via `league_founders()`; `league_standings()` unchanged).
+- **Parent pitch** (`ParentPitch`, on `/pro` and the landing page): only what Stay Safe Online
+  teaches, plus "Buying for your kid?" (buy on the kid's account, together).
+- **Events:** `founder_viewed`, `founder_clicked` (only the screen), `founder_purchased`.
+- **Tables:** `founding_members`, `founder_holds` (`20261007100000_founding_members.sql`): learners
+  read only their own seat; only the server writes; `check:rls` proves it.
 
 ## Paywall and certificates
 
