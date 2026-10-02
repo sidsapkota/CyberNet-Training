@@ -10,7 +10,7 @@ Last updated: 2 October 2026.
 - Free accounts: any lesson, 3 new lessons a day. CyberNet Pro (Stripe, live): unlimited lessons, Mistake review, certificates, an extra streak freeze; 7-day trial with a reminder email 3 days before it ends. One-screen `ProPitch`; "Not now" asks "What's stopping you?" once a week per device (`pro_declined`).
 - Plans (/pro, /account/plan), Pro identity (node frame, badge, welcome moment), no upgrade prompts for members.
 - Lesson player: one Check flow, Try again keeps what's right, Back/forward (read-only), Listen in the header, Hint in the footer, bonus cards, mascot reactions and the security scan, `lesson_quit`.
-- Usernames are the one public identity (server-checked filters, 30-day changes). Avatars and rewards (spins for modules, courses and 7/30/100-day streaks; 3 Pro items). Daily goals and streaks; leagues (hidden until 20 learners earn XP in one week); certificates.
+- Usernames are the one public identity (server-checked filters, 30-day changes). **Avatars v2** (merged 2 Oct): the avatar is the mascot dressed up, 12 accessories in 5 slots (free cap, glasses, hoodie; spin beanie, headband, headset, visor; scarf at 7 days, grad cap for a course, jetpack at 30 days; Pro crown and cape), the avatar page at /account/rewards, spins only while something is left to win ("N spins saved for new items"). Both migrations applied (`profiles.outfit` with a shape check; v1 items retired). `profiles.avatar` is unused. Daily goals and streaks; leagues (hidden until 20 learners earn XP in one week); certificates.
 - Feedback form stores each message and emails it to cybernettraining10@gmail.com (`FEEDBACK_INBOX`; switch to hello@ once ImprovMX forwarding works), at most 12 an hour.
 - **Learn before you do** (card types `reveal`, `true_false`, `fill_gap`; time-based lessons via `LEARN_FIRST_MODULES` in `src/lib/content/shape.ts`): Inside Your Devices module 1 (pilot) and all of Stay Safe Online. The train_model redesign (pictures, problem first) and See it in 3D on the phone explore card are live.
 - Functions run in **syd1** next to Supabase. Help lines: Kids Helpline with Lifeline (verified), eSafety, ACCCE, Scamwatch, IDCARE, ReportCyber, 000.
@@ -24,13 +24,13 @@ Stay Safe Online → How AI Really Works → How the Internet Works → the rest
 
 ## 3. In progress and queued (owner, 2 Oct)
 
-- **`avatars-v2` (built, not merged):** the avatar is the mascot dressed up: 12 accessories in 5 slots (free cap, glasses, hoodie; spin beanie, headband, headset, visor; scarf at 7 days, grad cap for a course, jetpack at 30 days; Pro crown and cape), the avatar page with slot tabs, saved spins, the capped mascot on the sign-up gate. Screenshots in `docs/plans/avatars/`. **Migration 1 (`20261006100000_avatar_outfits.sql`, adds `profiles.outfit`) needs the owner's approval before it's applied;** the branch can't merge before it (the code reads `outfit`). Migration 2 (retire v1 items) runs after the merge. Then `check:rls`, `e2e:rewards` and regenerated DB types.
-- **Next after avatars v2: `course-thumbnails`** (owner's brief, 2 Oct): one accent colour and one hero object per course (the mascot from avatars v2), same line weight, subtle hover/tap motion, used on the catalog and course headers, plus a template for future courses; side-by-side at desktop and 360×560 in light and dark before merging. Flag first: the suggested purple (AI) is reserved for the Quantum tier, and green (Stay Safe Online) is our "correct answer" colour.
+- **Dashboard numbers (found 2 Oct, waiting on the owner):** Activity bars and course rings count only finished lessons and passed quizzes, while XP and the streak count every card, so a learner with cards done but no finished lesson sees 0 bars and 0% (the owner's account: 13 cards, 75 XP, no finished lesson). Proposed: bars from the XP ledger per day, rings from core cards done.
+- **Next: `course-thumbnails`** (owner's brief, 2 Oct): one accent colour and one hero object per course (the mascot from avatars v2), same line weight, subtle hover/tap motion, used on the catalog and course headers, plus a template for future courses; side-by-side at desktop and 360×560 in light and dark before merging. Flag first: the suggested purple (AI) is reserved for the Quantum tier, and green (Stay Safe Online) is our "correct answer" colour.
 
 ## 4. Waiting on the owner
 
 - `docs/plans/what-really-happens.md`: approved plan for a new Medium course; the build waits for the owner.
-- Drop the unused `profiles.display_name` and `league_players.handle*` columns: needs a migration (show the SQL first).
+- Drop the unused `profiles.display_name`, `profiles.avatar` and `league_players.handle*` columns: needs a migration (show the SQL first).
 - Recheck AI lesson 4.3 (product names, makers, age rules) by 1 January 2027, then every 3 months.
 - An adult (ideally a lawyer) to review the privacy and terms drafts (`content/legal/`).
 - Playtest with real learners (AI audits overstate beginner ability: the SSO audit got 105/105 and called some cards too easy).
