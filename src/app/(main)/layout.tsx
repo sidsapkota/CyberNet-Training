@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { LeaguesOpening } from "@/components/leagues/LeaguesOpening";
 import { SiteFooter } from "@/components/nav/SiteFooter";
 import { BottomNav, SiteHeader } from "@/components/nav/SiteNav";
 import { ProCelebration } from "@/components/pro/ProCelebration";
@@ -12,6 +13,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
       <SiteFooter />
       <BottomNav />
       <ProCelebration />
+      <LeaguesOpening />
     </div>
   );
 }
