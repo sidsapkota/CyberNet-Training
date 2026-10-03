@@ -42,7 +42,9 @@ export type AnalyticsEvent =
   | "checkout_started"
   | "trial_started"
   | "subscribed"
-  | "certificate_issued";
+  | "certificate_issued"
+  // Someone clicked "Email us" about a family/household deal, in /pro's parent section (no properties).
+  | "family_interest";
 
 /** What an event is about: a lesson id (a plain string), or a course. */
 export type EventTarget = string | { course: string };
