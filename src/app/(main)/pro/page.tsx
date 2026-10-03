@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { FamilyInterest } from "@/components/pro/FamilyInterest";
 import { FounderCard, ParentPitch } from "@/components/pro/Founder";
 import { PlansCards, PlansHeading } from "@/components/pro/PlansCards";
 import { ChevronDownIcon } from "@/components/ui/icons";
@@ -54,6 +55,7 @@ export default async function ProPage() {
 
       <div className="mx-auto mt-8 max-w-3xl">
         <ParentPitch />
+        <FamilyInterest className="mt-4" />
       </div>
 
       {prices && (

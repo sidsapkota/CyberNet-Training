@@ -31,7 +31,7 @@ One payment (A$29, `STRIPE_PRICE_FOUNDER`, already in Vercel Production) for lif
 3. `docs/plans/what-really-happens.md`: approved plan for a new Medium course; the build waits for you.
 4. Drop the unused `profiles.display_name`, `profiles.avatar` and `league_players.handle*` columns (a drop: needs your OK on the SQL).
 5. Recheck AI lesson 4.3 (product names) by 1 January 2027; an adult or lawyer to review `content/legal/`; playtest with real learners.
-6. On hold: the Pro streak-freeze feature and a family plan.
+6. On hold: the Pro streak-freeze feature and a family plan. **A family-interest line is live on /pro** (merged 3 Oct): one quiet line in the parent section, "Want Pro for your family or household? Email us…" (mailto to `FEEDBACK_INBOX`, subject "Family plan"), with a `family_interest` analytics event on click — gauging demand before building a real family plan. Watch the Events panel and the inbox.
 
 ## 4. Rollout (owner, 2 Oct), in order
 
