@@ -78,14 +78,34 @@ function League({ league, courses, reload }: { league: MyLeague; courses: Course
     ? league.standings
     : league.standings.filter((r) => !r.isMe).map((r, i) => ({ ...r, rank: i + 1 }));
   const [now, setNow] = useState(() => Date.now());
+  // Each minute: tick the countdown and re-fetch standings, so ranks move during the week.
   useEffect(() => {
-    const id = window.setInterval(() => setNow(Date.now()), 60_000);
+    const id = window.setInterval(() => {
+      setNow(Date.now());
+      reload();
+    }, 60_000);
     return () => window.clearInterval(id);
-  }, []);
+  }, [reload]);
   const [open, setOpen] = useState<StandingRow | null>(null);
   const me = standings.find((r) => r.isMe);
   const ranked = standings.length;
   const { up, down } = zoneSizes(ranked, player.tier);
+
+  // Announce the learner's own position, and call out a move up or down when a poll changes it.
+  const myRank = me?.rank ?? null;
+  const myXp = me?.weeklyXp ?? null;
+  const [rankNote, setRankNote] = useState<string | null>(null);
+  const prevRank = useRef<number | null>(null);
+  useEffect(() => {
+    if (myRank === null) {
+      prevRank.current = null;
+      return;
+    }
+    const prev = prevRank.current;
+    if (prev === null) setRankNote(`You're number ${myRank} of ${ranked}${myXp !== null ? ` with ${myXp} XP this week` : ""}.`);
+    else if (prev !== myRank) setRankNote(myRank < prev ? `You moved up to number ${myRank}.` : `You moved down to number ${myRank}.`);
+    prevRank.current = myRank;
+  }, [myRank, myXp, ranked]);
 
   return (
     <div className="mx-auto grid max-w-wide gap-6 lg:grid-cols-[1fr_20rem]">
@@ -120,7 +140,7 @@ function League({ league, courses, reload }: { league: MyLeague; courses: Course
         ) : (
           <Standings rows={standings} tier={player.tier} onOpen={setOpen} />
         )}
-        {me && <p className="sr-only" aria-live="polite">{`You're ${me.rank} of ${ranked} with ${me.weeklyXp} XP this week.`}</p>}
+        {rankNote && <p className="sr-only" aria-live="polite">{rankNote}</p>}
       </div>
 
       <aside className="space-y-6">
@@ -165,11 +185,16 @@ function Standings({ rows, tier, onOpen }: { rows: StandingRow[]; tier: MyLeague
             {down > 0 && row.rank === size - down + 1 && <ZoneDivider kind="down" />}
             <motion.button
               type="button"
+              layout={!reduceMotion}
               onClick={() => onOpen(row)}
               aria-label={label}
               initial={reduceMotion ? false : { opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.25, delay: staggerDelay(i, 0.03) }}
+              transition={
+                reduceMotion
+                  ? { duration: 0 }
+                  : { layout: { type: "spring", stiffness: 500, damping: 40 }, duration: 0.25, delay: staggerDelay(i, 0.03) }
+              }
               className={`flex min-h-14 w-full items-center gap-3 rounded-control border px-3 text-left transition-colors hover:bg-surface-raised ${
                 row.isMe ? "border-accent-ink bg-accent-soft" : "border-line bg-surface"
               }`}

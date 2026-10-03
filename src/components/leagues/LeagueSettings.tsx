@@ -55,12 +55,17 @@ export function LeagueSettings({
           aria-labelledby={`${id}-show`}
           onClick={toggleShow}
           disabled={pending}
-          className={`relative h-8 w-14 shrink-0 rounded-node border-2 transition-colors ${show ? "border-accent-ink bg-accent" : "border-line-strong bg-surface-raised"}`}
+          className="grid min-h-11 w-14 shrink-0 place-items-center rounded-control"
         >
+          {/* 44px tap target around a 32px switch (the track and knob are the visual). */}
           <span
             aria-hidden="true"
-            className={`absolute top-1/2 size-5 -translate-y-1/2 rounded-node transition-all ${show ? "left-[calc(100%-1.5rem)] bg-on-accent" : "left-1 bg-ink-muted"}`}
-          />
+            className={`relative block h-8 w-14 rounded-node border-2 transition-colors ${show ? "border-accent-ink bg-accent" : "border-line-strong bg-surface-raised"}`}
+          >
+            <span
+              className={`absolute top-1/2 size-5 -translate-y-1/2 rounded-node transition-all ${show ? "left-[calc(100%-1.5rem)] bg-on-accent" : "left-1 bg-ink-muted"}`}
+            />
+          </span>
         </button>
       </div>
       {message && (

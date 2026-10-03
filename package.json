@@ -40,7 +40,8 @@
     "e2e:dashboard-numbers": "node scripts/e2e/dashboard-numbers.mjs",
     "e2e:player-flow": "node scripts/e2e/player-flow-shots.mjs",
     "e2e:prod-mascot": "node scripts/e2e/prod-mascot.mjs",
-    "e2e:founder": "node scripts/e2e/founder.mjs"
+    "e2e:founder": "node scripts/e2e/founder.mjs",
+    "e2e:leagues": "node scripts/e2e/leagues.mjs"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

@@ -6,6 +6,7 @@ import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { SaveProgressPrompt } from "@/components/account/SaveProgressPrompt";
 import { SignUpGate } from "@/components/account/SignUpGate";
+import { LeagueRankMoment } from "@/components/leagues/LeagueRankMoment";
 import { DailyGoalSummary } from "@/components/streak/DailyGoalSummary";
 import { Mascot } from "@/components/mascot/Mascot";
 import { ButtonLink, buttonClasses } from "@/components/ui/Button";
@@ -120,6 +121,7 @@ export function LessonComplete({
         )}
 
         <DailyGoalSummary goalMetNow={goalMetNow} freezeEarned={freezeEarned} />
+        <LeagueRankMoment />
         <SpinPrompt />
 
         {gateNext && next ? (

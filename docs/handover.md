@@ -1,7 +1,7 @@
 # Handover
 
 Read this first in every session. It is replaced, not appended: git keeps the history.
-Last updated: 2 October 2026 (end of the day).
+Last updated: 3 October 2026.
 
 ## 1. Live on production (https://cybernettraining.com, branch `main`)
 
@@ -11,6 +11,7 @@ Last updated: 2 October 2026 (end of the day).
 - Plans (/pro, /account/plan; `/pricing` now redirects to /pro), Pro identity, no upgrade prompts for members.
 - Lesson player: one Check flow, Try again keeps what's right, Back/forward, Listen, Hint, bonus cards, mascot reactions, `lesson_quit`.
 - Usernames, avatars v2, daily goals and streaks, leagues (hidden until 20 learners earn XP in a week), certificates, dashboard numbers, course thumbnails (one colour per course).
+- **Leagues moments (merged 3 Oct):** a one-time full-screen "Leagues are open!" celebration (`LeaguesOpening`, dashboard only — pathname `/` — and once per device; shows for future learners too, so a brand-new learner meets it on their first dashboard visit); live rank on `/leagues` (`LeaguesView` polls each minute, rows animate with `motion` layout, aria-live "You moved up to #N"); and a small "You moved up to #N" moment on the lesson-complete screen (`LeagueRankMoment`, compares against the rank stored per device at the last finished lesson). All leagues-open only, signed-in only, reduced-motion safe; pure rules in `src/lib/leagues/opening.ts` + `rankMoment.ts` (tested). `npm run e2e:leagues` (8 checks: all moments + a live rank rise with no reload, seeds and cleans up a throwaway league on staging, production-guarded) and `e2e:design-qa` now covers `/leagues` signed in (staging only). Fixed the leaderboards toggle to a 44px tap target (also on `/account`). **Known pre-existing (not leagues):** the desktop signed-in header account link is 40px tall (<44) on every signed-in page.
 - **Prior knowledge only (merged 2 Oct):** every card is tagged with what it `teaches` and `uses`; `concepts.test.ts` fails if a question needs something not taught earlier (`npx tsx scripts/check-concepts.ts [course]`). 42 problems fixed, all four courses; worst-first list in `docs/plans/prior-knowledge-audit.md`. Bits and Binary: the IP question moved to What Is an IP Address?, card 7 (was 8) asks about a byte with 10 bits.
 - **Every option on screen (merged 2 Oct):** `npm run e2e:fit-audit` fails if any control needs scrolling at 360×640 or 360×560; all 614 cards pass. Layout changes (phones only) and shorter content; every content cut is listed in `content/REVIEW.md`; the rules are in CLAUDE.md (simulator controls on list rows, short-screen question size, packet path, 3-bin sorts).
 - Feedback form emails cybernettraining10@gmail.com (`FEEDBACK_INBOX`). Functions run in syd1. Help lines verified.
@@ -51,6 +52,7 @@ Stay Safe Online (live) → **How AI Really Works (next)** → How the Internet 
    - Without any env file the app still runs guest-only, which is enough for content work.
 4. `npm run dev` → http://localhost:3000 (cards playground at /dev/cards). Before merging: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, `npm run e2e:design-qa` (with the dev server running; Playwright scripts use an installed Chrome: `E2E_BROWSER=chrome` on a Mac).
 5. Supabase CLI (migrations, types, `check:rls`): `npx supabase login`, then `npx supabase link --project-ref qyjmowpkdcunkfitbwca`.
+6. **Staging Supabase** (`cybernet-staging`, ref `sfacbjpgkbrqmteajmfl`, same org/region as production): a separate project with no real users, created 2 Oct and set up 3 Oct with **all 18 migrations applied** and `check:rls` 113/113. Point `.env.local` at it (with Stripe **test** keys) to run signed-in e2e suites that write data — `e2e:leagues` and the signed-in `/leagues` pass of `e2e:design-qa` **require** staging and refuse to run against production (`qyjmowpkdcunkfitbwca`). Production stays the only place for the live site; never seed league data or open `league_state` there.
 
 ## 7. Gotchas
 

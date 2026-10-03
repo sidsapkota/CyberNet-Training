@@ -7,6 +7,7 @@
 // Run with the dev server up (`npm run dev`), then `npm run e2e:design-qa`. No accounts are used.
 import fs from "node:fs";
 import path from "node:path";
+import { createClient } from "@supabase/supabase-js";
 import { chromium } from "playwright-core";
 import { prepare } from "./lib/access.mjs";
 
@@ -15,6 +16,23 @@ const BASE = process.env.E2E_BASE_URL ?? "http://localhost:3000";
 const SHOTS = path.join(APP, ".e2e-shots", "qa");
 fs.mkdirSync(SHOTS, { recursive: true });
 const ONLY = process.env.QA_ONLY ? new Set(process.env.QA_ONLY.split(",")) : null;
+
+// Signed-in leagues QA is optional: it runs only against a STAGING project with a secret key in
+// .env.local (never production). Without those, the guest page checks below still cover everything.
+const PROD_REF = "qyjmowpkdcunkfitbwca";
+function stagingAdmin() {
+  let env = {};
+  try {
+    env = Object.fromEntries(
+      fs.readFileSync(path.join(APP, ".env.local"), "utf8").split("\n").filter((l) => /^[A-Z_]+=/.test(l)).map((l) => [l.slice(0, l.indexOf("=")), l.slice(l.indexOf("=") + 1).trim()]),
+    );
+  } catch {
+    return null;
+  }
+  const url = env.NEXT_PUBLIC_SUPABASE_URL ?? "";
+  if (!env.SUPABASE_SECRET_KEY || !/^https:\/\/[a-z0-9]+\.supabase\.co\/?$/.test(url) || url.includes(PROD_REF)) return null;
+  return { url, admin: createClient(url, env.SUPABASE_SECRET_KEY, { auth: { persistSession: false, autoRefreshToken: false } }) };
+}
 
 const VIEWPORTS = [
   { name: "360", width: 360, height: 640, touch: true },
@@ -201,6 +219,87 @@ try {
     }
     console.log("\nTouch drag:\n" + touchResults.map((r) => `  ${r}`).join("\n"));
     await ctx.close();
+  }
+
+  // Leagues (signed in): the leaderboard and settings at each size and theme. Staging only, so it
+  // skips cleanly on a machine without the staging secret key. Seeds and cleans up its own league.
+  if (!ONLY) {
+    const staging = stagingAdmin();
+    if (!staging) {
+      console.log("\nLeagues QA skipped (no staging secret key in .env.local).");
+    } else {
+      const { admin } = staging;
+      const TZ = "Australia/Sydney";
+      const nowIso = new Date().toISOString();
+      const today = new Date().toLocaleDateString("en-CA", { timeZone: TZ });
+      const userIds = [];
+      const leagueIds = [];
+      let priorOpenedAt = null;
+      const found = [];
+      try {
+        const { data: weekRow } = await admin.rpc("league_week");
+        const WEEK = typeof weekRow === "string" ? weekRow : (weekRow?.[0]?.league_week ?? weekRow);
+        priorOpenedAt = (await admin.from("league_state").select("opened_at").maybeSingle()).data?.opened_at ?? null;
+        await admin.from("league_state").update({ opened_at: nowIso }).eq("id", true);
+        const { data: lg } = await admin.from("leagues").insert({ week: WEEK, tier: "packet", band: "regular" }).select("id").single();
+        leagueIds.push(lg.id);
+        const mk = async (name) => {
+          const email = `qa-${name.toLowerCase()}-${Date.now()}@example.com`;
+          const { data } = await admin.auth.admin.createUser({ email, email_confirm: true });
+          const id = data.user.id;
+          userIds.push(id);
+          await admin.from("profiles").update({ username: name, age_confirmed: true, time_zone: TZ }).eq("id", id);
+          await admin.from("league_players").insert({ user_id: id, tier: "packet", show_on_leaderboards: true });
+          await admin.from("league_members").insert({ week: WEEK, user_id: id, league_id: lg.id });
+          return { id, email };
+        };
+        const me = await mk("QaPilot");
+        await admin.from("xp_events").insert({ user_id: me.id, at: nowIso, day: today, time_zone: TZ, kind: "card", lesson_id: "seed-lesson", xp: 25 });
+        for (let i = 0; i < 4; i++) {
+          const other = await mk(`QaLearner${i}`);
+          await admin.from("xp_events").insert({ user_id: other.id, at: nowIso, day: today, time_zone: TZ, kind: "card", lesson_id: "seed-lesson", xp: 10 + i * 10 });
+        }
+        for (const vp of VIEWPORTS) {
+          for (const theme of THEMES) {
+            const combo = `${vp.name}/${theme}`;
+            const ctx = await browser.newContext({ viewport: { width: vp.width, height: vp.height }, hasTouch: vp.touch, isMobile: vp.touch, colorScheme: theme });
+            const page = await ctx.newPage();
+            await prepare(page);
+            const link = await admin.auth.admin.generateLink({ type: "magiclink", email: me.email });
+            await page.goto(`${BASE}/auth/callback?token_hash=${link.data.properties.hashed_token}&type=magiclink&next=/leagues`);
+            await page.waitForURL((u) => u.pathname === "/leagues", { timeout: 60000 }).catch(() => {});
+            await page.getByRole("button", { name: /QaPilot/ }).first().waitFor({ timeout: 30000 }).catch(() => {});
+            await page.waitForTimeout(600);
+            // The leagues page's own content (main): the shared header/footer chrome is QA'd elsewhere.
+            const issues = await page.evaluate(() => {
+              const out = [];
+              if (document.documentElement.scrollWidth > window.innerWidth + 1) out.push(`page scrolls sideways (${document.documentElement.scrollWidth}px)`);
+              for (const el of document.querySelectorAll("main button, main a[href], main input:not([type=hidden]), main [role=switch], main [role=radio]")) {
+                const r = el.getBoundingClientRect();
+                const st = getComputedStyle(el);
+                if (r.width <= 2 || r.height <= 2 || st.visibility === "hidden" || st.display === "none" || st.display === "inline") continue;
+                if (el.closest("p, li > span") || el.closest("[aria-hidden=true]")) continue;
+                if (r.width < 44 || r.height < 44) out.push(`small target ${Math.round(r.width)}×${Math.round(r.height)}: ${el.tagName.toLowerCase()} "${(el.getAttribute("aria-label") || el.textContent || "").trim().replace(/\s+/g, " ").slice(0, 30)}"`);
+              }
+              return [...new Set(out)];
+            });
+            if (vp.name === "360" && theme === "dark") await page.screenshot({ path: path.join(SHOTS, "page_leagues.png"), fullPage: true });
+            for (const x of issues) found.push(`${combo}: ${x}`);
+            await ctx.close();
+          }
+        }
+      } finally {
+        if (leagueIds.length) await admin.from("leagues").delete().in("id", leagueIds);
+        for (const id of userIds) await admin.auth.admin.deleteUser(id);
+        await admin.from("league_state").update({ opened_at: priorOpenedAt }).eq("id", true);
+      }
+      if (found.length) {
+        const set = report.get("page /leagues") ?? new Set();
+        for (const x of found) set.add(x);
+        report.set("page /leagues", set);
+      }
+      console.log(`\nLeagues QA (staging): ${found.length ? `${found.length} issue(s)` : "no layout or tap-target issues"}.`);
+    }
   }
 } finally {
   await browser.close();

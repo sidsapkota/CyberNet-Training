@@ -94,6 +94,22 @@ export async function getMyLeagueAction(): Promise<MyLeague> {
   };
 }
 
+/**
+ * The learner's own rank this week, for the small lesson-complete moment. Lean: just open?, rank and
+ * tier, read through the learner's own session (so the standings function decides what they see).
+ */
+export async function getMyRankAction(): Promise<{ open: boolean; rank: number | null; tier: Tier | null }> {
+  await requireUserId();
+  const admin = createSupabaseAdminClient();
+  const openedAt = await leaguesOpenedAt(admin);
+  if (!openedAt) return { open: false, rank: null, tier: null };
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase.rpc("league_standings");
+  if (error) throw new Error(`Couldn't load your rank: ${error.message}`);
+  const me = (data ?? []).find((r) => r.is_me);
+  return { open: true, rank: me?.rank ?? null, tier: me && isTier(me.tier) ? me.tier : null };
+}
+
 /** The learner has seen last week's result screen. */
 export async function markResultSeenAction(week: string): Promise<void> {
   const userId = await requireUserId();

@@ -57,6 +57,9 @@ npm run e2e:dashboard-numbers # cards done, no lesson finished: header XP, Activ
                           # (throwaway account; secret key, so a local production build or production)
 npm run e2e:player-flow   # before/after screenshots: a hotspot card and the wrong-answer flow (SHOTS_TAG=)
 npm run e2e:founder       # Founding Member: /pro, paywall, dashboard line, badge, refund, events (360x560 + desktop)
+npm run e2e:leagues       # Leagues moments at 360x560: first-open celebration, live rank rise (no reload),
+                          # promoted/demoted/stayed results, lesson-complete rank moment. Seeds + cleans a
+                          # throwaway league; STAGING ONLY (refuses production), needs the secret key
 ```
 
 Tap targets are at least **44px** everywhere (inline text links and glossary terms excepted); the
