@@ -1268,8 +1268,11 @@ number is in `src/lib/leagues/config.ts`.
   the username. The top 20% move up (at least 1 in leagues of 3+, and only with 50+ XP), the bottom
   15% move down (at least 1 in leagues of 6+). Never above Quantum or below Packet. Hidden learners
   aren't ranked and keep their tier. Vercel Cron calls `/api/cron/leagues` hourly (`vercel.json`;
-  `CRON_SECRET`, checked first): `finalizeDueWeeks` settles every finished week since leagues opened,
-  each in one transaction (`finalize_league_week`; a second run changes nothing).
+  `CRON_SECRET`, checked first): `reconcileCurrentWeek` places anyone who earned XP this week but
+  isn't in a league yet (a safety net, because `onXpEarned`'s `after()` placement can be dropped by
+  Vercel), then `finalizeDueWeeks` settles every finished week since leagues opened, each in one
+  transaction (`finalize_league_week`; a second run changes nothing). `placeInWeek` is shared by
+  `onXpEarned` and the reconcile.
 - **Hidden until there are players:** leagues (page, nav entry, standings) stay hidden until
   `LEAGUES_MIN_ACTIVE` (20) learners earn XP in one week, then stay open for good (`league_state`).
   No promotions before that, so everyone starts in Packet. **Never add fake or bot players.**

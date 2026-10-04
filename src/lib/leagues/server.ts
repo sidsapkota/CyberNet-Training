@@ -76,6 +76,21 @@ async function weeklyXp(admin: Admin, userIds: string[], starts: number, ends: n
 }
 
 /**
+ * Places one learner in a week's league: their tier, and their activity band (the last BAND_WEEKS
+ * finished weeks). Shared by the live path (onXpEarned) and the hourly reconcile. join_league is
+ * idempotent, so calling it when they're already a member is a no-op.
+ */
+async function placeInWeek(admin: Admin, userId: string, week: string): Promise<void> {
+  const player = await ensurePlayer(admin, userId);
+  const oldest = weekWindow(addDays(week, -7 * BAND_WEEKS)).starts;
+  const history = await weeklyXp(admin, [userId], oldest, weekWindow(week).starts);
+  // bandFor averages over BAND_WEEKS weeks, so the window's total is enough.
+  const band = bandFor([history.get(userId)?.xp ?? 0]);
+  const { error } = await admin.rpc("join_league", { p_user: userId, p_week: week, p_tier: player.tier, p_bands: bandPreference(band), p_cap: LEAGUE_CAP });
+  fail("Couldn't join a league", error);
+}
+
+/**
  * After the server records XP: puts the learner in this week's league (once a week), and opens
  * leagues the first time enough learners are playing. Never throws: leagues must never block XP.
  */
@@ -85,25 +100,46 @@ export async function onXpEarned(userId: string, now = new Date()): Promise<void
     const week = leagueWeek(now);
     const member = await admin.from("league_members").select("league_id").match({ week, user_id: userId }).maybeSingle();
     fail("Couldn't check league membership", member.error);
-    if (!member.data) {
-      const player = await ensurePlayer(admin, userId);
-      // Activity band: the last BAND_WEEKS finished weeks.
-      const oldest = weekWindow(addDays(week, -7 * BAND_WEEKS)).starts;
-      const history = await weeklyXp(admin, [userId], oldest, weekWindow(week).starts);
-      // bandFor averages over BAND_WEEKS weeks, so the window's total is enough.
-      const band = bandFor([history.get(userId)?.xp ?? 0]);
-      const { error } = await admin.rpc("join_league", {
-        p_user: userId,
-        p_week: week,
-        p_tier: player.tier,
-        p_bands: bandPreference(band),
-        p_cap: LEAGUE_CAP,
-      });
-      fail("Couldn't join a league", error);
-    }
+    if (!member.data) await placeInWeek(admin, userId, week);
     await maybeOpenLeagues(admin, week, now);
   } catch (error) {
     console.error("Leagues: couldn't place learner", error);
+  }
+}
+
+/**
+ * Safety net for the hourly job: places anyone who earned XP this week but isn't in a league yet.
+ * onXpEarned runs in `after()`, which Vercel can drop, so a dropped placement is corrected within
+ * the hour instead of leaving an active learner off the board. Never throws; returns how many it
+ * placed. (The earners query returns one row per event; fine at this scale, deduped in memory.)
+ */
+export async function reconcileCurrentWeek(now = new Date()): Promise<number> {
+  try {
+    const admin = createSupabaseAdminClient();
+    const week = leagueWeek(now);
+    const { starts, ends } = weekWindow(week);
+    const earners = await admin.from("xp_events").select("user_id").gte("at", new Date(starts).toISOString()).lt("at", new Date(ends).toISOString());
+    fail("Couldn't list this week's earners", earners.error);
+    const earnerIds = [...new Set((earners.data ?? []).map((e) => e.user_id))];
+    if (earnerIds.length === 0) return 0;
+    const members = await admin.from("league_members").select("user_id").eq("week", week).in("user_id", earnerIds);
+    fail("Couldn't list this week's members", members.error);
+    const placed = new Set((members.data ?? []).map((m) => m.user_id));
+    const unplaced = earnerIds.filter((id) => !placed.has(id));
+    let count = 0;
+    for (const userId of unplaced) {
+      try {
+        await placeInWeek(admin, userId, week);
+        count += 1;
+      } catch (error) {
+        console.error("Leagues: reconcile couldn't place", userId, error);
+      }
+    }
+    if (count) console.info(`Leagues: reconcile placed ${count} learner(s) for ${week}`);
+    return count;
+  } catch (error) {
+    console.error("Leagues: reconcile failed", error);
+    return 0;
   }
 }
 
