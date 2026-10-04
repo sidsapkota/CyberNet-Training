@@ -1688,6 +1688,55 @@ Applies to all content work: the "learn before you do" rollout, new courses and 
 7. **Useful today:** each lesson ends with one thing they can do in real life now ("Try this: …").
 8. **Learning over streaks:** XP and streaks reward real progress, not speed-running.
 
+### The lesson pattern (HARD RULE — every lesson, every course)
+Real users get lost when a "theory" card tells them something and the next card asks them to use it:
+the jump is too big. Simple, fun and Brilliant-style; anyone 13+ gets it first time, never babyish.
+Every lesson follows these beats, in order (some may share a card where the shape rules force it; a
+module on the time-based "learn-first" rules can give each its own card):
+1. **Hook:** a real-life moment they recognise ("Your phone unlocks when it sees your face. How does
+   it know it's you?"). The hook line goes **at the top of the Watch card**, not on its own explainer.
+2. **Watch it happen — ALWAYS an interactive card, NEVER an explainer:** they **see** the idea
+   working *before* it's named, by doing — tap, drag, predict, reveal (an MC with an image, a
+   simulator, a reveal, a train-model card…). A static picture plus a paragraph is still telling, not
+   showing. No paragraphs. The "aha" (e.g. the green apple breaking the recipe) comes **before** the
+   idea is named.
+3. **Name it:** ONE idea, in one or two short plain sentences, right after they've seen it. Pick one
+   word for the idea and use it the same way everywhere (e.g. "follows a recipe" / "learned from
+   examples", never "rule-based" or "learns" alone).
+4. **Easy win:** a question answerable directly from what they just watched; almost everyone gets it.
+5. **Twist:** a slightly harder case with a new example that makes them think (the green apple).
+6. **Try this:** one thing to notice or do in real life today.
+7. **Tease the next lesson** in one exciting line ("Next: how a hacker guesses a weak password in 2
+   seconds"), so they want to keep going (this is what makes people want Pro).
+
+**Hard rules (enforced by review, and by `load.test.ts`/`concepts.test.ts`/`e2e:fit-audit` where it can):**
+- Never ask about anything the learner hasn't **seen** in this lesson or earlier in the module.
+- **One new idea per lesson.** If a lesson has two, split it.
+- **No jargon before it's shown.** If a term is needed, show it first, then name it.
+- **3-second test** on every card: a 13-year-old knows what to do within 3 seconds.
+- Wrong answers explain why in one friendly line, then let them try again.
+- **Fun beats thorough** — cut anything that's only there for completeness.
+- Lessons stay **3–5 minutes** and fit **360×560**.
+- **At most 2 explainers per lesson** — "Name it" and the recap. Everything else is hands-on. The
+  Watch is never one of them.
+- **Split, don't squeeze:** if the pattern can't fit a lesson within the shape rules (`src/lib/content/shape.ts`),
+  split it into two lessons rather than cramming beats into paragraphs.
+
+**Make it feel like a game, not a worksheet (every question card, every course):**
+1. **Picture first, words last:** every question card has a visual. If a picture can show it, don't
+   write it. (An `image` on `multiple_choice`, a scene, a simulator, a `train_model` card…)
+2. **Questions are short:** aim for **under 12 words**. Never re-describe in text what the picture
+   already shows.
+3. **Same characters all lesson:** reuse the same picture or characters card to card, changing **one
+   thing** each time (red apple → green apple → red ball), so each card is the next scene of a story,
+   not a new worksheet. A question card's image may have a **reveal state** (a second SVG shown after
+   Check) so the answer plays out in the picture.
+4. **Tap the thing, not the sentence:** where possible, answers are pictures or objects to tap, not
+   text options.
+5. **Feedback is one line, maybe two:** celebrate or nudge, then move on. Never a paragraph (so a
+   graded card's `explanation` is one or two short sentences, not a lecture).
+6. **The fun test:** if a card feels like a school worksheet, redesign it.
+
 ### Zero-confusion rule (every card type, every course)
 A learner should know what to do within **3 seconds** of seeing a card.
 1. **Problem first:** the top of the card says what's wrong or what to do, in one short sentence

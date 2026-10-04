@@ -2,228 +2,129 @@
   "id": "spot-the-ai",
   "kind": "lesson",
   "title": "Spot the AI",
-  "about": "Tell apps that follow written rules from AI that learns from examples.",
+  "about": "Tell apps that follow a recipe from AI that learned from examples.",
   "order": 1,
   "icon": "bot",
   "cards": [
     {
-      "id": "ai-in-your-pocket",
+      "id": "watch",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "teaches": [
+        "everyday-ai-apps",
+        "rules-based-program",
+        "learning-from-examples"
+      ],
+      "uses": [
+        "learning-from-examples"
+      ],
+      "prompt": "Your phone learned your face. These two robots sort fruit — how did **Robot B** get good at spotting apples?",
+      "image": {
+        "src": "/illustrations/two-robots-fruit.svg",
+        "alt": "Two robots sorting a red apple. Robot A holds a recipe card reading red plus round equals apple. Robot B has a stack of apple photos. Both robots say apple.",
+        "width": 340,
+        "height": 158
+      },
+      "options": [
+        { "id": "photos", "text": "By seeing lots of apple photos" },
+        { "id": "recipe", "text": "A person wrote it a recipe", "nudge": "That's **Robot A** — it holds the recipe card. **Robot B** has a stack of photos it learned from." }
+      ],
+      "correctOptionId": "photos",
+      "hint": "Look at what each robot is holding. Robot A has a recipe card. What is Robot B holding?",
+      "explanation": "Yes! Robot B learned from **photos**. Now watch this…"
+    },
+    {
+      "id": "green-apple",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "uses": [
+        "rules-based-program",
+        "learning-from-examples"
+      ],
+      "prompt": "Who gets it right?",
+      "image": {
+        "src": "/illustrations/two-robots-green.svg",
+        "alt": "The same two robots, now with a green apple between them. Neither has answered yet.",
+        "width": 340,
+        "height": 158,
+        "revealSrc": "/illustrations/two-robots-green-result.svg",
+        "revealAlt": "Robot A says not apple (wrong). Robot B says apple (right)."
+      },
+      "options": [
+        { "id": "a", "text": "Robot A", "nudge": "Robot A's recipe only knows *red*. A green apple isn't red." },
+        { "id": "b", "text": "Robot B" },
+        { "id": "both", "text": "Both", "nudge": "Robot A's recipe only knows *red* — a green apple breaks it." },
+        { "id": "neither", "text": "Neither", "nudge": "Robot B saw green apples in its photos, so it still gets it." }
+      ],
+      "correctOptionId": "b",
+      "hint": "Robot A's recipe says *red*. Is a green apple red?",
+      "explanation": "Robot A's recipe only knew *red*, so it misses the green apple. Robot B learned from examples — it still gets it."
+    },
+    {
+      "id": "name-it",
       "type": "explainer",
       "difficulty": "core",
       "teaches": [
         "rules-based-program",
         "learning-from-examples",
         "artificial-intelligence",
-        "machine-learning",
-        "everyday-ai-apps"
+        "machine-learning"
       ],
-      "title": "AI is already in your pocket",
-      "body": "Your phone unlocks when it sees your face. Most programs follow **rules** a person wrote: at 7:00, ring the alarm. Nobody could write rules for every face, so face unlock learns from lots of **examples** instead. Spam filters and keyboard suggestions learn the same way.\n\nIn this course, **artificial intelligence (AI)** means software that learns from examples, called **machine learning**."
+      "title": "Recipe, or learned from examples?",
+      "body": "**Robot A follows a recipe** a person wrote: *red + round = apple*. A **calculator** does too. It breaks on anything new.\n\n**Robot B learned from examples** — lots of photos — so it copes with new ones. Your **spam filter** learned the same way. That's **AI**."
     },
     {
-      "id": "rules-or-learning",
+      "id": "two-ways",
       "type": "sort_bins",
       "difficulty": "core",
       "uses": [
+        "everyday-ai-apps",
         "rules-based-program",
-        "learning-from-examples",
-        "everyday-ai-apps"
+        "learning-from-examples"
       ],
-      "prompt": "Does each one **follow rules** someone wrote, or **learn from examples**?",
+      "prompt": "Which **follow a recipe**, and which **learned from examples**?",
       "bins": [
-        {
-          "id": "rules",
-          "label": "Follows rules"
-        },
-        {
-          "id": "learns",
-          "label": "Learns"
-        }
+        { "id": "recipe", "label": "Follows a recipe" },
+        { "id": "examples", "label": "Learned from examples" }
       ],
       "items": [
-        {
-          "id": "alarm",
-          "label": "An alarm clock",
-          "bin": "rules"
-        },
-        {
-          "id": "calculator",
-          "label": "A calculator",
-          "bin": "rules"
-        },
-        {
-          "id": "lights",
-          "label": "Traffic lights on a timer",
-          "bin": "rules"
-        },
-        {
-          "id": "face",
-          "label": "Face unlock",
-          "bin": "learns"
-        },
-        {
-          "id": "spam",
-          "label": "A spam filter",
-          "bin": "learns"
-        },
-        {
-          "id": "keyboard",
-          "label": "Keyboard word suggestions",
-          "bin": "learns"
-        }
+        { "id": "calculator", "label": "A calculator", "bin": "recipe" },
+        { "id": "timer", "label": "Traffic lights on a timer", "bin": "recipe" },
+        { "id": "alarm", "label": "An alarm clock", "bin": "recipe" },
+        { "id": "spam", "label": "A spam filter", "bin": "examples" },
+        { "id": "videos", "label": "Video recommendations", "bin": "examples" },
+        { "id": "face", "label": "Face unlock", "bin": "examples" }
       ],
-      "hint": "Ask: could a person write down every step exactly? If yes, it follows rules.",
-      "nudge": "Look again at the jobs that must cope with things nobody planned, like a new face.",
-      "explanation": "Alarms, calculators and timed lights follow exact rules. Face unlock, spam filters and keyboard suggestions **learn from examples**: there are too many faces, emails and sentences for rules."
+      "hint": "Could a person write down the exact steps? Then it follows a recipe. If it had to learn from lots of cases, it learned from examples.",
+      "nudge": "A recipe does the same exact steps every time. Learning from examples copes with new cases nobody wrote down.",
+      "explanation": "A **calculator**, **timed lights** and an **alarm** follow a recipe. A **spam filter**, **video picks** and **face unlock** learned from examples — too many emails, videos and faces for a recipe."
     },
     {
-      "id": "which-needs-learning",
+      "id": "red-ball",
       "type": "multiple_choice",
       "difficulty": "core",
       "uses": [
         "rules-based-program",
         "learning-from-examples"
       ],
-      "prompt": "Which job is easiest to solve by **learning from examples**?",
+      "prompt": "A red **ball** rolls in. Who gets it right?",
+      "image": {
+        "src": "/illustrations/two-robots-ball.svg",
+        "alt": "The same two robots, now with a red ball between them. Neither has answered yet.",
+        "width": 340,
+        "height": 158,
+        "revealSrc": "/illustrations/two-robots-ball-result.svg",
+        "revealAlt": "Robot A says apple (wrong). Robot B says not apple (right)."
+      },
       "options": [
-        {
-          "id": "bill",
-          "text": "Adding up a shopping bill",
-          "nudge": "Adding follows a few exact rules. Which job has endless variety?"
-        },
-        {
-          "id": "alarm",
-          "text": "Ringing an alarm at 7:00",
-          "nudge": "That's one simple rule. Which job has millions of different cases?"
-        },
-        {
-          "id": "handwriting",
-          "text": "Reading people's handwriting"
-        },
-        {
-          "id": "midnight",
-          "text": "Turning the lights off at midnight",
-          "nudge": "One timer rule can do that. Which job has examples that all look different?"
-        }
+        { "id": "a", "text": "Robot A", "nudge": "Its recipe is just *red + round* — and a ball is both. So the recipe is fooled." },
+        { "id": "b", "text": "Robot B" },
+        { "id": "both", "text": "Both", "nudge": "Red and round fools Robot A's recipe. It calls the ball an apple." },
+        { "id": "neither", "text": "Neither", "nudge": "Robot B learned what apples really look like, so it isn't fooled." }
       ],
-      "correctOptionId": "handwriting",
-      "hint": "Which job has endless variety, where no two examples look the same?",
-      "explanation": "Everyone's handwriting is different, so nobody could write rules for it all; a computer learns from examples instead. Adding, alarms and timers need just a few exact rules."
-    },
-    {
-      "id": "what-it-learned-from",
-      "type": "match_pairs",
-      "difficulty": "core",
-      "teaches": [
-        "everyday-ai-apps"
-      ],
-      "uses": [
-        "learning-from-examples"
-      ],
-      "prompt": "Match each kind of [[AI|artificial-intelligence]] to the examples it learns from.",
-      "pairs": [
-        {
-          "id": "songs",
-          "left": "Song suggestions",
-          "right": "Songs you skip and replay"
-        },
-        {
-          "id": "face",
-          "left": "Face unlock",
-          "right": "Scans of your face"
-        },
-        {
-          "id": "spam",
-          "left": "Spam filter",
-          "right": "Emails people mark as spam"
-        },
-        {
-          "id": "keyboard",
-          "left": "Keyboard suggestions",
-          "right": "Words people usually type next"
-        }
-      ],
-      "hint": "Ask: what would it need to see lots of to get good at its job?",
-      "nudge": "Ask what each one is trying to guess, and which examples would show it.",
-      "explanation": "Each one learns from examples of its own job: songs you **skip and replay**, **scans of your face**, emails **marked as spam**, and words people **usually type next**."
-    },
-    {
-      "id": "trickier-sort",
-      "type": "sort_bins",
-      "difficulty": "challenge",
-      "uses": [
-        "rules-based-program",
-        "learning-from-examples"
-      ],
-      "prompt": "Trickier: does each one **follow rules**, or **learn from examples**?",
-      "bins": [
-        {
-          "id": "rules",
-          "label": "Follows rules"
-        },
-        {
-          "id": "learns",
-          "label": "Learns"
-        }
-      ],
-      "items": [
-        {
-          "id": "heater-timer",
-          "label": "Heater on a timer",
-          "bin": "rules"
-        },
-        {
-          "id": "heater-learns",
-          "label": "Heater that learns your routine",
-          "bin": "learns"
-        },
-        {
-          "id": "enemy-path",
-          "label": "Game enemy on a set path",
-          "bin": "rules"
-        },
-        {
-          "id": "enemy-trained",
-          "label": "Enemy that copies top players",
-          "bin": "learns"
-        }
-      ],
-      "hint": "Ask: did someone write every step in advance, or does it improve by noticing what happens?",
-      "nudge": "Some pairs look alike: did a person write the steps, or did it learn from examples?",
-      "explanation": "A timer, a set path and a converter follow exact rules. The adapting heater, the copying enemy and the dog finder **learn from examples**. The same job can be done either way."
-    },
-    {
-      "id": "does-it-understand",
-      "type": "multiple_choice",
-      "difficulty": "challenge",
-      "uses": [
-        "learning-from-examples"
-      ],
-      "prompt": "Face unlock learned from lots of photos of your face. Does it **understand** you like a friend does?",
-      "options": [
-        {
-          "id": "friend",
-          "text": "Yes: it knows you just like a friend does",
-          "nudge": "A friend knows your jokes and favourite food. What did the AI learn from?"
-        },
-        {
-          "id": "name-not-feelings",
-          "text": "Partly: it knows your name, but not your feelings",
-          "nudge": "Face unlock never needs your name. What did it actually learn from?"
-        },
-        {
-          "id": "patterns",
-          "text": "No: it matches patterns learned from examples"
-        },
-        {
-          "id": "online",
-          "text": "No: it looks up your name online each time",
-          "nudge": "It doesn't look anything up. How did it learn to recognise you?"
-        }
-      ],
-      "correctOptionId": "patterns",
-      "hint": "Think back to how AI learns: from examples.",
-      "explanation": "Face unlock matches **patterns** in your face to examples it learned. It doesn't know who you are or how you feel, which is why AI can be fooled."
+      "correctOptionId": "b",
+      "hint": "Robot A's recipe is just *red + round*. A ball is red and round too…",
+      "explanation": "A red ball is red and round, so Robot A's recipe says *apple* — wrong! Robot B learned what apples really look like, so it isn't fooled."
     },
     {
       "id": "spot-the-ai-recap",
@@ -232,11 +133,10 @@
       "teaches": [
         "rules-based-program",
         "learning-from-examples",
-        "machine-learning",
-        "ai-doesnt-understand"
+        "machine-learning"
       ],
       "title": "Recap",
-      "body": "- Ordinary programs follow **rules** a person wrote.\n- **AI** learns from **examples** instead, finding patterns. That's **machine learning**.\n- It matches patterns. It doesn't understand things like people do.\n\nNext: you'll teach a model yourself."
+      "body": "- **Follows a recipe:** exact steps a person wrote (a calculator).\n- **Learned from examples:** got good from lots of cases, so it copes with new ones. That's **AI** (face unlock).\n\n**Try this:** find an app that gets better the more you use it — like video picks. It learned from examples.\n\nNext: teach a robot yourself, and watch it slip up."
     }
   ]
 }
