@@ -5,6 +5,19 @@ export const MultipleChoiceCardSchema = z
   .object({
     ...interactiveCardBase,
     type: z.literal("multiple_choice"),
+    /**
+     * An optional illustration shown above the options (same shape as an explainer's), so a card can
+     * let the learner **watch** something and predict from it, not just read. Keep it compact so the
+     * prompt, image and options all fit 360×560.
+     */
+    image: z
+      .object({
+        src: z.string().startsWith("/"),
+        alt: nonEmpty,
+        width: z.number().int().positive(),
+        height: z.number().int().positive(),
+      })
+      .optional(),
     options: z
       .array(
         z.object({

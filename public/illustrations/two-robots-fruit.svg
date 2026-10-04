@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 158" width="340" height="158" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Two robots sorting a red apple. Robot A holds a recipe card reading red + round = apple; Robot B learned from a stack of apple photos. Both robots say apple.</title>
+  <!-- Drawn for the navy screen panel (#061630) used in both themes. Landscape, so it stays legible and short. -->
+  <style>
+    .edge { fill: #0b2142; stroke: #00c2ff; stroke-width: 2.5; stroke-linejoin: round; }
+    .eye { fill: #00c2ff; }
+    .mono { font-family: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace; font-size: 12px; font-weight: 600; fill: #cfe0f7; }
+    .say { font-size: 12px; font-weight: 600; fill: #041937; text-anchor: middle; }
+    .cap { font-size: 11px; font-weight: 600; fill: #a3b6d2; text-anchor: middle; }
+    .tick { fill: none; stroke: #3ddc97; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .stem { fill: none; stroke: #8a6d4b; stroke-width: 2.5; stroke-linecap: round; }
+    .leaf { fill: #5bc98c; }
+    .photo { fill: #0b2142; stroke: #44628f; stroke-width: 2; }
+    .say-bubble { fill: #00c2ff; }
+  </style>
+
+  <!-- Recipe card (Robot A's brain: a rule a person wrote) -->
+  <g transform="translate(6 6)">
+    <rect class="edge" x="0" y="0" width="150" height="30" rx="6"/>
+    <text class="mono" x="12" y="20">red + round = apple</text>
+  </g>
+
+  <!-- Photo stack (Robot B's brain: examples it learned from) -->
+  <g transform="translate(246 2)">
+    <rect class="photo" x="8" y="7" width="56" height="34" rx="3" transform="rotate(6 36 24)"/>
+    <rect class="photo" x="2" y="4" width="56" height="34" rx="3" transform="rotate(-5 30 21)"/>
+    <g transform="translate(13 9)">
+      <rect class="photo" x="0" y="0" width="52" height="32" rx="3"/>
+      <circle cx="15" cy="16" r="7" fill="#f0674f"/>
+      <circle cx="27" cy="16" r="7" fill="#f0674f"/>
+      <path class="tick" d="M36 14 l3.5 4.5 l6 -9"/>
+    </g>
+  </g>
+
+  <!-- Robot A -->
+  <g transform="translate(40 50)">
+    <line x1="27" y1="2" x2="27" y2="-8" stroke="#00c2ff" stroke-width="2.5"/>
+    <circle cx="27" cy="-11" r="3.2" class="eye"/>
+    <rect class="edge" x="2" y="2" width="50" height="38" rx="10"/>
+    <circle cx="18" cy="20" r="4" class="eye"/>
+    <circle cx="36" cy="20" r="4" class="eye"/>
+    <rect class="edge" x="8" y="44" width="38" height="28" rx="7"/>
+  </g>
+
+  <!-- Robot B -->
+  <g transform="translate(248 50)">
+    <line x1="27" y1="2" x2="27" y2="-8" stroke="#00c2ff" stroke-width="2.5"/>
+    <circle cx="27" cy="-11" r="3.2" class="eye"/>
+    <rect class="edge" x="2" y="2" width="50" height="38" rx="10"/>
+    <circle cx="18" cy="20" r="4" class="eye"/>
+    <circle cx="36" cy="20" r="4" class="eye"/>
+    <rect class="edge" x="8" y="44" width="38" height="28" rx="7"/>
+  </g>
+
+  <!-- The red apple in the middle -->
+  <g transform="translate(170 86)">
+    <path class="stem" d="M0 -13 q4 -5 1 -10"/>
+    <path class="leaf" d="M1 -18 q11 -4 10 5 q-10 2 -10 -5 z"/>
+    <path fill="#f0674f" d="M0 -11 q-16 -4 -16 13 q0 16 16 18 q16 -2 16 -18 q0 -16 -16 -13 z"/>
+    <ellipse cx="-5" cy="4" rx="3.5" ry="6" fill="#ff8f7d" opacity="0.6"/>
+  </g>
+
+  <!-- "apple" outputs, both agree -->
+  <g transform="translate(66 94)">
+    <rect class="say-bubble" x="-27" y="0" width="54" height="20" rx="10"/>
+    <text class="say" x="0" y="14">apple</text>
+  </g>
+  <g transform="translate(274 94)">
+    <rect class="say-bubble" x="-27" y="0" width="54" height="20" rx="10"/>
+    <text class="say" x="0" y="14">apple</text>
+  </g>
+
+  <!-- Captions -->
+  <text class="cap" x="67" y="150">Robot A</text>
+  <text class="cap" x="274" y="150">Robot B</text>
+</svg>

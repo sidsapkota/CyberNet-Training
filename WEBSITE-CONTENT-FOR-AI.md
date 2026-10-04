@@ -415,20 +415,20 @@ What counts as AI, how it learns from examples, and where it goes wrong.
 
 #### Spot the AI
 
-- **What you learn:** Tell apps that follow written rules from AI that learns from examples.
+- **What you learn:** Tell apps that follow a recipe from AI that learned from examples.
 - **Access:** Free, no account needed (best for video links)
 - **Link:** `cybernettraining.com/from/<platform>/spot-the-ai`
 
 **Key facts**
 
-- *AI is already in your pocket:* Most programs follow **rules** a person wrote: at 7:00, ring the alarm. Nobody could write rules for every face, so face unlock learns from lots of **examples** instead.
-- *Recap:* Ordinary programs follow **rules** a person wrote. **AI** learns from **examples** instead, finding patterns.
+- *Recipe, or learned from examples?:* **Robot A follows a recipe** a person wrote: *red + round = apple*. A **calculator** does too.
+- *Recap:* **Follows a recipe:** exact steps a person wrote (a calculator). **Learned from examples:** got good from lots of cases, so it copes with new ones.
 
 **Best interactive cards**
 
-- Sort into groups: Does each one **follow rules** someone wrote, or **learn from examples**?
-- Match pairs: Match each kind of AI to the examples it learns from.
-- Sort into groups: Trickier: does each one **follow rules**, or **learn from examples**?
+- Multiple choice: Your phone learned your face. These two robots sort fruit — how did **Robot B** get good at spotting apples?
+- Multiple choice: A **green** apple rolls in. Robot A still follows *red + round = apple*. Robot B learned from red **and** green apple photos. Who gets it right?
+- Sort into groups: Which of these **follow a recipe**, and which **learned from examples**?
 
 #### Patterns Everywhere
 

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "motion/react";
 import { useId } from "react";
 import { CheckIcon, XIcon } from "@/components/ui/icons";
@@ -48,7 +49,20 @@ export function MultipleChoiceCardView({
   return (
     <div>
       <CardPrompt id={promptId}>{card.prompt}</CardPrompt>
-      <div role="radiogroup" aria-labelledby={promptId} className="mt-3 grid gap-1.5 sm:mt-8 sm:gap-2.5">
+      {card.image && (
+        <figure className="mt-3 overflow-hidden rounded-card border border-line bg-screen p-2 sm:p-3">
+          <Image
+            src={card.image.src}
+            alt={card.image.alt}
+            width={card.image.width}
+            height={card.image.height}
+            className="mx-auto h-auto w-full max-w-sm object-contain"
+            priority
+            unoptimized={card.image.src.endsWith(".svg")}
+          />
+        </figure>
+      )}
+      <div role="radiogroup" aria-labelledby={promptId} className="mt-3 grid gap-1.5 sm:mt-6 sm:gap-2.5">
         {options.map((option, i) => {
           const selected = answer === option.id;
           const tone: Tone = !selected
