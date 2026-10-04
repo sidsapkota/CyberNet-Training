@@ -7,52 +7,14 @@
   "icon": "shield-alert",
   "cards": [
     {
-      "id": "weird-link-sent",
-      "type": "true_false",
-      "difficulty": "core",
-      "uses": [],
-      "prompt": "Friends say you sent them a weird link, but you didn't. Someone may be in your account.",
-      "answer": true,
-      "explanation": "True. Messages you didn't send are a sign of a **take-over**: someone else is in your account.",
-      "hint": "If you didn't send it, who did?",
-      "nudge": "Your account sent something you didn't. Someone else must be using it."
-    },
-    {
-      "id": "meet-take-over",
-      "type": "reveal",
+      "id": "hacked-or-normal",
+      "type": "sort_bins",
       "difficulty": "core",
       "teaches": [
         "account-take-over"
       ],
-      "show": {
-        "kind": "icon",
-        "icon": "shield-alert"
-      },
-      "sentence": "A **take-over** is someone else in your account, doing things that weren't you."
-    },
-    {
-      "id": "meet-recovery",
-      "type": "reveal",
-      "difficulty": "core",
-      "teaches": [
-        "recovery-email"
-      ],
-      "show": {
-        "kind": "icon",
-        "icon": "key-round"
-      },
-      "sentence": "Your **recovery email** can reset your password, so it must be yours."
-    },
-    {
-      "id": "hacked-or-normal",
-      "type": "sort_bins",
-      "difficulty": "core",
-      "uses": [
-        "account-take-over",
-        "recovery-email",
-        "two-step-sign-in"
-      ],
-      "prompt": "Sign of a take-over, or normal?",
+      "uses": [],
+      "prompt": "Someone else getting into your account is a **take-over**. Which of these is a sign?",
       "bins": [
         {
           "id": "hacked",
@@ -75,47 +37,19 @@
           "bin": "hacked"
         },
         {
-          "id": "recovery-swapped",
-          "label": "A recovery email you've never seen",
-          "bin": "hacked"
-        },
-        {
           "id": "own-code",
           "label": "A code while you were signing in",
           "bin": "normal"
+        },
+        {
+          "id": "app-reauth",
+          "label": "The app asked you to sign in again",
+          "bin": "normal"
         }
       ],
-      "explanation": "Anything that **wasn't you** is a sign, including a **recovery email** you don't know: its owner could reset your password. A code while **you** are signing in is normal.",
+      "explanation": "Anything that **wasn't you** is a sign. A code or sign-in that matches something **you** just did is normal.",
       "hint": "For each one, ask: did I do this, or did someone else?",
-      "nudge": "Alerts and codes are normal when they match something you just did, and warning signs when they don't."
-    },
-    {
-      "id": "surprise-code",
-      "type": "fill_gap",
-      "difficulty": "core",
-      "uses": [
-        "unexpected-code-means-password-known"
-      ],
-      "prompt": "A sign-in code you didn't ask for means someone may have your ___.",
-      "options": [
-        {
-          "id": "password",
-          "text": "password"
-        },
-        {
-          "id": "phone",
-          "text": "phone",
-          "nudge": "The code came to your phone, so the phone is still yours. What did they type to make a code arrive?"
-        },
-        {
-          "id": "email",
-          "text": "email address",
-          "nudge": "Knowing your email isn't enough to make a sign-in code arrive. What else did they type?"
-        }
-      ],
-      "correctOptionId": "password",
-      "explanation": "Sites send a code when someone types your **password**. If it wasn't you, change it.",
-      "hint": "What does someone type just before a site sends a sign-in code?"
+      "nudge": "A code or alert is normal when it matches something you just did, and a warning sign when it doesn't."
     },
     {
       "id": "step-by-step",
@@ -123,7 +57,8 @@
       "difficulty": "core",
       "teaches": [
         "first-steps-after-hack",
-        "trusted-adult"
+        "trusted-adult",
+        "recovery-email"
       ],
       "title": "What to do first",
       "body": "Spotted a sign? Do these first, in order:\n\n1. **Tell a trusted adult.** You're not in trouble, and they can help you work through it.\n2. **Change the password** on a device you trust, in the real app or website. Make it new, strong and unique.\n3. **Check the recovery email and phone**, and remove anything that isn't yours, so the attacker can't reset your new password."
@@ -212,21 +147,53 @@
           ]
         }
       ],
-      "explanation": "Tell an adult and change the password. Then **check recovery details**, **sign out other devices**, turn on **two-step sign-in**, change that password everywhere else, and warn your friends.",
+      "explanation": "Change the password, then **sign out other devices**, check recovery details, turn on **two-step sign-in**, change that password everywhere else, and warn your friends.",
       "hint": "If someone's still signed in, is a new password enough? And where else does the old one work?"
     },
     {
-      "id": "still-signed-in",
-      "type": "true_false",
+      "id": "lock-them-out",
+      "type": "sort_bins",
       "difficulty": "core",
       "uses": [
+        "first-steps-after-hack",
         "attacker-stays-signed-in"
       ],
-      "prompt": "Changing your password signs the attacker out of every device.",
-      "answer": false,
-      "explanation": "False. They can stay signed in where they already are. Use **sign out other devices** in the account's security settings too.",
-      "hint": "Think back to the scenario: what did you do after changing the password?",
-      "nudge": "A new password stops new sign-ins. Someone already signed in needs signing out."
+      "prompt": "Which of these **locks the attacker out**?",
+      "bins": [
+        {
+          "id": "locks",
+          "label": "Locks them out"
+        },
+        {
+          "id": "nope",
+          "label": "Doesn't help"
+        }
+      ],
+      "items": [
+        {
+          "id": "new-password",
+          "label": "Change the password",
+          "bin": "locks"
+        },
+        {
+          "id": "sign-out",
+          "label": "Sign out all other devices",
+          "bin": "locks"
+        },
+        {
+          "id": "photo",
+          "label": "Delete your profile picture",
+          "bin": "nope"
+        },
+        {
+          "id": "reply",
+          "label": "Reply telling them to stop",
+          "bin": "nope"
+        }
+      ],
+      "explanation": "A new password plus **signing out other devices** locks them out. Deleting a photo or replying does nothing.",
+      "hint": "The attacker knows the old password and may still be signed in. What fixes both?",
+      "nudge": "Which actions change what the attacker can sign in with, or kick out a device they're already on?"
     },
     {
       "id": "recovery-offer",
@@ -254,13 +221,13 @@
         }
       ],
       "correctOptionId": "scam",
-      "explanation": "Paid \"recovery\" offers in your messages are scams. Use the app's official **Forgot password** or account recovery, tell a trusted adult, and **never pay**.",
+      "explanation": "Paid \"recovery\" offers in your messages are scams. Use the app's official **Forgot password**, tell a trusted adult, and **never pay**.",
       "hint": "The prompt says what can get you back in. Is a stranger asking for $20 part of it?"
     },
     {
       "id": "recovery-changed",
       "type": "scenario",
-      "difficulty": "challenge",
+      "difficulty": "core",
       "uses": [
         "recovery-email",
         "two-step-sign-in"

@@ -51,13 +51,13 @@ Strong passwords, passphrases and two-step sign-in.
 
 **Key facts**
 
-- *Words it teaches:* A **passphrase** is four or more **random** words, like `otter planet brick soup`: never a song line or quote. Guessers try **common passwords** like `password123`, **names and years**, and **swaps** like `@` for `a` first.
+- *Words it teaches:* Guessers try **common passwords** like `password123`, **names and years**, and **song lines** first. A **passphrase** is four or more **random** words, like `otter planet brick soup`: never a song line.
 - *Recap:* **Length** wins: a **passphrase** is four or more **random** words. Give every account its **own** password.
 
 **Best interactive cards**
 
-- Simulator: **Drag the slider** until a computer would need **100+ years** to guess this password.
-- Simulator: Only **10 characters** allowed. Add kinds of characters to reach **100 years**.
+- Simulator: A short password falls in seconds. **Drag** until cracking it would take 100+ years.
+- Simulator: Twist: only **10 characters** allowed. Add kinds of characters to reach **100 years**.
 - Choose what happens: A game site was hacked, and passwords were stolen: a data breach.
 
 #### Two-Step Sign-In
@@ -98,8 +98,8 @@ Phishing emails, scam texts and calls, and fake websites.
 
 **Best interactive cards**
 
+- Explore the picture: An email says it's from Your Bank. **Tap** each part to see what gives it away.
 - Choose what happens: You've "won" a prize by email. What do you do?
-- Explore the picture: This email says it's from Your Bank. What gives it away?
 - Choose what happens: This email uses your real name.
 
 #### Scam Texts and Calls
@@ -195,13 +195,12 @@ Signs of a hack, what to do step by step, and where to get help.
 
 **Key facts**
 
-- *Words it teaches:* A **take-over** is someone else in your account, doing things that weren't you. Your **recovery email** can reset your password, so it must be yours.
 - *What to do first:* **Tell a trusted adult.** You're not in trouble, and they can help you work through it. **Change the password** on a device you trust, in the real app or website.
 - *Recap:* First: **tell an adult**, **change the password**, **check recovery details**. Use the **official recovery**.
 
 **Best interactive cards**
 
-- Sort into groups: Sign of a take-over, or normal?
+- Sort into groups: Someone else getting into your account is a **take-over**. Which of these is a sign?
 - Choose what happens: Your friends say you've been sending them strange links. You haven't.
 - Choose what happens: You check your account's security settings.
 
