@@ -14,7 +14,7 @@
         "account-take-over"
       ],
       "uses": [],
-      "prompt": "Someone else getting into your account is a **take-over**. Which of these is a sign?",
+      "prompt": "Someone else in your account is a **take-over**. Which is a sign?",
       "bins": [
         {
           "id": "hacked",
@@ -203,7 +203,7 @@
         "official-account-recovery"
       ],
       "uses": [],
-      "prompt": "Locked out? Use the app's own **Forgot password**. Then a stranger offers to get your account back for $20. What is this?",
+      "prompt": "A stranger offers to unlock your account for $20. What is this?",
       "options": [
         {
           "id": "scam",
@@ -266,7 +266,7 @@
         "official-account-recovery"
       ],
       "title": "Recap",
-      "body": "- First: **tell an adult**, **change the password**, **check recovery details**.\n- Locked out? Use the **official recovery**. Never pay a stranger.\n- **Try this:** check your account's recovery email and phone today."
+      "body": "- First: **tell an adult**, **change the password**, **check recovery details**.\n- Locked out? Use the **official recovery**. Never pay a stranger.\n- **Try this:** check your account's recovery email and phone today.\n\n**Next:** the video call from a face that isn't real."
     }
   ]
 }

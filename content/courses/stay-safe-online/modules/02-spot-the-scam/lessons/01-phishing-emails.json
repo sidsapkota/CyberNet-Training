@@ -20,7 +20,7 @@
         "hidden-link"
       ],
       "uses": [],
-      "prompt": "An email says it's from Your Bank. **Tap** each part to see what gives it away.",
+      "prompt": "An email says it's from Your Bank. **Tap** each part.",
       "scene": "email",
       "mode": "explore",
       "parts": [
@@ -146,7 +146,7 @@
       "steps": [
         {
           "id": "start",
-          "text": "**\"You've won a games console! Claim it within 1 hour.\"** You never entered. (Replying to a scam tells the scammer your address works.) What do you do?",
+          "text": "**\"You've won a games console! Claim it within 1 hour.\"** You never entered. What do you do?",
           "choices": [
             {
               "id": "click",
@@ -203,7 +203,7 @@
         },
         {
           "id": "already-clicked",
-          "text": "Your friend Alex got it too and **already typed in their password**. Alex feels silly. What should Alex do?",
+          "text": "Your friend Alex **already typed in their password**. What should Alex do?",
           "choices": [
             {
               "id": "hide",
@@ -226,7 +226,7 @@
           ]
         }
       ],
-      "explanation": "A name doesn't prove an email is real: go to the site **your usual way**. If a password slips out, change it straight away and tell a trusted adult.",
+      "explanation": "A name doesn't prove an email is real: go the **usual way**. If a password slips out, change it and tell an adult.",
       "hint": "Can a name prove an email is real? And what makes a stolen password useless?"
     },
     {
@@ -255,7 +255,7 @@
         }
       ],
       "correctOptionId": "real",
-      "explanation": "Only `@yourbank.example` is Your Bank. The second is a lookalike, and in the last one the part after the @ belongs to someone else.",
+      "explanation": "Only `@yourbank.example` is Your Bank. The others change the name after the @, so they belong to someone else.",
       "hint": "Look only at the part after the @. Is it exactly `yourbank.example`?"
     },
     {
@@ -268,7 +268,7 @@
         "go-there-yourself"
       ],
       "title": "Recap",
-      "body": "- **Phishing** pretends to be someone you trust.\n- Check the **address after the @**; don't click, **go there yourself**.\n- **Try this:** check the address after the @ on the next email you get."
+      "body": "- **Phishing** pretends to be someone you trust.\n- Check the **address after the @**; don't click, **go there yourself**.\n- **Try this:** check the address after the @ on the next email you get.\n\n**Next:** the text message that's really a trap."
     }
   ]
 }
