@@ -1722,6 +1722,21 @@ module on the time-based "learn-first" rules can give each its own card):
 - **Split, don't squeeze:** if the pattern can't fit a lesson within the shape rules (`src/lib/content/shape.ts`),
   split it into two lessons rather than cramming beats into paragraphs.
 
+**Make it feel like a game, not a worksheet (every question card, every course):**
+1. **Picture first, words last:** every question card has a visual. If a picture can show it, don't
+   write it. (An `image` on `multiple_choice`, a scene, a simulator, a `train_model` card…)
+2. **Questions are short:** aim for **under 12 words**. Never re-describe in text what the picture
+   already shows.
+3. **Same characters all lesson:** reuse the same picture or characters card to card, changing **one
+   thing** each time (red apple → green apple → red ball), so each card is the next scene of a story,
+   not a new worksheet. A question card's image may have a **reveal state** (a second SVG shown after
+   Check) so the answer plays out in the picture.
+4. **Tap the thing, not the sentence:** where possible, answers are pictures or objects to tap, not
+   text options.
+5. **Feedback is one line, maybe two:** celebrate or nudge, then move on. Never a paragraph (so a
+   graded card's `explanation` is one or two short sentences, not a lecture).
+6. **The fun test:** if a card feels like a school worksheet, redesign it.
+
 ### Zero-confusion rule (every card type, every course)
 A learner should know what to do within **3 seconds** of seeing a card.
 1. **Problem first:** the top of the card says what's wrong or what to do, in one short sentence

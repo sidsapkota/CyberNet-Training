@@ -16,6 +16,9 @@ export const MultipleChoiceCardSchema = z
         alt: nonEmpty,
         width: z.number().int().positive(),
         height: z.number().int().positive(),
+        /** A second image shown once the answer is checked, so the outcome plays out in the picture. */
+        revealSrc: z.string().startsWith("/").optional(),
+        revealAlt: nonEmpty.optional(),
       })
       .optional(),
     options: z

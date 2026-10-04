@@ -427,8 +427,8 @@ What counts as AI, how it learns from examples, and where it goes wrong.
 **Best interactive cards**
 
 - Multiple choice: Your phone learned your face. These two robots sort fruit — how did **Robot B** get good at spotting apples?
-- Multiple choice: A **green** apple rolls in. Robot A still follows *red + round = apple*. Robot B learned from red **and** green apple photos. Who gets it right?
-- Sort into groups: Which of these **follow a recipe**, and which **learned from examples**?
+- Multiple choice: Who gets it right?
+- Sort into groups: Which **follow a recipe**, and which **learned from examples**?
 
 #### Patterns Everywhere
 

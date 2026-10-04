@@ -27,11 +27,11 @@
       },
       "options": [
         { "id": "photos", "text": "By seeing lots of apple photos" },
-        { "id": "recipe", "text": "A person wrote it a recipe", "nudge": "That's **Robot A** — it holds the recipe card (*red + round = apple*). **Robot B** has a stack of photos it learned from." }
+        { "id": "recipe", "text": "A person wrote it a recipe", "nudge": "That's **Robot A** — it holds the recipe card. **Robot B** has a stack of photos it learned from." }
       ],
       "correctOptionId": "photos",
       "hint": "Look at what each robot is holding. Robot A has a recipe card. What is Robot B holding?",
-      "explanation": "**By seeing lots of apple photos.** Robot B was shown example after example until it could spot an apple itself. Robot A instead follows a recipe a person wrote: *red + round = apple*. Both got the red apple — but watch what happens with a trickier one."
+      "explanation": "Yes! Robot B learned from **photos**. Now watch this…"
     },
     {
       "id": "green-apple",
@@ -41,16 +41,24 @@
         "rules-based-program",
         "learning-from-examples"
       ],
-      "prompt": "A **green** apple rolls in. Robot A still follows *red + round = apple*. Robot B learned from red **and** green apple photos. Who gets it right?",
+      "prompt": "Who gets it right?",
+      "image": {
+        "src": "/illustrations/two-robots-green.svg",
+        "alt": "The same two robots, now with a green apple between them. Neither has answered yet.",
+        "width": 340,
+        "height": 158,
+        "revealSrc": "/illustrations/two-robots-green-result.svg",
+        "revealAlt": "Robot A says not apple (wrong). Robot B says apple (right)."
+      },
       "options": [
-        { "id": "a", "text": "Only Robot A", "nudge": "Robot A's recipe only knows *red*. A green apple isn't red — so what does the recipe decide?" },
-        { "id": "b", "text": "Only Robot B" },
-        { "id": "both", "text": "Both robots", "nudge": "One robot only knows the *red* recipe, and a green apple breaks it." },
-        { "id": "neither", "text": "Neither robot", "nudge": "Robot B saw green apples in its examples, so one of them still gets it right." }
+        { "id": "a", "text": "Robot A", "nudge": "Robot A's recipe only knows *red*. A green apple isn't red." },
+        { "id": "b", "text": "Robot B" },
+        { "id": "both", "text": "Both", "nudge": "Robot A's recipe only knows *red* — a green apple breaks it." },
+        { "id": "neither", "text": "Neither", "nudge": "Robot B saw green apples in its photos, so it still gets it." }
       ],
       "correctOptionId": "b",
-      "hint": "Robot A's recipe says *red*. A green apple isn't red — what will the recipe decide?",
-      "explanation": "**Only Robot B.** Robot A's recipe only knew *red*, so it says *not an apple* — even though it really is one. Robot B saw green apples among its examples, so it still spots this one."
+      "hint": "Robot A's recipe says *red*. Is a green apple red?",
+      "explanation": "Robot A's recipe only knew *red*, so it misses the green apple. Robot B learned from examples — it still gets it."
     },
     {
       "id": "name-it",
@@ -74,7 +82,7 @@
         "rules-based-program",
         "learning-from-examples"
       ],
-      "prompt": "Which of these **follow a recipe**, and which **learned from examples**?",
+      "prompt": "Which **follow a recipe**, and which **learned from examples**?",
       "bins": [
         { "id": "recipe", "label": "Follows a recipe" },
         { "id": "examples", "label": "Learned from examples" }
@@ -89,25 +97,34 @@
       ],
       "hint": "Could a person write down the exact steps? Then it follows a recipe. If it had to learn from lots of cases, it learned from examples.",
       "nudge": "A recipe does the same exact steps every time. Learning from examples copes with new cases nobody wrote down.",
-      "explanation": "A **calculator**, **timed lights** and an **alarm** follow a recipe — exact steps a person set. A **spam filter**, **video recommendations** and **face unlock** learned from examples: there are too many emails, videos and faces to write rules for."
+      "explanation": "A **calculator**, **timed lights** and an **alarm** follow a recipe. A **spam filter**, **video picks** and **face unlock** learned from examples — too many emails, videos and faces for a recipe."
     },
     {
-      "id": "spot-the-learner",
+      "id": "red-ball",
       "type": "multiple_choice",
       "difficulty": "core",
       "uses": [
         "rules-based-program",
         "learning-from-examples"
       ],
-      "prompt": "A new robot must spot **cats** in photos. There are millions of different-looking cats. Which way works?",
+      "prompt": "A red **ball** rolls in. Who gets it right?",
+      "image": {
+        "src": "/illustrations/two-robots-ball.svg",
+        "alt": "The same two robots, now with a red ball between them. Neither has answered yet.",
+        "width": 340,
+        "height": 158,
+        "revealSrc": "/illustrations/two-robots-ball-result.svg",
+        "revealAlt": "Robot A says apple (wrong). Robot B says not apple (right)."
+      },
       "options": [
-        { "id": "recipe", "text": "Write a recipe for every kind of cat", "nudge": "Could a person write a rule for *every* cat — big, small, fluffy, hairless? There are far too many." },
-        { "id": "examples", "text": "Show it lots of cat photos until it learns" },
-        { "id": "online", "text": "Let it look each cat up online", "nudge": "It can't look anything up — it has to decide from the photo. How did Robot B get good?" }
+        { "id": "a", "text": "Robot A", "nudge": "Its recipe is just *red + round* — and a ball is both. So the recipe is fooled." },
+        { "id": "b", "text": "Robot B" },
+        { "id": "both", "text": "Both", "nudge": "Red and round fools Robot A's recipe. It calls the ball an apple." },
+        { "id": "neither", "text": "Neither", "nudge": "Robot B learned what apples really look like, so it isn't fooled." }
       ],
-      "correctOptionId": "examples",
-      "hint": "Think of the green apple: a recipe breaks on cases nobody wrote down. What copes with endless variety?",
-      "explanation": "**Show it lots of cat photos.** Nobody could write a recipe for every cat, just like the recipe missed the green apple. Learning from examples handles endless variety — that's why AI is used for jobs like this."
+      "correctOptionId": "b",
+      "hint": "Robot A's recipe is just *red + round*. A ball is red and round too…",
+      "explanation": "A red ball is red and round, so Robot A's recipe says *apple* — wrong! Robot B learned what apples really look like, so it isn't fooled."
     },
     {
       "id": "spot-the-ai-recap",

@@ -52,11 +52,12 @@ export function MultipleChoiceCardView({
       {card.image && (
         <figure className="mt-3 overflow-hidden rounded-card border border-line bg-screen p-2 sm:p-3">
           <Image
-            src={card.image.src}
-            alt={card.image.alt}
+            key={locked && card.image.revealSrc ? "reveal" : "idle"}
+            src={locked && card.image.revealSrc ? card.image.revealSrc : card.image.src}
+            alt={locked && card.image.revealSrc ? (card.image.revealAlt ?? card.image.alt) : card.image.alt}
             width={card.image.width}
             height={card.image.height}
-            className="mx-auto h-auto w-full max-w-sm object-contain"
+            className="mx-auto h-auto w-full max-w-[17rem] object-contain"
             priority
             unoptimized={card.image.src.endsWith(".svg")}
           />
