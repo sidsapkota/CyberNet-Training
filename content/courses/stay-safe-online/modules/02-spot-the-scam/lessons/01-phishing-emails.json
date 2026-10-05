@@ -7,60 +7,6 @@
   "icon": "mail-warning",
   "cards": [
     {
-      "id": "prize-email",
-      "type": "scenario",
-      "difficulty": "core",
-      "uses": [
-        "dont-reply-to-scams"
-      ],
-      "prompt": "You've \"won\" a prize by email. What do you do?",
-      "start": "start",
-      "steps": [
-        {
-          "id": "start",
-          "text": "**\"You've won a games console! Claim it within 1 hour.\"** You never entered. (Replying to a scam tells the scammer your address works.) What do you do?",
-          "choices": [
-            {
-              "id": "click",
-              "text": "Click fast, before the hour ends",
-              "consequence": "The rush is the trick. The link leads to a page that asks for your details or payment.",
-              "outcome": "fail"
-            },
-            {
-              "id": "reply",
-              "text": "Reply to ask if it's real",
-              "consequence": "Replying tells the scammer your address works, so you'll get more scams.",
-              "outcome": "fail"
-            },
-            {
-              "id": "report",
-              "text": "Report it, then delete it",
-              "consequence": "No prize is lost, because there never was one. Reporting helps your mail app catch the next one.",
-              "outcome": "success"
-            }
-          ]
-        }
-      ],
-      "explanation": "A prize you never entered, plus a deadline, is a classic scam. **Don't click, don't reply**: report it and delete it.",
-      "hint": "You never entered a competition. So why would someone give you a prize, and why only one hour to claim it?",
-      "teaches": [
-        "dont-reply-to-scams"
-      ]
-    },
-    {
-      "id": "meet-phishing",
-      "type": "reveal",
-      "difficulty": "core",
-      "teaches": [
-        "phishing"
-      ],
-      "show": {
-        "kind": "term",
-        "term": "phishing"
-      },
-      "sentence": "**Phishing** is a message pretending to be someone you trust, to trick you."
-    },
-    {
       "id": "meet-the-signs",
       "type": "hotspot",
       "difficulty": "core",
@@ -73,10 +19,8 @@
         "companies-never-ask-for-secrets",
         "hidden-link"
       ],
-      "uses": [
-        "phishing"
-      ],
-      "prompt": "This email says it's from Your Bank. What gives it away?",
+      "uses": [],
+      "prompt": "An email says it's from Your Bank. **Tap** each part.",
       "scene": "email",
       "mode": "explore",
       "parts": [
@@ -101,20 +45,45 @@
           "job": "Hidden link: it really goes to yourbank-verify.example. Hover over a link, or press and hold it, to see where it goes."
         }
       ],
-      "explanation": "Five warning signs: a **fake sender**, **rushing you**, **\"Dear Customer\"**, **asking for secrets** and a **hidden link**. Plus **too good to be true** from the prize email."
+      "explanation": "Five warning signs: a **fake sender**, **rushing you**, **\"Dear Customer\"**, **asking for secrets** and a **hidden link**."
     },
     {
-      "id": "asks-for-password",
-      "type": "true_false",
+      "id": "meet-phishing",
+      "type": "reveal",
+      "difficulty": "core",
+      "teaches": [
+        "phishing"
+      ],
+      "show": {
+        "kind": "term",
+        "term": "phishing"
+      },
+      "sentence": "**Phishing** is a message pretending to be someone you trust, to trick you."
+    },
+    {
+      "id": "spot-the-signs",
+      "type": "hotspot",
       "difficulty": "core",
       "uses": [
-        "companies-never-ask-for-secrets"
+        "fake-sender-address",
+        "rushing-is-a-scam-sign",
+        "generic-greeting",
+        "companies-never-ask-for-secrets",
+        "hidden-link"
       ],
-      "prompt": "A real company might ask for your password by email.",
-      "answer": false,
-      "explanation": "False. Real companies never ask for passwords, codes, card numbers or PINs by email. Anyone who does is phishing.",
-      "hint": "Would your bank or school ever need your password?",
-      "nudge": "Real companies already run your account. They never need your password."
+      "prompt": "Tap **every** warning sign in this email.",
+      "scene": "email",
+      "mode": "tap",
+      "targets": [
+        "email-from",
+        "email-subject",
+        "email-greeting",
+        "email-secrets",
+        "email-link"
+      ],
+      "explanation": "The sender isn't `@yourbank.example`, the subject **rushes you**, it says **\"Dear Customer\"**, it **asks for secrets** and the button goes to `yourbank-verify.example`.",
+      "hint": "Go back over the five signs you just met. Each one is on its own line.",
+      "nudge": "There are five. Look for each sign you just met, one at a time."
     },
     {
       "id": "phish-or-fine",
@@ -158,34 +127,50 @@
           "bin": "fine"
         }
       ],
-      "explanation": "Rushing, asking for secrets, prizes you pay for and links that go elsewhere are phishing signs. The **real** address sending you to the official app, or your school's usual email, is probably fine.",
-      "hint": "Check each against the signs: fake sender, rushing, \"Dear Customer\", secrets, hidden links, too good to be true.",
-      "nudge": "Check each one again: does it rush you, ask for secrets, hide a link or want money for a prize?"
+      "explanation": "Rushing, asking for secrets and links that go elsewhere are phishing. The real app, or your school's usual email, is probably fine.",
+      "hint": "Check each against the signs: fake sender, rushing, \"Dear Customer\", secrets, hidden links.",
+      "nudge": "Check each one again: does it rush you, ask for secrets or hide a link?"
     },
     {
-      "id": "spot-the-signs",
-      "type": "hotspot",
+      "id": "prize-email",
+      "type": "scenario",
       "difficulty": "core",
+      "teaches": [
+        "dont-reply-to-scams"
+      ],
       "uses": [
-        "fake-sender-address",
-        "rushing-is-a-scam-sign",
-        "generic-greeting",
-        "companies-never-ask-for-secrets",
-        "hidden-link"
+        "dont-reply-to-scams"
       ],
-      "prompt": "Tap **every** warning sign in this email.",
-      "scene": "email",
-      "mode": "tap",
-      "targets": [
-        "email-from",
-        "email-subject",
-        "email-greeting",
-        "email-secrets",
-        "email-link"
+      "prompt": "You've \"won\" a prize by email. What do you do?",
+      "start": "start",
+      "steps": [
+        {
+          "id": "start",
+          "text": "**\"You've won a games console! Claim it within 1 hour.\"** You never entered. What do you do?",
+          "choices": [
+            {
+              "id": "click",
+              "text": "Click fast, before the hour ends",
+              "consequence": "The rush is the trick. The link leads to a page that asks for your details or payment.",
+              "outcome": "fail"
+            },
+            {
+              "id": "reply",
+              "text": "Reply to ask if it's real",
+              "consequence": "Replying tells the scammer your address works, so you'll get more scams.",
+              "outcome": "fail"
+            },
+            {
+              "id": "report",
+              "text": "Report it, then delete it",
+              "consequence": "No prize is lost, because there never was one. Reporting helps your mail app catch the next one.",
+              "outcome": "success"
+            }
+          ]
+        }
       ],
-      "explanation": "The sender isn't `@yourbank.example`, the subject **rushes you**, it says **\"Dear Customer\"**, it **asks for secrets** and the button goes to `yourbank-verify.example`.",
-      "hint": "Go back over the five signs you just met. Each one is on its own line.",
-      "nudge": "There are five. Look for each sign you just met, one at a time."
+      "explanation": "A prize you never entered, plus a deadline, is a classic scam. **Don't click, don't reply**: report it and delete it.",
+      "hint": "You never entered a competition, so why a prize, and why only one hour to claim it?"
     },
     {
       "id": "knows-your-name",
@@ -218,7 +203,7 @@
         },
         {
           "id": "already-clicked",
-          "text": "Your friend Alex got it too and **already typed in their password**. Alex feels silly. What should Alex do?",
+          "text": "Your friend Alex **already typed in their password**. What should Alex do?",
           "choices": [
             {
               "id": "hide",
@@ -241,7 +226,7 @@
           ]
         }
       ],
-      "explanation": "A name doesn't prove a message is real: go to the site **your usual way**. If a password slipped out, **change it straight away** and tell a trusted adult. It's never your fault.",
+      "explanation": "A name doesn't prove an email is real: go the **usual way**. If a password slips out, change it and tell an adult.",
       "hint": "Can a name prove an email is real? And what makes a stolen password useless?"
     },
     {
@@ -270,7 +255,7 @@
         }
       ],
       "correctOptionId": "real",
-      "explanation": "Only `@yourbank.example` is Your Bank. `yourbank-alerts.example` is a lookalike, and in the last one the part after the @ belongs to someone else.",
+      "explanation": "Only `@yourbank.example` is Your Bank. The others change the name after the @, so they belong to someone else.",
       "hint": "Look only at the part after the @. Is it exactly `yourbank.example`?"
     },
     {
@@ -283,7 +268,7 @@
         "go-there-yourself"
       ],
       "title": "Recap",
-      "body": "- **Phishing** pretends to be someone you trust.\n- Check the **address after the @**; don't click, **go there yourself**.\n- **Try this:** check the address after the @ on the next email you get."
+      "body": "- **Phishing** pretends to be someone you trust.\n- Check the **address after the @**; don't click, **go there yourself**.\n- **Try this:** check the address after the @ on the next email you get.\n\n**Next:** the text message that's really a trap."
     }
   ]
 }

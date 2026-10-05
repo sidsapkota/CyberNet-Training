@@ -36,7 +36,7 @@
             {
               "id": "keep-talking",
               "text": "Keep chatting to find out more",
-              "consequence": "Scammers are good at talking: the longer you stay on, the more they can pressure you. It's safer to hang up.",
+              "consequence": "Scammers are good at talking, so the longer you stay on, the more they push. It's safer to hang up.",
               "outcome": "fail"
             }
           ]
@@ -54,33 +54,20 @@
             {
               "id": "call-back",
               "text": "Call back the number that just rang",
-              "consequence": "That number belongs to the caller, so they'd just answer again. Use the number you already know.",
+              "consequence": "That number belongs to the caller, so they would just answer again. Use the number you already have.",
               "outcome": "fail"
             },
             {
               "id": "tell-adult",
               "text": "Tell a trusted adult what happened",
-              "consequence": "Good choice: an adult can call Grandma on her real number with you, and help report the scam.",
+              "consequence": "An adult can call Grandma on her real number with you, and help report the scam.",
               "outcome": "success"
             }
           ]
         }
       ],
       "hint": "A familiar voice can be copied. Is there a way to reach the real Grandma that the caller can't fake?",
-      "explanation": "A new number, **hurry**, **money** and **keep it from your parents** are red flags. Hang up and check on the number **you already have**, or with a **trusted adult**."
-    },
-    {
-      "id": "sounds-exactly",
-      "type": "true_false",
-      "difficulty": "core",
-      "uses": [
-        "voice-clone"
-      ],
-      "prompt": "If a voice sounds exactly like someone you know, it must be them.",
-      "answer": false,
-      "explanation": "False. AI can copy a voice from a few seconds of video. Check by calling the number you already have.",
-      "hint": "Can a computer copy a voice?",
-      "nudge": "Voices can be copied now, so a familiar voice alone proves nothing."
+      "explanation": "A new number, hurry and secret money are red flags. Hang up, then check on the number you already have."
     },
     {
       "id": "fake-voices-and-faces",
@@ -137,7 +124,7 @@
       ],
       "hint": "Look for the four tricks: hurry, secrets, money or codes, and a new number.",
       "nudge": "Check each message for pressure to hurry, to keep a secret, to send money or codes, or a new number.",
-      "explanation": "Rushing you, asking for **secrets**, **gift cards or codes**, and a **new number** are all red flags, whoever the message seems to be from. Plans and favours are normal."
+      "explanation": "Rushing, secrets, gift cards or codes, and a new number are red flags, whoever it seems to be from. Plans and favours are normal."
     },
     {
       "id": "safe-word-check",
@@ -150,7 +137,7 @@
         "voice-clone",
         "call-back-on-known-number"
       ],
-      "prompt": "A caller sounds like your brother, can't say your **family safe word** (a secret emergency word) and is rushing you. What now?",
+      "prompt": "A caller fails your secret family safe word, and rushes you.",
       "options": [
         {
           "id": "hang-up",
@@ -159,162 +146,22 @@
         {
           "id": "forgot",
           "text": "Keep going: he's probably just forgotten it in a panic",
-          "nudge": "Forgetting is possible, but a voice can be copied. A missing safe word plus hurry is when to check another way."
+          "nudge": "A voice can be copied, so a forgotten word plus hurry is exactly when to check another way."
         },
         {
           "id": "give-hint",
           "text": "Give him a clue about the word so he can remember it",
-          "nudge": "A clue could hand the word to a scammer. How could you reach the real person?"
+          "nudge": "A clue could hand the word to a scammer. Reach him another way instead."
         }
       ],
       "correctOptionId": "hang-up",
-      "hint": "A safe word is a check that a copied voice can't pass. If the check fails, what's the safest way to reach the real person?",
-      "explanation": "No safe word plus hurry: hang up and call him on the number **you already have**. Never give away the safe word, even as a clue."
-    },
-    {
-      "id": "if-someone-fakes-you",
-      "type": "explainer",
-      "difficulty": "core",
-      "teaches": [
-        "not-your-fault",
-        "dont-share-private-image",
-        "dont-pay-scammers",
-        "save-evidence"
-      ],
-      "title": "If someone fakes you",
-      "body": "If someone makes or shares a fake picture or video of you, even a fake nude or sexual image, it's **not your fault**, and you won't be in trouble for asking for help.\n\n**Tell a trusted adult.** **Don't share it**, even to show someone, and **don't pay** or send anything. **Save evidence**: screenshot the messages, account name and web address, never the image itself."
-    },
-    {
-      "id": "do-or-dont",
-      "type": "sort_bins",
-      "difficulty": "core",
-      "uses": [
-        "save-evidence",
-        "dont-share-private-image",
-        "trusted-adult"
-      ],
-      "prompt": "Do, or don't?",
-      "bins": [
-        {
-          "id": "do",
-          "label": "Do"
-        },
-        {
-          "id": "dont",
-          "label": "Don't"
-        }
-      ],
-      "items": [
-        {
-          "id": "tell",
-          "label": "Tell a trusted adult",
-          "bin": "do"
-        },
-        {
-          "id": "evidence",
-          "label": "Screenshot the messages and account",
-          "bin": "do"
-        },
-        {
-          "id": "share",
-          "label": "Share it to show your friends",
-          "bin": "dont"
-        },
-        {
-          "id": "copy",
-          "label": "Save a copy of the image itself",
-          "bin": "dont"
-        }
-      ],
-      "hint": "The last card listed what to do, and what not to do.",
-      "nudge": "Look at each one again: does it help you and a trusted adult, or whoever made the fake?",
-      "explanation": "**Do:** tell a trusted adult, and screenshot the messages and account. **Don't:** share it or save the image itself. None of this is your fault."
-    },
-    {
-      "id": "where-to-report-a-fake",
-      "type": "explainer",
-      "difficulty": "core",
-      "teaches": [
-        "report-to-esafety",
-        "report-to-accce"
-      ],
-      "title": "Where to report a fake",
-      "body": "**Report** a fake image of you to the app, and to the government's **eSafety Commissioner** (esafety.gov.au/report), which can help get fake nude or sexual images taken down.\n\n**Under 18**, and someone threatens to share it or asks you for sexual images or money? Also report to the **ACCCE** (Australian Centre to Counter Child Exploitation): accce.gov.au/report."
-    },
-    {
-      "id": "fake-image-report",
-      "type": "scenario",
-      "difficulty": "core",
-      "uses": [
-        "report-to-esafety",
-        "report-to-accce",
-        "not-your-fault"
-      ],
-      "prompt": "Jo needs to report a fake picture.",
-      "start": "start",
-      "steps": [
-        {
-          "id": "start",
-          "text": "Jo, 15, told a trusted adult: someone made a fake picture of Jo and wants money not to share it. Where should they report?",
-          "choices": [
-            {
-              "id": "all-three",
-              "text": "The app, eSafety and the ACCCE",
-              "consequence": "Right. eSafety can help get the image taken down, and the ACCCE helps under-18s being threatened. Jo won't be in trouble.",
-              "outcome": "success"
-            },
-            {
-              "id": "app-only",
-              "text": "Just the app: it's only a fake",
-              "consequence": "Fakes are serious too. eSafety can help take it down, and because Jo is under 18 and being threatened, the ACCCE should know too.",
-              "outcome": "fail"
-            },
-            {
-              "id": "nowhere",
-              "text": "Nowhere: Jo might get in trouble",
-              "consequence": "Jo won't be in trouble for asking for help, and it's not Jo's fault. Reporting is how it gets stopped.",
-              "outcome": "fail"
-            }
-          ]
-        }
-      ],
-      "hint": "Look back at the last card: who to report to, and what changes when you're under 18 and threatened.",
-      "explanation": "Report to the **app** and the **eSafety Commissioner** (esafety.gov.au/report). Jo is under 18 and being threatened, so the **ACCCE** (accce.gov.au/report) too. It's never Jo's fault."
-    },
-    {
-      "id": "best-check",
-      "type": "multiple_choice",
-      "difficulty": "challenge",
-      "uses": [
-        "deepfake",
-        "never-share-sign-in-code",
-        "call-back-on-known-number"
-      ],
-      "prompt": "Your friend's account video-calls and asks for the code you just got. Face and voice look right. What's **best**?",
-      "options": [
-        {
-          "id": "check-another-way",
-          "text": "Don't send it; check on their usual number"
-        },
-        {
-          "id": "send",
-          "text": "Send it: the face and voice match",
-          "nudge": "Faces and voices can be faked with AI. How else could you reach your friend?"
-        },
-        {
-          "id": "explain",
-          "text": "Ask why it's urgent, then decide",
-          "nudge": "A scammer can always make up a good reason, and hurry is a red flag."
-        }
-      ],
-      "correctOptionId": "check-another-way",
-      "hint": "A face and voice can be faked. What can't a scammer fake?",
-      "explanation": "A deepfake can copy a face and voice, but it can't answer on your friend's **usual number**. Sign-in codes are never safe to share."
+      "hint": "A safe word is a check a copied voice can't pass. If it fails, how else can you reach him?",
+      "explanation": "No safe word plus hurry means hang up and call his usual number. Never give the safe word away, even as a clue."
     },
     {
       "id": "coach-video",
       "type": "scenario",
-      "difficulty": "challenge",
+      "difficulty": "core",
       "uses": [
         "deepfake",
         "deepfake-red-flags",
@@ -330,26 +177,125 @@
             {
               "id": "send",
               "text": "Send it: it's Coach",
-              "consequence": "\"Keep it between us\" is a red flag, even from someone you know. A real coach wouldn't ask you to keep secrets.",
+              "consequence": "\"Keep it between us\" is a red flag, even from someone you know. A real coach would not ask for secrets.",
               "outcome": "fail"
             },
             {
               "id": "tell",
               "text": "Don't reply; tell a trusted adult",
-              "consequence": "Exactly. An adult can check with the real coach. Secrets and photo requests are red flags, whatever face is on screen.",
+              "consequence": "An adult can check with the real coach. Secrets and photo requests are red flags, whatever the face.",
               "outcome": "success"
             },
             {
               "id": "prove",
               "text": "Ask for another video to prove it",
-              "consequence": "A deepfake can make another video. Check another way: through a trusted adult, or the coach's usual contact.",
+              "consequence": "A deepfake can make another video. Check another way, through a trusted adult or the coach's usual contact.",
               "outcome": "fail"
             }
           ]
         }
       ],
       "hint": "Look past the face. Which red flag is in the message itself?",
-      "explanation": "Real face or fake, **\"keep it between us\"** is a red flag. Don't reply, and **tell a trusted adult**, who can check with the real coach."
+      "explanation": "Real face or fake, keep it between us is a red flag. Don't reply, and tell a trusted adult who can check."
+    },
+    {
+      "id": "fake-image-report",
+      "type": "scenario",
+      "difficulty": "core",
+      "teaches": [
+        "not-your-fault",
+        "save-evidence",
+        "dont-pay-scammers",
+        "report-to-esafety",
+        "report-to-accce"
+      ],
+      "uses": [
+        "trusted-adult"
+      ],
+      "prompt": "Someone made a fake picture of you and wants money.",
+      "start": "start",
+      "steps": [
+        {
+          "id": "start",
+          "text": "It's not your fault. What do you do first?",
+          "choices": [
+            {
+              "id": "pay",
+              "text": "Pay so it never gets shared",
+              "consequence": "Paying usually leads to more demands, not fewer. Never pay.",
+              "outcome": "fail"
+            },
+            {
+              "id": "tell-save",
+              "text": "Tell a trusted adult, and save evidence",
+              "consequence": "Good. Screenshot the messages and account as evidence, never the image itself.",
+              "next": "report"
+            },
+            {
+              "id": "share",
+              "text": "Send it to a friend to warn them",
+              "consequence": "Don't pass it on, even to show someone. Tell a trusted adult.",
+              "outcome": "fail"
+            }
+          ]
+        },
+        {
+          "id": "report",
+          "text": "Where should you report it?",
+          "choices": [
+            {
+              "id": "all",
+              "text": "The app, eSafety, and the ACCCE",
+              "consequence": "Report to the app and eSafety (esafety.gov.au/report). Under 18, tell the ACCCE too.",
+              "outcome": "success"
+            },
+            {
+              "id": "app-only",
+              "text": "Just the app: it's only a fake",
+              "consequence": "A fake is serious too. eSafety can help take it down.",
+              "outcome": "fail"
+            },
+            {
+              "id": "nowhere",
+              "text": "Nowhere: you might get in trouble",
+              "consequence": "You won't be in trouble for asking. Reporting is how it stops.",
+              "outcome": "fail"
+            }
+          ]
+        }
+      ],
+      "hint": "Look at who to report to, and what changes when you're under 18 and threatened.",
+      "explanation": "Report to the app and eSafety (esafety.gov.au/report), and under 18, the ACCCE (accce.gov.au/report) too. It's never your fault."
+    },
+    {
+      "id": "best-check",
+      "type": "multiple_choice",
+      "difficulty": "challenge",
+      "uses": [
+        "deepfake",
+        "never-share-sign-in-code",
+        "call-back-on-known-number"
+      ],
+      "prompt": "A friend's video call asks for your sign-in code. What's best?",
+      "options": [
+        {
+          "id": "check-another-way",
+          "text": "Don't send it; check on their usual number"
+        },
+        {
+          "id": "send",
+          "text": "Send it: the face and voice match",
+          "nudge": "Faces and voices can be faked with AI. Reach your friend another way."
+        },
+        {
+          "id": "explain",
+          "text": "Ask why it's urgent, then decide",
+          "nudge": "A scammer can always invent a good reason, and hurry is a red flag."
+        }
+      ],
+      "correctOptionId": "check-another-way",
+      "hint": "A face and voice can be faked. What can't a scammer fake?",
+      "explanation": "A deepfake can copy a face and voice, but it can't answer on your friend's usual number. Sign-in codes are never safe to share."
     },
     {
       "id": "deepfake-recap",
@@ -363,7 +309,7 @@
         "lifeline"
       ],
       "title": "Recap",
-      "body": "- AI can fake voices and faces: hang up, then check on the number you already have.\n- A fake of you is never your fault: tell, save evidence, report.\n- **Try this:** agree a family safe word tonight.\n\nWant to talk? In Australia: **Kids Helpline** 1800 55 1800 (up to 25) or **Lifeline** 13 11 14, any time."
+      "body": "- AI can fake voices and faces: check on a number you already have.\n- A fake of you is never your fault: tell, save evidence, report.\n- **Try this:** agree a family safe word tonight.\n\nTalk any time: **Kids Helpline** 1800 55 1800 (up to 25) or **Lifeline** 13 11 14.\n\n**Next:** who to tell, and where to go, when something's wrong."
     }
   ]
 }

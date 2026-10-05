@@ -51,13 +51,13 @@ Strong passwords, passphrases and two-step sign-in.
 
 **Key facts**
 
-- *Words it teaches:* A **passphrase** is four or more **random** words, like `otter planet brick soup`: never a song line or quote. Guessers try **common passwords** like `password123`, **names and years**, and **swaps** like `@` for `a` first.
+- *Words it teaches:* Guessers try **common passwords** like `password123`, **names and years**, and **song lines** first. A **passphrase** is four or more **random** words, like `otter planet brick soup`: never a song line.
 - *Recap:* **Length** wins: a **passphrase** is four or more **random** words. Give every account its **own** password.
 
 **Best interactive cards**
 
-- Simulator: **Drag the slider** until a computer would need **100+ years** to guess this password.
-- Simulator: Only **10 characters** allowed. Add kinds of characters to reach **100 years**.
+- Simulator: A short password cracks fast. **Drag** to reach 100+ years.
+- Simulator: Twist: just **10 characters**. Add character types to reach **100 years**.
 - Choose what happens: A game site was hacked, and passwords were stolen: a data breach.
 
 #### Two-Step Sign-In
@@ -68,14 +68,14 @@ Strong passwords, passphrases and two-step sign-in.
 
 **Key facts**
 
-- *Words it teaches:* **Two-step sign-in** asks for your password **plus** a second proof, like your phone. A **passkey** signs you in with your face, fingerprint or PIN: the strongest kind, since fake sites can't use it. An **authenticator app** makes fresh codes on your phone, safer than codes sent by text.
-- *Recap:* **Two-step sign-in** adds a second proof, so a stolen password isn't enough. **Never share a sign-in code.** One you didn't ask for?
+- *Words it teaches:* **Two-step sign-in** asks for your password **plus** a second proof, like a code on your phone. A **passkey** signs you in with your face, fingerprint or PIN: the strongest, since fake sites can't use it. An **authenticator app** makes fresh codes on your phone, safer than codes sent by text.
+- *Recap:* **Two-step sign-in** adds a second proof, so a stolen password isn't enough. **Never share a sign-in code.** Got one you didn't ask for?
 
 **Best interactive cards**
 
-- Choose what happens: A **sign-in code** is sent when someone types your password. **Nobody real ever asks you to send one.**
-- Choose what happens: A music app only offers **text codes** for two-step sign-in.
-- Choose what happens: You saved **backup codes** when you set up two-step. Then your phone falls in a lake.
+- Choose what happens: A sign-in code arrives when someone types your password.
+- Choose what happens: A password manager keeps a different strong password for every account.
+- Choose what happens: A music app only offers text codes for two-step.
 
 #### Module quiz (7 questions)
 
@@ -98,8 +98,8 @@ Phishing emails, scam texts and calls, and fake websites.
 
 **Best interactive cards**
 
+- Explore the picture: An email says it's from Your Bank. **Tap** each part.
 - Choose what happens: You've "won" a prize by email. What do you do?
-- Explore the picture: This email says it's from Your Bank. What gives it away?
 - Choose what happens: This email uses your real name.
 
 #### Scam Texts and Calls
@@ -110,13 +110,14 @@ Phishing emails, scam texts and calls, and fake websites.
 
 **Key facts**
 
-- *Scam texts and calls:* Scam **texts** often ask for a **small fee**, set a **deadline** and add a strange **link**. Scam **callers** may say they're your bank or the police.
-- *Recap:* A **fee**, a **deadline** and a **link**? Check in the company's **official app**.
+- *Words it teaches:* Never tap a link in a surprise text: open the company's **own app** to check.
+- *Scam calls:* **Hang up** if they want a **code**, a **password**, **gift cards**, **secrecy** or **control of your computer**. Then **call back** on a number you already have, like the one on your card.
+- *Recap:* A text with a **fee**, a **deadline** and a **link**? Check in the company's **official app**.
 
 **Best interactive cards**
 
-- Choose what happens: A call sounds exactly like your cousin. (A computer can copy a voice: a voice clone.)
-- Choose what happens: A website promises **10,000 free coins** for your favourite game.
+- Explore the picture: You're expecting a parcel. **Tap** each part.
+- Choose what happens: A call sounds just like your cousin: a voice clone.
 - Choose what happens: A text arrives from a number you don't know.
 
 #### Fake Websites
@@ -127,15 +128,14 @@ Phishing emails, scam texts and calls, and fake websites.
 
 **Key facts**
 
-- *Words it teaches:* A **padlock** means **encrypted**: nobody can read your data on its way to the site.
-- *Read the address:* The **owner** is the name just before the **last ending** (like `.example`). `yourbank.example.login-check.example`: owned by **login-check.example**.
-- *Recap:* The **owner** is the name just before the very last ending. A **padlock only means encrypted**: scam sites can have one.
+- *Read the address:* The **owner** is the name just before the **last ending**, like `.example`. `yourbank.example.login-check.example`: owned by **login-check**.
+- *Recap:* The **owner** is the name just before the very last ending. A **padlock** only means encrypted: scam sites get them too.
 
 **Best interactive cards**
 
-- Tap the picture: Your Bank is `yourbank.example` and **never** asks for your PIN. Tap **every** warning sign.
+- Explore the picture: This page says it's Your Bank. **Tap** each part.
 - Choose what happens: Your **password manager** only fills in on the real site.
-- Choose what happens: Oops. Before you noticed, you typed your bank password and card number into a fake site.
+- Choose what happens: You typed your password and card number into a fake site.
 
 #### Module quiz (7 questions)
 
@@ -158,9 +158,9 @@ Your digital footprint, app permissions and public Wi-Fi.
 
 **Best interactive cards**
 
-- Sort into groups: Share with strangers, or keep private?
 - Choose what happens: A fun quiz is going around on social media.
-- Choose what happens: A friend from a game is really nice.
+- Choose what happens: Mia is on holiday and wants to post her beach photos.
+- Choose what happens: A new friend from a game seems really nice.
 
 #### Apps and Public Wi-Fi
 
@@ -170,14 +170,14 @@ Your digital footprint, app permissions and public Wi-Fi.
 
 **Key facts**
 
-- *Words it teaches:* An **app permission** lets an app use your camera, microphone, location or contacts. For location, choose **"Only while using the app"**, so a closed app can't see where you are. **Public Wi-Fi** in cafés and shops is shared, and you can't always be sure it's real.
-- *Recap:* Give apps only the **permissions** they need; choose **"Only while using"** for location. On **public Wi-Fi**, check the name, and bank on **mobile data**.
+- *Words it teaches:* An **app permission** lets an app use your camera, microphone, location or contacts. For location, pick **"Only while using the app"**, so a closed app can't track you. **Public Wi-Fi** in cafés and shops is shared, and you can't always be sure it's real. A **fake hotspot** is Wi-Fi a stranger names to look like the café's.
+- *Recap:* Give apps only the **permissions** they need; pick **"Only while using"** for location. On **public Wi-Fi**, check the name, and bank on **mobile data**.
 
 **Best interactive cards**
 
-- Sort into groups: Does the app **need** it for its job?
+- Sort into groups: Does the app need it for its job?
 - Choose what happens: You install a new drawing game.
-- Choose what happens: A **microphone dot** appears while you're reading. (It means an app is using the mic.)
+- Choose what happens: A **microphone dot** shows an app is using the mic.
 
 #### Module quiz (6 questions)
 
@@ -195,13 +195,12 @@ Signs of a hack, what to do step by step, and where to get help.
 
 **Key facts**
 
-- *Words it teaches:* A **take-over** is someone else in your account, doing things that weren't you. Your **recovery email** can reset your password, so it must be yours.
 - *What to do first:* **Tell a trusted adult.** You're not in trouble, and they can help you work through it. **Change the password** on a device you trust, in the real app or website.
 - *Recap:* First: **tell an adult**, **change the password**, **check recovery details**. Use the **official recovery**.
 
 **Best interactive cards**
 
-- Sort into groups: Sign of a take-over, or normal?
+- Sort into groups: Someone else in your account is a **take-over**. Which is a sign?
 - Choose what happens: Your friends say you've been sending them strange links. You haven't.
 - Choose what happens: You check your account's security settings.
 
@@ -214,15 +213,13 @@ Signs of a hack, what to do step by step, and where to get help.
 **Key facts**
 
 - *Fake voices and faces:* AI can copy a voice from real recordings, sometimes just a few seconds of video posted online: a **voice clone**. A faked video or picture is a **deepfake**.
-- *If someone fakes you:* If someone makes or shares a fake picture or video of you, even a fake nude or sexual image, it's **not your fault**, and you won't be in trouble for asking for help. **Tell a trusted adult.** **Don't share it**, even to show someone, and **don't pay** or send anything.
-- *Where to report a fake:* **Report** a fake image of you to the app, and to the government's **eSafety Commissioner** (esafety.gov.au/report), which can help get fake nude or sexual images taken down. **Under 18**, and someone threatens to share it or asks you for sexual images or money?
-- *Recap:* **Try this:** agree a family safe word tonight. In Australia: **Kids Helpline** 1800 55 1800 (up to 25) or **Lifeline** 13 11 14, any time.
+- *Recap:* **Try this:** agree a family safe word tonight. Talk any time: **Kids Helpline** 1800 55 1800 (up to 25) or **Lifeline** 13 11 14.
 
 **Best interactive cards**
 
 - Choose what happens: A call from an unknown number sounds just like your grandma.
-- Choose what happens: Jo needs to report a fake picture.
 - Choose what happens: A video message from an account with your coach's face.
+- Choose what happens: Someone made a fake picture of you and wants money.
 
 #### Getting Help
 
@@ -232,21 +229,15 @@ Signs of a hack, what to do step by step, and where to get help.
 
 **Key facts**
 
-- *Never your fault:* **It's never your fault.** Scammers **count on embarrassment** to keep people quiet. **Save evidence** before you block: screenshot the messages, username, web address and date.
-- *Who can help:* A **trusted adult** is someone you feel safe with: a parent or carer, teacher, school counsellor or older relative. **Kids Helpline**, ages 5 to 25: **1800 55 1800**.
-- *Where to report in Australia:* **eSafety** (esafety.gov.au): serious cyberbullying of under-18s the app hasn't fixed, adult cyber abuse, and a **private or nude image** of you shared or threatened. **ACCCE** (accce.gov.au/report): **under 18** and pressured or threatened over a private image.
-- *More places to go:* **Your bank, straight away**, if money or card details are involved. **IDCARE** (idcare.org or 1800 595 160): free help to make a plan if your personal details were stolen.
-- *Recap:* **Never your fault:** tell an adult, Kids Helpline (1800 55 1800) or Lifeline (13 11 14). **Try this:** save Kids Helpline and a trusted adult's number in your phone.
+- *Words it teaches:* Outside your family, **Kids Helpline** (ages 5 to 25) is 1800 55 1800 and **Lifeline** is 13 11 14, any time. **Report** it in the app first, and report a scam to **Scamwatch** (scamwatch.gov.au) to warn others. If money's involved, tell **your bank** straight away; if details are stolen, **IDCARE** (idcare.org) helps. If someone could get hurt right now, call **000**.
+- *Never your fault:* **It's never your fault**, and telling someone is brave. Before you block, **save the evidence**: screenshot the messages, the username, the web address and the date.
+- *Recap:* **Never your fault:** tell a trusted adult, **Kids Helpline** (1800 55 1800) or **Lifeline** (13 11 14). Report in the app, then **eSafety** (esafety.gov.au), **Scamwatch**, your **bank**, or **000** if there's danger.
 
 **Best interactive cards**
 
 - Sort into groups: Helps, or makes it worse?
-- Choose what happens: People in a group chat start posting mean messages about you.
-- Choose what happens: Someone threatens to share a private photo of you unless you pay. **It's never your fault**, and you won't be in trouble.
-
-**Surprising facts**
-
-- Report in the app, then eSafety, Scamwatch, your bank or 000.
+- Choose what happens: People in a group chat post mean messages about you.
+- Match pairs: Match each problem to where to go.
 
 #### Module quiz (8 questions)
 

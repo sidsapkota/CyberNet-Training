@@ -7,27 +7,83 @@
   "icon": "message-square-warning",
   "cards": [
     {
+      "id": "meet-the-text",
+      "type": "hotspot",
+      "difficulty": "core",
+      "teaches": [
+        "scam-text-signs"
+      ],
+      "uses": [],
+      "prompt": "You're expecting a parcel. **Tap** each part.",
+      "scene": "text-message",
+      "mode": "explore",
+      "parts": [
+        {
+          "part": "sms-fee",
+          "job": "A small fee. Real deliveries don't text you to pay a few dollars at a link."
+        },
+        {
+          "part": "sms-deadline",
+          "job": "A deadline. \"Within 2 hours\" rushes you so you don't stop to think."
+        },
+        {
+          "part": "sms-link",
+          "job": "A strange link. parcels-redelivery.example isn't the real Parcels app or website."
+        }
+      ],
+      "explanation": "A scam text often wants a **small fee**, sets a **deadline** and adds a **link**."
+    },
+    {
+      "id": "meet-check-the-app",
+      "type": "reveal",
+      "difficulty": "core",
+      "teaches": [
+        "official-app-check"
+      ],
+      "show": {
+        "kind": "icon",
+        "icon": "app-window"
+      },
+      "sentence": "Never tap a link in a surprise text: open the company's **own app** to check."
+    },
+    {
+      "id": "spot-the-text",
+      "type": "hotspot",
+      "difficulty": "core",
+      "uses": [
+        "scam-text-signs"
+      ],
+      "prompt": "Tap the **three** scam signs in the new text.",
+      "scene": "text-message",
+      "mode": "tap",
+      "targets": [
+        "sms-fee",
+        "sms-deadline",
+        "sms-link"
+      ],
+      "explanation": "It wants a **small fee**, sets a **deadline** and adds a **link** to `parcels-redelivery.example`. The sender name is faked to blend in.",
+      "hint": "Find what it wants you to pay, how long it gives you, and where it sends you.",
+      "nudge": "Look for a fee, a deadline and a link in the new message, one at a time."
+    },
+    {
       "id": "sounds-like-cousin",
       "type": "scenario",
       "difficulty": "core",
       "teaches": [
-        "voice-clone",
-        "family-safe-word"
+        "voice-clone"
       ],
-      "uses": [
-        "family-safe-word"
-      ],
-      "prompt": "A call sounds exactly like your cousin. (A computer can copy a voice: a [[voice clone|voice-clone]].)",
+      "uses": [],
+      "prompt": "A call sounds just like your cousin: a [[voice clone|voice-clone]].",
       "start": "start",
       "steps": [
         {
           "id": "start",
-          "text": "**\"I need $200 in gift cards now. Don't tell anyone!\"** What do you do?",
+          "text": "**\"Send $200 in gift cards now. Tell no one!\"** What now?",
           "choices": [
             {
               "id": "buy",
               "text": "Buy them: it's their voice",
-              "consequence": "Voices can be copied, and gift cards are a favourite scam payment. The money would be gone.",
+              "consequence": "Voices can be copied, and gift cards are a scammer's favourite. The money would be gone.",
               "outcome": "fail"
             },
             {
@@ -38,64 +94,27 @@
             },
             {
               "id": "call-back",
-              "text": "Hang up and call their saved number",
-              "consequence": "Your cousin answers, confused, and fine. It was a scam, and you stopped it.",
-              "next": "next-time"
-            }
-          ]
-        },
-        {
-          "id": "next-time",
-          "text": "How could you check a call like that next time? (A **family safe word** is a secret word only your family knows.)",
-          "choices": [
-            {
-              "id": "birthday",
-              "text": "Ask them to say your birthday",
-              "consequence": "Birthdays are often online, so a scammer may know yours.",
-              "outcome": "fail"
-            },
-            {
-              "id": "listen",
-              "text": "Listen for a robotic voice",
-              "consequence": "Copied voices can sound just like the real person. Your ears can't be sure.",
-              "outcome": "fail"
-            },
-            {
-              "id": "safe-word",
-              "text": "Agree a family safe word",
-              "consequence": "Now anyone in your family can ask for it. A copied voice won't know it.",
+              "text": "Hang up, call their saved number",
+              "consequence": "Your cousin answers, confused and fine. It was a scam, and you stopped it.",
               "outcome": "success"
             }
           ]
         }
       ],
-      "explanation": "A familiar voice can be faked: **hang up and call back** on a number you know, and agree a **family safe word**. Secrecy and gift cards are warning signs.",
-      "hint": "How can you reach your cousin in a way a scammer can't fake? And what could only your family know?"
-    },
-    {
-      "id": "knows-my-name",
-      "type": "true_false",
-      "difficulty": "core",
-      "uses": [
-        "name-proves-nothing"
-      ],
-      "prompt": "A caller who knows your name must be real.",
-      "answer": false,
-      "explanation": "False. Names, schools and even voices can be found or copied online. Check by calling back on a number you already know.",
-      "hint": "Where could a stranger find your name?",
-      "nudge": "Your name is easy to find online, so it proves nothing."
+      "explanation": "A familiar voice can be faked. **Hang up and call back** on a number you already have.",
+      "hint": "How can you reach your cousin in a way a scammer can't fake?"
     },
     {
       "id": "in-your-pocket",
       "type": "explainer",
       "difficulty": "core",
       "teaches": [
-        "scam-text-signs",
         "scam-call-signs",
-        "gift-cards-scam-payment"
+        "gift-cards-scam-payment",
+        "call-back-on-known-number"
       ],
-      "title": "Scam texts and calls",
-      "body": "Scam **texts** often ask for a **small fee**, set a **deadline** and add a strange **link**.\n\nScam **callers** may say they're your bank or the police. Hang up if they want a **code**, a **password**, **gift cards**, **secrecy** or **control of your computer**."
+      "title": "Scam calls",
+      "body": "A scam caller may say they're your bank or the police. **Hang up** if they want a **code**, a **password**, **gift cards**, **secrecy** or **control of your computer**.\n\nThen **call back** on a number you already have, like the one on your card."
     },
     {
       "id": "hang-up-or-ok",
@@ -142,57 +161,6 @@
       "explanation": "Codes, controlling your computer, gift cards and secrecy are scam signs: **hang up**. Calling a number you found yourself is fine.",
       "hint": "Check each against the warning signs for calls, and ask who chose the number.",
       "nudge": "Look at each one again: does it match a warning sign, and who chose the number?"
-    },
-    {
-      "id": "spot-the-text",
-      "type": "hotspot",
-      "difficulty": "core",
-      "uses": [
-        "scam-text-signs"
-      ],
-      "prompt": "You're expecting a parcel. Tap the **three** scam signs in the **new** text.",
-      "scene": "text-message",
-      "mode": "tap",
-      "targets": [
-        "sms-fee",
-        "sms-deadline",
-        "sms-link"
-      ],
-      "explanation": "It asks for a **small fee**, sets a **deadline** and links to `parcels-redelivery.example`. The sender name can be faked, so it blends in: check in the company's **official app** instead.",
-      "hint": "In the new message, find what it wants you to pay, how long it gives you, and where it sends you.",
-      "nudge": "Look for a fee, a deadline and a link in the new message, one at a time."
-    },
-    {
-      "id": "free-coins",
-      "type": "scenario",
-      "difficulty": "core",
-      "uses": [
-        "companies-never-ask-for-secrets"
-      ],
-      "prompt": "A website promises **10,000 free coins** for your favourite game.",
-      "start": "start",
-      "steps": [
-        {
-          "id": "start",
-          "text": "It asks for your **game username and password** to \"send the coins\". What do you do?",
-          "choices": [
-            {
-              "id": "enter",
-              "text": "Type them in: lots of comments say it really works",
-              "consequence": "Scammers write those comments too. The site keeps your password and takes your account. There were never any coins.",
-              "outcome": "fail"
-            },
-            {
-              "id": "close",
-              "text": "Close the page: coins only come from the game itself",
-              "consequence": "Your account stays yours. Free-coin sites are a common trick to steal accounts.",
-              "outcome": "success"
-            }
-          ]
-        }
-      ],
-      "explanation": "\"Free coins\" sites are **too good to be true**. Never type your game password anywhere except the game's own app or website.",
-      "hint": "Is this too good to be true? And who should ever see your password?"
     },
     {
       "id": "always-a-sign",
@@ -253,13 +221,13 @@
             {
               "id": "call",
               "text": "Call your boss's usual number",
-              "consequence": "Your boss has no idea what you mean. Scam stopped, and your boss warns the rest of the team.",
+              "consequence": "Your boss has no idea what you mean. Scam stopped, and your boss warns the team.",
               "outcome": "success"
             }
           ]
         }
       ],
-      "explanation": "Check \"new number\" texts by contacting the person on the **number you already have**. Gift cards and secrecy are warning signs, whoever it claims to be.",
+      "explanation": "Check a \"new number\" text on a number you already have. Gift cards and secrecy are warning signs.",
       "hint": "How can you reach your boss in a way a scammer can't fake?"
     },
     {
@@ -272,7 +240,7 @@
         "call-back-on-known-number"
       ],
       "title": "Recap",
-      "body": "- A **fee**, a **deadline** and a **link**? Check in the company's **official app**.\n- Calls: **hang up and call back** on a number you know.\n- **Try this:** save your bank's real number in your contacts."
+      "body": "- A text with a **fee**, a **deadline** and a **link**? Check in the company's **official app**.\n- A pushy call? **Hang up and call back** on a number you know.\n- **Try this:** save your bank's real number in your contacts.\n\n**Next:** a fake website that looks exactly like the real one."
     }
   ]
 }
