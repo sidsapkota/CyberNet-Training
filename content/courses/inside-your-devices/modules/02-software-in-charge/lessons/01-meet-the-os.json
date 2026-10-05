@@ -11,7 +11,7 @@
       "type": "scenario",
       "difficulty": "core",
       "uses": [],
-      "prompt": "Music, a game and a message ping all want the **speaker** at once.",
+      "prompt": "Music, a game and a ping all want the **speaker** at once.",
       "start": "who-decides",
       "steps": [
         {
@@ -126,7 +126,7 @@
       "uses": [
         "cpu"
       ],
-      "prompt": "The **task manager** lists each **process** (running program). End the [[CPU]] hog. Keep music, the browser and **System** (the OS).",
+      "prompt": "The **task manager** lists each **process**. End the [[CPU]] hog; keep **System**.",
       "model": "task-manager",
       "params": {
         "ramGb": 8,
@@ -249,7 +249,7 @@
         "task-manager",
         "never-end-system"
       ],
-      "prompt": "Slide time to **40 min**, then end the app that keeps grabbing [[RAM]] (a **memory leak**). Keep the music.",
+      "prompt": "A **memory leak** grabs [[RAM]]. Slide to **40 min**, end it.",
       "model": "task-manager",
       "params": {
         "ramGb": 8,
@@ -366,12 +366,12 @@
         "ram-wiped-at-power-off",
         "storage"
       ],
-      "prompt": "**Updates** fix mistakes (**bugs**) and weak spots attackers use (**security holes**). You're mid-essay.",
+      "prompt": "**Updates** fix mistakes (**bugs**) and attackers' weak spots (**security holes**).",
       "start": "prompt",
       "steps": [
         {
           "id": "prompt",
-          "text": "A pop-up says **\"Updates are ready. Restart now?\"**",
+          "text": "You're mid-essay. A pop-up says **\"Updates are ready. Restart now?\"**",
           "choices": [
             {
               "id": "restart-now",
@@ -425,7 +425,7 @@
       "uses": [
         "task-manager"
       ],
-      "prompt": "Your screen flashes red. Good to know: a web page can't see what's on your laptop.",
+      "prompt": "Your screen flashes red. A web page can't see your files.",
       "start": "popup",
       "steps": [
         {
@@ -471,7 +471,7 @@
           ]
         }
       ],
-      "explanation": "A web page can't see your files, so the warning is **fake**. Close the browser (with the task manager if needed) and tell a parent, teacher or someone you trust.",
+      "explanation": "A web page can't see your files, so the warning is **fake**. Close the browser and tell an adult you trust.",
       "hint": "Can a web page really see what's on your laptop?"
     },
     {
@@ -481,11 +481,10 @@
       "teaches": [
         "operating-system",
         "task-manager",
-        "never-end-system",
-        "save-before-restart"
+        "never-end-system"
       ],
       "title": "Recap",
-      "body": "- The **OS** is the referee: it shares out CPU, RAM and hardware.\n- Frozen app? End its process in the task manager, never System.\n- Save your work, then let updates finish.\n\nNext: where your files actually live."
+      "body": "- The **OS** is the referee: it shares out CPU, RAM and hardware.\n- Frozen app? End its **process** in the task manager, never **System**.\n- **Try this:** open your task manager and see what's running.\n\n**Next:** where your songs, photos and essays actually live."
     }
   ]
 }

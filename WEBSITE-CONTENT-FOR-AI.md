@@ -290,21 +290,21 @@ Open up a laptop and a phone, and meet the parts that make them work.
 
 #### Meet the CPU
 
-- **What you learn:** What the processor does, what speed and cores really mean, and why it needs to stay cool.
+- **What you learn:** What cores really do, and why the CPU needs to stay cool.
 - **Access:** Free with a free account
 - **Link:** `cybernettraining.com/from/<platform>/meet-the-cpu`
 
 **Key facts**
 
-- *Words it teaches:* **GHz** is a CPU's speed: its clock ticks billions of times a second, doing tiny steps of work. A **core** is one worker inside the CPU, so a CPU with 4 cores can work on 4 things at once. This **heat pipe** carries the CPU's heat away to metal fins by the vent. The **fan** blows air through those fins and out of the vents, so the CPU stays cool. **Throttling** is when a CPU gets too hot and slows itself down to stay safe.
-- *More cooks in the kitchen:* Cores are the same: they only help when a job **splits into pieces** that don't wait for each other.
-- *Recap:* **GHz** is clock speed: more GHz, more steps a second. **Cores** only help with jobs that split into pieces.
+- *Words it teaches:* **Throttling** is when a CPU gets too hot and slows itself down to stay safe.
+- *More cooks in the kitchen:* A **core** is one worker in the CPU. Cores only help a job that **splits into pieces** that don't wait for each other.
+- *Recap:* **Cores** only help jobs that split into pieces. A hot CPU **throttles**: it slows down to stay safe.
 
 **Best interactive cards**
 
-- Simulator: Saving this video takes 12 seconds. Add cores to get it to **3 seconds or less**.
-- Tap the picture: Tap the **CPU** and the **two parts** that cool it.
-- Simulator: This laptop is throttling on a blanket, with a dusty fan. Get it back to **3 GHz**.
+- Simulator: Saving a video takes 12 seconds. Add cores to reach 3.
+- Explore the picture: Hard work heats the CPU. Tap each part.
+- Simulator: This laptop is throttling. Stop it slowing down.
 
 #### Module quiz (8 questions)
 
@@ -323,13 +323,17 @@ Meet the operating system, the apps it manages, and the files it keeps.
 **Key facts**
 
 - *The operating system:* That main program is the **operating system** (**OS**), the referee: It talks to the **hardware** (screen, keyboard, Wi-Fi) for them.
-- *Recap:* The **OS** is the referee: it shares out CPU, RAM and hardware.
+- *Recap:* The **OS** is the referee: it shares out CPU, RAM and hardware. End its **process** in the task manager, never **System**.
 
 **Best interactive cards**
 
-- Choose what happens: Music, a game and a message ping all want the **speaker** at once.
-- Simulator: The **task manager** lists each **process** (running program). End the CPU hog. Keep music, the browser and **System** (the OS).
-- Simulator: Slide time to **40 min**, then end the app that keeps grabbing RAM (a **memory leak**). Keep the music.
+- Choose what happens: Music, a game and a ping all want the **speaker** at once.
+- Simulator: The **task manager** lists each **process**. End the CPU hog; keep **System**.
+- Simulator: A **memory leak** grabs RAM. Slide to **40 min**, end it.
+
+**Surprising facts**
+
+- **Next:** where your songs, photos and essays actually live.
 
 #### Files and Folders
 
@@ -381,13 +385,13 @@ Fix slow, full and flat devices with a simple loop, safely.
 
 **Key facts**
 
-- *When a battery swells:* Old or damaged **lithium-ion** batteries (in phones and laptops) can **swell**: the case bulges, the screen lifts, or the trackpad (touch pad) is pushed up.
+- *When a battery swells:* Old or damaged **lithium-ion** batteries can **swell**: the case bulges or the screen lifts.
 - *Recap:* **Brightness, location and background apps** drain batteries most. **Heat** wears them out.
 
 **Best interactive cards**
 
-- Simulator: No charger on a long trip: last **at least 8 hours** with **music** on. (**Low power mode** saves energy.)
-- Choose what happens: Your phone won't charge. Tip: cables wear out more often than phones, and **metal or water** can damage the charging port.
+- Simulator: No charger all day. Last **8 hours** with music playing.
+- Choose what happens: Your phone won't charge. Cables fail more often than phones.
 - Choose what happens: You're gaming on your bed with the phone plugged in.
 
 #### Module quiz (8 questions)
