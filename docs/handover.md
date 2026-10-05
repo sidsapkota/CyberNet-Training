@@ -1,7 +1,7 @@
 # Handover
 
 Read this first in every session. It is replaced, not appended: git keeps the history.
-Last updated: 4 October 2026.
+Last updated: 5 October 2026.
 
 ## 1. Live on production (https://cybernettraining.com, branch `main`)
 
@@ -16,6 +16,7 @@ Last updated: 4 October 2026.
 - **Leagues moments (merged 3 Oct):** a one-time full-screen "Leagues are open!" celebration (`LeaguesOpening`, dashboard only — pathname `/` — and once per device; shows for future learners too, so a brand-new learner meets it on their first dashboard visit); live rank on `/leagues` (`LeaguesView` polls each minute, rows animate with `motion` layout, aria-live "You moved up to #N"); and a small "You moved up to #N" moment on the lesson-complete screen (`LeagueRankMoment`, compares against the rank stored per device at the last finished lesson). All leagues-open only, signed-in only, reduced-motion safe; pure rules in `src/lib/leagues/opening.ts` + `rankMoment.ts` (tested). `npm run e2e:leagues` (8 checks: all moments + a live rank rise with no reload, seeds and cleans up a throwaway league on staging, production-guarded) and `e2e:design-qa` now covers `/leagues` signed in (staging only). Fixed the leaderboards toggle to a 44px tap target (also on `/account`). **Known pre-existing (not leagues):** the desktop signed-in header account link is 40px tall (<44) on every signed-in page.
 - **Prior knowledge only (merged 2 Oct):** every card is tagged with what it `teaches` and `uses`; `concepts.test.ts` fails if a question needs something not taught earlier (`npx tsx scripts/check-concepts.ts [course]`). 42 problems fixed, all four courses; worst-first list in `docs/plans/prior-knowledge-audit.md`. Bits and Binary: the IP question moved to What Is an IP Address?, card 7 (was 8) asks about a byte with 10 bits.
 - **Every option on screen (merged 2 Oct):** `npm run e2e:fit-audit` fails if any control needs scrolling at 360×640 or 360×560; all 614 cards pass. Layout changes (phones only) and shorter content; every content cut is listed in `content/REVIEW.md`; the rules are in CLAUDE.md (simulator controls on list rows, short-screen question size, packet path, 3-bin sorts).
+- **Lesson pattern rollout (in progress, owner 3–5 Oct):** every lesson rebuilt to open on an interactive **picture-first "Watch"** (tap/drag/predict/sort/scene/simulator — never an explainer), ≤2 explainers (Name it + recap), read-to-answer cards cut, every question **≤12 words** (a quoted scam message doesn't count) and every feedback **≤2 lines**, and a **"Next:" tease** as the recap's last line (a trailing paragraph, not a 4th bullet). Pattern + gates in CLAUDE.md "The lesson pattern"; scoreboard `docs/plans/lesson-pattern-audit.md` (re-run `node scripts/lesson-pattern-audit.mjs`); length gate `node scripts/lesson-length-report.mjs <course-id> [module-id]`. **Done & live:** the "Spot the AI" pilot (How AI Really Works) and **all 10 Stay Safe Online lessons** (merged 5 Oct, `329c917`; whole-course gate + `e2e:fit-audit` 115/115 at 360×640 and 360×560; help lessons kept calm with help lines verbatim in core cards). **Next: Inside Your Devices** (show 3 samples first).
 - Feedback form emails cybernettraining10@gmail.com (`FEEDBACK_INBOX`). Functions run in syd1. Help lines verified.
 
 ## 2. Behind a flag: Founding Member (merged 2 Oct, OFF in production)
@@ -35,9 +36,9 @@ One payment (A$29, `STRIPE_PRICE_FOUNDER`, already in Vercel Production) for lif
 5. Recheck AI lesson 4.3 (product names) by 1 January 2027; an adult or lawyer to review `content/legal/`; playtest with real learners.
 6. On hold: the Pro streak-freeze feature and a family plan. **A family-interest line is live on /pro** (merged 3 Oct): one quiet line in the parent section, "Want Pro for your family or household? Email us…" (mailto to `FEEDBACK_INBOX`, subject "Family plan"), with a `family_interest` analytics event on click — gauging demand before building a real family plan. Watch the Events panel and the inbox.
 
-## 4. Rollout (owner, 2 Oct), in order
+## 4. Rollout — lesson pattern (owner, 3 Oct), in order
 
-Stay Safe Online (live) → **How AI Really Works (next)** → How the Internet Works → the rest of Inside Your Devices. Each course: `LEARN_FIRST_MODULES` in `src/lib/content/shape.ts`, the playbook, `docs/plans/zero-confusion-audit.md`, one short question per card, every card fitting 360×560 (the fit audit now enforces it), a beginner audit, merge when checks pass.
+Stay Safe Online (done, merged 5 Oct) → **Inside Your Devices (next)** → How AI Really Works → How the Internet Works. One branch per course; rebuild every lesson to the pattern (CLAUDE.md "The lesson pattern"), then pass the whole-course gate + `npm run e2e:fit-audit` (COURSE=…) + `npx tsx scripts/check-concepts.ts <course>` + `node scripts/lesson-length-report.mjs <course>`, and **show the owner 3 sample lessons before each course merges**. Scoreboard: `docs/plans/lesson-pattern-audit.md`. (This supersedes the earlier 2 Oct zero-confusion rollout order; the playbook, `LEARN_FIRST_MODULES` and the beginner audit still apply.)
 
 ## 5. Decisions (not in CLAUDE.md or REVIEW.md)
 

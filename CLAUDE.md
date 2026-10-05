@@ -1707,7 +1707,9 @@ module on the time-based "learn-first" rules can give each its own card):
 5. **Twist:** a slightly harder case with a new example that makes them think (the green apple).
 6. **Try this:** one thing to notice or do in real life today.
 7. **Tease the next lesson** in one exciting line ("Next: how a hacker guesses a weak password in 2
-   seconds"), so they want to keep going (this is what makes people want Pro).
+   seconds"), so they want to keep going (this is what makes people want Pro). This is the **recap's
+   last line**, written as a trailing paragraph (`**Next:** …`), **not** a 4th bullet (recaps allow
+   at most 3 bullets).
 
 **Hard rules (enforced by review, and by `load.test.ts`/`concepts.test.ts`/`e2e:fit-audit` where it can):**
 - Never ask about anything the learner hasn't **seen** in this lesson or earlier in the module.
@@ -1721,6 +1723,11 @@ module on the time-based "learn-first" rules can give each its own card):
   Watch is never one of them.
 - **Split, don't squeeze:** if the pattern can't fit a lesson within the shape rules (`src/lib/content/shape.ts`),
   split it into two lessons rather than cramming beats into paragraphs.
+- **Short questions, short feedback (gates):** every question (a graded card's `prompt`, or a
+  scenario step's text) is **≤12 words**, *not counting a quoted scam message* — the quote is the
+  stimulus, like a picture. Every feedback line (an `explanation`, a scenario `consequence`) is
+  **≤2 lines**: at most 2 sentences and ≤26 words. `node scripts/lesson-length-report.mjs <course-id>
+  [module-id]` reports the longest of each per lesson and flags anything over.
 
 **Make it feel like a game, not a worksheet (every question card, every course):**
 1. **Picture first, words last:** every question card has a visual. If a picture can show it, don't
