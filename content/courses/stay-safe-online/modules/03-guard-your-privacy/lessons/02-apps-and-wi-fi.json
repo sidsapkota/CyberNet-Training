@@ -7,37 +7,11 @@
   "icon": "wifi",
   "cards": [
     {
-      "id": "torch-contacts",
-      "type": "true_false",
-      "difficulty": "core",
-      "uses": [],
-      "prompt": "A torch app asks to see your contacts. It needs them to work.",
-      "answer": false,
-      "explanation": "False. A torch only needs your phone's light. Asking for contacts is more than its job needs.",
-      "hint": "What does a torch app actually do?",
-      "nudge": "Think about the torch's one job. Do contacts help with it?"
-    },
-    {
-      "id": "meet-permission",
-      "type": "reveal",
-      "difficulty": "core",
-      "teaches": [
-        "app-permission"
-      ],
-      "show": {
-        "kind": "term",
-        "term": "app-permission"
-      },
-      "sentence": "An **app permission** lets an app use your camera, microphone, location or contacts."
-    },
-    {
       "id": "needs-it",
       "type": "sort_bins",
       "difficulty": "core",
-      "uses": [
-        "app-permission"
-      ],
-      "prompt": "Does the app **need** it for its job?",
+      "uses": [],
+      "prompt": "Does the app need it for its job?",
       "bins": [
         {
           "id": "needs",
@@ -70,9 +44,22 @@
           "bin": "doesnt"
         }
       ],
-      "explanation": "Allow what fits the app's job, like location for maps or the microphone for calls. A torch app needs your light, not who your aunt is.",
+      "explanation": "Allow what fits the app's job. A torch needs light, not your contacts.",
       "hint": "For each one, ask: could the app do its main job without it?",
-      "nudge": "Think about what each app is for. A permission unrelated to that job isn't needed."
+      "nudge": "Think what each app is for. A permission unrelated to that job isn't needed."
+    },
+    {
+      "id": "meet-permission",
+      "type": "reveal",
+      "difficulty": "core",
+      "teaches": [
+        "app-permission"
+      ],
+      "show": {
+        "kind": "term",
+        "term": "app-permission"
+      },
+      "sentence": "An **app permission** lets an app use your camera, microphone, location or contacts."
     },
     {
       "id": "meet-while-using",
@@ -85,7 +72,7 @@
         "kind": "icon",
         "icon": "map-pin"
       },
-      "sentence": "For location, choose **\"Only while using the app\"**, so a closed app can't see where you are."
+      "sentence": "For location, pick **\"Only while using the app\"**, so a closed app can't track you."
     },
     {
       "id": "new-game-asks",
@@ -100,69 +87,84 @@
       "steps": [
         {
           "id": "start",
-          "text": "It asks: **\"Allow access to your contacts?\"** then **\"Allow location: Always?\"** What do you do?",
+          "text": "It asks: **\"Allow your contacts?\"** What do you do?",
           "choices": [
             {
-              "id": "allow-all",
-              "text": "Allow both, so the game works",
-              "consequence": "A drawing game doesn't need your contacts or where you are, all the time.",
-              "outcome": "fail"
+              "id": "deny-contacts",
+              "text": "Say no: a drawing game doesn't need them",
+              "consequence": "Right. The game still works fine without your contacts.",
+              "next": "location"
             },
             {
-              "id": "deny",
-              "text": "Say no to both, and see if the game still works",
-              "consequence": "It does. You can always change it later in Settings if a feature really needs it.",
+              "id": "allow-contacts",
+              "text": "Allow it, so the game works",
+              "consequence": "A drawing game has no reason to see your contacts.",
+              "outcome": "fail"
+            }
+          ]
+        },
+        {
+          "id": "location",
+          "text": "Then: **\"Allow location: Always?\"** Which setting?",
+          "choices": [
+            {
+              "id": "while-using",
+              "text": "Only while using the app",
+              "consequence": "Nice. It only sees your spot while the game is open.",
               "outcome": "success"
+            },
+            {
+              "id": "always",
+              "text": "Always, so it just works",
+              "consequence": "A game doesn't need your location when it's closed.",
+              "outcome": "fail"
             }
           ]
         }
       ],
-      "explanation": "Say no to permissions an app doesn't need. If it **won't work at all** without ones unrelated to its job, choose a different app.",
+      "explanation": "Say no to permissions a game doesn't need. For location, pick \"Only while using\".",
       "hint": "Would a drawing game need your contacts, or your location all the time?"
     },
     {
-      "id": "switch-it-off",
-      "type": "true_false",
+      "id": "mic-dot",
+      "type": "scenario",
       "difficulty": "core",
-      "uses": [
-        "permissions-changeable-in-settings"
-      ],
-      "prompt": "Your phone's **Settings** list every app permission you've given. You can switch one off there later.",
-      "answer": true,
-      "explanation": "True. Any permission can be turned off in **Settings**, so you can change your mind any time.",
-      "hint": "Where on your phone do you control what apps can use?",
-      "nudge": "Permissions aren't for ever: look in your phone's Settings.",
       "teaches": [
-        "permissions-changeable-in-settings"
-      ]
-    },
-    {
-      "id": "weather-location",
-      "type": "multiple_choice",
-      "difficulty": "challenge",
-      "uses": [
-        "location-while-using"
+        "mic-indicator"
       ],
-      "prompt": "Which gives a weather app your location, **and no more**?",
-      "options": [
+      "uses": [
+        "app-permission"
+      ],
+      "prompt": "A **microphone dot** shows an app is using the mic.",
+      "start": "start",
+      "steps": [
         {
-          "id": "while-using",
-          "text": "Only while using: when you open it"
-        },
-        {
-          "id": "always",
-          "text": "Always: all day, every day",
-          "nudge": "The forecast only matters when you look. Does it need to know where you go while it's closed?"
-        },
-        {
-          "id": "never",
-          "text": "Never: it doesn't need it",
-          "nudge": "A local forecast does use where you are. The question is how much of the time."
+          "id": "start",
+          "text": "You're not on a call. What do you do?",
+          "choices": [
+            {
+              "id": "check",
+              "text": "Check which app, and switch its mic off",
+              "consequence": "Good. You find the app and turn its mic permission off.",
+              "outcome": "success"
+            },
+            {
+              "id": "ignore",
+              "text": "Ignore it",
+              "consequence": "The dot means an app is listening right now.",
+              "outcome": "fail"
+            },
+            {
+              "id": "restart",
+              "text": "Restart, then carry on",
+              "consequence": "The app still has permission and could listen again later.",
+              "outcome": "fail"
+            }
+          ]
         }
       ],
-      "correctOptionId": "while-using",
-      "explanation": "**\"Only while using the app\"** shares your location when you check, not while it's closed. \"Always\" is more than it needs. (\"Never\" works too if you type your town in.)",
-      "hint": "When do you actually need the forecast for where you are?"
+      "explanation": "The dot means an app is using the mic. Switch that permission off if it doesn't need it.",
+      "hint": "The dot means some app is using the mic. Where can you stop it for good?"
     },
     {
       "id": "meet-public-wi-fi",
@@ -181,10 +183,13 @@
       "id": "wi-fi-ok",
       "type": "sort_bins",
       "difficulty": "core",
+      "teaches": [
+        "mobile-data-for-banking"
+      ],
       "uses": [
         "public-wi-fi"
       ],
-      "prompt": "Fine on public Wi-Fi, or better on **mobile data**?",
+      "prompt": "Fine on public Wi-Fi, or better on mobile data?",
       "bins": [
         {
           "id": "fine",
@@ -217,109 +222,51 @@
           "bin": "mobile"
         }
       ],
-      "explanation": "Everyday browsing is fine on public Wi-Fi. For money or important accounts, **mobile data** is safer, since you can't always be sure a network is real.",
+      "explanation": "Everyday browsing is fine. For money or key accounts, use mobile data.",
       "hint": "Which ones involve your money or your most important accounts?",
-      "nudge": "Ask of each one again: does it involve money or an important account?"
+      "nudge": "Ask again: does it involve money or an important account?"
     },
     {
-      "id": "bank-on",
-      "type": "fill_gap",
+      "id": "meet-fake-hotspot",
+      "type": "reveal",
       "difficulty": "core",
-      "uses": [
-        "public-wi-fi"
+      "teaches": [
+        "fake-hotspot"
       ],
-      "prompt": "Check your bank on ___, not on public Wi-Fi.",
-      "options": [
-        {
-          "id": "mobile",
-          "text": "mobile data"
-        },
-        {
-          "id": "cafe",
-          "text": "the café's Wi-Fi",
-          "nudge": "Café Wi-Fi is public Wi-Fi, and you can't always be sure it's the real one."
-        },
-        {
-          "id": "free",
-          "text": "any free Wi-Fi",
-          "nudge": "Free networks are exactly the ones you can't be sure about."
-        }
-      ],
-      "correctOptionId": "mobile",
-      "explanation": "**Mobile data** goes straight to your phone company, so it's safer for money and important accounts.",
-      "hint": "Which connection isn't shared with strangers?"
+      "show": {
+        "kind": "icon",
+        "icon": "wifi"
+      },
+      "sentence": "A **fake hotspot** is Wi-Fi a stranger names to look like the café's."
     },
     {
       "id": "riskiest-wi-fi",
       "type": "multiple_choice",
       "difficulty": "core",
-      "teaches": [
-        "fake-hotspot"
-      ],
       "uses": [
+        "fake-hotspot",
         "public-wi-fi"
       ],
-      "prompt": "At a café, which is **riskiest**? (A **fake hotspot** is Wi-Fi named to look like the café's.)",
+      "prompt": "At a café, which choice is riskiest?",
       "options": [
         {
           "id": "unknown-network",
-          "text": "Join \"Free Cafe WiFi 2\" when staff don't know it"
+          "text": "Join \"Free Cafe WiFi 2\" that staff don't know"
         },
         {
           "id": "news",
-          "text": "Read the news on the network staff told you about",
-          "nudge": "The café's real network is fine for news. Which choice could hand your details to a stranger?"
+          "text": "Read the news on the network staff told you",
+          "nudge": "The café's real network is fine for news. Which choice could belong to a stranger?"
         },
         {
           "id": "mobile",
-          "text": "Check your bank account on mobile data, not Wi-Fi",
+          "text": "Check your bank on mobile data, not Wi-Fi",
           "nudge": "Mobile data is the safer choice for banking. Which network can nobody vouch for?"
         }
       ],
       "correctOptionId": "unknown-network",
-      "explanation": "Staff have never heard of \"Free Cafe WiFi 2\", so it might be a **fake hotspot**. Ask staff for the real name, and turn off auto-join for public networks.",
+      "explanation": "Staff never heard of \"Free Cafe WiFi 2\", so it could be a fake hotspot. Ask staff for the real name.",
       "hint": "Which network could belong to a stranger instead of the café?"
-    },
-    {
-      "id": "mic-dot",
-      "type": "scenario",
-      "difficulty": "challenge",
-      "teaches": [
-        "mic-indicator"
-      ],
-      "uses": [
-        "app-permission"
-      ],
-      "prompt": "A **microphone dot** appears while you're reading. (It means an app is using the mic.)",
-      "start": "start",
-      "steps": [
-        {
-          "id": "start",
-          "text": "You're not on a call. What do you do?",
-          "choices": [
-            {
-              "id": "check",
-              "text": "Check which app; switch its mic off",
-              "consequence": "Your phone shows which app it is. You turn its microphone permission off in Settings.",
-              "outcome": "success"
-            },
-            {
-              "id": "ignore",
-              "text": "Ignore it",
-              "consequence": "The dot means an app is listening right now. It's worth a quick check.",
-              "outcome": "fail"
-            },
-            {
-              "id": "restart",
-              "text": "Restart, then carry on",
-              "consequence": "The dot may go for now, but the app still has permission and could listen again later.",
-              "outcome": "fail"
-            }
-          ]
-        }
-      ],
-      "explanation": "The dot shows an app is using the **microphone**. Find out which app, and switch that permission off if it doesn't need it.",
-      "hint": "The dot means some app is using the microphone. Where can you stop an app using it for good?"
     },
     {
       "id": "recap",
@@ -332,7 +279,7 @@
         "mobile-data-for-banking"
       ],
       "title": "Recap",
-      "body": "- Give apps only the **permissions** they need; choose **\"Only while using\"** for location.\n- On **public Wi-Fi**, check the name, and bank on **mobile data**.\n- **Try this:** switch one app's location to \"Only while using\"."
+      "body": "- Give apps only the **permissions** they need; pick **\"Only while using\"** for location.\n- On **public Wi-Fi**, check the name, and bank on **mobile data**.\n- **Try this:** switch one app's location to \"Only while using\".\n\n**Next:** how to tell when an account has been taken over."
     }
   ]
 }

@@ -7,35 +7,11 @@
   "icon": "footprints",
   "cards": [
     {
-      "id": "old-photo",
-      "type": "true_false",
-      "difficulty": "core",
-      "uses": [],
-      "prompt": "A photo you posted and deleted years ago can still turn up today.",
-      "answer": true,
-      "explanation": "True. Anyone could have saved or screenshotted it while it was up. Posts can last, so choose what you share.",
-      "hint": "Could someone have saved it before you deleted it?",
-      "nudge": "Deleting it removes your copy, but not a screenshot someone took."
-    },
-    {
-      "id": "meet-footprint",
-      "type": "reveal",
-      "difficulty": "core",
-      "teaches": [
-        "digital-footprint"
-      ],
-      "show": {
-        "kind": "term",
-        "term": "digital-footprint"
-      },
-      "sentence": "Your **digital footprint** is the trail of everything you post and do online."
-    },
-    {
       "id": "share-or-private",
       "type": "sort_bins",
       "difficulty": "core",
       "uses": [],
-      "prompt": "Share with strangers, or keep private?",
+      "prompt": "You fill in a new profile. Share, or keep private?",
       "bins": [
         {
           "id": "share",
@@ -68,9 +44,22 @@
           "bin": "private"
         }
       ],
-      "explanation": "Interests and things you make are fine to share. Your **school**, **address**, **phone number** and **where you are right now** help strangers find you, so keep them private.",
-      "hint": "Could a stranger use it to work out where you live, go to school or are right now?",
-      "nudge": "Look at each one again: could it show where you live, go to school or are right now?"
+      "explanation": "Interests and things you make are fine to share. Your address and phone number help strangers find you, so keep them private.",
+      "hint": "Could a stranger use it to find where you live?",
+      "nudge": "Look again: could it show where you live or your number?"
+    },
+    {
+      "id": "meet-footprint",
+      "type": "reveal",
+      "difficulty": "core",
+      "teaches": [
+        "digital-footprint"
+      ],
+      "show": {
+        "kind": "term",
+        "term": "digital-footprint"
+      },
+      "sentence": "Your **digital footprint** is the trail of everything you post and do online."
     },
     {
       "id": "meet-security-question",
@@ -97,51 +86,25 @@
       "steps": [
         {
           "id": "start",
-          "text": "**\"Find your pop star name! It's your first pet's name plus the street you grew up on. Share yours below!\"** What do you do?",
+          "text": "**\"Find your pop star name! It's your first pet plus your street. Share yours below!\"** What do you do?",
           "choices": [
             {
               "id": "share",
               "text": "Share it. It's just a bit of fun",
-              "consequence": "\"Your pop star name is Biscuit Wattle!\" Also: the answers to two of your **security questions**. Sharing them helps someone reset your accounts.",
+              "consequence": "You just shared answers to two security questions. That can help someone reset your accounts.",
               "outcome": "fail"
             },
             {
               "id": "skip",
               "text": "Scroll past without answering",
-              "consequence": "Nothing personal shared. Quizzes like this are sometimes made to collect exactly those answers.",
+              "consequence": "Nothing shared. Quizzes like this are sometimes built to collect those exact answers.",
               "outcome": "success"
             }
           ]
         }
       ],
-      "explanation": "\"Fun\" quizzes can collect the answers to **security questions** (your first pet, your street, your school). Enjoy them without posting the answers.",
-      "hint": "Think about where else you might have been asked for your first pet's name or your street."
-    },
-    {
-      "id": "why-wait",
-      "type": "multiple_choice",
-      "difficulty": "core",
-      "uses": [],
-      "prompt": "Mia wants to post holiday photos **while she's still away**. Is that a problem?",
-      "options": [
-        {
-          "id": "away",
-          "text": "Yes: it shows she's away, so her home may be empty"
-        },
-        {
-          "id": "quality",
-          "text": "No: a photo only shows where she is if she tags it",
-          "nudge": "A tag isn't the only clue. What does any holiday photo say about where she is today?"
-        },
-        {
-          "id": "likes",
-          "text": "No: only her friends can see it, so nobody else knows",
-          "nudge": "Friends can share or screenshot posts, and friend lists often include people she barely knows."
-        }
-      ],
-      "correctOptionId": "away",
-      "explanation": "Posting while you're away tells people **where you are, and that you're not home**. Share the photos once you're back.",
-      "hint": "What does a holiday photo say about where she is right now, and her home?"
+      "explanation": "Fun quizzes can collect security question answers like your first pet or street. Enjoy them without posting the answers.",
+      "hint": "Where else have you been asked your first pet or street?"
     },
     {
       "id": "match-settings",
@@ -151,7 +114,7 @@
         "privacy-settings"
       ],
       "uses": [],
-      "prompt": "Match each **privacy setting** to what it does.",
+      "prompt": "Match each privacy setting to what it does.",
       "pairs": [
         {
           "id": "private",
@@ -174,9 +137,39 @@
           "right": "You approve tagged photos"
         }
       ],
-      "explanation": "Each setting controls one thing: who sees your posts, who can message you, your location, or photos of you. Apps sometimes change settings in updates, so check them now and then.",
-      "hint": "What does each one control: your posts, your messages, your location or your photos?",
-      "nudge": "Go through each setting again and ask who it keeps out, or what it hides."
+      "explanation": "Each setting controls one thing: who sees your posts, who can message you, your location, or your photos.",
+      "hint": "What does each control: posts, messages, location or photos?",
+      "nudge": "Go through each again: who does it keep out, or what does it hide?"
+    },
+    {
+      "id": "post-while-away",
+      "type": "scenario",
+      "difficulty": "core",
+      "uses": [],
+      "prompt": "Mia is on holiday and wants to post her beach photos.",
+      "start": "start",
+      "steps": [
+        {
+          "id": "start",
+          "text": "She could post now, or wait until she's home. Which is safer?",
+          "choices": [
+            {
+              "id": "now",
+              "text": "Post now: the photos look great",
+              "consequence": "Posting while away shows her home is empty, and where she is.",
+              "outcome": "fail"
+            },
+            {
+              "id": "wait",
+              "text": "Wait until she's home to post",
+              "consequence": "Smart. The memories keep, and nobody learns her house is empty.",
+              "outcome": "success"
+            }
+          ]
+        }
+      ],
+      "explanation": "Holiday posts tell people where you are, and that you're not home. Share them once you're back.",
+      "hint": "What does a holiday photo say about where she is, and her home?"
     },
     {
       "id": "meet-block-report",
@@ -200,30 +193,30 @@
         "block-and-report",
         "trusted-adult"
       ],
-      "prompt": "A friend from a game is really nice.",
+      "prompt": "A new friend from a game seems really nice.",
       "start": "start",
       "steps": [
         {
           "id": "start",
-          "text": "After a few days they ask: **\"What school do you go to? Send me a photo of you!\"** What do you do?",
+          "text": "After a while they ask: **\"What school do you go to? Send a photo!\"** What now?",
           "choices": [
             {
               "id": "send",
               "text": "Send it. They've been really nice",
-              "consequence": "Being friendly online doesn't show who someone really is. A school and a photo help a stranger find you.",
+              "consequence": "Being friendly online doesn't prove who someone is. A school and photo help them find you.",
               "outcome": "fail"
             },
             {
               "id": "safe",
-              "text": "Send nothing, block and report, and tell a trusted adult",
-              "consequence": "That's exactly right. You're not in trouble, and telling someone keeps you and others safe.",
+              "text": "Send nothing, block and report, and tell an adult",
+              "consequence": "Exactly right. You're not in trouble, and telling someone keeps you safe.",
               "outcome": "success"
             }
           ]
         }
       ],
-      "explanation": "Keep your school, photos and location from people you only know online, however friendly they seem. **Block, report and tell a trusted adult**: you won't be in trouble.",
-      "hint": "Is a school and a photo \"stuff that finds you\"? And what can you always do in the app?"
+      "explanation": "Keep your school, photos and location from people you only know online. Block, report and tell a trusted adult.",
+      "hint": "Is a school and a photo stuff that finds you? What can you always do?"
     },
     {
       "id": "username-check",
@@ -263,9 +256,9 @@
           "bin": "too-much"
         }
       ],
-      "explanation": "A good username says nothing about who you are. `MiaJones_Brisbane` gives a full name and city; `Liam_HillsideHigh` gives a name and school.",
-      "hint": "Look for a real name, a school or a place inside each username.",
-      "nudge": "Check each one again: could it point to who you really are?"
+      "explanation": "A good username says nothing about who you are. A real name, city or school gives too much away.",
+      "hint": "Look for a real name, a school or a place in each.",
+      "nudge": "Check each again: could it point to who you really are?"
     },
     {
       "id": "recap",
@@ -278,7 +271,7 @@
         "block-and-report"
       ],
       "title": "Recap",
-      "body": "- Your **digital footprint** can last: keep anything that **finds you** or **unlocks you** private.\n- Use **privacy settings**. Block, report and tell a trusted adult.\n- **Try this:** set one social account to private."
+      "body": "- Your **digital footprint** can last: keep anything that **finds you** or **unlocks you** private.\n- Use **privacy settings**. Block, report and tell a trusted adult.\n- **Try this:** set one social account to private.\n\n**Next:** the café Wi-Fi that isn't really the café's, and the app that asks for too much."
     }
   ]
 }

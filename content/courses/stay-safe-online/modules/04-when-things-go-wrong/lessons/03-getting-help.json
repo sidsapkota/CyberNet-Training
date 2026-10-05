@@ -7,31 +7,6 @@
   "icon": "life-buoy",
   "cards": [
     {
-      "id": "too-embarrassed",
-      "type": "true_false",
-      "difficulty": "core",
-      "uses": [
-        "not-your-fault"
-      ],
-      "prompt": "A friend got scammed and is too embarrassed to tell anyone. It's their fault for falling for it.",
-      "answer": false,
-      "explanation": "False. Scams fool adults and experts too. **It's never your fault**, and telling someone is brave and smart.",
-      "hint": "Who do scams fool: only careless people, or anyone?",
-      "nudge": "Scammers are good at tricking everyone. The blame is theirs."
-    },
-    {
-      "id": "never-your-fault",
-      "type": "explainer",
-      "difficulty": "core",
-      "teaches": [
-        "not-your-fault",
-        "save-evidence",
-        "dont-share-private-image"
-      ],
-      "title": "Never your fault",
-      "body": "Scams and online bullying happen to lots of people, even experts. **It's never your fault.** Scammers **count on embarrassment** to keep people quiet.\n\n**Save evidence** before you block: screenshot the messages, username, web address and date. A **private or nude image**? **Don't copy, save or share the image itself.** Write down the username and where it is, and report it."
-    },
-    {
       "id": "helps-or-worse",
       "type": "sort_bins",
       "difficulty": "core",
@@ -73,21 +48,35 @@
           "bin": "worse"
         }
       ],
-      "explanation": "Evidence and a trusted adult both help. Replying with insults, or paying a scammer (they usually ask for more), makes things worse.",
-      "hint": "Which ones keep the evidence and get you help? Which ones give a scammer or bully what they want?",
-      "nudge": "Anything that removes the evidence, or gives a scammer or bully what they want, makes it worse."
+      "explanation": "Keep the evidence and get help. Replying with insults, or paying a scammer, only makes it worse.",
+      "hint": "Which ones keep the evidence and get you help? Which give a scammer what they want?",
+      "nudge": "Anything that removes the evidence, or gives a scammer what they want, makes it worse."
     },
     {
-      "id": "who-can-help",
+      "id": "never-your-fault",
       "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "not-your-fault",
+        "save-evidence"
+      ],
+      "title": "Never your fault",
+      "body": "Scams and online cruelty happen to lots of people, even experts. **It's never your fault**, and telling someone is brave.\n\nBefore you block, **save the evidence**: screenshot the messages, the username, the web address and the date. A **private or nude image**? Don't save or share the image itself: write down the username and where it is, then report it."
+    },
+    {
+      "id": "talk-to-someone",
+      "type": "reveal",
       "difficulty": "core",
       "teaches": [
         "trusted-adult",
         "kids-helpline",
         "lifeline"
       ],
-      "title": "Who can help",
-      "body": "A **trusted adult** is someone you feel safe with: a parent or carer, teacher, school counsellor or older relative. Outside your family, in Australia:\n\n- **Kids Helpline**, ages 5 to 25: **1800 55 1800**. Free, private, any time.\n- **Lifeline**, for anyone: **13 11 14**, any time."
+      "show": {
+        "kind": "icon",
+        "icon": "phone"
+      },
+      "sentence": "Outside your family, **Kids Helpline** (ages 5 to 25) is 1800 55 1800 and **Lifeline** is 13 11 14, any time."
     },
     {
       "id": "who-to-tell",
@@ -97,7 +86,7 @@
         "kids-helpline",
         "trusted-adult"
       ],
-      "prompt": "Ali is worried about something online, but isn't ready to tell his family. What could he do?",
+      "prompt": "Worried online, but not ready to tell family. What now?",
       "options": [
         {
           "id": "helpline",
@@ -105,31 +94,32 @@
         },
         {
           "id": "wait",
-          "text": "Wait until it's bad enough to be worth telling anyone",
-          "nudge": "You don't need a big problem to ask for help. Who could Ali talk to outside his family?"
+          "text": "Wait until it's bad enough to tell someone",
+          "nudge": "You don't need a big problem to ask for help. Who could you talk to outside your family?"
         },
         {
           "id": "forum",
-          "text": "Ask an online forum, since nobody there can see who he is",
+          "text": "Ask strangers on an online forum",
           "nudge": "Strangers online aren't trusted adults, and some aren't who they say they are."
         }
       ],
       "correctOptionId": "helpline",
-      "explanation": "**Kids Helpline (1800 55 1800)** is free, private and open any time for ages 5 to 25, and **Lifeline (13 11 14)** is there any time too. A school counsellor is a trusted adult outside the family, so Ali doesn't have to wait or cope alone.",
+      "explanation": "Kids Helpline and a school counsellor are there for you. You don't have to wait, or cope alone.",
       "hint": "The last card named people outside the family who can help."
     },
     {
-      "id": "where-to-report",
-      "type": "explainer",
+      "id": "meet-report",
+      "type": "reveal",
       "difficulty": "core",
       "teaches": [
         "report-in-app",
-        "report-to-esafety",
-        "report-to-accce",
         "report-to-scamwatch"
       ],
-      "title": "Where to report in Australia",
-      "body": "Report in the app first. Then:\n\n- **eSafety** (esafety.gov.au): serious [[cyberbullying]] of under-18s the app hasn't fixed, adult cyber abuse, and a **private or nude image** of you shared or threatened.\n- **ACCCE** (accce.gov.au/report): **under 18** and pressured or threatened over a private image. You won't be in trouble.\n- **Scamwatch** (scamwatch.gov.au): report a scam to warn others."
+      "show": {
+        "kind": "icon",
+        "icon": "message-square-warning"
+      },
+      "sentence": "**Report** it in the app first, and report a scam to **Scamwatch** (scamwatch.gov.au) to warn others."
     },
     {
       "id": "group-chat",
@@ -140,7 +130,7 @@
         "trusted-adult",
         "report-in-app"
       ],
-      "prompt": "People in a group chat start posting mean messages about you.",
+      "prompt": "People in a group chat post mean messages about you.",
       "start": "start",
       "steps": [
         {
@@ -150,18 +140,18 @@
             {
               "id": "reply",
               "text": "Reply with something just as mean",
-              "consequence": "It usually makes things worse, and it can get you in trouble too.",
+              "consequence": "That usually makes things worse, and can get you in trouble too.",
               "outcome": "fail"
             },
             {
               "id": "evidence",
               "text": "Screenshot the messages, and tell a trusted adult",
-              "consequence": "You have evidence, and someone on your side.",
+              "consequence": "Now you have evidence, and someone on your side.",
               "next": "next"
             },
             {
               "id": "delete",
-              "text": "Delete the chat so you don't have to see it",
+              "text": "Delete the chat so you don't see it",
               "consequence": "That deletes the evidence too. Save it first.",
               "outcome": "fail"
             }
@@ -173,34 +163,48 @@
           "choices": [
             {
               "id": "report",
-              "text": "Report the messages in the app, and block or leave the chat",
-              "consequence": "The app can remove them. If it doesn't, eSafety can help.",
+              "text": "Report it in the app, then block or leave",
+              "consequence": "The app can remove it. If not, eSafety can help.",
               "outcome": "success"
             },
             {
               "id": "wait",
               "text": "Wait and hope it stops",
-              "consequence": "Reporting gives the app, and eSafety if needed, the chance to stop it.",
+              "consequence": "Reporting gives the app, and eSafety, the chance to stop it.",
               "outcome": "fail"
             }
           ]
         }
       ],
-      "explanation": "Don't reply. **Save the evidence**, **tell a trusted adult**, then **report and block**. If the app doesn't act on serious bullying, report it to **eSafety**.",
+      "explanation": "Don't reply. Save the evidence, tell a trusted adult, then report and block.",
       "hint": "Think about the order: evidence and a trusted adult first, then reporting."
     },
     {
-      "id": "more-places",
-      "type": "explainer",
+      "id": "meet-bank-idcare",
+      "type": "reveal",
       "difficulty": "core",
       "teaches": [
         "contact-bank",
-        "idcare",
-        "reportcyber",
+        "idcare"
+      ],
+      "show": {
+        "kind": "icon",
+        "icon": "shield-check"
+      },
+      "sentence": "If money's involved, tell **your bank** straight away; if details are stolen, **IDCARE** (idcare.org) helps."
+    },
+    {
+      "id": "meet-000",
+      "type": "reveal",
+      "difficulty": "core",
+      "teaches": [
         "call-000"
       ],
-      "title": "More places to go",
-      "body": "- **Your bank, straight away**, if money or card details are involved.\n- **IDCARE** (idcare.org or 1800 595 160): free help to make a plan if your personal details were stolen.\n- **ReportCyber** (cyber.gov.au): report cybercrime to the police.\n- **In danger right now:** call **000**."
+      "show": {
+        "kind": "icon",
+        "icon": "life-buoy"
+      },
+      "sentence": "If someone could get hurt right now, call **000**."
     },
     {
       "id": "where-to-go",
@@ -217,12 +221,12 @@
         {
           "id": "bullying",
           "left": "Bullying the app won't remove",
-          "right": "eSafety Commissioner"
+          "right": "eSafety"
         },
         {
           "id": "card",
           "left": "Money taken from your card",
-          "right": "Your bank, straight away"
+          "right": "Your bank, now"
         },
         {
           "id": "details",
@@ -235,7 +239,7 @@
           "right": "Call 000"
         }
       ],
-      "explanation": "Serious bullying goes to **eSafety** once the app has had a chance; card problems to **your bank** straight away; stolen details to **IDCARE**; and danger right now is always **000**.",
+      "explanation": "Serious bullying goes to eSafety, card trouble to your bank, stolen details to IDCARE, and danger to 000.",
       "hint": "Look back at the last two cards: what is each one for?",
       "nudge": "Start with the one you're surest of. What is each service for?"
     },
@@ -246,7 +250,7 @@
       "uses": [
         "contact-bank"
       ],
-      "prompt": "A scam took money from your card. What's the **first** thing to do?",
+      "prompt": "A scam took money from your card. What's the first thing?",
       "options": [
         {
           "id": "bank",
@@ -254,87 +258,18 @@
         },
         {
           "id": "wait",
-          "text": "Wait a day to see if the bank notices and fixes it",
-          "nudge": "Every hour counts with money. Who did the lesson say to contact straight away?"
+          "text": "Wait a day to see if the bank fixes it",
+          "nudge": "Every hour counts with money. Who did the lesson say to contact?"
         },
         {
           "id": "post",
           "text": "Post about it online so others don't get caught",
-          "nudge": "Warning people is good later. First, stop more money going."
+          "nudge": "Warn people later. First, stop more money going."
         }
       ],
       "correctOptionId": "bank",
-      "explanation": "Contact the **bank straight away**: it may be able to stop the payment or cancel the card. Then report it to **Scamwatch**.",
-      "hint": "Which place did the lesson say to contact straight away when money is involved?"
-    },
-    {
-      "id": "photo-threat",
-      "type": "scenario",
-      "difficulty": "challenge",
-      "uses": [
-        "dont-pay-scammers",
-        "save-evidence",
-        "report-to-esafety",
-        "report-to-accce"
-      ],
-      "prompt": "Someone threatens to share a private photo of you unless you pay. **It's never your fault**, and you won't be in trouble.",
-      "start": "start",
-      "steps": [
-        {
-          "id": "start",
-          "text": "You feel scared. What do you do?",
-          "choices": [
-            {
-              "id": "pay",
-              "text": "Pay so it goes away",
-              "consequence": "Paying usually leads to more demands, not fewer. It's never your fault, and help is there.",
-              "outcome": "fail"
-            },
-            {
-              "id": "delete-hide",
-              "text": "Delete everything, tell nobody",
-              "consequence": "You'd lose the evidence and face it alone. It's never your fault, and you don't have to deal with it by yourself.",
-              "outcome": "fail"
-            },
-            {
-              "id": "get-help",
-              "text": "Stop replying, tell an adult, report it",
-              "consequence": "You did the right thing. Report it to the app and eSafety (which can help remove images), and if you're under 18, the ACCCE. Kids Helpline (1800 55 1800) and Lifeline (13 11 14) are there any time.",
-              "outcome": "success"
-            }
-          ]
-        }
-      ],
-      "explanation": "**It is never your fault**, and you won't be in trouble. **Don't pay**, and stop replying. Screenshot the messages and their profile (never the image itself), block them, and **tell a trusted adult**. Report it to the app and to **eSafety** (esafety.gov.au/report), and if you're **under 18**, to the **ACCCE** (accce.gov.au/report) too. Anyone in danger right now: **000**. To talk to someone any time: **Kids Helpline** (free, 1800 55 1800) or **Lifeline** (13 11 14).",
-      "hint": "Look back at where to report a threat about a private image (including for under-18s), and who to tell."
-    },
-    {
-      "id": "danger-now",
-      "type": "multiple_choice",
-      "difficulty": "challenge",
-      "uses": [
-        "call-000"
-      ],
-      "prompt": "Late at night, a friend messages: someone she met online is **on his way to her house now**. What first?",
-      "options": [
-        {
-          "id": "call-000",
-          "text": "Call 000: she may be in danger now"
-        },
-        {
-          "id": "esafety",
-          "text": "Report it to eSafety",
-          "nudge": "eSafety helps with online abuse, but it can't send help to her door."
-        },
-        {
-          "id": "screenshot",
-          "text": "Screenshot the chat first",
-          "nudge": "Evidence matters, but not more than her safety right now."
-        }
-      ],
-      "correctOptionId": "call-000",
-      "explanation": "It started online, but someone may be in **danger right now**, so call **000** first. Evidence and reports to the app and eSafety can come later.",
-      "hint": "Is this about something online, or about someone's safety right now?"
+      "explanation": "Contact your bank straight away: it may stop the payment or cancel the card. Then report it to Scamwatch.",
+      "hint": "Who did the lesson say to contact straight away about money?"
     },
     {
       "id": "recap",
@@ -344,12 +279,12 @@
         "not-your-fault",
         "kids-helpline",
         "lifeline",
-        "report-in-app",
         "report-to-scamwatch",
+        "contact-bank",
         "call-000"
       ],
       "title": "Recap",
-      "body": "- **Never your fault:** tell an adult, Kids Helpline (1800 55 1800) or Lifeline (13 11 14).\n- Report in the app, then eSafety, Scamwatch, your bank or 000.\n- **Try this:** save Kids Helpline and a trusted adult's number in your phone."
+      "body": "- **Never your fault:** tell a trusted adult, **Kids Helpline** (1800 55 1800) or **Lifeline** (13 11 14).\n- Report in the app, then **eSafety** (esafety.gov.au), **Scamwatch**, your **bank**, or **000** if there's danger.\n- **Try this:** save Kids Helpline and a trusted adult's number in your phone.\n\n**Next:** the course challenge that brings every skill together."
     }
   ]
 }
