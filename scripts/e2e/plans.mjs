@@ -79,6 +79,12 @@ async function makeUser(tag) {
   return { id, email };
 }
 
+/** While the Founding Member offer is on, its button is /pro's main one (it comes first). */
+async function founderOfferShown(page) {
+  const name = /Get lifetime Pro for/;
+  return page.getByRole("button", { name }).or(page.getByRole("link", { name })).first().waitFor({ timeout: 5000 }).then(() => true, () => false);
+}
+
 async function proButtonInView(page, name) {
   const button = page.getByRole("button", { name }).or(page.getByRole("link", { name })).first();
   await button.waitFor({ timeout: 30000 });
@@ -98,8 +104,9 @@ try {
     await watchEvents(page);
     await page.goto(`${BASE}/pro`);
     await page.getByRole("heading", { name: "Choose your plan" }).waitFor({ timeout: 30000 });
-    const inView = await proButtonInView(page, /Start your free trial/);
-    record("Guest /pro: the Pro button is in view at 360×640", inView.ok, inView.detail);
+    const guestFounder = await founderOfferShown(page);
+    const inView = await proButtonInView(page, guestFounder ? /Get lifetime Pro for/ : /Start your free trial/);
+    record(`Guest /pro: the main buy button is in view at 360×640 (${guestFounder ? "founder offer" : "trial"})`, inView.ok, inView.detail);
     const proTop = (await page.getByRole("heading", { name: "Pro", exact: true }).boundingBox())?.y ?? 9999;
     const freeTop = (await page.getByRole("heading", { name: "Free", exact: true }).boundingBox())?.y ?? 0;
     record("…the Pro card comes first on phones", proTop < freeTop);
@@ -178,8 +185,9 @@ try {
     record("Free dashboard: 'Free plan · See plans' at the top", true);
     await plansLink.click();
     await page.getByRole("heading", { name: "Choose your plan" }).waitFor({ timeout: 30000 });
-    const inView = await proButtonInView(page, "Start 7-day free trial");
-    record("Free /pro: Start 7-day free trial in view at 360×640", inView.ok, inView.detail);
+    const freeFounder = await founderOfferShown(page);
+    const inView = await proButtonInView(page, freeFounder ? /Get lifetime Pro for/ : "Start 7-day free trial");
+    record(`Free /pro: the main buy button is in view at 360×640 (${freeFounder ? "founder offer" : "trial"})`, inView.ok, inView.detail);
     record("…Free shows Your plan (disabled)", await page.getByRole("button", { name: "Your plan" }).isDisabled());
     await page.waitForTimeout(500);
     const seen = await events(page);
