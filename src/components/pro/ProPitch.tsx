@@ -141,7 +141,8 @@ export function ProPitch({
 
   return (
     <div className="mx-auto flex w-full max-w-sm flex-col items-center text-center">
-      <motion.div {...rise(0)}>
+      {/* On short screens (an in-app browser) the mascot steps aside so the button and Not now stay in view. */}
+      <motion.div {...rise(0)} className="[@media(max-height:620px)]:hidden">
         <Mascot expression="happy" size={64} idle />
       </motion.div>
       <motion.div {...rise(1)} className="mt-2">

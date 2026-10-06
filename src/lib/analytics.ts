@@ -46,6 +46,10 @@ export type AnalyticsEvent =
   | "founder_checkout_created"
   | "founder_checkout_error"
   | "founder_line_opened"
+  // "Send to a parent": a learner made a one-time link (with the screen), and a parent paid through
+  // one (on the thank-you page, after the server confirmed it). Nothing else.
+  | "parent_link_created"
+  | "parent_link_paid"
   | "checkout_started"
   | "trial_started"
   | "subscribed"
@@ -184,7 +188,8 @@ export function trackWith(
     | "founder_signup_wall"
     | "founder_checkout_created"
     | "founder_checkout_error"
-    | "founder_line_opened",
+    | "founder_line_opened"
+    | "parent_link_created",
   data: Record<string, string>,
 ): void {
   try {

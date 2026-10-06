@@ -12,6 +12,7 @@ import type { Plan } from "@/lib/pro/env";
 import { type ProInterval, proIntervals, type ProStatus, trialEligible } from "@/lib/pro/entitlement";
 import { DAILY_LESSON_LIMIT, type DailyLessons, limitDay } from "@/lib/pro/dailyLimit";
 import { FOUNDER_ERROR_TEXT, FOUNDER_METADATA, type FounderError } from "@/lib/pro/founder";
+import { createParentLink } from "@/lib/pro/parentLink";
 import { ensureStripeCustomer, getEntitlement, holdFounderSeat, stripeCustomerFor } from "@/lib/pro/server";
 import { founderPriceId, getStripe, getStripeEnv } from "@/lib/pro/stripe";
 import { returnOrigin } from "@/lib/pro/urls";
@@ -161,6 +162,24 @@ async function createFounderCheckout(userId: string, price: string): Promise<Fou
   }
   if (!session.url) return refuse("stripe");
   return { url: session.url };
+}
+
+export type ParentLinkResult = { url: string } | { error: string };
+
+/**
+ * "Send to a parent": a one-time link for a parent to pay for this learner's Founding Member seat on
+ * their own device (no sign-in). The same checks as buying it yourself, except the 13+ one: the
+ * parent pays.
+ */
+export async function createParentLinkAction(): Promise<ParentLinkResult> {
+  const user = await requireUser();
+  if (!founderPriceId()) return { error: FOUNDER_ERROR_TEXT.off };
+  const entitlement = await getEntitlement(user);
+  if (entitlement.status.kind === "founder") return { error: FOUNDER_ERROR_TEXT.founder };
+  if (entitlement.status.kind === "subscription") return { error: FOUNDER_ERROR_TEXT.has_pro };
+  const link = await createParentLink(user.id);
+  if ("error" in link) return { error: "You've made 5 links today. Send one of those, or try again tomorrow." };
+  return { url: `${await origin()}/pay?t=${link.token}` };
 }
 
 /** Opens Stripe's Customer Portal: switch plans, update the card, cancel. */
