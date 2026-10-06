@@ -11,7 +11,7 @@ import { requireUser, requireUserId } from "@/lib/auth/server";
 import type { Plan } from "@/lib/pro/env";
 import { type ProInterval, proIntervals, type ProStatus, trialEligible } from "@/lib/pro/entitlement";
 import { DAILY_LESSON_LIMIT, type DailyLessons, limitDay } from "@/lib/pro/dailyLimit";
-import { FOUNDER_METADATA } from "@/lib/pro/founder";
+import { FOUNDER_ERROR_TEXT, FOUNDER_METADATA, type FounderError } from "@/lib/pro/founder";
 import { ensureStripeCustomer, getEntitlement, holdFounderSeat, stripeCustomerFor } from "@/lib/pro/server";
 import { founderPriceId, getStripe, getStripeEnv } from "@/lib/pro/stripe";
 import { returnOrigin } from "@/lib/pro/urls";
@@ -114,18 +114,33 @@ const FOUNDER_CHECKOUT_MS = 31 * 60 * 1000;
  * no trial), lifetime Pro. Refused while the offer is off, to anyone with a subscription or a seat,
  * and when every seat is sold or held in someone's checkout (the database decides, under a lock).
  */
-export async function startFounderCheckoutAction(): Promise<Result> {
+export type FounderCheckoutResult = { url: string } | { error: string; code: FounderError };
+
+const refuse = (code: FounderError): FounderCheckoutResult => ({ error: FOUNDER_ERROR_TEXT[code], code });
+
+export async function startFounderCheckoutAction(): Promise<FounderCheckoutResult> {
   const user = await requireUser();
   const price = founderPriceId();
-  if (!price) return { error: "The Founding Member offer isn't available." };
+  if (!price) return refuse("off");
   const admin = createSupabaseAdminClient();
   const { data: profile } = await admin.from("profiles").select("age_confirmed").eq("id", user.id).maybeSingle();
-  if (!profile?.age_confirmed) return { error: "Please confirm you're 13 or older first (on your account page)." };
+  // The button asks for the 13+ confirmation on the spot, then tries again.
+  if (!profile?.age_confirmed) return refuse("age");
 
   const entitlement = await getEntitlement(user);
-  if (entitlement.status.kind === "founder") return { error: "You're already a Founding Member." };
-  if (entitlement.status.kind === "subscription") return { error: "You already have Pro. You can manage it on your account page." };
+  if (entitlement.status.kind === "founder") return refuse("founder");
+  if (entitlement.status.kind === "subscription") return refuse("has_pro");
 
+  try {
+    return await createFounderCheckout(user.id, price);
+  } catch (error) {
+    console.error("Founding checkout failed", error);
+    return refuse("stripe");
+  }
+}
+
+async function createFounderCheckout(userId: string, price: string): Promise<FounderCheckoutResult> {
+  const user = { id: userId };
   const customer = await ensureStripeCustomer(user.id);
   const base = await origin();
   const expiresAt = new Date(Date.now() + FOUNDER_CHECKOUT_MS);
@@ -142,9 +157,9 @@ export async function startFounderCheckoutAction(): Promise<Result> {
   });
   if (!(await holdFounderSeat(user.id, session.id, expiresAt))) {
     await getStripe().checkout.sessions.expire(session.id).catch(() => undefined);
-    return { error: "Every founding spot is taken or in someone's checkout right now. Spots in checkout free up within 30 minutes." };
+    return refuse("all_held");
   }
-  if (!session.url) return { error: "Stripe didn't return a checkout page. Please try again." };
+  if (!session.url) return refuse("stripe");
   return { url: session.url };
 }
 

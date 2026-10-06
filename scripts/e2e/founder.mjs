@@ -79,12 +79,12 @@ async function signIn(ctx, email) {
   return page;
 }
 
-async function makeUser(tag) {
+async function makeUser(tag, { ageConfirmed = true } = {}) {
   const email = `founder-${tag}-${Date.now()}@example.com`;
   const { data, error } = await admin.auth.admin.createUser({ email, email_confirm: true });
   if (error) throw error;
   const id = data.user.id;
-  await admin.from("profiles").update({ username: `E2e_${Math.random().toString(36).slice(2, 12)}`, age_confirmed: true }).eq("id", id);
+  await admin.from("profiles").update({ username: `E2e_${Math.random().toString(36).slice(2, 12)}`, age_confirmed: ageConfirmed }).eq("id", id);
   // A finished card (the dashboard, not the welcome) and a mistake (so /review has something).
   await admin.from("card_completions").insert({ user_id: id, lesson_id: "what-is-an-ip-address", card_id: "ip-purpose", xp: 10, completed_at: new Date().toISOString() });
   await admin.rpc("record_mistake", { p_user: id, p_lesson: "what-is-an-ip-address", p_card: "ip-purpose" });
@@ -128,9 +128,11 @@ try {
       record("founder_viewed carries only the screen", viewed.length >= 1 && viewed.every(([, d]) => JSON.stringify(d) === JSON.stringify({ source: "pro_page" })), JSON.stringify(viewed));
       await founderButton(page).click();
       await page.waitForURL(/\/login/, { timeout: 30000 });
-      record("A guest's founding button goes to sign in first", page.url().includes("/login?next=%2Fpro") || page.url().includes("/login?next=/pro"));
+      record("A guest's founding button goes to sign in, then back to /pro one tap from checkout", new URL(page.url()).searchParams.get("next") === "/pro?buy=founder", page.url());
       const clicked = page.__sent.filter(([n]) => n === "founder_clicked");
       record("founder_clicked carries only the screen", clicked.length === 1 && JSON.stringify(clicked[0][1]) === JSON.stringify({ source: "pro_page" }), JSON.stringify(clicked));
+      const wall = page.__sent.filter(([n]) => n === "founder_signup_wall");
+      record("founder_signup_wall: the guest was sent to sign in", wall.length === 1 && JSON.stringify(wall[0][1]) === JSON.stringify({ source: "pro_page" }), JSON.stringify(wall));
       await page.goto(`${BASE}/`);
       record("Landing: the parent pitch", await page.getByRole("heading", { name: "Teach your kid to spot scams before they meet one." }).waitFor({ timeout: 30000 }).then(() => true, () => false));
       await page.goto(`${BASE}/pricing`);
@@ -165,6 +167,12 @@ try {
         const line = page.getByText("Founding Member:", { exact: false }).first();
         record("Free dashboard: one small Founding Member line", await line.waitFor({ timeout: 30000 }).then(() => true, () => false));
         await page.screenshot({ path: path.join(SHOTS, "dashboard-line-360x560.png") });
+        await page.getByRole("link", { name: "See it" }).click();
+        await page.waitForURL(/\/pro/, { timeout: 30000 });
+        const opened = page.__sent.filter(([n]) => n === "founder_line_opened");
+        const lineClicks = page.__sent.filter(([n, d]) => n === "founder_clicked" && d.source === "dashboard");
+        record("\"See it\" sends founder_line_opened, not founder_clicked", opened.length === 1 && lineClicks.length === 0, JSON.stringify(opened));
+        await page.goto(`${BASE}/`);
         await page.getByRole("button", { name: "Hide the Founding Member offer" }).click();
         await page.reload();
         await page.getByRole("heading", { name: "Dashboard" }).waitFor({ state: "attached", timeout: 30000 });
@@ -173,6 +181,43 @@ try {
       }
       await ctx.close();
     }
+  }
+
+  // 2b. After signing in to buy: one tap from checkout; 13+ asked on the spot; friendly errors.
+  {
+    // Confirmed when the page loads (so the full-screen age check stays away), then unconfirmed by the
+    // time they tap: the race the button guards against (the 13+ box on /login, saved a moment later).
+    const learner = await makeUser("continue");
+    const ctx = await browser.newContext({ viewport: PHONE, colorScheme: "dark", reducedMotion: "reduce" });
+    const page = await signIn(ctx, learner.email);
+    await page.goto(`${BASE}/pro?buy=founder`);
+    const note = page.getByText("You're signed in. One tap to pay on Stripe's secure page.");
+    record("Back from sign-in: /pro says they're one tap from checkout", await note.waitFor({ timeout: 30000 }).then(() => true, () => false));
+    const where = await inView(page, founderButton(page), PHONE.height - TAB_BAR);
+    record("…with the button in view at 360x560", where.ok, where.detail);
+    await page.screenshot({ path: path.join(SHOTS, "continue-360x560.png") });
+    record("founder_viewed says continue", page.__sent.some(([n, d]) => n === "founder_viewed" && d.source === "continue"));
+    await admin.from("profiles").update({ age_confirmed: false }).eq("id", learner.id);
+    await founderButton(page).click();
+    const box = page.getByRole("checkbox", { name: "I'm 13 or older" });
+    record("No 13+ confirmation yet: it's asked right there (not on another page)", await box.waitFor({ timeout: 30000 }).then(() => true, () => false));
+    record("founder_checkout_error says why: age", page.__sent.some(([n, d]) => n === "founder_checkout_error" && d.reason === "age" && d.source === "continue"));
+    await box.check();
+    await page.getByRole("button", { name: "Continue to checkout" }).click();
+    // Then a checkout is created (Stripe opens) or a friendly error with a way forward shows.
+    const outcome = await Promise.race([
+      page.waitForURL(/checkout\.stripe\.com/, { timeout: 30000 }).then(() => "stripe-opened"),
+      page.getByRole("alert").filter({ hasText: /Nothing was charged|try again/i }).waitFor({ timeout: 30000 }).then(() => "friendly-error"),
+    ]).catch(() => "nothing");
+    const confirmed = (await admin.from("profiles").select("age_confirmed").eq("id", learner.id).single()).data?.age_confirmed;
+    record("Confirming 13+ there saves it and carries on to checkout", confirmed === true && outcome !== "nothing", `${outcome}`);
+    if (outcome === "friendly-error") {
+      record("…an error says nothing was charged, with Try again", (await page.getByRole("button", { name: "Try again" }).count()) === 1);
+      record("…and founder_checkout_error has its reason", page.__sent.some(([n, d]) => n === "founder_checkout_error" && ["stripe", "network", "all_held"].includes(d.reason)));
+    } else if (outcome === "stripe-opened") {
+      record("…founder_checkout_created was sent", page.__sent.some(([n]) => n === "founder_checkout_created"));
+    }
+    await ctx.close();
   }
 
   // 3. A Pro subscriber never sees it.

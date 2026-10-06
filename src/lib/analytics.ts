@@ -39,6 +39,13 @@ export type AnalyticsEvent =
   | "founder_viewed"
   | "founder_clicked"
   | "founder_purchased"
+  // The steps after the click (all with only the screen, and a reason code for errors): a guest sent
+  // to sign in first, a checkout created (about to open Stripe), a checkout that couldn't start.
+  // "See it" on the dashboard line only opens /pro, so it has its own event.
+  | "founder_signup_wall"
+  | "founder_checkout_created"
+  | "founder_checkout_error"
+  | "founder_line_opened"
   | "checkout_started"
   | "trial_started"
   | "subscribed"
@@ -167,7 +174,19 @@ export function trackProDeclined(data: Record<string, string>): void {
 }
 
 /** An event whose data was already checked by its own pure function. Never throws. */
-export function trackWith(name: "pro_declined" | "plans_viewed" | "plan_selected" | "founder_viewed" | "founder_clicked", data: Record<string, string>): void {
+export function trackWith(
+  name:
+    | "pro_declined"
+    | "plans_viewed"
+    | "plan_selected"
+    | "founder_viewed"
+    | "founder_clicked"
+    | "founder_signup_wall"
+    | "founder_checkout_created"
+    | "founder_checkout_error"
+    | "founder_line_opened",
+  data: Record<string, string>,
+): void {
   try {
     ensureAnalyticsQueue();
     track(name, data);

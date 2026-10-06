@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { hasPro, proCosmeticUntil, proIntervals, proStatus } from "./entitlement";
 import { proLine } from "./describe";
 import { founderCopy, founderCounter, founderOfferOn, founderPurchaseOf, fullyRefundedPayment, seatsLeftText, showFounderOffer } from "./founder";
+import { FOUNDER_ERRORS, FOUNDER_ERROR_TEXT, FOUNDER_RETRYABLE, FOUNDER_SIGN_IN_PATH, founderErrorData, isFounderContinue } from "./founder";
 
 const monthly = { unitAmount: 799, currency: "aud", interval: "month" as const };
 const NOW = new Date("2026-10-07T00:00:00Z");
@@ -105,5 +106,25 @@ describe("entitlement with a founding seat", () => {
   it("stamps the cosmetic frame a week ahead (renewed on visits, so a refunded seat's fades)", () => {
     expect(proCosmeticUntil([], null, NOW, founder)).toBe("2026-10-14T00:00:00.000Z");
     expect(proCosmeticUntil([], null, NOW)).toBeNull();
+  });
+});
+
+describe("the steps after the click", () => {
+  it("sends a guest to sign in and back to /pro, one tap from checkout", () => {
+    const next = new URL(`https://x.example${FOUNDER_SIGN_IN_PATH}`).searchParams.get("next");
+    expect(next).toBe("/pro?buy=founder");
+    expect(isFounderContinue("?buy=founder")).toBe(true);
+    expect(isFounderContinue("?from=nav")).toBe(false);
+  });
+
+  it("checkout errors carry only the screen and a known reason", () => {
+    expect(founderErrorData("pro_page", "stripe")).toEqual({ source: "pro_page", reason: "stripe" });
+    expect(founderErrorData("continue", "age")).toEqual({ source: "continue", reason: "age" });
+    expect(founderErrorData("somewhere", "a@b.example")).toEqual({});
+  });
+
+  it("every reason has friendly words, and only some can be retried", () => {
+    for (const code of FOUNDER_ERRORS) expect(FOUNDER_ERROR_TEXT[code].length).toBeGreaterThan(10);
+    expect([...FOUNDER_RETRYABLE].sort()).toEqual(["all_held", "network", "stripe"]);
   });
 });

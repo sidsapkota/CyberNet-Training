@@ -1,14 +1,27 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import { startFounderCheckoutAction } from "@/app/actions/pro";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { confirmAgeAction } from "@/app/actions/account";
+import { type FounderCheckoutResult, startFounderCheckoutAction } from "@/app/actions/pro";
 import { LogoMark } from "@/components/brand/Logo";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { ChevronDownIcon, XIcon } from "@/components/ui/icons";
 import { trackEvent, trackWith } from "@/lib/analytics";
 import { useAuth } from "@/lib/auth/AuthProvider";
-import { type FounderOffer, type FounderScreen, founderEventData, seatsLeftText, showFounderOffer } from "@/lib/pro/founder";
+import {
+  FOUNDER_ERROR_TEXT,
+  FOUNDER_RETRYABLE,
+  FOUNDER_SIGN_IN_PATH,
+  type FounderError,
+  type FounderOffer,
+  type FounderScreen,
+  founderErrorData,
+  founderEventData,
+  isFounderContinue,
+  seatsLeftText,
+  showFounderOffer,
+} from "@/lib/pro/founder";
 import { usePro } from "@/lib/pro/ProProvider";
 
 /**
@@ -86,45 +99,91 @@ export function SeatsLeft({ offer, className = "" }: { offer: FounderOffer; clas
   );
 }
 
-/** The one button. Guests sign in first (Pro belongs to an account); then Stripe's hosted Checkout. */
+/**
+ * The one button. Guests sign in first (Pro belongs to an account) and come back to /pro one tap
+ * from checkout (`?buy=founder`); then Stripe's hosted Checkout. Every step is tracked: the click,
+ * the sign-in wall, a checkout created, or why it couldn't start. A missing 13+ confirmation is
+ * asked for right here, and errors say what to do, with a retry where one can work.
+ */
 export function FounderButton({ offer, screen, big = false }: { offer: FounderOffer; screen: FounderScreen; big?: boolean }) {
   const { auth, available } = useAuth();
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [problem, setProblem] = useState<FounderError | null>(null);
+  const [over13, setOver13] = useState(false);
   const size = big ? "w-full min-h-14 text-lead active:scale-[0.98]" : "w-full";
   const label = `Get lifetime Pro for ${offer.price}`;
-  const clicked = () => trackWith("founder_clicked", founderEventData(screen));
+
+  async function checkout() {
+    setBusy(true);
+    setProblem(null);
+    const result = await startFounderCheckoutAction().catch((): FounderCheckoutResult => ({ error: FOUNDER_ERROR_TEXT.network, code: "network" }));
+    if ("url" in result) {
+      trackWith("founder_checkout_created", founderEventData(screen));
+      window.location.assign(result.url);
+      return;
+    }
+    trackWith("founder_checkout_error", founderErrorData(screen, result.code));
+    setProblem(result.code);
+    setBusy(false);
+  }
+
+  async function confirmAgeThenCheckout() {
+    setBusy(true);
+    const confirmed = await confirmAgeAction().then(() => true, () => false);
+    if (!confirmed) {
+      setProblem("network");
+      setBusy(false);
+      return;
+    }
+    await checkout();
+  }
 
   return (
     <div>
       {!available || auth.status === "guest" ? (
-        <ButtonLink href="/login?next=/pro" className={size} onClick={clicked}>
+        <ButtonLink
+          href={FOUNDER_SIGN_IN_PATH}
+          className={size}
+          onClick={() => {
+            trackWith("founder_clicked", founderEventData(screen));
+            trackWith("founder_signup_wall", founderEventData(screen));
+          }}
+        >
           {label}
         </ButtonLink>
+      ) : problem === "age" ? (
+        <div className="rounded-control border border-line bg-surface-raised p-3 text-left">
+          <p className="text-small">{FOUNDER_ERROR_TEXT.age}</p>
+          <label className="mt-2 flex min-h-11 items-center gap-2 text-small font-semibold">
+            <input type="checkbox" checked={over13} onChange={(e) => setOver13(e.target.checked)} className="size-5 accent-[var(--color-accent)]" />
+            I&apos;m 13 or older
+          </label>
+          <Button className="mt-2 w-full" disabled={!over13 || busy} onClick={() => void confirmAgeThenCheckout()}>
+            {busy ? "Opening checkout…" : "Continue to checkout"}
+          </Button>
+        </div>
       ) : (
         <Button
           className={size}
           disabled={busy || auth.status === "loading" || offer.counter.allHeld}
-          onClick={async () => {
-            clicked();
-            setBusy(true);
-            setError(null);
-            const result = await startFounderCheckoutAction().catch(() => ({ error: "Something went wrong. Please try again." }));
-            if ("url" in result) window.location.assign(result.url);
-            else {
-              setError(result.error);
-              setBusy(false);
-            }
+          onClick={() => {
+            trackWith("founder_clicked", founderEventData(screen));
+            void checkout();
           }}
         >
           {busy ? "Opening checkout…" : label}
         </Button>
       )}
       <p className="mt-1 text-caption text-ink-muted">Under 18? Ask a parent before buying.</p>
-      {error && (
-        <p role="alert" className="mt-1 text-small text-danger">
-          {error}
-        </p>
+      {problem && problem !== "age" && (
+        <div role="alert" className="mt-1 text-small text-danger">
+          <p>{FOUNDER_ERROR_TEXT[problem]}</p>
+          {FOUNDER_RETRYABLE.has(problem) && (
+            <button type="button" onClick={() => void checkout()} disabled={busy} className="min-h-11 font-semibold text-accent-ink underline-offset-2 hover:underline">
+              Try again
+            </button>
+          )}
+        </div>
       )}
     </div>
   );
@@ -150,12 +209,32 @@ export function BuyingForYourKid({ className = "" }: { className?: string }) {
 }
 
 /** The offer as /pro's first, biggest card. Renders nothing while there's no offer for this visitor. */
+/**
+ * Whether /pro was opened to finish a founding purchase (a guest who tapped buy, then signed in).
+ * Read from the address in the browser only (the server render says no), so it can't mismatch.
+ */
+function useFounderContinue(): boolean {
+  return useSyncExternalStore(
+    () => () => {},
+    () => isFounderContinue(window.location.search),
+    () => false,
+  );
+}
+
 export function FounderCard() {
   const offer = useVisibleFounderOffer();
-  useViewed(offer, "pro_page");
+  const { auth } = useAuth();
+  const continuing = useFounderContinue() && auth.status === "signed-in";
+  const screen: FounderScreen = continuing ? "continue" : "pro_page";
+  useViewed(offer, screen);
   if (!offer) return null;
   return (
     <section aria-labelledby="founder-title" className="rounded-card border-2 border-accent-ink bg-surface p-4 shadow-pro-card sm:p-6">
+      {continuing && (
+        <p role="status" className="mb-2 rounded-control bg-accent-soft px-3 py-1.5 text-caption font-semibold">
+          You&apos;re signed in. One tap to pay on Stripe&apos;s secure page.
+        </p>
+      )}
       <div className="flex flex-wrap items-center justify-between gap-2">
         <FounderBadge />
         <SeatsLeft offer={offer} />
@@ -166,7 +245,7 @@ export function FounderCard() {
       <p className="mt-1 text-small text-ink-muted sm:text-body">{offer.comparison}</p>
       <p className="mt-2 text-small sm:text-body">Every Pro feature, for as long as CyberNet Training runs. The first {offer.counter.total} people only.</p>
       <div className="mt-3 sm:mt-4">
-        <FounderButton offer={offer} screen="pro_page" big />
+        <FounderButton offer={offer} screen={screen} big />
       </div>
       <BuyingForYourKid className="mt-2" />
     </section>
@@ -200,7 +279,7 @@ export function FounderLine() {
       </p>
       <Link
         href="/pro?from=dashboard"
-        onClick={() => trackWith("founder_clicked", founderEventData("dashboard"))}
+        onClick={() => trackWith("founder_line_opened", founderEventData("dashboard"))}
         className="inline-flex min-h-11 items-center px-2 font-semibold text-accent-ink underline-offset-2 hover:underline"
       >
         See it

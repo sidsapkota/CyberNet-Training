@@ -92,12 +92,47 @@ export function showFounderOffer(offer: FounderOffer | null | undefined, pro: { 
   return pro.kind === "none" || pro.kind === "grant";
 }
 
-/** The screens the offer shows on (founder_viewed and founder_clicked carry one, nothing else). */
-export const FOUNDER_SCREENS = ["pro_page", "paywall", "limit", "dashboard", "landing"] as const;
+/**
+ * The screens the offer shows on (the founder events carry one, nothing else). "continue" is /pro
+ * after a guest signed in to buy: one tap from secure checkout.
+ */
+export const FOUNDER_SCREENS = ["pro_page", "paywall", "limit", "dashboard", "landing", "continue"] as const;
 export type FounderScreen = (typeof FOUNDER_SCREENS)[number];
 
 export function founderEventData(screen: string): Record<string, string> {
   return (FOUNDER_SCREENS as readonly string[]).includes(screen) ? { source: screen } : {};
+}
+
+/** Why a founding checkout couldn't start (sent as `founder_checkout_error`'s `reason`). */
+export const FOUNDER_ERRORS = ["age", "has_pro", "founder", "all_held", "off", "stripe", "network"] as const;
+export type FounderError = (typeof FOUNDER_ERRORS)[number];
+
+/** `founder_checkout_error`'s data: the screen and the reason code, nothing else. */
+export function founderErrorData(screen: string, reason: string): Record<string, string> {
+  return { ...founderEventData(screen), ...((FOUNDER_ERRORS as readonly string[]).includes(reason) ? { reason } : {}) };
+}
+
+/** What the learner reads for each reason: friendly, and what to do next. */
+export const FOUNDER_ERROR_TEXT: Record<FounderError, string> = {
+  age: "One quick check before checkout: please confirm you're 13 or older.",
+  has_pro: "You already have Pro. You can manage it from Your plan.",
+  founder: "You're already a Founding Member. Enjoy lifetime Pro!",
+  all_held: "The last spots are in other people's checkouts right now. They free up within 30 minutes, so try again soon.",
+  off: "The Founding Member offer has ended.",
+  stripe: "Stripe's checkout didn't open. Nothing was charged. Please try again.",
+  network: "We couldn't reach checkout. Check your connection and try again.",
+};
+
+/** Reasons where trying again can work. */
+export const FOUNDER_RETRYABLE: ReadonlySet<FounderError> = new Set(["all_held", "stripe", "network"]);
+
+/** Where /pro sends a guest who wants to buy, so they come back one tap from checkout. */
+export const FOUNDER_CONTINUE_QUERY = "buy=founder";
+export const FOUNDER_SIGN_IN_PATH = `/login?next=${encodeURIComponent(`/pro?${FOUNDER_CONTINUE_QUERY}`)}`;
+
+/** Whether this page was opened to finish a founding purchase (after signing in). */
+export function isFounderContinue(search: string): boolean {
+  return new URLSearchParams(search).get("buy") === "founder";
 }
 
 // ── Stripe: a paid founding session, and its refund ─────────────────────────
