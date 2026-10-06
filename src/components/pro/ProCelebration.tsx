@@ -39,18 +39,31 @@ function dueStart(userId: string, subscribed: boolean, intervals: readonly ProIn
  * celebrating, one confetti burst, what's now theirs). Remembered per device. Not for the early-user
  * grant (it has its own thank-you), and not after /pro/welcome, which already celebrated.
  */
-export function ProCelebration() {
+/**
+ * Whether the Pro welcome is due on this device: the Pro start it would celebrate, null when it
+ * isn't due, or "loading" while Pro status loads. Other one-time welcomes (the leagues one) wait
+ * while it's due, so a learner never sees two pop-ups stacked.
+ */
+export function useProWelcomeDue(): string | null | "loading" {
   const { auth } = useAuth();
   const { pro, hasPro } = usePro();
+  const userId = auth.status === "signed-in" ? auth.userId : null;
+  // /pro/welcome is its own celebration (and marks this device).
+  const onWelcome = usePathname().startsWith("/pro/welcome");
+  if (auth.status === "loading" || (userId && pro.loading)) return "loading";
+  // Pro status only loads in the browser (it's "loading" in the server HTML), so reading the clock
+  // and storage here can't cause a hydration mismatch.
+  return !userId || pro.loading || !hasPro || onWelcome ? null : dueStart(userId, pro.status.kind === "subscription", pro.intervals);
+}
+
+export function ProCelebration() {
+  const { auth } = useAuth();
   const reduceMotion = useReducedMotion();
   const [closed, setClosed] = useState(false);
   const ref = useRef<HTMLDialogElement>(null);
   const userId = auth.status === "signed-in" ? auth.userId : null;
-  // /pro/welcome is its own celebration (and marks this device).
-  const onWelcome = usePathname().startsWith("/pro/welcome");
-  // Pro status only loads in the browser (it's "loading" in the server HTML), so reading the clock
-  // and storage here can't cause a hydration mismatch.
-  const start = closed || !userId || pro.loading || !hasPro || onWelcome ? null : dueStart(userId, pro.status.kind === "subscription", pro.intervals);
+  const due = useProWelcomeDue();
+  const start = closed || due === "loading" ? null : due;
 
   useEffect(() => {
     const dialog = ref.current;

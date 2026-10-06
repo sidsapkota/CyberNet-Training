@@ -7,6 +7,7 @@ import { Mascot } from "@/components/mascot/Mascot";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { celebrate } from "@/lib/celebrate";
+import { useProWelcomeDue } from "@/components/pro/ProCelebration";
 import { leaguesOpenSeenKey, shouldShowOpening } from "@/lib/leagues/opening";
 import { useLeaguesStatus } from "@/lib/leagues/useLeaguesOpen";
 import { EASE_OUT_QUICK } from "@/lib/motion";
@@ -39,7 +40,10 @@ export function LeaguesOpening() {
   const onDashboard = usePathname() === "/";
   // The open flag only resolves in the browser ("loading" in the server HTML), so reading storage
   // here can't cause a hydration mismatch: both server and first client render show nothing.
-  const show = !closed && shouldShowOpening({ status, userId, seen: readSeen(userId), onDashboard });
+  // One welcome at a time: while the Pro welcome is due (or Pro status is loading), this one waits
+  // for a later visit, so the two never stack.
+  const proWelcome = useProWelcomeDue();
+  const show = !closed && proWelcome === null && shouldShowOpening({ status, userId, seen: readSeen(userId), onDashboard });
 
   useEffect(() => {
     const dialog = ref.current;
