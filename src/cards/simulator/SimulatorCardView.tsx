@@ -22,7 +22,7 @@ function smoothness(value: number): { text: string; tone: "good" | "ok" | "bad";
 const toneText = { good: "text-success", ok: "text-warning", bad: "text-danger" } as const;
 
 /** A generic phone or laptop whose screen scrolls smoothly, stutters, or freezes. */
-/** `statusOnlyOnPhones`: hidden on phones, where the list beside it shows the status (`DeviceStatus`) in its header. */
+/** `statusOnlyOnPhones`: hidden (at every size), because the list beside it shows the status (`DeviceStatus`) in its header. */
 function DeviceMockup({ smooth, frame, label, statusOnlyOnPhones = false }: { smooth: number; frame: "phone" | "laptop"; label: string; statusOnlyOnPhones?: boolean }) {
   const reduceMotion = useReducedMotion();
   const status = smoothness(smooth);
@@ -48,7 +48,7 @@ function DeviceMockup({ smooth, frame, label, statusOnlyOnPhones = false }: { sm
   );
 
   return (
-    <figure className={`flex flex-col items-center gap-2 ${statusOnlyOnPhones ? "max-sm:hidden" : ""}`}>
+    <figure className={`flex flex-col items-center gap-2 ${statusOnlyOnPhones ? "hidden" : ""}`}>
       <div className="rounded-card bg-screen p-2.5 sm:p-3">
         {frame === "phone" ? (
           <div className="relative h-28 w-16 overflow-hidden rounded-[14px] border-2 border-scene-edge bg-scene-shell p-1.5 sm:h-36 sm:w-20 [@media(max-height:600px)]:h-22">
@@ -74,7 +74,7 @@ function DeviceMockup({ smooth, frame, label, statusOnlyOnPhones = false }: { sm
 function DeviceStatus({ smooth, label }: { smooth: number; label: string }) {
   const status = smoothness(smooth);
   return (
-    <span className={`inline-flex items-center gap-1 text-caption font-semibold sm:hidden ${toneText[status.tone]}`} aria-live="polite">
+    <span className={`inline-flex shrink-0 items-center gap-1 text-caption font-semibold ${toneText[status.tone]}`} aria-live="polite">
       <status.Icon className="size-3.5" />
       <span className="sr-only">{label}: </span>
       {status.text}
@@ -127,9 +127,9 @@ function ListOutput({ output, items, action, status }: { output: SimulatorOutput
       <ul className={`mt-1.5 sm:mt-2 sm:space-y-1.5 ${action ? "" : "space-y-1"}`}>
         {items.map((item) => (
           <li key={item.id} className={`grid items-center gap-x-2 text-small ${action ? "grid-cols-[minmax(0,1fr)_auto_auto]" : "grid-cols-[minmax(0,1fr)_auto]"} ${item.state === "off" ? "text-ink-faint" : "text-ink"}`}>
-            <span className={`truncate ${item.state === "off" ? "line-through" : ""}`}>
+            <span className={`min-w-0 [overflow-wrap:anywhere] ${item.state === "off" ? "line-through" : ""}`}>
               {item.label}
-              {item.state === "system" && <span className="ml-1.5 rounded-sm border border-line-strong px-1 text-caption text-ink-muted">system</span>}
+              {item.state === "system" && <span className="ml-1.5 inline-block rounded-sm border border-line-strong px-1 text-caption whitespace-nowrap text-ink-muted">system</span>}
               {item.state === "high" && (
                 <span className="ml-1.5 inline-flex items-center gap-0.5 text-caption font-semibold text-warning">
                   <WarningIcon className="size-3" />
@@ -344,7 +344,7 @@ export function SimulatorCardView({ card, answer, onAnswerChange, status }: Card
         {/* Three or more switches or buttons sit two to a row on phones, so every control stays on screen. */}
         {otherControls.length > 0 && (
           // Beside a list with its own row controls, what's left (a slider) comes first on phones: set it, then act on the rows.
-          <section aria-label="Controls" className={`${rowControls.size > 0 ? "max-sm:order-first" : ""} ${compact ? "grid grid-cols-2 gap-2 sm:grid-cols-1 [&>div]:col-span-2 sm:[&>*]:col-span-1" : "space-y-2"}`}>
+          <section aria-label="Controls" className={`${rowControls.size > 0 ? "max-sm:order-first" : ""} ${compact ? "max-sm:grid max-sm:grid-cols-2 max-sm:gap-2 max-sm:[&>div]:col-span-2 sm:space-y-2" : "space-y-2"}`}>
             {otherControls.map((control) => (
               <ControlView
                 key={control.id}

@@ -14,7 +14,7 @@
         "low-power-mode"
       ],
       "uses": [],
-      "prompt": "No charger on a long trip: last **at least 8 hours** with **music** on. (**Low power mode** saves energy.)",
+      "prompt": "Make the battery last **8 hours** with **music** on.",
       "model": "battery",
       "params": {
         "wattHours": 15
