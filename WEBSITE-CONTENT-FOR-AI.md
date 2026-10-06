@@ -386,7 +386,7 @@ Fix slow, full and flat devices with a simple loop, safely.
 
 **Best interactive cards**
 
-- Simulator: No charger on a long trip: last **at least 8 hours** with **music** on. (**Low power mode** saves energy.)
+- Simulator: Make the battery last **8 hours** with **music** on.
 - Choose what happens: Your phone won't charge. Tip: cables wear out more often than phones, and **metal or water** can damage the charging port.
 - Choose what happens: You're gaming on your bed with the phone plugged in.
 

@@ -73,7 +73,7 @@ function Learned({ card }: { card: TrainModelCard }) {
               <li key={e.id} className="flex items-center gap-1.5 text-caption">
                 <LabelShape index={card.labels.findIndex((l) => l.id === e.label)} className="size-3" />
                 <span className="font-semibold">{card.labels.find((l) => l.id === e.label)?.text}:</span>
-                <span className="truncate text-ink-muted">“{e.text}”</span>
+                <span className="min-w-0 text-ink-muted [overflow-wrap:anywhere]">“{e.text}”</span>
               </li>
             ))}
           </ul>
@@ -138,7 +138,7 @@ function FixCard({ card, answer, onAnswerChange, status }: CardComponentProps<Tr
             <span>Other guesses:</span>
             {others.map((t) => (
               <span key={t.id} className="inline-flex items-center gap-1">
-                {card.model.kind === "nearest" ? <Picture card={card} item={t} className="size-5" /> : <span className="max-w-[9rem] truncate text-ink">“{t.text}”</span>}
+                {card.model.kind === "nearest" ? <Picture card={card} item={t} className="size-5" /> : <span className="text-ink [overflow-wrap:anywhere]">“{t.text}”</span>}
                 <span className="sr-only">{t.text}, model&apos;s guess</span>
                 <GuessChip card={card} guess={guesses[t.id] ?? null} />
               </span>
@@ -233,7 +233,7 @@ function LabelCard({ card, answer, onAnswerChange, status }: CardComponentProps<
               return (
                 <li key={t.id} className="flex items-center gap-2 text-small">
                   {card.model.kind === "nearest" ? <Picture card={card} item={t} className="size-8" /> : null}
-                  <span className="min-w-0 flex-1 truncate">{t.text}</span>
+                  <span className="min-w-0 flex-1 [overflow-wrap:anywhere]">{t.text}</span>
                   <GuessChip card={card} guess={guess} />
                   {right ? <CheckIcon className="size-4 text-success" strokeWidth={2.5} /> : <XIcon className="size-4 text-danger" strokeWidth={2.5} />}
                   <span className="sr-only">{right ? "right" : "wrong"}</span>

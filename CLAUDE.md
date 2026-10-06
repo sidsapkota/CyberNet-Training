@@ -51,8 +51,11 @@ npm run e2e:plans         # plans at 360px and desktop (guest, free, Pro), plan 
 npm run e2e:account-speed # how fast /account opens from the profile icon (PHONE=1 for throttled 4G)
 npm run e2e:mascot-motion # mascot reactions timed in the browser, the scan filmstrip, reduced motion
 npm run e2e:usernames    # pick a username at sign-up, rude/taken names refused, the 30-day change (secret key: local build)
-npm run e2e:fit-audit     # every card at 360x640 and 360x560: does it fit without scrolling? (COURSE=<id>, LESSONS=<id,id>;
-                          # E2E_SHARE_URL for a protected preview)
+npm run e2e:fit-audit     # every card at phone (360x640, 360x560, 390x844), tablet (768x1024) and desktop
+                          # (1280x800, 1440x900, 1920x1080): every control on screen AND no broken layout
+                          # (scripts/e2e/lib/layout.mjs: a control's content spilling out, overlapping
+                          # controls, cut-off text, doubled controls, sideways scroll). Fails on any.
+                          # (COURSE=<id>, LESSONS=<id,id>, SIZES=560,1440, PARALLEL=3; E2E_SHARE_URL for a preview)
 npm run e2e:dashboard-numbers # cards done, no lesson finished: header XP, Activity XP bars and rings
                           # (throwaway account; secret key, so a local production build or production)
 npm run e2e:player-flow   # before/after screenshots: a hotspot card and the wrong-answer flow (SHOTS_TAG=)
@@ -708,6 +711,11 @@ src/dev/                 dev-only card samples + playground (served at /dev/card
   mount, so avoid hydration mismatches: no `Math.random`/`Date` during render. The drag shuffle is
   seeded from the card id.
 - **Mobile-first:** design at 360–390px wide first. Keep tap targets ≥ 44px.
+- **Every size, not just phones:** a card must also lay out cleanly at tablet and desktop widths
+  (768 to 1920). Phone-only layouts (two-column switch grids and the like) are written with `max-sm:`
+  so they can't leak into wider screens: an unprefixed rule such as `[&>div]:col-span-2` beats a
+  `sm:` reset and once broke the Power Problems simulator at desktop width (fixed 6 Oct 2026).
+  The fit audit checks every card at all seven sizes.
 - **Fit target: 360×560.** Every card must fit a 360×560 screen (the Instagram in-app browser,
   the smallest real one we see) without scrolling: prompt, interactive area, labels, header and
   footer on one screen, before Check. `npm run e2e:fit-audit` measures it (`COURSE=` / `LESSONS=`;
