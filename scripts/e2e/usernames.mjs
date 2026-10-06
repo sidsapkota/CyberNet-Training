@@ -85,6 +85,10 @@ try {
   record("The header shows the username", true);
 
   await page.goto(`${BASE}/account`);
+  // While /account streams in, the server copy and the browser copy of the form can overlap for a
+  // moment: wait for exactly one field (a lasting duplicate still fails).
+  const oneField = () => page.waitForFunction(() => document.querySelectorAll("input[autocomplete=username]").length === 1, null, { timeout: 15000 });
+  await oneField();
   const field = page.getByLabel("Username", { exact: true });
   record("Account settings show the username", (await field.inputValue()) === fresh);
   await field.fill(changed);
@@ -97,6 +101,7 @@ try {
 
   // A second change straight away is refused on the server too (not only by the disabled field).
   await page.reload();
+  await oneField();
   record("After a reload it's still locked, with the date", await page.getByLabel("Username", { exact: true }).isDisabled());
 
   // A name the app generated (league placement, the scan) isn't a pick: the learner is asked to

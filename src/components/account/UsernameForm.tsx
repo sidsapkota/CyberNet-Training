@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useState, useTransition } from "react";
+import { useEffect, useId, useRef, useState, useTransition } from "react";
 import { setUsernameAction, suggestUsernameAction } from "@/app/actions/account";
 import { Button } from "@/components/ui/Button";
 import { USERNAME_MAX } from "@/lib/usernames/check";
@@ -35,11 +35,19 @@ export function UsernameForm({
   const [pending, startTransition] = useTransition();
   const choosing = saved === null;
 
-  const shuffle = () =>
+  // Only the newest suggestion request counts, and typing cancels any still on its way, so a late
+  // suggestion never replaces what the learner typed (a slow connection, or the arrival effect
+  // running twice in development).
+  const request = useRef(0);
+  const shuffle = () => {
+    const mine = ++request.current;
     startTransition(async () => {
-      setName(await suggestUsernameAction());
+      const suggestion = await suggestUsernameAction();
+      if (mine !== request.current) return;
+      setName(suggestion);
       setMessage(null);
     });
+  };
 
   // A new account starts with a suggestion, so skipping is one tap.
   useEffect(() => {
@@ -78,6 +86,7 @@ export function UsernameForm({
           spellCheck={false}
           disabled={locked}
           onChange={(e) => {
+            request.current++; // a suggestion still on its way won't overwrite this
             setName(e.target.value);
             setMessage(null);
           }}
