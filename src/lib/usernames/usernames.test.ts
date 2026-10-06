@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { checkUsername, USERNAME_MESSAGES, usernameKey } from "./check";
 import { generateUsername } from "./generate";
-import { canChangeUsername, nextUsernameChange } from "./rules";
+import { canChangeUsername, isUsernameChange, nextUsernameChange } from "./rules";
 
 const blocked = (name: string) => {
   const result = checkUsername(name);
@@ -88,5 +88,17 @@ describe("changing a username", () => {
     expect(canChangeUsername("2026-09-20T00:00:00Z", now)).toBe(false);
     expect(nextUsernameChange("2026-09-20T00:00:00Z", now)?.toISOString()).toBe("2026-10-20T00:00:00.000Z");
     expect(canChangeUsername("2026-09-01T00:00:00Z", now)).toBe(true);
+  });
+});
+
+describe("isUsernameChange: a generated name is not picked yet", () => {
+  it("picking the first name isn't a change", () => {
+    expect(isUsernameChange(null, false)).toBe(false);
+  });
+  it("replacing a generated name isn't a change (the first real pick stays free)", () => {
+    expect(isUsernameChange("PacketPilot482", true)).toBe(false);
+  });
+  it("replacing a picked name is a change", () => {
+    expect(isUsernameChange("MyOwnName", false)).toBe(true);
   });
 });

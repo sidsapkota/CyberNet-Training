@@ -1,5 +1,6 @@
 "use client";
 
+import { FALLBACK_NAME } from "@/lib/auth/profile";
 import { Avatar } from "@/components/rewards/Avatar";
 import { motion, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
@@ -144,7 +145,7 @@ function League({ league, courses, reload }: { league: MyLeague; courses: Course
       </div>
 
       <aside className="space-y-6">
-        <OwnCard handle={player.handle} outfit={player.outfit} tier={player.tier} courses={courses} />
+        <OwnCard handle={player.handle ?? FALLBACK_NAME} outfit={player.outfit} tier={player.tier} courses={courses} />
         <LeagueSettings className={panel} showOnLeaderboards={player.showOnLeaderboards} onChange={reload} />
       </aside>
 

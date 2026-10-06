@@ -28,7 +28,7 @@ export default async function AccountPage({ searchParams }: PageProps<"/account"
   }
   const [{ data: user, error }, { data: profile }, { welcome, next }] = await Promise.all([
     supabase.auth.getUser(),
-    supabase.from("profiles").select("username, username_changed_at").maybeSingle(),
+    supabase.from("profiles").select("username, username_changed_at, username_generated").maybeSingle(),
     searchParams,
   ]);
   if (error || !user.user) redirect("/login");
@@ -39,6 +39,7 @@ export default async function AccountPage({ searchParams }: PageProps<"/account"
         courseTitles={Object.fromEntries(getCourses().map((c) => [c.id, c.title]))}
         email={user.user?.email ?? null}
         username={profile?.username ?? null}
+        usernameGenerated={profile?.username_generated ?? false}
         nextChange={nextChangeLine(profile?.username_changed_at ?? null)}
         welcome={welcome === "1"}
         next={safeNextPath(typeof next === "string" ? next : null)}

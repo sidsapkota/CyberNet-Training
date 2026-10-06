@@ -495,6 +495,7 @@ export type Database = {
           time_zone_changed_at: string | null
           username: string | null
           username_changed_at: string | null
+          username_generated: boolean
         }
         Insert: {
           age_confirmed?: boolean
@@ -512,6 +513,7 @@ export type Database = {
           time_zone_changed_at?: string | null
           username?: string | null
           username_changed_at?: string | null
+          username_generated?: boolean
         }
         Update: {
           age_confirmed?: boolean
@@ -529,6 +531,7 @@ export type Database = {
           time_zone_changed_at?: string | null
           username?: string | null
           username_changed_at?: string | null
+          username_generated?: boolean
         }
         Relationships: []
       }

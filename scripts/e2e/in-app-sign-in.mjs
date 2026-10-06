@@ -6,12 +6,13 @@ import fs from "node:fs";
 import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { chromium } from "playwright-core";
+import { readEnvEntries } from "./lib/env.mjs";
 
 // Run with the dev server up (`npm run dev`), then `npm run e2e:in-app`. Needs .env.local with the
 // Supabase URL and SUPABASE_SECRET_KEY. Uses an installed Edge or Chrome (E2E_BROWSER=chrome).
 const APP = path.resolve(import.meta.dirname, "../..");
 const env = Object.fromEntries(
-  fs.readFileSync(path.join(APP, ".env.local"), "utf8").split("\n").filter((l) => /^[A-Z_]+=/.test(l)).map((l) => [l.slice(0, l.indexOf("=")), l.slice(l.indexOf("=") + 1).trim()]),
+  readEnvEntries(APP),
 );
 const admin = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SECRET_KEY, { auth: { persistSession: false, autoRefreshToken: false } });
 const BASE = process.env.E2E_BASE_URL ?? "http://localhost:3000";

@@ -9,12 +9,14 @@ import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { chromium } from "playwright-core";
 import { prepare } from "./lib/access.mjs";
+import { closeLeaguesWelcome } from "./lib/welcome.mjs";
+import { readEnvEntries } from "./lib/env.mjs";
 
 // Run with the dev server up (`npm run dev`), then `npm run e2e:mistake-review`. Needs .env.local
 // with the Supabase URL and SUPABASE_SECRET_KEY. Uses an installed Edge or Chrome (E2E_BROWSER=chrome).
 const APP = path.resolve(import.meta.dirname, "../..");
 const env = Object.fromEntries(
-  fs.readFileSync(path.join(APP, ".env.local"), "utf8").split("\n").filter((l) => /^[A-Z_]+=/.test(l)).map((l) => [l.slice(0, l.indexOf("=")), l.slice(l.indexOf("=") + 1).trim()]),
+  readEnvEntries(APP),
 );
 const admin = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SECRET_KEY, { auth: { persistSession: false, autoRefreshToken: false } });
 const BASE = process.env.E2E_BASE_URL ?? "http://localhost:3000";
@@ -70,6 +72,7 @@ try {
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto(`${BASE}/auth/callback?token_hash=${link.data.properties.hashed_token}&type=magiclink&next=/`);
   await page.waitForURL((u) => !u.pathname.startsWith("/auth"), { timeout: 30000 });
+  await closeLeaguesWelcome(page);
 
   // 1. A wrong answer in a lesson is saved (once per visit), and nothing is saved for a right one.
   await page.goto(`${BASE}/lesson/${LIVE}`);
@@ -99,6 +102,7 @@ try {
   for (const s of seeds) await admin.rpc("record_mistake", { p_user: userId, p_lesson: s.lessonId, p_card: s.card.id });
   await admin.rpc("record_mistake", { p_user: userId, p_lesson: "not-a-real-lesson", p_card: "nope" });
   await page.goto(`${BASE}/`);
+  await closeLeaguesWelcome(page);
   const cardTitle = page.getByRole("heading", { name: "Your mistakes" });
   await cardTitle.waitFor({ timeout: 30000 }).catch(async (error) => {
     await page.screenshot({ path: path.join(SHOTS, "mistakes-card-missing.png"), fullPage: true });
@@ -167,6 +171,7 @@ try {
   record("Right answers cleared their mistakes; the skipped one stays", left.length === 1 && left[0].card_id === queue[1].card.id, JSON.stringify(left));
 
   await page.goto(`${BASE}/`);
+  await closeLeaguesWelcome(page);
   await page.getByRole("heading", { name: "Your mistakes" }).waitFor({ timeout: 30000 });
   const after = (await page.locator("section[aria-labelledby=mistakes-card-title] p").innerText()).trim();
   record("The dashboard count drops, with Review now for Pro", after === "1 card to try again" && (await page.getByRole("link", { name: "Review now" }).count()) === 1, after);

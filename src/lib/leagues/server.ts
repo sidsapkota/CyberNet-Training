@@ -23,27 +23,40 @@ function fail(message: string, error: { message: string } | null | undefined): a
 }
 
 export interface LeaguePlayer {
-  /** The learner's public username (`profiles.username`), shown on leaderboards. */
-  handle: string;
+  /** The learner's public username (`profiles.username`), shown on leaderboards; null until they have one. */
+  handle: string | null;
   tier: Tier;
   showOnLeaderboards: boolean;
   /** The learner's avatar outfit (item ids from the fixed list). */
   outfit: string[];
 }
 
-/** The learner's league player row, created the first time. Their public name is their username. */
-export async function ensurePlayer(admin: Admin, userId: string): Promise<LeaguePlayer> {
-  const [username, profile] = await Promise.all([ensureUsername(admin, userId), admin.from("profiles").select("outfit").eq("id", userId).maybeSingle()]);
+/**
+ * The learner's league player. `mode`:
+ * - "read" (pages that show league data): writes nothing; no username is generated or saved, and a
+ *   learner who has never played gets the defaults.
+ * - "row" (a league setting): creates the player row if needed, still without touching the username.
+ * - "place" (putting them in a league: the cron and XP placement): also gives them a generated
+ *   username if they have none (flagged, so their first real pick stays free).
+ */
+export async function ensurePlayer(admin: Admin, userId: string, mode: "read" | "row" | "place" = "read"): Promise<LeaguePlayer> {
+  const [username, profile] = await Promise.all([
+    mode === "place" ? ensureUsername(admin, userId) : null,
+    admin.from("profiles").select("username, outfit").eq("id", userId).maybeSingle(),
+  ]);
+  fail("Couldn't read the profile", profile.error);
+  const handle = username ?? profile.data?.username ?? null;
   const outfit = profile.data?.outfit ?? [];
   const existing = await admin.from("league_players").select("tier, show_on_leaderboards").eq("user_id", userId).maybeSingle();
   fail("Couldn't read the league player", existing.error);
   if (existing.data) {
-    return { handle: username, outfit, tier: isTier(existing.data.tier) ? existing.data.tier : "packet", showOnLeaderboards: existing.data.show_on_leaderboards };
+    return { handle, outfit, tier: isTier(existing.data.tier) ? existing.data.tier : "packet", showOnLeaderboards: existing.data.show_on_leaderboards };
   }
+  if (mode === "read") return { handle, outfit, tier: "packet", showOnLeaderboards: true };
   const { error } = await admin.from("league_players").insert({ user_id: userId });
   // 23505: a parallel request just created this player.
   if (error && error.code !== "23505") fail("Couldn't create the league player", error);
-  return { handle: username, outfit, tier: "packet", showOnLeaderboards: true };
+  return { handle, outfit, tier: "packet", showOnLeaderboards: true };
 }
 
 /** Usernames for a set of learners (leaderboards show nothing else about them). */
@@ -82,7 +95,7 @@ async function weeklyXp(admin: Admin, userIds: string[], starts: number, ends: n
  * idempotent, so calling it when they're already a member is a no-op.
  */
 async function placeInWeek(admin: Admin, userId: string, week: string): Promise<void> {
-  const player = await ensurePlayer(admin, userId);
+  const player = await ensurePlayer(admin, userId, "place");
   const oldest = weekWindow(addDays(week, -7 * BAND_WEEKS)).starts;
   const history = await weeklyXp(admin, [userId], oldest, weekWindow(week).starts);
   // bandFor averages over BAND_WEEKS weeks, so the window's total is enough.
@@ -240,7 +253,7 @@ async function finalizeWeek(admin: Admin, week: string): Promise<void> {
 
 export async function setShowOnLeaderboards(userId: string, show: boolean): Promise<void> {
   const admin = createSupabaseAdminClient();
-  await ensurePlayer(admin, userId);
+  await ensurePlayer(admin, userId, "row");
   const { error } = await admin.from("league_players").update({ show_on_leaderboards: show }).eq("user_id", userId);
   fail("Couldn't save that setting", error);
 }

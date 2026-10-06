@@ -7,12 +7,13 @@ import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { chromium } from "playwright-core";
 import { prepare } from "./lib/access.mjs";
+import { readEnvEntries } from "./lib/env.mjs";
 
 // Run with the dev server up (`npm run dev`), then `npm run e2e:guest-gate`. Needs .env.local with
 // the Supabase URL and SUPABASE_SECRET_KEY. Uses an installed Edge or Chrome (E2E_BROWSER=chrome).
 const APP = path.resolve(import.meta.dirname, "../..");
 const env = Object.fromEntries(
-  fs.readFileSync(path.join(APP, ".env.local"), "utf8").split("\n").filter((l) => /^[A-Z_]+=/.test(l)).map((l) => [l.slice(0, l.indexOf("=")), l.slice(l.indexOf("=") + 1).trim()]),
+  readEnvEntries(APP),
 );
 const admin = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SECRET_KEY, { auth: { persistSession: false, autoRefreshToken: false } });
 const BASE = process.env.E2E_BASE_URL ?? "http://localhost:3000";
@@ -28,6 +29,21 @@ const LESSONS = path.join(APP, "content/courses/stay-safe-online/modules/01-lock
 const lesson1 = JSON.parse(fs.readFileSync(path.join(LESSONS, "01-strong-passwords.json"), "utf8"));
 const lesson2 = JSON.parse(fs.readFileSync(path.join(LESSONS, "02-two-step-sign-in.json"), "utf8"));
 const GATE = "Create a free account to keep going.";
+
+/**
+ * A plain phrase from a lesson's cards (any card with a prompt, title or body; whatever the card
+ * types), for checking whether the page HTML carries the cards. Markdown, glossary marks and
+ * punctuation are skipped, so it matches however the text is encoded in the page.
+ */
+function phraseFrom(lesson) {
+  for (const card of lesson.cards) {
+    for (const text of [card.prompt, card.title, card.body]) {
+      const plain = (text ?? "").replace(/\[\[([^\]|]+\|)?([^\]]+)\]\]/g, "$2").match(/[A-Za-z][A-Za-z ]{19,}/);
+      if (plain) return plain[0].slice(0, 20);
+    }
+  }
+  throw new Error(`No plain text found in ${lesson.id}`);
+}
 
 // Guest progress: every card of lesson 1 but its last (the recap), so Continue finishes it.
 const at = new Date(Date.now() - 10 * 60_000).toISOString();
@@ -55,8 +71,8 @@ try {
   const html1 = await (await htmlPage.request.get(`${BASE}/lesson/${lesson1.id}`)).text();
   const html2 = await (await htmlPage.request.get(`${BASE}/lesson/${lesson2.id}`)).text();
   await htmlContext.close();
-  const secret = lesson2.cards.find((c) => c.prompt)?.prompt.slice(0, 30);
-  record("A course's first lesson has its cards in the page", html1.includes(lesson1.cards[1].title ?? lesson1.cards[1].prompt.slice(0, 30)));
+  const secret = phraseFrom(lesson2);
+  record("A course's first lesson has its cards in the page", html1.includes(phraseFrom(lesson1)), phraseFrom(lesson1));
   record("A lesson that needs an account never ships its cards in the page", Boolean(secret) && !html2.includes(secret));
 
   const context = await browser.newContext({ viewport: { width: 360, height: 900 }, colorScheme: "dark", reducedMotion: "reduce" });

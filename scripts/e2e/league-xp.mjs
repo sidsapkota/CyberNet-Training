@@ -10,10 +10,11 @@ import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { chromium } from "playwright-core";
 import { prepare } from "./lib/access.mjs";
+import { readEnvEntries } from "./lib/env.mjs";
 
 const APP = path.resolve(import.meta.dirname, "../..");
 const env = Object.fromEntries(
-  fs.readFileSync(path.join(APP, ".env.local"), "utf8").split("\n").filter((l) => /^[A-Z_]+=/.test(l)).map((l) => [l.slice(0, l.indexOf("=")), l.slice(l.indexOf("=") + 1).trim()]),
+  readEnvEntries(APP),
 );
 if (env.NEXT_PUBLIC_SUPABASE_URL.includes("qyjmowpkdcunkfitbwca")) {
   console.error("e2e:league-xp writes league data: it runs on staging only, never production.");

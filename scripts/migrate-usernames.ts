@@ -48,7 +48,7 @@ for (const row of rows) {
   else replaced++;
   if (!apply) continue;
   // Only change the row if it still has the value we read (a learner may have just picked one).
-  const query = admin.from("profiles").update({ username: name, username_changed_at: null }).eq("id", row.id);
+  const query = admin.from("profiles").update({ username: name, username_changed_at: null, username_generated: true }).eq("id", row.id);
   const { error: writeError } = await (missing ? query.is("username", null) : query.eq("username", row.username!));
   if (writeError) throw new Error(`Couldn't save a username: ${writeError.message}`);
 }

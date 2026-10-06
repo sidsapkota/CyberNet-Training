@@ -9,12 +9,14 @@ import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { chromium } from "playwright-core";
 import { prepare } from "./lib/access.mjs";
+import { closeLeaguesWelcome } from "./lib/welcome.mjs";
+import { readEnvEntries } from "./lib/env.mjs";
 
 // Run with the dev server up (`npm run dev`), then `npm run e2e:plans`. Needs .env.local with the
 // Supabase URL and SUPABASE_SECRET_KEY. Uses an installed Edge or Chrome (E2E_BROWSER=chrome).
 const APP = path.resolve(import.meta.dirname, "../..");
 const env = Object.fromEntries(
-  fs.readFileSync(path.join(APP, ".env.local"), "utf8").split("\n").filter((l) => /^[A-Z_]+=/.test(l)).map((l) => [l.slice(0, l.indexOf("=")), l.slice(l.indexOf("=") + 1).trim()]),
+  readEnvEntries(APP),
 );
 const admin = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SECRET_KEY, { auth: { persistSession: false, autoRefreshToken: false } });
 const BASE = process.env.E2E_BASE_URL ?? "http://localhost:3000";
@@ -62,6 +64,7 @@ async function signIn(ctx, email) {
   const link = await admin.auth.admin.generateLink({ type: "magiclink", email });
   await page.goto(`${BASE}/auth/callback?token_hash=${link.data.properties.hashed_token}&type=magiclink&next=/`);
   await page.waitForURL((u) => !u.pathname.startsWith("/auth"), { timeout: 30000 });
+  await closeLeaguesWelcome(page);
   return page;
 }
 
@@ -169,6 +172,7 @@ try {
     const page = await signIn(ctx, free.email);
     await watchEvents(page);
     await page.goto(`${BASE}/`);
+    await closeLeaguesWelcome(page);
     const plansLink = page.getByRole("link", { name: "Free plan · See plans" });
     await plansLink.waitFor({ timeout: 30000 });
     record("Free dashboard: 'Free plan · See plans' at the top", true);
@@ -223,6 +227,7 @@ try {
     const errors = [];
     page.on("pageerror", (e) => errors.push(e.message));
     await page.goto(`${BASE}/`);
+    await closeLeaguesWelcome(page);
     const welcome = page.getByRole("heading", { name: "You're Pro now" });
     record("Pro: the welcome moment shows on first open", await welcome.waitFor({ timeout: 30000 }).then(() => true, () => false));
     await page.screenshot({ path: path.join(SHOTS, "pro-welcome-360.png") });

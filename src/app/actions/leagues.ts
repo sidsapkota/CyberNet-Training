@@ -47,7 +47,8 @@ export interface MyLeague {
   week: string;
   timeZone: string;
   /** `handle` is the learner's public username. */
-  player: { handle: string; tier: Tier; showOnLeaderboards: boolean; outfit: string[] };
+  /** `handle` is null until the learner has a username (reading league data never makes one). */
+  player: { handle: string | null; tier: Tier; showOnLeaderboards: boolean; outfit: string[] };
   /** This week's league, ranked; empty until the learner earns XP this week. */
   standings: StandingRow[];
   /** Last week's result, until the learner has seen it. */

@@ -7,15 +7,15 @@
 //
 // Run with a staging dev server up (npm run dev, .env.local on staging with CRON_SECRET), then:
 //   E2E_BROWSER=chrome node scripts/e2e/leagues-rehearsal.mjs
-import fs from "node:fs";
 import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { chromium } from "playwright-core";
 import { prepare } from "./lib/access.mjs";
+import { readEnvEntries } from "./lib/env.mjs";
 
 const APP = path.resolve(import.meta.dirname, "../..");
 const env = Object.fromEntries(
-  fs.readFileSync(path.join(APP, ".env.local"), "utf8").split("\n").filter((l) => /^[A-Z_]+=/.test(l)).map((l) => [l.slice(0, l.indexOf("=")), l.slice(l.indexOf("=") + 1).trim()]),
+  readEnvEntries(APP),
 );
 const PROD_REF = "qyjmowpkdcunkfitbwca";
 const url = env.NEXT_PUBLIC_SUPABASE_URL ?? "";

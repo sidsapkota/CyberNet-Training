@@ -3,16 +3,16 @@
 // skeleton or the page itself), until the page's real content shows, and the server's response time
 // for /account. Medians are printed. Compare deployments with E2E_BASE_URL.
 //   E2E_BASE_URL=https://cybernettraining.com npm run e2e:account-speed
-import fs from "node:fs";
 import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { chromium } from "playwright-core";
+import { readEnvEntries } from "./lib/env.mjs";
 
 // A unique, valid username for the throwaway account (usernames are unique ignoring case).
 const SPEEDY = `Speedy_${Math.random().toString(36).slice(2, 10)}`;
 const APP = path.resolve(import.meta.dirname, "../..");
 const env = Object.fromEntries(
-  fs.readFileSync(path.join(APP, ".env.local"), "utf8").split("\n").filter((l) => /^[A-Z_]+=/.test(l)).map((l) => [l.slice(0, l.indexOf("=")), l.slice(l.indexOf("=") + 1).trim()]),
+  readEnvEntries(APP),
 );
 const admin = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SECRET_KEY, { auth: { persistSession: false, autoRefreshToken: false } });
 const BASE = process.env.E2E_BASE_URL ?? "http://localhost:3000";

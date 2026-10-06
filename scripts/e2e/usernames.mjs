@@ -4,15 +4,15 @@
 // A new account lands on "Pick a username" with a suggestion; Shuffle changes it; a rude name gets
 // the friendly message only; a taken name (any case) says so; a good name saves and carries on;
 // the header shows it; one change in settings, then it's locked for 30 days.
-import fs from "node:fs";
 import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { chromium } from "playwright-core";
 import { prepare } from "./lib/access.mjs";
+import { readEnvEntries } from "./lib/env.mjs";
 
 const APP = path.resolve(import.meta.dirname, "../..");
 const env = Object.fromEntries(
-  fs.readFileSync(path.join(APP, ".env.local"), "utf8").split("\n").filter((l) => /^[A-Z_]+=/.test(l)).map((l) => [l.slice(0, l.indexOf("=")), l.slice(l.indexOf("=") + 1).trim()]),
+  readEnvEntries(APP),
 );
 const admin = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SECRET_KEY, { auth: { persistSession: false, autoRefreshToken: false } });
 const BASE = process.env.E2E_BASE_URL ?? "http://localhost:3000";
@@ -56,6 +56,11 @@ try {
   await page.getByRole("button", { name: "Shuffle" }).click();
   await page.waitForFunction((before) => document.querySelector("input[autocomplete=username]")?.value !== before, suggestion, { timeout: 30000 });
   record("Shuffle gives another suggestion", true);
+  // Pages that read league data (the league settings here, the dashboard's league card) must never
+  // save a username: until the learner picks one, they have none (fixed 6 Oct 2026).
+  const before = (await admin.from("profiles").select("username").eq("id", me.id).single()).data;
+  const leaguesOpen = (await admin.rpc("leagues_open")).data === true;
+  record(`Nothing saves a name before the learner picks one (leagues ${leaguesOpen ? "open" : "closed"})`, before?.username === null, String(before?.username !== null));
 
   await input.fill("sh1t_lord");
   await page.getByRole("button", { name: "Use this" }).click();
@@ -93,6 +98,25 @@ try {
   // A second change straight away is refused on the server too (not only by the disabled field).
   await page.reload();
   record("After a reload it's still locked, with the date", await page.getByLabel("Username", { exact: true }).isDisabled());
+
+  // A name the app generated (league placement, the scan) isn't a pick: the learner is asked to
+  // pick one, and that first pick is free (no 30-day lock).
+  const gen = await makeUser(`Gen_${rand()}`);
+  await admin.from("profiles").update({ username_generated: true }).eq("id", gen.id);
+  const page2 = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+  await page2.route(/\/script\.js$|\/_vercel\/insights\//, (r) => r.abort());
+  await prepare(page2);
+  const link2 = await admin.auth.admin.generateLink({ type: "magiclink", email: gen.email });
+  await page2.goto(`${BASE}/auth/callback?token_hash=${link2.data.properties.hashed_token}&type=magiclink&next=/courses`);
+  await page2.waitForURL((u) => u.pathname === "/account" || u.pathname === "/courses", { timeout: 60000 });
+  record("A learner with a generated name is asked to pick one", new URL(page2.url()).searchParams.get("welcome") === "1", page2.url());
+  const picked = `Mine_${rand()}`;
+  await page2.getByLabel("Pick a username").fill(picked);
+  await page2.getByRole("button", { name: "Use this" }).click();
+  await page2.waitForURL((u) => u.pathname === "/courses", { timeout: 60000 });
+  const genRow = (await admin.from("profiles").select("username, username_changed_at, username_generated").eq("id", gen.id).single()).data;
+  record("Their first pick is free: saved, not generated any more, no lock", genRow?.username === picked && genRow.username_changed_at === null && genRow.username_generated === false, JSON.stringify({ ...genRow, username: genRow?.username === picked }));
+  await page2.close();
 } catch (error) {
   console.error(error);
   results.push({ check: "no errors", ok: false });

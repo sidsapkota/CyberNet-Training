@@ -102,8 +102,8 @@ export function SignInOptions({
     }
     // Signed in, right here: guest progress in this browser merges as usual (AuthProvider). Then go
     // where a link would have gone: new accounts pick a name first.
-    const { data: profile } = await client.from("profiles").select("username").eq("id", data.user.id).maybeSingle();
-    window.location.assign(afterSignInPath(takeNextPath(), Boolean(profile?.username)));
+    const { data: profile } = await client.from("profiles").select("username, username_generated").eq("id", data.user.id).maybeSingle();
+    window.location.assign(afterSignInPath(takeNextPath(), Boolean(profile?.username) && !profile?.username_generated));
   }
 
   async function google() {

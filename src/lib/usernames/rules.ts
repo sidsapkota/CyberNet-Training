@@ -14,3 +14,12 @@ export function nextUsernameChange(changedAt: string | null, now: Date): Date | 
 }
 
 export const canChangeUsername = (changedAt: string | null, now: Date): boolean => nextUsernameChange(changedAt, now) === null;
+
+/**
+ * Whether saving a new name counts as a change (which starts the 30-day lock). Picking the first
+ * one doesn't, and neither does replacing a name the app generated (league placement, the safety
+ * scan, after reports): a generated name is "not picked yet".
+ */
+export function isUsernameChange(current: string | null, generated: boolean): boolean {
+  return current !== null && !generated;
+}
