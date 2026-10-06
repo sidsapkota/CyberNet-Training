@@ -85,11 +85,13 @@ try {
   record("The header shows the username", true);
 
   await page.goto(`${BASE}/account`);
-  // While /account streams in, the server copy and the browser copy of the form can overlap for a
-  // moment: wait for exactly one field (a lasting duplicate still fails).
-  const oneField = () => page.waitForFunction(() => document.querySelectorAll("input[autocomplete=username]").length === 1, null, { timeout: 15000 });
+  // While /account streams in, React keeps the server's copy in a hidden container (div[hidden])
+  // until it swaps it in, so only the visible field counts (two visible fields still fail).
+  const visibleFields = "input[autocomplete=username]:visible";
+  const oneField = () =>
+    page.waitForFunction(() => [...document.querySelectorAll("input[autocomplete=username]")].filter((i) => i.offsetParent !== null).length === 1, null, { timeout: 15000 });
   await oneField();
-  const field = page.getByLabel("Username", { exact: true });
+  const field = page.locator(visibleFields);
   record("Account settings show the username", (await field.inputValue()) === fresh);
   await field.fill(changed);
   await page.getByRole("button", { name: "Save" }).click();
@@ -102,7 +104,7 @@ try {
   // A second change straight away is refused on the server too (not only by the disabled field).
   await page.reload();
   await oneField();
-  record("After a reload it's still locked, with the date", await page.getByLabel("Username", { exact: true }).isDisabled());
+  record("After a reload it's still locked, with the date", await page.locator(visibleFields).isDisabled());
 
   // A name the app generated (league placement, the scan) isn't a pick: the learner is asked to
   // pick one, and that first pick is free (no 30-day lock).
