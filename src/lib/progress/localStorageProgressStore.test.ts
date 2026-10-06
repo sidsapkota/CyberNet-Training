@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { countsForLeague } from "./daily";
 import { LocalStorageProgressStore, PROGRESS_STORAGE_KEY } from "./localStorageProgressStore";
 import { MemoryStorage } from "./memoryStorage";
 import { cardKey, defaultPreferences, emptySnapshot, type QuizAttempt } from "./types";
@@ -93,7 +94,7 @@ describe("LocalStorageProgressStore", () => {
     expect(snapshot.totalXp).toBe(10);
   });
 
-  it("resets all progress but keeps the streak and settings", async () => {
+  it("resets all progress and its XP, but keeps the streak (met days) and settings", async () => {
     await store.setPreferences({ dailyGoal: 20 });
     await store.completeCard("l1", "c1", 10);
     await store.completeCard("l1", "c2", 10);
@@ -105,9 +106,44 @@ describe("LocalStorageProgressStore", () => {
       quizzes: {},
       totalXp: 0,
     });
-    expect(after.xpEvents).toHaveLength(2);
+    expect(after.xpEvents).toHaveLength(0);
     expect(Object.keys(after.goalDays)).toHaveLength(1);
     expect(after.preferences.dailyGoal).toBe(20);
+  });
+
+  describe("league XP can't be farmed (reset and replay)", () => {
+    // Weekly league XP is the ledger's non-practice XP; it must never exceed total XP.
+    const leagueXp = (snap: Awaited<ReturnType<typeof store.getSnapshot>>) => snap.xpEvents.filter(countsForLeague).reduce((sum, e) => sum + e.xp, 0);
+
+    it("resetting everything, then replaying, pays the XP once, not twice", async () => {
+      for (let round = 0; round < 3; round++) {
+        await store.completeCard("l1", "c1", 10);
+        await store.completeCard("l1", "c2", 10);
+        const snap = await store.getSnapshot();
+        expect(leagueXp(snap)).toBeLessThanOrEqual(snap.totalXp);
+        await store.resetAll();
+      }
+      await store.completeCard("l1", "c1", 10);
+      const snap = await store.getSnapshot();
+      expect(snap.totalXp).toBe(10);
+      expect(leagueXp(snap)).toBe(10);
+    });
+
+    it("resetting one lesson clears only that lesson's XP", async () => {
+      await store.completeCard("l1", "c1", 10);
+      await store.completeCard("l2", "c1", 10);
+      await store.resetLesson("l1");
+      await store.completeCard("l1", "c1", 10);
+      const snap = await store.getSnapshot();
+      expect(snap.totalXp).toBe(20);
+      expect(leagueXp(snap)).toBe(20);
+      expect(snap.xpEvents.filter((e) => e.lessonId === "l2")).toHaveLength(1);
+    });
+
+    it("practice never counts toward a league", () => {
+      expect(countsForLeague({ kind: "practice" })).toBe(false);
+      for (const kind of ["card", "lesson", "quiz"] as const) expect(countsForLeague({ kind })).toBe(true);
+    });
   });
 
   it("notifies subscribers and stops after unsubscribe", async () => {

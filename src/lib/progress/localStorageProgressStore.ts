@@ -1,4 +1,4 @@
-import { addXpEvent, browserTimeZone, checkGoal, currentDay, type XpInput } from "./daily";
+import { addXpEvent, browserTimeZone, checkGoal, currentDay, eventsAfterReset, type XpInput } from "./daily";
 import type { ProgressStore } from "./ProgressStore";
 import {
   cardKey,
@@ -141,13 +141,13 @@ export class LocalStorageProgressStore implements ProgressStore {
     const quizzes = { ...current.quizzes };
     delete lessons[lessonId];
     delete quizzes[lessonId];
-    this.write({ ...current, cards, lessons, quizzes });
+    this.write({ ...current, cards, lessons, quizzes, xpEvents: eventsAfterReset(current.xpEvents, lessonId) });
   }
 
-  /** Clears all progress. Settings (Path or Explore, the daily goal) and the streak are kept. */
+  /** Clears all progress and its XP. Settings (Path or Explore, the daily goal) and the streak (met days) are kept. */
   async resetAll(): Promise<void> {
-    const { preferences, xpEvents, goalDays } = this.read();
-    this.write({ ...emptySnapshot(), preferences, xpEvents, goalDays });
+    const { preferences, goalDays } = this.read();
+    this.write({ ...emptySnapshot(), preferences, xpEvents: eventsAfterReset([]), goalDays });
   }
 
   /**

@@ -10,7 +10,7 @@ import {
   type XpWrite,
 } from "@/app/actions/progress";
 import type { Database } from "@/lib/supabase/database.types";
-import { addDays, addXpEvent, browserTimeZone, checkGoal, currentDay, localDay, type XpInput } from "./daily";
+import { addDays, addXpEvent, browserTimeZone, checkGoal, currentDay, eventsAfterReset, localDay, type XpInput } from "./daily";
 import { quizProgressFrom } from "./merge";
 import type { ProgressStore } from "./ProgressStore";
 import { GOAL_DAY_COLUMNS, rowsToSnapshot, XP_EVENT_COLUMNS } from "./rows";
@@ -223,14 +223,14 @@ export class SupabaseProgressStore implements ProgressStore {
     const quizzes = { ...current.quizzes };
     delete lessons[lessonId];
     delete quizzes[lessonId];
-    this.set({ ...current, cards, lessons, quizzes });
+    this.set({ ...current, cards, lessons, quizzes, xpEvents: eventsAfterReset(current.xpEvents, lessonId) });
     await this.write(() => resetLessonAction(lessonId));
   }
 
-  /** Clears lessons and XP. Settings and the streak (the XP ledger and met days) are kept. */
+  /** Clears lessons and their XP events. Settings and the streak (met days) are kept. */
   async resetAll(): Promise<void> {
-    const { preferences, xpEvents, goalDays } = await this.getSnapshot();
-    this.set({ cards: {}, lessons: {}, quizzes: {}, preferences, xpEvents, goalDays });
+    const { preferences, goalDays } = await this.getSnapshot();
+    this.set({ cards: {}, lessons: {}, quizzes: {}, preferences, xpEvents: eventsAfterReset([]), goalDays });
     await this.write(() => resetAllAction());
   }
 

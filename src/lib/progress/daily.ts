@@ -157,6 +157,23 @@ export function dayXp(events: readonly XpEvent[], day: string): number {
   return total;
 }
 
+/**
+ * League XP: every XP event except practice (replays pay toward today's goal only, never total XP,
+ * so they never count toward a league either). Keeps weekly league XP within total XP.
+ */
+export function countsForLeague(e: Pick<XpEvent, "kind">): boolean {
+  return e.kind !== "practice";
+}
+
+/**
+ * The XP events that survive a reset. Resetting clears the XP earned by what was reset (all of it,
+ * or one lesson's), so replaying it can't pay first-time XP twice into the same week. Met days
+ * (goal_days) are separate and always kept, so the streak survives.
+ */
+export function eventsAfterReset(events: readonly XpEvent[], lessonId?: string): XpEvent[] {
+  return lessonId === undefined ? [] : events.filter((e) => e.lessonId !== lessonId);
+}
+
 export function practicedOn(events: readonly XpEvent[], day: string, lessonId: string, cardId: string): boolean {
   return events.some((e) => e.kind === "practice" && e.day === day && e.lessonId === lessonId && e.cardId === cardId);
 }

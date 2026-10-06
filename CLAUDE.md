@@ -57,6 +57,8 @@ npm run e2e:dashboard-numbers # cards done, no lesson finished: header XP, Activ
                           # (throwaway account; secret key, so a local production build or production)
 npm run e2e:player-flow   # before/after screenshots: a hotspot card and the wrong-answer flow (SHOTS_TAG=)
 npm run e2e:founder       # Founding Member: /pro, paywall, dashboard line, badge, refund, events (360x560 + desktop)
+npm run e2e:league-xp     # league XP can't be farmed: reset-and-replay, practice left out, weekly <= total
+                          # (STAGING ONLY, refuses production; dev server running)
 npm run e2e:leagues       # Leagues moments at 360x560: first-open celebration, live rank rise (no reload),
                           # promoted/demoted/stayed results, lesson-complete rank moment. Seeds + cleans a
                           # throwaway league; STAGING ONLY (refuses production), needs the secret key
@@ -587,8 +589,10 @@ interactive, update `isInteractiveCard` / `InteractiveCard` in `schema.ts`.
   quiz-complete screen; "Daily goal reached" on those screens (`DailyGoalSummary`).
 - **Guests** keep the ledger in local progress (at most 5,000 events). **Signed in**, Server
   Actions record everything (next section); the browser only sends its time zone.
-- **Resets keep the streak:** "Reset progress" clears lessons and XP but keeps the ledger, met days
-  and settings.
+- **Resets keep the streak, not the XP:** "Reset progress" clears lessons, XP and the XP events
+  (`eventsAfterReset`; resetting one lesson clears that lesson's events), but keeps met days
+  (`goal_days`, which the streak reads) and settings. Clearing the events stops reset-and-replay
+  from paying first-time XP twice into a league week.
 
 ### Pages
 Pages with the site header live in the `src/app/(main)/` route group: a top bar (logo, Dashboard,
@@ -1255,7 +1259,9 @@ number is in `src/lib/leagues/config.ts`.
 
 - **The week:** Monday 00:00 **Australia/Sydney** to the next Monday (`leagueWeek`, and the
   database's `league_week()`; daylight saving tested). Weekly XP is every `xp_events` row in that
-  window (card, lesson, quiz and practice), summed on the server; never from the client. The page
+  window **except practice** (card, lesson and quiz; `countsForLeague`), summed on the server
+  (`weeklyXp` in `server.ts` and `league_standings()`, the same rule); never from the client. So
+  weekly league XP never exceeds total XP; `npm run e2e:league-xp` proves it on staging. The page
   shows the reset in the learner's own time zone too.
 - **Joining:** a signed-in learner's first XP of the week puts them in a league (`onXpEarned`, run
   with `after()` from `recordXp`, never blocking the XP). Their player row (tier Packet, shown on

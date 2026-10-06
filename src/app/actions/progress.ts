@@ -355,12 +355,15 @@ export async function resetLessonAction(lessonId: string): Promise<void> {
     admin.from("lesson_completions").delete().match({ user_id: userId, lesson_id: id }),
     admin.from("quiz_attempts").delete().match({ user_id: userId, quiz_id: id }),
     admin.from("card_mistakes").delete().match({ user_id: userId, lesson_id: id }),
+    // Its XP goes too, so replaying it can't pay first-time XP twice into a week (eventsAfterReset).
+    // Met days (goal_days) stay, so the streak survives.
+    admin.from("xp_events").delete().match({ user_id: userId, lesson_id: id }),
   ]);
   const error = results.find((r) => r.error)?.error;
   if (error) fail("Couldn't reset the lesson", error);
 }
 
-/** Clears all progress. The account and its settings stay. */
+/** Clears all progress and its XP events. The account, its settings and the streak (met days) stay. */
 export async function resetAllAction(): Promise<void> {
   const userId = await requireUserId();
   const admin = createSupabaseAdminClient();
@@ -369,6 +372,7 @@ export async function resetAllAction(): Promise<void> {
     admin.from("lesson_completions").delete().eq("user_id", userId),
     admin.from("quiz_attempts").delete().eq("user_id", userId),
     admin.from("card_mistakes").delete().eq("user_id", userId),
+    admin.from("xp_events").delete().eq("user_id", userId),
   ]);
   const error = results.find((r) => r.error)?.error;
   if (error) fail("Couldn't reset progress", error);

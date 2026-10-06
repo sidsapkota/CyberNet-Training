@@ -54,7 +54,7 @@ async function usernames(admin: Admin, userIds: string[]): Promise<Map<string, s
   return new Map((data ?? []).map((r) => [r.id, r.username ?? ""]));
 }
 
-/** Weekly XP per user over a time window, with each user's last XP time (for ties). */
+/** Weekly league XP per user over a time window (no practice: countsForLeague), with each user's last XP time (for ties). */
 async function weeklyXp(admin: Admin, userIds: string[], starts: number, ends: number): Promise<Map<string, { xp: number; lastAt: number | null }>> {
   const out = new Map(userIds.map((id) => [id, { xp: 0, lastAt: null as number | null }]));
   if (userIds.length === 0) return out;
@@ -62,6 +62,7 @@ async function weeklyXp(admin: Admin, userIds: string[], starts: number, ends: n
     .from("xp_events")
     .select("user_id, xp, at")
     .in("user_id", userIds)
+    .neq("kind", "practice") // the same rule as countsForLeague and league_standings()
     .gte("at", new Date(starts).toISOString())
     .lt("at", new Date(ends).toISOString());
   fail("Couldn't read weekly XP", error);

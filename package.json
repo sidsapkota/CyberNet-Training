@@ -42,7 +42,8 @@
     "e2e:prod-mascot": "node scripts/e2e/prod-mascot.mjs",
     "e2e:founder": "node scripts/e2e/founder.mjs",
     "e2e:leagues": "node scripts/e2e/leagues.mjs",
-    "e2e:leagues-rehearsal": "node scripts/e2e/leagues-rehearsal.mjs"
+    "e2e:leagues-rehearsal": "node scripts/e2e/leagues-rehearsal.mjs",
+    "e2e:league-xp": "node scripts/e2e/league-xp.mjs"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
