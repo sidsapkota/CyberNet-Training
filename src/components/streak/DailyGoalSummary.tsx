@@ -1,6 +1,8 @@
 "use client";
 
+import { motion } from "motion/react";
 import { useState } from "react";
+import { CountUp } from "@/components/ui/CountUp";
 import { Button } from "@/components/ui/Button";
 import { ProgressRing } from "@/components/ui/ProgressRing";
 import { dailyGoalLabel } from "@/lib/progress/daily";
@@ -32,11 +34,23 @@ export function DailyGoalSummary({ goalMetNow, freezeEarned }: { goalMetNow: boo
     <div className="mx-auto mt-6 max-w-sm text-left">
       {goalMetNow ? (
         <div role="status" className="flex items-center gap-3 rounded-card border border-accent-ink bg-accent-soft p-4">
-          <StreakIcon lit className="size-8 shrink-0 text-accent-ink" />
+          {/* The streak grows on screen: the chain pops bigger and the count ticks up by one. */}
+          <motion.span
+            className="shrink-0 text-accent-ink"
+            initial={{ scale: 0.6 }}
+            animate={{ scale: [0.6, 1.25, 1] }}
+            transition={{ delay: 1, duration: 0.6, ease: "easeOut" }}
+          >
+            <StreakIcon lit className="size-8" />
+          </motion.span>
           <div>
             <p className="font-semibold">Daily goal reached</p>
             <p className="text-small text-ink-muted">
-              {streakLabel(streak.current)}
+              <span className="sr-only">{streakLabel(streak.current)}</span>
+              <span aria-hidden="true">
+                <CountUp from={Math.max(streak.current - 1, 0)} value={streak.current} delay={1.1} className="font-mono tabular-nums" />
+                -day streak
+              </span>
               {freezeEarned && ". You earned a streak freeze"}
             </p>
           </div>

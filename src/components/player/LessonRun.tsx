@@ -9,6 +9,7 @@ import type { CardStatus } from "@/cards/types";
 import { LessonTimeIcon } from "@/components/ui/icons";
 import { formatChecked } from "@/lib/content/lastChecked";
 import type { CourseOutline, RegularLesson } from "@/lib/content/schema";
+import { comboLabel, comboPitch, COMBO_FROM, nextCombo } from "@/lib/combo";
 import { useFeedback } from "@/lib/feedback";
 import { useCardNavigationKeys, useGlobalKeyDown } from "@/lib/keyboard";
 import { useProgress } from "@/lib/progress/ProgressProvider";
@@ -97,6 +98,8 @@ export function LessonRun({
   const [announcement, setAnnouncement] = useState("");
   const { scope, playIncorrect } = useFeedbackAnimation();
   const feedback = useFeedback();
+  /** Right first time, in a row, this visit ("3 in a row!"), and the best this visit. */
+  const [combo, setCombo] = useState({ now: 0, best: 0 });
 
   // Daily goal and streak: compared with how they stood when the lesson opened, to catch the
   // moment the goal is met (a chime and a note) and a streak milestone (a screen at the end).
@@ -196,6 +199,8 @@ export function LessonRun({
 
     const attempts = run.attempts + 1;
     const { correct } = definition.grade(card, run.answer);
+    const streak = nextCombo(combo.now, correct, attempts);
+    setCombo({ now: streak, best: Math.max(combo.best, streak) });
     if (correct) {
       const xp = cardXpToAward(isDone(card), card.difficulty, attempts, run.hintUsed);
       const practice = practiceFor(card);
@@ -204,7 +209,10 @@ export function LessonRun({
       markComplete(card, xp, practice);
       setPulse((current) => ({ key: (current?.key ?? 0) + 1, from: index - 1, to: index }));
       feedback.play("correct");
-      feedback.haptic("success");
+      if (streak >= COMBO_FROM && streak > combo.now) {
+        feedback.play("combo", comboPitch(streak));
+        feedback.haptic("combo");
+      } else feedback.haptic("success");
     } else {
       setRun({ ...run, status: "incorrect", attempts });
       // Mistake review: the first wrong try on this card in this visit (the server re-grades it).
@@ -345,6 +353,7 @@ export function LessonRun({
           alreadyCompleted={result.alreadyCompleted}
           challengesCompleted={result.challengesCompleted}
           challengesTotal={lesson.cards.filter((c) => c.difficulty === "challenge").length}
+          bestCombo={combo.best}
           next={next}
           previous={moduleNeighbours(course, lesson.id).previous}
           lessonId={lesson.id}
@@ -430,6 +439,7 @@ export function LessonRun({
           xpAwarded={run.xpAwarded}
           practiceXp={run.practiceAwarded}
           goalNote={goalNoteAt === index && run.status === "correct" ? "Daily goal reached" : undefined}
+          combo={run.status === "correct" && run.attempts === 1 ? comboLabel(combo.now) : null}
           explanation={isInteractiveCard(card) && run.status !== "answering" ? card.explanation : undefined}
           collapseExplanation={run.status === "incorrect"}
           primary={primary}
