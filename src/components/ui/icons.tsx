@@ -1,4 +1,5 @@
 import {
+  Flame,
   ArrowRight,
   Award,
   Infinity as InfinityLucide,
@@ -155,6 +156,8 @@ export const XIcon = brandIcon(X, "XIcon");
 export const LockIcon = brandIcon(Lock, "LockIcon");
 export const PlayIcon = brandIcon(Play, "PlayIcon");
 export const XpIcon = brandIcon(Zap, "XpIcon");
+/** The lesson combo ("3 in a row!") only: streaks keep the node chain (StreakIcon). */
+export const ComboIcon = brandIcon(Flame, "ComboIcon");
 export const ChallengeIcon = brandIcon(Diamond, "ChallengeIcon");
 export const GripIcon = brandIcon(GripVertical, "GripIcon");
 export const ChevronDownIcon = brandIcon(ChevronDown, "ChevronDownIcon");

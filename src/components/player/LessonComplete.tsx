@@ -11,7 +11,8 @@ import { DailyGoalSummary } from "@/components/streak/DailyGoalSummary";
 import { Mascot } from "@/components/mascot/Mascot";
 import { ButtonLink, buttonClasses } from "@/components/ui/Button";
 import { CountUp } from "@/components/ui/CountUp";
-import { ArrowRightIcon, BackIcon, ChallengeIcon, FeedbackIcon, LessonIcon, XpIcon } from "@/components/ui/icons";
+import { ArrowRightIcon, BackIcon, ChallengeIcon, ComboIcon, FeedbackIcon, LessonIcon, XpIcon } from "@/components/ui/icons";
+import { COMBO_FROM } from "@/lib/combo";
 import { NetworkMark } from "@/components/network/NetworkMark";
 import type { LessonIconName } from "@/lib/content/lessonIcons";
 import type { LessonOutline } from "@/lib/content/schema";
@@ -36,7 +37,10 @@ export function LessonComplete({
   lessonId,
   goalMetNow = false,
   freezeEarned = false,
+  bestCombo = 0,
 }: {
+  /** The longest run of right-first-time answers this visit (shown from 3). */
+  bestCombo?: number;
   /** This lesson met today's daily goal. */
   goalMetNow?: boolean;
   /** Meeting it earned a streak freeze. */
@@ -107,6 +111,12 @@ export function LessonComplete({
             <p className="mt-1 text-small text-ink-muted">Challenges</p>
           </div>
         </div>
+
+        {bestCombo >= COMBO_FROM && (
+          <p className="mx-auto mt-4 flex w-fit items-center gap-1.5 text-small font-semibold text-warning">
+            <ComboIcon className="size-4" /> Best combo: {bestCombo} in a row
+          </p>
+        )}
 
         {alreadyCompleted && (
           <p className="mx-auto mt-4 max-w-sm text-small text-ink-muted">
