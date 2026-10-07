@@ -14,7 +14,7 @@
 export function layoutProblems(rootSelector) {
   const root = (rootSelector && document.querySelector(rootSelector)) || document.body;
   const out = [];
-  const name = (el) => (el.getAttribute("aria-label") || el.textContent || el.tagName).replace(/\s+/g, " ").trim().slice(0, 40);
+  const name = (el) => (el.getAttribute("aria-label") || el.labels?.[0]?.textContent || el.textContent || el.tagName).replace(/\s+/g, " ").trim().slice(0, 40);
   const visible = (el) => {
     const r = el.getBoundingClientRect();
     const s = getComputedStyle(el);
@@ -46,8 +46,17 @@ export function layoutProblems(rootSelector) {
     if (spills) out.push({ kind: "spill", what: name(el) });
   }
 
-  // Overlap: two controls whose boxes intersect, neither inside the other.
+  // Overlap: two controls whose boxes intersect, neither inside the other. Bars that stay put while
+  // the page scrolls under them (the header, the phone tab bar, the player footer) don't count.
+  const pinned = (el) => {
+    for (let n = el; n; n = n.parentElement) {
+      const p = getComputedStyle(n).position;
+      if (p === "fixed" || p === "sticky") return true;
+    }
+    return false;
+  };
   const boxes = controls
+    .filter((el) => !pinned(el))
     .filter((el) => getComputedStyle(el).position !== "absolute" || el.closest("[data-card-stage]") === null)
     // Each line box (an inline link that wraps has one per line; its bounding box would span both).
     .map((el) => ({ el, rects: [...el.getClientRects()].filter((r) => r.width > 1 && r.height > 1) }));
@@ -72,8 +81,11 @@ export function layoutProblems(rootSelector) {
   }
 
   // Duplicate: the same control name twice among the visible controls of one group.
+  // Navigation (the header, the tab bar, the footer) repeats page links on purpose.
   const groups = new Map();
   for (const el of controls) {
+    if (el.closest("header, nav, footer, [role=navigation]")) continue;
+    if (el.matches("a[href]")) continue;
     const group = el.closest("[role=radiogroup], [role=group], section, form, [data-card-stage]") ?? root;
     const key = name(el);
     if (!key) continue;

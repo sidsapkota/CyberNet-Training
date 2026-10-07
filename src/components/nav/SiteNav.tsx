@@ -65,8 +65,8 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-30 border-b border-line bg-canvas">
       <div className="mx-auto flex h-16 max-w-wide items-center gap-2 px-gutter sm:gap-6">
-        <Link href="/" aria-label="CyberNet Training, dashboard" className="inline-flex min-h-11 min-w-11 items-center rounded-control">
-          <LogoLockup />
+        <Link href="/" aria-label="CyberNet Training, dashboard" className="inline-flex min-h-11 min-w-11 shrink-0 items-center rounded-control">
+          <LogoLockup tileOnTablets />
         </Link>
         <nav aria-label="Main" className="hidden h-full items-stretch gap-1 sm:flex">
           {nav.map((item) => {
@@ -135,8 +135,8 @@ function HeaderAccount() {
       <Pending>
         <UserNode outfit={auth.outfit} pro={hasPro} size={32} />
       </Pending>
-      <span className="hidden max-w-32 truncate md:inline">{name}</span>
-      {hasPro && <ProBadge size="sm" lit className="hidden md:inline-flex" />}
+      <span className="hidden whitespace-nowrap lg:inline">{name}</span>
+      {hasPro && <ProBadge size="sm" lit className="hidden lg:inline-flex" />}
     </Link>
   );
 }

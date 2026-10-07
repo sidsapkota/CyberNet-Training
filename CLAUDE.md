@@ -58,6 +58,12 @@ npm run e2e:fit-audit     # every card at phone (360x640, 360x560, 390x844), tab
                           # (COURSE=<id>, LESSONS=<id,id>, SIZES=560,1440, PARALLEL=3; E2E_SHARE_URL for a preview)
 npm run e2e:combo         # the lesson combo ("3 in a row!"), its reset on a miss, and "Best combo" at lesson complete
                           # (guest, 360x560 + desktop; dev server running)
+npm run e2e:visual-qa:gate # MERGE GATE: every page (guest + signed in, light + dark) and every card at 360x560,
+                          # 768x1024 and 1440x900: overlap, cut-off text, spill, doubled controls, sideways scroll,
+                          # broken images, console errors, 404 links. STAGING ONLY (throwaway learner; opens and
+                          # restores leagues). Fails on any problem
+npm run e2e:visual-qa     # the full sweep: all 6 sizes, plus contact sheets in docs/plans/visual-qa/ (PAGES_ONLY=,
+                          # CARDS_ONLY=, COURSE=, SIZES=, THEMES=, SHEETS=0)
 npm run e2e:dashboard-numbers # cards done, no lesson finished: header XP, Activity XP bars and rings
                           # (throwaway account; secret key, so a local production build or production)
 npm run e2e:player-flow   # before/after screenshots: a hotspot card and the wrong-answer flow (SHOTS_TAG=)
@@ -79,7 +85,10 @@ items on one row, and the tray is two columns. On short screens (max-height 620p
 in-app browser) a card's question steps down from 20px to body size, and terminal output boxes get
 shorter (24dvh up to 700px tall); the output scrolls inside its box.
 
-All of `build`, `lint`, `test` and `typecheck` must pass with zero errors and warnings.
+All of `build`, `lint`, `test` and `typecheck` must pass with zero errors and warnings, and
+**`npm run e2e:visual-qa:gate` must pass before every merge** (phone, tablet and desktop; any overlap,
+truncation or overflow fails it). Layout checks live in `scripts/e2e/lib/layout.mjs`, shared with the
+fit audit; mark a deliberate exception `data-layout-ok`, never loosen the check.
 
 ## Stack
 
@@ -1592,8 +1601,8 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
 - New screens should use the network motif for loading, empty, success and locked states.
 
 ### Copy rules (dashboard, catalog, course path and any new page)
-- **Cut text.** Headings are at most about 4 words. Any description is one line at most (truncate
-  rather than wrap). No paragraphs of explanation on navigation pages.
+- **Cut text.** Headings are at most about 4 words. Any description is one short line; write it
+  shorter rather than cutting it off with an ellipsis (the visual QA gate fails on truncated text). No paragraphs of explanation on navigation pages.
 - **State is visual.** Show done, current, available and locked with shape, colour *and* icon, not
   repeated labels like "Locked" on every row. The screen-reader label carries the words.
 - **No metadata clutter.** Card counts, "x/y done" and similar belong in a popover or side panel,

@@ -159,7 +159,7 @@ function ContinueHero({ state }: { state: CourseState }) {
           <h2 id="continue-title" className="mt-2 text-headline leading-tight font-semibold text-balance">
             {current ? current.lesson.title : course.title}
           </h2>
-          <p className="mt-1 truncate text-small text-ink-muted">
+          <p className="mt-1 text-small text-ink-muted">
             {current
               ? `${course.title} · Module ${moduleNumber} · about ${estimateMinutes(current.lesson)} min`
               : restIsPro
@@ -287,7 +287,7 @@ function CourseRings({ states }: { states: CourseState[] }) {
                 <span className="font-mono text-small font-semibold tabular-nums">{percent}%</span>
               </ProgressRing>
               <div className="min-w-0">
-                <p className="truncate font-semibold">{state.course.title}</p>
+                <p className="font-semibold">{state.course.title}</p>
                 <p className="font-mono text-caption text-ink-faint">
                   {progressCounts(progress)}
                 </p>

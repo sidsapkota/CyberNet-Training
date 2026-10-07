@@ -68,8 +68,8 @@ export function AccountPanel({
       <div className="flex items-center gap-4">
         <Avatar outfit={auth.status === "signed-in" ? auth.outfit : null} pro={hasPro} size={56} />
         <div className="min-w-0">
-          <h1 className="truncate text-headline font-semibold">{saved ?? "Your account"}</h1>
-          {email && <p className="truncate text-small text-ink-muted">{email}</p>}
+          <h1 className="text-headline font-semibold [overflow-wrap:anywhere]">{saved ?? "Your account"}</h1>
+          {email && <p className="text-small text-ink-muted [overflow-wrap:anywhere]">{email}</p>}
         </div>
       </div>
 
