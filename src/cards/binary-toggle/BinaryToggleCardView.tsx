@@ -5,6 +5,7 @@ import { CheckIcon } from "@/components/ui/icons";
 import { digitKeyIndex, useGlobalKeyDown } from "@/lib/keyboard";
 import { CardPrompt } from "../CardPrompt";
 import { CardStatusNote } from "../CardStatusNote";
+import { WorkedSteps } from "../shared/WorkedSteps";
 import type { CardComponentProps, CardStatus } from "../types";
 import { BIT_COUNT, bitsToDecimal, PLACE_VALUES } from "./binary";
 import type { BinaryToggleAnswer, BinaryToggleCard } from "./schema";
@@ -25,9 +26,11 @@ export function BinaryToggleCardView({
   const total = bitsToDecimal(answer);
   const onValues = PLACE_VALUES.filter((_, i) => answer[i]);
   const matches = total === card.target;
+  /** A worked example's bits, already done: shown on and fixed. */
+  const fixed = (i: number) => (card.worked?.locked ?? []).includes(PLACE_VALUES[i] ?? -1);
 
   function toggle(index: number) {
-    if (locked) return;
+    if (locked || fixed(index)) return;
     onAnswerChange(answer.map((on, i) => (i === index ? !on : on)));
   }
 
@@ -42,6 +45,7 @@ export function BinaryToggleCardView({
   return (
     <div>
       <CardPrompt>{card.prompt}</CardPrompt>
+      {card.worked && <WorkedSteps steps={card.worked.steps} />}
 
       <div className="mt-3 grid grid-cols-2 gap-2 sm:mt-8 sm:gap-2.5">
         <div className="rounded-card border border-line bg-surface px-3 py-1.5 sm:px-4 sm:py-3">
@@ -93,8 +97,8 @@ export function BinaryToggleCardView({
               <motion.button
                 type="button"
                 aria-pressed={on}
-                aria-label={`${place}s bit, ${on ? "on" : "off"}`}
-                disabled={locked}
+                aria-label={`${place}s bit, ${on ? "on" : "off"}${fixed(i) ? ", already done" : ""}`}
+                disabled={locked || fixed(i)}
                 onClick={() => toggle(i)}
                 whileTap={locked ? undefined : { scale: 0.92 }}
                 className={`grid h-12 w-full place-items-center rounded-control border-2 font-mono text-title font-semibold transition-[background-color,border-color,box-shadow] duration-150 disabled:cursor-default sm:h-16 sm:text-headline ${

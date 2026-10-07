@@ -8,7 +8,7 @@
  * silent no-op. Whether sound is on at all is a learner preference, checked by `useFeedback()`.
  */
 
-export type SoundName = "correct" | "wrong" | "complete" | "lessonComplete" | "goal" | "remove" | "snap";
+export type SoundName = "correct" | "wrong" | "complete" | "lessonComplete" | "goal" | "remove" | "snap" | "combo";
 
 interface Note {
   /** Hz; `to` glides the pitch over the note. */
@@ -46,6 +46,9 @@ export const SOUNDS: Record<SoundName, Note[]> = {
     { freq: 520, at: 0.03, dur: 0.06, wave: "triangle", gain: 0.25 },
   ],
   snap: [{ freq: 880, to: 1320, at: 0, dur: 0.07, gain: 0.4 }],
+  // A combo (3+ right first time in a row): one bright note just after "correct", raised a little
+  // more each step (see comboPitch in src/lib/combo.ts).
+  combo: [{ freq: 1318.51, at: 0.17, dur: 0.12, gain: 0.32 }],
 };
 
 const MASTER_VOLUME = 0.18;
@@ -78,7 +81,8 @@ export function audioUnlocked(): boolean {
   return unlocked && context !== null;
 }
 
-export function playSound(name: SoundName): void {
+/** `pitch` multiplies every note's frequency (1 = as written). */
+export function playSound(name: SoundName, pitch = 1): void {
   if (!unlocked || !context) return;
   const ctx = context;
   const start = ctx.currentTime + 0.005;
@@ -88,8 +92,8 @@ export function playSound(name: SoundName): void {
     osc.type = note.wave ?? "sine";
     const t0 = start + note.at;
     const t1 = t0 + note.dur;
-    osc.frequency.setValueAtTime(note.freq, t0);
-    if (note.to) osc.frequency.exponentialRampToValueAtTime(note.to, t1);
+    osc.frequency.setValueAtTime(note.freq * pitch, t0);
+    if (note.to) osc.frequency.exponentialRampToValueAtTime(note.to * pitch, t1);
     const peak = (note.gain ?? 0.4) * MASTER_VOLUME;
     gain.gain.setValueAtTime(0.0001, t0);
     gain.gain.exponentialRampToValueAtTime(peak, t0 + 0.008);
@@ -100,11 +104,12 @@ export function playSound(name: SoundName): void {
   }
 }
 
-export type HapticKind = "tap" | "success" | "error";
+export type HapticKind = "tap" | "success" | "error" | "combo";
 export const HAPTICS: Record<HapticKind, number | number[]> = {
   tap: 10,
   success: 12,
   error: [20, 40, 20],
+  combo: [12, 50, 12],
 };
 
 /** Light vibration where supported (Android browsers; iOS Safari ignores it). */

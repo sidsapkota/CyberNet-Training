@@ -17,6 +17,12 @@ export interface ProgressStore {
    */
   completeCard(lessonId: string, cardId: string, xp: number, practiceXp?: number): Promise<void>;
 
+  /**
+   * A Feed byte answered right (see src/lib/feed/). `xp` is the caller's estimate after the daily
+   * cap; signed in, the server re-grades `answer` and decides. Once per byte, ever.
+   */
+  completeByte(byteId: string, answer: unknown, xp: number): Promise<void>;
+
   /** Idempotent: completing an already-completed lesson is a no-op (no extra XP). */
   completeLesson(lessonId: string, xp: number): Promise<void>;
 

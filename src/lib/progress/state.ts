@@ -1,4 +1,5 @@
 import type { Card } from "@/cards/schema";
+import { requiredForLesson } from "@/cards/pace";
 import type { CourseOutline, LessonOutline, ModuleOutline } from "@/lib/content/schema";
 import { isCardCompleted, type LearningMode, type ProgressSnapshot } from "./types";
 
@@ -293,15 +294,15 @@ export function getBlockingLesson(
 export function resumeIndex(
   snapshot: ProgressSnapshot,
   lessonId: string,
-  cards: readonly Pick<Card, "id" | "difficulty">[],
+  cards: readonly Pick<Card, "id" | "difficulty" | "pace">[],
 ): number {
   if (snapshot.lessons[lessonId]) return 0;
   const incomplete = (c: Pick<Card, "id">) => !isCardCompleted(snapshot, lessonId, c.id);
 
-  const nextCore = cards.findIndex((c) => c.difficulty === "core" && incomplete(c));
+  const nextCore = cards.findIndex((c) => requiredForLesson(c) && incomplete(c));
   if (nextCore !== -1) return nextCore;
 
-  const lastCore = cards.findLastIndex((c) => c.difficulty === "core");
+  const lastCore = cards.findLastIndex((c) => requiredForLesson(c));
   const nextAfterCore = cards.findIndex((c, i) => i > lastCore && incomplete(c));
   return nextAfterCore !== -1 ? nextAfterCore : Math.max(0, cards.length - 1);
 }
@@ -312,11 +313,11 @@ export function resumeIndex(
  * been applied yet. `missingCore` is the first unfinished core card, or -1 if the lesson is finished.
  */
 export function lessonFinishState(
-  cards: readonly Pick<Card, "id" | "difficulty">[],
+  cards: readonly Pick<Card, "id" | "difficulty" | "pace">[],
   done: (card: Pick<Card, "id">) => boolean,
 ): { missingCore: number; challengesCompleted: number } {
   return {
-    missingCore: cards.findIndex((c) => c.difficulty === "core" && !done(c)),
+    missingCore: cards.findIndex((c) => requiredForLesson(c) && !done(c)),
     challengesCompleted: cards.filter((c) => c.difficulty === "challenge" && done(c)).length,
   };
 }

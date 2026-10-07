@@ -55,7 +55,22 @@ export type AnalyticsEvent =
   | "subscribed"
   | "certificate_issued"
   // Someone clicked "Email us" about a family/household deal, in /pro's parent section (no properties).
-  | "family_interest";
+  | "family_interest"
+  // The Feed (docs/plans/feed.md): src/components/feed/
+  | "byte_viewed"
+  | "byte_answered"
+  | "byte_go_deeper"
+  | "feed_session_length"
+  | "feed_signup"
+  // Challenge a friend (with the lesson): src/components/challenge/
+  | "challenge_created"
+  | "challenge_opened"
+  | "challenge_completed"
+  | "challenge_signup"
+  // Reminder emails (sent from the server, with the email kind as `source`): src/lib/reminders/server.ts
+  | "reminder_sent"
+  | "reminder_opened"
+  | "reminder_returned";
 
 /** What an event is about: a lesson id (a plain string), or a course. */
 export type EventTarget = string | { course: string };
@@ -189,6 +204,8 @@ export function trackWith(
     | "founder_checkout_created"
     | "founder_checkout_error"
     | "founder_line_opened"
+    | "byte_answered"
+    | "feed_session_length"
     | "parent_link_created",
   data: Record<string, string>,
 ): void {

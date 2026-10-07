@@ -5,7 +5,8 @@ import Link, { useLinkStatus } from "next/link";
 import { usePathname } from "next/navigation";
 import type { ComponentType, ReactNode } from "react";
 import { LogoLockup } from "@/components/brand/Logo";
-import { CoursesIcon, DashboardIcon, LeaguesIcon, PricingIcon, ProIcon, SignInIcon } from "@/components/ui/icons";
+import { CoursesIcon, DashboardIcon, LeaguesIcon, PlayIcon, PricingIcon, ProIcon, SignInIcon } from "@/components/ui/icons";
+import { FEED_ENABLED } from "@/lib/feed/config";
 import { SoundToggle } from "@/components/ui/SoundToggle";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { StreakPill } from "@/components/streak/StreakPill";
@@ -20,12 +21,14 @@ import { useLeaguesOpen } from "@/lib/leagues/useLeaguesOpen";
 interface NavItem {
   href: string;
   label: string;
+  /** A shorter label for the phone tab bar (six tabs share 360px). */
+  short?: string;
   Icon: ComponentType<{ className?: string }>;
   isActive: (pathname: string) => boolean;
 }
 
 const NAV: NavItem[] = [
-  { href: "/", label: "Dashboard", Icon: DashboardIcon, isActive: (p) => p === "/" },
+  { href: "/", label: "Dashboard", short: "Home", Icon: DashboardIcon, isActive: (p) => p === "/" },
   {
     href: "/courses",
     label: "Courses",
@@ -33,6 +36,9 @@ const NAV: NavItem[] = [
     isActive: (p) => p.startsWith("/courses") || p.startsWith("/course/"),
   },
 ];
+
+/** The Feed (behind FEED_ENABLED; docs/plans/feed.md). */
+const FEED: NavItem = { href: "/feed", label: "Feed", Icon: PlayIcon, isActive: (p) => p.startsWith("/feed") };
 
 /** Leagues: only for signed-in learners, once leagues have opened. */
 const LEAGUES: NavItem = { href: "/leagues", label: "Leagues", Icon: LeaguesIcon, isActive: (p) => p.startsWith("/leagues") };
@@ -55,7 +61,7 @@ function usePlanItem(): NavItem | null {
 
 function useNav(): NavItem[] {
   const plan = usePlanItem();
-  return [...NAV, ...(useLeaguesOpen() ? [LEAGUES] : []), ...(plan ? [plan] : [])];
+  return [...NAV, ...(FEED_ENABLED ? [FEED] : []), ...(useLeaguesOpen() ? [LEAGUES] : []), ...(plan ? [plan] : [])];
 }
 
 /** Top bar: logo, Dashboard, Courses and Leagues (from `sm` up), XP and theme. */
@@ -64,9 +70,9 @@ export function SiteHeader() {
   const nav = useNav();
   return (
     <header className="sticky top-0 z-30 border-b border-line bg-canvas">
-      <div className="mx-auto flex h-16 max-w-wide items-center gap-2 px-gutter sm:gap-6">
-        <Link href="/" aria-label="CyberNet Training, dashboard" className="inline-flex min-h-11 min-w-11 items-center rounded-control">
-          <LogoLockup />
+      <div className="mx-auto flex h-16 max-w-wide items-center gap-2 px-gutter sm:gap-3 lg:gap-6">
+        <Link href="/" aria-label="CyberNet Training, dashboard" className="inline-flex min-h-11 min-w-11 shrink-0 items-center rounded-control">
+          <LogoLockup tileOnTablets />
         </Link>
         <nav aria-label="Main" className="hidden h-full items-stretch gap-1 sm:flex">
           {nav.map((item) => {
@@ -76,16 +82,18 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 aria-current={active ? "page" : undefined}
-                className={`relative flex items-center px-3 text-small font-semibold transition-[background-color,color] active:bg-surface-raised ${
+                className={`relative flex items-center px-2 text-small font-semibold lg:px-3 transition-[background-color,color] active:bg-surface-raised ${
                   active ? "text-ink" : "text-ink-muted hover:text-ink"
                 }`}
               >
-                {item.label}
+                {/* Tablets share the bar with the Feed tab: the short label (Home) until there's room. */}
+                <span className="lg:hidden">{item.short ?? item.label}</span>
+                <span className="hidden lg:inline">{item.label}</span>
                 {active && (
                   <motion.span
                     layoutId="nav-active"
                     aria-hidden="true"
-                    className="absolute inset-x-3 bottom-0 h-0.5 rounded-sm bg-accent"
+                    className="absolute inset-x-2 bottom-0 h-0.5 rounded-sm bg-accent lg:inset-x-3"
                   />
                 )}
               </Link>
@@ -135,8 +143,8 @@ function HeaderAccount() {
       <Pending>
         <UserNode outfit={auth.outfit} pro={hasPro} size={32} />
       </Pending>
-      <span className="hidden max-w-32 truncate md:inline">{name}</span>
-      {hasPro && <ProBadge size="sm" lit className="hidden md:inline-flex" />}
+      <span className="hidden whitespace-nowrap lg:inline">{name}</span>
+      {hasPro && <ProBadge size="sm" lit className="hidden lg:inline-flex" />}
     </Link>
   );
 }
@@ -151,7 +159,7 @@ export function BottomNav() {
       className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-canvas pb-[env(safe-area-inset-bottom)] sm:hidden"
     >
       <ul className="grid auto-cols-fr grid-flow-col">
-        {nav.map(({ href, label, Icon, isActive }) => {
+        {nav.map(({ href, label, short, Icon, isActive }) => {
           const active = isActive(pathname);
           return (
             <li key={href}>
@@ -172,7 +180,7 @@ export function BottomNav() {
                 <Pending>
                   <Icon className="size-6" />
                 </Pending>
-                {label}
+                {short ?? label}
               </Link>
             </li>
           );

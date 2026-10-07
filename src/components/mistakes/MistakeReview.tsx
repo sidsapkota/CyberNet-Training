@@ -307,7 +307,7 @@ function FinishScreen({
       <Mascot expression={cleared > 0 ? "celebrating" : "thinking"} size={120} idle />
       <h1 className="mt-4 text-headline font-semibold">
         {cleared > 0 ? "Review done" : "Review over"}
-        {name && <span className="block truncate text-lead font-medium text-ink-muted">{name}</span>}
+        {name && <span className="block text-lead font-medium text-ink-muted [overflow-wrap:anywhere]">{name}</span>}
       </h1>
       <p className="mt-2 text-ink-muted">
         <span className="font-mono font-semibold text-ink tabular-nums">{cleared}</span> of {total} fixed

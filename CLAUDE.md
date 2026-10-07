@@ -40,6 +40,9 @@ npm run brand:assets      # regenerate logo SVGs + favicon from src/components/b
 npm run brand:mascot      # regenerate public/brand/mascot/<expression>.svg from the Mascot parts
 npm run check:supabase    # verify the Supabase URL + publishable key in .env.local (health check)
 npm run check:rls         # prove users can't read/write each other's rows (needs SUPABASE_SECRET_KEY)
+npm run report:cards      # the 10 slowest and most-failed cards per course, last 7 days (read-only; production:
+                          # E2E_ENV_FILE=.env.production-checks; DAYS=, MIN_PLAYS=). Summary goes in the handover weekly
+npm run e2e:card-plays    # card measurements: one row per first Check, with time and right/wrong, nothing personal (staging)
 npm run usernames:scan    # re-check every username with the current rules (-- --apply replaces failures; counts only)
 npm run e2e:design-qa     # every card type and main page at 360px/desktop, light/dark, motion on/off:
                           # sideways scrolling, controls under 44px, touch drag (dev server running)
@@ -56,6 +59,25 @@ npm run e2e:fit-audit     # every card at phone (360x640, 360x560, 390x844), tab
                           # (scripts/e2e/lib/layout.mjs: a control's content spilling out, overlapping
                           # controls, cut-off text, doubled controls, sideways scroll). Fails on any.
                           # (COURSE=<id>, LESSONS=<id,id>, SIZES=560,1440, PARALLEL=3; E2E_SHARE_URL for a preview)
+npm run e2e:visual-qa:gate # MERGE GATE: every page (guest + signed in, light + dark) and every card at 360x560,
+                          # 768x1024 and 1440x900: overlap, cut-off text, spill, doubled controls, sideways scroll,
+                          # broken images, console errors, 404 links. STAGING ONLY (throwaway learner; opens and
+                          # restores leagues). Fails on any problem
+npm run e2e:visual-qa     # the full sweep: all 6 sizes, plus contact sheets in docs/plans/visual-qa/ (PAGES_ONLY=,
+                          # CARDS_ONLY=, COURSE=, SIZES=, THEMES=, SHEETS=0)
+npm run e2e:admin         # /admin: guest, learner and Pro get the plain 404 on every page and the reveal endpoint,
+                          # nothing logged; the admin sees every page, views and email reveals are logged. STAGING
+                          # ONLY; the dev server needs ADMIN_USER_IDS = the staging admin test account
+npm run e2e:feed          # the Feed: flag, guest flow (XP, events, Go deeper, 5-byte gate), merge at sign-up, server
+                          # XP and the daily cap, the break card, the video view, every byte fits. STAGING ONLY
+npm run e2e:combo         # the lesson combo ("3 in a row!"), its reset on a miss, and "Best combo" at lesson complete
+                          # (guest, 360x560 + desktop; dev server running)
+npm run e2e:challenge     # Challenge a friend: make one (360x560), a guest plays and wins, GG, sign up claims it, the
+                          # challenger's view, /account, bad/unknown/expired links. STAGING ONLY
+npm run e2e:reminders     # reminder emails: the sign-up opt-in (unticked), the /account switch, the hourly job (dry
+                          # run), one a day, open/return links, one-tap unsubscribe. STAGING ONLY; CRON_SECRET locally
+npm run e2e:pacing        # adaptive pacing in the real player (/dev/cards pacing demo): easy win skipped after 3 right,
+                          # extra example only after a miss (dev server running)
 npm run e2e:dashboard-numbers # cards done, no lesson finished: header XP, Activity XP bars and rings
                           # (throwaway account; secret key, so a local production build or production)
 npm run e2e:player-flow   # before/after screenshots: a hotspot card and the wrong-answer flow (SHOTS_TAG=)
@@ -77,7 +99,10 @@ items on one row, and the tray is two columns. On short screens (max-height 620p
 in-app browser) a card's question steps down from 20px to body size, and terminal output boxes get
 shorter (24dvh up to 700px tall); the output scrolls inside its box.
 
-All of `build`, `lint`, `test` and `typecheck` must pass with zero errors and warnings.
+All of `build`, `lint`, `test` and `typecheck` must pass with zero errors and warnings, and
+**`npm run e2e:visual-qa:gate` must pass before every merge** (phone, tablet and desktop; any overlap,
+truncation or overflow fails it). Layout checks live in `scripts/e2e/lib/layout.mjs`, shared with the
+fit audit; mark a deliberate exception `data-layout-ok`, never loosen the check.
 
 ## Stack
 
@@ -454,6 +479,12 @@ interactive, update `isInteractiveCard` / `InteractiveCard` in `schema.ts`.
     started again); and Check stays off until the answer differs from the one just marked wrong
     (`canCheckAgain`, with "Change your answer, then press Check."), so "wrong" can never loop. The
     same in Mistake review and the teaser card.
+  - **Combo** (`src/lib/combo.ts`, tested): from the 3rd graded card in a row right on the first
+    try, the footer shows "3 in a row!" (then "4 in a row!"…) with a small amber flame (`ComboIcon`),
+    the correct sound gets a rising extra note (`combo`, a semitone higher per step, capped) and a
+    light double buzz. A wrong answer resets it quietly. Lesson complete shows "Best combo: N in a
+    row" (from 3), and when the lesson met today's goal the streak's node chain pops bigger as its
+    count ticks up by one. `npm run e2e:combo` checks it.
   - Right answer: a cyan pulse travels along the progress trace to this card's node, which
     ripples. The footer status node fills with a check, and the explanation and XP earned show.
   - **Mascot reactions** (`src/lib/reactions.ts`): every answer in a lesson gets a small mascot
@@ -596,6 +627,16 @@ interactive, update `isInteractiveCard` / `InteractiveCard` in `schema.ts`.
   (`eventsAfterReset`; resetting one lesson clears that lesson's events), but keeps met days
   (`goal_days`, which the streak reads) and settings. Clearing the events stops reset-and-replay
   from paying first-time XP twice into a league week.
+
+### Card measurements (`src/lib/measure/`)
+- **What:** for every graded card in lessons and quizzes, the time from the card appearing to the first
+  Check, and whether that answer was right (`startCardTimer` in an effect, `measureFirstCheck` in Check;
+  sent with `sendBeacon`, fire and forget). Retries aren't measured.
+- **Anonymous:** no user, session or device id. `/api/card-plays` checks the lesson and graded card exist in
+  the loaded content before storing (`card_plays`, server-only; a trigger caps 600 a minute).
+  `20261013100000_card_plays.sql`; the privacy policy says so.
+- **Read it:** `npm run report:cards` (slowest and most failed per course, 5+ plays). Use it to pick the
+  cards the content quality pass converts first (`docs/plans/retention-and-fun.md`).
 
 ### Pages
 Pages with the site header live in the `src/app/(main)/` route group: a top bar (logo, Dashboard,
@@ -944,6 +985,11 @@ Migrations, all applied to the linked project:
   `limit_time_zone_changes` trigger (see [Daily lesson limit](#daily-lesson-limit)).
 - `20261003100000_card_mistakes.sql`: `card_mistakes` and `record_mistake()` (security definer,
   `search_path ''`, execute for `service_role` only; see [Mistake review](#mistake-review)).
+- `20261012100000_challenges.sql`: `challenges` and `challenge_attempts` (server-only). See
+  [Challenge a friend](#challenge-a-friend).
+- `20261011100000_reminder_emails.sql`: `profiles.reminder_emails` (default false),
+  `reminder_consent_at`, `email_token` (unsubscribe key), and the server-only `reminder_emails` log (one
+  a day). See [Reminder emails](#reminder-emails).
 - `20261004100000_usernames.sql` and `20261004110000_usernames_server_only.sql`: `profiles.username`,
   `username_changed_at`, the shape check and the unique index; league handles copied over;
   `league_standings()` returns the username; then learners lose their direct profile write.
@@ -1187,6 +1233,111 @@ Pro learners try the cards they got wrong again. Pure rules in `src/lib/progress
   `store.completeCard`: practice XP toward today's goal, or the card's XP if it was never finished;
   quiz cards pay nothing. The finish screen counts what was fixed (mascot `celebrating`, or
   `thinking` if nothing was).
+
+## Admin dashboard
+
+Private and read-only (owner, 7 Oct 2026; plan `docs/plans/admin.md`). The most sensitive page: `/admin`.
+- **Access, on the server only:** `requireAdmin()` (`src/lib/admin/auth.ts`): the user from the verified
+  session (`auth.getUser()`), on the allowlist `ADMIN_USER_IDS` (server env var, comma-separated Supabase user
+  ids; never emails, never anything from the browser), signed in within 12 hours (`recentSignIn`). Every
+  admin page calls it first, and every data function in `src/lib/admin/server.ts` calls it again (a second
+  gate); the reveal route (`/api/admin/reveal`) checks `adminOrNull()` before reading the request.
+  `server-actions.test.ts` enforces all three.
+- **Everyone else gets the site's ordinary 404:** guests, learners, Pro members, and an admin signed in over
+  12 hours ago. Not linked anywhere (a test checks no source outside the admin files mentions `/admin`), not in
+  the sitemap or `robots.txt`, `noindex`.
+- **Audit:** every page view (`view:<page>`) and action (`reveal-email`, with whose) goes in `admin_audit`
+  (`20261014100000_admin_audit.sql`, server-only; `check:rls` proves it). Read it in the Supabase dashboard.
+- **Pages:** Overview (learners, active today and 7 days, returning, lessons completed, Pro, founders and
+  their revenue, sign-ups per day), Funnel (7/30 days, from our own data; Vercel events are linked, not
+  copied), Learners (50 a page; emails masked until "Show email"), Lessons (started vs finished, most
+  mistakes, slowest and most-missed first answers from `card_plays`), Leagues (this week, last week's results),
+  Feedback (latest 50), Features (reminders, challenges, the Feed; "not live yet" until their tables exist).
+  **Nothing on them changes data.**
+- **Owner step:** `ADMIN_USER_IDS` in Vercel Production (the owner adds it; never set it from here).
+  Locally, `.env.local` may hold the staging admin test account's id (admin-e2e@example.com), for `e2e:admin`.
+## The Feed
+
+A TikTok-style stream of "bytes" (owner, 7 Oct 2026; plan `docs/plans/feed.md`). Rules in
+`src/lib/feed/` (`rules.ts`, `bytes.ts`, `solve.ts`; tested), UI in `src/components/feed/`. Behind
+`FEED_ENABLED` (`src/lib/feed/config.ts`; `?feed=1` previews it outside production).
+- **Bytes** (`content/bytes/bytes.json`): `{ id, hook, lesson, card, rare? }`. A byte points at an existing
+  interactive core card (`FEED_TYPES`: multiple choice, true or false, fill the gap, binary, next word,
+  train model, sort); the card is the interaction, its explanation the reveal. Hooks are 12 words or
+  fewer and must not repeat the card's own question; at most 1 in 6 rare (+15 XP instead of +5).
+  `feed.test.ts` checks every byte, and `e2e:feed` that each fits 360×560 and desktop with nothing
+  covered (tall cards like the binary or train-model ones don't fit: pick compact ones).
+- **The stream** (`/feed`, `Feed`): one byte per screen, CSS scroll snap (swipe), the header's up/down
+  buttons and the arrow keys; never moves by itself. One-tap types check themselves; others have a
+  Check pinned to the bottom. No second try. Order: `feedOrder` (seeded per learner per day, leaning to
+  courses with finished lessons or "Go deeper" taps, answered bytes last, courses mixed). Guests get
+  `GUEST_BYTES` (5), then the sign-up card. After 15 minutes, one dismissible "Nice work. Take a break?".
+- **XP:** 5 (rare 15) for a right answer on a new byte, at most `FEED_DAILY_CAP` (50) a day.
+  `store.completeByte` → `completeByteAction` (re-grades with `gradeUntrusted`, applies the cap) stores it
+  as a card completion with lesson id `feed` (card id = byte id) and a `card` XP event, so total XP,
+  the daily goal, streaks and leagues count it with no new tables. The Feed is **not** in the content
+  index, so the lesson actions can't pay for it. The guest merge prices bytes from the content and keeps
+  at most 5 (`withFeedLimit`, `FeedPrices`).
+- **Front door:** with the flag on, new visitors' first screen is a live byte (`HeroByte`, `HERO_BYTE`)
+  with "Keep going" into the Feed; the rest of the landing page stays below. "Feed" is a nav tab (the
+  phone tab bar says "Home" for Dashboard so six tabs fit).
+- **Export as video:** `/feed/video/<id>` (not linked, `noindex`): a 9:16 frame that plays the byte
+  (hook, the right answer from `rightAnswer`, the reveal and XP, then the logo) on a loop, to
+  screen-record.
+- **Events:** `byte_viewed`, `byte_answered` (`source` right/wrong), `byte_go_deeper`,
+  `feed_session_length` (bucketed), `feed_signup`.
+## Challenge a friend
+
+An async duel, the growth loop (owner, 7 Oct 2026; plan `docs/plans/retention-and-fun.md`). Pure rules in
+`src/lib/challenges/rules.ts` (tested), server code in `src/lib/challenges/server.ts` (vetted secret-key
+use), UI in `src/components/challenge/`.
+- **Making one:** "Challenge a friend" on the lesson-complete screen (signed in, lessons with 3+
+  questions: `canChallenge`) → `/challenge/new/<lesson>` (needs the lesson finished, or a challenge on it
+  played: "Challenge back"). Up to 5 questions: the lesson's last interactive core cards
+  (`challengeCards`), one try each, quiz rules (`PlayModeContext` "quiz": no hints, no explanations).
+  `createChallengeAction` re-grades on the server (`gradeUntrusted`), saves it, and the share screen
+  offers the share sheet and Copy link. At most 20 a day.
+- **Playing one:** `/c/<id>` (12 random letters and digits; 30 days; `noindex`, `robots.txt` disallows `/c/`
+  and `/challenge/`). No account needed. The intro shows the challenger's **username and avatar outfit
+  only** (never an email or id: `creatorId` is stripped before the page renders). Two mascots, two
+  health bars (`HealthBars`, one segment per question, with "4/5" in text); after each Check the
+  challenger's answer to the same question is revealed and their bar drops if they missed it. The go
+  is posted to `/api/challenges/[id]/attempts` (re-graded; the player comes only from the verified session,
+  else a guest; at most 100 goes per challenge; one per signed-in player).
+- **Result:** win / draw / "So close!", one **preset** emote (`EMOTES`: GG, Nice one, Rematch?; Pro also gets
+  the animated On fire, Wow, Bring it, which `/api/challenges/[id]/emote` checks with `getEntitlement`).
+  **No free text anywhere.** Guests: "Sign up to save your score and challenge back" (the go's key stays
+  on the device, and `claimChallengeAttemptAction` claims it after sign-in); signed in: "Challenge back".
+- **The challenger** opening their own link sees who played (usernames, or "A guest"), scores and
+  reactions; `/account` lists their latest challenges (`ChallengesPanel`).
+- **Events:** `challenge_created`, `challenge_opened`, `challenge_completed`, `challenge_signup` (with the lesson).
+- **Tables** (`20261012100000_challenges.sql`): `challenges`, `challenge_attempts`, server-only;
+  `check:rls` proves it, and that emotes are only the fixed list.
+## Reminder emails
+
+Opt-in only (owner, 7 Oct 2026; plan `docs/plans/retention-and-fun.md`). Pure rules and words in
+`src/lib/reminders/` (`rules.ts`, `email.ts`, tested), server code in `src/lib/reminders/server.ts`
+(vetted secret-key use), the hourly job `/api/cron/reminders` (`vercel.json`, `CRON_SECRET` checked first).
+- **What:** at most one email a day. **Streak:** at 7 pm in the learner's time zone, only with a streak
+  and no XP today; "Your N-day streak ends tonight" only when no freeze would save it, otherwise "Keep
+  your N-day streak going". **League:** Sunday 6 pm Sydney (6 hours before the reset), only while
+  leagues are open, ranked learners with XP, between 8 am and 9:59 pm their time; it wins on a Sunday.
+- **Consent (Australian Spam Act):** off for everyone (`profiles.reminder_emails` default false; existing
+  accounts were never opted in). Turned on only by the learner's own tick: an unticked box in the
+  "Pick a username" welcome note, or the switch on `/account` (`ReminderSetting` →
+  `setReminderEmailsAction`, which records `reminder_consent_at`). Learners can't write it directly.
+- **Every email:** from "CyberNet Training <noreply@…>", reply-to hello@, says why they're getting it,
+  one button, a one-tap unsubscribe link (`/api/email/unsubscribe?t=<profiles.email_token>`: GET from
+  the link, POST for mail apps' one-click via `List-Unsubscribe` / `List-Unsubscribe-Post`), then
+  `/unsubscribed`. No offers or Pro pitch, ever (a test checks).
+- **Tracking:** `reminder_emails` rows (one per learner per local day, unique) with `opened_at` (the
+  `/api/email/open` image; rough, Apple Mail opens images itself) and `returned_at` (the button, via
+  `/api/email/go`, same-site redirects only); each checked by the row's random `key`. Also Vercel events
+  `reminder_sent`, `reminder_opened`, `reminder_returned` (`source` = streak or league).
+- **Safety:** outside production (`VERCEL_ENV`), only `FEEDBACK_INBOX` can receive one; everyone else is a
+  dry run (`dry_run`). Without `RESEND_API_KEY`, all are dry runs. Never test on a real learner.
+- `npm run e2e:reminders` (staging) checks it end to end; `check:rls` proves the defaults and that the
+  log is server-only.
 
 ## Avatars and rewards
 
@@ -1559,7 +1710,8 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
 - **Sounds are synthesised** with the Web Audio API in `src/lib/sound.ts`: short oscillator notes
   with soft envelopes. **Source: original, written for this project; no audio files, nothing to
   license.**
-- **Sounds:** correct, wrong, card complete, lesson complete, daily goal reached, part removed and snap. All are under
+- **Sounds:** correct, wrong, card complete, lesson complete, daily goal reached, part removed, snap and
+  combo (one note after "correct", raised per combo step). All are under
   300ms except the chime, and quiet.
 - **Never before interaction:** `installAudioUnlock()` (in `Providers`) only creates the audio
   context on the first tap or key press. Before that, `playSound` is a no-op.
@@ -1576,13 +1728,15 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
 - No glassmorphism: no `backdrop-blur`, no translucent panels. Headers are solid `canvas` with a
   hairline border.
 - No emoji as icons, and one icon set.
+- **The only flame is the lesson combo's** (`ComboIcon`, amber, owner 7 Oct 2026). Streaks keep the
+  node chain.
 - No generic grey or black dark mode: surfaces are navy.
 - Round shapes are for nodes (and progress rings) only. Glow is for cyan interactive elements only.
 - New screens should use the network motif for loading, empty, success and locked states.
 
 ### Copy rules (dashboard, catalog, course path and any new page)
-- **Cut text.** Headings are at most about 4 words. Any description is one line at most (truncate
-  rather than wrap). No paragraphs of explanation on navigation pages.
+- **Cut text.** Headings are at most about 4 words. Any description is one short line; write it
+  shorter rather than cutting it off with an ellipsis (the visual QA gate fails on truncated text). No paragraphs of explanation on navigation pages.
 - **State is visual.** Show done, current, available and locked with shape, colour *and* icon, not
   repeated labels like "Locked" on every row. The screen-reader label carries the words.
 - **No metadata clutter.** Card counts, "x/y done" and similar belong in a popover or side panel,
@@ -1701,6 +1855,28 @@ Applies to all content work: the "learn before you do" rollout, new courses and 
 6. **3-second rule:** know what to do instantly (the zero-confusion rule below).
 7. **Useful today:** each lesson ends with one thing they can do in real life now ("Try this: …").
 8. **Learning over streaks:** XP and streaks reward real progress, not speed-running.
+
+### What learners do on each card (content quality pass, owner 7 Oct 2026)
+Every graded card has a **play** tag (`src/lib/content/play.ts`, from its type and prompt; a card's
+`play` field overrides it when the default is wrong): **RECOGNISE** (pick or sort labels), **PREDICT**
+(guess an outcome before seeing it), **BUILD** (make something) or **CONSEQUENCE** (the action visibly
+changes something). **Target per lesson:** at least one PREDICT, at least one BUILD or CONSEQUENCE, and
+RECOGNISE no more than half. Converted courses are listed in `PLAY_TARGET_COURSES` (`play.test.ts`), which
+enforces it: **Stay Safe Online** so far. `npx tsx scripts/play-audit.ts [course]` prints every lesson's mix
+(and writes `docs/plans/play-audit.md`). A real PREDICT asks for an outcome before it's shown; never reword
+a definition question to look like one.
+- **Adaptive pacing** (`src/cards/pace.ts`): a card's `pace` is `"easy"` (the easy win, skipped when the
+  first 3 graded cards of the visit were right first time) or `"extra"` (one more worked example, shown
+  only straight after a miss on the card before). Paced cards are never required to finish a lesson (the
+  content outline, the server's XP index, resume and finish all use `requiredForLesson`), nothing later
+  may rely on what they teach (`concepts.ts`), quizzes can't have them, and time estimates count easy wins
+  but not extras. Don't pace a lesson's only PREDICT card.
+- **Worked example, then fade:** `binary_toggle` and `numeric_input` take `worked: { steps, locked | prefill }`:
+  up to 4 short steps under the question, and bits already on and locked (binary) or a value already in the
+  box (number). Use three cards in a row: solved (every step, the whole answer), half done (the first steps),
+  alone (no `worked`).
+- **Measure:** card measurements (above) and `npm run report:cards` show which cards are slowest and most
+  missed; convert those first.
 
 ### The lesson pattern (HARD RULE — every lesson, every course)
 Real users get lost when a "theory" card tells them something and the next card asks them to use it:

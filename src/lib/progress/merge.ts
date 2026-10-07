@@ -21,6 +21,35 @@
 import { cleanCoachSeen } from "@/lib/coach";
 import { type ContentIndex, cardXpFor, practiceXpFor } from "./authority";
 import { dayXp, isDailyGoal, isValidTimeZone, type Ledger, MAX_LOCAL_XP_EVENTS, plausibleEvent } from "./daily";
+import { FEED_LESSON_ID, GUEST_BYTES } from "@/lib/feed/rules";
+
+/**
+ * Feed bytes' prices (byte id → XP: 5, rare 15), for merging a guest's Feed progress. The Feed is
+ * deliberately not in the content index, so the lesson actions can't pay for it; only the merge
+ * (and completeByteAction) knows these.
+ */
+export type FeedPrices = ReadonlyMap<string, number>;
+const NO_FEED: FeedPrices = new Map();
+const feedCard = (key: string) => (key.startsWith(`${FEED_LESSON_ID}/`) ? key.slice(FEED_LESSON_ID.length + 1) : null);
+
+/**
+ * Guests play at most GUEST_BYTES bytes before signing up, so only that many of a guest's bytes
+ * (the earliest, not already on the account) come across, with their XP events. More could only
+ * come from tampering.
+ */
+export function withFeedLimit(local: ProgressSnapshot, account: Pick<ProgressSnapshot, "cards">, max = GUEST_BYTES): ProgressSnapshot {
+  const kept = new Set(
+    Object.entries(local.cards)
+      .filter(([key]) => feedCard(key) !== null && !account.cards[key])
+      .sort(([, a], [, b]) => time(a.completedAt) - time(b.completedAt))
+      .slice(0, max)
+      .map(([key]) => key),
+  );
+  const cards = Object.fromEntries(Object.entries(local.cards).filter(([key]) => feedCard(key) === null || kept.has(key)));
+  const xpEvents = local.xpEvents.filter((e) => e.lessonId !== FEED_LESSON_ID || kept.has(`${FEED_LESSON_ID}/${e.cardId ?? ""}`));
+  const next = { ...local, cards, xpEvents };
+  return { ...next, totalXp: sumXp(next) };
+}
 import {
   type CardCompletion,
   type DailyGoalDay,
@@ -71,9 +100,16 @@ export function quizProgressFrom(attempts: QuizAttempt[]): QuizProgress {
  * card XP from its difficulty (first try or not), +20 per completed lesson, and +50 for the
  * first passed attempt of each quiz only.
  */
-export function recomputeXp(snapshot: Omit<ProgressSnapshot, "totalXp">, index: ContentIndex): ProgressSnapshot {
+export function recomputeXp(snapshot: Omit<ProgressSnapshot, "totalXp">, index: ContentIndex, feed: FeedPrices = NO_FEED): ProgressSnapshot {
   const cards: Record<string, CardCompletion> = {};
   for (const [key, record] of Object.entries(snapshot.cards)) {
+    const byte = feedCard(key);
+    if (byte !== null) {
+      // A Feed byte: never more than its price (the guest's own figure may be lower, after the cap).
+      const price = feed.get(byte);
+      if (price !== undefined) cards[key] = { completedAt: record.completedAt, xp: Math.min(price, Math.max(0, record.xp)) };
+      continue;
+    }
     const slash = key.indexOf("/");
     const xp = cardXpFor(index, key.slice(0, slash), key.slice(slash + 1), record.xp);
     if (xp !== null) cards[key] = { completedAt: record.completedAt, xp };
@@ -152,8 +188,12 @@ function keepRecords(local: ProgressSnapshot, keep: (lessonId: string, at: strin
 }
 
 /** The XP an event is worth under the content rules, or null if it can't be (unknown ids, no XP). */
-export function priceEvent(index: ContentIndex, e: XpEvent, passedQuizzes: ReadonlySet<string>): number | null {
+export function priceEvent(index: ContentIndex, e: XpEvent, passedQuizzes: ReadonlySet<string>, feed: FeedPrices = NO_FEED): number | null {
   let xp: number | null = null;
+  if (e.lessonId === FEED_LESSON_ID) {
+    const price = e.kind === "card" && e.cardId ? feed.get(e.cardId) : undefined;
+    return price !== undefined && e.xp > 0 ? Math.min(price, e.xp) : null;
+  }
   if (e.kind === "card") xp = e.cardId ? cardXpFor(index, e.lessonId, e.cardId, e.xp) : null;
   else if (e.kind === "practice") xp = e.cardId ? practiceXpFor(index, e.lessonId, e.cardId) : null;
   else if (e.kind === "lesson") xp = index.get(e.lessonId)?.kind === "lesson" ? XP.lessonComplete : null;
@@ -184,6 +224,7 @@ export function mergeLedger(
   index: ContentIndex,
   passedQuizzes: ReadonlySet<string>,
   now: Date,
+  feed: FeedPrices = NO_FEED,
 ): LedgerMerge {
   const seen = new Set(account.xpEvents.map(eventKey));
   const practiced = new Set(account.xpEvents.filter((e) => e.kind === "practice").map(practiceKey));
@@ -191,7 +232,7 @@ export function mergeLedger(
   const newEvents: XpEvent[] = [];
   for (const e of local.xpEvents.slice(-MAX_LOCAL_XP_EVENTS)) {
     if (!plausibleEvent(e, now)) continue;
-    const xp = priceEvent(index, e, passedQuizzes);
+    const xp = priceEvent(index, e, passedQuizzes, feed);
     if (xp === null) continue;
     const event: XpEvent = { ...e, at: new Date(e.at).toISOString(), xp };
     if (seen.has(eventKey(event))) continue;
@@ -227,6 +268,7 @@ export function mergeProgress(
   local: ProgressSnapshot,
   index: ContentIndex,
   now: Date = new Date(),
+  feed: FeedPrices = NO_FEED,
 ): ProgressSnapshot {
   const quizzes: Record<string, QuizProgress> = {};
   for (const id of new Set([...Object.keys(account.quizzes), ...Object.keys(local.quizzes)])) {
@@ -243,7 +285,7 @@ export function mergeProgress(
       .filter(([, q]) => q.attempts.some((a) => a.passed))
       .map(([id]) => id),
   );
-  const { ledger } = mergeLedger(account, local, index, passedQuizzes, now);
+  const { ledger } = mergeLedger(account, local, index, passedQuizzes, now, feed);
 
   return recomputeXp(
     {
@@ -260,5 +302,6 @@ export function mergeProgress(
       },
     },
     index,
+    feed,
   );
 }

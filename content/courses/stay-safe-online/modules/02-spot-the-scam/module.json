@@ -4,5 +4,5 @@
   "description": "Phishing emails, scam texts and calls, and fake websites.",
   "order": 2,
   "access": "pro",
-  "teaserCard": { "lesson": "phishing-emails", "card": "phish-or-fine" }
+  "teaserCard": { "lesson": "phishing-emails", "card": "prize-email" }
 }

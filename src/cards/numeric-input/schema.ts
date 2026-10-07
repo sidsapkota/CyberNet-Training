@@ -16,6 +16,16 @@ export const NumericInputCardSchema = z
     answer: z.union([finite, z.array(finite).min(1, "needs at least one accepted answer")]),
     /** Shown after the field, e.g. "hosts" or "bytes". */
     unit: nonEmpty.max(20).optional(),
+    /**
+     * A worked example (worked example, then fade): up to 4 short steps under the question, and an
+     * optional value already in the box (the solved card; the learner checks it).
+     */
+    worked: z
+      .object({
+        steps: z.array(nonEmpty.max(100)).min(1).max(4),
+        prefill: z.string().max(40).optional(),
+      })
+      .optional(),
   })
   .refine(
     (c) =>

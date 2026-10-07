@@ -82,7 +82,7 @@ describe("Server Actions that write with the secret key", () => {
     // signature instead (checked before anything is read or written).
     // "Send to a parent" (lib/pro/parentLink.ts) has no user session either: the link's secret is its
     // authority (only its hash is stored); see the parent-link test below.
-    const vetted = ["src/lib/pro/server.ts", "src/lib/leagues/server.ts", "src/lib/certificates/server.ts", "src/app/api/stripe/webhook/route.ts", "src/lib/feedback/server.ts", "src/lib/usernames/server.ts", "src/lib/rewards/server.ts", "src/lib/pro/parentLink.ts"];
+    const vetted = ["src/lib/pro/server.ts", "src/lib/leagues/server.ts", "src/lib/certificates/server.ts", "src/app/api/stripe/webhook/route.ts", "src/lib/feedback/server.ts", "src/lib/usernames/server.ts", "src/lib/rewards/server.ts", "src/lib/admin/server.ts", "src/lib/measure/server.ts", "src/lib/challenges/server.ts", "src/lib/reminders/server.ts", "src/lib/pro/parentLink.ts"];
     for (const file of importers) {
       const rel = path.relative(ROOT, file).replace(/\\/g, "/");
       if (!rel.startsWith("src/app/actions/")) expect(vetted, rel).toContain(rel);
@@ -97,6 +97,75 @@ describe("Server Actions that write with the secret key", () => {
       const at = webhook.indexOf(later);
       if (at !== -1) expect(verified, `the webhook must verify the signature before ${later}`).toBeLessThan(at);
     }
+  });
+
+  it("the admin dashboard checks the admin on the server for every page, data call and route, first", () => {
+    const pages = sourceFiles(path.join(ROOT, "src/app/admin")).filter((f) => f.endsWith("page.tsx"));
+    expect(pages.length).toBeGreaterThanOrEqual(7);
+    for (const page of pages) {
+      const source = fs.readFileSync(page, "utf8");
+      const body = source.slice(source.indexOf("export default async function"));
+      const gate = body.indexOf("await requireAdmin()");
+      expect(gate, page).toBeGreaterThan(0);
+      for (const later of ["await logAdmin(", "await overview(", "await learners(", "await funnel(", "await lessonStats(", "await leagueStats(", "await latestFeedback(", "await featureStats("]) {
+        const at = body.indexOf(later);
+        if (at !== -1) expect(gate, `${page}: requireAdmin before ${later}`).toBeLessThan(at);
+      }
+    }
+    // Every exported data function checks again, first thing.
+    const server = fs.readFileSync(path.join(ROOT, "src/lib/admin/server.ts"), "utf8");
+    expect(server.trimStart().startsWith('import "server-only";')).toBe(true);
+    const fns = server.split("export async function ").slice(1);
+    expect(fns.length).toBeGreaterThanOrEqual(8);
+    for (const fn of fns) {
+      const flat = fn.replace(/\r\n/g, "\n");
+      const body = flat.slice(flat.indexOf("{\n") + 1).trimStart(); // the body's brace ends its line
+      expect(body.startsWith("await requireAdmin();") || body.startsWith("const admin = await requireAdmin();"), fn.slice(0, 40)).toBe(true);
+    }
+    const route = fs.readFileSync(path.join(ROOT, "src/app/api/admin/reveal/route.ts"), "utf8");
+    const post = route.slice(route.indexOf("export async function POST"));
+    expect(post.indexOf("await adminOrNull()")).toBeGreaterThan(0);
+    expect(post.indexOf("await adminOrNull()")).toBeLessThan(post.indexOf("request.json"));
+    // The allowlist is the env var of user ids, from the verified session; never an email or the request.
+    const auth = fs.readFileSync(path.join(ROOT, "src/lib/admin/auth.ts"), "utf8");
+    expect(auth).toContain("process.env.ADMIN_USER_IDS");
+    expect(auth).toContain("auth.getUser()");
+    expect(auth).not.toMatch(/\.email\b|headers\(\)|cookies\(\)/);
+  });
+
+  it("nothing in the site links to /admin, and robots.txt doesn't name it", () => {
+    for (const file of sourceFiles(path.join(ROOT, "src"))) {
+      const rel = path.relative(ROOT, file).replace(/\\/g, "/");
+      if (/^src\/(app\/admin|app\/api\/admin|components\/admin|lib\/admin)\//.test(rel) || rel.endsWith(".test.ts")) continue;
+      expect(fs.readFileSync(file, "utf8"), rel).not.toMatch(/["'`]\/admin\b/);
+    }
+  });
+
+  it("challenge routes take the player only from the verified session, never from the request", () => {
+    const attempts = fs.readFileSync(path.join(ROOT, "src/app/api/challenges/[id]/attempts/route.ts"), "utf8");
+    expect(attempts).toContain("await requireUserId()");
+    expect(attempts).not.toMatch(/body\.data\.(player|user)/);
+    const server = fs.readFileSync(path.join(ROOT, "src/lib/challenges/server.ts"), "utf8");
+    expect(server.trimStart().startsWith('import "server-only";')).toBe(true);
+    // Answers are always re-graded with the quiz graders.
+    expect(server).toContain("gradeUntrusted(");
+    // The public view never reads an email.
+    expect(server).not.toMatch(/auth\.admin|\.email\b|"email"/);
+  });
+
+  it("the reminder job checks CRON_SECRET before touching any data, and the email links check their key or token", () => {
+    const cron = fs.readFileSync(path.join(ROOT, "src/app/api/cron/reminders/route.ts"), "utf8");
+    const check = cron.indexOf("if (!authorised(");
+    expect(check, "the cron route must check CRON_SECRET").toBeGreaterThan(0);
+    expect(check).toBeLessThan(cron.indexOf("sendDueReminders(", cron.indexOf("export async function GET")));
+    expect(cron).toContain("timingSafeEqual");
+    const server = fs.readFileSync(path.join(ROOT, "src/lib/reminders/server.ts"), "utf8");
+    expect(server.trimStart().startsWith('import "server-only";')).toBe(true);
+    // Opens and returns match the row's random key; unsubscribing matches the profile's token.
+    expect(server).toMatch(/match\(\{ id: Number\(id\), key \}\)/);
+    expect(server).toMatch(/eq\("email_token", token\)/);
+    // Outside production, only the owner's test inbox ever receives one.
+    expect(server).toContain("FEEDBACK_INBOX");
   });
 
   it("the league job checks CRON_SECRET before touching any data", () => {
@@ -114,6 +183,8 @@ describe("Server Actions that write with the secret key", () => {
       // The helpers call each other; each is server-only and checked above.
       const rel = path.relative(ROOT, file).replace(/\\/g, "/");
       if (/^src\/lib\/(pro|leagues|certificates)\/server\.ts$/.test(rel)) continue;
+      // Reminder emails: called only by the cron (CRON_SECRET) and key-checked email links (tested above).
+      if (rel === "src/lib/reminders/server.ts") continue;
       if (rel.startsWith("src/app/api/cron/")) continue;
       // Stripe's webhook has no user: Stripe's signature is its authority, checked before anything else.
       if (rel === "src/app/api/stripe/webhook/route.ts") {
