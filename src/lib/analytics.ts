@@ -52,6 +52,12 @@ export type AnalyticsEvent =
   | "certificate_issued"
   // Someone clicked "Email us" about a family/household deal, in /pro's parent section (no properties).
   | "family_interest"
+  // The Feed (docs/plans/feed.md): src/components/feed/
+  | "byte_viewed"
+  | "byte_answered"
+  | "byte_go_deeper"
+  | "feed_session_length"
+  | "feed_signup"
   // Challenge a friend (with the lesson): src/components/challenge/
   | "challenge_created"
   | "challenge_opened"
@@ -193,7 +199,9 @@ export function trackWith(
     | "founder_signup_wall"
     | "founder_checkout_created"
     | "founder_checkout_error"
-    | "founder_line_opened",
+    | "founder_line_opened"
+    | "byte_answered"
+    | "feed_session_length",
   data: Record<string, string>,
 ): void {
   try {

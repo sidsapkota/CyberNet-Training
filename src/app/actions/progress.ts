@@ -19,7 +19,7 @@ import { getContentIndex } from "@/lib/content/server";
 import { canCompleteLesson, cardXpFor, gradeQuizAttempt, practiceXpFor } from "@/lib/progress/authority";
 import { lessonMistake, type MistakeKey, quizMistakes } from "@/lib/progress/mistakes";
 import { addDays, DEFAULT_DAILY_GOAL, isDailyGoal, localDay, safeTimeZone, type XpInput } from "@/lib/progress/daily";
-import { GUEST_GATE_AT, mergeLedger, mergeProgress, withoutGatedGuestProgress, withoutUnentitledPro } from "@/lib/progress/merge";
+import { GUEST_GATE_AT, mergeLedger, mergeProgress, withFeedLimit, withoutGatedGuestProgress, withoutUnentitledPro } from "@/lib/progress/merge";
 import {
   eventToRow,
   GOAL_DAY_COLUMNS,
@@ -46,6 +46,9 @@ import { getEntitlement, hasFinishedLesson, hasOpenedLesson, proLaunchAt, ProReq
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { after } from "next/server";
 import { onXpEarned } from "@/lib/leagues/server";
+import { gradeUntrusted } from "@/cards/grading";
+import { BYTE_XP, byteXp, FEED_LESSON_ID, RARE_BYTE_XP } from "@/lib/feed/rules";
+import { getByte, getBytes } from "@/lib/feed/server";
 
 const Id = z.string().min(1).max(120);
 
@@ -214,6 +217,32 @@ export async function completeCardAction(
     .select("completed_at, xp")
     .match({ user_id: userId, lesson_id: lessonId, card_id: cardId })
     .single();
+  return { completion: data ? { completedAt: new Date(data.completed_at).toISOString(), xp: data.xp } : null, xp: xpWrite };
+}
+
+/**
+ * A Feed byte answered (docs/plans/feed.md). The answer is re-graded here; a right answer on a byte
+ * not answered right before earns its XP (5, rare 15), capped at FEED_DAILY_CAP a day across the
+ * Feed. Stored like a card (lesson "feed", card = the byte), so it counts toward total XP, the daily
+ * goal, streaks and leagues with no new rules.
+ */
+export async function completeByteAction(byteId: string, answer: unknown, timeZone?: string): Promise<{ completion: CardCompletion | null; xp: XpWrite }> {
+  const userId = await requireUserId();
+  const byte = getByte(Id.parse(byteId));
+  if (!byte || !gradeUntrusted(byte.card, answer)) return { completion: null, xp: NO_XP };
+  const admin = createSupabaseAdminClient();
+  const tz = safeTimeZone(timeZone);
+  const day = await learnerDay(admin, userId, tz, new Date());
+  const today = await admin.from("xp_events").select("xp").match({ user_id: userId, day, lesson_id: FEED_LESSON_ID });
+  if (today.error) fail("Couldn't read today's Feed XP", today.error);
+  const xp = byteXp(Boolean(byte.rare), (today.data ?? []).reduce((s, r) => s + r.xp, 0));
+  const { data: inserted, error } = await admin
+    .from("card_completions")
+    .upsert({ user_id: userId, lesson_id: FEED_LESSON_ID, card_id: byte.id, completed_at: new Date().toISOString(), xp }, { onConflict: "user_id,lesson_id,card_id", ignoreDuplicates: true })
+    .select("card_id");
+  if (error) fail("Couldn't save the byte", error);
+  const xpWrite = inserted?.length && xp > 0 ? await recordXp(admin, userId, tz, { kind: "card", lessonId: FEED_LESSON_ID, cardId: byte.id, xp }) : NO_XP;
+  const { data } = await admin.from("card_completions").select("completed_at, xp").match({ user_id: userId, lesson_id: FEED_LESSON_ID, card_id: byte.id }).single();
   return { completion: data ? { completedAt: new Date(data.completed_at).toISOString(), xp: data.xp } : null, xp: xpWrite };
 }
 
@@ -408,14 +437,17 @@ export async function mergeGuestProgressAction(local: unknown): Promise<Progress
   // Guests can't open Pro lessons after launch, so Pro progress from after then only counts with Pro.
   const { hasPro } = await getEntitlement({ id: userId, createdAt: null });
   // Likewise, guests can't open account-only lessons once the sign-up gate launched.
-  const guest = withoutGatedGuestProgress(withoutUnentitledPro(regraded, index, proLaunchAt(), hasPro), index, GUEST_GATE_AT);
-  const merged = mergeProgress(account, guest, index, now);
+  const gated = withoutGatedGuestProgress(withoutUnentitledPro(regraded, index, proLaunchAt(), hasPro), index, GUEST_GATE_AT);
+  // Feed bytes: at most the 5 a guest can play, priced from the content.
+  const guest = withFeedLimit(gated, account);
+  const feed = new Map(getBytes().map((b) => [b.id, b.rare ? RARE_BYTE_XP : BYTE_XP]));
+  const merged = mergeProgress(account, guest, index, now, feed);
   const passedQuizzes = new Set(
     Object.entries(guest.quizzes)
       .filter(([, q]) => q.attempts.some((a) => a.passed))
       .map(([id]) => id),
   );
-  const ledger = mergeLedger(account, guest, index, passedQuizzes, now);
+  const ledger = mergeLedger(account, guest, index, passedQuizzes, now, feed);
   const rows = snapshotToRows(userId, merged);
 
   const writes = await Promise.all([

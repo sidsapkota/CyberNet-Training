@@ -1,5 +1,6 @@
 import { addXpEvent, browserTimeZone, checkGoal, currentDay, eventsAfterReset, type XpInput } from "./daily";
 import type { ProgressStore } from "./ProgressStore";
+import { FEED_LESSON_ID } from "@/lib/feed/rules";
 import {
   cardKey,
   emptySnapshot,
@@ -90,6 +91,14 @@ export class LocalStorageProgressStore implements ProgressStore {
     }
     const next = { ...current, cards: { ...current.cards, [key]: { completedAt: this.now().toISOString(), xp } } };
     this.write(this.withXp(next, { kind: "card", lessonId, cardId, xp }));
+  }
+
+  async completeByte(byteId: string, _answer: unknown, xp: number): Promise<void> {
+    const current = this.read();
+    const key = cardKey(FEED_LESSON_ID, byteId);
+    if (current.cards[key]) return;
+    const next = { ...current, cards: { ...current.cards, [key]: { completedAt: this.now().toISOString(), xp } } };
+    this.write(xp > 0 ? this.withXp(next, { kind: "card", lessonId: FEED_LESSON_ID, cardId: byteId, xp }) : next);
   }
 
   async completeLesson(lessonId: string, xp: number): Promise<void> {

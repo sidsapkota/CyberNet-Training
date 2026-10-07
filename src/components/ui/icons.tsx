@@ -160,6 +160,8 @@ export const XIcon = brandIcon(X, "XIcon");
 export const LockIcon = brandIcon(Lock, "LockIcon");
 export const PlayIcon = brandIcon(Play, "PlayIcon");
 export const XpIcon = brandIcon(Zap, "XpIcon");
+/** A rare Feed byte. */
+export const RareIcon = brandIcon(Sparkles, "RareIcon");
 /** The lesson combo ("3 in a row!") only: streaks keep the node chain (StreakIcon). */
 export const ComboIcon = brandIcon(Flame, "ComboIcon");
 /** Challenge a friend (the async duel). */

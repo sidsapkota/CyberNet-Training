@@ -1,10 +1,11 @@
 import type { MetadataRoute } from "next";
+import { FEED_ENABLED } from "@/lib/feed/config";
 import { getAllLessonIds, getCourses } from "@/lib/content/server";
 import { absoluteUrl } from "@/lib/site";
 
 /** Public pages only: never /dev, /account, /auth, /login or /feedback. */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const pages = ["/", "/courses", "/privacy", "/terms"];
+  const pages = ["/", "/courses", ...(FEED_ENABLED ? ["/feed"] : []), "/privacy", "/terms"];
   const courses = getCourses().map((c) => `/course/${c.id}`);
   const lessons = getAllLessonIds().map((id) => `/lesson/${id}`);
   return [...pages, ...courses, ...lessons].map((path) => ({
