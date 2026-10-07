@@ -530,6 +530,18 @@ async function main() {
     );
     record("Signed-out visitors can't list Founding Members", Boolean((await anonSeats.rpc("league_founders")).error));
 
+    // Card measurements: anonymous and server-only.
+    const measured = await admin.from("card_plays").insert({ lesson_id: "strong-passwords", card_id: "rls-check", ms: 1234, first_try: true }).select("id").single();
+    const anonPlays = createClient<Database>(env.url, env.publishableKey, noSession);
+    record(
+      "Card measurements are server-only: nobody else can read or write them",
+      !measured.error &&
+        blocked(await a.client.from("card_plays").select("*")) &&
+        blocked(await anonPlays.from("card_plays").select("*")) &&
+        blocked(await anonPlays.from("card_plays").insert({ lesson_id: "x", card_id: "y", ms: 1, first_try: true }).select()) &&
+        blocked(await a.client.from("card_plays").delete().eq("card_id", "rls-check").select()),
+    );
+    if (measured.data) await admin.from("card_plays").delete().eq("id", measured.data.id);
     // Challenges: server-only. Nobody reads or writes them directly (the server re-grades every go).
     const challengeId = "rlscheck" + String(Date.now()).slice(-4);
     const madeChallenge = await admin.from("challenges").insert({ id: challengeId, creator_id: a.id, lesson_id: "strong-passwords", card_ids: ["x"], results: [true], score: 1 });

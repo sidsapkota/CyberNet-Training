@@ -40,6 +40,9 @@ npm run brand:assets      # regenerate logo SVGs + favicon from src/components/b
 npm run brand:mascot      # regenerate public/brand/mascot/<expression>.svg from the Mascot parts
 npm run check:supabase    # verify the Supabase URL + publishable key in .env.local (health check)
 npm run check:rls         # prove users can't read/write each other's rows (needs SUPABASE_SECRET_KEY)
+npm run report:cards      # the 10 slowest and most-failed cards per course, last 7 days (read-only; production:
+                          # E2E_ENV_FILE=.env.production-checks; DAYS=, MIN_PLAYS=). Summary goes in the handover weekly
+npm run e2e:card-plays    # card measurements: one row per first Check, with time and right/wrong, nothing personal (staging)
 npm run usernames:scan    # re-check every username with the current rules (-- --apply replaces failures; counts only)
 npm run e2e:design-qa     # every card type and main page at 360px/desktop, light/dark, motion on/off:
                           # sideways scrolling, controls under 44px, touch drag (dev server running)
@@ -619,6 +622,16 @@ interactive, update `isInteractiveCard` / `InteractiveCard` in `schema.ts`.
   (`eventsAfterReset`; resetting one lesson clears that lesson's events), but keeps met days
   (`goal_days`, which the streak reads) and settings. Clearing the events stops reset-and-replay
   from paying first-time XP twice into a league week.
+
+### Card measurements (`src/lib/measure/`)
+- **What:** for every graded card in lessons and quizzes, the time from the card appearing to the first
+  Check, and whether that answer was right (`startCardTimer` in an effect, `measureFirstCheck` in Check;
+  sent with `sendBeacon`, fire and forget). Retries aren't measured.
+- **Anonymous:** no user, session or device id. `/api/card-plays` checks the lesson and graded card exist in
+  the loaded content before storing (`card_plays`, server-only; a trigger caps 600 a minute).
+  `20261013100000_card_plays.sql`; the privacy policy says so.
+- **Read it:** `npm run report:cards` (slowest and most failed per course, 5+ plays). Use it to pick the
+  cards the content quality pass converts first (`docs/plans/retention-and-fun.md`).
 
 ### Pages
 Pages with the site header live in the `src/app/(main)/` route group: a top bar (logo, Dashboard,

@@ -39,6 +39,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_audit: {
+        Row: {
+          action: string
+          admin_id: string
+          at: string
+          id: number
+          target: string | null
+        }
+        Insert: {
+          action: string
+          admin_id: string
+          at?: string
+          id?: never
+          target?: string | null
+        }
+        Update: {
+          action?: string
+          admin_id?: string
+          at?: string
+          id?: never
+          target?: string | null
+        }
+        Relationships: []
+      }
       card_completions: {
         Row: {
           card_id: string
@@ -90,6 +114,39 @@ export type Database = {
           lesson_id?: string
           misses?: number
           user_id?: string
+        }
+        Relationships: []
+      }
+      card_plays: {
+        Row: {
+          card_id: string
+          created_at: string
+          day: string
+          first_try: boolean
+          id: number
+          lesson_id: string
+          ms: number
+          quiz: boolean
+        }
+        Insert: {
+          card_id: string
+          created_at?: string
+          day?: string
+          first_try: boolean
+          id?: never
+          lesson_id: string
+          ms: number
+          quiz?: boolean
+        }
+        Update: {
+          card_id?: string
+          created_at?: string
+          day?: string
+          first_try?: boolean
+          id?: never
+          lesson_id?: string
+          ms?: number
+          quiz?: boolean
         }
         Relationships: []
       }

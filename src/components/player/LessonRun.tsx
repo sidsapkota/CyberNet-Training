@@ -13,6 +13,7 @@ import { afterAnswer, NO_PACING, nextCardIndex } from "@/cards/pace";
 import { canChallenge } from "@/lib/challenges/rules";
 import { comboLabel, comboPitch, COMBO_FROM, nextCombo } from "@/lib/combo";
 import { useFeedback } from "@/lib/feedback";
+import { measureFirstCheck, startCardTimer } from "@/lib/measure/cardPlays";
 import { useCardNavigationKeys, useGlobalKeyDown } from "@/lib/keyboard";
 import { useProgress } from "@/lib/progress/ProgressProvider";
 import { trackEvent, trackLessonQuit } from "@/lib/analytics";
@@ -133,6 +134,8 @@ export function LessonRun({
   // Read once when the lesson opens: someone with no progress at all is brand new here.
   const [newcomer] = useState(() => !hasAnyProgress(snapshot));
   useEffect(() => trackEvent("lesson_start", lesson.id), [lesson.id]);
+  // The card's anonymous measurement starts when it appears (time to the first Check).
+  useEffect(() => startCardTimer(lesson.id, card.id), [lesson.id, card.id]);
   const showCoach = result === null && run.status === "answering" && coachAllowedOn(index, newcomer) ? coach.coachKey : null;
 
   const isDone = (c: Pick<Card, "id">) => completedThisVisit.has(c.id) || isCardCompleted(snapshot, lesson.id, c.id);
@@ -206,6 +209,7 @@ export function LessonRun({
     const attempts = run.attempts + 1;
     const { correct } = definition.grade(card, run.answer);
     if (attempts === 1) setPacing((current) => afterAnswer(current, correct));
+    if (attempts === 1) measureFirstCheck(lesson.id, card.id, correct);
     const streak = nextCombo(combo.now, correct, attempts);
     setCombo({ now: streak, best: Math.max(combo.best, streak) });
     if (correct) {
