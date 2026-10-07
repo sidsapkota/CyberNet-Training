@@ -118,7 +118,7 @@ const email = `visual-qa-${Date.now()}@example.com`;
 const { data: created, error: createError } = await admin.auth.admin.createUser({ email, email_confirm: true });
 if (createError) throw createError;
 const userId = created.user.id;
-await admin.from("profiles").update({ username: `Qa_${Math.random().toString(36).slice(2, 10)}`, age_confirmed: true }).eq("id", userId);
+await admin.from("profiles").update({ username: `Qa_${Array.from({ length: 17 }, () => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join("")}` /* the longest a username can be (20) */, age_confirmed: true }).eq("id", userId);
 await admin.from("card_completions").insert({ user_id: userId, lesson_id: courses[0].lessons[0].id, card_id: courses[0].lessons[0].cards[0].id, xp: 10, completed_at: new Date().toISOString() });
 const { data: stateBefore } = await admin.from("league_state").select("opened_at").eq("id", true).maybeSingle();
 

@@ -209,7 +209,7 @@ function Standings({ rows, tier, onOpen }: { rows: StandingRow[]; tier: MyLeague
                 <span className="size-4 shrink-0" aria-hidden="true" />
               )}
               <Avatar outfit={row.outfit} pro={row.pro} frame={false} size={32} />
-              <span className="min-w-0 flex-1 truncate font-semibold">
+              <span className="min-w-0 flex-1 font-semibold [overflow-wrap:anywhere]">
                 {row.handle}
                 {row.isMe && <span className="ml-2 text-caption font-semibold text-accent-ink">You</span>}
               </span>
