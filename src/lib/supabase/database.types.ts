@@ -39,6 +39,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_audit: {
+        Row: {
+          action: string
+          admin_id: string
+          at: string
+          id: number
+          target: string | null
+        }
+        Insert: {
+          action: string
+          admin_id: string
+          at?: string
+          id?: never
+          target?: string | null
+        }
+        Update: {
+          action?: string
+          admin_id?: string
+          at?: string
+          id?: never
+          target?: string | null
+        }
+        Relationships: []
+      }
       card_completions: {
         Row: {
           card_id: string
