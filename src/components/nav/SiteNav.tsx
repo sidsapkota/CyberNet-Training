@@ -70,7 +70,7 @@ export function SiteHeader() {
   const nav = useNav();
   return (
     <header className="sticky top-0 z-30 border-b border-line bg-canvas">
-      <div className="mx-auto flex h-16 max-w-wide items-center gap-2 px-gutter sm:gap-6">
+      <div className="mx-auto flex h-16 max-w-wide items-center gap-2 px-gutter sm:gap-3 lg:gap-6">
         <Link href="/" aria-label="CyberNet Training, dashboard" className="inline-flex min-h-11 min-w-11 shrink-0 items-center rounded-control">
           <LogoLockup tileOnTablets />
         </Link>
@@ -82,16 +82,18 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 aria-current={active ? "page" : undefined}
-                className={`relative flex items-center px-3 text-small font-semibold transition-[background-color,color] active:bg-surface-raised ${
+                className={`relative flex items-center px-2 text-small font-semibold lg:px-3 transition-[background-color,color] active:bg-surface-raised ${
                   active ? "text-ink" : "text-ink-muted hover:text-ink"
                 }`}
               >
-                {item.label}
+                {/* Tablets share the bar with the Feed tab: the short label (Home) until there's room. */}
+                <span className="lg:hidden">{item.short ?? item.label}</span>
+                <span className="hidden lg:inline">{item.label}</span>
                 {active && (
                   <motion.span
                     layoutId="nav-active"
                     aria-hidden="true"
-                    className="absolute inset-x-3 bottom-0 h-0.5 rounded-sm bg-accent"
+                    className="absolute inset-x-2 bottom-0 h-0.5 rounded-sm bg-accent lg:inset-x-3"
                   />
                 )}
               </Link>
