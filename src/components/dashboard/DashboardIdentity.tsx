@@ -22,7 +22,7 @@ export function DashboardIdentity() {
     <>
     <div className="mb-4 flex items-center gap-3">
       <UserNode outfit={auth.outfit} pro={hasPro} size={36} />
-      <p className="min-w-0 flex-1 truncate font-semibold">{name}</p>
+      <p className="min-w-0 flex-1 font-semibold [overflow-wrap:anywhere]">{name}</p>
       {hasPro ? (
         <Link href="/account/plan" aria-label={founder ? "Your plan: Founding Member" : "Your plan: Pro"} className="inline-flex min-h-11 items-center rounded-control px-1">
           {founder ? <FounderBadge lit /> : <ProBadge lit />}

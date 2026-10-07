@@ -135,7 +135,7 @@ function HeaderAccount() {
       <Pending>
         <UserNode outfit={auth.outfit} pro={hasPro} size={32} />
       </Pending>
-      <span className="hidden max-w-32 truncate lg:inline">{name}</span>
+      <span className="hidden whitespace-nowrap lg:inline">{name}</span>
       {hasPro && <ProBadge size="sm" lit className="hidden lg:inline-flex" />}
     </Link>
   );
