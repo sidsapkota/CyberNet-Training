@@ -69,7 +69,7 @@ export function AccountPanel({
         <Avatar outfit={auth.status === "signed-in" ? auth.outfit : null} pro={hasPro} size={56} />
         <div className="min-w-0">
           <h1 className="truncate text-headline font-semibold">{saved ?? "Your account"}</h1>
-          {email && <p className="truncate text-small text-ink-muted">{email}</p>}
+          {email && <p className="text-small text-ink-muted [overflow-wrap:anywhere]">{email}</p>}
         </div>
       </div>
 

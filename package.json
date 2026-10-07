@@ -37,6 +37,8 @@
     "e2e:account-speed": "node scripts/e2e/account-speed.mjs",
     "e2e:mascot-motion": "node scripts/e2e/mascot-motion.mjs",
     "e2e:fit-audit": "node scripts/e2e/fit-audit.mjs",
+    "e2e:visual-qa": "node scripts/e2e/visual-qa.mjs",
+    "e2e:visual-qa:gate": "node scripts/e2e/visual-qa.mjs --gate",
     "e2e:dashboard-numbers": "node scripts/e2e/dashboard-numbers.mjs",
     "e2e:player-flow": "node scripts/e2e/player-flow-shots.mjs",
     "e2e:prod-mascot": "node scripts/e2e/prod-mascot.mjs",
