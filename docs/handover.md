@@ -96,6 +96,7 @@ Stay Safe Online (done, merged 5 Oct) → **Inside Your Devices (next)** → How
 - **`WEBSITE-CONTENT-FOR-AI.md` after a build** shows as modified (line endings only); `git checkout -- WEBSITE-CONTENT-FOR-AI.md` before switching branches.
 - **Local `.env.local`** now also holds `ADMIN_USER_IDS` = the staging admin test account (admin-e2e@example.com), for `e2e:admin`. Never put a production id there.
 - **The dev server's first request** after an idle spell sometimes 500s ("Unexpected end of JSON input" inside Next's handler); the e2e scripts reload once. It's dev-only.
+- **Test dates:** seed "n days ago" by calendar day in the learner's time zone, never by subtracting 24-hour steps: Sydney's daylight-saving days have 23 or 25 hours, so 24-hour steps skip a date in the hour after midnight (it broke `e2e:rewards` on 8 Oct; fixed).
 - **Stale servers:** on Windows a stopped background `next start` can leave its node process running; it then serves (and re-caches) pages from the old build. Free the port (`netstat -ano`, `Stop-Process`) and rebuild before trusting a run.
 - **Turbopack won't follow a `node_modules` junction** in a second worktree (`next dev --webpack` works, or check the branch out in a worktree with real `node_modules`).
 - **Vercel's security checkpoint** once challenged this machine after many automated runs: check `X-Vercel-Mitigated` before rolling back.
