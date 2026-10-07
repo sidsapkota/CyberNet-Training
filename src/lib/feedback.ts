@@ -17,8 +17,8 @@ export function useFeedback() {
   return useMemo(
     () => ({
       enabled,
-      play(name: SoundName) {
-        if (enabled) playSound(name);
+      play(name: SoundName, pitch?: number) {
+        if (enabled) playSound(name, pitch);
       },
       haptic(kind: HapticKind) {
         if (enabled && !reduceMotion) vibrate(kind);

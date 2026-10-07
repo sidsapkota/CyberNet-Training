@@ -1,4 +1,9 @@
 import {
+  Swords,
+  Share2,
+  Copy,
+  Rocket,
+  Flame,
   ArrowRight,
   Award,
   Infinity as InfinityLucide,
@@ -157,6 +162,15 @@ export const PlayIcon = brandIcon(Play, "PlayIcon");
 export const XpIcon = brandIcon(Zap, "XpIcon");
 /** A rare Feed byte. */
 export const RareIcon = brandIcon(Sparkles, "RareIcon");
+/** The lesson combo ("3 in a row!") only: streaks keep the node chain (StreakIcon). */
+export const ComboIcon = brandIcon(Flame, "ComboIcon");
+/** Challenge a friend (the async duel). */
+export const DuelIcon = brandIcon(Swords, "DuelIcon");
+export const ShareIcon = brandIcon(Share2, "ShareIcon");
+export const CopyIcon = brandIcon(Copy, "CopyIcon");
+/** Pro challenge emotes ("Wow", "Bring it"); "On fire" uses ComboIcon. */
+export const WowIcon = brandIcon(Sparkles, "WowIcon");
+export const BringItIcon = brandIcon(Rocket, "BringItIcon");
 export const ChallengeIcon = brandIcon(Diamond, "ChallengeIcon");
 export const GripIcon = brandIcon(GripVertical, "GripIcon");
 export const ChevronDownIcon = brandIcon(ChevronDown, "ChevronDownIcon");
