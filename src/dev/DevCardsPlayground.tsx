@@ -11,9 +11,26 @@ import { LocalStorageProgressStore } from "@/lib/progress/localStorageProgressSt
 import { MemoryStorage } from "@/lib/progress/memoryStorage";
 import { ProgressProvider } from "@/lib/progress/ProgressProvider";
 import type { ProgressStore } from "@/lib/progress/ProgressStore";
+import { type Card, CardSchema } from "@/cards/schema";
 import { CARD_SAMPLES } from "./card-samples";
 
-type Mode = "lesson" | "quiz";
+/**
+ * Adaptive pacing demo (src/cards/pace.ts): card 4 is the easy win (skipped after 3 right first
+ * time), card 6 an extra example (shown only straight after a miss on card 5). e2e:pacing plays it.
+ */
+const PACING_CARDS: Card[] = [1, 2, 3, 4, 5, 6].map((n) =>
+  CardSchema.parse({
+    id: `pacing-${n}`,
+    type: "true_false",
+    difficulty: "core",
+    ...(n === 4 ? { pace: "easy" } : n === 6 ? { pace: "extra" } : {}),
+    prompt: `Pacing card ${n}: is this true?`,
+    explanation: `Card ${n} is true.`,
+    answer: true,
+  }),
+);
+
+type Mode = "lesson" | "quiz" | "pacing";
 interface Run {
   key: number;
   mode: Mode;
@@ -23,10 +40,10 @@ interface Run {
 }
 
 function buildRun(mode: Mode, cardIds: string[]) {
-  const cards = CARD_SAMPLES.filter((c) => cardIds.includes(c.id));
+  const cards = mode === "pacing" ? PACING_CARDS : CARD_SAMPLES.filter((c) => cardIds.includes(c.id));
   const base = { order: 1, courseId: "dev", moduleId: "dev-module", access: "free" as const, guests: true };
   const lesson: RegularLesson | Quiz =
-    mode === "lesson"
+    mode !== "quiz"
       ? { ...base, id: "dev-lesson", kind: "lesson", title: "Card playground (lesson)", about: "Every card type, with throwaway progress.", icon: "layers", cards }
       : {
           ...base,
@@ -99,6 +116,9 @@ export function DevCardsPlayground() {
         </Button>
         <Button variant="secondary" onClick={() => start("quiz", allIds)}>
           Play all as a quiz
+        </Button>
+        <Button variant="secondary" onClick={() => start("pacing", [])}>
+          Play the pacing demo
         </Button>
       </div>
 
