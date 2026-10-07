@@ -11,6 +11,7 @@ import { requireUserId } from "@/lib/auth/server";
 import { deleteStripeCustomer } from "@/lib/pro/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { setReminderEmails } from "@/lib/reminders/server";
 import { setUsername, suggestUsername, type UsernameResult } from "@/lib/usernames/server";
 
 /** Sets the learner's public username (sign-up's pick, or a change: first free, then every 30 days). */
@@ -41,6 +42,15 @@ export async function deleteAccountAction(): Promise<void> {
   const supabase = await createSupabaseServerClient();
   await supabase.auth.signOut();
   redirect("/?account=deleted");
+}
+
+/**
+ * Turns reminder emails on or off for the signed-in learner (opt-in only; turning them on records
+ * when consent was given). Learners can't write their profile row themselves.
+ */
+export async function setReminderEmailsAction(on: boolean): Promise<void> {
+  const userId = await requireUserId();
+  await setReminderEmails(userId, z.boolean().parse(on));
 }
 
 /**

@@ -487,9 +487,12 @@ export type Database = {
           daily_goal: number
           daily_goal_chosen: boolean
           display_name: string | null
+          email_token: string
           id: string
           learning_mode: string
           outfit: string[]
+          reminder_consent_at: string | null
+          reminder_emails: boolean
           sound_enabled: boolean
           time_zone: string | null
           time_zone_changed_at: string | null
@@ -505,9 +508,12 @@ export type Database = {
           daily_goal?: number
           daily_goal_chosen?: boolean
           display_name?: string | null
+          email_token?: string
           id: string
           learning_mode?: string
           outfit?: string[]
+          reminder_consent_at?: string | null
+          reminder_emails?: boolean
           sound_enabled?: boolean
           time_zone?: string | null
           time_zone_changed_at?: string | null
@@ -523,9 +529,12 @@ export type Database = {
           daily_goal?: number
           daily_goal_chosen?: boolean
           display_name?: string | null
+          email_token?: string
           id?: string
           learning_mode?: string
           outfit?: string[]
+          reminder_consent_at?: string | null
+          reminder_emails?: boolean
           sound_enabled?: boolean
           time_zone?: string | null
           time_zone_changed_at?: string | null
@@ -565,6 +574,45 @@ export type Database = {
           score?: number
           user_id?: string
           xp?: number
+        }
+        Relationships: []
+      }
+      reminder_emails: {
+        Row: {
+          day: string
+          dry_run: boolean
+          id: number
+          key: string
+          kind: string
+          opened_at: string | null
+          resend_id: string | null
+          returned_at: string | null
+          sent_at: string
+          user_id: string
+        }
+        Insert: {
+          day: string
+          dry_run?: boolean
+          id?: never
+          key?: string
+          kind: string
+          opened_at?: string | null
+          resend_id?: string | null
+          returned_at?: string | null
+          sent_at?: string
+          user_id: string
+        }
+        Update: {
+          day?: string
+          dry_run?: boolean
+          id?: never
+          key?: string
+          kind?: string
+          opened_at?: string | null
+          resend_id?: string | null
+          returned_at?: string | null
+          sent_at?: string
+          user_id?: string
         }
         Relationships: []
       }

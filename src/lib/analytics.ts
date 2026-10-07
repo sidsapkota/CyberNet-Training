@@ -51,7 +51,11 @@ export type AnalyticsEvent =
   | "subscribed"
   | "certificate_issued"
   // Someone clicked "Email us" about a family/household deal, in /pro's parent section (no properties).
-  | "family_interest";
+  | "family_interest"
+  // Reminder emails (sent from the server, with the email kind as `source`): src/lib/reminders/server.ts
+  | "reminder_sent"
+  | "reminder_opened"
+  | "reminder_returned";
 
 /** What an event is about: a lesson id (a plain string), or a course. */
 export type EventTarget = string | { course: string };
