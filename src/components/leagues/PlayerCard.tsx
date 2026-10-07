@@ -50,7 +50,7 @@ export function PlayerCard({
             <TierBadge tier={tier} tile={false} className="size-7" />
           </span>
         </span>
-        <p className="mt-3 max-w-full truncate text-lead font-semibold">{handle}</p>
+        <p className="mt-3 max-w-full text-lead font-semibold [overflow-wrap:anywhere]">{handle}</p>
         <p className="mt-0.5 text-small text-ink-muted">{TIER_NAMES[tier]} tier</p>
         {founder && <FounderBadge className="mt-2" />}
       </div>
