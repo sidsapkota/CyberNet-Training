@@ -62,6 +62,8 @@ npm run e2e:visual-qa:gate # MERGE GATE: every page (guest + signed in, light + 
                           # restores leagues). Fails on any problem
 npm run e2e:visual-qa     # the full sweep: all 6 sizes, plus contact sheets in docs/plans/visual-qa/ (PAGES_ONLY=,
                           # CARDS_ONLY=, COURSE=, SIZES=, THEMES=, SHEETS=0)
+npm run e2e:combo         # the lesson combo ("3 in a row!"), its reset on a miss, and "Best combo" at lesson complete
+                          # (guest, 360x560 + desktop; dev server running)
 npm run e2e:dashboard-numbers # cards done, no lesson finished: header XP, Activity XP bars and rings
                           # (throwaway account; secret key, so a local production build or production)
 npm run e2e:player-flow   # before/after screenshots: a hotspot card and the wrong-answer flow (SHOTS_TAG=)
@@ -463,6 +465,12 @@ interactive, update `isInteractiveCard` / `InteractiveCard` in `schema.ts`.
     started again); and Check stays off until the answer differs from the one just marked wrong
     (`canCheckAgain`, with "Change your answer, then press Check."), so "wrong" can never loop. The
     same in Mistake review and the teaser card.
+  - **Combo** (`src/lib/combo.ts`, tested): from the 3rd graded card in a row right on the first
+    try, the footer shows "3 in a row!" (then "4 in a row!"…) with a small amber flame (`ComboIcon`),
+    the correct sound gets a rising extra note (`combo`, a semitone higher per step, capped) and a
+    light double buzz. A wrong answer resets it quietly. Lesson complete shows "Best combo: N in a
+    row" (from 3), and when the lesson met today's goal the streak's node chain pops bigger as its
+    count ticks up by one. `npm run e2e:combo` checks it.
   - Right answer: a cyan pulse travels along the progress trace to this card's node, which
     ripples. The footer status node fills with a check, and the explanation and XP earned show.
   - **Mascot reactions** (`src/lib/reactions.ts`): every answer in a lesson gets a small mascot
@@ -1568,7 +1576,8 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
 - **Sounds are synthesised** with the Web Audio API in `src/lib/sound.ts`: short oscillator notes
   with soft envelopes. **Source: original, written for this project; no audio files, nothing to
   license.**
-- **Sounds:** correct, wrong, card complete, lesson complete, daily goal reached, part removed and snap. All are under
+- **Sounds:** correct, wrong, card complete, lesson complete, daily goal reached, part removed, snap and
+  combo (one note after "correct", raised per combo step). All are under
   300ms except the chime, and quiet.
 - **Never before interaction:** `installAudioUnlock()` (in `Providers`) only creates the audio
   context on the first tap or key press. Before that, `playSound` is a no-op.
@@ -1585,6 +1594,8 @@ Reference sheet: `docs/brand/mascot/expression-sheet.png` (AI concept, never shi
 - No glassmorphism: no `backdrop-blur`, no translucent panels. Headers are solid `canvas` with a
   hairline border.
 - No emoji as icons, and one icon set.
+- **The only flame is the lesson combo's** (`ComboIcon`, amber, owner 7 Oct 2026). Streaks keep the
+  node chain.
 - No generic grey or black dark mode: surfaces are navy.
 - Round shapes are for nodes (and progress rings) only. Glow is for cyan interactive elements only.
 - New screens should use the network motif for loading, empty, success and locked states.
