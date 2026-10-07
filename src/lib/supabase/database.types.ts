@@ -93,6 +93,39 @@ export type Database = {
         }
         Relationships: []
       }
+      card_plays: {
+        Row: {
+          card_id: string
+          created_at: string
+          day: string
+          first_try: boolean
+          id: number
+          lesson_id: string
+          ms: number
+          quiz: boolean
+        }
+        Insert: {
+          card_id: string
+          created_at?: string
+          day?: string
+          first_try: boolean
+          id?: never
+          lesson_id: string
+          ms: number
+          quiz?: boolean
+        }
+        Update: {
+          card_id?: string
+          created_at?: string
+          day?: string
+          first_try?: boolean
+          id?: never
+          lesson_id?: string
+          ms?: number
+          quiz?: boolean
+        }
+        Relationships: []
+      }
       certificates: {
         Row: {
           completed_on: string
@@ -120,6 +153,80 @@ export type Database = {
           name?: string
           revoked_at?: string | null
           user_id?: string
+        }
+        Relationships: []
+      }
+      challenge_attempts: {
+        Row: {
+          challenge_id: string
+          created_at: string
+          emote: string | null
+          id: number
+          key: string
+          player_id: string | null
+          results: boolean[]
+          score: number
+        }
+        Insert: {
+          challenge_id: string
+          created_at?: string
+          emote?: string | null
+          id?: never
+          key?: string
+          player_id?: string | null
+          results: boolean[]
+          score: number
+        }
+        Update: {
+          challenge_id?: string
+          created_at?: string
+          emote?: string | null
+          id?: never
+          key?: string
+          player_id?: string | null
+          results?: boolean[]
+          score?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "challenge_attempts_challenge_id_fkey"
+            columns: ["challenge_id"]
+            isOneToOne: false
+            referencedRelation: "challenges"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      challenges: {
+        Row: {
+          card_ids: string[]
+          created_at: string
+          creator_id: string
+          expires_at: string
+          id: string
+          lesson_id: string
+          results: boolean[]
+          score: number
+        }
+        Insert: {
+          card_ids: string[]
+          created_at?: string
+          creator_id: string
+          expires_at?: string
+          id: string
+          lesson_id: string
+          results: boolean[]
+          score: number
+        }
+        Update: {
+          card_ids?: string[]
+          created_at?: string
+          creator_id?: string
+          expires_at?: string
+          id?: string
+          lesson_id?: string
+          results?: boolean[]
+          score?: number
         }
         Relationships: []
       }
@@ -487,9 +594,12 @@ export type Database = {
           daily_goal: number
           daily_goal_chosen: boolean
           display_name: string | null
+          email_token: string
           id: string
           learning_mode: string
           outfit: string[]
+          reminder_consent_at: string | null
+          reminder_emails: boolean
           sound_enabled: boolean
           time_zone: string | null
           time_zone_changed_at: string | null
@@ -505,9 +615,12 @@ export type Database = {
           daily_goal?: number
           daily_goal_chosen?: boolean
           display_name?: string | null
+          email_token?: string
           id: string
           learning_mode?: string
           outfit?: string[]
+          reminder_consent_at?: string | null
+          reminder_emails?: boolean
           sound_enabled?: boolean
           time_zone?: string | null
           time_zone_changed_at?: string | null
@@ -523,9 +636,12 @@ export type Database = {
           daily_goal?: number
           daily_goal_chosen?: boolean
           display_name?: string | null
+          email_token?: string
           id?: string
           learning_mode?: string
           outfit?: string[]
+          reminder_consent_at?: string | null
+          reminder_emails?: boolean
           sound_enabled?: boolean
           time_zone?: string | null
           time_zone_changed_at?: string | null
@@ -565,6 +681,45 @@ export type Database = {
           score?: number
           user_id?: string
           xp?: number
+        }
+        Relationships: []
+      }
+      reminder_emails: {
+        Row: {
+          day: string
+          dry_run: boolean
+          id: number
+          key: string
+          kind: string
+          opened_at: string | null
+          resend_id: string | null
+          returned_at: string | null
+          sent_at: string
+          user_id: string
+        }
+        Insert: {
+          day: string
+          dry_run?: boolean
+          id?: never
+          key?: string
+          kind: string
+          opened_at?: string | null
+          resend_id?: string | null
+          returned_at?: string | null
+          sent_at?: string
+          user_id: string
+        }
+        Update: {
+          day?: string
+          dry_run?: boolean
+          id?: never
+          key?: string
+          kind?: string
+          opened_at?: string | null
+          resend_id?: string | null
+          returned_at?: string | null
+          sent_at?: string
+          user_id?: string
         }
         Relationships: []
       }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getCardDefinition } from "@/cards/registry";
 import type { Card } from "@/cards/schema";
 import type { CardStatus } from "@/cards/types";
@@ -14,6 +14,7 @@ import { CoachPanel } from "./coach/CoachPanel";
 import { useCoach } from "./coach/useCoach";
 import { useProgress } from "@/lib/progress/ProgressProvider";
 import { useFeedback } from "@/lib/feedback";
+import { measureFirstCheck, startCardTimer } from "@/lib/measure/cardPlays";
 import { getNextLesson } from "@/lib/progress/state";
 import { emptySnapshot, type QuizAttempt } from "@/lib/progress/types";
 import { quizXpToAward, scoreQuiz } from "@/lib/progress/xp";
@@ -75,6 +76,10 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
   const coach = useCoach(card);
   const showCoach = phase === "playing" && run.status === "answering" ? coach.coachKey : null;
   const isLast = index + 1 >= total;
+  // The question's anonymous measurement starts when it appears.
+  useEffect(() => {
+    if (phase === "playing") startCardTimer(quiz.id, card.id);
+  }, [phase, quiz.id, card.id]);
 
   function start() {
     setViewing(null);
@@ -92,6 +97,7 @@ export function QuizRun({ quiz, course }: { quiz: Quiz; course: CourseOutline })
     if (!definition.isAnswerReady(run.answer, card)) return;
     if (showCoach) coach.dismiss();
     const { correct } = definition.grade(card, run.answer);
+    measureFirstCheck(quiz.id, card.id, correct, true);
     setRun({ ...run, status: correct ? "correct" : "incorrect" });
     setAnswers((current) => [...current, { cardId: card.id, answer: run.answer, correct }]);
     if (correct) setPulse((current) => ({ key: (current?.key ?? 0) + 1, from: index - 1, to: index }));

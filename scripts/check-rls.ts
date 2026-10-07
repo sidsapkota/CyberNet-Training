@@ -290,9 +290,10 @@ async function main() {
     if (closed) record("Before leagues open, standings show nothing", !closed.error && (closed.data ?? []).length === 0);
     await admin.from("league_state").update({ opened_at: new Date().toISOString() }).eq("id", true);
 
-    // Weekly XP must equal the ledger's total for this week (other checks above earned XP too).
+    // Weekly XP must equal the ledger's total for this week, practice left out (league XP never
+    // counts replays: 20261008100000_league_xp_no_practice). Other checks above earned XP too.
     const weekStart = (await admin.rpc("league_week")).data as string;
-    const ledger = (await admin.from("xp_events").select("user_id, xp, at").in("user_id", [a.id, b.id])).data ?? [];
+    const ledger = (await admin.from("xp_events").select("user_id, xp, at").in("user_id", [a.id, b.id]).neq("kind", "practice")).data ?? [];
     const startMs = Date.parse(`${weekStart}T00:00:00+10:00`) - 3_600_000; // Sydney Monday, either offset
     const weekXp = (id: string) => ledger.filter((e) => e.user_id === id && Date.parse(e.at) >= startMs).reduce((sum, e) => sum + e.xp, 0);
     const standingsA = await a.client.rpc("league_standings");
@@ -528,6 +529,19 @@ async function main() {
       JSON.stringify({ refunded: refundedUser.data ?? refundedUser.error?.message, afterRefund }),
     );
     record("Signed-out visitors can't list Founding Members", Boolean((await anonSeats.rpc("league_founders")).error));
+
+    // Card measurements: anonymous and server-only.
+    const measured = await admin.from("card_plays").insert({ lesson_id: "strong-passwords", card_id: "rls-check", ms: 1234, first_try: true }).select("id").single();
+    const anonPlays = createClient<Database>(env.url, env.publishableKey, noSession);
+    record(
+      "Card measurements are server-only: nobody else can read or write them",
+      !measured.error &&
+        blocked(await a.client.from("card_plays").select("*")) &&
+        blocked(await anonPlays.from("card_plays").select("*")) &&
+        blocked(await anonPlays.from("card_plays").insert({ lesson_id: "x", card_id: "y", ms: 1, first_try: true }).select()) &&
+        blocked(await a.client.from("card_plays").delete().eq("card_id", "rls-check").select()),
+    );
+    if (measured.data) await admin.from("card_plays").delete().eq("id", measured.data.id);
 
     // Signed-out visitors see nothing.
     const anon = createClient<Database>(env.url, env.publishableKey, noSession);
