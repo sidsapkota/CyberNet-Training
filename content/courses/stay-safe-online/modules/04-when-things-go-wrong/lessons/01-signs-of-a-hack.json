@@ -196,33 +196,33 @@
       "nudge": "Which actions change what the attacker can sign in with, or kick out a device they're already on?"
     },
     {
-      "id": "recovery-offer",
+      "id": "pay-to-unlock",
       "type": "multiple_choice",
       "difficulty": "core",
       "teaches": [
         "official-account-recovery"
       ],
       "uses": [],
-      "prompt": "A stranger offers to unlock your account for $20. What is this?",
+      "prompt": "You pay a stranger $20 to unlock your account. What happens?",
       "options": [
         {
-          "id": "scam",
-          "text": "A scam: only the app's own recovery can get it back"
+          "id": "money-gone",
+          "text": "They keep the $20, and your account stays locked"
         },
         {
-          "id": "help",
-          "text": "Real help: some people are paid experts at recovery",
-          "nudge": "The app's own recovery is free, and nobody else can open your account for you."
+          "id": "they-unlock",
+          "text": "They unlock it, like a paid recovery expert would",
+          "nudge": "Only the app itself can unlock your account. Nobody else can, however much you pay."
         },
         {
-          "id": "hacker",
-          "text": "The app's support team, who noticed the take-over",
-          "nudge": "Real support teams don't message you asking for money."
+          "id": "support-unlocks",
+          "text": "The app's support team steps in and unlocks it",
+          "nudge": "Real support teams never message you asking for money. The app's own recovery is free."
         }
       ],
-      "correctOptionId": "scam",
-      "explanation": "Paid \"recovery\" offers in your messages are scams. Use the app's official **Forgot password**, tell a trusted adult, and **never pay**.",
-      "hint": "The prompt says what can get you back in. Is a stranger asking for $20 part of it?"
+      "correctOptionId": "money-gone",
+      "explanation": "Strangers can't unlock accounts, so the money's just gone. Use the app's own **Forgot password**, tell a trusted adult, and never pay.",
+      "hint": "Can anyone outside the app open your account for you?"
     },
     {
       "id": "recovery-changed",

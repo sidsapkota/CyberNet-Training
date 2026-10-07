@@ -48,6 +48,39 @@
       "explanation": "Five warning signs: a **fake sender**, **rushing you**, **\"Dear Customer\"**, **asking for secrets** and a **hidden link**."
     },
     {
+      "id": "type-in-the-button",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "uses": [
+        "hidden-link"
+      ],
+      "prompt": "You tap this email's button and type your password. What happens?",
+      "options": [
+        {
+          "id": "scammer-gets-it",
+          "text": "The scammer gets it, and tries it on the real bank"
+        },
+        {
+          "id": "bank-blocks",
+          "text": "Your Bank spots the fake page and blocks it for you",
+          "nudge": "The button goes to `yourbank-verify.example`. Your Bank never sees what you type there."
+        },
+        {
+          "id": "needs-card",
+          "text": "Nothing yet: they'd also need your card number",
+          "nudge": "A password is enough to try your account. That's why it's a secret."
+        },
+        {
+          "id": "phone-warns",
+          "text": "Your phone warns you and wipes what you typed",
+          "nudge": "Phones can't always spot a new fake page. You're the check."
+        }
+      ],
+      "correctOptionId": "scammer-gets-it",
+      "explanation": "The button goes to `yourbank-verify.example`, the scammer's page. Anything you type there goes straight to them.",
+      "hint": "Remember the hidden link: where does the button really go?"
+    },
+    {
       "id": "meet-phishing",
       "type": "reveal",
       "difficulty": "core",
@@ -84,52 +117,6 @@
       "explanation": "The sender isn't `@yourbank.example`, the subject **rushes you**, it says **\"Dear Customer\"**, it **asks for secrets** and the button goes to `yourbank-verify.example`.",
       "hint": "Go back over the five signs you just met. Each one is on its own line.",
       "nudge": "There are five. Look for each sign you just met, one at a time."
-    },
-    {
-      "id": "phish-or-fine",
-      "type": "sort_bins",
-      "difficulty": "core",
-      "uses": [
-        "rushing-is-a-scam-sign",
-        "companies-never-ask-for-secrets",
-        "hidden-link"
-      ],
-      "prompt": "Phishing, or probably fine?",
-      "bins": [
-        {
-          "id": "phish",
-          "label": "Phishing"
-        },
-        {
-          "id": "fine",
-          "label": "Probably fine"
-        }
-      ],
-      "items": [
-        {
-          "id": "password",
-          "label": "\"Urgent: reply with your password\"",
-          "bin": "phish"
-        },
-        {
-          "id": "hidden-link",
-          "label": "A link to a different site than it says",
-          "bin": "phish"
-        },
-        {
-          "id": "statement",
-          "label": "Your Bank: \"Statement ready in the app\"",
-          "bin": "fine"
-        },
-        {
-          "id": "school",
-          "label": "Your school's usual email about a trip",
-          "bin": "fine"
-        }
-      ],
-      "explanation": "Rushing, asking for secrets and links that go elsewhere are phishing. The real app, or your school's usual email, is probably fine.",
-      "hint": "Check each against the signs: fake sender, rushing, \"Dear Customer\", secrets, hidden links.",
-      "nudge": "Check each one again: does it rush you, ask for secrets or hide a link?"
     },
     {
       "id": "prize-email",

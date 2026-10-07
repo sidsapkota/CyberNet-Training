@@ -7,50 +7,35 @@
   "icon": "life-buoy",
   "cards": [
     {
-      "id": "helps-or-worse",
-      "type": "sort_bins",
+      "id": "block-before-saving",
+      "type": "multiple_choice",
       "difficulty": "core",
-      "uses": [
-        "save-evidence",
-        "dont-pay-scammers",
-        "trusted-adult"
-      ],
-      "prompt": "Helps, or makes it worse?",
-      "bins": [
+      "uses": [],
+      "prompt": "You block a bully before saving their messages. What happens?",
+      "options": [
         {
-          "id": "helps",
-          "label": "Helps"
+          "id": "may-vanish",
+          "text": "The messages may disappear, so there's nothing to show"
         },
         {
-          "id": "worse",
-          "label": "Makes it worse"
+          "id": "app-keeps-copy",
+          "text": "The app keeps a copy for you to report later",
+          "nudge": "Some apps hide or delete the chat once you block. Screenshot first, to be safe."
+        },
+        {
+          "id": "auto-report",
+          "text": "Blocking reports them to the app at the same time",
+          "nudge": "Blocking only stops them reaching you. Reporting is a separate step."
+        },
+        {
+          "id": "stay-forever",
+          "text": "Nothing changes: the messages stay in your chat",
+          "nudge": "Not always. Some apps remove the chat when you block, so save it first."
         }
       ],
-      "items": [
-        {
-          "id": "screenshot",
-          "label": "Screenshot the mean messages",
-          "bin": "helps"
-        },
-        {
-          "id": "tell",
-          "label": "Tell a trusted adult",
-          "bin": "helps"
-        },
-        {
-          "id": "insult",
-          "label": "Reply with insults",
-          "bin": "worse"
-        },
-        {
-          "id": "pay",
-          "label": "Pay a scammer to go away",
-          "bin": "worse"
-        }
-      ],
-      "explanation": "Keep the evidence and get help. Replying with insults, or paying a scammer, only makes it worse.",
-      "hint": "Which ones keep the evidence and get you help? Which give a scammer what they want?",
-      "nudge": "Anything that removes the evidence, or gives a scammer what they want, makes it worse."
+      "correctOptionId": "may-vanish",
+      "explanation": "On some apps, blocking hides the chat, and the evidence goes with it. Screenshot first, then block.",
+      "hint": "After you block someone, can you always still see your chat with them?"
     },
     {
       "id": "never-your-fault",
@@ -244,32 +229,37 @@
       "nudge": "Start with the one you're surest of. What is each service for?"
     },
     {
-      "id": "card-money",
+      "id": "bank-can-help",
       "type": "multiple_choice",
       "difficulty": "core",
       "uses": [
         "contact-bank"
       ],
-      "prompt": "A scam took money from your card. What's the first thing?",
+      "prompt": "A scam used your card. You call your bank now. What happens?",
       "options": [
         {
-          "id": "bank",
-          "text": "Contact the bank straight away (with an adult)"
+          "id": "block-card",
+          "text": "They can block the card, and may stop the payment"
         },
         {
-          "id": "wait",
-          "text": "Wait a day to see if the bank fixes it",
-          "nudge": "Every hour counts with money. Who did the lesson say to contact?"
+          "id": "nothing",
+          "text": "Nothing: once money's gone, a bank can't do anything",
+          "nudge": "Banks deal with scams every day. Calling fast gives them the best chance to help."
         },
         {
-          "id": "post",
-          "text": "Post about it online so others don't get caught",
-          "nudge": "Warn people later. First, stop more money going."
+          "id": "told-off",
+          "text": "They tell you off for falling for a scam",
+          "nudge": "You won't be in trouble. Scams fool adults too, and banks just want to help."
+        },
+        {
+          "id": "wait-week",
+          "text": "They wait a week to see if it happens again",
+          "nudge": "Banks act fast on scams. That's why calling straight away matters."
         }
       ],
-      "correctOptionId": "bank",
-      "explanation": "Contact your bank straight away: it may stop the payment or cancel the card. Then report it to Scamwatch.",
-      "hint": "Who did the lesson say to contact straight away about money?"
+      "correctOptionId": "block-card",
+      "explanation": "Calling fast, with an adult, lets the bank block the card and maybe stop the payment. You're not in trouble.",
+      "hint": "Why would the lesson say to tell your bank straight away?"
     },
     {
       "id": "recap",

@@ -64,6 +64,39 @@
       "sentence": "**Two-step sign-in** asks for your password **plus** a second proof, like a code on your phone."
     },
     {
+      "id": "thief-hits-step-two",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "uses": [
+        "two-step-sign-in"
+      ],
+      "prompt": "Two-step is on. A thief types your stolen password. What happens?",
+      "options": [
+        {
+          "id": "stuck",
+          "text": "They're stuck: the code goes to your phone, not theirs"
+        },
+        {
+          "id": "get-in",
+          "text": "They get in, because the password they typed is right",
+          "nudge": "The password is only step one now. What does the site ask for next?"
+        },
+        {
+          "id": "code-to-thief",
+          "text": "The site sends the code to the thief's phone instead",
+          "nudge": "The code goes to the phone you set up: yours."
+        },
+        {
+          "id": "you-locked-out",
+          "text": "Your password stops working, so you're locked out too",
+          "nudge": "Nothing changes for you. Only someone without your phone gets stuck."
+        }
+      ],
+      "correctOptionId": "stuck",
+      "explanation": "Without your phone, the thief can't finish signing in. A stolen password alone isn't enough any more.",
+      "hint": "Two-step asks for two things. Which one doesn't the thief have?"
+    },
+    {
       "id": "the-code-text",
       "type": "scenario",
       "difficulty": "core",

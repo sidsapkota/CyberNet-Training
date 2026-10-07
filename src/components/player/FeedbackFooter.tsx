@@ -3,12 +3,13 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useId, useState } from "react";
 import { Button, type ButtonVariant } from "@/components/ui/Button";
-import { BackIcon, CheckIcon, ChevronDownIcon, GoalIcon, HintIcon, XIcon, XpIcon } from "@/components/ui/icons";
+import { BackIcon, CheckIcon, ChevronDownIcon, ComboIcon, GoalIcon, HintIcon, XIcon, XpIcon } from "@/components/ui/icons";
 import { Markdown } from "@/components/ui/Markdown";
 import { Mascot } from "@/components/mascot/Mascot";
 import { type WrongTheme, WrongBurst } from "./WrongBurst";
 import { StreakIcon } from "@/components/streak/StreakIcon";
 import type { MascotExpression } from "@/components/mascot/poses";
+import { PRESS_SPRING } from "@/lib/motion";
 
 export type FeedbackTone = "neutral" | "correct" | "incorrect";
 
@@ -37,6 +38,8 @@ interface FeedbackFooterProps {
   practiceXp?: number;
   /** Shown under the heading when this answer met the daily goal. */
   goalNote?: string;
+  /** "3 in a row!": the lesson combo, under the heading (src/lib/combo.ts). */
+  combo?: string | null;
   explanation?: string;
   /** If true, the explanation starts hidden behind a "Show explanation" toggle. */
   collapseExplanation?: boolean;
@@ -98,6 +101,7 @@ export function FeedbackFooter({
   xpAwarded = 0,
   practiceXp = 0,
   goalNote,
+  combo,
   explanation,
   collapseExplanation = false,
   primary,
@@ -176,6 +180,17 @@ export function FeedbackFooter({
                   </motion.span>
                 )}
               </div>
+              {combo && (
+                <motion.p
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={PRESS_SPRING}
+                  className="mt-2 flex w-fit origin-left items-center gap-1.5 text-small font-semibold text-warning"
+                >
+                  <ComboIcon className="size-4" />
+                  {combo}
+                </motion.p>
+              )}
               {goalNote && (
                 <p className="mt-2 flex items-center gap-2 text-small font-semibold text-accent-ink">
                   <StreakIcon lit className="size-4" />

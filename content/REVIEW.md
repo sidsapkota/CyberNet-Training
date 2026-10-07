@@ -1487,6 +1487,39 @@ number on the back of your card"; plainer statement email; quiz 2's "probably fi
 newsletter, not a lesson copy; help numbers never break across lines (non-breaking spaces); the
 email explore callout is pinned inside the scene (no page jump).
 
+## Content quality pass: predict and consequence (7 October 2026)
+
+Every lesson now has at least one PREDICT card, at least one BUILD or CONSEQUENCE card, and no more
+than half RECOGNISE (core cards; `play.test.ts` enforces it for this course). Each new card asks
+the learner to guess an outcome before the explanation shows it. Learning goals are unchanged; the
+cards removed only re-checked vocabulary taught elsewhere.
+- **1.2 `two-step-sign-in`:** new `thief-hits-step-two` after `meet-two-step` (a thief types your
+  stolen password with two-step on: what happens?). Sets up `the-code-text`.
+- **2.1 `phishing-emails`:** `phish-or-fine` (sort) replaced by `type-in-the-button` after the
+  explore (you tap the button and type your password: what happens?). The module's teaser is now
+  `prize-email` (a scenario that sets itself up).
+- **2.2 `scam-texts-and-calls`:** `always-a-sign` (multiple choice) replaced by `pay-the-fee` after
+  the explore (you pay the $1.95 fee: what happens?). Paying a fake fee hands over the card number.
+- **2.3 `fake-websites`:** new `who-gets-it` after the explore (you type your password into this
+  page: who gets it?). The owner in the address gets it; the logo and padlock don't change that.
+- **3.1 `your-digital-footprint`:** new `delete-an-hour-later` after `meet-footprint` (you delete a
+  post an hour later: what happens?). Anyone could have saved or screenshotted it.
+- **3.2 `apps-and-wi-fi`:** `riskiest-wi-fi` replaced by `wi-fi-wants-password` (café Wi-Fi asks
+  for your email password and you type it: what happens?). Claim: whoever made the sign-in page
+  gets what's typed, and real café Wi-Fi never needs an email password (a fake hotspot sign-in
+  page is a known trick; defence only).
+- **4.1 `signs-of-a-hack`:** `recovery-offer` replaced by `pay-to-unlock` (you pay a stranger $20
+  to unlock your account: what happens?). Still teaches the official recovery; never pay.
+- **4.2 `deepfake-scams`:** new `few-seconds-of-voice` after `grandma-call` (scammers grab a few
+  seconds of your voice: what can they make?). Same claim as the explainer: AI can clone a voice
+  from a short clip.
+- **4.3 `getting-help`:** `helps-or-worse` (sort) replaced by `block-before-saving` (you block
+  before saving the messages: what happens?) and `card-money` by `bank-can-help` (you call your bank
+  about a scam on your card: what happens?). Claims: on some apps blocking hides or deletes the chat,
+  so save evidence first (matches eSafety's "collect evidence before you block"); a bank can block
+  the card and may stop the payment, and you're not in trouble. Kind framing kept; every help line
+  is unchanged.
+
 ---
 
 ## Module 1: Lock Your Accounts (free)

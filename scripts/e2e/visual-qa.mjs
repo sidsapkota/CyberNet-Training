@@ -169,8 +169,10 @@ try {
     // Every card: light mode at phone and desktop (the gate adds tablet; the fit audit checks dark at
     // seven sizes), and contact-sheet screenshots (dark) at phone and desktop.
     const cardSizes = GATE ? SIZES : ALL_SIZES.filter((s) => s.name === "360x560" || s.name === "1440x900");
-    for (const theme of MAKE_SHEETS ? ["light", "dark"] : ["light"]) {
-      for (const size of cardSizes) {
+    // Each size and theme runs in its own browser context, all at once (about 3x faster).
+    const combos = (MAKE_SHEETS ? ["light", "dark"] : ["light"]).flatMap((theme) => cardSizes.map((size) => ({ theme, size })));
+    await Promise.all(
+      combos.map(async ({ theme, size }) => {
         const ctx = await newContext(browser, size, theme);
         const page = await ctx.newPage();
         await prepare(page);
@@ -201,8 +203,8 @@ try {
           }
         }
         await ctx.close();
-      }
-    }
+      }),
+    );
   }
 
   // Contact sheets: a grid of small screenshots per course (phone, desktop) and for the pages.

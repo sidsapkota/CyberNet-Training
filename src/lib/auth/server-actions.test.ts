@@ -80,7 +80,7 @@ describe("Server Actions that write with the secret key", () => {
     // Besides Server Actions: the Pro entitlement helpers (server-only; callers pass a verified
     // user id) and the Stripe webhook, which has no user session and is authenticated by Stripe's
     // signature instead (checked before anything is read or written).
-    const vetted = ["src/lib/pro/server.ts", "src/lib/leagues/server.ts", "src/lib/certificates/server.ts", "src/app/api/stripe/webhook/route.ts", "src/lib/feedback/server.ts", "src/lib/usernames/server.ts", "src/lib/rewards/server.ts", "src/lib/admin/server.ts"];
+    const vetted = ["src/lib/pro/server.ts", "src/lib/leagues/server.ts", "src/lib/certificates/server.ts", "src/app/api/stripe/webhook/route.ts", "src/lib/feedback/server.ts", "src/lib/usernames/server.ts", "src/lib/rewards/server.ts", "src/lib/admin/server.ts", "src/lib/measure/server.ts", "src/lib/challenges/server.ts", "src/lib/reminders/server.ts"];
     for (const file of importers) {
       const rel = path.relative(ROOT, file).replace(/\\/g, "/");
       if (!rel.startsWith("src/app/actions/")) expect(vetted, rel).toContain(rel);
@@ -139,6 +139,33 @@ describe("Server Actions that write with the secret key", () => {
     }
   });
 
+  it("challenge routes take the player only from the verified session, never from the request", () => {
+    const attempts = fs.readFileSync(path.join(ROOT, "src/app/api/challenges/[id]/attempts/route.ts"), "utf8");
+    expect(attempts).toContain("await requireUserId()");
+    expect(attempts).not.toMatch(/body\.data\.(player|user)/);
+    const server = fs.readFileSync(path.join(ROOT, "src/lib/challenges/server.ts"), "utf8");
+    expect(server.trimStart().startsWith('import "server-only";')).toBe(true);
+    // Answers are always re-graded with the quiz graders.
+    expect(server).toContain("gradeUntrusted(");
+    // The public view never reads an email.
+    expect(server).not.toMatch(/auth\.admin|\.email\b|"email"/);
+  });
+
+  it("the reminder job checks CRON_SECRET before touching any data, and the email links check their key or token", () => {
+    const cron = fs.readFileSync(path.join(ROOT, "src/app/api/cron/reminders/route.ts"), "utf8");
+    const check = cron.indexOf("if (!authorised(");
+    expect(check, "the cron route must check CRON_SECRET").toBeGreaterThan(0);
+    expect(check).toBeLessThan(cron.indexOf("sendDueReminders(", cron.indexOf("export async function GET")));
+    expect(cron).toContain("timingSafeEqual");
+    const server = fs.readFileSync(path.join(ROOT, "src/lib/reminders/server.ts"), "utf8");
+    expect(server.trimStart().startsWith('import "server-only";')).toBe(true);
+    // Opens and returns match the row's random key; unsubscribing matches the profile's token.
+    expect(server).toMatch(/match\(\{ id: Number\(id\), key \}\)/);
+    expect(server).toMatch(/eq\("email_token", token\)/);
+    // Outside production, only the owner's test inbox ever receives one.
+    expect(server).toContain("FEEDBACK_INBOX");
+  });
+
   it("the league job checks CRON_SECRET before touching any data", () => {
     const cron = fs.readFileSync(path.join(ROOT, "src/app/api/cron/leagues/route.ts"), "utf8");
     const check = cron.indexOf("if (!authorised(");
@@ -154,6 +181,8 @@ describe("Server Actions that write with the secret key", () => {
       // The helpers call each other; each is server-only and checked above.
       const rel = path.relative(ROOT, file).replace(/\\/g, "/");
       if (/^src\/lib\/(pro|leagues|certificates)\/server\.ts$/.test(rel)) continue;
+      // Reminder emails: called only by the cron (CRON_SECRET) and key-checked email links (tested above).
+      if (rel === "src/lib/reminders/server.ts") continue;
       if (rel.startsWith("src/app/api/cron/")) continue;
       // Stripe's webhook has no user: Stripe's signature is its authority, checked before anything else.
       if (rel === "src/app/api/stripe/webhook/route.ts") {

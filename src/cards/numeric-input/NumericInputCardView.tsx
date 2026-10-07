@@ -3,6 +3,7 @@
 import { useId } from "react";
 import { WarningIcon } from "@/components/ui/icons";
 import { CardPrompt } from "../CardPrompt";
+import { WorkedSteps } from "../shared/WorkedSteps";
 import { CardStatusNote } from "../CardStatusNote";
 import type { CardComponentProps } from "../types";
 import { parseNumericInput } from "./grade";
@@ -36,6 +37,7 @@ export function NumericInputCardView({
   return (
     <div>
       <CardPrompt id={promptId}>{card.prompt}</CardPrompt>
+      {card.worked && <WorkedSteps steps={card.worked.steps} />}
 
       <div className="mt-8 flex flex-wrap items-center gap-3">
         <div
