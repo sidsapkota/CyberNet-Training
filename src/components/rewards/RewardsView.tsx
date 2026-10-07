@@ -96,7 +96,7 @@ export function AvatarPanel({ className }: { className: string }) {
         <h2 id="avatar-title" className="font-semibold">
           Your avatar
         </h2>
-        <p className="truncate text-small text-ink-muted">
+        <p className="text-small text-ink-muted">
           {ready > 0 ? `${ready} ${ready === 1 ? "spin" : "spins"} to use` : saved > 0 ? `${saved} ${saved === 1 ? "spin" : "spins"} saved for new items` : "Dress up your mascot"}
         </p>
       </div>

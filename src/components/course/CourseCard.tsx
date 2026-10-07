@@ -41,7 +41,7 @@ export function CourseCard({ course, startHere = false }: { course: CourseOutlin
               )}
             </div>
             <h3 className="mt-1 text-lead font-semibold">{course.title}</h3>
-            <p className="mt-0.5 truncate text-small text-ink-muted">{course.description}</p>
+            <p className="mt-0.5 text-small text-ink-muted">{course.description}</p>
           </div>
           <div className="mt-auto flex items-center gap-3" aria-label={`${percent}% complete`}>
             <div className="h-2 flex-1 overflow-hidden rounded-sm bg-line">
