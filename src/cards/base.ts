@@ -25,6 +25,16 @@ export const cardBase = {
   teaches: z.array(ConceptId).max(8).optional(),
   /** Concepts the learner must already know to answer or follow this card (never outside knowledge). */
   uses: z.array(ConceptId).max(8).optional(),
+  /**
+   * Adaptive pacing (src/cards/pace.ts): "easy" (the easy win, skipped after 3 right first time) or
+   * "extra" (one more worked example, shown only after a miss). Never required to finish a lesson.
+   */
+  pace: z.enum(["easy", "extra"]).optional(),
+  /**
+   * Overrides the card's play tag (src/lib/content/play.ts): what the learner does on it. Use it when
+   * the type's default is wrong, e.g. a multiple choice that asks for a prediction.
+   */
+  play: z.enum(["recognise", "predict", "build", "consequence"]).optional(),
 };
 
 /**
