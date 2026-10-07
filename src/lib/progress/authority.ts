@@ -3,6 +3,7 @@
  * number here comes from the lesson content and `xp.ts`, never from a value the client sends.
  * Pure (content passed in), so it's unit-tested and shared by Server Actions and the merge.
  */
+import { requiredForLesson } from "@/cards/pace";
 import { gradeUntrusted } from "@/cards/grading";
 import { type Card, isGuidedCard, isInteractiveCard } from "@/cards/schema";
 import type { Lesson } from "@/lib/content/schema";
@@ -32,7 +33,7 @@ export function buildContentIndex(lessons: Iterable<Lesson>): ContentIndex {
       access: lesson.access,
       guests: lesson.guests,
       cards: new Map(lesson.cards.map((c) => [c.id, c])),
-      coreCardIds: lesson.cards.filter((c) => c.difficulty === "core").map((c) => c.id),
+      coreCardIds: lesson.cards.filter(requiredForLesson).map((c) => c.id),
       ...(lesson.kind === "quiz" ? { passThreshold: lesson.passThreshold } : {}),
     });
   }

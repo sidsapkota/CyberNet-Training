@@ -62,6 +62,34 @@
       "sentence": "Your **digital footprint** is the trail of everything you post and do online."
     },
     {
+      "id": "delete-an-hour-later",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "uses": [
+        "digital-footprint"
+      ],
+      "prompt": "You post a photo, then delete it an hour later. What happens?",
+      "options": [
+        {
+          "id": "copies-live-on",
+          "text": "Copies may live on: someone could have saved it"
+        },
+        {
+          "id": "gone-everywhere",
+          "text": "It's gone everywhere, as if you never posted it",
+          "nudge": "Deleting removes your copy. In that hour, anyone could have taken a screenshot."
+        },
+        {
+          "id": "gone-if-no-likes",
+          "text": "It's gone, as long as nobody liked or commented",
+          "nudge": "Saving a photo or taking a screenshot leaves no like or comment behind."
+        }
+      ],
+      "correctOptionId": "copies-live-on",
+      "explanation": "Deleting removes it from your page, but anyone could have screenshotted or saved it. Your digital footprint can last.",
+      "hint": "In that hour, what could someone else have done with the photo?"
+    },
+    {
       "id": "meet-security-question",
       "type": "reveal",
       "difficulty": "core",

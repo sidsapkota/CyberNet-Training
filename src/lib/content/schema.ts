@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { requiredForLesson } from "@/cards/pace";
 import { CardId, nonEmpty } from "@/cards/base";
 import { type Card, CardSchema, isInteractiveCard } from "@/cards/schema";
 import { cardSeconds } from "./estimate";
@@ -90,6 +91,7 @@ export const QuizSchema = z
     message: "quiz cards must all be interactive (no explainers)",
     path: ["cards"],
   })
+  .refine((q) => q.cards.every((c) => !c.pace), { message: "quiz cards can't be paced (one try each, nothing skipped)", path: ["cards"] })
   .refine((q) => q.cards.every((c) => c.difficulty === "core"), {
     message: "quiz cards must all be core difficulty",
     path: ["cards"],
@@ -163,9 +165,10 @@ export function toLessonOutline(lesson: Lesson): LessonOutline {
     courseId: lesson.courseId,
     moduleId: lesson.moduleId,
     cardCount: lesson.cards.length,
-    coreCardIds: lesson.cards.filter((c) => c.difficulty === "core").map((c) => c.id),
+    coreCardIds: lesson.cards.filter(requiredForLesson).map((c) => c.id),
     photoCount: lesson.cards.filter((c) => c.type === "photo").length,
-    coreSeconds: lesson.cards.filter((c) => c.difficulty === "core").reduce((sum, c) => sum + cardSeconds(c), 0),
+    // The easy win counts toward the time (most learners see it); an extra example doesn't.
+    coreSeconds: lesson.cards.filter((c) => c.difficulty === "core" && c.pace !== "extra").reduce((sum, c) => sum + cardSeconds(c), 0),
     ...(lesson.kind === "quiz" ? { passThreshold: lesson.passThreshold } : { icon: lesson.icon }),
     ...(lesson.kind === "lesson" && lesson.lastChecked ? { lastChecked: lesson.lastChecked } : {}),
     ...(lesson.kind === "lesson" ? { about: lesson.about } : {}),

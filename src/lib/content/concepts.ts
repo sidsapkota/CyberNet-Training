@@ -49,7 +49,7 @@ export function conceptProblems(content: LoadedContent): ConceptProblem[] {
     const everywhere = new Map<string, Place[]>();
     for (const { lesson, card } of cards) {
       for (const concept of card.teaches ?? []) {
-        everywhere.set(concept, [...(everywhere.get(concept) ?? []), { lessonId: lesson.id, cardId: card.id, core: card.difficulty === "core" }]);
+        everywhere.set(concept, [...(everywhere.get(concept) ?? []), { lessonId: lesson.id, cardId: card.id, core: card.difficulty === "core" && !card.pace }]);
       }
     }
     const taughtCore = new Set<string>();
@@ -73,7 +73,8 @@ export function conceptProblems(content: LoadedContent): ConceptProblem[] {
       }
       for (const concept of own) {
         taughtAny.add(concept);
-        if (card.difficulty === "core") taughtCore.add(concept);
+        // A paced card may be skipped, so what it teaches can't be relied on later.
+        if (card.difficulty === "core" && !card.pace) taughtCore.add(concept);
       }
     }
   }

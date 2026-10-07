@@ -70,6 +70,40 @@
       "explanation": "A new number, hurry and secret money are red flags. Hang up, then check on the number you already have."
     },
     {
+      "id": "few-seconds-of-voice",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "play": "predict",
+      "uses": [
+        "voice-clone"
+      ],
+      "prompt": "Scammers grab a few seconds of your voice. What can they make?",
+      "options": [
+        {
+          "id": "new-sentences",
+          "text": "A fake voice like yours, saying anything they type"
+        },
+        {
+          "id": "needs-hours",
+          "text": "Nothing, because copying a voice needs hours of recordings",
+          "nudge": "That was true years ago. Today AI can copy a voice from a short clip."
+        },
+        {
+          "id": "same-clip",
+          "text": "Only that same clip, played back word for word",
+          "nudge": "AI doesn't just replay the clip. It learns how you sound and makes new sentences."
+        },
+        {
+          "id": "robot",
+          "text": "A robot voice that anyone would spot straight away",
+          "nudge": "Copies can sound very real. That's why you check the number, not the voice."
+        }
+      ],
+      "correctOptionId": "new-sentences",
+      "explanation": "AI can learn a voice from a short clip and make it say new things. So a familiar voice alone proves nothing.",
+      "hint": "Think about Grandma's call. Did the voice sound like a recording, or like her talking?"
+    },
+    {
       "id": "fake-voices-and-faces",
       "type": "explainer",
       "difficulty": "core",

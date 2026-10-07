@@ -240,33 +240,38 @@
       "sentence": "A **fake hotspot** is Wi-Fi a stranger names to look like the café's."
     },
     {
-      "id": "riskiest-wi-fi",
+      "id": "wi-fi-wants-password",
       "type": "multiple_choice",
       "difficulty": "core",
       "uses": [
         "fake-hotspot",
         "public-wi-fi"
       ],
-      "prompt": "At a café, which choice is riskiest?",
+      "prompt": "Café Wi-Fi asks for your email password. You type it. What happens?",
       "options": [
         {
-          "id": "unknown-network",
-          "text": "Join \"Free Cafe WiFi 2\" that staff don't know"
+          "id": "owner-has-it",
+          "text": "Whoever set up that Wi-Fi now has your password"
         },
         {
-          "id": "news",
-          "text": "Read the news on the network staff told you",
-          "nudge": "The café's real network is fine for news. Which choice could belong to a stranger?"
+          "id": "cafe-checks",
+          "text": "The café checks it, then lets you go online",
+          "nudge": "A real café never needs your email password. This could be a fake hotspot."
         },
         {
-          "id": "mobile",
-          "text": "Check your bank on mobile data, not Wi-Fi",
-          "nudge": "Mobile data is the safer choice for banking. Which network can nobody vouch for?"
+          "id": "cant-keep",
+          "text": "Nothing: Wi-Fi pages can't keep what you type",
+          "nudge": "A sign-in page sends what you type to whoever made it."
+        },
+        {
+          "id": "email-blocks",
+          "text": "Your email app spots the wrong page and blocks it",
+          "nudge": "Your email app never sees this page. You're the only check."
         }
       ],
-      "correctOptionId": "unknown-network",
-      "explanation": "Staff never heard of \"Free Cafe WiFi 2\", so it could be a fake hotspot. Ask staff for the real name.",
-      "hint": "Which network could belong to a stranger instead of the café?"
+      "correctOptionId": "owner-has-it",
+      "explanation": "Anyone can name Wi-Fi after the café and ask for passwords. Real café Wi-Fi never needs your email password: ask staff for its name.",
+      "hint": "Who made the sign-in page, and who gets what you type into it?"
     },
     {
       "id": "recap",

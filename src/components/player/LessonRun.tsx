@@ -9,6 +9,7 @@ import type { CardStatus } from "@/cards/types";
 import { LessonTimeIcon } from "@/components/ui/icons";
 import { formatChecked } from "@/lib/content/lastChecked";
 import type { CourseOutline, RegularLesson } from "@/lib/content/schema";
+import { afterAnswer, NO_PACING, nextCardIndex } from "@/cards/pace";
 import { canChallenge } from "@/lib/challenges/rules";
 import { comboLabel, comboPitch, COMBO_FROM, nextCombo } from "@/lib/combo";
 import { useFeedback } from "@/lib/feedback";
@@ -100,6 +101,8 @@ export function LessonRun({
   const [announcement, setAnnouncement] = useState("");
   const { scope, playIncorrect } = useFeedbackAnimation();
   const feedback = useFeedback();
+  /** Adaptive pacing this visit (src/cards/pace.ts): skip the easy win, or add an extra example. */
+  const [pacing, setPacing] = useState(NO_PACING);
   /** Right first time, in a row, this visit ("3 in a row!"), and the best this visit. */
   const [combo, setCombo] = useState({ now: 0, best: 0 });
 
@@ -192,7 +195,9 @@ export function LessonRun({
       if (xp > 0) setSessionXp((current) => current + xp);
     }
     setHistory((current) => new Map(current).set(index, run));
-    if (index + 1 < total) goTo(index + 1);
+    // Paced cards that aren't needed are passed over (the trace shows them as skipped).
+    const next = nextCardIndex(lesson.cards, index, pacing, (i) => isDone(lesson.cards[i] as Card));
+    if (next < total) goTo(next);
     else void finish(completedByContinue ? card.id : undefined, xp);
   }
 
@@ -203,6 +208,7 @@ export function LessonRun({
 
     const attempts = run.attempts + 1;
     const { correct } = definition.grade(card, run.answer);
+    if (attempts === 1) setPacing((current) => afterAnswer(current, correct));
     if (attempts === 1) measureFirstCheck(lesson.id, card.id, correct);
     const streak = nextCombo(combo.now, correct, attempts);
     setCombo({ now: streak, best: Math.max(combo.best, streak) });

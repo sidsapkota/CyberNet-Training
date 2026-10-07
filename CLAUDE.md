@@ -73,6 +73,8 @@ npm run e2e:challenge     # Challenge a friend: make one (360x560), a guest play
                           # challenger's view, /account, bad/unknown/expired links. STAGING ONLY
 npm run e2e:reminders     # reminder emails: the sign-up opt-in (unticked), the /account switch, the hourly job (dry
                           # run), one a day, open/return links, one-tap unsubscribe. STAGING ONLY; CRON_SECRET locally
+npm run e2e:pacing        # adaptive pacing in the real player (/dev/cards pacing demo): easy win skipped after 3 right,
+                          # extra example only after a miss (dev server running)
 npm run e2e:dashboard-numbers # cards done, no lesson finished: header XP, Activity XP bars and rings
                           # (throwaway account; secret key, so a local production build or production)
 npm run e2e:player-flow   # before/after screenshots: a hotspot card and the wrong-answer flow (SHOTS_TAG=)
@@ -1828,6 +1830,28 @@ Applies to all content work: the "learn before you do" rollout, new courses and 
 6. **3-second rule:** know what to do instantly (the zero-confusion rule below).
 7. **Useful today:** each lesson ends with one thing they can do in real life now ("Try this: …").
 8. **Learning over streaks:** XP and streaks reward real progress, not speed-running.
+
+### What learners do on each card (content quality pass, owner 7 Oct 2026)
+Every graded card has a **play** tag (`src/lib/content/play.ts`, from its type and prompt; a card's
+`play` field overrides it when the default is wrong): **RECOGNISE** (pick or sort labels), **PREDICT**
+(guess an outcome before seeing it), **BUILD** (make something) or **CONSEQUENCE** (the action visibly
+changes something). **Target per lesson:** at least one PREDICT, at least one BUILD or CONSEQUENCE, and
+RECOGNISE no more than half. Converted courses are listed in `PLAY_TARGET_COURSES` (`play.test.ts`), which
+enforces it: **Stay Safe Online** so far. `npx tsx scripts/play-audit.ts [course]` prints every lesson's mix
+(and writes `docs/plans/play-audit.md`). A real PREDICT asks for an outcome before it's shown; never reword
+a definition question to look like one.
+- **Adaptive pacing** (`src/cards/pace.ts`): a card's `pace` is `"easy"` (the easy win, skipped when the
+  first 3 graded cards of the visit were right first time) or `"extra"` (one more worked example, shown
+  only straight after a miss on the card before). Paced cards are never required to finish a lesson (the
+  content outline, the server's XP index, resume and finish all use `requiredForLesson`), nothing later
+  may rely on what they teach (`concepts.ts`), quizzes can't have them, and time estimates count easy wins
+  but not extras. Don't pace a lesson's only PREDICT card.
+- **Worked example, then fade:** `binary_toggle` and `numeric_input` take `worked: { steps, locked | prefill }`:
+  up to 4 short steps under the question, and bits already on and locked (binary) or a value already in the
+  box (number). Use three cards in a row: solved (every step, the whole answer), half done (the first steps),
+  alone (no `worked`).
+- **Measure:** card measurements (above) and `npm run report:cards` show which cards are slowest and most
+  missed; convert those first.
 
 ### The lesson pattern (HARD RULE — every lesson, every course)
 Real users get lost when a "theory" card tells them something and the next card asks them to use it:

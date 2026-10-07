@@ -1,9 +1,9 @@
 [
   { "id": "guessed-in-a-second", "hook": "Some passwords get guessed in under a second. Which ones?", "lesson": "strong-passwords", "card": "easy-or-hard" },
-  { "id": "phish-or-fine", "hook": "One of these emails wants your password. Can you tell?", "lesson": "phishing-emails", "card": "phish-or-fine" },
-  { "id": "scam-text-giveaway", "hook": "Every scam text has the same giveaway.", "lesson": "scam-texts-and-calls", "card": "always-a-sign" },
+  { "id": "stolen-password", "hook": "Someone stole your password. Two-step is on.", "lesson": "two-step-sign-in", "card": "thief-hits-step-two" },
+  { "id": "parcel-fee", "hook": "A text says your parcel is stuck. Pay $1.95?", "lesson": "scam-texts-and-calls", "card": "pay-the-fee" },
   { "id": "fake-bank-address", "hook": "Fake bank sites look perfect. The address doesn't.", "lesson": "fake-websites", "card": "bank-or-not" },
-  { "id": "cafe-wi-fi", "hook": "Café Wi-Fi is free. Is it fine for everything?", "lesson": "apps-and-wi-fi", "card": "riskiest-wi-fi" },
+  { "id": "cafe-wi-fi", "hook": "Free café Wi-Fi. Then it asks for something odd.", "lesson": "apps-and-wi-fi", "card": "wi-fi-wants-password" },
   { "id": "torch-wants-contacts", "hook": "Why would a torch app want your contacts?", "lesson": "apps-and-wi-fi", "card": "needs-it" },
   { "id": "already-hacked", "hook": "Your account could be taken over right now. Spot the signs.", "lesson": "signs-of-a-hack", "card": "hacked-or-normal" },
   { "id": "mum-on-the-phone", "hook": "It sounds exactly like Mum. It isn't her.", "lesson": "deepfake-scams", "card": "safe-word-check", "rare": true },

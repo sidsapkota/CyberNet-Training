@@ -34,6 +34,39 @@
       "explanation": "A scam text often wants a **small fee**, sets a **deadline** and adds a **link**."
     },
     {
+      "id": "pay-the-fee",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "uses": [
+        "scam-text-signs"
+      ],
+      "prompt": "You tap the link and pay the $1.95 fee. What happens?",
+      "options": [
+        {
+          "id": "card-stolen",
+          "text": "The scammer now has your card number, and can spend more"
+        },
+        {
+          "id": "parcel-arrives",
+          "text": "Your parcel arrives tomorrow, just as the text promised",
+          "nudge": "The link goes to `parcels-redelivery.example`, not Parcels. There's no parcel waiting there."
+        },
+        {
+          "id": "refund",
+          "text": "Parcels spots the fake page and refunds your $1.95",
+          "nudge": "Parcels never sees this payment. It went to a stranger's page."
+        },
+        {
+          "id": "only-small",
+          "text": "Nothing much happens, because it was only $1.95",
+          "nudge": "The fee is small on purpose. To pay it, you typed in your whole card number."
+        }
+      ],
+      "correctOptionId": "card-stolen",
+      "explanation": "The page belongs to the scammer, not Parcels. Now they have your card number, and $1.95 was just the bait.",
+      "hint": "Who owns the page the link opens? What did you type in to pay?"
+    },
+    {
       "id": "meet-check-the-app",
       "type": "reveal",
       "difficulty": "core",
@@ -161,35 +194,6 @@
       "explanation": "Codes, controlling your computer, gift cards and secrecy are scam signs: **hang up**. Calling a number you found yourself is fine.",
       "hint": "Check each against the warning signs for calls, and ask who chose the number.",
       "nudge": "Look at each one again: does it match a warning sign, and who chose the number?"
-    },
-    {
-      "id": "always-a-sign",
-      "type": "multiple_choice",
-      "difficulty": "core",
-      "uses": [
-        "gift-cards-scam-payment",
-        "scam-text-signs"
-      ],
-      "prompt": "Which is **always** a warning sign?",
-      "options": [
-        {
-          "id": "fee-gift-cards",
-          "text": "Being asked to pay a fee in gift cards to claim a prize"
-        },
-        {
-          "id": "unsaved-number",
-          "text": "A text from a number that isn't saved in your phone",
-          "nudge": "New numbers can be fine: the dentist, a new classmate."
-        },
-        {
-          "id": "receipt",
-          "text": "A receipt email for an order you placed this morning",
-          "nudge": "A receipt for something you really bought is normal."
-        }
-      ],
-      "correctOptionId": "fee-gift-cards",
-      "explanation": "Real prizes never cost money to claim, and gift cards are a favourite scam payment. A new number or a real receipt can be normal.",
-      "hint": "What does a real prize cost to claim, and which payment were you told to hang up on?"
     },
     {
       "id": "boss-new-number",
