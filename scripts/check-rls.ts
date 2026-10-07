@@ -290,9 +290,10 @@ async function main() {
     if (closed) record("Before leagues open, standings show nothing", !closed.error && (closed.data ?? []).length === 0);
     await admin.from("league_state").update({ opened_at: new Date().toISOString() }).eq("id", true);
 
-    // Weekly XP must equal the ledger's total for this week (other checks above earned XP too).
+    // Weekly XP must equal the ledger's total for this week, practice left out (league XP never
+    // counts replays: 20261008100000_league_xp_no_practice). Other checks above earned XP too.
     const weekStart = (await admin.rpc("league_week")).data as string;
-    const ledger = (await admin.from("xp_events").select("user_id, xp, at").in("user_id", [a.id, b.id])).data ?? [];
+    const ledger = (await admin.from("xp_events").select("user_id, xp, at").in("user_id", [a.id, b.id]).neq("kind", "practice")).data ?? [];
     const startMs = Date.parse(`${weekStart}T00:00:00+10:00`) - 3_600_000; // Sydney Monday, either offset
     const weekXp = (id: string) => ledger.filter((e) => e.user_id === id && Date.parse(e.at) >= startMs).reduce((sum, e) => sum + e.xp, 0);
     const standingsA = await a.client.rpc("league_standings");
@@ -529,6 +530,44 @@ async function main() {
     );
     record("Signed-out visitors can't list Founding Members", Boolean((await anonSeats.rpc("league_founders")).error));
 
+    // Challenges: server-only. Nobody reads or writes them directly (the server re-grades every go).
+    const challengeId = "rlscheck" + String(Date.now()).slice(-4);
+    const madeChallenge = await admin.from("challenges").insert({ id: challengeId, creator_id: a.id, lesson_id: "strong-passwords", card_ids: ["x"], results: [true], score: 1 });
+    const madeAttempt = await admin.from("challenge_attempts").insert({ challenge_id: challengeId, player_id: b.id, results: [false], score: 0 });
+    const secondGo = await admin.from("challenge_attempts").insert({ challenge_id: challengeId, player_id: b.id, results: [true], score: 1 });
+    record("The server can save a challenge and a go; one go per signed-in player", !madeChallenge.error && !madeAttempt.error && secondGo.error?.code === "23505", madeChallenge.error?.message ?? madeAttempt.error?.message ?? secondGo.error?.code ?? "second accepted");
+    const anonChallenges = createClient<Database>(env.url, env.publishableKey, noSession);
+    record(
+      "Nobody but the server can read, add, change or remove challenges or goes",
+      blocked(await a.client.from("challenges").select("*")) &&
+        blocked(await b.client.from("challenge_attempts").select("*")) &&
+        blocked(await anonChallenges.from("challenges").select("*")) &&
+        blocked(await anonChallenges.from("challenge_attempts").insert({ challenge_id: challengeId, results: [true], score: 1 }).select()) &&
+        blocked(await a.client.from("challenges").insert({ id: "rlsforged0001", creator_id: a.id, lesson_id: "x", card_ids: ["x"], results: [true], score: 1 }).select()) &&
+        blocked(await a.client.from("challenges").update({ score: 5 }).eq("id", challengeId).select()) &&
+        blocked(await b.client.from("challenge_attempts").update({ score: 5 }).eq("challenge_id", challengeId).select()) &&
+        blocked(await a.client.from("challenges").delete().eq("id", challengeId).select()),
+    );
+    const badEmote = await admin.from("challenge_attempts").update({ emote: "free text!" }).eq("challenge_id", challengeId);
+    record("Emotes are only the fixed list (the database refuses anything else)", Boolean(badEmote.error));
+    // Reminder emails: off by default, only the server turns them on, and their log is server-only.
+    const optIns = (await admin.from("profiles").select("reminder_emails, email_token").in("id", [a.id, b.id, c.id])).data ?? [];
+    record("New accounts are never opted in to reminder emails, and each has its own unsubscribe token", optIns.length === 3 && optIns.every((p) => p.reminder_emails === false) && new Set(optIns.map((p) => p.email_token)).size === 3);
+    await a.client.from("profiles").update({ reminder_emails: true }).eq("id", a.id);
+    const stillOff = (await admin.from("profiles").select("reminder_emails").eq("id", a.id).single()).data?.reminder_emails;
+    record("Learners can't opt themselves in to reminder emails directly", stillOff === false);
+    const reminderDay = "2026-01-01";
+    const logged = await admin.from("reminder_emails").insert({ user_id: a.id, kind: "streak", day: reminderDay }).select("id").single();
+    const secondSameDay = await admin.from("reminder_emails").insert({ user_id: a.id, kind: "league", day: reminderDay });
+    record("At most one reminder email a day per learner (the database refuses a second)", !logged.error && secondSameDay.error?.code === "23505", secondSameDay.error?.code ?? "accepted");
+    record(
+      "Learners can't read, add, change or remove reminder email records",
+      blocked(await a.client.from("reminder_emails").select("*")) &&
+        blocked(await a.client.from("reminder_emails").insert({ user_id: a.id, kind: "streak", day: "2026-01-02" }).select()) &&
+        blocked(await a.client.from("reminder_emails").update({ returned_at: new Date().toISOString() }).eq("user_id", a.id).select()) &&
+        blocked(await a.client.from("reminder_emails").delete().eq("user_id", a.id).select()),
+    );
+
     // Signed-out visitors see nothing.
     const anon = createClient<Database>(env.url, env.publishableKey, noSession);
     let anonClean = true;
@@ -536,7 +575,7 @@ async function main() {
       "profiles", "card_completions", "lesson_completions", "quiz_attempts", "xp_events", "goal_days",
       "subscriptions", "pro_grants", "stripe_customers", "stripe_events",
       "league_players", "leagues", "league_members", "league_results", "league_weeks", "league_state", "handle_reports",
-      "certificates", "lesson_opens", "card_mistakes", "founding_members", "founder_holds",
+      "certificates", "lesson_opens", "card_mistakes", "founding_members", "founder_holds", "challenges", "challenge_attempts", "reminder_emails",
     ] as const) {
       const r = await anon.from(table).select("*");
       if (!r.error && (r.data ?? []).length > 0) anonClean = false;
@@ -579,11 +618,13 @@ async function main() {
     for (const table of [
       "card_completions", "lesson_completions", "quiz_attempts", "xp_events", "goal_days",
       "subscriptions", "pro_grants", "stripe_customers", "league_players", "league_members", "league_results", "certificates", "lesson_opens", "card_mistakes",
-      "founding_members", "founder_holds",
+      "founding_members", "founder_holds", "reminder_emails",
     ] as const) {
       const r = await admin.from(table).select("user_id").in("user_id", [a.id, b.id, c.id]);
       leftovers += (r.data ?? []).length;
     }
+    const challengesLeft = await admin.from("challenges").select("id").in("creator_id", [a.id, b.id, c.id]);
+    leftovers += (challengesLeft.data ?? []).length;
     const profiles = await admin.from("profiles").select("id").in("id", [a.id, b.id, c.id]);
     leftovers += (profiles.data ?? []).length;
     record("Deleting a user removes all their rows (cascade)", leftovers === 0);

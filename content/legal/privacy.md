@@ -80,6 +80,17 @@ That's all. They never see your email, your real name, your other stats or where
 - **Hide yourself any time:** turn off "Show me on leaderboards" on the [Account page](/account) or the Leagues page, and nobody else sees you in any league. Your tier then stays as it is.
 - **Reports:** if you report a username, we keep the report (your account, the username and the reason) so an adult can review it, and we email a short daily summary of new reports to our own inbox. If three different learners report the same username, we replace it with a new made-up one.
 
+## Challenge a friend
+
+If you make a challenge, we store which lesson and questions it uses, whether you got each one right, and when you made it. Anyone you send the link to sees only your **username and avatar** and your score, never your email or anything else. When a friend plays it, we store their right and wrong answers, their score and the one reaction they pick from a fixed list (there's no free text). If they're signed in, their username is shown to you; if not, they show as "A guest". Links stop working after 30 days, and your challenges are deleted with your account.
+## Reminder emails (only if you turn them on)
+
+Reminder emails are **off** unless you tick "Email me before my streak or league ends", when you pick your username or in your account settings. If you do:
+
+- We send **at most one email a day**: a note before your streak ends (in the evening, your time, only if you haven't learned anything that day) or a few hours before your weekly league resets. Never adverts or offers.
+- We keep a record of each one: when it was sent, whether it was opened (a tiny image in the email tells us, roughly) and whether you tapped its button, so we can tell if reminders help. We keep when you turned them on, as a record of your consent.
+- Every email has a **one-tap unsubscribe** link that works without signing in, and you can turn them off in your account settings any time.
+
 ## Certificates
 
 With CyberNet Pro, you can create a certificate when you pass a course final. We keep **the name you choose for it** (a first name or nickname is fine), the **course**, the **date you finished** and a random **certificate ID**.
@@ -110,7 +121,7 @@ We share information only with the services that run the website:
 - **Supabase**: our database and sign-in system. Stores account data and feedback.
 - **Vercel**: hosts the website and runs our cookieless analytics.
 - **Google**: only if you choose "Continue with Google" to sign in.
-- **Resend**: sends sign-in emails, a reminder 3 days before a Pro free trial ends (to that subscriber only), our daily summary of username reports, and a copy of each feedback message (both sent only to us).
+- **Resend**: sends sign-in emails, reminder emails (only to learners who turned them on), a reminder 3 days before a Pro free trial ends (to that subscriber only), our daily summary of username reports, and a copy of each feedback message (both sent only to us).
 - **Stripe**: only if you subscribe to CyberNet Pro or buy Founding Member. Stripe runs the checkout and handles your card; it also has your email (for receipts). See [Stripe's privacy policy](https://stripe.com/privacy).
 
 These companies may store data on servers outside Australia. They're only allowed to use it to provide their service to us.
