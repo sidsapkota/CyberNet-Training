@@ -290,9 +290,10 @@ async function main() {
     if (closed) record("Before leagues open, standings show nothing", !closed.error && (closed.data ?? []).length === 0);
     await admin.from("league_state").update({ opened_at: new Date().toISOString() }).eq("id", true);
 
-    // Weekly XP must equal the ledger's total for this week (other checks above earned XP too).
+    // Weekly XP must equal the ledger's total for this week, practice left out (league XP never
+    // counts replays: 20261008100000_league_xp_no_practice). Other checks above earned XP too.
     const weekStart = (await admin.rpc("league_week")).data as string;
-    const ledger = (await admin.from("xp_events").select("user_id, xp, at").in("user_id", [a.id, b.id])).data ?? [];
+    const ledger = (await admin.from("xp_events").select("user_id, xp, at").in("user_id", [a.id, b.id]).neq("kind", "practice")).data ?? [];
     const startMs = Date.parse(`${weekStart}T00:00:00+10:00`) - 3_600_000; // Sydney Monday, either offset
     const weekXp = (id: string) => ledger.filter((e) => e.user_id === id && Date.parse(e.at) >= startMs).reduce((sum, e) => sum + e.xp, 0);
     const standingsA = await a.client.rpc("league_standings");
@@ -528,6 +529,19 @@ async function main() {
       JSON.stringify({ refunded: refundedUser.data ?? refundedUser.error?.message, afterRefund }),
     );
     record("Signed-out visitors can't list Founding Members", Boolean((await anonSeats.rpc("league_founders")).error));
+
+    // The admin audit log: server-only. Nobody reads or writes it through the API.
+    const audited = await admin.from("admin_audit").insert({ admin_id: a.id, action: "rls-check" }).select("id").single();
+    const anonAudit = createClient<Database>(env.url, env.publishableKey, noSession);
+    record(
+      "The admin audit log is server-only: learners and visitors can't read or write it",
+      !audited.error &&
+        blocked(await a.client.from("admin_audit").select("*")) &&
+        blocked(await anonAudit.from("admin_audit").select("*")) &&
+        blocked(await a.client.from("admin_audit").insert({ admin_id: a.id, action: "forged" }).select()) &&
+        blocked(await a.client.from("admin_audit").delete().eq("action", "rls-check").select()),
+    );
+    if (audited.data) await admin.from("admin_audit").delete().eq("id", audited.data.id);
 
     // Signed-out visitors see nothing.
     const anon = createClient<Database>(env.url, env.publishableKey, noSession);

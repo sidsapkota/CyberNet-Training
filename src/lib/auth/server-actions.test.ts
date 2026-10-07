@@ -80,7 +80,7 @@ describe("Server Actions that write with the secret key", () => {
     // Besides Server Actions: the Pro entitlement helpers (server-only; callers pass a verified
     // user id) and the Stripe webhook, which has no user session and is authenticated by Stripe's
     // signature instead (checked before anything is read or written).
-    const vetted = ["src/lib/pro/server.ts", "src/lib/leagues/server.ts", "src/lib/certificates/server.ts", "src/app/api/stripe/webhook/route.ts", "src/lib/feedback/server.ts", "src/lib/usernames/server.ts", "src/lib/rewards/server.ts"];
+    const vetted = ["src/lib/pro/server.ts", "src/lib/leagues/server.ts", "src/lib/certificates/server.ts", "src/app/api/stripe/webhook/route.ts", "src/lib/feedback/server.ts", "src/lib/usernames/server.ts", "src/lib/rewards/server.ts", "src/lib/admin/server.ts"];
     for (const file of importers) {
       const rel = path.relative(ROOT, file).replace(/\\/g, "/");
       if (!rel.startsWith("src/app/actions/")) expect(vetted, rel).toContain(rel);
@@ -94,6 +94,48 @@ describe("Server Actions that write with the secret key", () => {
     for (const later of ["createSupabaseAdminClient(", "syncSubscription(", ".from("]) {
       const at = webhook.indexOf(later);
       if (at !== -1) expect(verified, `the webhook must verify the signature before ${later}`).toBeLessThan(at);
+    }
+  });
+
+  it("the admin dashboard checks the admin on the server for every page, data call and route, first", () => {
+    const pages = sourceFiles(path.join(ROOT, "src/app/admin")).filter((f) => f.endsWith("page.tsx"));
+    expect(pages.length).toBeGreaterThanOrEqual(7);
+    for (const page of pages) {
+      const source = fs.readFileSync(page, "utf8");
+      const body = source.slice(source.indexOf("export default async function"));
+      const gate = body.indexOf("await requireAdmin()");
+      expect(gate, page).toBeGreaterThan(0);
+      for (const later of ["await logAdmin(", "await overview(", "await learners(", "await funnel(", "await lessonStats(", "await leagueStats(", "await latestFeedback(", "await featureStats("]) {
+        const at = body.indexOf(later);
+        if (at !== -1) expect(gate, `${page}: requireAdmin before ${later}`).toBeLessThan(at);
+      }
+    }
+    // Every exported data function checks again, first thing.
+    const server = fs.readFileSync(path.join(ROOT, "src/lib/admin/server.ts"), "utf8");
+    expect(server.trimStart().startsWith('import "server-only";')).toBe(true);
+    const fns = server.split("export async function ").slice(1);
+    expect(fns.length).toBeGreaterThanOrEqual(8);
+    for (const fn of fns) {
+      const flat = fn.replace(/\r\n/g, "\n");
+      const body = flat.slice(flat.indexOf("{\n") + 1).trimStart(); // the body's brace ends its line
+      expect(body.startsWith("await requireAdmin();") || body.startsWith("const admin = await requireAdmin();"), fn.slice(0, 40)).toBe(true);
+    }
+    const route = fs.readFileSync(path.join(ROOT, "src/app/api/admin/reveal/route.ts"), "utf8");
+    const post = route.slice(route.indexOf("export async function POST"));
+    expect(post.indexOf("await adminOrNull()")).toBeGreaterThan(0);
+    expect(post.indexOf("await adminOrNull()")).toBeLessThan(post.indexOf("request.json"));
+    // The allowlist is the env var of user ids, from the verified session; never an email or the request.
+    const auth = fs.readFileSync(path.join(ROOT, "src/lib/admin/auth.ts"), "utf8");
+    expect(auth).toContain("process.env.ADMIN_USER_IDS");
+    expect(auth).toContain("auth.getUser()");
+    expect(auth).not.toMatch(/\.email\b|headers\(\)|cookies\(\)/);
+  });
+
+  it("nothing in the site links to /admin, and robots.txt doesn't name it", () => {
+    for (const file of sourceFiles(path.join(ROOT, "src"))) {
+      const rel = path.relative(ROOT, file).replace(/\\/g, "/");
+      if (/^src\/(app\/admin|app\/api\/admin|components\/admin|lib\/admin)\//.test(rel) || rel.endsWith(".test.ts")) continue;
+      expect(fs.readFileSync(file, "utf8"), rel).not.toMatch(/["'`]\/admin\b/);
     }
   });
 

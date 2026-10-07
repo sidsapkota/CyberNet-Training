@@ -62,6 +62,9 @@ npm run e2e:visual-qa:gate # MERGE GATE: every page (guest + signed in, light + 
                           # restores leagues). Fails on any problem
 npm run e2e:visual-qa     # the full sweep: all 6 sizes, plus contact sheets in docs/plans/visual-qa/ (PAGES_ONLY=,
                           # CARDS_ONLY=, COURSE=, SIZES=, THEMES=, SHEETS=0)
+npm run e2e:admin         # /admin: guest, learner and Pro get the plain 404 on every page and the reveal endpoint,
+                          # nothing logged; the admin sees every page, views and email reveals are logged. STAGING
+                          # ONLY; the dev server needs ADMIN_USER_IDS = the staging admin test account
 npm run e2e:dashboard-numbers # cards done, no lesson finished: header XP, Activity XP bars and rings
                           # (throwaway account; secret key, so a local production build or production)
 npm run e2e:player-flow   # before/after screenshots: a hotspot card and the wrong-answer flow (SHOTS_TAG=)
@@ -1196,6 +1199,29 @@ Pro learners try the cards they got wrong again. Pure rules in `src/lib/progress
   `store.completeCard`: practice XP toward today's goal, or the card's XP if it was never finished;
   quiz cards pay nothing. The finish screen counts what was fixed (mascot `celebrating`, or
   `thinking` if nothing was).
+
+## Admin dashboard
+
+Private and read-only (owner, 7 Oct 2026; plan `docs/plans/admin.md`). The most sensitive page: `/admin`.
+- **Access, on the server only:** `requireAdmin()` (`src/lib/admin/auth.ts`): the user from the verified
+  session (`auth.getUser()`), on the allowlist `ADMIN_USER_IDS` (server env var, comma-separated Supabase user
+  ids; never emails, never anything from the browser), signed in within 12 hours (`recentSignIn`). Every
+  admin page calls it first, and every data function in `src/lib/admin/server.ts` calls it again (a second
+  gate); the reveal route (`/api/admin/reveal`) checks `adminOrNull()` before reading the request.
+  `server-actions.test.ts` enforces all three.
+- **Everyone else gets the site's ordinary 404:** guests, learners, Pro members, and an admin signed in over
+  12 hours ago. Not linked anywhere (a test checks no source outside the admin files mentions `/admin`), not in
+  the sitemap or `robots.txt`, `noindex`.
+- **Audit:** every page view (`view:<page>`) and action (`reveal-email`, with whose) goes in `admin_audit`
+  (`20261014100000_admin_audit.sql`, server-only; `check:rls` proves it). Read it in the Supabase dashboard.
+- **Pages:** Overview (learners, active today and 7 days, returning, lessons completed, Pro, founders and
+  their revenue, sign-ups per day), Funnel (7/30 days, from our own data; Vercel events are linked, not
+  copied), Learners (50 a page; emails masked until "Show email"), Lessons (started vs finished, most
+  mistakes, slowest and most-missed first answers from `card_plays`), Leagues (this week, last week's results),
+  Feedback (latest 50), Features (reminders, challenges, the Feed; "not live yet" until their tables exist).
+  **Nothing on them changes data.**
+- **Owner step:** `ADMIN_USER_IDS` in Vercel Production (the owner adds it; never set it from here).
+  Locally, `.env.local` may hold the staging admin test account's id (admin-e2e@example.com), for `e2e:admin`.
 
 ## Avatars and rewards
 
