@@ -43,7 +43,13 @@ try {
   await admin.from("profiles").update({ username, age_confirmed: true, time_zone: "Australia/Sydney" }).eq("id", userId);
   await admin.from("quiz_attempts").insert({ user_id: userId, quiz_id: quiz.id, attempted_at: new Date().toISOString(), score: 1, passed: true, xp: 50, answers: {} });
   // Seven met days in a row, ending yesterday (Sydney).
-  const day = (n) => new Date(Date.now() - n * 86_400_000).toLocaleDateString("en-CA", { timeZone: "Australia/Sydney" });
+  // Calendar days back from today in Sydney (not 24-hour steps: a daylight-saving day has 23 or 25
+  // hours, so stepping by 24 hours can skip or repeat a date in the hour after midnight).
+  const today = new Date().toLocaleDateString("en-CA", { timeZone: "Australia/Sydney" });
+  const day = (n) => {
+    const [y, m, d] = today.split("-").map(Number);
+    return new Date(Date.UTC(y, m - 1, d - n)).toISOString().slice(0, 10);
+  };
   await admin.from("goal_days").insert([1, 2, 3, 4, 5, 6, 7].map((n) => ({ user_id: userId, day: day(n), time_zone: "Australia/Sydney", goal: 20, met_at: new Date(Date.now() - n * 86_400_000).toISOString() })));
 
   const page = await browser.newPage({ viewport: { width: 360, height: 740 }, colorScheme: "dark", isMobile: true, hasTouch: true });
