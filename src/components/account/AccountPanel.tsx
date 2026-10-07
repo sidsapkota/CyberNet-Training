@@ -78,15 +78,16 @@ export function AccountPanel({
       </div>
 
       {welcome && !saved && (
-        <p role="status" className="rounded-card border border-accent-ink bg-accent-soft p-4 text-small">
-          You&apos;re in! Pick a username. It&apos;s how other learners see you, so keep it fun and never your real name.
-        </p>
+        <div className="rounded-card border border-accent-ink bg-accent-soft p-4 text-small">
+          <p role="status">
+            You&apos;re in! Pick a username. It&apos;s how other learners see you, so keep it fun and never your real name.
+          </p>
+          {/* Sign-up: the reminder opt-in, unticked, where it's seen before "Use this" (it saves on its own). */}
+          <ReminderSetting variant="signup" initial={reminderEmails} className="mt-3 border-t border-line pt-3" />
+        </div>
       )}
 
-      <UsernameForm className={panel} initial={username} generated={usernameGenerated} nextChange={nextChange} welcome={welcome} onSaved={(name) => void onSaved(name)}>
-        {/* Sign-up: the opt-in, unticked, beside the name they're picking (it saves on its own). */}
-        {welcome && !saved && <ReminderSetting variant="signup" initial={reminderEmails} className="mt-4 border-t border-line pt-4" />}
-      </UsernameForm>
+      <UsernameForm className={panel} initial={username} generated={usernameGenerated} nextChange={nextChange} welcome={welcome} onSaved={(name) => void onSaved(name)} />
 
       <AvatarPanel className={panel} />
 

@@ -62,6 +62,8 @@ npm run e2e:visual-qa:gate # MERGE GATE: every page (guest + signed in, light + 
                           # restores leagues). Fails on any problem
 npm run e2e:visual-qa     # the full sweep: all 6 sizes, plus contact sheets in docs/plans/visual-qa/ (PAGES_ONLY=,
                           # CARDS_ONLY=, COURSE=, SIZES=, THEMES=, SHEETS=0)
+npm run e2e:reminders     # reminder emails: the sign-up opt-in (unticked), the /account switch, the hourly job (dry
+                          # run), one a day, open/return links, one-tap unsubscribe. STAGING ONLY; CRON_SECRET locally
 npm run e2e:dashboard-numbers # cards done, no lesson finished: header XP, Activity XP bars and rings
                           # (throwaway account; secret key, so a local production build or production)
 npm run e2e:player-flow   # before/after screenshots: a hotspot card and the wrong-answer flow (SHOTS_TAG=)
@@ -953,6 +955,9 @@ Migrations, all applied to the linked project:
   `limit_time_zone_changes` trigger (see [Daily lesson limit](#daily-lesson-limit)).
 - `20261003100000_card_mistakes.sql`: `card_mistakes` and `record_mistake()` (security definer,
   `search_path ''`, execute for `service_role` only; see [Mistake review](#mistake-review)).
+- `20261011100000_reminder_emails.sql`: `profiles.reminder_emails` (default false),
+  `reminder_consent_at`, `email_token` (unsubscribe key), and the server-only `reminder_emails` log (one
+  a day). See [Reminder emails](#reminder-emails).
 - `20261004100000_usernames.sql` and `20261004110000_usernames_server_only.sql`: `profiles.username`,
   `username_changed_at`, the shape check and the unique index; league handles copied over;
   `league_standings()` returns the username; then learners lose their direct profile write.
@@ -1196,6 +1201,32 @@ Pro learners try the cards they got wrong again. Pure rules in `src/lib/progress
   `store.completeCard`: practice XP toward today's goal, or the card's XP if it was never finished;
   quiz cards pay nothing. The finish screen counts what was fixed (mascot `celebrating`, or
   `thinking` if nothing was).
+
+## Reminder emails
+
+Opt-in only (owner, 7 Oct 2026; plan `docs/plans/retention-and-fun.md`). Pure rules and words in
+`src/lib/reminders/` (`rules.ts`, `email.ts`, tested), server code in `src/lib/reminders/server.ts`
+(vetted secret-key use), the hourly job `/api/cron/reminders` (`vercel.json`, `CRON_SECRET` checked first).
+- **What:** at most one email a day. **Streak:** at 7 pm in the learner's time zone, only with a streak
+  and no XP today; "Your N-day streak ends tonight" only when no freeze would save it, otherwise "Keep
+  your N-day streak going". **League:** Sunday 6 pm Sydney (6 hours before the reset), only while
+  leagues are open, ranked learners with XP, between 8 am and 9:59 pm their time; it wins on a Sunday.
+- **Consent (Australian Spam Act):** off for everyone (`profiles.reminder_emails` default false; existing
+  accounts were never opted in). Turned on only by the learner's own tick: an unticked box in the
+  "Pick a username" welcome note, or the switch on `/account` (`ReminderSetting` →
+  `setReminderEmailsAction`, which records `reminder_consent_at`). Learners can't write it directly.
+- **Every email:** from "CyberNet Training <noreply@…>", reply-to hello@, says why they're getting it,
+  one button, a one-tap unsubscribe link (`/api/email/unsubscribe?t=<profiles.email_token>`: GET from
+  the link, POST for mail apps' one-click via `List-Unsubscribe` / `List-Unsubscribe-Post`), then
+  `/unsubscribed`. No offers or Pro pitch, ever (a test checks).
+- **Tracking:** `reminder_emails` rows (one per learner per local day, unique) with `opened_at` (the
+  `/api/email/open` image; rough, Apple Mail opens images itself) and `returned_at` (the button, via
+  `/api/email/go`, same-site redirects only); each checked by the row's random `key`. Also Vercel events
+  `reminder_sent`, `reminder_opened`, `reminder_returned` (`source` = streak or league).
+- **Safety:** outside production (`VERCEL_ENV`), only `FEEDBACK_INBOX` can receive one; everyone else is a
+  dry run (`dry_run`). Without `RESEND_API_KEY`, all are dry runs. Never test on a real learner.
+- `npm run e2e:reminders` (staging) checks it end to end; `check:rls` proves the defaults and that the
+  log is server-only.
 
 ## Avatars and rewards
 
