@@ -11,7 +11,7 @@ import { DailyGoalSummary } from "@/components/streak/DailyGoalSummary";
 import { Mascot } from "@/components/mascot/Mascot";
 import { ButtonLink, buttonClasses } from "@/components/ui/Button";
 import { CountUp } from "@/components/ui/CountUp";
-import { ArrowRightIcon, BackIcon, ChallengeIcon, ComboIcon, FeedbackIcon, LessonIcon, XpIcon } from "@/components/ui/icons";
+import { ArrowRightIcon, BackIcon, ChallengeIcon, ComboIcon, DuelIcon, FeedbackIcon, LessonIcon, XpIcon } from "@/components/ui/icons";
 import { COMBO_FROM } from "@/lib/combo";
 import { NetworkMark } from "@/components/network/NetworkMark";
 import type { LessonIconName } from "@/lib/content/lessonIcons";
@@ -38,7 +38,10 @@ export function LessonComplete({
   goalMetNow = false,
   freezeEarned = false,
   bestCombo = 0,
+  challengeable = false,
 }: {
+  /** The lesson has enough questions for "Challenge a friend" (signed-in learners only). */
+  challengeable?: boolean;
   /** The longest run of right-first-time answers this visit (shown from 3). */
   bestCombo?: number;
   /** This lesson met today's daily goal. */
@@ -154,6 +157,14 @@ export function LessonComplete({
               )}
             </div>
           </>
+        )}
+        {challengeable && available && auth.status === "signed-in" && (
+          <Link
+            href={`/challenge/new/${lessonId}`}
+            className="mx-auto mt-4 flex min-h-11 w-fit items-center gap-2 rounded-control px-3 text-small font-semibold text-accent-ink underline-offset-2 hover:underline"
+          >
+            <DuelIcon className="size-5" /> Challenge a friend
+          </Link>
         )}
         <Link
           href={`/feedback?lesson=${lessonId}`}

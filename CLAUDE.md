@@ -64,6 +64,8 @@ npm run e2e:visual-qa     # the full sweep: all 6 sizes, plus contact sheets in 
                           # CARDS_ONLY=, COURSE=, SIZES=, THEMES=, SHEETS=0)
 npm run e2e:combo         # the lesson combo ("3 in a row!"), its reset on a miss, and "Best combo" at lesson complete
                           # (guest, 360x560 + desktop; dev server running)
+npm run e2e:challenge     # Challenge a friend: make one (360x560), a guest plays and wins, GG, sign up claims it, the
+                          # challenger's view, /account, bad/unknown/expired links. STAGING ONLY
 npm run e2e:dashboard-numbers # cards done, no lesson finished: header XP, Activity XP bars and rings
                           # (throwaway account; secret key, so a local production build or production)
 npm run e2e:player-flow   # before/after screenshots: a hotspot card and the wrong-answer flow (SHOTS_TAG=)
@@ -961,6 +963,8 @@ Migrations, all applied to the linked project:
   `limit_time_zone_changes` trigger (see [Daily lesson limit](#daily-lesson-limit)).
 - `20261003100000_card_mistakes.sql`: `card_mistakes` and `record_mistake()` (security definer,
   `search_path ''`, execute for `service_role` only; see [Mistake review](#mistake-review)).
+- `20261012100000_challenges.sql`: `challenges` and `challenge_attempts` (server-only). See
+  [Challenge a friend](#challenge-a-friend).
 - `20261004100000_usernames.sql` and `20261004110000_usernames_server_only.sql`: `profiles.username`,
   `username_changed_at`, the shape check and the unique index; league handles copied over;
   `league_standings()` returns the username; then learners lose their direct profile write.
@@ -1204,6 +1208,34 @@ Pro learners try the cards they got wrong again. Pure rules in `src/lib/progress
   `store.completeCard`: practice XP toward today's goal, or the card's XP if it was never finished;
   quiz cards pay nothing. The finish screen counts what was fixed (mascot `celebrating`, or
   `thinking` if nothing was).
+
+## Challenge a friend
+
+An async duel, the growth loop (owner, 7 Oct 2026; plan `docs/plans/retention-and-fun.md`). Pure rules in
+`src/lib/challenges/rules.ts` (tested), server code in `src/lib/challenges/server.ts` (vetted secret-key
+use), UI in `src/components/challenge/`.
+- **Making one:** "Challenge a friend" on the lesson-complete screen (signed in, lessons with 3+
+  questions: `canChallenge`) → `/challenge/new/<lesson>` (needs the lesson finished, or a challenge on it
+  played: "Challenge back"). Up to 5 questions: the lesson's last interactive core cards
+  (`challengeCards`), one try each, quiz rules (`PlayModeContext` "quiz": no hints, no explanations).
+  `createChallengeAction` re-grades on the server (`gradeUntrusted`), saves it, and the share screen
+  offers the share sheet and Copy link. At most 20 a day.
+- **Playing one:** `/c/<id>` (12 random letters and digits; 30 days; `noindex`, `robots.txt` disallows `/c/`
+  and `/challenge/`). No account needed. The intro shows the challenger's **username and avatar outfit
+  only** (never an email or id: `creatorId` is stripped before the page renders). Two mascots, two
+  health bars (`HealthBars`, one segment per question, with "4/5" in text); after each Check the
+  challenger's answer to the same question is revealed and their bar drops if they missed it. The go
+  is posted to `/api/challenges/[id]/attempts` (re-graded; the player comes only from the verified session,
+  else a guest; at most 100 goes per challenge; one per signed-in player).
+- **Result:** win / draw / "So close!", one **preset** emote (`EMOTES`: GG, Nice one, Rematch?; Pro also gets
+  the animated On fire, Wow, Bring it, which `/api/challenges/[id]/emote` checks with `getEntitlement`).
+  **No free text anywhere.** Guests: "Sign up to save your score and challenge back" (the go's key stays
+  on the device, and `claimChallengeAttemptAction` claims it after sign-in); signed in: "Challenge back".
+- **The challenger** opening their own link sees who played (usernames, or "A guest"), scores and
+  reactions; `/account` lists their latest challenges (`ChallengesPanel`).
+- **Events:** `challenge_created`, `challenge_opened`, `challenge_completed`, `challenge_signup` (with the lesson).
+- **Tables** (`20261012100000_challenges.sql`): `challenges`, `challenge_attempts`, server-only;
+  `check:rls` proves it, and that emotes are only the fixed list.
 
 ## Avatars and rewards
 

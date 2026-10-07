@@ -80,6 +80,10 @@ That's all. They never see your email, your real name, your other stats or where
 - **Hide yourself any time:** turn off "Show me on leaderboards" on the [Account page](/account) or the Leagues page, and nobody else sees you in any league. Your tier then stays as it is.
 - **Reports:** if you report a username, we keep the report (your account, the username and the reason) so an adult can review it, and we email a short daily summary of new reports to our own inbox. If three different learners report the same username, we replace it with a new made-up one.
 
+## Challenge a friend
+
+If you make a challenge, we store which lesson and questions it uses, whether you got each one right, and when you made it. Anyone you send the link to sees only your **username and avatar** and your score, never your email or anything else. When a friend plays it, we store their right and wrong answers, their score and the one reaction they pick from a fixed list (there's no free text). If they're signed in, their username is shown to you; if not, they show as "A guest". Links stop working after 30 days, and your challenges are deleted with your account.
+
 ## Certificates
 
 With CyberNet Pro, you can create a certificate when you pass a course final. We keep **the name you choose for it** (a first name or nickname is fine), the **course**, the **date you finished** and a random **certificate ID**.

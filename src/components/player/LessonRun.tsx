@@ -9,6 +9,7 @@ import type { CardStatus } from "@/cards/types";
 import { LessonTimeIcon } from "@/components/ui/icons";
 import { formatChecked } from "@/lib/content/lastChecked";
 import type { CourseOutline, RegularLesson } from "@/lib/content/schema";
+import { canChallenge } from "@/lib/challenges/rules";
 import { comboLabel, comboPitch, COMBO_FROM, nextCombo } from "@/lib/combo";
 import { useFeedback } from "@/lib/feedback";
 import { useCardNavigationKeys, useGlobalKeyDown } from "@/lib/keyboard";
@@ -354,6 +355,7 @@ export function LessonRun({
           challengesCompleted={result.challengesCompleted}
           challengesTotal={lesson.cards.filter((c) => c.difficulty === "challenge").length}
           bestCombo={combo.best}
+          challengeable={canChallenge(lesson.cards)}
           next={next}
           previous={moduleNeighbours(course, lesson.id).previous}
           lessonId={lesson.id}

@@ -8,6 +8,7 @@ import { DailyGoalSetting } from "./DailyGoalSetting";
 import { ManageProPanel } from "@/components/pro/ManageProPanel";
 import { LeagueAccountSettings } from "@/components/leagues/LeagueAccountSettings";
 import { CertificatesPanel } from "@/components/certificates/CertificatesPanel";
+import { ChallengesPanel } from "@/components/challenge/ChallengesPanel";
 import { DeleteIcon, SignOutIcon } from "@/components/ui/icons";
 import { trackEvent } from "@/lib/analytics";
 import { takeSignupLesson } from "@/lib/auth/afterSignIn";
@@ -88,6 +89,8 @@ export function AccountPanel({
       <LeagueAccountSettings className={panel} />
 
       <CertificatesPanel className={panel} courseTitles={courseTitles} />
+
+      <ChallengesPanel className={panel} />
 
       <DailyGoalSetting className={panel} />
 

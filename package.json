@@ -40,6 +40,7 @@
     "e2e:visual-qa": "node scripts/e2e/visual-qa.mjs",
     "e2e:visual-qa:gate": "node scripts/e2e/visual-qa.mjs --gate",
     "e2e:combo": "node scripts/e2e/combo.mjs",
+    "e2e:challenge": "node scripts/e2e/challenge.mjs",
     "e2e:dashboard-numbers": "node scripts/e2e/dashboard-numbers.mjs",
     "e2e:player-flow": "node scripts/e2e/player-flow-shots.mjs",
     "e2e:prod-mascot": "node scripts/e2e/prod-mascot.mjs",

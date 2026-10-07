@@ -80,7 +80,7 @@ describe("Server Actions that write with the secret key", () => {
     // Besides Server Actions: the Pro entitlement helpers (server-only; callers pass a verified
     // user id) and the Stripe webhook, which has no user session and is authenticated by Stripe's
     // signature instead (checked before anything is read or written).
-    const vetted = ["src/lib/pro/server.ts", "src/lib/leagues/server.ts", "src/lib/certificates/server.ts", "src/app/api/stripe/webhook/route.ts", "src/lib/feedback/server.ts", "src/lib/usernames/server.ts", "src/lib/rewards/server.ts"];
+    const vetted = ["src/lib/pro/server.ts", "src/lib/leagues/server.ts", "src/lib/certificates/server.ts", "src/app/api/stripe/webhook/route.ts", "src/lib/feedback/server.ts", "src/lib/usernames/server.ts", "src/lib/rewards/server.ts", "src/lib/challenges/server.ts"];
     for (const file of importers) {
       const rel = path.relative(ROOT, file).replace(/\\/g, "/");
       if (!rel.startsWith("src/app/actions/")) expect(vetted, rel).toContain(rel);
@@ -95,6 +95,18 @@ describe("Server Actions that write with the secret key", () => {
       const at = webhook.indexOf(later);
       if (at !== -1) expect(verified, `the webhook must verify the signature before ${later}`).toBeLessThan(at);
     }
+  });
+
+  it("challenge routes take the player only from the verified session, never from the request", () => {
+    const attempts = fs.readFileSync(path.join(ROOT, "src/app/api/challenges/[id]/attempts/route.ts"), "utf8");
+    expect(attempts).toContain("await requireUserId()");
+    expect(attempts).not.toMatch(/body\.data\.(player|user)/);
+    const server = fs.readFileSync(path.join(ROOT, "src/lib/challenges/server.ts"), "utf8");
+    expect(server.trimStart().startsWith('import "server-only";')).toBe(true);
+    // Answers are always re-graded with the quiz graders.
+    expect(server).toContain("gradeUntrusted(");
+    // The public view never reads an email.
+    expect(server).not.toMatch(/auth\.admin|\.email\b|"email"/);
   });
 
   it("the league job checks CRON_SECRET before touching any data", () => {

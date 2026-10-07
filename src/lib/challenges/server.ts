@@ -45,6 +45,13 @@ export function questionsFor(lessonId: string): InteractiveCard[] | null {
   return cards.length >= 3 ? cards : null;
 }
 
+/** The learner as they appear in a duel: their username and avatar outfit only. */
+export async function duelist(userId: string): Promise<{ name: string; outfit: string[] }> {
+  const { data, error } = await createSupabaseAdminClient().from("profiles").select("username, outfit").eq("id", userId).maybeSingle();
+  fail("Couldn't read the profile", error);
+  return { name: data?.username ?? "You", outfit: data?.outfit ?? [] };
+}
+
 /** May this learner start a challenge on this lesson? (They finished it, or played a challenge on it.) */
 export async function mayChallenge(userId: string, lessonId: string): Promise<boolean> {
   const admin = createSupabaseAdminClient();
