@@ -7,7 +7,7 @@ import { playMix, playProblems } from "./play";
  * or CONSEQUENCE, RECOGNISE no more than half). Add a course here once it's converted, so it can't
  * slip back. Run `npx tsx scripts/play-audit.ts` to see every lesson's mix.
  */
-export const PLAY_TARGET_COURSES: readonly string[] = [];
+export const PLAY_TARGET_COURSES: readonly string[] = ["stay-safe-online"];
 
 describe("play mix", () => {
   const { lessons } = loadContent();

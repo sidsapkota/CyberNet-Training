@@ -235,7 +235,7 @@ Signs of a hack, what to do step by step, and where to get help.
 
 **Best interactive cards**
 
-- Sort into groups: Helps, or makes it worse?
+- Multiple choice: You block a bully before saving their messages. What happens?
 - Choose what happens: People in a group chat post mean messages about you.
 - Match pairs: Match each problem to where to go.
 

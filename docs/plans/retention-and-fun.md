@@ -220,7 +220,7 @@ PREDICT is almost missing everywhere. That's the biggest gap.
 - **Target, per lesson:** at least one PREDICT, at least one BUILD or CONSEQUENCE, and RECOGNISE no more
   than half the graded cards.
 - **Enforced in tests per course** once that course is converted (`PLAY_TARGET_COURSES` in
-  `load.test.ts`), so it can't slip back.
+  `play.test.ts`), so it can't slip back. Stay Safe Online: converted 7 Oct (10 of 10).
 - **Weakest cards first:**
   - A sort that only checks vocabulary becomes a sort with a visible consequence. A new `sort_bins`
     option, `scene`, shows a picture that changes as items move: an inbox that empties as scams go to

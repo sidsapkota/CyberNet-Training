@@ -46,6 +46,37 @@
       "explanation": "The address, pressure, a secret, a padlock and a logo. Only the address shows who really owns the page."
     },
     {
+      "id": "who-gets-it",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "play": "predict",
+      "uses": [
+        "domain-owner",
+        "padlock-not-proof",
+        "fake-sites-copy-looks"
+      ],
+      "prompt": "You type your password into this page. Who gets it?",
+      "options": [
+        {
+          "id": "login-check",
+          "text": "The page's real owner, login-check"
+        },
+        {
+          "id": "your-bank",
+          "text": "Your Bank, because the page has its logo",
+          "nudge": "A logo can be copied in minutes. Only the address shows who owns the page."
+        },
+        {
+          "id": "nobody",
+          "text": "Nobody, because the padlock keeps it safe",
+          "nudge": "The padlock only scrambles it on the way. It still arrives at the page's owner."
+        }
+      ],
+      "correctOptionId": "login-check",
+      "explanation": "The owner is the name before the last ending: `login-check`. Logos and padlocks can't change who receives what you type.",
+      "hint": "Which part of the page shows who really owns it?"
+    },
+    {
       "id": "read-the-address",
       "type": "explainer",
       "difficulty": "core",
