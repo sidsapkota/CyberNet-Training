@@ -155,6 +155,8 @@ export const XIcon = brandIcon(X, "XIcon");
 export const LockIcon = brandIcon(Lock, "LockIcon");
 export const PlayIcon = brandIcon(Play, "PlayIcon");
 export const XpIcon = brandIcon(Zap, "XpIcon");
+/** A rare Feed byte. */
+export const RareIcon = brandIcon(Sparkles, "RareIcon");
 export const ChallengeIcon = brandIcon(Diamond, "ChallengeIcon");
 export const GripIcon = brandIcon(GripVertical, "GripIcon");
 export const ChevronDownIcon = brandIcon(ChevronDown, "ChevronDownIcon");

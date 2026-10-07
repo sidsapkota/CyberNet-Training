@@ -5,6 +5,8 @@ import { ChevronDownIcon, HandsOnIcon, HintIcon, LessonTimeIcon, SafeIcon } from
 import type { CourseOutline } from "@/lib/content/schema";
 import { AUDIENCE } from "@/lib/site";
 import { ParentPitch } from "@/components/pro/Founder";
+import { HeroByte } from "@/components/feed/HeroByte";
+import type { ByteForView } from "@/components/feed/ByteView";
 import { LandingCta } from "./LandingCta";
 
 const COUNT_WORDS: Record<number, string> = { 2: "Two", 3: "Three", 4: "Four", 5: "Five" };
@@ -41,10 +43,13 @@ export function Landing({
   courses,
   firstLessonId,
   lessonMinutes,
+  heroByte,
 }: {
   courses: CourseOutline[];
   firstLessonId: string;
   lessonMinutes: number;
+  /** With the Feed on: a live byte as the first screen. */
+  heroByte?: ByteForView;
 }) {
   const how = [
     { Icon: LessonTimeIcon, text: `Short lessons, about ${lessonMinutes} minutes each` },
@@ -54,7 +59,18 @@ export function Landing({
 
   return (
     <div className="mx-auto max-w-page px-gutter">
-      {/* Hero */}
+      {/* Hero: a live byte when the Feed is on (play first, read later), otherwise the mascot. */}
+      {heroByte ? (
+        <section aria-label="Try one now" className="flex flex-col items-center pt-4 pb-12 sm:pt-10">
+          <HeroByte byte={heroByte} />
+          <div className="mt-3 flex w-full max-w-lesson flex-col items-center gap-1 text-center">
+            <Link href={`/lesson/${firstLessonId}`} className="inline-flex min-h-11 items-center text-small font-semibold text-accent-ink underline-offset-2 hover:underline">
+              Or start a full lesson
+            </Link>
+            <p className="text-small text-ink-muted">{AUDIENCE}</p>
+          </div>
+        </section>
+      ) : (
       <section className="flex flex-col items-center pt-6 pb-12 text-center sm:pt-12">
         <Mascot expression="happy" size={140} idle label="The CyberNet mascot, waving hello" />
         <h1 className="mt-4 text-headline font-semibold text-balance sm:text-display">How tech really works</h1>
@@ -67,6 +83,7 @@ export function Landing({
           <p className="text-small text-ink-muted">No sign-up for your first lesson</p>
         </div>
       </section>
+      )}
 
       {/* Courses */}
       <section aria-labelledby="courses-heading" className="py-10">

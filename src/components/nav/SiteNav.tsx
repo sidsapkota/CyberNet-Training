@@ -5,7 +5,8 @@ import Link, { useLinkStatus } from "next/link";
 import { usePathname } from "next/navigation";
 import type { ComponentType, ReactNode } from "react";
 import { LogoLockup } from "@/components/brand/Logo";
-import { CoursesIcon, DashboardIcon, LeaguesIcon, PricingIcon, ProIcon, SignInIcon } from "@/components/ui/icons";
+import { CoursesIcon, DashboardIcon, LeaguesIcon, PlayIcon, PricingIcon, ProIcon, SignInIcon } from "@/components/ui/icons";
+import { FEED_ENABLED } from "@/lib/feed/config";
 import { SoundToggle } from "@/components/ui/SoundToggle";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { StreakPill } from "@/components/streak/StreakPill";
@@ -20,12 +21,14 @@ import { useLeaguesOpen } from "@/lib/leagues/useLeaguesOpen";
 interface NavItem {
   href: string;
   label: string;
+  /** A shorter label for the phone tab bar (six tabs share 360px). */
+  short?: string;
   Icon: ComponentType<{ className?: string }>;
   isActive: (pathname: string) => boolean;
 }
 
 const NAV: NavItem[] = [
-  { href: "/", label: "Dashboard", Icon: DashboardIcon, isActive: (p) => p === "/" },
+  { href: "/", label: "Dashboard", short: "Home", Icon: DashboardIcon, isActive: (p) => p === "/" },
   {
     href: "/courses",
     label: "Courses",
@@ -33,6 +36,9 @@ const NAV: NavItem[] = [
     isActive: (p) => p.startsWith("/courses") || p.startsWith("/course/"),
   },
 ];
+
+/** The Feed (behind FEED_ENABLED; docs/plans/feed.md). */
+const FEED: NavItem = { href: "/feed", label: "Feed", Icon: PlayIcon, isActive: (p) => p.startsWith("/feed") };
 
 /** Leagues: only for signed-in learners, once leagues have opened. */
 const LEAGUES: NavItem = { href: "/leagues", label: "Leagues", Icon: LeaguesIcon, isActive: (p) => p.startsWith("/leagues") };
@@ -55,7 +61,7 @@ function usePlanItem(): NavItem | null {
 
 function useNav(): NavItem[] {
   const plan = usePlanItem();
-  return [...NAV, ...(useLeaguesOpen() ? [LEAGUES] : []), ...(plan ? [plan] : [])];
+  return [...NAV, ...(FEED_ENABLED ? [FEED] : []), ...(useLeaguesOpen() ? [LEAGUES] : []), ...(plan ? [plan] : [])];
 }
 
 /** Top bar: logo, Dashboard, Courses and Leagues (from `sm` up), XP and theme. */
@@ -151,7 +157,7 @@ export function BottomNav() {
       className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-canvas pb-[env(safe-area-inset-bottom)] sm:hidden"
     >
       <ul className="grid auto-cols-fr grid-flow-col">
-        {nav.map(({ href, label, Icon, isActive }) => {
+        {nav.map(({ href, label, short, Icon, isActive }) => {
           const active = isActive(pathname);
           return (
             <li key={href}>
@@ -172,7 +178,7 @@ export function BottomNav() {
                 <Pending>
                   <Icon className="size-6" />
                 </Pending>
-                {label}
+                {short ?? label}
               </Link>
             </li>
           );

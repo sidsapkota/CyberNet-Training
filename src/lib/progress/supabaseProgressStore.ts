@@ -1,5 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { FEED_LESSON_ID } from "@/lib/feed/rules";
 import {
+  completeByteAction,
   completeCardAction,
   completeLessonAction,
   recordMistakeAction,
@@ -145,6 +147,22 @@ export class SupabaseProgressStore implements ProgressStore {
     this.set(next);
     await this.write(async () => {
       const saved = await completeCardAction(lessonId, cardId, xp, browserTimeZone());
+      const cards = { ...this.snapshot!.cards };
+      if (saved.completion) cards[key] = saved.completion;
+      else delete cards[key];
+      this.set(this.settle({ ...this.snapshot!, cards }, pending, saved.xp));
+    });
+  }
+
+  async completeByte(byteId: string, answer: unknown, xp: number): Promise<void> {
+    const current = await this.getSnapshot();
+    const key = cardKey(FEED_LESSON_ID, byteId);
+    if (current.cards[key]) return;
+    const withCard = { ...current, cards: { ...current.cards, [key]: { completedAt: new Date().toISOString(), xp } } };
+    const { next, pending } = this.withXp(withCard, { kind: "card", lessonId: FEED_LESSON_ID, cardId: byteId, xp });
+    this.set(next);
+    await this.write(async () => {
+      const saved = await completeByteAction(byteId, answer, browserTimeZone());
       const cards = { ...this.snapshot!.cards };
       if (saved.completion) cards[key] = saved.completion;
       else delete cards[key];

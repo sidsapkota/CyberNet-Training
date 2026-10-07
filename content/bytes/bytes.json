@@ -1,0 +1,35 @@
+[
+  { "id": "guessed-in-a-second", "hook": "Some passwords get guessed in under a second. Which ones?", "lesson": "strong-passwords", "card": "easy-or-hard" },
+  { "id": "phish-or-fine", "hook": "One of these emails wants your password. Can you tell?", "lesson": "phishing-emails", "card": "phish-or-fine" },
+  { "id": "scam-text-giveaway", "hook": "Every scam text has the same giveaway.", "lesson": "scam-texts-and-calls", "card": "always-a-sign" },
+  { "id": "fake-bank-address", "hook": "Fake bank sites look perfect. The address doesn't.", "lesson": "fake-websites", "card": "bank-or-not" },
+  { "id": "cafe-wi-fi", "hook": "Café Wi-Fi is free. Is it fine for everything?", "lesson": "apps-and-wi-fi", "card": "riskiest-wi-fi" },
+  { "id": "torch-wants-contacts", "hook": "Why would a torch app want your contacts?", "lesson": "apps-and-wi-fi", "card": "needs-it" },
+  { "id": "already-hacked", "hook": "Your account could be taken over right now. Spot the signs.", "lesson": "signs-of-a-hack", "card": "hacked-or-normal" },
+  { "id": "mum-on-the-phone", "hook": "It sounds exactly like Mum. It isn't her.", "lesson": "deepfake-scams", "card": "safe-word-check", "rare": true },
+
+  { "id": "phone-ram-upgrade", "hook": "Can you upgrade a phone's memory like a gaming PC?", "lesson": "whats-in-the-box", "card": "phone-ram-swap" },
+  { "id": "phone-full", "hook": "Your phone says it's full. Full of what, exactly?", "lesson": "memory-vs-storage", "card": "download-needs-storage" },
+  { "id": "power-cut", "hook": "Power cut! What survives on your computer?", "lesson": "memory-vs-storage", "card": "still-there-after-off" },
+  { "id": "what-ghz-means", "hook": "What does 3 GHz on a processor actually mean?", "lesson": "meet-the-cpu", "card": "more-ghz-more-steps" },
+  { "id": "laptop-on-bed", "hook": "Gaming on your bed? Your laptop hates that.", "lesson": "meet-the-cpu", "card": "blanket-slows-it", "rare": true },
+  { "id": "apps-borrow-ram", "hook": "Every app you open quietly borrows something.", "lesson": "memory-vs-storage", "card": "apps-need-ram" },
+  { "id": "bulging-laptop", "hook": "A bulging laptop is a warning. Know what to do?", "lesson": "power-problems", "card": "swollen-battery" },
+
+  { "id": "robot-that-learned", "hook": "Two robots sort fruit. Only one actually learned.", "lesson": "spot-the-ai", "card": "watch" },
+  { "id": "red-ball", "hook": "Only one of these robots actually learned.", "lesson": "spot-the-ai", "card": "red-ball" },
+  { "id": "beat-the-keyboard", "hook": "Your keyboard guesses your next word. Can you?", "lesson": "next-word-machines", "card": "hungry-horse" },
+  { "id": "free-pizza", "hook": "A spam filter sees the word \"free\". Then what?", "lesson": "training-data", "card": "free-pizza-guess" },
+  { "id": "how-chatbots-know", "hook": "How does a chatbot know the Eiffel Tower is in Paris?", "lesson": "next-word-machines", "card": "how-it-knows", "rare": true },
+  { "id": "same-prompt-twice", "hook": "Same prompt, twice. Same picture?", "lesson": "how-ai-makes-pictures", "card": "same-prompt-twice" },
+  { "id": "chocolate-cure", "hook": "A doctor online says chocolate cures colds. Hmm.", "lesson": "spotting-ai-fakes", "card": "chocolate-cure" },
+  { "id": "sure-and-wrong", "hook": "AI can be completely wrong and sound totally sure.", "lesson": "what-ai-cant-do", "card": "why-confidently-wrong" },
+
+  { "id": "what-443-means", "hook": "Ever seen :443 after a web address? Here's why.", "lesson": "ports", "card": "colon-443" },
+  { "id": "not-enough-addresses", "hook": "4.3 billion addresses. 8 billion people. Uh oh.", "lesson": "what-is-an-ip-address", "card": "enough-for-everyone" },
+  { "id": "film-and-game", "hook": "Why doesn't your game lag while a film streams?", "lesson": "why-data-travels-in-packets", "card": "film-or-game" },
+  { "id": "glitchy-calls", "hook": "Why do video calls glitch instead of freezing?", "lesson": "tcp-and-udp", "card": "frozen-call" },
+  { "id": "padlock-trap", "hook": "This login page has a padlock. Is it safe?", "lesson": "https-and-the-padlock", "card": "lookalike-padlock", "rare": true },
+  { "id": "cafe-snooper", "hook": "No padlock on café Wi-Fi. Who can read your password?", "lesson": "https-and-the-padlock", "card": "who-can-read" },
+  { "id": "names-are-numbers", "hook": "You type names. The internet only understands numbers.", "lesson": "names-and-numbers", "card": "why-dns" }
+]

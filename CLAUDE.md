@@ -62,6 +62,8 @@ npm run e2e:visual-qa:gate # MERGE GATE: every page (guest + signed in, light + 
                           # restores leagues). Fails on any problem
 npm run e2e:visual-qa     # the full sweep: all 6 sizes, plus contact sheets in docs/plans/visual-qa/ (PAGES_ONLY=,
                           # CARDS_ONLY=, COURSE=, SIZES=, THEMES=, SHEETS=0)
+npm run e2e:feed          # the Feed: flag, guest flow (XP, events, Go deeper, 5-byte gate), merge at sign-up, server
+                          # XP and the daily cap, the break card, the video view, every byte fits. STAGING ONLY
 npm run e2e:dashboard-numbers # cards done, no lesson finished: header XP, Activity XP bars and rings
                           # (throwaway account; secret key, so a local production build or production)
 npm run e2e:player-flow   # before/after screenshots: a hotspot card and the wrong-answer flow (SHOTS_TAG=)
@@ -1196,6 +1198,37 @@ Pro learners try the cards they got wrong again. Pure rules in `src/lib/progress
   `store.completeCard`: practice XP toward today's goal, or the card's XP if it was never finished;
   quiz cards pay nothing. The finish screen counts what was fixed (mascot `celebrating`, or
   `thinking` if nothing was).
+
+## The Feed
+
+A TikTok-style stream of "bytes" (owner, 7 Oct 2026; plan `docs/plans/feed.md`). Rules in
+`src/lib/feed/` (`rules.ts`, `bytes.ts`, `solve.ts`; tested), UI in `src/components/feed/`. Behind
+`FEED_ENABLED` (`src/lib/feed/config.ts`; `?feed=1` previews it outside production).
+- **Bytes** (`content/bytes/bytes.json`): `{ id, hook, lesson, card, rare? }`. A byte points at an existing
+  interactive core card (`FEED_TYPES`: multiple choice, true or false, fill the gap, binary, next word,
+  train model, sort); the card is the interaction, its explanation the reveal. Hooks are 12 words or
+  fewer and must not repeat the card's own question; at most 1 in 6 rare (+15 XP instead of +5).
+  `feed.test.ts` checks every byte, and `e2e:feed` that each fits 360×560 and desktop with nothing
+  covered (tall cards like the binary or train-model ones don't fit: pick compact ones).
+- **The stream** (`/feed`, `Feed`): one byte per screen, CSS scroll snap (swipe), the header's up/down
+  buttons and the arrow keys; never moves by itself. One-tap types check themselves; others have a
+  Check pinned to the bottom. No second try. Order: `feedOrder` (seeded per learner per day, leaning to
+  courses with finished lessons or "Go deeper" taps, answered bytes last, courses mixed). Guests get
+  `GUEST_BYTES` (5), then the sign-up card. After 15 minutes, one dismissible "Nice work. Take a break?".
+- **XP:** 5 (rare 15) for a right answer on a new byte, at most `FEED_DAILY_CAP` (50) a day.
+  `store.completeByte` → `completeByteAction` (re-grades with `gradeUntrusted`, applies the cap) stores it
+  as a card completion with lesson id `feed` (card id = byte id) and a `card` XP event, so total XP,
+  the daily goal, streaks and leagues count it with no new tables. The Feed is **not** in the content
+  index, so the lesson actions can't pay for it. The guest merge prices bytes from the content and keeps
+  at most 5 (`withFeedLimit`, `FeedPrices`).
+- **Front door:** with the flag on, new visitors' first screen is a live byte (`HeroByte`, `HERO_BYTE`)
+  with "Keep going" into the Feed; the rest of the landing page stays below. "Feed" is a nav tab (the
+  phone tab bar says "Home" for Dashboard so six tabs fit).
+- **Export as video:** `/feed/video/<id>` (not linked, `noindex`): a 9:16 frame that plays the byte
+  (hook, the right answer from `rightAnswer`, the reveal and XP, then the logo) on a loop, to
+  screen-record.
+- **Events:** `byte_viewed`, `byte_answered` (`source` right/wrong), `byte_go_deeper`,
+  `feed_session_length` (bucketed), `feed_signup`.
 
 ## Avatars and rewards
 
