@@ -70,3 +70,22 @@ export function leagueReminder(input: {
 export function pickReminder(league: Reminder | null, streak: Reminder | null): Reminder | null {
   return league ?? streak;
 }
+
+/**
+ * When the sign-up opt-in went live (7 Oct 2026, just after the merge at 07:22 UTC). Accounts made
+ * before it were never asked about reminder emails, so the dashboard asks them once.
+ */
+export const REMINDER_OPT_IN_AT = "2026-10-07T08:00:00Z";
+
+/**
+ * The one-time dashboard card ("Want a reminder before your streak ends?"): only for accounts made
+ * before the sign-up opt-in, that aren't opted in and never were. Anyone who once opted in (even if
+ * they later unsubscribed: `reminder_consent_at` stays) is never asked again.
+ */
+export function showReminderPrompt(profile: { createdAt: string; optedIn: boolean; consentAt: string | null }): boolean {
+  const made = Date.parse(profile.createdAt);
+  return !profile.optedIn && profile.consentAt === null && !Number.isNaN(made) && made < Date.parse(REMINDER_OPT_IN_AT);
+}
+
+/** Per device, per account: the card was dismissed ("No thanks"), so it never shows again here. */
+export const reminderPromptKey = (userId: string) => `cybernet.reminderPrompt.dismissed.${userId}`;
