@@ -44,7 +44,7 @@ async function shot(name, { viewport, scheme = "dark", offer = OFFER, email = nu
   await page.goto(`${BASE}/pro`);
   const name1 = offer ? /Get lifetime Pro/ : /Start 7-day free trial|Get yearly Pro/;
   const button = page.getByRole("button", { name: name1 }).or(page.getByRole("link", { name: name1 })).first();
-  await button.waitFor({ timeout: 60000 });
+  await button.waitFor({ timeout: 120000 });
   await page.waitForTimeout(600);
   const box = await button.boundingBox();
   const tabs = await page.locator("nav[aria-label=Main]").last().boundingBox();
