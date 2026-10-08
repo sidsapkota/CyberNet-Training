@@ -1,7 +1,7 @@
 // Founding Member on screen, as a guest, a free account, a Pro subscriber and a Founding Member
 // (throwaway accounts, deleted afterwards; the subscriber and the founder get stand-in rows, never a
 // real Stripe payment):
-// - /pro: the offer first, with the real comparison line, the counter, the button and "Under 18?";
+// - /pro: Lifetime first in the Pro box and preselected, with the counter, the button and "Under 18?";
 //   the parent pitch and "Buying for your kid?"; screenshots at 360×560 and desktop;
 // - the paywall (/review for a free account): the founding button is the main one, the trial one
 //   small link away; screenshots at 360×560 and desktop;
@@ -98,6 +98,23 @@ async function inView(page, locator, height) {
   return { ok: Boolean(box) && box.y >= 0 && box.y + box.height <= height, detail: box ? `bottom ${Math.round(box.y + box.height)}px of ${height}` : "no box" };
 }
 
+/** Where the visible screen ends: the top of the phone tab bar when it shows, else the window's bottom. */
+async function visibleBottom(page, height) {
+  const tabs = await page.locator("nav[aria-label=Main]").last().boundingBox().catch(() => null);
+  return tabs && tabs.y > height / 2 && tabs.y < height ? tabs.y : height;
+}
+
+/** "Can't pay? Send it to a parent": straight under the founding button, and on screen with it. */
+async function parentLinkUnder(page, height) {
+  const link = page.getByRole("button", { name: /Send it to a parent/ }).or(page.getByRole("link", { name: /Send it to a parent/ })).first();
+  if (!(await link.waitFor({ timeout: 15000 }).then(() => true, () => false))) return { ok: false, detail: "no link" };
+  const button = await founderButton(page).boundingBox();
+  const box = await link.boundingBox();
+  const limit = await visibleBottom(page, height);
+  const under = Boolean(button && box) && box.y >= button.y + button.height - 1 && box.y - (button.y + button.height) < 12;
+  return { ok: under && box.y + box.height <= limit, detail: box ? `link bottom ${Math.round(box.y + box.height)}px of ${Math.round(limit)}${under ? "" : ", not right under the button"}` : "no box" };
+}
+
 const founderButton = (page) => page.getByRole("button", { name: BUTTON }).or(page.getByRole("link", { name: BUTTON })).first();
 const users = [];
 const browser = await chromium.launch({ channel: process.env.E2E_BROWSER ?? "msedge", headless: true });
@@ -107,16 +124,18 @@ try {
     const ctx = await browser.newContext({ viewport, colorScheme: "dark", reducedMotion: "reduce" });
     const page = await newPage(ctx);
     await page.goto(`${BASE}/pro`);
-    const heading = page.getByRole("heading", { name: OFFER.headline });
-    record(`Guest /pro (${name}): the Founding Member offer shows`, await heading.waitFor({ timeout: 30000 }).then(() => true, () => false));
-    record(`Guest /pro (${name}): the real comparison and the counter`, (await page.getByText(OFFER.comparison).count()) > 0 && (await page.getByText("37 of 50 left").count()) > 0);
-    record(`Guest /pro (${name}): "Under 18? Ask a parent before buying."`, (await page.getByText("Under 18? Ask a parent before buying.").count()) > 0);
-    const offerTop = (await heading.boundingBox())?.y ?? Infinity;
-    const plansTop = (await page.getByRole("heading", { name: /^Pro$/ }).first().boundingBox())?.y ?? -Infinity;
-    record(`Guest /pro (${name}): the offer comes before the plans`, offerTop < plansTop, `${Math.round(offerTop)} vs ${Math.round(plansTop)}`);
+    const lifetime = page.getByRole("radio", { name: /Lifetime/ });
+    record(`Guest /pro (${name}): Lifetime (Founding Member) shows, preselected`, await lifetime.waitFor({ timeout: 30000 }).then(async () => (await lifetime.getAttribute("aria-checked")) === "true", () => false));
+    record(`Guest /pro (${name}): its price, Founding Member and the counter`, (await lifetime.innerText()).includes("A$29") && /Founding Member/.test(await lifetime.innerText()) && (await page.getByText("37 of 50 left").count()) > 0);
+    record(`Guest /pro (${name}): "Pay once · Under 18? Ask a parent"`, (await page.getByText("Pay once · Under 18? Ask a parent").count()) > 0);
+    const offerTop = (await lifetime.boundingBox())?.y ?? Infinity;
+    const yearlyTop = (await page.getByRole("radio", { name: /Yearly/ }).boundingBox())?.y ?? -Infinity;
+    record(`Guest /pro (${name}): Lifetime is the first choice, before Yearly`, offerTop < yearlyTop, `${Math.round(offerTop)} vs ${Math.round(yearlyTop)}`);
     if (name === "360x560") {
       const button = await inView(page, founderButton(page), PHONE.height - TAB_BAR);
       record("Guest /pro (360x560): the founding button is in view without scrolling", button.ok, button.detail);
+      const parent = await parentLinkUnder(page, PHONE.height);
+      record("Guest /pro (360x560): \"Can't pay? Send it to a parent\" right under it, above the tab bar", parent.ok, parent.detail);
       record("Guest /pro: no sideways scrolling", !(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)));
     }
     await page.screenshot({ path: path.join(SHOTS, `pro-${name}.png`) });
@@ -156,6 +175,8 @@ try {
         record("Free paywall (360x560): the button is in view without scrolling", where.ok, where.detail);
         const notNow = await inView(page, page.getByRole("link", { name: "Not now" }).or(page.getByRole("button", { name: "Not now" })).first(), PHONE.height);
         record("Free paywall (360x560): Not now is in view too", notNow.ok, notNow.detail);
+        const parent = await parentLinkUnder(page, PHONE.height);
+        record("Free paywall (360x560): \"Can't pay? Send it to a parent\" right under the button, in view", parent.ok, parent.detail);
       }
       record(`Free paywall (${name}): the comparison and counter`, (await page.getByText(OFFER.comparison).count()) === 1 && (await page.getByText("37 of 50 left").count()) === 1);
       await page.screenshot({ path: path.join(SHOTS, `paywall-${name}.png`) });
@@ -198,6 +219,8 @@ try {
     record("Back from sign-in: /pro says they're one tap from checkout", await note.waitFor({ timeout: 30000 }).then(() => true, () => false));
     const where = await inView(page, founderButton(page), PHONE.height - TAB_BAR);
     record("…with the button in view at 360x560", where.ok, where.detail);
+    const parentThere = await parentLinkUnder(page, PHONE.height);
+    record("…and \"Can't pay? Send it to a parent\" right under it, above the tab bar", parentThere.ok, parentThere.detail);
     await page.screenshot({ path: path.join(SHOTS, "continue-360x560.png") });
     record("founder_viewed says continue", page.__sent.some(([n, d]) => n === "founder_viewed" && d.source === "continue"));
     await admin.from("profiles").update({ age_confirmed: false }).eq("id", learner.id);
@@ -223,14 +246,41 @@ try {
     await ctx.close();
   }
 
+  // 2b. The daily-limit screen (today's 3 new lessons used): the link sits under the founding button.
+  {
+    const limited = await makeUser("limit");
+    const today = new Date().toLocaleDateString("en-CA", { timeZone: "Australia/Sydney" });
+    const opens = await admin.from("lesson_opens").insert(["memory-vs-storage", "meet-the-os", "meet-the-cpu"].map((lesson_id) => ({ user_id: limited.id, day: today, lesson_id })));
+    if (opens.error) throw opens.error;
+    const ctx = await browser.newContext({ viewport: PHONE, colorScheme: "dark", reducedMotion: "reduce", timezoneId: "Australia/Sydney" });
+    const page = await signIn(ctx, limited.email);
+    await page.goto(`${BASE}/lesson/files-and-folders`);
+    const shown = await page.getByRole("heading", { name: /lessons today/ }).waitFor({ timeout: 30000 }).then(() => true, () => false);
+    record("Daily limit (360x560): the limit screen, with the founding button", shown && (await founderButton(page).waitFor({ timeout: 15000 }).then(() => true, () => false)));
+    const where = await inView(page, founderButton(page), PHONE.height);
+    record("Daily limit (360x560): the button is in view", where.ok, where.detail);
+    const parent = await parentLinkUnder(page, PHONE.height);
+    record("Daily limit (360x560): \"Can't pay? Send it to a parent\" right under it, in view", parent.ok, parent.detail);
+    await page.screenshot({ path: path.join(SHOTS, "limit-360x560.png") });
+    const notNow = await inView(page, page.getByRole("link", { name: "Not now" }).first(), PHONE.height);
+    record("Daily limit (360x560): Not now is in view too", notNow.ok, notNow.detail);
+    record("Daily limit: \"Under 18? Ask a parent before buying.\"", (await page.getByText("Under 18? Ask a parent before buying.").count()) === 1);
+    await page.setViewportSize({ width: 360, height: 640 });
+    await page.waitForTimeout(500);
+    record("Daily limit (360x640): one screen, no scrolling", !(await page.evaluate(() => document.documentElement.scrollHeight > window.innerHeight + 1)));
+    await page.screenshot({ path: path.join(SHOTS, "limit-360x640.png") });
+    await ctx.close();
+  }
+
   // 2c. "Send to a parent": a one-time link a parent opens on their own device (no account).
   {
     const learner = await makeUser("parent-link");
     const ctx = await browser.newContext({ viewport: PHONE, colorScheme: "dark", reducedMotion: "reduce" });
     const page = await signIn(ctx, learner.email);
     await page.goto(`${BASE}/pro`);
-    const send = page.getByRole("button", { name: "Send to a parent" });
-    record("\"Send to a parent\" sits next to the buy button", await send.waitFor({ timeout: 30000 }).then(() => true, () => false));
+    const send = page.getByRole("button", { name: "Can't pay? Send it to a parent" });
+    const placed = await parentLinkUnder(page, PHONE.height);
+    record("\"Can't pay? Send it to a parent\" sits right under the buy button on /pro, above the tab bar (360x560)", placed.ok, placed.detail);
     await send.click();
     const field = page.getByRole("textbox", { name: "Link for a parent" });
     const made = await field.waitFor({ timeout: 30000 }).then(() => true, () => false);
@@ -326,7 +376,8 @@ try {
     const ctx2 = await browser.newContext({ viewport: PHONE, colorScheme: "dark", reducedMotion: "reduce" });
     const page2 = await signIn(ctx2, founder.email);
     await page2.goto(`${BASE}/account/plan`);
-    record("After a refund: no Founding Member badge or lifetime Pro", await page2.getByRole("link", { name: "See plans" }).or(page2.getByText("Free")).first().waitFor({ timeout: 30000 }).then(async () => (await page2.getByText(/lifetime Pro/).count()) === 0, () => false));
+    // Back on the free plan: Your plan shows the Pro box again (lifetime can be bought again), never the member's lifetime line.
+    record("After a refund: back on the free plan, no Founding Member badge or lifetime line", await page2.getByText("You're on the free plan.").waitFor({ timeout: 30000 }).then(async () => (await page2.getByText(/for as long as CyberNet Training runs\./).count()) === 0 && (await page2.getByRole("link", { name: "Your plan: Founding Member" }).count()) === 0, () => false));
     await ctx2.close();
   }
 } finally {

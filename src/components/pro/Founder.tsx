@@ -5,7 +5,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { confirmAgeAction } from "@/app/actions/account";
 import { type FounderCheckoutResult, startFounderCheckoutAction } from "@/app/actions/pro";
 import { LogoMark } from "@/components/brand/Logo";
-import { SendToParent } from "./ParentPay";
+import { PARENT_LINK_CLASS, PARENT_LINK_LABEL, SendToParent } from "./ParentPay";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { ChevronDownIcon, XIcon } from "@/components/ui/icons";
 import { trackEvent, trackWith } from "@/lib/analytics";
@@ -20,7 +20,7 @@ import {
   founderErrorData,
   founderEventData,
   isFounderContinue,
-  seatsLeftText,
+  seatCounterText,
   showFounderOffer,
 } from "@/lib/pro/founder";
 import { usePro } from "@/lib/pro/ProProvider";
@@ -91,11 +91,11 @@ export function FounderBadge({ className = "", lit = false }: { className?: stri
   );
 }
 
-/** "37 of 50 left" (or that the last spots are in someone's checkout). */
+/** "First 50 learners only", then "37 of 50 left" (or that the last spots are in someone's checkout). */
 export function SeatsLeft({ offer, className = "" }: { offer: FounderOffer; className?: string }) {
   return (
     <span className={`font-mono text-caption font-semibold whitespace-nowrap text-ink-muted tabular-nums ${className}`}>
-      {offer.counter.allHeld ? "The last spots are in checkout right now" : seatsLeftText(offer.counter)}
+      {offer.counter.allHeld ? "The last spots are in checkout right now" : seatCounterText(offer.counter)}
     </span>
   );
 }
@@ -106,7 +106,21 @@ export function SeatsLeft({ offer, className = "" }: { offer: FounderOffer; clas
  * the sign-in wall, a checkout created, or why it couldn't start. A missing 13+ confirmation is
  * asked for right here, and errors say what to do, with a retry where one can work.
  */
-export function FounderButton({ offer, screen, big = false }: { offer: FounderOffer; screen: FounderScreen; big?: boolean }) {
+export function FounderButton({
+  offer,
+  screen,
+  big = false,
+  note = "Under 18? Ask a parent before buying.",
+  onSelect,
+}: {
+  offer: FounderOffer;
+  screen: FounderScreen;
+  big?: boolean;
+  /** The line under the button (null: the screen shows it elsewhere). */
+  note?: string | null;
+  /** Called when the learner picks lifetime Pro (before sign-in or Checkout). */
+  onSelect?: () => void;
+}) {
   const { auth, available } = useAuth();
   const [busy, setBusy] = useState(false);
   const [problem, setProblem] = useState<FounderError | null>(null);
@@ -146,6 +160,7 @@ export function FounderButton({ offer, screen, big = false }: { offer: FounderOf
           href={FOUNDER_SIGN_IN_PATH}
           className={size}
           onClick={() => {
+            onSelect?.();
             trackWith("founder_clicked", founderEventData(screen));
             trackWith("founder_signup_wall", founderEventData(screen));
           }}
@@ -168,6 +183,7 @@ export function FounderButton({ offer, screen, big = false }: { offer: FounderOf
           className={size}
           disabled={busy || auth.status === "loading" || offer.counter.allHeld}
           onClick={() => {
+            onSelect?.();
             trackWith("founder_clicked", founderEventData(screen));
             void checkout();
           }}
@@ -175,11 +191,19 @@ export function FounderButton({ offer, screen, big = false }: { offer: FounderOf
           {busy ? "Opening checkout…" : label}
         </Button>
       )}
-      <div className="mt-1 flex flex-wrap items-center justify-center gap-x-3">
-        <p className="text-caption text-ink-muted">Under 18? Ask a parent before buying.</p>
-        {/* A teen without a card: a link a parent opens on their own device to pay. */}
-        {available && auth.status === "signed-in" && <SendToParent screen={screen} />}
-      </div>
+      {/* A teen without a card: a link a parent opens on their own device to pay. Straight under the
+          button, so it's on screen with it at 360×560. Guests sign in first (the link pays for their
+          account) and come back one tap from checkout, with this link under the button again. */}
+      {available && auth.status === "signed-in" ? (
+        <SendToParent screen={screen} />
+      ) : available && auth.status === "guest" ? (
+        <div className="text-center">
+          <Link href={FOUNDER_SIGN_IN_PATH} className={PARENT_LINK_CLASS}>
+            {PARENT_LINK_LABEL}
+          </Link>
+        </div>
+      ) : null}
+      {note && <p className="text-center text-caption text-ink-muted">{note}</p>}
       {problem && problem !== "age" && (
         <div role="alert" className="mt-1 text-small text-danger">
           <p>{FOUNDER_ERROR_TEXT[problem]}</p>
@@ -213,47 +237,15 @@ export function BuyingForYourKid({ className = "" }: { className?: string }) {
   );
 }
 
-/** The offer as /pro's first, biggest card. Renders nothing while there's no offer for this visitor. */
 /**
  * Whether /pro was opened to finish a founding purchase (a guest who tapped buy, then signed in).
  * Read from the address in the browser only (the server render says no), so it can't mismatch.
  */
-function useFounderContinue(): boolean {
+export function useFounderContinue(): boolean {
   return useSyncExternalStore(
     () => () => {},
     () => isFounderContinue(window.location.search),
     () => false,
-  );
-}
-
-export function FounderCard() {
-  const offer = useVisibleFounderOffer();
-  const { auth } = useAuth();
-  const continuing = useFounderContinue() && auth.status === "signed-in";
-  const screen: FounderScreen = continuing ? "continue" : "pro_page";
-  useViewed(offer, screen);
-  if (!offer) return null;
-  return (
-    <section aria-labelledby="founder-title" className="rounded-card border-2 border-accent-ink bg-surface p-4 shadow-pro-card sm:p-6">
-      {continuing && (
-        <p role="status" className="mb-2 rounded-control bg-accent-soft px-3 py-1.5 text-caption font-semibold">
-          You&apos;re signed in. One tap to pay on Stripe&apos;s secure page.
-        </p>
-      )}
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <FounderBadge />
-        <SeatsLeft offer={offer} />
-      </div>
-      <h2 id="founder-title" className="mt-3 text-lead font-semibold text-balance sm:text-title">
-        {offer.headline}
-      </h2>
-      <p className="mt-1 text-small text-ink-muted sm:text-body">{offer.comparison}</p>
-      <p className="mt-2 text-small sm:text-body">Every Pro feature, for as long as CyberNet Training runs. The first {offer.counter.total} people only.</p>
-      <div className="mt-3 sm:mt-4">
-        <FounderButton offer={offer} screen={screen} big />
-      </div>
-      <BuyingForYourKid className="mt-2" />
-    </section>
   );
 }
 
@@ -280,7 +272,7 @@ export function FounderLine() {
     <div className="flex items-center gap-2 rounded-card border border-line bg-surface py-1 pr-1 pl-4 text-small">
       <p className="min-w-0 flex-1 truncate">
         <span className="font-semibold">Founding Member:</span> lifetime Pro for {shown.price} ·{" "}
-        <span className="font-mono tabular-nums">{shown.counter.left} left</span>
+        <span className="font-mono tabular-nums">{seatCounterText(shown.counter, true)}</span>
       </p>
       <Link
         href="/pro?from=dashboard"

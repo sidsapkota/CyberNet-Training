@@ -3,6 +3,7 @@ import { hasPro, proCosmeticUntil, proIntervals, proStatus } from "./entitlement
 import { proLine } from "./describe";
 import { founderCopy, founderCounter, founderOfferOn, founderPurchaseOf, fullyRefundedPayment, seatsLeftText, showFounderOffer } from "./founder";
 import { PARENT_LINK_TEXT, parentLinkState } from "./founder";
+import { COUNTER_SHOWS_FROM, seatCounterText } from "./founder";
 import { FOUNDER_ERRORS, FOUNDER_ERROR_TEXT, FOUNDER_RETRYABLE, FOUNDER_SIGN_IN_PATH, founderErrorData, isFounderContinue } from "./founder";
 
 const monthly = { unitAmount: 799, currency: "aud", interval: "month" as const };
@@ -45,6 +46,25 @@ describe("founderCounter", () => {
   it("says when the last seats are all in someone's checkout", () => {
     expect(founderCounter({ sold: 48, held: 2, total: 50 }).allHeld).toBe(true);
     expect(founderCounter({ sold: 48, held: 1, total: 50 }).allHeld).toBe(false);
+  });
+});
+
+describe("seatCounterText: no number until 5 are sold, then the real one", () => {
+  it("says First 50 learners only while fewer than 5 are sold", () => {
+    for (const sold of [0, 1, COUNTER_SHOWS_FROM - 1]) {
+      expect(seatCounterText(founderCounter({ sold, held: 0, total: 50 }))).toBe("First 50 learners only");
+      expect(seatCounterText(founderCounter({ sold, held: 0, total: 50 }), true)).toBe("First 50 only");
+    }
+  });
+
+  it("shows the real number left from the 5th sale on", () => {
+    expect(seatCounterText(founderCounter({ sold: COUNTER_SHOWS_FROM, held: 0, total: 50 }))).toBe("45 of 50 left");
+    expect(seatCounterText(founderCounter({ sold: 13, held: 2, total: 50 }))).toBe("37 of 50 left");
+    expect(seatCounterText(founderCounter({ sold: 49, held: 0, total: 50 }), true)).toBe("1 left");
+  });
+
+  it("counts only sales, never seats held in a checkout", () => {
+    expect(seatCounterText(founderCounter({ sold: 2, held: 10, total: 50 }))).toBe("First 50 learners only");
   });
 });
 

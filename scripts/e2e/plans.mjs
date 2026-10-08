@@ -1,7 +1,8 @@
 // Plans and Pro identity at 360×640, as a guest, a free account and a Pro member (throwaway
 // accounts, deleted afterwards; the Pro one gets a stand-in subscription row, never a real Stripe one):
-// - /pro: the Pro card first with its button in view, "Best value", the monthly switch, Free's
-//   button per viewer, the FAQ, plans_viewed / plan_selected with only their allowed data;
+// - /pro: the Pro box first with its button in view, Lifetime / Yearly / Monthly with one button
+//   whose words follow the choice, one "Best value", the Free vs Pro table, the FAQ, plans_viewed /
+//   plan_selected with only their allowed data;
 // - a Pro member: the welcome moment once per device, the Pro badge and node frame, Your plan,
 //   and no upgrade prompt anywhere.
 import fs from "node:fs";
@@ -103,26 +104,31 @@ try {
     await prepare(page);
     await watchEvents(page);
     await page.goto(`${BASE}/pro`);
-    await page.getByRole("heading", { name: "Choose your plan" }).waitFor({ timeout: 30000 });
+    await page.getByRole("heading", { name: "Learn without limits" }).waitFor({ timeout: 30000 });
     const guestFounder = await founderOfferShown(page);
-    const inView = await proButtonInView(page, guestFounder ? /Get lifetime Pro for/ : /Start your free trial/);
+    const inView = await proButtonInView(page, guestFounder ? /Get lifetime Pro for/ : /Start 7-day free trial/);
     record(`Guest /pro: the main buy button is in view at 360×640 (${guestFounder ? "founder offer" : "trial"})`, inView.ok, inView.detail);
-    const proTop = (await page.getByRole("heading", { name: "Pro", exact: true }).boundingBox())?.y ?? 9999;
-    const freeTop = (await page.getByRole("heading", { name: "Free", exact: true }).boundingBox())?.y ?? 0;
-    record("…the Pro card comes first on phones", proTop < freeTop);
-    record("…tagged Best value", (await page.getByText("Best value").count()) === 1);
-    record("…with exactly 4 Pro benefits, all live", (await page.getByRole("list", { name: "Pro includes" }).getByRole("listitem").count()) === 4);
+    const boxTop = (await page.locator("section[aria-labelledby=plan-pro]").boundingBox())?.y ?? 9999;
+    const tableTop = (await page.locator("section[aria-labelledby=compare-title]").boundingBox())?.y ?? 0;
+    record("…the Pro box comes before Free vs Pro on phones", boxTop < tableTop);
+    const rows = page.locator("section[aria-labelledby=compare-title] tbody tr");
+    record("…Free vs Pro: 5 rows, unlimited lessons first", (await rows.count()) === 5 && /Unlimited lessons every day/.test(await rows.first().innerText()));
+    record("…tagged Best value once", (await page.getByText("Best value").count()) === 1);
     record("…and no 'every new course'", (await page.getByText(/new course/i).count()) === 0);
-    const before = await page.locator("[aria-live=polite]").first().innerText();
-    await page.getByRole("radio", { name: "Monthly" }).click();
-    const after = await page.locator("[aria-live=polite]").first().innerText();
-    record("…the monthly switch changes the price", before !== after && /a month/.test(after), `${before} → ${after}`);
-    record("…Free says Start free", (await page.getByRole("link", { name: "Start free" }).count()) === 1);
+    if (guestFounder) {
+      record("…Lifetime is preselected while seats remain", (await page.getByRole("radio", { name: /Lifetime/ }).getAttribute("aria-checked")) === "true");
+      record("…with a one-off note, never Cancel anytime", (await page.getByText("Pay once · Under 18? Ask a parent").count()) === 1 && (await page.getByText(/Cancel anytime/).count()) === 0);
+    } else {
+      record("…Yearly is preselected (no Founding Member offer)", (await page.getByRole("radio", { name: /Yearly/ }).getAttribute("aria-checked")) === "true");
+    }
+    await page.getByRole("radio", { name: /Monthly/ }).click();
+    record(
+      "…picking Monthly changes the one button and its note",
+      (await page.getByRole("link", { name: /Start 7-day free trial/ }).count()) === 1 && (await page.getByText("Cancel anytime · Under 18? Ask a parent").count()) === 1,
+    );
+    record("…Free vs Pro has Start free", (await page.getByRole("link", { name: "Start free" }).count()) === 1);
     record("…a three-question FAQ", (await page.locator("section[aria-labelledby=pro-faq] details").count()) === 3);
     record("…no sideways scrolling", !(await sideways(page)));
-    const proH = (await page.locator("section[aria-labelledby=plan-pro]").boundingBox())?.height ?? 0;
-    const freeH = (await page.locator("section[aria-labelledby=plan-free]").boundingBox())?.height ?? 0;
-    record("…stacked on phones, the cards keep their natural heights", Math.abs(proH - freeH) > 40, `Pro ${Math.round(proH)}px, Free ${Math.round(freeH)}px`);
     await page.getByRole("radio", { name: /Yearly/ }).click();
     await page.screenshot({ path: path.join(SHOTS, "plans-guest-360.png") });
     await page.emulateMedia({ colorScheme: "light" });
@@ -137,7 +143,7 @@ try {
     record("Guest, phone: Pricing in the tab bar", true);
     await page.screenshot({ path: path.join(SHOTS, "nav-guest-360.png") });
     await tab.click();
-    await page.getByRole("heading", { name: "Choose your plan" }).waitFor({ timeout: 30000 });
+    await page.getByRole("heading", { name: "Learn without limits" }).waitFor({ timeout: 30000 });
     await page.waitForTimeout(500);
     record("…opens the plans with plans_viewed {source: nav}", (await events(page)).some(([n, d]) => n === "plans_viewed" && JSON.stringify(d) === '{"source":"nav"}'), JSON.stringify(await events(page)));
     await page.getByRole("link", { name: "Start free" }).click();
@@ -153,17 +159,12 @@ try {
       const desk = await wide.newPage();
       await prepare(desk);
       await desk.goto(`${BASE}/pro`);
-      await desk.getByRole("heading", { name: "Choose your plan" }).waitFor({ timeout: 30000 });
-      await desk.getByRole("link", { name: /Start your free trial/ }).waitFor({ timeout: 30000 });
+      await desk.getByRole("heading", { name: "Learn without limits" }).waitFor({ timeout: 30000 });
+      await desk.locator("section[aria-labelledby=plan-pro] [role=radio]").first().waitFor({ timeout: 30000 });
       const pro = await desk.locator("section[aria-labelledby=plan-pro]").boundingBox();
-      const free = await desk.locator("section[aria-labelledby=plan-free]").boundingBox();
-      const proBtn = await desk.getByRole("link", { name: /Start your free trial/ }).boundingBox();
-      const freeBtn = await desk.getByRole("link", { name: "Start free" }).boundingBox();
+      const table = await desk.locator("section[aria-labelledby=compare-title]").boundingBox();
       if (scheme === "dark") {
-        record("Desktop: Free and Pro side by side", Math.abs(pro.y - free.y) < 8 && free.x < pro.x);
-        record("…the same height", Math.abs(pro.height - free.height) <= 2, `Pro ${Math.round(pro.height)}px, Free ${Math.round(free.height)}px`);
-        record("…buttons aligned along the bottom", Math.abs(proBtn.y + proBtn.height - (freeBtn.y + freeBtn.height)) <= 2, `Pro ${Math.round(proBtn.y + proBtn.height)}, Free ${Math.round(freeBtn.y + freeBtn.height)}`);
-        record("…Free says Upgrade any time, no extra benefits", (await desk.getByText("Upgrade any time.").count()) === 1 && (await desk.getByRole("list", { name: "Free includes" }).getByRole("listitem").count()) === 3);
+        record("Desktop: Free vs Pro on the left, the Pro box on the right, side by side", Math.abs(pro.y - table.y) < 8 && table.x < pro.x);
         record("Desktop: Pricing in the header nav", (await desk.getByRole("navigation", { name: "Main" }).first().getByRole("link", { name: "Pricing" }).count()) === 1);
       }
       await desk.screenshot({ path: path.join(SHOTS, `plans-desktop-${scheme}.png`) });
@@ -184,18 +185,18 @@ try {
     await plansLink.waitFor({ timeout: 30000 });
     record("Free dashboard: 'Free plan · See plans' at the top", true);
     await plansLink.click();
-    await page.getByRole("heading", { name: "Choose your plan" }).waitFor({ timeout: 30000 });
+    await page.getByRole("heading", { name: "Learn without limits" }).waitFor({ timeout: 30000 });
     const freeFounder = await founderOfferShown(page);
     const inView = await proButtonInView(page, freeFounder ? /Get lifetime Pro for/ : "Start 7-day free trial");
     record(`Free /pro: the main buy button is in view at 360×640 (${freeFounder ? "founder offer" : "trial"})`, inView.ok, inView.detail);
-    record("…Free shows Your plan (disabled)", await page.getByRole("button", { name: "Your plan" }).isDisabled());
+    record("…the Free column says Your plan", (await page.getByRole("columnheader", { name: /Free.*Your plan/ }).count()) === 1);
     await page.waitForTimeout(500);
     const seen = await events(page);
     record("…plans_viewed with source dashboard", seen.some(([n, d]) => n === "plans_viewed" && JSON.stringify(d) === '{"source":"dashboard"}'), JSON.stringify(seen));
     // Picking Pro opens Stripe's checkout. Locally that's the sandbox; on production it would be a
     // live checkout (and a real Stripe customer), so it's skipped there.
     if (/localhost|127\.0\.0\.1/.test(BASE)) {
-      await page.getByRole("radio", { name: "Monthly" }).click();
+      await page.getByRole("radio", { name: /Monthly/ }).click();
       // Picking Pro opens Stripe's (sandbox) checkout: stop at the event.
       await page.route(/checkout\.stripe\.com/, (r) => r.abort());
       await page.getByRole("button", { name: "Start 7-day free trial" }).click();
@@ -210,6 +211,15 @@ try {
     await page.goto(`${BASE}/account`);
     await page.getByRole("heading", { name: "Your plan" }).waitFor({ timeout: 30000 });
     record("Free /account: Your plan, with See plans", (await page.getByRole("link", { name: "See plans" }).count()) === 1);
+    // Your plan, for a free learner: /pro's Pro box and Free vs Pro (no hero), plans_viewed {source: account}.
+    await page.goto(`${BASE}/account/plan`);
+    await page.getByRole("heading", { name: "Your plan" }).waitFor({ timeout: 30000 });
+    const box = await page.locator("section[aria-labelledby=plan-pro] [role=radio]").first().waitFor({ timeout: 30000 }).then(() => true, () => false);
+    record("Free /account/plan: the Pro box and Free vs Pro, no hero", box && (await page.locator("section[aria-labelledby=compare-title]").count()) === 1 && (await page.getByRole("heading", { name: "Learn without limits" }).count()) === 0);
+    await page.waitForTimeout(500);
+    record("…plans_viewed with source account", (await events(page)).some(([n, d]) => n === "plans_viewed" && JSON.stringify(d) === '{"source":"account"}'));
+    record("…no sideways scrolling", !(await sideways(page)));
+    await page.screenshot({ path: path.join(SHOTS, "account-plan-free-360.png") });
     await ctx.close();
   }
 

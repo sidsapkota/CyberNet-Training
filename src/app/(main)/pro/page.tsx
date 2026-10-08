@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FamilyInterest } from "@/components/pro/FamilyInterest";
-import { FounderCard, ParentPitch } from "@/components/pro/Founder";
-import { PlansCards, PlansHeading } from "@/components/pro/PlansCards";
+import { ParentPitch } from "@/components/pro/Founder";
+import { ProPlans } from "@/components/pro/ProPlans";
 import { ChevronDownIcon } from "@/components/ui/icons";
 import { annualSaving, formatPrice, pitchPrices } from "@/lib/pro/pricing";
 import { getPlanPrices } from "@/lib/pro/stripe";
 
 export const metadata: Metadata = {
   title: "CyberNet Pro",
-  description: "Unlimited lessons every day, in every course. Free accounts get 3 new lessons a day; start free and upgrade when you're ready.",
+  description: "Learn without limits: unlimited lessons every day, in every course. Free accounts get 3 new lessons a day; start free and upgrade when you're ready.",
   alternates: { canonical: "/pro" },
 };
 
@@ -31,7 +31,10 @@ const FAQ: { q: string; a: string }[] = [
   },
 ];
 
-/** /pro: the plans (Free and Pro, prices from Stripe), the trial terms and a short FAQ. */
+/**
+ * /pro: the crowned mascot, one Pro box (Lifetime while Founding Member seats remain, Yearly,
+ * Monthly; prices from Stripe), Free vs Pro, the parent pitch, the trial terms and a short FAQ.
+ */
 export default async function ProPage() {
   const prices = await getPlanPrices().catch((error: unknown) => {
     console.error(error);
@@ -40,26 +43,19 @@ export default async function ProPage() {
   const saving = prices ? annualSaving(prices.monthly, prices.annual) : null;
 
   return (
-    <div className="mx-auto max-w-page px-gutter pt-3 pb-8 sm:pt-8">
-      {/* On a 360×640 phone the Pro card's button is in view without scrolling. */}
-      <section aria-labelledby="plans-title" className="mx-auto max-w-3xl">
-        <PlansHeading />
-        {/* The Founding Member offer comes first while it's on (it renders nothing otherwise). */}
-        <div className="mt-4 empty:hidden">
-          <FounderCard />
-        </div>
-        <div className="mt-4">
-          <PlansCards prices={prices ? pitchPrices(prices.monthly, prices.annual) : null} source="auto" />
-        </div>
+    <div className="mx-auto max-w-wide px-gutter pt-3 pb-8 sm:pt-8">
+      {/* On a 360×560 phone the Pro box's button is in view without scrolling. */}
+      <section aria-labelledby="plans-title">
+        <ProPlans prices={prices ? pitchPrices(prices.monthly, prices.annual) : null} />
       </section>
 
-      <div className="mx-auto mt-8 max-w-3xl">
+      <div className="mx-auto mt-8 max-w-4xl">
         <ParentPitch />
         <FamilyInterest className="mt-4" />
       </div>
 
       {prices && (
-        <p className="mx-auto mt-8 max-w-3xl text-small text-ink-muted">
+        <p className="mx-auto mt-8 max-w-4xl text-small text-ink-muted">
           {saving
             ? `Annual: ${formatPrice(prices.annual.unitAmount, prices.annual.currency)} a year, about ${saving.perMonth} a month (${saving.percent}% less than 12 months of monthly). `
             : ""}
@@ -73,7 +69,7 @@ export default async function ProPage() {
         </p>
       )}
 
-      <section aria-labelledby="pro-faq" className="mx-auto mt-8 max-w-3xl">
+      <section aria-labelledby="pro-faq" className="mx-auto mt-8 max-w-4xl">
         <h2 id="pro-faq" className="text-title font-semibold">
           Questions
         </h2>

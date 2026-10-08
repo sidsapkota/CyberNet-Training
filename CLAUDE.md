@@ -1114,7 +1114,8 @@ the first 50 buyers. **Behind `FOUNDER_OFFER=on`** (plus `STRIPE_PRICE_FOUNDER`,
 off, `/api/pro/founder` answers null and nothing shows. Plan and owner steps:
 `docs/plans/founding-member.md`. Rules in `src/lib/pro/founder.ts` (pure, tested), UI in
 `src/components/pro/Founder.tsx`.
-- **Honest numbers:** the counter is the database's (`founder_seats()`, never cached), and the
+- **Honest numbers:** the counter is the database's (`founder_seats()`, never cached) and says "First
+  50 learners only" until 5 are sold, then the real "37 of 50 left" (`seatCounterText`); the
   headline and comparison ("Lifetime Pro for A$29, less than 4 months of the monthly plan" / "A
   year of monthly is A$95.88. This is A$29, once.") are worked out from Stripe's live prices
   (`founderCopy`). Never a "was" price, timer or fake scarcity; at 50 it disappears.
@@ -1124,8 +1125,19 @@ off, `/api/pro/founder` answers null and nothing shows. Plan and owner steps:
   metadata (idempotent); a **full** `charge.refunded` ends it and frees the seat. An unrefunded
   seat is Pro with no end date (`proStatus` kind `founder`).
 - **Shown to** guests, free accounts and early-user grant holders; never subscribers or founders.
-  First on `/pro` (`/pricing` redirects there), the main button in `ProPitch` (trial one link
+  On `/pro` it's the Pro box's first, preselected choice (`/pricing` redirects there), the main button in `ProPitch` (trial one link
   away), one dismissible dashboard line. "Under 18? Ask a parent before buying." under every button.
+- **"Can't pay? Send it to a parent"** (`SendToParent`, `src/lib/pro/parentLink.ts`; owner, 6 and 8 Oct
+  2026): a small text link (44px tap target) **straight under every lifetime button** (/pro, the paywall,
+  the daily-limit screen), in view with it at 360×560. Signed in, it makes a one-time 7-day link
+  (`/pay?t=…`, 24 random bytes, only its sha256 stored in `founder_parent_links`, 5 a day) that a
+  parent opens on their own device, with no account, to pay on Stripe; the purchase is tied to the
+  learner, so the webhook claims the seat as usual and marks the link paid. Guests sign in first and come
+  back one tap from checkout. Lifetime only (it's the one-off price; subscriptions need the payer's own
+  card). On `ProPitch` the parent line sits under "Not now", and the mascot steps aside below 700px
+  tall, so the button, the link and Not now fit 360×560 and 360×640 without scrolling. Events
+  `parent_link_created`, `parent_link_paid`. `20261010100000_founder_parent_links.sql` (server-only;
+  `check:rls` proves it).
 - **Badge** (`FounderBadge`: the logo's shield and the words): dashboard, account, Your plan,
   player cards and leaderboard rows (via `league_founders()`; `league_standings()` unchanged).
 - **Parent pitch** (`ParentPitch`, on `/pro` and the landing page): only what Stay Safe Online
@@ -1165,20 +1177,26 @@ parent or guardian before subscribing" is shown to everyone.
 - **Plans and Pro identity**<a id="plans-and-pro-identity"></a> (`PlansCards`, `YourPlan`,
   `ProCelebration`; pure rules in `src/lib/pro/plans.ts`, tested). **Never list a benefit that isn't
   live** (`PRO_BENEFITS`; a test bans "new course", since free accounts get every course).
-  - **Plans** (`/pro`, `/account/plan` for free learners; linked as "Free plan · See plans" at the
-    top of the dashboard and "See plans" on `/account`): Free (A$0, three lines; "Start free" for
-    guests, "Your plan" disabled when signed in) and Pro (Stripe's prices, annual preselected with a
-    Yearly/Monthly switch, "Best value" only when the annual plan really saves, the 4 benefits,
-    "Start 7-day free trial", the parent line). Pro first in the page and on phones (its button in
-    view at 360×640), on the right from `sm`. Side by side they're the same height with the buttons
-    lined up along the bottom (Free says "Upgrade any time." above its button; never extra
-    benefits); stacked on phones they keep natural heights. The Pro card has a cyan border and
-    `shadow-pro-card` (raised 2px on phones); a gentle staggered entrance (none under reduced motion). Below: the trial
-    terms and a 3-question FAQ (cancel, after the trial, ask a parent).
+  - **`/pro`** (`ProPlans`; owner's brief, 8 Oct 2026, the Duolingo Super / Brilliant pattern): the
+    mascot wearing the circuit crown, "Learn without limits" and one line; then **one Pro box** with a
+    three-way picker and **one button whose words follow the choice**: Lifetime (Founding Member, "Best
+    value", preselected while seats remain: "Get lifetime Pro for A$29", "Pay once · Under 18? Ask a
+    parent", "Can't pay? Send it to a parent"), Yearly (A$5 a month, 7-day free trial) and Monthly ("Start 7-day free
+    trial", "Cancel anytime · Under 18? Ask a parent"). When seats run out Lifetime disappears and Yearly
+    is preselected and "Best value" (only if it really saves). Then **Free vs Pro** (`PLAN_TABLE`, 5
+    rows, unlimited lessons first; ticks and dashes always with screen-reader text; "Start free" for
+    guests, "Your plan" on Free for free learners). Rules in `plans.ts` (`proChoices`,
+    `defaultChoice`, `bestValueChoice`, `choiceNote`). On phones the box comes straight after the
+    hero, so its button is in view at 360×560 above the tab bar; from `md` the table is on the left and
+    the box on the right. The parent pitch, family line, trial terms and FAQ follow. Early-user grant
+    holders see only Lifetime; members see "You're on Pro" and "See your plan".
+    `node scripts/e2e/pro-shots.mjs` saves review screenshots to `docs/plans/pro-redesign/`.
+  - **`/account/plan`** for free learners: the same Pro box and Free vs Pro (`ProPlans` with `hero={false}`,
+    `plans_viewed` source `account`) under "Your plan" and "You're on the free plan."
   - **Nav:** "Pricing" (`/pro?from=nav`) in the header nav and the phone tab bar; "Your plan"
     (`/account/plan`) for Pro members. Hidden until a signed-in learner's Pro status is known.
   - **Events:** `plans_viewed` (`source`: `pro_page`, `account`, `dashboard` or `nav`, from `?from=`) and
-    `plan_selected` (`plan`: free or pro; `interval`: monthly or annual for Pro), data only from
+    `plan_selected` (`plan`: free or pro; `interval`: monthly, annual or lifetime for Pro), data only from
     `plansViewedData` / `planSelectedData`.
   - **Pro identity:** the member's node wears the Pro frame (an outer cyan ring and glow) in the
     header and tab bar, with a lit `ProBadge` beside their name on desktop and at the top of the

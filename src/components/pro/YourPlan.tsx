@@ -9,14 +9,14 @@ import { BackIcon, CheckIcon } from "@/components/ui/icons";
 import { proLine } from "@/lib/pro/describe";
 import { PRO_BENEFITS } from "@/lib/pro/plans";
 import { usePro } from "@/lib/pro/ProProvider";
-import { PlansCards } from "./PlansCards";
 import { FounderBadge } from "./Founder";
 import { ProBadge } from "./ProBadge";
+import { ProPlans } from "./ProPlans";
 import { usePitchPrices } from "./ProPitch";
 
 /**
  * "Your plan": for Pro members, the plan, when it renews or the trial ends, what's included and
- * "Manage subscription" (Stripe's portal). Free learners see the plans section instead.
+ * "Manage subscription" (Stripe's portal). Free learners see /pro's Pro box and Free vs Pro instead.
  */
 export function YourPlan() {
   const { pro, hasPro } = usePro();
@@ -84,9 +84,7 @@ export function YourPlan() {
       ) : (
         <div className="mt-2">
           <p className="text-ink-muted">You&apos;re on the free plan.</p>
-          <div className="mt-6">
-            <PlansCards prices={prices} source="account" />
-          </div>
+          <ProPlans prices={prices} source="account" hero={false} />
         </div>
       )}
     </div>

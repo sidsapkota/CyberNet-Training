@@ -44,6 +44,18 @@ export function seatsLeftText(c: FounderCounter): string {
   return `${c.left} of ${c.total} left`;
 }
 
+/** Until this many seats are sold, the counter shows no number (see seatCounterText). */
+export const COUNTER_SHOWS_FROM = 5;
+
+/**
+ * The seat counter everywhere: "First 50 learners only" until 5 seats are sold, then the real
+ * "37 of 50 left". Both are true; nothing is ever made up. `short` is for one-line spots.
+ */
+export function seatCounterText(c: FounderCounter, short = false): string {
+  if (c.total - c.left < COUNTER_SHOWS_FROM) return short ? `First ${c.total} only` : `First ${c.total} learners only`;
+  return short ? `${c.left} left` : seatsLeftText(c);
+}
+
 export interface FounderCopy {
   /** "A$29". */
   price: string;
