@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { reminderEmail, SENDER } from "./email";
-import { clockIn, isLeagueReminderHour, leagueReminder, pickReminder, streakReminder } from "./rules";
+import { clockIn, isLeagueReminderHour, leagueReminder, pickReminder, REMINDER_OPT_IN_AT, showReminderPrompt, streakReminder } from "./rules";
 
 const links = { go: "https://cybernettraining.com/api/email/go?r=1", unsubscribe: "https://cybernettraining.com/api/email/unsubscribe?t=abc", open: "https://cybernettraining.com/api/email/open?r=1", site: "cybernettraining.com" };
 
@@ -35,6 +35,24 @@ describe("league reminder", () => {
     expect(isLeagueReminderHour(new Date("2026-10-11T07:30:00Z"))).toBe(true); // Sun 18:30 AEDT
     expect(isLeagueReminderHour(new Date("2026-10-11T08:30:00Z"))).toBe(false); // 19:30
     expect(isLeagueReminderHour(new Date("2026-07-12T08:30:00Z"))).toBe(true); // Sun 18:30 AEST
+  });
+});
+
+describe("the one-time dashboard card for existing learners", () => {
+  const before = "2026-09-20T03:00:00Z";
+  it("asks accounts made before the sign-up opt-in, never opted in", () => {
+    expect(showReminderPrompt({ createdAt: before, optedIn: false, consentAt: null })).toBe(true);
+  });
+  it("never asks newer accounts (they saw the box at sign-up)", () => {
+    expect(showReminderPrompt({ createdAt: REMINDER_OPT_IN_AT, optedIn: false, consentAt: null })).toBe(false);
+    expect(showReminderPrompt({ createdAt: "2026-10-08T00:00:00Z", optedIn: false, consentAt: null })).toBe(false);
+  });
+  it("never asks anyone opted in, or who opted in once and unsubscribed", () => {
+    expect(showReminderPrompt({ createdAt: before, optedIn: true, consentAt: "2026-10-08T00:00:00Z" })).toBe(false);
+    expect(showReminderPrompt({ createdAt: before, optedIn: false, consentAt: "2026-10-08T00:00:00Z" })).toBe(false);
+  });
+  it("says no when the date is unreadable", () => {
+    expect(showReminderPrompt({ createdAt: "not a date", optedIn: false, consentAt: null })).toBe(false);
   });
 });
 
