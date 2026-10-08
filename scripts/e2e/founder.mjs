@@ -109,7 +109,7 @@ try {
     await page.goto(`${BASE}/pro`);
     const lifetime = page.getByRole("radio", { name: /Lifetime/ });
     record(`Guest /pro (${name}): Lifetime (Founding Member) shows, preselected`, await lifetime.waitFor({ timeout: 30000 }).then(async () => (await lifetime.getAttribute("aria-checked")) === "true", () => false));
-    record(`Guest /pro (${name}): its price, Founding Member and the counter`, /A$29/.test(await lifetime.innerText()) && /Founding Member/.test(await lifetime.innerText()) && (await page.getByText("37 of 50 left").count()) > 0);
+    record(`Guest /pro (${name}): its price, Founding Member and the counter`, (await lifetime.innerText()).includes("A$29") && /Founding Member/.test(await lifetime.innerText()) && (await page.getByText("37 of 50 left").count()) > 0);
     record(`Guest /pro (${name}): "Pay once · Under 18? Ask a parent"`, (await page.getByText("Pay once · Under 18? Ask a parent").count()) > 0);
     const offerTop = (await lifetime.boundingBox())?.y ?? Infinity;
     const yearlyTop = (await page.getByRole("radio", { name: /Yearly/ }).boundingBox())?.y ?? -Infinity;

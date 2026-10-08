@@ -62,7 +62,8 @@ export function ProPlans({ prices }: { prices: PitchPrices | null }) {
 
   return (
     <>
-      <motion.header {...rise(0)} className="flex items-center gap-3 sm:flex-col sm:gap-2 sm:text-center">
+      {/* Back from sign-in to buy (one tap from checkout), phones skip the hero so the button stays in view; it stays for screen readers. */}
+      <motion.header {...rise(0)} className={`flex items-center gap-3 sm:flex-col sm:gap-2 sm:text-center ${continuing && founder ? "max-sm:sr-only" : ""}`}>
         <MascotAvatar outfit={["crown"]} size={64} className="sm:hidden" />
         <MascotAvatar outfit={["crown"]} size={136} className="hidden sm:block" />
         <div className="min-w-0">
