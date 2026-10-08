@@ -1,7 +1,7 @@
 // Founding Member on screen, as a guest, a free account, a Pro subscriber and a Founding Member
 // (throwaway accounts, deleted afterwards; the subscriber and the founder get stand-in rows, never a
 // real Stripe payment):
-// - /pro: the offer first, with the real comparison line, the counter, the button and "Under 18?";
+// - /pro: Lifetime first in the Pro box and preselected, with the counter, the button and "Under 18?";
 //   the parent pitch and "Buying for your kid?"; screenshots at 360×560 and desktop;
 // - the paywall (/review for a free account): the founding button is the main one, the trial one
 //   small link away; screenshots at 360×560 and desktop;
@@ -107,13 +107,13 @@ try {
     const ctx = await browser.newContext({ viewport, colorScheme: "dark", reducedMotion: "reduce" });
     const page = await newPage(ctx);
     await page.goto(`${BASE}/pro`);
-    const heading = page.getByRole("heading", { name: OFFER.headline });
-    record(`Guest /pro (${name}): the Founding Member offer shows`, await heading.waitFor({ timeout: 30000 }).then(() => true, () => false));
-    record(`Guest /pro (${name}): the real comparison and the counter`, (await page.getByText(OFFER.comparison).count()) > 0 && (await page.getByText("37 of 50 left").count()) > 0);
-    record(`Guest /pro (${name}): "Under 18? Ask a parent before buying."`, (await page.getByText("Under 18? Ask a parent before buying.").count()) > 0);
-    const offerTop = (await heading.boundingBox())?.y ?? Infinity;
-    const plansTop = (await page.getByRole("heading", { name: /^Pro$/ }).first().boundingBox())?.y ?? -Infinity;
-    record(`Guest /pro (${name}): the offer comes before the plans`, offerTop < plansTop, `${Math.round(offerTop)} vs ${Math.round(plansTop)}`);
+    const lifetime = page.getByRole("radio", { name: /Lifetime/ });
+    record(`Guest /pro (${name}): Lifetime (Founding Member) shows, preselected`, await lifetime.waitFor({ timeout: 30000 }).then(async () => (await lifetime.getAttribute("aria-checked")) === "true", () => false));
+    record(`Guest /pro (${name}): its price, Founding Member and the counter`, /A$29/.test(await lifetime.innerText()) && /Founding Member/.test(await lifetime.innerText()) && (await page.getByText("37 of 50 left").count()) > 0);
+    record(`Guest /pro (${name}): "Pay once · Under 18? Ask a parent"`, (await page.getByText("Pay once · Under 18? Ask a parent").count()) > 0);
+    const offerTop = (await lifetime.boundingBox())?.y ?? Infinity;
+    const yearlyTop = (await page.getByRole("radio", { name: /Yearly/ }).boundingBox())?.y ?? -Infinity;
+    record(`Guest /pro (${name}): Lifetime is the first choice, before Yearly`, offerTop < yearlyTop, `${Math.round(offerTop)} vs ${Math.round(yearlyTop)}`);
     if (name === "360x560") {
       const button = await inView(page, founderButton(page), PHONE.height - TAB_BAR);
       record("Guest /pro (360x560): the founding button is in view without scrolling", button.ok, button.detail);

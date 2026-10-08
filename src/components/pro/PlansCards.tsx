@@ -187,25 +187,3 @@ export function PlansCards({
     </div>
   );
 }
-
-/**
- * /pro's heading: "Choose your plan" with a one-line nudge for everyone else, but a member's own
- * heading for Pro members (no upgrade wording). Neutral while a signed-in learner's status loads.
- */
-export function PlansHeading() {
-  const { auth, available } = useAuth();
-  const { pro, hasPro } = usePro();
-  const guest = !available || auth.status === "guest";
-  const unknown = !guest && (auth.status === "loading" || pro.loading);
-  const member = !guest && !unknown && hasPro;
-  return (
-    <>
-      <h1 id="plans-title" className="text-center text-title font-semibold sm:text-headline">
-        {unknown ? "Plans" : member ? "You're on Pro" : "Choose your plan"}
-      </h1>
-      <p className="min-h-5 text-center text-small text-ink-muted">
-        {unknown ? "" : member ? "Thanks for supporting CyberNet." : "Start free. Go unlimited any time."}
-      </p>
-    </>
-  );
-}

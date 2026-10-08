@@ -23,6 +23,7 @@ import {
   LogIn,
   LogOut,
   Mail,
+  Minus,
   LayoutList,
   Lightbulb,
   Tag,
@@ -156,6 +157,8 @@ function brandIcon(Icon: LucideIcon, name: string) {
 }
 
 export const CheckIcon = brandIcon(Check, "CheckIcon");
+/** "Not included" in the Free vs Pro table (always with screen-reader text). */
+export const NotIncludedIcon = brandIcon(Minus, "NotIncludedIcon");
 export const XIcon = brandIcon(X, "XIcon");
 export const LockIcon = brandIcon(Lock, "LockIcon");
 export const PlayIcon = brandIcon(Play, "PlayIcon");

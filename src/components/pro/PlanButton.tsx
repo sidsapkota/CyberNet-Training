@@ -19,12 +19,15 @@ export function PlanButton({
   label,
   primary,
   big = false,
+  guestLabel = "Start your free trial",
   onSelect,
 }: {
   plan: Plan;
   label: string;
   primary: boolean;
   big?: boolean;
+  /** What a guest sees (they sign in first). */
+  guestLabel?: string;
   /** Called when the learner picks this plan (before Checkout opens). */
   onSelect?: () => void;
 }) {
@@ -38,7 +41,7 @@ export function PlanButton({
   if (!available || auth.status === "guest") {
     return (
       <ButtonLink href="/login?next=/pro" variant={primary ? "primary" : "secondary"} className={size} onClick={onSelect}>
-        <SignInIcon className="size-5" /> Start your free trial
+        <SignInIcon className="size-5" /> {guestLabel}
       </ButtonLink>
     );
   }

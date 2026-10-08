@@ -4,7 +4,7 @@
  * never list one that isn't.
  */
 import { DAILY_LESSON_LIMIT } from "./dailyLimit";
-import type { ProInterval } from "./entitlement";
+import { FREE_MAX_FREEZES, PRO_MAX_FREEZES, type ProInterval } from "./entitlement";
 
 /** Pro's benefits, four at most (all live: see CLAUDE.md → CyberNet Pro). */
 export const PRO_BENEFITS = [
@@ -16,6 +16,44 @@ export const PRO_BENEFITS = [
 
 /** What the free plan gives, in three short lines. */
 export const FREE_BENEFITS = [`${DAILY_LESSON_LIMIT} new lessons a day`, "Every course", "Streaks and XP"] as const;
+
+/** A cell in the Free vs Pro table: included (a tick), not included (a dash), or a short value. */
+export type PlanCell = boolean | string;
+
+/**
+ * /pro's Free vs Pro table, unlimited lessons first. Every row is live in production (the same
+ * benefits as PRO_BENEFITS, plus the Pro avatar items: the circuit crown and the cape).
+ */
+export const PLAN_TABLE: readonly { feature: string; free: PlanCell; pro: PlanCell }[] = [
+  { feature: "Unlimited lessons every day", free: `${DAILY_LESSON_LIMIT} a day`, pro: true },
+  { feature: "Review your mistakes", free: false, pro: true },
+  { feature: "Certificates for every course", free: false, pro: true },
+  { feature: "Streak freezes", free: `Up to ${FREE_MAX_FREEZES}`, pro: `Up to ${PRO_MAX_FREEZES}` },
+  { feature: "Pro avatar items", free: false, pro: true },
+];
+
+/** The one Pro box's three ways to pay: Lifetime (Founding Member, while seats remain), Yearly or Monthly. */
+export type ProChoice = "lifetime" | "annual" | "monthly";
+
+/** What's offered, in order: Lifetime only while the Founding Member offer is showing. */
+export function proChoices(founder: boolean): ProChoice[] {
+  return founder ? ["lifetime", "annual", "monthly"] : ["annual", "monthly"];
+}
+
+/** Selected at first: Lifetime while seats remain, otherwise Yearly. */
+export function defaultChoice(founder: boolean): ProChoice {
+  return founder ? "lifetime" : "annual";
+}
+
+/** "Best value": Lifetime while it's offered; once it's gone, Yearly, but only if it really saves. */
+export function bestValueChoice(founder: boolean, annualSaves: boolean): ProChoice | null {
+  return founder ? "lifetime" : annualSaves ? "annual" : null;
+}
+
+/** Under the button: what the choice means, then the parent line. Lifetime has nothing to cancel. */
+export function choiceNote(choice: ProChoice): string {
+  return choice === "lifetime" ? "Pay once · Under 18? Ask a parent" : "Cancel anytime · Under 18? Ask a parent";
+}
 
 /** Where the plans section was opened from (`plans_viewed`'s `source`). */
 export type PlansSource = "pro_page" | "account" | "dashboard" | "nav";
@@ -32,11 +70,11 @@ export function plansViewedData(source: string): Record<string, string> {
   return SOURCES.has(source) ? { source } : {};
 }
 
-/** `plan_selected`'s properties: free or pro, and for Pro, monthly or annual. Nothing else. */
+/** `plan_selected`'s properties: free or pro, and for Pro, monthly, annual or lifetime. Nothing else. */
 export function planSelectedData(plan: string, interval?: string): Record<string, string> {
   if (plan === "free") return { plan };
   if (plan !== "pro") return {};
-  return interval === "monthly" || interval === "annual" ? { plan, interval } : { plan };
+  return interval === "monthly" || interval === "annual" || interval === "lifetime" ? { plan, interval } : { plan };
 }
 
 /** A subscription this new still gets the welcome moment on a device that hasn't shown it. */
