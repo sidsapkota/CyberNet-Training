@@ -19,6 +19,7 @@ import { createClient } from "@supabase/supabase-js";
 import { chromium } from "playwright-core";
 import { prepare } from "./lib/access.mjs";
 import { readEnvEntries } from "./lib/env.mjs";
+import { closeLeaguesWelcome } from "./lib/welcome.mjs";
 
 const APP = path.resolve(import.meta.dirname, "../..");
 const env = Object.fromEntries(
@@ -164,6 +165,7 @@ try {
         await page.getByRole("button", { name: "Or try 7 days free" }).click();
         record("Paywall: the trial is one small link away", await page.getByRole("button", { name: /Go unlimited with Pro|Start 7-day free trial|free trial/ }).first().waitFor({ timeout: 10000 }).then(() => true, () => false));
         await page.goto(`${BASE}/`);
+        await closeLeaguesWelcome(page);
         const line = page.getByText("Founding Member:", { exact: false }).first();
         record("Free dashboard: one small Founding Member line", await line.waitFor({ timeout: 30000 }).then(() => true, () => false));
         await page.screenshot({ path: path.join(SHOTS, "dashboard-line-360x560.png") });
@@ -173,6 +175,7 @@ try {
         const lineClicks = page.__sent.filter(([n, d]) => n === "founder_clicked" && d.source === "dashboard");
         record("\"See it\" sends founder_line_opened, not founder_clicked", opened.length === 1 && lineClicks.length === 0, JSON.stringify(opened));
         await page.goto(`${BASE}/`);
+        await closeLeaguesWelcome(page);
         await page.getByRole("button", { name: "Hide the Founding Member offer" }).click();
         await page.reload();
         await page.getByRole("heading", { name: "Dashboard" }).waitFor({ state: "attached", timeout: 30000 });
@@ -308,6 +311,7 @@ try {
     const ctx = await browser.newContext({ viewport: PHONE, colorScheme: "dark", reducedMotion: "reduce" });
     const page = await signIn(ctx, founder.email);
     await page.goto(`${BASE}/`);
+    await closeLeaguesWelcome(page);
     record("Founder dashboard: the Founding Member badge", await page.getByRole("link", { name: "Your plan: Founding Member" }).waitFor({ timeout: 30000 }).then(() => true, () => false));
     await page.screenshot({ path: path.join(SHOTS, "founder-dashboard-360x560.png") });
     await page.goto(`${BASE}/account/plan`);

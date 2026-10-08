@@ -61,7 +61,7 @@ const courses = fs.readdirSync(path.join(APP, "content/courses")).map((dir) => {
 
 const GUEST_PAGES = [
   "/", "/courses", ...courses.map((c) => `/course/${c.id}`), ...courses.map((c) => `/lesson/${c.lessons[0].id}`),
-  "/pro", "/login", "/privacy", "/terms", "/feedback", "/this-page-does-not-exist",
+  "/pro", "/pay", "/login", "/privacy", "/terms", "/feedback", "/this-page-does-not-exist",
 ];
 const LEARNER_PAGES = ["/", "/courses", `/course/${courses[0].id}`, `/lesson/${courses[0].lessons[1]?.id ?? courses[0].lessons[0].id}`, "/leagues", "/account", "/account/rewards", "/account/plan", "/pro", "/review", "/feedback"];
 
