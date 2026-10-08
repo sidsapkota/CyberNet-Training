@@ -34,8 +34,12 @@ export function ParentLinkPaid() {
   return null;
 }
 
+/** The small text link under the lifetime button (small text, a 44px tap target). */
+export const PARENT_LINK_LABEL = "Can't pay? Send it to a parent";
+export const PARENT_LINK_CLASS = "inline-flex min-h-11 items-center text-small font-semibold text-accent-ink underline-offset-2 hover:underline";
+
 /**
- * "Send to a parent", next to the buy button: makes a one-time link a parent can open on their own
+ * "Can't pay? Send it to a parent", straight under the lifetime button: makes a one-time link a parent can open on their own
  * phone or computer to pay for this learner's account, then offers Share (where the device has it)
  * and Copy. For teens without a card of their own.
  */
@@ -63,9 +67,9 @@ export function SendToParent({ screen }: { screen: FounderScreen }) {
 
   if (!url) {
     return (
-      <div>
-        <button type="button" onClick={() => void create()} disabled={busy} className="min-h-11 text-small font-semibold text-accent-ink underline-offset-2 hover:underline">
-          {busy ? "Making a link…" : "Send to a parent"}
+      <div className="text-center">
+        <button type="button" onClick={() => void create()} disabled={busy} className={PARENT_LINK_CLASS}>
+          {busy ? "Making a link…" : PARENT_LINK_LABEL}
         </button>
         {error && (
           <p role="alert" className="text-small text-danger">

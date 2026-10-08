@@ -17,6 +17,7 @@ import {
   planSelectedData,
   plansSourceFrom,
   plansViewedData,
+  type PlansSource,
   type ProChoice,
   proChoices,
 } from "@/lib/pro/plans";
@@ -34,7 +35,18 @@ import { PlanButton } from "./PlanButton";
  * Yearly is preselected and is "Best value" when it really saves. Prices come from Stripe; the seat
  * counter from the database. Pro members see their plan, never an upgrade button.
  */
-export function ProPlans({ prices }: { prices: PitchPrices | null }) {
+export function ProPlans({
+  prices,
+  source = "auto",
+  hero = true,
+}: {
+  /** Stripe's prices; undefined while they load (in-app), null when Pro can't be bought. */
+  prices: PitchPrices | null | undefined;
+  /** Where it's shown (`plans_viewed`); "auto" reads `?from=` on /pro. */
+  source?: PlansSource | "auto";
+  /** /pro's crowned mascot and headline; /account/plan has its own heading. */
+  hero?: boolean;
+}) {
   const { auth, available } = useAuth();
   const { pro, hasPro } = usePro();
   const reduceMotion = useReducedMotion();
@@ -51,8 +63,8 @@ export function ProPlans({ prices }: { prices: PitchPrices | null }) {
   useEffect(() => {
     if (viewed.current) return;
     viewed.current = true;
-    trackWith("plans_viewed", plansViewedData(plansSourceFrom(window.location.search)));
-  }, []);
+    trackWith("plans_viewed", plansViewedData(source === "auto" ? plansSourceFrom(window.location.search) : source));
+  }, [source]);
 
   const rise = (i: number) => ({
     initial: { opacity: 0, y: 12 },
@@ -63,8 +75,9 @@ export function ProPlans({ prices }: { prices: PitchPrices | null }) {
   return (
     <>
       {/* Back from sign-in to buy (one tap from checkout), phones skip the hero so the button stays in view; it stays for screen readers. */}
+      {hero && (
       <motion.header {...rise(0)} className={`flex items-center gap-3 sm:flex-col sm:gap-2 sm:text-center ${continuing && founder ? "max-sm:sr-only" : ""}`}>
-        <MascotAvatar outfit={["crown"]} size={64} className="sm:hidden" />
+        <MascotAvatar outfit={["crown"]} size={52} className="sm:hidden" />
         <MascotAvatar outfit={["crown"]} size={136} className="hidden sm:block" />
         <div className="min-w-0">
           <h1 id="plans-title" className="text-title font-semibold text-balance sm:text-display">
@@ -75,8 +88,9 @@ export function ProPlans({ prices }: { prices: PitchPrices | null }) {
           </p>
         </div>
       </motion.header>
+      )}
 
-      <div className="mx-auto mt-4 grid max-w-4xl gap-5 sm:mt-8 md:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] md:items-start">
+      <div className={`mx-auto grid max-w-4xl gap-5 md:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] md:items-start ${hero ? "mt-3 sm:mt-8" : "mt-4"}`}>
         <motion.div {...rise(1)} className="md:order-2">
           <ProBox prices={prices} offer={founder ? offer : null} member={member} unknown={unknown} guest={guest} continuing={continuing} />
         </motion.div>
@@ -96,7 +110,7 @@ function ProBox({
   guest,
   continuing,
 }: {
-  prices: PitchPrices | null;
+  prices: PitchPrices | null | undefined;
   /** The Founding Member offer, only while it's showing for this visitor. */
   offer: FounderOffer | null | undefined;
   member: boolean;
@@ -123,12 +137,12 @@ function ProBox({
 
   // The offer's answer (or that there's none) arrives just after the page: hold the picker until then,
   // so the preselected choice never flips under the learner's finger.
-  const loading = unknown || offer === undefined;
+  const loading = unknown || offer === undefined || prices === undefined;
 
   return (
-    <section aria-labelledby="plan-pro" className="rounded-card border-2 border-accent-ink bg-surface p-4 shadow-pro-card sm:p-5">
+    <section aria-labelledby="plan-pro" className="rounded-card border-2 border-accent-ink bg-surface p-3 shadow-pro-card sm:p-5">
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-        <h2 id="plan-pro" className="text-title font-semibold">
+        <h2 id="plan-pro" className="text-lead font-semibold sm:text-title">
           Pro
         </h2>
         {offer && <SeatsLeft offer={offer} className="ml-auto" />}
@@ -158,7 +172,7 @@ function ProBox({
         <p className="mt-2 text-ink-muted">Pro isn&apos;t available to buy just yet.</p>
       ) : (
         <>
-          <div role="radiogroup" aria-label="How to pay" className="mt-3 grid gap-2">
+          <div role="radiogroup" aria-label="How to pay" className="mt-2 grid gap-1.5 sm:mt-3 sm:gap-2">
             {choices.map((c) => (
               <ChoiceRow
                 key={c}
@@ -178,7 +192,7 @@ function ProBox({
               />
             ))}
           </div>
-          <div className="mt-3">
+          <div className="mt-2 sm:mt-3">
             {choice === "lifetime" && offer ? (
               <FounderButton
                 offer={offer}
@@ -233,7 +247,7 @@ function ChoiceRow({
       onClick={onSelect}
       // The price shares the title's line; the details line runs underneath at full width, so it
       // stays on one line at 360px.
-      className={`grid min-h-13 w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 rounded-control border-2 px-3 py-2 text-left transition-colors ${
+      className={`grid min-h-12 w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 rounded-control border-2 px-3 py-1.5 text-left sm:min-h-13 sm:py-2 transition-colors ${
         selected ? "border-accent-ink bg-accent-soft" : "border-line hover:border-line-strong"
       }`}
     >

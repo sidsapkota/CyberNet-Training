@@ -5,7 +5,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { confirmAgeAction } from "@/app/actions/account";
 import { type FounderCheckoutResult, startFounderCheckoutAction } from "@/app/actions/pro";
 import { LogoMark } from "@/components/brand/Logo";
-import { SendToParent } from "./ParentPay";
+import { PARENT_LINK_CLASS, PARENT_LINK_LABEL, SendToParent } from "./ParentPay";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { ChevronDownIcon, XIcon } from "@/components/ui/icons";
 import { trackEvent, trackWith } from "@/lib/analytics";
@@ -191,11 +191,19 @@ export function FounderButton({
           {busy ? "Opening checkout…" : label}
         </Button>
       )}
-      <div className="mt-1 flex flex-wrap items-center justify-center gap-x-3">
-        <p className="text-center text-caption text-ink-muted">{note}</p>
-        {/* A teen without a card: a link a parent opens on their own device to pay. */}
-        {available && auth.status === "signed-in" && <SendToParent screen={screen} />}
-      </div>
+      {/* A teen without a card: a link a parent opens on their own device to pay. Straight under the
+          button, so it's on screen with it at 360×560. Guests sign in first (the link pays for their
+          account) and come back one tap from checkout, with this link under the button again. */}
+      {available && auth.status === "signed-in" ? (
+        <SendToParent screen={screen} />
+      ) : available && auth.status === "guest" ? (
+        <div className="text-center">
+          <Link href={FOUNDER_SIGN_IN_PATH} className={PARENT_LINK_CLASS}>
+            {PARENT_LINK_LABEL}
+          </Link>
+        </div>
+      ) : null}
+      <p className="text-center text-caption text-ink-muted">{note}</p>
       {problem && problem !== "age" && (
         <div role="alert" className="mt-1 text-small text-danger">
           <p>{FOUNDER_ERROR_TEXT[problem]}</p>

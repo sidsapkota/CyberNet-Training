@@ -211,6 +211,15 @@ try {
     await page.goto(`${BASE}/account`);
     await page.getByRole("heading", { name: "Your plan" }).waitFor({ timeout: 30000 });
     record("Free /account: Your plan, with See plans", (await page.getByRole("link", { name: "See plans" }).count()) === 1);
+    // Your plan, for a free learner: /pro's Pro box and Free vs Pro (no hero), plans_viewed {source: account}.
+    await page.goto(`${BASE}/account/plan`);
+    await page.getByRole("heading", { name: "Your plan" }).waitFor({ timeout: 30000 });
+    const box = await page.locator("section[aria-labelledby=plan-pro] [role=radio]").first().waitFor({ timeout: 30000 }).then(() => true, () => false);
+    record("Free /account/plan: the Pro box and Free vs Pro, no hero", box && (await page.locator("section[aria-labelledby=compare-title]").count()) === 1 && (await page.getByRole("heading", { name: "Learn without limits" }).count()) === 0);
+    await page.waitForTimeout(500);
+    record("…plans_viewed with source account", (await events(page)).some(([n, d]) => n === "plans_viewed" && JSON.stringify(d) === '{"source":"account"}'));
+    record("…no sideways scrolling", !(await sideways(page)));
+    await page.screenshot({ path: path.join(SHOTS, "account-plan-free-360.png") });
     await ctx.close();
   }
 
