@@ -1,7 +1,7 @@
 # Handover
 
 Read this first in every session. It is replaced, not appended: git keeps the history.
-Last updated: 7 October 2026 (evening).
+Last updated: 8 October 2026.
 
 ## 0. Built 7 Oct while the owner was away
 
@@ -21,6 +21,16 @@ Plans: `docs/plans/retention-and-fun.md` (parts 1–4 + the content quality pass
 - **Card report (weekly, `E2E_ENV_FILE=.env.production-checks npm run report:cards`):** measurements started 7 Oct; no cards have 5+ plays yet. Paste next week's slowest and most-failed cards here.
 - **Content quality, next:** How AI Really Works (4/18 lessons meet the target), How the Internet Works (1/17), then Inside Your Devices (0/7, after the Mac branch). Worked examples (binary, IP addresses, passwords) and paced cards aren't used in content yet; the engine and `e2e:pacing` are ready.
 - **Decision for the owner:** the combo uses a small amber flame; streaks keep the node-chain icon (brand rule). Say if you want streaks to become a flame too.
+
+### 8 Oct (owner approved)
+
+| Part | Branch | Status |
+|---|---|---|
+| Send to a parent (`/pay`) | `parent-link` | LIVE `9ac163e`; migration `20261010100000` on production (RLS on, no policies, no learner grants); 7/7 production suites passed |
+| Reminder card for existing learners ("Want a reminder before your streak ends?") | `reminder-prompt` | LIVE (merged 8 Oct); no migration; the full gate and `e2e:reminders` 25/25 passed |
+| /pro redesign (crowned mascot, one Pro box: Lifetime / Yearly / Monthly, Free vs Pro table) | `pro-redesign` | **Waiting for the owner's OK on the screenshots** (`docs/plans/pro-redesign/` on the branch); `e2e:plans` 36/36 and `e2e:founder` 57/57 pass on it |
+
+- **Staging leagues have been open since 6 Oct** (20+ test learners earned XP in one week, so they opened for good, as the rules say). E2e scripts that open the dashboard must call `closeLeaguesWelcome` (`scripts/e2e/lib/welcome.mjs`); `e2e:founder` and `e2e:reminders` now do.
 
 ## 1. Live on production (https://cybernettraining.com, branch `main`)
 
@@ -56,8 +66,7 @@ One payment (A$29, `STRIPE_PRICE_FOUNDER`) for lifetime Pro, first 50 buyers; `F
 
 0. **Admin dashboard: add `ADMIN_USER_IDS = cf5b0efc-1c8f-490c-b90d-a1ca081b16e8` in Vercel → project → Settings → Environment Variables, Production only, then redeploy.** Until then `/admin` is a 404 for everyone, you included. Sign in again if your last sign-in is over 12 hours old.
 0. **IYD rollout branch:** `rollout-inside-your-devices` (`9c562b7`, the 3 approved samples) isn't on GitHub. Push it from the Mac (`git push -u origin rollout-inside-your-devices`) to continue on Windows. **It also rebuilt Power Problems: when it arrives, merge `main` into it first** so it gets the 6 Oct simulator hotfix (`SimulatorCardView.tsx`, the battery card's prompt) and the 7-size fit audit, and re-run `npm run e2e:fit-audit COURSE=inside-your-devices`. **Seven Feed bytes point at Inside Your Devices cards** (`content/bytes/bytes.json`: phone-ram-swap, apps-need-ram, download-needs-storage, still-there-after-off, more-ghz-more-steps, blanket-slows-it, swollen-battery): if the rebuild removes any of those card ids, `feed.test.ts` fails; re-point the bytes (compact cards that fit 360×560) and run `npm run e2e:feed`.
-0. **"Send to a parent" (branch `parent-link`, pushed, NOT merged): needs your OK on the migration SQL for production** (`supabase/migrations/20261010100000_founder_parent_links.sql`: a new server-only table `founder_parent_links`, add-only, RLS on, no learner access; applied on staging, `check:rls` 116/116, `e2e:founder` 57/57). A learner taps "Send to a parent" by the buy button, gets a one-time 7-day link (`/pay?t=…`, only its hash is stored, 5 a day); the parent opens it on their own device, no sign-in, and pays on Stripe; the purchase is tied to the learner's account. Events `parent_link_created`, `parent_link_paid`. After it merges, add `/pay` back to the visual QA pages.
-0. **/pro redesign (not started; it builds on `parent-link`, which waits for your SQL OK):** hero with the crowned mascot, "Learn without limits", a Free vs Pro table, one Pro box with Lifetime / Yearly / Monthly and one matching button; seat counter "First 50 learners only" until 5 are sold. Screenshots at 360x560 and desktop go to the owner before merging.
+0. **/pro redesign (branch `pro-redesign`, pushed, NOT merged): your OK on the screenshots.** `docs/plans/pro-redesign/` (guest at 360×560 dark and light, 1440×900, sold out, a free learner). Lifetime is preselected while seats remain ("Get lifetime Pro for A$29", "Pay once · Under 18? Ask a parent"; "Cancel anytime" only under Yearly and Monthly, since a one-off payment has nothing to cancel); when seats run out Yearly is preselected and "Best value". The seat counter now says "First 50 learners only" until 5 are sold, everywhere it shows. On approval: run the full gate on it (`fullgate.cmd pro e2e:plans e2e:founder`), merge, production checks. `/account/plan` still uses the old two-card `PlansCards` for free learners (bring it over too if you like the new box).
 0. **`.env.local` on Windows** points at staging with the Stripe test key, but holds the **live** price ids, so `/pro` can't read prices locally (start the dev server with the sandbox `STRIPE_PRICE_MONTHLY`/`STRIPE_PRICE_ANNUAL` set in the shell, or fix the file).
 
 1. **Founding Member:** (a) in the Stripe *sandbox*, create a one-off A$29 price, put it and `FOUNDER_OFFER=on` in `.env.local`, run `stripe listen --forward-to localhost:3000/api/stripe/webhook`, then buy as a throwaway learner with card 4242 4242 4242 4242 (Pro, badge, counter −1, offer gone, refund in the dashboard puts it back); (b) to go live, add `FOUNDER_OFFER=on` to Vercel **Production** and redeploy (remove it to stop the offer); (c) bank-debit payment methods would need `checkout.session.async_payment_succeeded` on the webhook (or keep instant methods only).
