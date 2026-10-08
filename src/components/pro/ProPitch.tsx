@@ -141,8 +141,8 @@ export function ProPitch({
 
   return (
     <div className="mx-auto flex w-full max-w-sm flex-col items-center text-center">
-      {/* On short screens (an in-app browser) the mascot steps aside so the button and Not now stay in view. */}
-      <motion.div {...rise(0)} className="[@media(max-height:620px)]:hidden">
+      {/* On short screens (360×640 and less) the mascot steps aside so the button, the parent link and Not now stay in view. */}
+      <motion.div {...rise(0)} className="[@media(max-height:700px)]:hidden">
         <Mascot expression="happy" size={64} idle />
       </motion.div>
       <motion.div {...rise(1)} className="mt-2">
@@ -150,10 +150,10 @@ export function ProPitch({
         {sub && <p className="mt-1 text-ink-muted">{sub}</p>}
       </motion.div>
 
-      <motion.ul {...rise(2)} className="mt-3 grid w-full gap-2 text-left" aria-label="With Pro">
+      <motion.ul {...rise(2)} className="mt-3 grid w-full gap-1.5 text-left" aria-label="With Pro">
         {BENEFITS.map(({ Icon, text }) => (
           <li key={text} className="flex items-center gap-3">
-            <span className="grid size-8 shrink-0 place-items-center rounded-node bg-accent-soft text-accent-ink">
+            <span className="grid size-7 shrink-0 place-items-center rounded-node bg-accent-soft text-accent-ink">
               <Icon className="size-4" />
             </span>
             <span className="font-semibold">{text}</span>
@@ -162,7 +162,7 @@ export function ProPitch({
       </motion.ul>
 
       {founder ? (
-        <motion.div {...rise(3)} className="mt-3 w-full">
+        <motion.div {...rise(3)} className="mt-2 w-full">
           <p className="font-semibold text-balance">{founder.headline}</p>
           <p className="text-caption text-ink-muted">
             {founder.comparison} <SeatsLeft offer={founder} className="inline" />
@@ -206,8 +206,9 @@ export function ProPitch({
 
       <motion.div {...rise(4)} className="mt-1 w-full">
         {founder ? (
-          <div className="mt-2">
-            <FounderButton offer={founder} screen={screen} big />
+          <div className="mt-1">
+            {/* The parent line goes under "Not now", so the button, the parent link and Not now fit 360×560. */}
+            <FounderButton offer={founder} screen={screen} big note={null} />
           </div>
         ) : (
           prices && <PlanButton key={plan} plan={plan} label="Go unlimited with Pro" primary big />
@@ -233,7 +234,7 @@ export function ProPitch({
             </Button>
           )}
         </div>
-        {!founder && <p className="mt-1 text-caption text-ink-muted">Ask a parent or guardian before subscribing.</p>}
+        <p className="mt-1 text-caption text-ink-muted">{founder ? "Under 18? Ask a parent before buying." : "Ask a parent or guardian before subscribing."}</p>
         {sample && !showSample && (
           <button
             type="button"

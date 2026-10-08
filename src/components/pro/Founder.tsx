@@ -116,8 +116,8 @@ export function FounderButton({
   offer: FounderOffer;
   screen: FounderScreen;
   big?: boolean;
-  /** The line under the button. */
-  note?: string;
+  /** The line under the button (null: the screen shows it elsewhere). */
+  note?: string | null;
   /** Called when the learner picks lifetime Pro (before sign-in or Checkout). */
   onSelect?: () => void;
 }) {
@@ -203,7 +203,7 @@ export function FounderButton({
           </Link>
         </div>
       ) : null}
-      <p className="text-center text-caption text-ink-muted">{note}</p>
+      {note && <p className="text-center text-caption text-ink-muted">{note}</p>}
       {problem && problem !== "age" && (
         <div role="alert" className="mt-1 text-small text-danger">
           <p>{FOUNDER_ERROR_TEXT[problem]}</p>

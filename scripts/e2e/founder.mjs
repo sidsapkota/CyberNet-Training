@@ -262,6 +262,13 @@ try {
     const parent = await parentLinkUnder(page, PHONE.height);
     record("Daily limit (360x560): \"Can't pay? Send it to a parent\" right under it, in view", parent.ok, parent.detail);
     await page.screenshot({ path: path.join(SHOTS, "limit-360x560.png") });
+    const notNow = await inView(page, page.getByRole("link", { name: "Not now" }).first(), PHONE.height);
+    record("Daily limit (360x560): Not now is in view too", notNow.ok, notNow.detail);
+    record("Daily limit: \"Under 18? Ask a parent before buying.\"", (await page.getByText("Under 18? Ask a parent before buying.").count()) === 1);
+    await page.setViewportSize({ width: 360, height: 640 });
+    await page.waitForTimeout(500);
+    record("Daily limit (360x640): one screen, no scrolling", !(await page.evaluate(() => document.documentElement.scrollHeight > window.innerHeight + 1)));
+    await page.screenshot({ path: path.join(SHOTS, "limit-360x640.png") });
     await ctx.close();
   }
 
@@ -369,7 +376,8 @@ try {
     const ctx2 = await browser.newContext({ viewport: PHONE, colorScheme: "dark", reducedMotion: "reduce" });
     const page2 = await signIn(ctx2, founder.email);
     await page2.goto(`${BASE}/account/plan`);
-    record("After a refund: no Founding Member badge or lifetime Pro", await page2.getByRole("link", { name: "See plans" }).or(page2.getByText("Free")).first().waitFor({ timeout: 30000 }).then(async () => (await page2.getByText(/lifetime Pro/).count()) === 0, () => false));
+    // Back on the free plan: Your plan shows the Pro box again (lifetime can be bought again), never the member's lifetime line.
+    record("After a refund: back on the free plan, no Founding Member badge or lifetime line", await page2.getByText("You're on the free plan.").waitFor({ timeout: 30000 }).then(async () => (await page2.getByText(/for as long as CyberNet Training runs\./).count()) === 0 && (await page2.getByRole("link", { name: "Your plan: Founding Member" }).count()) === 0, () => false));
     await ctx2.close();
   }
 } finally {
