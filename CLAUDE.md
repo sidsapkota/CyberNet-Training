@@ -1326,6 +1326,12 @@ Opt-in only (owner, 7 Oct 2026; plan `docs/plans/retention-and-fun.md`). Pure ru
   accounts were never opted in). Turned on only by the learner's own tick: an unticked box in the
   "Pick a username" welcome note, or the switch on `/account` (`ReminderSetting` →
   `setReminderEmailsAction`, which records `reminder_consent_at`). Learners can't write it directly.
+- **Asking existing learners once** (owner, 8 Oct 2026): accounts made before the sign-up opt-in
+  (`REMINDER_OPT_IN_AT`, 7 Oct 2026 08:00 UTC) that never opted in see one dashboard card, "Want a
+  reminder before your streak ends?" (`ReminderPrompt`; `showReminderPrompt` in `rules.ts`, asked
+  through `reminderPromptAction`). "Remind me" is their own opt-in (consent recorded, as with the
+  switch); "No thanks" hides it for good on that device (`reminderPromptKey`, like the other
+  one-time dashboard notices). Anyone who ever opted in (even if they unsubscribed later) is never asked.
 - **Every email:** from "CyberNet Training <noreply@…>", reply-to hello@, says why they're getting it,
   one button, a one-tap unsubscribe link (`/api/email/unsubscribe?t=<profiles.email_token>`: GET from
   the link, POST for mail apps' one-click via `List-Unsubscribe` / `List-Unsubscribe-Post`), then

@@ -11,6 +11,7 @@ import { requireUserId } from "@/lib/auth/server";
 import { deleteStripeCustomer } from "@/lib/pro/server";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { showReminderPrompt } from "@/lib/reminders/rules";
 import { setReminderEmails } from "@/lib/reminders/server";
 import { setUsername, suggestUsername, type UsernameResult } from "@/lib/usernames/server";
 
@@ -51,6 +52,17 @@ export async function deleteAccountAction(): Promise<void> {
 export async function setReminderEmailsAction(on: boolean): Promise<void> {
   const userId = await requireUserId();
   await setReminderEmails(userId, z.boolean().parse(on));
+}
+
+/**
+ * Whether to show the signed-in learner the one-time "Want a reminder before your streak ends?" card
+ * (accounts made before the sign-up opt-in, never opted in). Reads only their own row (RLS).
+ */
+export async function reminderPromptAction(): Promise<boolean> {
+  const userId = await requireUserId();
+  const supabase = await createSupabaseServerClient();
+  const { data } = await supabase.from("profiles").select("created_at, reminder_emails, reminder_consent_at").eq("id", userId).maybeSingle();
+  return data ? showReminderPrompt({ createdAt: data.created_at, optedIn: data.reminder_emails, consentAt: data.reminder_consent_at }) : false;
 }
 
 /**

@@ -8,6 +8,8 @@
 //   already learned today; running it again sends nothing more (one a day).
 // - The open image and the button note the open and the return (only with the right key).
 // - The one-tap unsubscribe link turns reminders off without signing in.
+// - The one-time dashboard card for accounts made before the sign-up opt-in: "Remind me" opts in
+//   (consent recorded), "No thanks" hides it for good, and newer accounts never see it.
 //   npm run e2e:reminders
 import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
@@ -15,6 +17,7 @@ import { chromium } from "playwright-core";
 import { prepare } from "./lib/access.mjs";
 import { readEnvEntries, PRODUCTION_REF } from "./lib/env.mjs";
 import { layoutProblems } from "./lib/layout.mjs";
+import { closeLeaguesWelcome } from "./lib/welcome.mjs";
 
 const APP = path.resolve(import.meta.dirname, "../..");
 const env = Object.fromEntries(readEnvEntries(APP));
@@ -161,6 +164,61 @@ try {
   await confirm.goto(`${BASE}/unsubscribed`);
   record("The confirmation page says so", await confirm.getByRole("heading", { name: "You're unsubscribed" }).isVisible());
   await confirm.close();
+
+  // 5. The one-time dashboard card for existing learners (accounts made before the sign-up opt-in).
+  const PROMPT = "Want a reminder before your streak ends?";
+  const dashboardAs = async (who) => {
+    const c = await browser.newContext({ viewport: { width: 360, height: 560 }, colorScheme: "dark", reducedMotion: "reduce" });
+    const p = await c.newPage();
+    await prepare(p);
+    const l = await admin.auth.admin.generateLink({ type: "magiclink", email: who.email });
+    await p.goto(`${BASE}/auth/callback?token_hash=${l.data.properties.hashed_token}&type=magiclink&next=/`);
+    await p.waitForURL((u) => u.pathname === "/", { timeout: 60000 });
+    await p.getByRole("heading", { name: "Dashboard" }).waitFor({ state: "attached", timeout: 60000 });
+    await closeLeaguesWelcome(p);
+    return { c, p };
+  };
+  const backdate = async (id) => {
+    const r = await admin.from("profiles").update({ created_at: "2026-09-20T03:00:00Z" }).eq("id", id);
+    if (r.error) throw r.error;
+  };
+  const oldYes = await learner("old-yes", { username: `E2e_old${Date.now() % 100000}` }, zone);
+  await backdate(oldYes.id);
+  {
+    const { c, p } = await dashboardAs(oldYes);
+    const shown = await p.getByRole("heading", { name: PROMPT }).waitFor({ timeout: 30000 }).then(() => true, () => false);
+    record("An existing learner sees the reminder card once on the dashboard", shown);
+    const cardLayout = await p.evaluate(layoutProblems, null);
+    record("The card lays out cleanly at 360x560", cardLayout.length === 0, JSON.stringify(cardLayout));
+    await p.screenshot({ path: path.join(SHOTS, "reminder-prompt-360x560.png") });
+    await p.getByRole("button", { name: "Remind me" }).click();
+    await p.getByRole("heading", { name: "Reminders are on" }).waitFor({ timeout: 30000 });
+    const after = await profileOf(oldYes.id);
+    record("Remind me opts them in and records consent", after.reminder_emails === true && Boolean(after.reminder_consent_at));
+    await p.reload();
+    await p.getByRole("heading", { name: "Dashboard" }).waitFor({ state: "attached", timeout: 60000 });
+    await p.waitForTimeout(3000);
+    record("…and the card never comes back", (await p.getByRole("heading", { name: PROMPT }).count()) === 0);
+    await c.close();
+  }
+  const oldNo = await learner("old-no", { username: `E2e_no${Date.now() % 100000}` }, zone);
+  await backdate(oldNo.id);
+  {
+    const { c, p } = await dashboardAs(oldNo);
+    await p.getByRole("button", { name: "No thanks" }).click();
+    await p.reload();
+    await p.getByRole("heading", { name: "Dashboard" }).waitFor({ state: "attached", timeout: 60000 });
+    await p.waitForTimeout(3000);
+    record("No thanks hides it for good, and opts nobody in", (await p.getByRole("heading", { name: PROMPT }).count()) === 0 && (await profileOf(oldNo.id)).reminder_emails === false);
+    await c.close();
+  }
+  const newer = await learner("newer", { username: `E2e_new${Date.now() % 100000}` }, zone);
+  {
+    const { c, p } = await dashboardAs(newer);
+    await p.waitForTimeout(4000);
+    record("Newer accounts (asked at sign-up) never see the card", (await p.getByRole("heading", { name: PROMPT }).count()) === 0);
+    await c.close();
+  }
 } finally {
   await browser.close();
   for (const id of users) await admin.auth.admin.deleteUser(id);

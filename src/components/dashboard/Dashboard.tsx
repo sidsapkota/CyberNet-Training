@@ -29,6 +29,7 @@ import { LeaguesCard } from "@/components/leagues/LeaguesCard";
 import { MistakesCard } from "@/components/mistakes/MistakesCard";
 import { DashboardIdentity } from "./DashboardIdentity";
 import { DailyLimitNotice } from "@/components/pro/DailyLimitNotice";
+import { ReminderPrompt } from "@/components/account/ReminderPrompt";
 import { EarlyUserThanks } from "@/components/pro/EarlyUserThanks";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { usePro } from "@/lib/pro/ProProvider";
@@ -90,6 +91,7 @@ export function Dashboard({ courses }: { courses: CourseOutline[] }) {
       <DashboardIdentity />
       <EarlyUserThanks />
       <DailyLimitNotice />
+      <ReminderPrompt />
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <Rise index={0} className="lg:col-span-2">
           <ContinueHero state={focus} />
