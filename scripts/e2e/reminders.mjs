@@ -178,12 +178,18 @@ try {
     await closeLeaguesWelcome(p);
     return { c, p };
   };
+  // Existing learners have progress (a finished card), so they see the dashboard, not the welcome.
   const backdate = async (id) => {
     const r = await admin.from("profiles").update({ created_at: "2026-09-20T03:00:00Z" }).eq("id", id);
     if (r.error) throw r.error;
   };
+  const withProgress = async (id) => {
+    const r = await admin.from("card_completions").insert({ user_id: id, lesson_id: "strong-passwords", card_id: "e2e-progress", xp: 10, completed_at: new Date().toISOString() });
+    if (r.error) throw r.error;
+  };
   const oldYes = await learner("old-yes", { username: `E2e_old${Date.now() % 100000}` }, zone);
   await backdate(oldYes.id);
+  await withProgress(oldYes.id);
   {
     const { c, p } = await dashboardAs(oldYes);
     const shown = await p.getByRole("heading", { name: PROMPT }).waitFor({ timeout: 30000 }).then(() => true, () => false);
@@ -203,6 +209,7 @@ try {
   }
   const oldNo = await learner("old-no", { username: `E2e_no${Date.now() % 100000}` }, zone);
   await backdate(oldNo.id);
+  await withProgress(oldNo.id);
   {
     const { c, p } = await dashboardAs(oldNo);
     await p.getByRole("button", { name: "No thanks" }).click();
@@ -213,6 +220,7 @@ try {
     await c.close();
   }
   const newer = await learner("newer", { username: `E2e_new${Date.now() % 100000}` }, zone);
+  await withProgress(newer.id);
   {
     const { c, p } = await dashboardAs(newer);
     await p.waitForTimeout(4000);
