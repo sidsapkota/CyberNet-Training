@@ -80,7 +80,9 @@ describe("Server Actions that write with the secret key", () => {
     // Besides Server Actions: the Pro entitlement helpers (server-only; callers pass a verified
     // user id) and the Stripe webhook, which has no user session and is authenticated by Stripe's
     // signature instead (checked before anything is read or written).
-    const vetted = ["src/lib/pro/server.ts", "src/lib/leagues/server.ts", "src/lib/certificates/server.ts", "src/app/api/stripe/webhook/route.ts", "src/lib/feedback/server.ts", "src/lib/usernames/server.ts", "src/lib/rewards/server.ts", "src/lib/admin/server.ts", "src/lib/measure/server.ts", "src/lib/challenges/server.ts", "src/lib/reminders/server.ts"];
+    // "Send to a parent" (lib/pro/parentLink.ts) has no user session either: the link's secret is its
+    // authority (only its hash is stored); see the parent-link test below.
+    const vetted = ["src/lib/pro/server.ts", "src/lib/leagues/server.ts", "src/lib/certificates/server.ts", "src/app/api/stripe/webhook/route.ts", "src/lib/feedback/server.ts", "src/lib/usernames/server.ts", "src/lib/rewards/server.ts", "src/lib/admin/server.ts", "src/lib/measure/server.ts", "src/lib/challenges/server.ts", "src/lib/reminders/server.ts", "src/lib/pro/parentLink.ts"];
     for (const file of importers) {
       const rel = path.relative(ROOT, file).replace(/\\/g, "/");
       if (!rel.startsWith("src/app/actions/")) expect(vetted, rel).toContain(rel);
@@ -194,6 +196,18 @@ describe("Server Actions that write with the secret key", () => {
       expect(source.trimStart().startsWith('"use client"'), file).toBe(false);
       expect(source, `${file} must get the user from the verified session`).toMatch(/await requireUser(Id)?\(\)/);
     }
+  });
+
+  it("parent links: server-only, used only by the learner's action and the parent's pages, always through the link's checks", () => {
+    const lib = fs.readFileSync(path.join(ROOT, "src/lib/pro/parentLink.ts"), "utf8");
+    expect(lib.trimStart().startsWith('import "server-only";')).toBe(true);
+    expect(lib, "only a hash of the secret is stored").toContain('createHash("sha256")');
+    expect(lib, "startParentCheckout re-checks the link first").toMatch(/startParentCheckout[\s\S]*?await findParentLink\(token/);
+    const users = sourceFiles(path.join(ROOT, "src")).filter((f) => /from "@\/lib\/pro\/parentLink"/.test(fs.readFileSync(f, "utf8")) && !f.endsWith(".test.ts"));
+    const rel = users.map((f) => path.relative(ROOT, f).replace(/\\/g, "/")).sort();
+    expect(rel).toEqual(["src/app/actions/pro.ts", "src/app/api/pay/route.ts", "src/app/pay/page.tsx", "src/app/pay/thanks/page.tsx"]);
+    const action = fs.readFileSync(path.join(ROOT, "src/app/actions/pro.ts"), "utf8");
+    expect(action, "a learner makes links only for themselves").toMatch(/createParentLinkAction[\s\S]*?await requireUser\(\)[\s\S]*?createParentLink\(user\.id\)/);
   });
 
   it("no file reads the secret key except admin.ts, and no public variable holds it", () => {

@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { hasPro, proCosmeticUntil, proIntervals, proStatus } from "./entitlement";
 import { proLine } from "./describe";
 import { founderCopy, founderCounter, founderOfferOn, founderPurchaseOf, fullyRefundedPayment, seatsLeftText, showFounderOffer } from "./founder";
+import { PARENT_LINK_TEXT, parentLinkState } from "./founder";
 import { FOUNDER_ERRORS, FOUNDER_ERROR_TEXT, FOUNDER_RETRYABLE, FOUNDER_SIGN_IN_PATH, founderErrorData, isFounderContinue } from "./founder";
 
 const monthly = { unitAmount: 799, currency: "aud", interval: "month" as const };
@@ -126,5 +127,23 @@ describe("the steps after the click", () => {
   it("every reason has friendly words, and only some can be retried", () => {
     for (const code of FOUNDER_ERRORS) expect(FOUNDER_ERROR_TEXT[code].length).toBeGreaterThan(10);
     expect([...FOUNDER_RETRYABLE].sort()).toEqual(["all_held", "network", "stripe"]);
+  });
+});
+
+describe("parent links", () => {
+  const now = new Date("2026-10-06T00:00:00Z");
+  const link = { expiresAt: "2026-10-13T00:00:00Z", paidAt: null };
+  it("a fresh link for a learner without Pro, while the offer is on, can pay", () => {
+    expect(parentLinkState(link, { hasProNow: false }, true, now)).toBe("ok");
+  });
+  it("can't pay when unknown, expired, already paid, the learner has Pro, or the offer is off", () => {
+    expect(parentLinkState(null, { hasProNow: false }, true, now)).toBe("unknown");
+    expect(parentLinkState({ ...link, expiresAt: "2026-10-05T23:59:59Z" }, { hasProNow: false }, true, now)).toBe("expired");
+    expect(parentLinkState({ ...link, paidAt: "2026-10-05T00:00:00Z" }, { hasProNow: true }, true, now)).toBe("paid");
+    expect(parentLinkState(link, { hasProNow: true }, true, now)).toBe("has_pro");
+    expect(parentLinkState(link, { hasProNow: false }, false, now)).toBe("off");
+  });
+  it("every state that can't pay says what to do", () => {
+    for (const text of Object.values(PARENT_LINK_TEXT)) expect(text.length).toBeGreaterThan(10);
   });
 });

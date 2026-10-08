@@ -62,6 +62,7 @@ When it's offered, Founding Member is a single payment for CyberNet Pro, for the
 - **What you get:** every Pro feature on your account, **for as long as CyberNet Training runs**. It isn't a subscription: you pay once, and nothing renews or is charged again. If CyberNet Training ever closes, Founding Member ends with it.
 - **Who can buy it:** you need an account (13 or older), and it's one per account. It belongs to that account and can't be moved to another one. If you're under 18, please ask a parent or carer before you buy.
 - **Already subscribed?** It isn't offered while you have a subscription or a free trial.
+- **A parent can pay:** a learner can send a parent or carer a one-time link. The parent opens it on their own device, with no account, and pays on Stripe's page. Founding Member then belongs to the learner's account. A link works for 7 days and pays once.
 - **Refunds:** we don't give refunds for a change of mind, except where the law says we must. Your rights under the **Australian Consumer Law** always apply, and nothing in these terms takes them away: if something's gone wrong, email us. If a Founding Member payment is refunded, its Pro and the Founding Member badge end, and the spot can go to someone else.
 - **Payments are handled by Stripe.** Your card details go to Stripe, never to us.
 - **Deleting your account** ends Founding Member. It can't be restored on a new account.

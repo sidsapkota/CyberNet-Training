@@ -19,6 +19,7 @@ import { createClient } from "@supabase/supabase-js";
 import { chromium } from "playwright-core";
 import { prepare } from "./lib/access.mjs";
 import { readEnvEntries } from "./lib/env.mjs";
+import { closeLeaguesWelcome } from "./lib/welcome.mjs";
 
 const APP = path.resolve(import.meta.dirname, "../..");
 const env = Object.fromEntries(
@@ -164,6 +165,7 @@ try {
         await page.getByRole("button", { name: "Or try 7 days free" }).click();
         record("Paywall: the trial is one small link away", await page.getByRole("button", { name: /Go unlimited with Pro|Start 7-day free trial|free trial/ }).first().waitFor({ timeout: 10000 }).then(() => true, () => false));
         await page.goto(`${BASE}/`);
+        await closeLeaguesWelcome(page);
         const line = page.getByText("Founding Member:", { exact: false }).first();
         record("Free dashboard: one small Founding Member line", await line.waitFor({ timeout: 30000 }).then(() => true, () => false));
         await page.screenshot({ path: path.join(SHOTS, "dashboard-line-360x560.png") });
@@ -173,6 +175,7 @@ try {
         const lineClicks = page.__sent.filter(([n, d]) => n === "founder_clicked" && d.source === "dashboard");
         record("\"See it\" sends founder_line_opened, not founder_clicked", opened.length === 1 && lineClicks.length === 0, JSON.stringify(opened));
         await page.goto(`${BASE}/`);
+        await closeLeaguesWelcome(page);
         await page.getByRole("button", { name: "Hide the Founding Member offer" }).click();
         await page.reload();
         await page.getByRole("heading", { name: "Dashboard" }).waitFor({ state: "attached", timeout: 30000 });
@@ -220,6 +223,60 @@ try {
     await ctx.close();
   }
 
+  // 2c. "Send to a parent": a one-time link a parent opens on their own device (no account).
+  {
+    const learner = await makeUser("parent-link");
+    const ctx = await browser.newContext({ viewport: PHONE, colorScheme: "dark", reducedMotion: "reduce" });
+    const page = await signIn(ctx, learner.email);
+    await page.goto(`${BASE}/pro`);
+    const send = page.getByRole("button", { name: "Send to a parent" });
+    record("\"Send to a parent\" sits next to the buy button", await send.waitFor({ timeout: 30000 }).then(() => true, () => false));
+    await send.click();
+    const field = page.getByRole("textbox", { name: "Link for a parent" });
+    const made = await field.waitFor({ timeout: 30000 }).then(() => true, () => false);
+    const url = made ? await field.inputValue() : "";
+    record("It makes a link to /pay with a long one-time secret", /\/pay\?t=[A-Za-z0-9_-]{32}$/.test(url), url.replace(/t=.*/, "t=…"));
+    await page.screenshot({ path: path.join(SHOTS, "parent-link-360x560.png") });
+    record("parent_link_created carries only the screen", page.__sent.some(([n, d]) => n === "parent_link_created" && JSON.stringify(d) === JSON.stringify({ source: "pro_page" })));
+    const token = new URL(url || "http://x/pay?t=").searchParams.get("t") ?? "";
+    const rows = (await admin.from("founder_parent_links").select("token_hash, expires_at, paid_at").eq("user_id", learner.id)).data ?? [];
+    record("Only a hash of the secret is stored, for 7 days", rows.length === 1 && /^[0-9a-f]{64}$/.test(rows[0].token_hash) && rows[0].token_hash !== token && Math.round((Date.parse(rows[0].expires_at) - Date.now()) / 86_400_000) === 7);
+    await ctx.close();
+
+    // The parent: their own browser, no account.
+    const parent = await browser.newContext({ viewport: PHONE, colorScheme: "light", reducedMotion: "reduce" });
+    const pp = await newPage(parent);
+    await pp.goto(url);
+    const named = pp.getByRole("heading", { name: /Lifetime Pro for E2e_/ });
+    const priceOk = await named.waitFor({ timeout: 30000 }).then(() => true, () => false);
+    if (priceOk) {
+      record("The parent sees who it's for and one button to Stripe", (await pp.getByRole("button", { name: /Pay A\$29 securely with Stripe/ }).count()) === 1);
+      await pp.screenshot({ path: path.join(SHOTS, "parent-pay-360x560.png") });
+    } else {
+      // No founding price in the Stripe sandbox: the page can't show a price locally (honest message).
+      record("Without a price, the parent page says so honestly (no sandbox founding price)", await pp.getByText("We couldn't load the price just now.").isVisible());
+    }
+    const states = [
+      ["a made-up link", `${BASE}/pay?t=${"x".repeat(32)}`, "This link doesn't work."],
+      ["no link at all", `${BASE}/pay`, "This link doesn't work."],
+    ];
+    for (const [what, href, text] of states) {
+      await pp.goto(href);
+      record(`Parent page, ${what}: "${text}"`, await pp.getByText(text).first().waitFor({ timeout: 30000 }).then(() => true, () => false));
+    }
+    await admin.from("founder_parent_links").update({ expires_at: new Date(Date.now() - 1000).toISOString() }).eq("user_id", learner.id);
+    await pp.goto(url);
+    record("Parent page, an expired link: says to ask for a new one", await pp.getByText(/has expired/).waitFor({ timeout: 30000 }).then(() => true, () => false));
+    await admin.from("founder_parent_links").update({ expires_at: new Date(Date.now() + 86_400_000).toISOString(), paid_at: new Date().toISOString() }).eq("user_id", learner.id);
+    await pp.goto(url);
+    record("Parent page, a used link: says it's already been used", await pp.getByText(/already been used/).waitFor({ timeout: 30000 }).then(() => true, () => false));
+    await pp.goto(`${BASE}/pay/thanks?session_id=cs_test_notreal`);
+    record("Thank-you page: an unconfirmed payment isn't celebrated", await pp.getByRole("heading", { name: "We couldn't confirm that payment yet" }).waitFor({ timeout: 30000 }).then(() => true, () => false));
+    const robots = await (await pp.request.get(`${BASE}/pay`)).text();
+    record("The parent page is never indexed", /noindex/.test(robots));
+    await parent.close();
+  }
+
   // 3. A Pro subscriber never sees it.
   {
     const pro = await makeUser("pro");
@@ -254,6 +311,7 @@ try {
     const ctx = await browser.newContext({ viewport: PHONE, colorScheme: "dark", reducedMotion: "reduce" });
     const page = await signIn(ctx, founder.email);
     await page.goto(`${BASE}/`);
+    await closeLeaguesWelcome(page);
     record("Founder dashboard: the Founding Member badge", await page.getByRole("link", { name: "Your plan: Founding Member" }).waitFor({ timeout: 30000 }).then(() => true, () => false));
     await page.screenshot({ path: path.join(SHOTS, "founder-dashboard-360x560.png") });
     await page.goto(`${BASE}/account/plan`);

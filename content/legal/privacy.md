@@ -61,7 +61,8 @@ Accounts are for people **aged 13 or older**. When you sign in we keep:
 - **That you confirmed you're 13 or older.** We only store "confirmed", never your date of birth.
 - **Which new lessons you open each day** (the lesson and the day, nothing else), because free accounts can open 3 new lessons a day, and **when you last changed your time zone** (it can change once a week, so the day can't be reset early).
 - **If you subscribe to CyberNet Pro:** your Stripe customer number and your subscription's plan, status and dates (for example when it renews). **We never see or store your card details**: Stripe handles them.
-- **If you buy Founding Member:** the date, the amount, Stripe's payment and checkout numbers, and whether it was refunded. Leaderboards show a Founding Member badge next to your username (unless you hide yourself from leaderboards).
+- **If you buy Founding Member:** the date, the amount, Stripe's payment and checkout numbers, and whether it was refunded.
+- **If a parent pays through a link:** we keep a scrambled version of the link (never the link itself), when it was made, opened and used. The parent's name, email and card details go to Stripe, not to us. Leaderboards show a Founding Member badge next to your username (unless you hide yourself from leaderboards).
 
 If you sign in with Google, Google sends us your email address, and also your name and profile picture. We don't use or show your name or picture, and we remove them from your profile. Our sign-in provider (Supabase) keeps the details Google sent in its sign-in records until you delete your account.
 

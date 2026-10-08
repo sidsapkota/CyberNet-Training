@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { confirmAgeAction } from "@/app/actions/account";
 import { type FounderCheckoutResult, startFounderCheckoutAction } from "@/app/actions/pro";
 import { LogoMark } from "@/components/brand/Logo";
+import { SendToParent } from "./ParentPay";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { ChevronDownIcon, XIcon } from "@/components/ui/icons";
 import { trackEvent, trackWith } from "@/lib/analytics";
@@ -174,7 +175,11 @@ export function FounderButton({ offer, screen, big = false }: { offer: FounderOf
           {busy ? "Opening checkout…" : label}
         </Button>
       )}
-      <p className="mt-1 text-caption text-ink-muted">Under 18? Ask a parent before buying.</p>
+      <div className="mt-1 flex flex-wrap items-center justify-center gap-x-3">
+        <p className="text-caption text-ink-muted">Under 18? Ask a parent before buying.</p>
+        {/* A teen without a card: a link a parent opens on their own device to pay. */}
+        {available && auth.status === "signed-in" && <SendToParent screen={screen} />}
+      </div>
       {problem && problem !== "age" && (
         <div role="alert" className="mt-1 text-small text-danger">
           <p>{FOUNDER_ERROR_TEXT[problem]}</p>

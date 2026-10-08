@@ -591,6 +591,21 @@ async function main() {
         blocked(await a.client.from("reminder_emails").update({ returned_at: new Date().toISOString() }).eq("user_id", a.id).select()) &&
         blocked(await a.client.from("reminder_emails").delete().eq("user_id", a.id).select()),
     );
+    // "Send to a parent": links are server-only (no policies, no grants), and go with the learner.
+    const linkRow = { user_id: b.id, token_hash: "a".repeat(64), expires_at: new Date(Date.now() + 86_400_000).toISOString() };
+    const madeLink = await admin.from("founder_parent_links").insert(linkRow).select("id");
+    record("The server can save a parent link", !madeLink.error, madeLink.error?.message);
+    record(
+      "Nobody but the server can read, add, change or remove parent links",
+      blocked(await b.client.from("founder_parent_links").select("*")) &&
+        blocked(await anonSeats.from("founder_parent_links").select("*")) &&
+        blocked(await b.client.from("founder_parent_links").insert({ ...linkRow, token_hash: "b".repeat(64) }).select()) &&
+        blocked(await anonSeats.from("founder_parent_links").insert({ ...linkRow, token_hash: "c".repeat(64) }).select()) &&
+        blocked(await b.client.from("founder_parent_links").update({ paid_at: new Date().toISOString() }).eq("user_id", b.id).select()) &&
+        blocked(await b.client.from("founder_parent_links").delete().eq("user_id", b.id).select()),
+    );
+    const badHash = await admin.from("founder_parent_links").insert({ ...linkRow, token_hash: "not-a-hash" });
+    record("A parent link stores only a sha256 hash", Boolean(badHash.error));
 
     // Signed-out visitors see nothing.
     const anon = createClient<Database>(env.url, env.publishableKey, noSession);
@@ -642,7 +657,7 @@ async function main() {
     for (const table of [
       "card_completions", "lesson_completions", "quiz_attempts", "xp_events", "goal_days",
       "subscriptions", "pro_grants", "stripe_customers", "league_players", "league_members", "league_results", "certificates", "lesson_opens", "card_mistakes",
-      "founding_members", "founder_holds", "reminder_emails",
+      "founding_members", "founder_holds", "reminder_emails", "founder_parent_links",
     ] as const) {
       const r = await admin.from(table).select("user_id").in("user_id", [a.id, b.id, c.id]);
       leftovers += (r.data ?? []).length;

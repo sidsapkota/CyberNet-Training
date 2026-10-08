@@ -215,6 +215,13 @@ export async function claimFounderSeat(p: FounderPurchase): Promise<void> {
     p_currency: p.currency,
   });
   if (error) throw new Error(`Couldn't record the founding seat: ${error.message}`);
+  // Bought through "Send to a parent": the link has paid and can't be used again.
+  const { error: linkError } = await createSupabaseAdminClient()
+    .from("founder_parent_links")
+    .update({ paid_at: new Date().toISOString() })
+    .eq("checkout_session_id", p.sessionId)
+    .is("paid_at", null);
+  if (linkError) console.error("Couldn't mark the parent link paid", linkError.message);
 }
 
 /** A full refund: the seat ends and is free again. The learner, or null if it wasn't a founding payment. */

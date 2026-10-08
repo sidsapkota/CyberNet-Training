@@ -96,7 +96,7 @@ export function showFounderOffer(offer: FounderOffer | null | undefined, pro: { 
  * The screens the offer shows on (the founder events carry one, nothing else). "continue" is /pro
  * after a guest signed in to buy: one tap from secure checkout.
  */
-export const FOUNDER_SCREENS = ["pro_page", "paywall", "limit", "dashboard", "landing", "continue"] as const;
+export const FOUNDER_SCREENS = ["pro_page", "paywall", "limit", "dashboard", "landing", "continue", "parent"] as const;
 export type FounderScreen = (typeof FOUNDER_SCREENS)[number];
 
 export function founderEventData(screen: string): Record<string, string> {
@@ -173,4 +173,44 @@ export function fullyRefundedPayment(charge: Record<string, unknown>): string | 
   if (charge.refunded !== true) return null;
   const payment = idOf(charge.payment_intent);
   return payment && /^pi_[A-Za-z0-9]+$/.test(payment) ? payment : null;
+}
+
+// ── "Send to a parent": a one-time link a parent opens on their own device to pay ──
+
+/** How long a parent link works, and how many a learner can make in a day. */
+export const PARENT_LINK_DAYS = 7;
+export const PARENT_LINKS_PER_DAY = 5;
+
+export type ParentLinkState = "ok" | "unknown" | "expired" | "paid" | "has_pro" | "off";
+
+/**
+ * Whether a parent link can still pay: it exists, isn't past its 7 days, hasn't paid, the learner
+ * doesn't already have Pro (a subscription or a seat), and the offer is still on.
+ */
+export function parentLinkState(
+  link: { expiresAt: string; paidAt: string | null } | null,
+  learner: { hasProNow: boolean },
+  offerOn: boolean,
+  now: Date,
+): ParentLinkState {
+  if (!link) return "unknown";
+  if (link.paidAt) return "paid";
+  if (Date.parse(link.expiresAt) <= now.getTime()) return "expired";
+  if (learner.hasProNow) return "has_pro";
+  if (!offerOn) return "off";
+  return "ok";
+}
+
+/** What the parent reads when a link can't pay. */
+export const PARENT_LINK_TEXT: Record<Exclude<ParentLinkState, "ok">, string> = {
+  unknown: "This link doesn't work. Ask for a new one.",
+  expired: "This link has expired (links work for 7 days). Ask for a new one.",
+  paid: "This link has already been used: lifetime Pro is on the account. Thank you!",
+  has_pro: "This account already has Pro, so there's nothing to pay.",
+  off: "The Founding Member offer has ended.",
+};
+
+/** parent_link_created / parent_link_paid data: the screen only (no ids, nothing personal). */
+export function parentLinkEventData(screen: string): Record<string, string> {
+  return founderEventData(screen);
 }

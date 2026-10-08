@@ -299,6 +299,39 @@ export type Database = {
         }
         Relationships: []
       }
+      founder_parent_links: {
+        Row: {
+          checkout_session_id: string | null
+          created_at: string
+          expires_at: string
+          id: number
+          opened_at: string | null
+          paid_at: string | null
+          token_hash: string
+          user_id: string
+        }
+        Insert: {
+          checkout_session_id?: string | null
+          created_at?: string
+          expires_at: string
+          id?: never
+          opened_at?: string | null
+          paid_at?: string | null
+          token_hash: string
+          user_id: string
+        }
+        Update: {
+          checkout_session_id?: string | null
+          created_at?: string
+          expires_at?: string
+          id?: never
+          opened_at?: string | null
+          paid_at?: string | null
+          token_hash?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       founding_members: {
         Row: {
           amount_total: number
