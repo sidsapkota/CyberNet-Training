@@ -276,7 +276,10 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
     `sign-in-options` (Text me a code, Authenticator app, Passkey) and `sign-in` (password box, code box, the
     phone's code); module 3: `social-post` (a front-steps photo: letterbox "12", "Fern St" sign, skateboard,
     sneakers, pot plant) and `cafe` (the Wi-Fi list, the café's Wi-Fi box, a laptop on table 4, the library
-    window). Self-labelled, text at 15+ units in 320-wide scenes.
+    window); module 2: the scam scenes redrawn (`email`, `text-message`, `fake-website`) plus second
+    examples `email-frozen-card`, `text-message-tolls`, the quiz's `email-payment` and `phone-call`, all
+    built from pure data in `textScenes.ts`; module 4: `account-activity`, `account-security`, `group-chat`
+    and `help-board`. Self-labelled, text at 15+ units in 320-wide scenes (`READABLE` in `SceneStage.tsx`).
 - **`multiple_choice`:** options are shown in a stable shuffle per card (`displayOptions`), so the
   right answer's written position never gives it away; digit keys follow the order on screen.
   Answers and grading use option ids, so the order can't change a score.
@@ -319,9 +322,9 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - `manifests.ts` is pure data: part ids, accessible names, hit boxes, draw order, `coveredBy` and
     named `views` (e.g. `open` = cover off), plus an optional `labelAt` point where a label marker
     must not cover the part (file names). `art.tsx` draws each part as its own group.
-  - Scenes: `laptop`, `phone`, `file-browser`, and for Stay Safe Online `email`, `text-message`
-    and `fake-website`. Generic only: no brands, logos or real designs (a test checks for brand
-    names). The three scam scenes show one fictional example each; every address in them uses
+  - Scenes: `laptop`, `phone`, `file-browser`, and for Stay Safe Online the scam, account, chat, café
+    and help scenes (listed under Lesson Blueprint pieces above). Generic only: no brands, logos or real
+    designs (a test checks for brand names). The scam scenes show fictional examples; every address in them uses
     the reserved `.example` domain (a test checks), and each part's name is exactly the text
     shown, so screen readers get the same clues and nothing more.
   - **Self-labelled scenes** (`file-browser`, `email`, `text-message`, `fake-website`) show their
