@@ -10,7 +10,7 @@ export function ExplainerCardView({ card }: { card: ExplainerCard }) {
         {card.title}
       </h2>
       {card.image && (
-        <figure className="mt-6 overflow-hidden rounded-card border border-line bg-screen p-4 sm:p-6">
+        <figure className="mt-6 overflow-hidden rounded-card border border-line bg-screen p-4 sm:p-6 [@media(max-height:620px)]:mt-3 [@media(max-height:620px)]:p-2">
           <Image
             src={card.image.src}
             alt={card.image.alt}

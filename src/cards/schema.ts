@@ -18,6 +18,7 @@ import { TrainModelCardSchema } from "./train-model/schema";
 import { RevealCardSchema } from "./reveal/schema";
 import { TrueFalseCardSchema } from "./true-false/schema";
 import { FillGapCardSchema } from "./fill-gap/schema";
+import { HookCardSchema } from "./hook/schema";
 
 /**
  * Every card type. Registration step 1 of 2 when adding a card type
@@ -43,25 +44,31 @@ export const CardSchema = z.discriminatedUnion("type", [
   RevealCardSchema,
   TrueFalseCardSchema,
   FillGapCardSchema,
+  HookCardSchema,
 ]);
 
 export type Card = z.infer<typeof CardSchema>;
 export type CardType = Card["type"];
 
 /** Card types that can be graded (everything except read-only ones). */
-export type InteractiveCard = Exclude<Card, { type: "explainer" | "photo" | "reveal" }>;
+export type InteractiveCard = Exclude<Card, { type: "explainer" | "photo" | "reveal" | "hook" }>;
 
 /** A hotspot in explore mode: hands-on but never graded (see `GuidedCardDefinition`). */
 export function isExploreCard(card: Card): boolean {
   return card.type === "hotspot" && card.mode === "explore";
 }
 
+/** A simulator in play mode (Lesson Blueprint's Play beat): a toy to mess with, never graded. */
+export function isSimulatorPlay(card: Card): boolean {
+  return card.type === "simulator" && card.mode === "play";
+}
+
 /**
- * Hands-on but never graded (guided): explore-mode hotspots and learning cards (`reveal`). They pay
- * `XP.explore` once and can't be in quizzes.
+ * Hands-on but never graded (guided): explore-mode hotspots, play-mode simulators and learning cards
+ * (`reveal`). They pay `XP.explore` once and can't be in quizzes.
  */
 export function isGuidedCard(card: Card): boolean {
-  return isExploreCard(card) || card.type === "reveal";
+  return isExploreCard(card) || isSimulatorPlay(card) || card.type === "reveal";
 }
 
 /**
@@ -69,5 +76,5 @@ export function isGuidedCard(card: Card): boolean {
  * narrows usefully: a false result can also be a hotspot in explore mode.)
  */
 export function isInteractiveCard(card: Card): card is InteractiveCard {
-  return card.type !== "explainer" && card.type !== "photo" && card.type !== "reveal" && !isExploreCard(card);
+  return card.type !== "explainer" && card.type !== "photo" && card.type !== "reveal" && card.type !== "hook" && !isExploreCard(card) && !isSimulatorPlay(card);
 }

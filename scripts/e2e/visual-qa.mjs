@@ -9,7 +9,8 @@
 // docs/plans/visual-qa/ so everything can be skimmed at a glance.
 //   npm run e2e:visual-qa                 (dev server running, .env.local = staging)
 //   PAGES_ONLY=1 / CARDS_ONLY=1, SIZES=360x560,1440x900, THEMES=dark, SHEETS=0 (no contact sheets),
-//   COURSE=<id> (the card pass for one course)
+//   COURSE=<id> (the card pass for one course), LESSONS=<id,id> (the card pass for those lessons; with
+//   CARDS_ONLY=1 no throwaway learner is made, so it runs even when the staging database is down)
 //   npm run e2e:visual-qa:gate            (the merge gate: phone 360x560, tablet 768x1024 and desktop
 //                                          1440x900, pages in both themes, every card in light; no sheets)
 // Fails (exit 1) on any broken layout, broken image, error or broken link.
@@ -113,14 +114,19 @@ function watch(page) {
   return errors;
 }
 
-// A throwaway learner with a little progress (staging), and leagues open for the sweep.
+// A throwaway learner with a little progress (staging), and leagues open for the sweep. The card pass
+// alone (CARDS_ONLY=1) needs neither: cards are shown through /dev/fit with throwaway progress.
+const NEEDS_LEARNER = !process.env.CARDS_ONLY;
 const email = `visual-qa-${Date.now()}@example.com`;
-const { data: created, error: createError } = await admin.auth.admin.createUser({ email, email_confirm: true });
-if (createError) throw createError;
-const userId = created.user.id;
-await admin.from("profiles").update({ username: `Qa_${Array.from({ length: 17 }, () => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join("")}` /* the longest a username can be (20) */, age_confirmed: true }).eq("id", userId);
-await admin.from("card_completions").insert({ user_id: userId, lesson_id: courses[0].lessons[0].id, card_id: courses[0].lessons[0].cards[0].id, xp: 10, completed_at: new Date().toISOString() });
-const { data: stateBefore } = await admin.from("league_state").select("opened_at").eq("id", true).maybeSingle();
+const userId = NEEDS_LEARNER ? await makeLearner() : null;
+async function makeLearner() {
+  const { data: created, error: createError } = await admin.auth.admin.createUser({ email, email_confirm: true });
+  if (createError) throw createError;
+  return created.user.id;
+}
+if (userId) await admin.from("profiles").update({ username: `Qa_${Array.from({ length: 17 }, () => String.fromCharCode(97 + Math.floor(Math.random() * 26))).join("")}` /* the longest a username can be (20) */, age_confirmed: true }).eq("id", userId);
+if (userId) await admin.from("card_completions").insert({ user_id: userId, lesson_id: courses[0].lessons[0].id, card_id: courses[0].lessons[0].cards[0].id, xp: 10, completed_at: new Date().toISOString() });
+const { data: stateBefore } = NEEDS_LEARNER ? await admin.from("league_state").select("opened_at").eq("id", true).maybeSingle() : { data: null };
 
 const browser = await chromium.launch({ channel: process.env.E2E_BROWSER ?? "msedge", headless: true });
 try {
@@ -179,7 +185,7 @@ try {
         await page.route(/\/script\.js$|\/_vercel\/insights\//, (r) => r.abort());
         const errors = watch(page);
         for (const course of courses.filter((c) => !process.env.COURSE || c.id === process.env.COURSE)) {
-          for (const lesson of course.lessons) {
+          for (const lesson of course.lessons.filter((l) => !process.env.LESSONS || process.env.LESSONS.split(",").includes(l.id))) {
             for (let i = 0; i < lesson.cards.length; i++) {
               await page.goto(`${BASE}/dev/fit?lesson=${lesson.id}&card=${i}`, { waitUntil: "domcontentloaded" });
               await page.locator("[data-card-stage]").first().waitFor({ timeout: 60000 });
@@ -238,8 +244,8 @@ try {
   }
 } finally {
   await browser.close();
-  await admin.from("league_state").update({ opened_at: stateBefore?.opened_at ?? null }).eq("id", true);
-  await admin.auth.admin.deleteUser(userId);
+  if (NEEDS_LEARNER) await admin.from("league_state").update({ opened_at: stateBefore?.opened_at ?? null }).eq("id", true);
+  if (userId) await admin.auth.admin.deleteUser(userId);
   fs.writeFileSync(path.join(SHOTS, "problems.json"), JSON.stringify(problems, null, 2));
 }
 

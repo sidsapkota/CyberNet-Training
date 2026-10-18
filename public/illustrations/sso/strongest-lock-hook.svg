@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 250" width="340" height="250" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Mia holds her phone. A pop-up over her inbox asks "Sign in faster with a passkey?" with two buttons, Make a passkey and Not now. A question mark floats over Mia's head.</title>
+  <!-- Mia's phone, her inbox behind a small pop-up -->
+  <rect x="60" y="110" width="70" height="130" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <path d="M85 119H105" stroke="#6f8fbd" stroke-width="3" stroke-linecap="round"/>
+  <rect x="68" y="128" width="54" height="10" rx="3" fill="#24507f"/>
+  <rect x="68" y="144" width="54" height="10" rx="3" fill="#24507f"/>
+  <rect x="68" y="206" width="54" height="10" rx="3" fill="#24507f"/>
+  <rect x="68" y="222" width="54" height="10" rx="3" fill="#24507f"/>
+  <rect x="66" y="160" width="58" height="38" rx="6" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <circle cx="77" cy="171" r="5" fill="none" stroke="#8be3ff" stroke-width="1.5"/>
+  <path d="M87 171H117" stroke="#a3b6d2" stroke-width="3" stroke-linecap="round"/>
+  <rect x="71" y="183" width="48" height="9" rx="3" fill="#00c2ff"/>
+  <!-- The pop-up, enlarged -->
+  <path d="M138 158L160 158L122 178Z" fill="#24507f" stroke="#8be3ff" stroke-width="2" stroke-linejoin="round"/>
+  <rect x="120" y="10" width="212" height="156" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="2"/>
+  <circle cx="150" cy="46" r="18" fill="#1d3d6e" stroke="#8be3ff" stroke-width="2"/>
+  <path transform="translate(149 45)" d="M-10 -10H-5M5 -10H10V-5M10 5V10H5M-5 10H-10V5M-10 -5V-10M-3 -2V0M3 -2V0M-3 4A4 3 0 0 0 3 4" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round"/>
+  <g transform="translate(158 60)">
+    <circle cx="0" cy="0" r="4" fill="#24507f" stroke="#00c2ff" stroke-width="2"/>
+    <path d="M4 0H13M10 0V3M13 0V3" fill="none" stroke="#00c2ff" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <text x="178" y="42" font-size="16" font-weight="600" fill="#e6eef9">Sign in faster</text>
+  <text x="178" y="62" font-size="16" font-weight="600" fill="#e6eef9">with a passkey?</text>
+  <rect x="136" y="82" width="180" height="34" rx="8" fill="#00c2ff"/>
+  <text x="226" y="104" font-size="16" font-weight="600" fill="#041937" text-anchor="middle">Make a passkey</text>
+  <rect x="136" y="122" width="180" height="34" rx="8" fill="none" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="226" y="144" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Not now</text>
+  <!-- Mia, puzzled -->
+  <text x="32" y="146" font-size="28" font-weight="700" fill="#ffb547" text-anchor="middle">?</text>
+  <g transform="translate(32 168)">
+    <rect x="-20" y="16" width="40" height="44" rx="14" fill="#24507f" stroke="#8be3ff" stroke-width="2"/>
+    <circle cx="0" cy="0" r="14" fill="#f2c6a0"/>
+    <path d="M-14.6 -1A14.6 14.6 0 0 1 14.6 -1Q9 -8 1 -6Q-8 -9 -14.6 -1Z" fill="#3b2a1f"/>
+    <circle cx="-5" cy="3" r="1.8" fill="#1d2a3d"/>
+    <circle cx="5" cy="3" r="1.8" fill="#1d2a3d"/>
+  </g>
+  <path d="M48 202Q56 208 63 200" fill="none" stroke="#8be3ff" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="64" cy="199" r="5" fill="#f2c6a0"/>
+</svg>

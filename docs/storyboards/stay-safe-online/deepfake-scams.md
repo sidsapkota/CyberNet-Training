@@ -48,17 +48,16 @@
 - Continue unlocks once all four have been tapped.
 
 ## 3 · Predict (`few-seconds-of-voice`, easy · multiple choice with picture)
+Predict: not scored (any answer, including Not sure, goes straight to the reveal; no hint, no 2nd-wrong step; not counted in first-try accuracy).
 - **Situation:** A scammer copies a few seconds of Grandma's voice from a video.
 - **Picture:** left, a social post: Grandma blowing out birthday candles, a play button and "0:05".
   An arrow to a laptop on the right. → **Reveal:** the laptop's speaker shows a sound wave and the
   bubble "I've lost my purse. Send me $200 now." in Grandma's voice.
 - **Action:** Tap what they can make.
 - **Answers:** "Her voice, saying anything they type" · "Only that same clip, word for word" ·
-  "Nothing: copying a voice takes hours of recordings"
-- **Correct:** "Her voice, saying anything they type"
-- **Right:** AI can learn a voice from a short clip and make it say new things.
-- **1st wrong:** On the call, was Grandma replaying an old clip, or saying something new?
-- **2nd wrong:** They can make her voice say anything: AI learns how she sounds from a short clip.
+  "Nothing: copying a voice takes hours of recordings" · "Not sure"
+- **What happens:** "Her voice, saying anything they type".
+- **Reveal line:** Here's what happens… AI learns how Grandma sounds from a short clip, then makes her voice say new things.
 
 ## 4 · Name it (`meet-deepfake`, explainer)
 - **Says:** A voice, face or video faked with AI is a **deepfake**. A voice you know proves nothing,

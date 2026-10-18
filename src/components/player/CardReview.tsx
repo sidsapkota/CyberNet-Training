@@ -9,6 +9,8 @@ import { Markdown } from "@/components/ui/Markdown";
 export type ReviewState =
   /** Answered right in this visit: the card shows exactly as they left it. */
   | { kind: "answered"; answer: unknown }
+  /** Lesson Blueprint: the answer was shown after a second wrong try (their pick and the answer). */
+  | { kind: "shown"; answer: unknown }
   /** Finished on an earlier visit (old answers aren't kept): the prompt and the right answer. */
   | { kind: "done-before" }
   /** A bonus card they skipped: the prompt only, so it can still be tried another time. */
@@ -25,6 +27,9 @@ export function CardReview({ card, state }: { card: Card; state: ReviewState }) 
 
   if (state.kind === "answered" && definition.interactive) {
     return <definition.Component card={card} answer={state.answer} onAnswerChange={() => {}} status="correct" />;
+  }
+  if (state.kind === "shown" && definition.interactive) {
+    return <definition.Component card={card} answer={state.answer} onAnswerChange={() => {}} status="incorrect" revealAnswer />;
   }
   if (state.kind === "read") {
     if (isGuidedDefinition(definition)) {

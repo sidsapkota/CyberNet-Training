@@ -39,18 +39,17 @@
 - **Action:** Tap Next, then tap the code on the phone.
 
 ## 3 · Predict
-`thief-hits-step-two` · multiple choice with a picture and a reveal picture.
+`thief-hits-step-two` · multiple choice with a picture and a reveal picture · Predict: not scored (any answer, including Not sure, goes straight to the reveal; no hint, no 2nd-wrong step; not counted in first-try accuracy).
 - **Situation:** Far away, the scammer types Mia's password and taps Next.
 - **Picture:** The scammer's laptop showing the same "Email" page, "Step 1: Password" filled in, the
   pointer on "Next". Small inset, far away: Mia's phone in her pocket. → **Reveal:** the scammer's
   screen shows "Step 2: Enter the code we sent to your phone" with an empty box; far away, Mia's
   phone buzzes with the code. The scammer sits stuck, a little "?" over their head.
 - **Action:** Tap what happens next.
-- **Answers:** "The scammer gets in" · "The scammer is stuck" · "The code goes to the scammer"
-- **Correct:** The scammer is stuck.
-- **Right:** Right: the code goes to Mia's phone, and the scammer can't reach it.
-- **1st wrong:** In the demo, where did the code show up?
-- **2nd wrong:** The scammer is stuck: the code goes to Mia's phone, not theirs.
+- **Answers:** "The scammer gets in" · "The scammer is stuck" · "The code goes to the scammer" ·
+  "Not sure"
+- **What happens:** "The scammer is stuck".
+- **Reveal line:** Here's what happens… the code goes to Mia's phone, so the scammer is stuck at step 2.
 
 ## 4 · Name it
 `meet-two-step`
@@ -107,5 +106,6 @@
 `recap`
 - **Takeaway:** Two-step sign-in means a stolen password isn't enough, as long as you never share
   your code.
-- **Try this:** With a trusted adult, turn on two-step sign-in for your email.
+- **Try this:** With a trusted adult, or on your own if you're 18+, turn on two-step sign-in for your
+  email.
 - **Next:** Which second lock is hardest to break, and why your face beats a text.

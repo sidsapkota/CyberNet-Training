@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 176" width="340" height="176" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Your phone: a notification reading Your sign-in code is 552 018, and under it a chat from Game Support asking you to tell them the code.</title>
+  <rect x="10" y="8" width="320" height="44" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="24" y="36" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="start">Your sign-in code is 552 018</text>
+  <rect x="10" y="64" width="320" height="104" rx="10" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="24" y="90" font-size="16" font-weight="600" fill="#a3b6d2" text-anchor="start">Game Support</text>
+  <text x="24" y="116" font-size="16" font-weight="400" fill="#e6eef9" text-anchor="start">We just texted you a code.</text>
+  <text x="24" y="140" font-size="16" font-weight="400" fill="#e6eef9" text-anchor="start">Tell us it so we can check</text>
+  <text x="24" y="162" font-size="16" font-weight="400" fill="#e6eef9" text-anchor="start">it's you.</text>
+</svg>

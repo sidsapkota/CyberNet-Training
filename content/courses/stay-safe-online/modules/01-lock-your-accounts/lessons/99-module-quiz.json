@@ -12,14 +12,13 @@
       "uses": [
         "names-and-years-guessed-early",
         "common-passwords-guessed-early",
-        "length-makes-strong",
         "passphrase"
       ],
-      "prompt": "Easy to guess, or hard to guess?",
+      "prompt": "Your cousin lists four password ideas. Sort each one.",
       "bins": [
         {
           "id": "easy",
-          "label": "Easy to guess"
+          "label": "On the guess list"
         },
         {
           "id": "hard",
@@ -29,7 +28,7 @@
       "items": [
         {
           "id": "name-year",
-          "label": "Your name and birth year",
+          "label": "Zoe2009 (her name and birth year)",
           "bin": "easy"
         },
         {
@@ -48,7 +47,7 @@
           "bin": "hard"
         }
       ],
-      "explanation": "Names, birthdays, common patterns and short symbol swaps are guessed first. Four random words are long and unpredictable."
+      "explanation": "Names, years, common patterns and symbol swaps get tried first; four random words aren't on the guess list."
     },
     {
       "id": "q-long-enough",
@@ -88,7 +87,7 @@
           }
         ]
       },
-      "explanation": "Around **16 lowercase letters** gets past a million years. Every letter multiplies the time by 26."
+      "explanation": "Around **16 lowercase letters** gets past a million years: each extra letter means 26 times more guesses."
     },
     {
       "id": "q-passphrase",
@@ -98,87 +97,160 @@
         "passphrase",
         "song-lines-guessed-early"
       ],
-      "prompt": "Your aunt needs a new passphrase for her email. Which is best?",
+      "prompt": "Your aunt needs a new email password. Tap the one she should use.",
+      "image": {
+        "src": "/illustrations/sso/quiz-passphrase.svg",
+        "alt": "Three password cards above a New password box: cactus orbit lantern velvet; To be or not to be, that is the question; P@ssw0rd!Summer2026.",
+        "width": 340,
+        "height": 210
+      },
       "options": [
         {
           "id": "random",
-          "text": "cactus orbit lantern velvet"
+          "text": "cactus orbit lantern velvet",
+          "area": {
+            "x": 2,
+            "y": 2,
+            "w": 96,
+            "h": 23
+          }
         },
         {
           "id": "quote",
-          "text": "To be or not to be, that is the question"
+          "text": "To be or not to be, that is the question",
+          "area": {
+            "x": 2,
+            "y": 28,
+            "w": 96,
+            "h": 23
+          }
         },
         {
           "id": "short",
-          "text": "P@ssw0rd!Summer2026"
+          "text": "P@ssw0rd!Summer2026",
+          "area": {
+            "x": 2,
+            "y": 54,
+            "w": 96,
+            "h": 23
+          }
         }
       ],
       "correctOptionId": "random",
-      "explanation": "Four **random** words are long and unpredictable. A famous quote is in guessing lists, and symbol swaps on a common word are tried early."
+      "explanation": "Four random words make a passphrase; a famous line and swaps on a common word are on the guess list."
     },
     {
       "id": "q-reused",
-      "type": "scenario",
+      "type": "multiple_choice",
       "difficulty": "core",
       "uses": [
         "password-reuse-risk",
-        "unique-password-per-account"
+        "email-resets-accounts"
       ],
-      "prompt": "A shopping site was hacked. You used that password for your email and music app too.",
-      "start": "start",
-      "steps": [
+      "prompt": "Your music app leaks. You used that password everywhere. Tap the app to change first.",
+      "image": {
+        "src": "/illustrations/sso/quiz-reused.svg",
+        "alt": "A home screen with Game Club, Email and Music, all opened by one key. Music has a red Hacked! banner.",
+        "width": 340,
+        "height": 200
+      },
+      "options": [
         {
-          "id": "start",
-          "text": "What do you do first?",
-          "choices": [
-            {
-              "id": "email",
-              "text": "Change your email password to a new one",
-              "consequence": "Your email can reset everything else, so it comes first. Then give the others their own new passwords.",
-              "outcome": "success"
-            },
-            {
-              "id": "wait",
-              "text": "Wait and see what happens",
-              "consequence": "Attackers try stolen passwords on other sites quickly.",
-              "outcome": "fail"
-            },
-            {
-              "id": "same",
-              "text": "Change all three to one new password",
-              "consequence": "Then one leak opens all three again.",
-              "outcome": "fail"
-            }
-          ]
+          "id": "game-club",
+          "text": "Game Club",
+          "area": {
+            "x": 6,
+            "y": 32,
+            "w": 27,
+            "h": 56
+          }
+        },
+        {
+          "id": "email",
+          "text": "Email",
+          "area": {
+            "x": 37,
+            "y": 32,
+            "w": 27,
+            "h": 56
+          }
+        },
+        {
+          "id": "music",
+          "text": "Music",
+          "area": {
+            "x": 68,
+            "y": 32,
+            "w": 27,
+            "h": 56
+          }
         }
       ],
-      "explanation": "Change the reused password everywhere, starting with **email**, and give every account its own password."
+      "correctOptionId": "email",
+      "explanation": "Email first, because it can reset all your other passwords; then give every app its own."
+    },
+    {
+      "id": "q-manager-leak",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "uses": [
+        "unique-password-per-account",
+        "password-manager"
+      ],
+      "prompt": "Leo gives all 30 accounts their own passwords. One leaks. What can the scammer open?",
+      "image": {
+        "src": "/illustrations/sso/quiz-manager-leak.svg",
+        "alt": "Leo's password manager holding many different keys, with a counter reading 30, beside a game site with a red Hacked! banner.",
+        "width": 340,
+        "height": 170
+      },
+      "options": [
+        {
+          "id": "one",
+          "text": "Just that game account"
+        },
+        {
+          "id": "all",
+          "text": "All 30 accounts"
+        },
+        {
+          "id": "manager",
+          "text": "Leo's password manager"
+        }
+      ],
+      "correctOptionId": "one",
+      "explanation": "Every account has its own password, so one leak only opens one account."
     },
     {
       "id": "q-stolen-password",
       "type": "multiple_choice",
       "difficulty": "core",
       "uses": [
-        "two-step-sign-in",
-        "authenticator-app"
+        "two-step-sign-in"
       ],
-      "prompt": "A stranger has your email password, but your email uses an authenticator app too. Can they get in?",
+      "prompt": "A leak gave a stranger your game password. Two-step sign-in is on. Can they get in?",
+      "image": {
+        "src": "/illustrations/sso/quiz-stolen-password.svg",
+        "alt": "Far away, a stranger's laptop on your game's sign-in page with your password typed and the pointer on Next. Close by, your phone with two-step sign-in on.",
+        "width": 340,
+        "height": 170
+      },
       "options": [
         {
           "id": "no",
-          "text": "No: they'd also need the code from your phone"
+          "text": "No: they'd need my phone's code"
         },
         {
           "id": "yes-password",
-          "text": "Yes: a stolen password is all anyone needs"
+          "text": "Yes: the password is enough"
         },
         {
-          "id": "yes-guessers",
-          "text": "Yes: two-step only stops people guessing passwords"
+          "id": "yes-code",
+          "text": "Yes: the code goes to them"
         }
       ],
       "correctOptionId": "no",
-      "explanation": "No. The password is only half of it: they'd also need the code from the app on **your** phone."
+      "explanation": "The password is only step one; the code goes to your phone, which they don't have."
     },
     {
       "id": "q-code-request",
@@ -187,69 +259,90 @@
       "uses": [
         "never-share-sign-in-code"
       ],
-      "prompt": "\"I'm from the game's support team. Tell me the code we just texted you.\" What is this?",
+      "prompt": "\"Game Support\" messages you about a code. What is this?",
+      "image": {
+        "src": "/illustrations/sso/quiz-code-request.svg",
+        "alt": "Your phone: a notification reading Your sign-in code is 552 018, and a chat from Game Support asking you to tell them the code so they can check it's you.",
+        "width": 340,
+        "height": 176
+      },
       "options": [
         {
           "id": "scam",
-          "text": "A scam: nobody real asks for your sign-in code"
+          "text": "A scam: real support never asks"
         },
         {
           "id": "support",
-          "text": "Real support: they need it to check it's really you"
+          "text": "Real support checking it's you"
         },
         {
           "id": "fine",
-          "text": "Safe, as long as they already know your username"
+          "text": "Safe, if they know my username"
         }
       ],
       "correctOptionId": "scam",
-      "explanation": "No real company ever asks for a sign-in code. Anyone who does is trying to get into your account."
+      "explanation": "No real company ever asks for a sign-in code; whoever asks is trying to get into your account."
     },
     {
       "id": "q-hardest-account",
-      "type": "scenario",
+      "type": "multiple_choice",
       "difficulty": "core",
       "uses": [
-        "passkey",
         "passkey-strongest",
         "app-codes-beat-text-codes",
-        "two-step-sign-in"
+        "authenticator-app"
       ],
-      "prompt": "Whose email is **hardest** to break into?",
-      "start": "start",
-      "steps": [
+      "prompt": "Four friends lock their email in different ways. Tap whose is hardest to break into.",
+      "image": {
+        "src": "/illustrations/sso/quiz-hardest-account.svg",
+        "alt": "Four friends: Ava uses a passkey; Ben a password and an authenticator app; Cleo a password and a text code; Dev a long passphrase and nothing else.",
+        "width": 340,
+        "height": 222
+      },
+      "options": [
         {
-          "id": "start",
-          "text": "Four friends protect it in different ways.",
-          "choices": [
-            {
-              "id": "passkey",
-              "text": "Ava: a passkey",
-              "consequence": "Right. A passkey is the strongest way to sign in, and fake sites can't use it.",
-              "outcome": "success"
-            },
-            {
-              "id": "app",
-              "text": "Ben: password + app code",
-              "consequence": "That's strong, but one way to sign in is stronger still, and fake sites can't use it.",
-              "outcome": "fail"
-            },
-            {
-              "id": "sms",
-              "text": "Cleo: password + text code",
-              "consequence": "Better than a password alone, but text codes are the weakest second proof.",
-              "outcome": "fail"
-            },
-            {
-              "id": "long",
-              "text": "Dev: a long passphrase, nothing else",
-              "consequence": "A great passphrase, but with no second proof, one leak is enough to get in.",
-              "outcome": "fail"
-            }
-          ]
+          "id": "passkey",
+          "text": "Ava: a passkey",
+          "area": {
+            "x": 2,
+            "y": 3,
+            "w": 47,
+            "h": 46
+          }
+        },
+        {
+          "id": "app",
+          "text": "Ben: a password and an authenticator app",
+          "area": {
+            "x": 51,
+            "y": 3,
+            "w": 47,
+            "h": 46
+          }
+        },
+        {
+          "id": "sms",
+          "text": "Cleo: a password and a text code",
+          "area": {
+            "x": 2,
+            "y": 52,
+            "w": 47,
+            "h": 46
+          }
+        },
+        {
+          "id": "long",
+          "text": "Dev: a long passphrase, nothing else",
+          "area": {
+            "x": 51,
+            "y": 52,
+            "w": 47,
+            "h": 46
+          }
         }
       ],
-      "explanation": "Strongest first: a **passkey**, an **authenticator app**, then a **text code**. A password alone, however long, has no second lock."
+      "correctOptionId": "passkey",
+      "explanation": "A passkey is strongest, then an authenticator app, then a text code; a password alone, however long, has no second lock."
     }
   ]
 }

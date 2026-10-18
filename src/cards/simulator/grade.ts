@@ -57,7 +57,7 @@ function compare(actual: InputValue | OutputValue | undefined, op: "<=" | ">=" |
 export function goalMet(card: SimulatorCard, answer: SimulatorAnswer): boolean {
   const inputs = cleanInputs(card, answer);
   const outputs = runSimulator(card, answer);
-  return card.goal.all.every((c) => compare(c.target === "control" ? inputs[c.id] : outputs[c.id], c.op, c.value));
+  return (card.goal?.all ?? []).every((c) => compare(c.target === "control" ? inputs[c.id] : outputs[c.id], c.op, c.value));
 }
 
 /** Ready once the learner has changed something. */

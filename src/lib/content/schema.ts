@@ -72,6 +72,11 @@ export const RegularLessonSchema = z
      * with only 0s and 1s."). Plain words, no full stop needed beyond one.
      */
     about: z.string().min(10).max(90),
+    /**
+     * Built to Lesson Blueprint v1.1 (CLAUDE.md): the player shows the answer after a second wrong
+     * attempt, Predict cards aren't scored, and the lesson's shape follows the blueprint's rules.
+     */
+    blueprint: z.literal("1.1").optional(),
   })
   .refine(uniqueCardIds, { message: "card ids must be unique within a lesson", path: ["cards"] })
   .refine((l) => l.cards.some((c) => c.difficulty === "core"), {
@@ -92,6 +97,10 @@ export const QuizSchema = z
     path: ["cards"],
   })
   .refine((q) => q.cards.every((c) => !c.pace), { message: "quiz cards can't be paced (one try each, nothing skipped)", path: ["cards"] })
+  .refine((q) => q.cards.every((c) => !(c.type === "multiple_choice" && c.predict)), {
+    message: "quiz cards can't be Predict cards (quizzes are scored)",
+    path: ["cards"],
+  })
   .refine((q) => q.cards.every((c) => c.difficulty === "core"), {
     message: "quiz cards must all be core difficulty",
     path: ["cards"],

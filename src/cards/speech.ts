@@ -80,6 +80,9 @@ export function speechText(card: Card, status: CardStatus = "answering"): string
     case "reveal":
       add(sentence(card.prompt ?? "Tap to see."), sentence(card.sentence));
       return parts.join(" ");
+    case "hook":
+      add(sentence(card.image.alt), sentence(card.situation));
+      return parts.join(" ");
     default:
       break;
   }

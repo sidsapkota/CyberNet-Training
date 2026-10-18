@@ -1,0 +1,255 @@
+{
+  "id": "two-step-sign-in",
+  "kind": "lesson",
+  "title": "Two-Step Sign-In",
+  "about": "Add a second lock, so a stolen password alone can't get in.",
+  "order": 3,
+  "icon": "smartphone",
+  "blueprint": "1.1",
+  "cards": [
+    {
+      "id": "scammer-has-password",
+      "type": "hook",
+      "difficulty": "core",
+      "uses": [
+        "data-breach"
+      ],
+      "situation": "A scammer far away got Mia's email password from a leak.",
+      "image": {
+        "src": "/illustrations/sso/two-step-sign-in-hook.svg",
+        "alt": "Mia sits on her couch with her phone in her hoodie pocket. Far away, across a dotted line over the sea, a grey hooded scammer sits at a laptop with a sticky note on it: Mia's email password.",
+        "width": 340,
+        "height": 150
+      }
+    },
+    {
+      "id": "sign-in-demo",
+      "type": "hotspot",
+      "difficulty": "core",
+      "prompt": "Sign in to Mia's email, the way she does. **Tap each part.**",
+      "scene": "sign-in",
+      "mode": "explore",
+      "parts": [
+        {
+          "part": "sign-in-password",
+          "job": "Step 1: Mia types her password, then taps Next."
+        },
+        {
+          "part": "sign-in-phone",
+          "job": "Step 2: a code arrives on Mia's phone: 481 902."
+        },
+        {
+          "part": "sign-in-code-box",
+          "job": "Mia types the code from her phone here, and her inbox opens: \"Welcome back, Mia\"."
+        }
+      ],
+      "explanation": "Her password, then the code from her phone: that's how Mia gets in."
+    },
+    {
+      "id": "thief-hits-step-two",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "predict": true,
+      "uses": [],
+      "prompt": "The scammer types Mia's password and taps Next. **What happens?**",
+      "image": {
+        "src": "/illustrations/sso/two-step-sign-in-predict.svg",
+        "alt": "The scammer at their laptop on Mia's email sign-in page. Step 1, Password, is filled in and the pointer is on Next. Far away, Mia has her phone in her pocket.",
+        "width": 340,
+        "height": 180,
+        "revealSrc": "/illustrations/sso/two-step-sign-in-predict-reveal.svg",
+        "revealAlt": "The scammer's screen now says Step 2, Enter the code, with an empty box. Far away, Mia's phone buzzes with the code 481 902. The scammer is stuck, with a question mark over their head."
+      },
+      "options": [
+        {
+          "id": "get-in",
+          "text": "The scammer gets in"
+        },
+        {
+          "id": "stuck",
+          "text": "The scammer is stuck"
+        },
+        {
+          "id": "code-to-scammer",
+          "text": "The code goes to the scammer"
+        }
+      ],
+      "correctOptionId": "stuck",
+      "explanation": "The code goes to Mia's phone, so the scammer is stuck at step 2."
+    },
+    {
+      "id": "meet-two-step",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "two-step-sign-in"
+      ],
+      "title": "Two-step sign-in",
+      "body": "This is **two-step sign-in**: your password, then a second lock, a **code** sent to your phone.\n\nA scammer far away can steal a password, but not the phone in your pocket.",
+      "image": {
+        "src": "/illustrations/sso/two-step-sign-in-named.svg",
+        "alt": "The same picture, labelled. Step 1, the password: the scammer has it on a sticky note, with a green tick. Step 2, the code: it goes to the phone in Mia's pocket, and a red cross by the scammer shows they don't have it.",
+        "width": 320,
+        "height": 190
+      }
+    },
+    {
+      "id": "the-code-text",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "teaches": [
+        "change-stolen-password"
+      ],
+      "uses": [
+        "two-step-sign-in"
+      ],
+      "prompt": "A sign-in code arrives. Mia didn't sign in. **Tap what it means.**",
+      "image": {
+        "src": "/illustrations/sso/two-step-sign-in-code-text.svg",
+        "alt": "Mia on her couch watching TV at night. Her phone buzzes, and its lock screen shows 9:14 pm and a notification from Email: Your sign-in code is 481 902.",
+        "width": 340,
+        "height": 180,
+        "revealSrc": "/illustrations/sso/two-step-sign-in-code-text-reveal.svg",
+        "revealAlt": "A bubble shows the scammer far away, stuck on Enter the code. Mia's phone now shows: Email, password changed, with a green tick."
+      },
+      "options": [
+        {
+          "id": "someone-trying",
+          "text": "Someone's trying my password"
+        },
+        {
+          "id": "random",
+          "text": "Nothing: codes just turn up",
+          "nudge": "When does a code get sent? Think back to the scammer's screen."
+        },
+        {
+          "id": "testing",
+          "text": "The app is testing my phone",
+          "nudge": "When does a code get sent? Think back to the scammer's screen."
+        }
+      ],
+      "correctOptionId": "someone-trying",
+      "explanation": "Yes: a code only comes when someone types your password, so change it now.",
+      "showAnswer": "Someone has her password: codes only come when it's typed, so she changes it now."
+    },
+    {
+      "id": "friend-wants-code",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "play": "consequence",
+      "teaches": [
+        "never-share-sign-in-code"
+      ],
+      "uses": [
+        "two-step-sign-in",
+        "change-stolen-password"
+      ],
+      "prompt": "Mia gets a sign-in code. Then Leo messages her. **Tap what she should do.**",
+      "image": {
+        "src": "/illustrations/sso/two-step-sign-in-friend.svg",
+        "alt": "Mia's phone. At the top, a notification: Your sign-in code is 481 902. Below, a message from Leo, shown as a circle with the letter L: Oops, I sent my code to you by mistake! Can you send it back?",
+        "width": 340,
+        "height": 180,
+        "revealSrc": "/illustrations/sso/two-step-sign-in-friend-reveal.svg",
+        "revealAlt": "The L circle has flipped over: behind it is the grey hooded scammer, typing at a laptop. The padlock by Mia's sign-in code is green and stays shut."
+      },
+      "options": [
+        {
+          "id": "send-back",
+          "text": "Send it back to help Leo",
+          "nudge": "Look at the top of the screen: whose account is that code for?"
+        },
+        {
+          "id": "dont-send",
+          "text": "Don't send it; change my password"
+        },
+        {
+          "id": "ask-first",
+          "text": "Ask Leo why, then send it",
+          "nudge": "Look at the top of the screen: whose account is that code for?"
+        }
+      ],
+      "correctOptionId": "dont-send",
+      "explanation": "Right: that code unlocks Mia's account, so it never goes to anyone, even a friend.",
+      "showAnswer": "Don't send it: the code unlocks Mia's account, and \"Leo\" could be a scammer using his account."
+    },
+    {
+      "id": "email-first",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "uses": [
+        "two-step-sign-in",
+        "email-resets-accounts"
+      ],
+      "prompt": "Your phone has these apps. Which gets two-step sign-in first? **Tap the app to protect first.**",
+      "image": {
+        "src": "/illustrations/sso/two-step-sign-in-home-screen.svg",
+        "alt": "Your phone's home screen with four apps: Game Club, Email, Music and Photos. Each has a small open padlock.",
+        "width": 340,
+        "height": 204,
+        "revealSrc": "/illustrations/sso/two-step-sign-in-home-screen-reveal.svg",
+        "revealAlt": "Email's padlock is shut, with a tag: Two-step on. Dotted lines run from Email to Game Club, Music and Photos, labelled can reset."
+      },
+      "options": [
+        {
+          "id": "game-club",
+          "text": "Game Club",
+          "area": {
+            "x": 3.5,
+            "y": 20,
+            "w": 22.4,
+            "h": 54
+          },
+          "nudge": "Think back to \"Forgot password?\": where do reset links go?"
+        },
+        {
+          "id": "email",
+          "text": "Email",
+          "area": {
+            "x": 27.1,
+            "y": 20,
+            "w": 22.4,
+            "h": 54
+          }
+        },
+        {
+          "id": "music",
+          "text": "Music",
+          "area": {
+            "x": 50.6,
+            "y": 20,
+            "w": 22.4,
+            "h": 54
+          },
+          "nudge": "Think back to \"Forgot password?\": where do reset links go?"
+        },
+        {
+          "id": "photos",
+          "text": "Photos",
+          "area": {
+            "x": 74.1,
+            "y": 20,
+            "w": 22.4,
+            "h": 54
+          },
+          "nudge": "Think back to \"Forgot password?\": where do reset links go?"
+        }
+      ],
+      "correctOptionId": "email",
+      "explanation": "Yes: your email can reset your other passwords, so lock it first.",
+      "showAnswer": "Email: whoever gets into it can reset the rest, so it gets two-step sign-in first."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "two-step-sign-in",
+        "never-share-sign-in-code",
+        "change-stolen-password"
+      ],
+      "title": "Recap",
+      "body": "**Two-step sign-in** means a stolen password isn't enough, as long as you never share your code.\n\n**Try this:** With a trusted adult, or on your own if you're 18+, turn on two-step sign-in for your email.\n\n**Next:** Which second lock is hardest to break, and why your face beats a text."
+    }
+  ]
+}

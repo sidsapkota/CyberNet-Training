@@ -29,6 +29,8 @@ export const isCoachKey = (key: string): key is CoachKey => KNOWN.has(key);
 
 /** The coach panel a card needs, or null (explainers and multiple choice explain themselves). */
 export function coachKeyFor(card: Card): CoachKey | null {
+  // A play-mode simulator is the toy itself (Lesson Blueprint's Play beat): no panel in front of it.
+  if (card.type === "simulator" && card.mode === "play") return null;
   if (card.type === "hotspot") return `hotspot-${card.mode}`;
   return isCoachKey(card.type) ? card.type : null;
 }

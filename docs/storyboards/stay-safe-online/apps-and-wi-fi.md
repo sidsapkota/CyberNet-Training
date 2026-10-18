@@ -31,17 +31,16 @@
 - **Action:** Flip the switches. Continue unlocks after two flips.
 
 ## 2 · Predict · `new-game-asks` · easy · multiple choice with picture
+Predict: not scored (any answer, including Not sure, goes straight to the reveal; no hint, no 2nd-wrong step; not counted in first-try accuracy).
 - **Situation:** The drawing game asks for Sam's contacts. Sam taps Don't allow.
 - **Picture:** The game's canvas with a half-drawn cat and a brush bar. Over it, a pop-up: "Allow
   Drawing game to see your contacts?" with **Don't allow** and **Allow**; a finger on Don't allow. The
   canvas behind is dimmed with a "?". → **Reveal:** the pop-up gone, the cat finished in bright colours,
   the brush bar working, and a small crossed-out contacts icon "Contacts: off".
 - **Action:** Pick what happens to the game.
-- **Answers:** "It still draws just fine" · "It stops working" · "It deletes the drawing"
-- **Correct:** It still draws just fine
-- **Right:** Drawing doesn't need your contacts, so the game works fine without them.
-- **1st wrong:** What does a drawing game need to do its job?
-- **2nd wrong:** It still draws just fine: the game never needed contacts to draw.
+- **Answers:** "It still draws just fine" · "It stops working" · "It deletes the drawing" · "Not sure"
+- **What happens:** It still draws just fine.
+- **Reveal line:** Here's what happens… drawing never needed your contacts, so the game works fine without them.
 
 ## 3 · Name it · `meet-permission` · explainer with picture
 - **Says:** An **app permission** is your OK for an app to use your camera, microphone, location or

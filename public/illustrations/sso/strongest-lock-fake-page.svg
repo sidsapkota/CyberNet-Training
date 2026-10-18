@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 180" width="340" height="180" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>A laptop shows a page that looks just like Mia's email sign-in, with a Password box and a Code box. An amber tag on its corner says Fake copy. A scammer peeks out from behind the screen. Mia's phone sits beside it.</title>
+  <!-- The scammer, behind the screen -->
+  <g transform="translate(208 86)">
+    <rect x="-18" y="14" width="36" height="40" rx="12" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2"/>
+    <path d="M-16 8Q-18 -18 0 -18Q18 -18 16 8Q0 14 -16 8Z" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2"/>
+    <ellipse cx="0" cy="-1" rx="9.5" ry="10" fill="#1d2a3d"/>
+  </g>
+  <!-- Laptop with the fake page -->
+  <rect x="8" y="44" width="188" height="112" rx="8" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <path d="M2 156H202L194 168H10Z" fill="#24507f" stroke="#6f8fbd" stroke-width="2" stroke-linejoin="round"/>
+  <text x="104" y="61" font-size="16" font-weight="600" fill="#a3b6d2">Email</text>
+  <rect x="22" y="68" width="160" height="32" rx="6" fill="#122b52" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="32" y="90" font-size="16" fill="#a3b6d2">Password</text>
+  <rect x="22" y="110" width="160" height="32" rx="6" fill="#122b52" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="32" y="132" font-size="16" fill="#a3b6d2">Code</text>
+  <circle cx="197" cy="116" r="5" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2"/>
+  <g transform="rotate(-5 53 43)">
+    <rect x="12" y="30" width="82" height="26" rx="6" fill="#ffb547"/>
+    <text x="53" y="48" font-size="16" font-weight="600" fill="#041937" text-anchor="middle">Fake copy</text>
+  </g>
+  <!-- Mia's phone -->
+  <rect x="262" y="46" width="70" height="130" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <path d="M287 55H307" stroke="#6f8fbd" stroke-width="3" stroke-linecap="round"/>
+  <text x="297" y="94" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">9:41</text>
+  <g transform="translate(297 120)"><path d="M-5 -2V-6A5 5 0 0 1 5 -6V-2" fill="none" stroke="#8be3ff" stroke-width="2.5"/><rect x="-8" y="-2" width="16" height="12" rx="2.5" fill="#8be3ff"/><circle cx="0" cy="3.5" r="1.8" fill="#122b52"/></g>
+</svg>

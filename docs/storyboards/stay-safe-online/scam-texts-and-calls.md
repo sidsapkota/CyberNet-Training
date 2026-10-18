@@ -40,6 +40,7 @@
 - **Action:** Tap each glowing part (Continue unlocks after all five). Not graded.
 
 ## 3 · Predict
+Predict: not scored (any answer, including Not sure, goes straight to the reveal; no hint, no 2nd-wrong step; not counted in first-try accuracy).
 - **Situation:** Sam taps the link and pays the $1.95 fee. What happens next?
 - **Picture:** a pay page on Sam's phone ("parcels-redelivery.example" at the top, "Pay $1.95", card
   number boxes filled with "•••• •••• •••• 4821", a "Pay" button pressed). Below, three tappable
@@ -50,12 +51,10 @@
   Sam's card shows a list of new spending Sam never made: "$89.00", "$240.00". The van stays parked,
   empty.
 - **Action:** Tap what happens.
-- **Answers:** hoodie arrives (van) · they can spend from the card (card) · Parcels refunds it (coin)
-- **Correct:** they can spend from the card
-- **Right:** The page is the scammer's, so now they have Sam's card number. The $1.95 was just bait.
-- **1st wrong:** Who owns the page the link opened? And what did Sam type in to pay?
-- **2nd wrong:** The card: the page belongs to the scammer, not Parcels, so they now have Sam's card
-  number.
+- **Answers:** hoodie arrives (van) · they can spend from the card (card) · Parcels refunds it (coin) ·
+  "Not sure"
+- **What happens:** they can spend from the card.
+- **Reveal line:** Here's what happens… the page is the scammer's, so they now have Sam's card number; the $1.95 was just bait.
 
 ## 4 · Name it
 - **Says:** A **scam** text copies a name you trust, then rushes you to pay or tap a link. Never use the

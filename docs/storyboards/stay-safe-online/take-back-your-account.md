@@ -49,18 +49,16 @@
 - Continue unlocks once all four have been tapped.
 
 ## 3 · Predict (`still-signed-in`, easy · multiple choice with picture)
+Predict: not scored (any answer, including Not sure, goes straight to the reveal; no hint, no 2nd-wrong step; not counted in first-try accuracy).
 - **Situation:** You change your password. The laptop was signed in before.
 - **Picture:** the Security page; the Password row now reads "Changed just now". The Laptop row is
   still in the list, dimmed slightly. → **Reveal:** a small pulsing dot and "Active now" appear on the
   Laptop row.
 - **Action:** Tap whether the laptop is still in your account.
 - **Answers:** "It may still be signed in" · "No: the new password kicked it out" · "No: the app
-  spotted it and removed it"
-- **Correct:** "It may still be signed in"
-- **Right:** A new password stops new sign-ins, but a device that's already in may stay in.
-- **1st wrong:** A new key stops anyone opening the door again. What about someone already inside?
-- **2nd wrong:** It may still be signed in: changing the password doesn't always sign out a device
-  that's already in.
+  spotted it and removed it" · "Not sure"
+- **What happens:** "It may still be signed in": the laptop shows "Active now".
+- **Reveal line:** Here's what happens… a new password stops new sign-ins, but this laptop was already in, so it stayed in.
 
 ## 4 · Name it (`lock-every-door`, explainer)
 - **Says:** A new password alone isn't enough. After telling a trusted adult, lock every door:

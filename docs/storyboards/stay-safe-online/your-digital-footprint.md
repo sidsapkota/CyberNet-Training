@@ -36,17 +36,16 @@
   Screenshot.
 
 ## 2 · Predict · `delete-an-hour-later` · easy · multiple choice with picture
+Predict: not scored (any answer, including Not sure, goes straight to the reveal; no hint, no 2nd-wrong step; not counted in first-try accuracy).
 - **Situation:** An hour later, Sam deletes the post. What's left?
 - **Picture:** The same ring. Sam's phone shows the post with a finger on a red **Delete** button. The
   four friends' phones are dimmed, each with a "?" over it. → **Reveal:** Sam's phone reads "Post
   deleted". Two friends' phones still show the photo, one tagged "Saved" (camera), one tagged "Shared"
   (arrow); the other two are blank.
 - **Action:** Pick what's left.
-- **Answers:** "Nothing, anywhere" · "Friends' saved copies" · "Only the likes"
-- **Correct:** Friends' saved copies
-- **Right:** Deleting removes Sam's copy, but anyone could have saved or shared it in that hour.
-- **1st wrong:** Think back to the friends' phones: what could they do with the photo?
-- **2nd wrong:** Saved copies stay: deleting only removes Sam's own copy.
+- **Answers:** "Nothing, anywhere" · "Friends' saved copies" · "Only the likes" · "Not sure"
+- **What happens:** Friends' saved copies are left.
+- **Reveal line:** Here's what happens… deleting removes Sam's copy, but friends saved and shared it in that hour.
 
 ## 3 · Name it · `meet-footprint` · explainer with picture
 - **Says:** Everything you post adds to your **digital footprint**: the trail you leave online. Copies

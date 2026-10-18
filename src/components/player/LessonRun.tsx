@@ -52,6 +52,11 @@ interface CardRun {
   hintUsed: boolean;
   /** The answer just marked wrong: Check comes back only once the answer differs from it. */
   lastWrong?: unknown;
+  /**
+   * Lesson Blueprint: "predict" once a Predict card is answered (any answer goes to the reveal), or
+   * "answer" once the answer has been shown after a second wrong try. Either way, Continue is next.
+   */
+  revealed?: "predict" | "answer";
 }
 
 function freshRun(card: Card): CardRun {
@@ -129,6 +134,9 @@ export function LessonRun({
 
   const card = lesson.cards[index] as Card;
   const definition = getCardDefinition(card);
+  // Lesson Blueprint v1.1 lessons: Predict cards aren't scored, and a second wrong try shows the answer.
+  const blueprint = lesson.blueprint !== undefined;
+  const predictCard = blueprint && card.type === "multiple_choice" && card.predict === true;
   const total = lesson.cards.length;
   const coach = useCoach(card);
   // Read once when the lesson opens: someone with no progress at all is brand new here.
@@ -207,6 +215,20 @@ export function LessonRun({
     if (showCoach) coach.dismiss();
 
     const attempts = run.attempts + 1;
+    if (predictCard) {
+      // Not scored: any answer (Not sure too) goes straight to the reveal. No mistake is recorded, it
+      // isn't measured for first-try accuracy, pacing and the combo ignore it, and it pays the
+      // card's first-try XP (there's nothing to get wrong).
+      const xp = cardXpToAward(isDone(card), card.difficulty, 1, false);
+      const practice = practiceFor(card);
+      setRun({ ...run, status: "correct", attempts, xpAwarded: xp, practiceAwarded: practice, revealed: "predict" });
+      setSessionXp((current) => current + xp);
+      markComplete(card, xp, practice);
+      setPulse((current) => ({ key: (current?.key ?? 0) + 1, from: index - 1, to: index }));
+      feedback.play("complete");
+      feedback.haptic("success");
+      return;
+    }
     const { correct } = definition.grade(card, run.answer);
     if (attempts === 1) setPacing((current) => afterAnswer(current, correct));
     if (attempts === 1) measureFirstCheck(lesson.id, card.id, correct);
@@ -224,6 +246,17 @@ export function LessonRun({
         feedback.play("combo", comboPitch(streak));
         feedback.haptic("combo");
       } else feedback.haptic("success");
+    } else if (blueprint && attempts >= 2) {
+      // Second wrong try: show the answer and one line, then Continue (no endless retries). The card
+      // counts as done, at the retry XP, so the lesson can always be finished.
+      const xp = cardXpToAward(isDone(card), card.difficulty, attempts, run.hintUsed);
+      const practice = practiceFor(card);
+      setRun({ ...run, status: "incorrect", attempts, xpAwarded: xp, practiceAwarded: practice, revealed: "answer" });
+      setSessionXp((current) => current + xp);
+      markComplete(card, xp, practice);
+      playIncorrect();
+      feedback.play("wrong");
+      feedback.haptic("error");
     } else {
       setRun({ ...run, status: "incorrect", attempts });
       // Mistake review: the first wrong try on this card in this visit (the server re-grades it).
@@ -247,6 +280,8 @@ export function LessonRun({
   if (isGuidedDefinition(definition)) {
     primary = { label: "Continue", onClick: advance, disabled: !definition.isComplete(run.answer, card) };
   } else if (!definition.interactive) {
+    primary = { label: card.type === "hook" ? "Start" : "Continue", onClick: advance };
+  } else if (run.revealed === "answer") {
     primary = { label: "Continue", onClick: advance };
   } else if (run.status === "answering") {
     primary = { label: "Check", onClick: check, disabled: !definition.isAnswerReady(run.answer, card) || unchangedAfterWrong };
@@ -291,6 +326,7 @@ export function LessonRun({
     const definition = getCardDefinition(c);
     if (!definition.interactive) return { kind: "read", answer: past?.answer };
     if (past?.status === "correct") return { kind: "answered", answer: past.answer };
+    if (past?.revealed === "answer") return { kind: "shown", answer: past.answer };
     return isDone(c) ? { kind: "done-before" } : { kind: "skipped" };
   }
   function reviewWord(c: Card, at: number): string {
@@ -304,7 +340,7 @@ export function LessonRun({
     const challenge = c.difficulty === "challenge";
     if (result) return { state: isDone(c) ? "done" : "skipped", challenge };
     if (i < index) return { state: isDone(c) ? "done" : "skipped", challenge };
-    if (i === index) return { state: run.status === "correct" ? "done" : "current", challenge };
+    if (i === index) return { state: run.status === "correct" || run.revealed === "answer" ? "done" : "current", challenge };
     return { state: "upcoming", challenge };
   });
 
@@ -377,7 +413,7 @@ export function LessonRun({
   if (viewing !== null) {
     const reviewCard = lesson.cards[viewing] as Card;
     const state = reviewState(reviewCard, viewing);
-    const answered = state.kind === "answered" || state.kind === "done-before";
+    const answered = state.kind === "answered" || state.kind === "done-before" || state.kind === "shown";
     return (
       <PlayerShell
         exitHref={`/course/${course.id}`}
@@ -390,8 +426,8 @@ export function LessonRun({
         footer={
           <FeedbackFooter
             key={`review-${viewing}`}
-            tone={answered ? "correct" : "neutral"}
-            heading={answered ? "You got this one" : undefined}
+            tone={state.kind === "shown" ? "reveal" : answered ? "correct" : "neutral"}
+            heading={state.kind === "shown" ? "Here's the answer" : answered ? "You got this one" : undefined}
             explanation={answered && isInteractiveCard(reviewCard) ? reviewCard.explanation : undefined}
             primary={reviewPrimary}
             back={canGoBack ? { label: "Back to the previous card", onClick: goBack } : undefined}
@@ -416,9 +452,16 @@ export function LessonRun({
     );
   }
 
-  const hint = visibleHint(card, "lesson", run.status);
-  const tone: FeedbackTone =
-    run.status === "correct" ? "correct" : run.status === "incorrect" ? "incorrect" : "neutral";
+  // Blueprint lessons have no Hint button: the hint is what a first wrong try shows (the nudge).
+  const hint = blueprint ? null : visibleHint(card, "lesson", run.status);
+  const tone: FeedbackTone = run.revealed
+    ? "reveal"
+    : run.status === "correct"
+      ? "correct"
+      : run.status === "incorrect"
+        ? "incorrect"
+        : "neutral";
+  const shownAnswer = run.revealed === "answer" && definition.interactive ? definition.describeCorrectAnswer(card) : null;
   const challengeXp = XP.card.challenge.firstTry;
 
   return (
@@ -441,19 +484,41 @@ export function LessonRun({
           }
           tone={tone}
           // The mascot reacts to every answer with a short, varied line (src/lib/reactions.ts).
-          mascot={run.status === "answering" ? undefined : reactionExpression(run.status === "correct", card.difficulty === "challenge", run.attempts)}
-          heading={run.status === "answering" ? undefined : reactionLine(lesson.id, index, run.attempts, run.status === "correct")}
+          mascot={
+            run.status === "answering" || run.revealed === "predict"
+              ? undefined
+              : run.revealed === "answer"
+                ? "thinking"
+                : reactionExpression(run.status === "correct", card.difficulty === "challenge", run.attempts)
+          }
+          heading={
+            run.status === "answering"
+              ? undefined
+              : run.revealed === "predict"
+                ? "Here's what happens…"
+                : run.revealed === "answer"
+                  ? "Not quite. Here's the answer."
+                  : reactionLine(lesson.id, index, run.attempts, run.status === "correct")
+          }
           subheading={
-            run.status === "incorrect"
-              ? ((isInteractiveCard(card) ? nudgeFor(card, run.answer) : undefined) ?? "Have another go. You've got this.")
-              : undefined
+            shownAnswer
+              ? `The answer: **${shownAnswer}**`
+              : run.status === "incorrect"
+                ? ((isInteractiveCard(card) ? nudgeFor(card, run.answer) : undefined) ?? "Have another go. You've got this.")
+                : undefined
           }
           xpAwarded={run.xpAwarded}
           practiceXp={run.practiceAwarded}
           goalNote={goalNoteAt === index && run.status === "correct" ? "Daily goal reached" : undefined}
-          combo={run.status === "correct" && run.attempts === 1 ? comboLabel(combo.now) : null}
-          explanation={isInteractiveCard(card) && run.status !== "answering" ? card.explanation : undefined}
-          collapseExplanation={run.status === "incorrect"}
+          combo={run.status === "correct" && run.attempts === 1 && !predictCard ? comboLabel(combo.now) : null}
+          explanation={
+            isInteractiveCard(card) && run.status !== "answering"
+              ? run.revealed === "answer"
+                ? (card.showAnswer ?? card.explanation)
+                : card.explanation
+              : undefined
+          }
+          collapseExplanation={run.status === "incorrect" && run.revealed !== "answer"}
           primary={primary}
           back={canGoBack ? { label: "Back to the previous card", onClick: goBack } : undefined}
           wrongTheme={wrongThemeFor(course.id)}
@@ -482,6 +547,7 @@ export function LessonRun({
             answer={run.answer}
             onAnswerChange={(answer) => setRun((current) => ({ ...current, answer }))}
             status={run.status}
+            revealAnswer={run.revealed === "answer"}
           />
         ) : (
           <definition.Component card={card} />

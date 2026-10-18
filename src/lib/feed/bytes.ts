@@ -49,6 +49,8 @@ export function loadBytes(lessons: ReadonlyMap<string, Lesson>, file = BYTES_FIL
     else if (!card) problems.push(`${b.id}: no card "${b.card}" in ${b.lesson}`);
     else if (!isInteractiveCard(card) || !(FEED_TYPES as readonly string[]).includes(card.type)) problems.push(`${b.id}: a ${card.type} card can't be a byte`);
     else if (card.difficulty !== "core") problems.push(`${b.id}: bytes use core cards`);
+    // Predict cards (Lesson Blueprint) aren't scored, and their "Not sure" would count as wrong here.
+    else if (card.type === "multiple_choice" && card.predict) problems.push(`${b.id}: a Predict card can't be a byte (it isn't scored)`);
     else out.push({ ...b, courseId: lesson.courseId, lessonTitle: lesson.title, card });
   }
   const rare = raw.filter((b) => b.rare).length;

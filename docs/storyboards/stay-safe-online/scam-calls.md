@@ -52,6 +52,7 @@
 - **Action:** Tap each glowing line (Continue unlocks after all five). Not graded.
 
 ## 3 · Predict
+Predict: not scored (any answer, including Not sure, goes straight to the reveal; no hint, no 2nd-wrong step; not counted in first-try accuracy).
 - **Situation:** Sam reads the texted code out to the caller. What can they do now?
 - **Picture:** Sam's phone with the text "Your Bank code: 482 913. Never share this code." and a speech
   bubble from Sam "4… 8… 2…". Below, three tappable objects: a laptop showing a sign-in screen ("Sign
@@ -60,11 +61,10 @@
   → **Reveal:** the caller's laptop screen changes to "Your Bank · Welcome back, Sam". On Sam's phone a
   banner slides in: "New sign-in on another device".
 - **Action:** Tap what the caller can do.
-- **Answers:** sign in to Sam's account (laptop) · stop the payment (stamped card) · nothing (bin)
-- **Correct:** sign in to Sam's account
-- **Right:** The code was the last step of signing in, so reading it out lets the caller in.
-- **1st wrong:** Think back: why does a code arrive on your phone?
-- **2nd wrong:** The laptop: someone typed Sam's password, and the code was the last step to get in.
+- **Answers:** sign in to Sam's account (laptop) · stop the payment (stamped card) · nothing (bin) ·
+  "Not sure"
+- **What happens:** the caller signs in to Sam's account.
+- **Reveal line:** Here's what happens… the code was the last step of signing in, so reading it out lets the caller in.
 
 ## 4 · Name it
 - **Says:** If a caller wants a code, money or for you to tell no one, it's a **scam**: hang up. Then

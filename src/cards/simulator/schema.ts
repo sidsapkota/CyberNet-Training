@@ -49,8 +49,10 @@ export const SimulatorCardSchema = z
     params: z.record(z.string(), z.unknown()),
     controls: z.array(Control).min(1).max(10),
     outputs: z.array(Output).min(1).max(5),
-    /** Every condition must hold for the final state. */
-    goal: z.object({ all: z.array(Condition).min(1).max(5) }),
+    /** Every condition must hold for the final state. Play mode has none. */
+    goal: z.object({ all: z.array(Condition).min(1).max(5) }).optional(),
+    /** "play": a toy to mess with, not graded (Lesson Blueprint's Play beat). */
+    mode: z.literal("play").optional(),
   })
   .superRefine((card, ctx) => {
     const model = MODELS[card.model];
@@ -100,7 +102,9 @@ export const SimulatorCardSchema = z
       }
     });
 
-    card.goal.all.forEach((cond, i) => {
+    if (card.mode === "play" && card.goal) ctx.addIssue({ code: "custom", message: "play mode has no goal", path: ["goal"] });
+    if (card.mode !== "play" && !card.goal) ctx.addIssue({ code: "custom", message: "a simulator needs a goal (or mode: play)", path: ["goal"] });
+    (card.goal?.all ?? []).forEach((cond, i) => {
       const path = ["goal", "all", i];
       if (cond.target === "control") {
         const control = card.controls.find((c) => c.id === cond.id);

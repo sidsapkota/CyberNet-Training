@@ -16,7 +16,8 @@
 - **Needs building:** a **`security-settings` scene** (a generic phone screen titled "Sign-in
   options" with three tappable rows: Text me a code, Authenticator app, Passkey), used in explore
   mode (card 2) and tap mode (card 3), plus the **reveal state for hotspot tap cards** asked for in
-  `one-password-each` (padlocks hold or break, after a right answer only).
+  `one-password-each` (padlocks hold or break, after a right answer, or after any answer on a
+  Predict), with its "Not sure" button for card 3.
 
 ## 1 · Hook
 `make-a-passkey`
@@ -40,18 +41,16 @@
 - **Action:** Tap each lock.
 
 ## 3 · Predict
-`number-stolen` · hotspot tap mode on the `security-settings` scene (two targets).
+`number-stolen` · hotspot tap mode on the `security-settings` scene (two targets) · Predict: not scored (any answer, including Not sure, goes straight to the reveal; no hint, no 2nd-wrong step; not counted in first-try accuracy).
 - **Situation:** A scammer steals Mia's phone number, so her texts go to them.
 - **Picture:** The "Sign-in options" screen with all three rows, each with a shut padlock. Far
   away, the scammer holds a second phone with a "Mia's number" tag, a text bubble arriving on it.
   → **Reveal:** "Text me a code" breaks open, its code bubble flying to the scammer's phone; the
   Authenticator app and Passkey padlocks stay shut, each tagged "Still locked".
 - **Action:** Tap every lock that still keeps the scammer out.
-- **Answers:** the three rows.
-- **Correct:** Authenticator app and Passkey.
-- **Right:** Right: those never travel by text, so a stolen number can't reach them.
-- **1st wrong:** Think about where each lock's code comes from.
-- **2nd wrong:** Authenticator app and Passkey: only the text code goes to Mia's number.
+- **Answers:** the three rows, then a "Not sure" button under the scene.
+- **What happens:** Authenticator app and Passkey still keep the scammer out.
+- **Reveal line:** Here's what happens… only the text code travels to Mia's number, so the other two locks hold.
 
 ## 4 · Name it
 `meet-passkey`
@@ -107,5 +106,6 @@
 `recap`
 - **Takeaway:** Use the strongest lock an app offers: passkey, then authenticator app, then text
   code. Any beats none.
-- **Try this:** With a trusted adult, look in one app's settings for a passkey or authenticator app.
+- **Try this:** With a trusted adult, or on your own if you're 18+, look in one app's settings for a
+  passkey or authenticator app.
 - **Next:** The scam email that pretends to be someone you trust.

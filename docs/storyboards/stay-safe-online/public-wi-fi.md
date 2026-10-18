@@ -35,19 +35,16 @@
 - **Action:** Tap the glowing things. Continue unlocks once all three are tapped.
 
 ## 2 · Predict · `wi-fi-wants-password` · easy · tap a part of the picture (new; fallback multiple choice)
+Predict: not scored (any answer, including Not sure, goes straight to the reveal; no hint, no 2nd-wrong step; not counted in first-try accuracy).
 - **Situation:** Sam joins "CornerCafe_Free". It asks for Sam's email password to get online.
 - **Picture:** Sam's phone showing a sign-in page: "Free Wi-Fi! Sign in with your email password", a
   password box with dots, and a finger on **Go**. Behind, the café from card 1, every thing dimmed with
   a "?". → **Reveal:** a line from Sam's phone to the laptop at table 4, where a small bubble with dots
   "••••••" lands.
 - **Action:** Tap who gets the password.
-- **Answers:** the café's Wi-Fi box · the laptop at table 4 · a "Nobody" button
-- **Correct:** the laptop at table 4
-- **Right:** A sign-in page sends what you type to whoever made it: here, the laptop's owner.
-- **1st wrong:** (Wi-Fi box) Which thing in the café sends "CornerCafe_Free"? (Nobody) Where does a
-  sign-in page send what you type?
-- **2nd wrong:** The laptop's owner gets it: they made that network and its page. Real café Wi-Fi never
-  needs your email password.
+- **Answers:** the café's Wi-Fi box · the laptop at table 4 · a "Nobody" button · a "Not sure" button
+- **What happens:** the laptop at table 4 gets the password.
+- **Reveal line:** Here's what happens… the laptop's owner made this network and its page, and real café Wi-Fi never needs your email password.
 
 ## 3 · Name it · `meet-public-wi-fi` · explainer with picture
 - **Says:** On **public Wi-Fi**, anyone can name a network after the café. A copycat like

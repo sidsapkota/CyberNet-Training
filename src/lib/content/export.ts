@@ -53,6 +53,7 @@ const TYPE_LABEL: Record<CardType, string> = {
   reveal: "Tap to learn",
   true_false: "True or false",
   fill_gap: "Fill the gap",
+  hook: "Hook",
 };
 
 const PICKS_PER_LESSON = 3;

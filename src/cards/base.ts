@@ -57,4 +57,9 @@ export const interactiveCardBase = {
    * misconception without revealing the answer. Markdown.
    */
   nudge: nonEmpty.max(220).optional(),
+  /**
+   * Lesson Blueprint lessons only: after a second wrong attempt the player shows the answer with this
+   * one line, then Continue (no endless retries). Markdown.
+   */
+  showAnswer: nonEmpty.max(220).optional(),
 };

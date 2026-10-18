@@ -45,6 +45,7 @@
 - **Action:** Tap each glowing part (Continue unlocks after all five). Not graded.
 
 ## 3 · Predict
+Predict: not scored (any answer, including Not sure, goes straight to the reveal; no hint, no 2nd-wrong step; not counted in first-try accuracy).
 - **Situation:** Alex types the password into this page. Who gets it?
 - **Picture:** the page with "••••••••" in the Password box and the "Sign in" button pressed; a small
   key leaves the page. Below, three tappable objects: a bank building with the Your Bank logo ("Your
@@ -53,12 +54,9 @@
   → **Reveal:** the key travels inside a little padlocked tube (scrambled on the way) and comes out at
   the login-check laptop, where it pops open: "Got it". Your Bank's building stays untouched.
 - **Action:** Tap who gets the password.
-- **Answers:** Your Bank (building) · login-check (laptop) · nobody (safe)
-- **Correct:** login-check
-- **Right:** The address says login-check owns the page, so it gets the password. The padlock only
-  scrambles it on the way.
-- **1st wrong:** Which part of the page showed who really owns it?
-- **2nd wrong:** login-check gets it: the web address shows who owns the page, whatever the logo says.
+- **Answers:** Your Bank (building) · login-check (laptop) · nobody (safe) · "Not sure"
+- **What happens:** login-check gets the password.
+- **Reveal line:** Here's what happens… the address says login-check owns the page, and the padlock only scrambles the password on the way.
 
 ## 4 · Name it
 - **Says:** A fake site can copy a logo, but not the real **web address**. The owner is the name just

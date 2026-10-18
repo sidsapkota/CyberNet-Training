@@ -1,0 +1,218 @@
+{
+  "id": "strongest-lock",
+  "kind": "lesson",
+  "blueprint": "1.1",
+  "title": "The Strongest Lock",
+  "about": "Some second locks are harder to steal than others. Pick the strongest.",
+  "order": 4,
+  "icon": "shield-check",
+  "cards": [
+    {
+      "id": "make-a-passkey",
+      "type": "hook",
+      "difficulty": "core",
+      "situation": "Mia's email asks her to make a passkey. She's never heard of one.",
+      "image": {
+        "src": "/illustrations/sso/strongest-lock-hook.svg",
+        "alt": "Mia holds her phone. A pop-up over her inbox asks \"Sign in faster with a passkey?\" with two buttons, Make a passkey and Not now. A question mark floats over Mia's head.",
+        "width": 340,
+        "height": 250
+      }
+    },
+    {
+      "id": "try-each-lock",
+      "type": "hotspot",
+      "difficulty": "core",
+      "teaches": [
+        "passkey",
+        "authenticator-app"
+      ],
+      "uses": [],
+      "prompt": "Mia's email offers three locks. **Tap** each to see how it works.",
+      "scene": "sign-in-options",
+      "mode": "explore",
+      "parts": [
+        {
+          "part": "option-text-code",
+          "job": "A code comes by text message. You type it in."
+        },
+        {
+          "part": "option-authenticator",
+          "job": "An app on your phone makes the code. Nothing is sent."
+        },
+        {
+          "part": "option-passkey",
+          "job": "Your phone checks your face, fingerprint or PIN. No code to type."
+        }
+      ],
+      "explanation": "Three locks: a code by text, a code from an app, or your face, fingerprint or PIN."
+    },
+    {
+      "id": "number-stolen",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "predict": true,
+      "uses": [
+        "two-step-sign-in",
+        "passkey",
+        "authenticator-app"
+      ],
+      "prompt": "The scammer has Mia's password, and now her number. What happens?",
+      "image": {
+        "src": "/illustrations/sso/strongest-lock-number-stolen.svg",
+        "alt": "Mia's Sign-in options screen with three choices, Text me a code, Authenticator app and Passkey, each with a shut padlock. Far away, a scammer holds a second phone tagged Mia's number, as a text message arrives on it.",
+        "width": 340,
+        "height": 180,
+        "revealSrc": "/illustrations/sso/strongest-lock-number-stolen-reveal.svg",
+        "revealAlt": "The Text me a code padlock breaks open: its code, 481 902, goes to the scammer's phone. The Authenticator app and Passkey padlocks stay shut."
+      },
+      "options": [
+        {
+          "id": "text-code-breaks",
+          "text": "Only the text code breaks"
+        },
+        {
+          "id": "all-break",
+          "text": "All three break"
+        },
+        {
+          "id": "passkey-holds",
+          "text": "Only the passkey holds"
+        }
+      ],
+      "correctOptionId": "text-code-breaks",
+      "explanation": "Only the text code travels to Mia's number, so the other two locks hold."
+    },
+    {
+      "id": "meet-passkey",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "passkey",
+        "authenticator-app",
+        "passkey-strongest",
+        "app-codes-beat-text-codes"
+      ],
+      "title": "Three locks, ranked",
+      "body": "Strongest to weakest: a **passkey**, an **authenticator app**, then a text code. Any of them beats a password alone.",
+      "image": {
+        "src": "/illustrations/sso/strongest-lock-podium.svg",
+        "alt": "A podium: Passkey stands in first place, Authenticator app in second and Text code in third. A grey, dashed key labelled Password alone lies on the floor beside it.",
+        "width": 320,
+        "height": 200
+      }
+    },
+    {
+      "id": "rank-proofs",
+      "type": "drag_to_order",
+      "difficulty": "core",
+      "uses": [
+        "passkey-strongest",
+        "app-codes-beat-text-codes",
+        "two-step-sign-in"
+      ],
+      "prompt": "Mia lines up four ways to sign in. Drag them strongest to weakest.",
+      "items": [
+        {
+          "id": "passkey",
+          "label": "Passkey"
+        },
+        {
+          "id": "app",
+          "label": "Password + authenticator app"
+        },
+        {
+          "id": "sms",
+          "label": "Password + text code"
+        },
+        {
+          "id": "password-only",
+          "label": "Password alone"
+        }
+      ],
+      "explanation": "Spot on: each one is harder to steal than the one under it.",
+      "nudge": "Start at the bottom: which one has no second lock at all?",
+      "showAnswer": "Passkey, then authenticator app, then text code, then a password alone, with no second lock."
+    },
+    {
+      "id": "fake-page",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "uses": [
+        "two-step-sign-in",
+        "passkey",
+        "authenticator-app"
+      ],
+      "prompt": "A fake email page asks for Mia's password and code. Which lock keeps her safe?",
+      "image": {
+        "src": "/illustrations/sso/strongest-lock-fake-page.svg",
+        "alt": "A laptop shows a page that looks just like Mia's email sign-in, with a Password box and a Code box. An amber tag on its corner says Fake copy. A scammer peeks out from behind the screen. Mia's phone sits beside it.",
+        "width": 340,
+        "height": 180,
+        "revealSrc": "/illustrations/sso/strongest-lock-fake-page-reveal.svg",
+        "revealAlt": "Mia's phone says No passkey for this site. The fake page's Password and Code boxes stay empty, and the scammer shrugs."
+      },
+      "options": [
+        {
+          "id": "text-code",
+          "text": "Text code"
+        },
+        {
+          "id": "authenticator-app",
+          "text": "Authenticator app"
+        },
+        {
+          "id": "passkey",
+          "text": "Passkey"
+        }
+      ],
+      "correctOptionId": "passkey",
+      "explanation": "Yes: a passkey only works on the real site, so the fake copy gets nothing.",
+      "nudge": "If Mia types a code into this page, who sees it?",
+      "showAnswer": "The passkey: any code Mia types goes to the fake page, but a passkey only works on the real site."
+    },
+    {
+      "id": "text-codes-only",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "uses": [
+        "two-step-sign-in",
+        "app-codes-beat-text-codes"
+      ],
+      "prompt": "Your music app only offers text codes. Turn on two-step sign-in?",
+      "image": {
+        "src": "/illustrations/sso/strongest-lock-text-codes.svg",
+        "alt": "Your phone shows a music app's Two-step sign-in setting with one option, Text me a code, switched off. Far away, a scammer with your password types it into a laptop.",
+        "width": 340,
+        "height": 160,
+        "revealSrc": "/illustrations/sso/strongest-lock-text-codes-reveal.svg",
+        "revealAlt": "The Text me a code switch is now on. Far away, the scammer is stuck at Enter the code."
+      },
+      "options": [
+        {
+          "id": "turn-on",
+          "text": "Yes: a weak lock beats no lock"
+        },
+        {
+          "id": "skip",
+          "text": "No: text codes can be stolen"
+        },
+        {
+          "id": "wait",
+          "text": "Not yet: wait for passkeys"
+        }
+      ],
+      "correctOptionId": "turn-on",
+      "explanation": "Right: most scammers only have a password, and a text code stops them.",
+      "nudge": "Which is harder to get into: a password plus a text code, or a password alone?",
+      "showAnswer": "Turn it on: any second lock beats a password alone, and you can switch to a better one later."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "title": "Recap",
+      "body": "Use the strongest lock an app offers: passkey, then authenticator app, then text code. Any beats none.\n\n**Try this:** With a trusted adult, or on your own if you're 18+, look in one app's settings for a passkey or authenticator app.\n\n**Next:** The scam email that pretends to be someone you trust."
+    }
+  ]
+}

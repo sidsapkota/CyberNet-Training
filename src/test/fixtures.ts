@@ -4,6 +4,7 @@ import type { FillGapCard } from "@/cards/fill-gap/schema";
 import type { BinaryToggleCard } from "@/cards/binary-toggle/schema";
 import type { DragToOrderCard } from "@/cards/drag-to-order/schema";
 import type { ExplainerCard } from "@/cards/explainer/schema";
+import type { HookCard } from "@/cards/hook/schema";
 import type { PhotoCard } from "@/cards/photo/schema";
 import type { MatchPairsCard } from "@/cards/match-pairs/schema";
 import type { MultipleChoiceCard } from "@/cards/multiple-choice/schema";
@@ -25,6 +26,15 @@ export const explainer = (over: Partial<ExplainerCard> = {}): ExplainerCard => (
   difficulty: "core",
   title: "Hello",
   body: "Some **markdown**.",
+  ...over,
+});
+
+export const hook = (over: Partial<HookCard> = {}): HookCard => ({
+  id: "hook",
+  type: "hook",
+  difficulty: "core",
+  situation: "Mia is making a password for her new game account.",
+  image: { src: "/illustrations/two-robots-fruit.svg", alt: "A picture.", width: 340, height: 168 },
   ...over,
 });
 

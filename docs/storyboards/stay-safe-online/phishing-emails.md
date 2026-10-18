@@ -44,6 +44,7 @@
 - **Action:** Tap each glowing line (Continue unlocks after all five). Not graded.
 
 ## 3 · Predict
+Predict: not scored (any answer, including Not sure, goes straight to the reveal; no hint, no 2nd-wrong step; not counted in first-try accuracy).
 - **Situation:** Sam taps "Verify my account" and types the password. Who gets it?
 - **Picture:** the email's button pressed, leading (arrow) to a plain sign-in page on Sam's phone with
   "••••••••" typed in the password box and a "Sign in" button. Below it, three tappable objects in a row:
@@ -52,11 +53,10 @@
   → **Reveal:** the password flies as a small key from Sam's phone into the yourbank-verify.example
   laptop. The laptop then tries the key on Your Bank's door. Your Bank's building stays untouched.
 - **Action:** Tap who gets the password.
-- **Answers:** Your Bank (bank building) · yourbank-verify.example (laptop) · Nobody (phone with shield)
-- **Correct:** yourbank-verify.example (laptop)
-- **Right:** The button goes to yourbank-verify.example, so the password goes straight to them.
-- **1st wrong:** Remember what pressing and holding the button showed: where does it really go?
-- **2nd wrong:** The laptop: yourbank-verify.example gets it, because that's where the button really goes.
+- **Answers:** Your Bank (bank building) · yourbank-verify.example (laptop) · Nobody (phone with shield) ·
+  "Not sure"
+- **What happens:** yourbank-verify.example (laptop) gets the password.
+- **Reveal line:** Here's what happens… the button really goes to yourbank-verify.example, so the password goes straight to them.
 
 ## 4 · Name it
 - **Says:** A **scam** email pretends to be someone you trust, and each clue that gives it away is a

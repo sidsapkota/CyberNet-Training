@@ -31,17 +31,17 @@
 - **Action:** Flip the switches. Continue unlocks after two flips.
 
 ## 2 · Predict · `stranger-messages` · easy · multiple choice with picture
+Predict: not scored (any answer, including Not sure, goes straight to the reveal; no hint, no 2nd-wrong step; not counted in first-try accuracy).
 - **Situation:** Sam switches on "Messages: friends only". Then a stranger taps Message.
 - **Picture:** Left, a fourth switch now added at the bottom, "Messages: friends only", shown turning
   on. Right, the Stranger's view with a message box "hey, cool tricks" and a finger on **Send**; the
   space below is covered by a "?". → **Reveal:** the Send button greyed out and a note "PixelFox only
   gets messages from friends".
 - **Action:** Pick what happens.
-- **Answers:** "The message reaches Sam" · "The stranger can't send it" · "It sends, with a warning"
-- **Correct:** The stranger can't send it
-- **Right:** With friends-only messages, people Sam hasn't added can't message at all.
-- **1st wrong:** Read the switch's name again: who is allowed to message now?
-- **2nd wrong:** The stranger can't send it: only Sam's friends can message now.
+- **Answers:** "The message reaches Sam" · "The stranger can't send it" · "It sends, with a warning" ·
+  "Not sure"
+- **What happens:** The stranger can't send it.
+- **Reveal line:** Here's what happens… with friends-only messages, people Sam hasn't added can't message at all.
 
 ## 3 · Name it · `meet-privacy-settings` · explainer with picture
 - **Says:** **Privacy settings** choose who can see your posts and who can reach you. Each switch

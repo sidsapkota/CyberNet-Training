@@ -190,6 +190,43 @@ export const SCENES = {
     ],
     views: { default: [] },
   },
+  "home-screen": {
+    id: "home-screen",
+    description: "A phone's home screen with four apps: Game Club, Email, Music and Photos, each with a small padlock.",
+    width: 320,
+    height: 220,
+    parts: [
+      { id: "app-game-club", name: "Game Club", box: { x: 14, y: 56, w: 70, h: 112 } },
+      { id: "app-email", name: "Email", box: { x: 90, y: 56, w: 70, h: 112 } },
+      { id: "app-music", name: "Music", box: { x: 166, y: 56, w: 70, h: 112 } },
+      { id: "app-photos", name: "Photos", box: { x: 242, y: 56, w: 70, h: 112 } },
+    ],
+    views: { default: [], "three-apps": ["app-photos"] },
+  },
+  "sign-in-options": {
+    id: "sign-in-options",
+    description: "An email app's Sign-in options screen with three choices: Text me a code, Authenticator app and Passkey.",
+    width: 320,
+    height: 236,
+    parts: [
+      { id: "option-text-code", name: "Text me a code", box: { x: 14, y: 62, w: 292, h: 50 } },
+      { id: "option-authenticator", name: "Authenticator app", box: { x: 14, y: 118, w: 292, h: 50 } },
+      { id: "option-passkey", name: "Passkey", box: { x: 14, y: 174, w: 292, h: 50 } },
+    ],
+    views: { default: [] },
+  },
+  "sign-in": {
+    id: "sign-in",
+    description: "An email sign-in page on a laptop with a password box and a code box, and a phone beside it showing a sign-in code.",
+    width: 320,
+    height: 210,
+    parts: [
+      { id: "sign-in-password", name: "Step 1: Password", box: { x: 12, y: 46, w: 196, h: 54 } },
+      { id: "sign-in-code-box", name: "Step 2: Enter the code", box: { x: 12, y: 112, w: 196, h: 54 } },
+      { id: "sign-in-phone", name: "Your sign-in code is 481 902", box: { x: 222, y: 30, w: 90, h: 160 } },
+    ],
+    views: { default: [] },
+  },
 } as const satisfies Record<string, SceneManifest>;
 
 export type SceneId = keyof typeof SCENES;

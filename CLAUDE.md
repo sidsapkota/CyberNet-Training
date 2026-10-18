@@ -154,6 +154,10 @@ content/courses/<course-dir>/modules/<module-dir>/module.json   { id, title, des
 content/courses/<course-dir>/modules/<module-dir>/lessons/*.json
 ```
 
+- A lesson built to Lesson Blueprint v1.1 also has `"blueprint": "1.1"`: the player's blueprint behaviour
+  (above), the blueprint shape check (`blueprintShapeProblems` in `shape.ts`: 6–8 cards, at most 2 explainers,
+  3+ answers, a Wrap with Try this and Next) and, for every graded card except Predict cards, a `nudge` and a
+  `showAnswer` line instead of a `hint` (`load.test.ts`).
 - A lesson file holds `{ id, kind: "lesson" | "quiz", title, order, cards[] }` (plus `icon` and
   `about` for lessons: `about` is "what you'll learn" in one line, 10–90 characters, shown on the
   "Up next" screen). A lesson about fast-changing things (real products) also has `lastChecked`
@@ -228,8 +232,9 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
 | `type` | Extra fields | Answer (JSON) | Correct when |
 |---|---|---|---|
 | `explainer` | `title`, `body` (md), `image?` `{src, alt, width, height, caption?}`, `mascot?` (`"presenting"`, safety notes only) | none | read (Continue) |
+| `hook` | `situation` (md, ≤120), `image` `{src, alt, width, height}` (Lesson Blueprint's Hook: one full-width picture and one line) | none | read (Start) |
 | `photo` | `title`, `photo` `{src: /photos/…, alt, width, height}`, `caption` (md), `credit` `{author, licence, licenceUrl, sourceUrl, device?}` | none | read (Continue) |
-| `multiple_choice` | `options` (2–5 `{id, text, nudge?}`), `correctOptionId` | option id | right option picked |
+| `multiple_choice` | `options` (2–5 `{id, text, nudge?, area?}`), `correctOptionId`, `image?` (`revealSrc?`), `predict?` | option id (or `not-sure` on a Predict card) | right option picked (Predict cards aren't scored) |
 | `drag_to_order` | `items` (3–7 `{id, label}`, **authored in the correct order**) | item ids | exact order |
 | `binary_toggle` | `target` (0–255) | 8 booleans | bits sum to target |
 | `numeric_input` | `base` (`decimal` \| `binary` \| `hex`, default decimal), `answer` (number or number[]), `hint?` (md), `unit?` | raw string | parsed value is accepted |
@@ -238,12 +243,29 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
 | `terminal` | `commands`, `success`, `promptLabel?`, `intro?`, `caseSensitive?` (see below) | `{history, response}` | success condition met |
 | `hotspot` | `scene`, `view?`, `mode` (`tap` + `targets[]`, `label` + `labels[] {part, label}`, or `explore` + `parts[] {part, job}`) | `{selected[], placed{part: labelIndex}}` (explore: `{seen[]}`) | exactly the targets / every label on its part (explore: not graded) |
 | `teardown` | `scene`, `view?`, `actions[] {id, part, verb, after?, nudge}`, `maxNudges?` | `{done[], nudges}` | all actions, each after its `after`, nudges ≤ max |
-| `simulator` | `model`, `params`, `controls[]` (toggle/slider/button), `outputs[]` (meter/bar/timer/device/list), `goal.all[]` | `{controlId: value}` | every goal condition holds |
+| `simulator` | `model`, `params`, `controls[]` (toggle/slider/button), `outputs[]` (meter/bar/timer/device/list), `goal.all[]`, or `mode: "play"` with no goal | `{controlId: value}` | every goal condition holds (play mode: not graded) |
 | `scenario` | `start`, `steps[] {id, text, choices[] {id, text, consequence, next \| outcome}}` | choice ids in order | the last choice's outcome is `success` |
 | `sort_bins` | `bins[]` (2–3), `items[] {id, label, bin}` (4–10) | `{itemId: binId}` | every item in its bin |
 | `train_model` | `model` (`nearest` + `k` 1/3 + `scene`: `fruit`/`ball`/`weather`/`daynight`, or `word-vote`), `labels[]` (2–3), `examples[] {id, text, x?, y?, label, given?}` (3–12; at most 4 not `given`), `tests[] {id, text, x?, y?, truth}` (1–3), `task` (`label`, or `fix` + `action` `add`/`remove`) | `{labels: {exampleId: labelId}, included: [exampleId?]}` | label: every example labelled right; fix: the one change makes the model get every test right |
 | `next_word` | `context`, `candidates[] {word, p}` (3–6, sum 1), `temperature {min, max, start, step}`, `goal` (`pick` + `word`, or `probability` + `word?`, `atLeast?`, `atMost?`) | `{temperature, pick}` | pick: the likeliest word; probability: the goal holds at that temperature |
 
+- **Lesson Blueprint pieces** (built 18–19 Oct 2026 for Stay Safe Online's rebuild; `src/cards/blueprint.test.ts`):
+  - **`hook`**: one full-width picture and one situation line; the footer button says Start. Not graded, no XP.
+  - **Predict cards** (`multiple_choice` with `predict: true`): `displayOptions` adds **"Not sure"** last. In a
+    blueprint lesson any answer goes straight to the reveal: the footer's `reveal` tone (a lightbulb, never a
+    tick or cross) says "Here's what happens…" with the `explanation`, the reveal picture shows, the card pays
+    its first-try XP, and it records no mistake, no card measurement and no combo or pacing change. Quizzes
+    can't have Predict cards, and duels skip them (`challengeCards`).
+  - **Answers on the picture:** a multiple-choice option with `area` `{x, y, w, h}` (percent of the picture)
+    becomes a tap target over that part of the picture (every option needs one; ring per state, a check or
+    cross badge after Check, the option text as its accessible name). Options without one ("Not sure") list below.
+  - **Reveal pictures** (`image.revealSrc`) show only once earned: after a right answer, after any Predict
+    answer, or with the answer after a second wrong try. Never after a first wrong one.
+  - **Play-mode simulator** (`mode: "play"`, no `goal`): a guided card (`simulatorPlayDefinition`): Continue
+    unlocks once a control moves from its starting value; pays `XP.explore`; no how-to-play panel.
+  - **Scenes** for Stay Safe Online module 1: `home-screen` (Game Club, Email, Music, Photos; view `three-apps`),
+    `sign-in-options` (Text me a code, Authenticator app, Passkey) and `sign-in` (password box, code box, the
+    phone's code). Self-labelled, text at 15+ units in 320-wide scenes.
 - **`multiple_choice`:** options are shown in a stable shuffle per card (`displayOptions`), so the
   right answer's written position never gives it away; digit keys follow the order on screen.
   Answers and grading use option ids, so the order can't change a score.
@@ -473,6 +495,12 @@ interactive, update `isInteractiveCard` / `InteractiveCard` in `schema.ts`.
     cross (`WrongBurst`, under 700ms, never blocks anything, none under reduced motion: Inside Your
     Devices a spark and smoke puff, How AI Really Works a glitch, How the Internet Works a packet
     bouncing back, Stay Safe Online a shield wobble), the explanation collapsed, and **Try again**.
+  - **Blueprint lessons** (`"blueprint": "1.1"` on the lesson): a **second wrong try shows the answer**: the
+    footer's `reveal` tone with "Not quite. Here's the answer.", "The answer: …" (`describeCorrectAnswer`) and
+    the card's `showAnswer` line, the card marks the right answer where it can (`revealAnswer`: multiple choice
+    marks the option and shows the reveal picture), and the button is Continue (the card counts as done at the
+    retry XP, so the lesson always finishes). No Hint button (the first wrong try's nudge is the hint). Predict
+    cards aren't scored (see Lesson Blueprint pieces). Other lessons keep Try again until they're rebuilt.
   - **Try again** (`src/cards/retry.ts`, tested per type): the wrong part is cleared and anything
     right stays where the card type allows it (wrong pick cleared, right pairs/bits/labels/bins
     kept, a route kept up to its first wrong hop, a failed scenario ending taken off, a teardown
@@ -1902,7 +1930,7 @@ a definition question to look like one.
 - **Measure:** card measurements (above) and `npm run report:cards` show which cards are slowest and most
   missed; convert those first.
 
-### Lesson Blueprint v1 (HARD RULE — owner, 18 Oct 2026)
+### Lesson Blueprint v1.1 (HARD RULE — owner, 18 Oct 2026)
 Supersedes the earlier 7-beat lesson pattern and the 12-word question rule.
 
 **One lesson = one idea, 6–8 cards, 3–5 minutes, one story.** The same characters or objects stay on
@@ -1916,7 +1944,10 @@ screen all lesson; each card changes ONE thing.
 5. **Easy win:** apply it straight away (most people get it right).
 6. **Twist:** one thing changes and they have to think.
 7. **Real life:** apply it to their own world (their phone, apps, home).
-8. **Wrap:** a one-line takeaway, a "Try this", and a one-line tease of the next lesson.
+8. **Wrap:** a one-line takeaway, a "Try this", and a one-line tease of the next lesson. A "Try this"
+   makes sense to a 13-year-old and an adult alike: when it involves someone else's help it says
+   **"With a trusted adult, or on your own if you're 18+, …"** (the same words across the course);
+   anything a person can simply do alone needs no adult wording.
 
 **Every question card has 4 parts**
 1. **Situation:** what's happening, in words, under 15 words. Never a question that only makes sense
@@ -1924,12 +1955,16 @@ screen all lesson; each card changes ONE thing.
 2. **Picture:** fills most of the card's width; any text inside reads at 14px or more, rendered, on
    phone and desktop (`pictureText.test.ts` checks every lesson SVG at 360px).
 3. **Action:** a clear verb ("Tap the robot that…", "Drag each app into…").
-4. **Answers:** tappable objects where possible, otherwise short text.
+4. **Answers:** tappable objects where possible, otherwise short text. **At least 3 answers, never 2**
+   (a third plausible option, a real misconception; sort, order and match cards are fine).
 
 **Feedback**
 - **Right:** one line saying WHY, then the reveal picture.
 - **1st wrong:** a hint pointing to the idea. Never show the answer.
 - **2nd wrong:** show the answer and a one-line explanation, then continue. No endless retry loops.
+- **Predict cards are not scored** (v1.1): they add a **"Not sure"** answer, and any answer (Not sure
+  included) goes straight to the reveal with one line, "Here's what happens…". No hint, no 2nd-wrong
+  step, and they don't count toward first-try accuracy.
 - **The answer (including reveal pictures) is never visible before it's earned.** The player and
   card views enforce it: a multiple-choice reveal picture shows only after a right answer, and a
   hotspot never marks the parts a learner missed.
@@ -1964,6 +1999,8 @@ short (an `explanation` is one line, maybe two).
 5. **Blueprint changes get a version bump and a line in the changelog below.**
 
 **Blueprint changelog**
+- **v1.1** (18 Oct 2026): Predict cards aren't scored ("Not sure" plus straight to the reveal); at
+  least 3 answers on every question; one "Try this" wording that suits adults too.
 - **v1** (18 Oct 2026): the 8 beats, the 4-part question card, feedback (hint, then the answer on the
   2nd wrong), difficulty, words and the storyboard-first rollout. Replaces the 7-beat lesson pattern
   and the 12-word question rule.

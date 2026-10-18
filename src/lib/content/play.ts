@@ -20,6 +20,7 @@ export function playOf(card: Card): Play | null {
     case "explainer":
     case "photo":
     case "reveal":
+    case "hook":
       return null;
     case "hotspot":
       return card.mode === "explore" ? null : "recognise";

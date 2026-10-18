@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200" width="340" height="200" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>A phone home screen with Game Club, Email and Music. One cyan key opens all three, and Music has a red Hacked! banner.</title>
+  <rect x="4" y="4" width="332" height="192" rx="22" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <g transform="translate(140 34)"><circle cx="0" cy="0" r="8" fill="none" stroke="#00c2ff" stroke-width="4"/><path d="M8 0H30M22 0V7M28 0V6" stroke="#00c2ff" stroke-width="4" stroke-linecap="round"/></g>
+  <text x="182" y="40" font-size="16" font-weight="600" fill="#a3b6d2" text-anchor="start">one key</text>
+  <rect x="30" y="70" width="70" height="70" rx="16" fill="#24507f" stroke="#6f8fbd" stroke-width="2"/>
+  <path transform="translate(65 105)" d="M-16 -7H16A7 7 0 0 1 16 9H-16A7 7 0 0 1 -16 -7ZM-9 -2V5M-12.5 1.5H-5.5" fill="none" stroke="#e6eef9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <text x="65" y="166" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Game Club</text>
+  <rect x="135" y="70" width="70" height="70" rx="16" fill="#24507f" stroke="#6f8fbd" stroke-width="2"/>
+  <path transform="translate(170 105)" d="M-16 -10H16V10H-16ZM-16 -10L0 3L16 -10" fill="none" stroke="#e6eef9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <text x="170" y="166" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Email</text>
+  <rect x="240" y="70" width="70" height="70" rx="16" fill="#24507f" stroke="#6f8fbd" stroke-width="2"/>
+  <path transform="translate(275 105)" d="M-5 9V-11L11 -14V6M-5 9A4.5 4.5 0 1 1 -5 8.9M11 6A4.5 4.5 0 1 1 11 5.9" fill="none" stroke="#e6eef9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <g transform="translate(275 104) rotate(-8)"><rect x="-40" y="-13" width="80" height="26" rx="5" fill="#ff7a7a"/><text x="0" y="6" font-size="16" font-weight="600" fill="#2a1622" text-anchor="middle">Hacked!</text></g>
+  <text x="275" y="166" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Music</text>
+</svg>

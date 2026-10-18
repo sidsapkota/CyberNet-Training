@@ -32,7 +32,7 @@ screen. `make-it-last`, `password` model, length slider 4–20, starting at 6.
 (Shares card 1 with the Hook.)
 
 ## 3 · Predict
-`password-race` · multiple choice with a picture and a reveal picture.
+`password-race` · multiple choice with a picture and a reveal picture · Predict: not scored (any answer, including Not sure, goes straight to the reveal; no hint, no 2nd-wrong step; not counted in first-try accuracy).
 - **Situation:** Three passwords race the guessing computer. Which lasts longest?
 - **Picture:** The guessing computer in the middle, with three password cards lined up in front of
   it like runners: `Sunshine2026`, `kqzmwp`, `violet cactus harbour pepper`. Each card has an empty
@@ -40,11 +40,9 @@ screen. `make-it-last`, `password` model, length slider 4–20, starting at 6.
   word plus a year), `kqzmwp` is stamped "Guessed: too short", and `violet cactus harbour pepper`
   still shows "Still guessing…" with the dial spinning.
 - **Action:** Tap the password that lasts longest.
-- **Answers:** the three password cards.
-- **Correct:** `violet cactus harbour pepper`
-- **Right:** Yes: it's long, and those four words together aren't on the guess list.
-- **1st wrong:** Think about what the slider showed you: what made the timer climb?
-- **2nd wrong:** It's `violet cactus harbour pepper`: long and random beats short or predictable.
+- **Answers:** the three password cards, then a "Not sure" button.
+- **What happens:** `violet cactus harbour pepper` lasts longest.
+- **Reveal line:** Here's what happens… `Sunshine2026` is on the guess list and `kqzmwp` is too short, but four random words keep it guessing.
 
 ## 4 · Name it
 `meet-passphrase`
@@ -69,17 +67,18 @@ screen. `make-it-last`, `password` model, length slider 4–20, starting at 6.
 - **2nd wrong:** Only the four random words are hard to guess; the others are all on the guess list.
 
 ## 6 · Twist
-`symbol-swap` · multiple choice with a picture and a reveal picture (2 big buttons).
+`symbol-swap` · multiple choice with a picture and a reveal picture (3 big buttons).
 - **Situation:** Mia swaps letters for symbols and numbers: `$unsh1ne2026`.
 - **Picture:** Mia's phone, the password box showing `$unsh1ne2026` with the `$` and `1` lightly
   highlighted; the guessing computer beside it, timer empty. → **Reveal:** the computer's screen
   shows a list scrolling past "sunshine2026 … Sunshine2026 … $unsh1ne2026 ✓" and the stamp
   "Guessed: on the guess list!".
 - **Action:** Tap what happens.
-- **Answers:** "On the guess list" · "Hard to guess"
+- **Answers:** "On the guess list" · "Guessed, but much slower" · "Hard to guess"
 - **Correct:** On the guess list
 - **Right:** Right: scammers know the swaps people make, so they're on the guess list too.
-- **1st wrong:** Under the swaps, what word is it still?
+- **1st wrong:** (much slower) Do lots of people make swaps like `$` for S? (hard to guess) Under the
+  swaps, what word is it still?
 - **2nd wrong:** On the guess list: it's still "sunshine" and a year, and swaps like `$` for S get tried first.
 
 ## 7 · Real life

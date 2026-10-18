@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 222" width="340" height="222" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Four friends and how they lock their email: Ava, a passkey; Ben, a password and an authenticator app; Cleo, a password and a text code; Dev, a long passphrase and nothing else.</title>
+  <rect x="8" y="8" width="158" height="100" rx="10" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <circle cx="34" cy="36" r="12" fill="#f2c6a0"/>
+  <path d="M22 32a12 12 0 0 1 24 0z" fill="#3b2a1f"/>
+  <text x="54" y="42" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="start">Ava</text>
+  <text x="22" y="72" font-size="16" font-weight="400" fill="#e6eef9" text-anchor="start">Passkey</text>
+
+  <rect x="174" y="8" width="158" height="100" rx="10" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <circle cx="200" cy="36" r="12" fill="#f2c6a0"/>
+  <path d="M188 32a12 12 0 0 1 24 0z" fill="#3b2a1f"/>
+  <text x="220" y="42" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="start">Ben</text>
+  <text x="188" y="72" font-size="16" font-weight="400" fill="#e6eef9" text-anchor="start">Password +</text>
+  <text x="188" y="94" font-size="16" font-weight="400" fill="#e6eef9" text-anchor="start">authenticator app</text>
+  <rect x="8" y="116" width="158" height="100" rx="10" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <circle cx="34" cy="144" r="12" fill="#f2c6a0"/>
+  <path d="M22 140a12 12 0 0 1 24 0z" fill="#3b2a1f"/>
+  <text x="54" y="150" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="start">Cleo</text>
+  <text x="22" y="180" font-size="16" font-weight="400" fill="#e6eef9" text-anchor="start">Password +</text>
+  <text x="22" y="202" font-size="16" font-weight="400" fill="#e6eef9" text-anchor="start">text code</text>
+  <rect x="174" y="116" width="158" height="100" rx="10" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <circle cx="200" cy="144" r="12" fill="#f2c6a0"/>
+  <path d="M188 140a12 12 0 0 1 24 0z" fill="#3b2a1f"/>
+  <text x="220" y="150" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="start">Dev</text>
+  <text x="188" y="180" font-size="16" font-weight="400" fill="#e6eef9" text-anchor="start">Long passphrase,</text>
+  <text x="188" y="202" font-size="16" font-weight="400" fill="#e6eef9" text-anchor="start">nothing else</text>
+</svg>

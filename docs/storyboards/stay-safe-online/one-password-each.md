@@ -16,8 +16,9 @@
   manager" are introduced here and used the same way in later lessons.
 - **Needs building:** a **`home-screen` scene** (a generic phone home screen; parts: Game Club,
   Email, Music; each app icon a tappable part with a padlock that can show
-  locked or open), used in explore mode (card 2) and tap mode (cards 3, 5, 6); and a **reveal state
-  for hotspot tap cards** (after a right answer only, padlocks swing open or stay shut). Fallback if
+  locked or open), used in explore mode (card 2) and tap mode (cards 3, 5, 6), with a "Not sure"
+  button when tap mode is a Predict (card 3); and a **reveal state for hotspot tap cards** (after a
+  right answer, or after any answer on a Predict: padlocks swing open or stay shut). Fallback if
   not built: multiple choice with a picture and a reveal picture, answers as short text ("Only Game
   Club", "Game Club and Email", "All three").
 - **Fact checked (18 Oct 2026):** card 7's "you only remember the one password that opens it": a
@@ -43,17 +44,15 @@
 - **Action:** Tap each app.
 
 ## 3 · Predict
-`what-opens` · hotspot tap mode on the `home-screen` scene.
+`what-opens` · hotspot tap mode on the `home-screen` scene · Predict: not scored (any answer, including Not sure, goes straight to the reveal; no hint, no 2nd-wrong step; not counted in first-try accuracy).
 - **Situation:** Game Club gets hacked, and Mia's password is stolen.
 - **Picture:** The home screen, all padlocks shut. Game Club's icon has a red "Hacked!" banner
   across it. Top corner: the scammer, now holding a copy of the cyan key. → **Reveal:** the copied
   key flies to each app in turn and all three padlocks swing open.
 - **Action:** Tap every app the scammer can now open.
-- **Answers:** the three app icons (Game Club, Email, Music).
-- **Correct:** all three.
-- **Right:** Yes: one password opens all three, so the scammer tries it everywhere.
-- **1st wrong:** Look at Mia's key: which apps does it open?
-- **2nd wrong:** All three: scammers try a stolen password on other apps, and Mia used it on every one.
+- **Answers:** the three app icons (Game Club, Email, Music), then a "Not sure" button under the scene.
+- **What happens:** All three open.
+- **Reveal line:** Here's what happens… the scammer tries the stolen password everywhere, and Mia used it on all three apps.
 
 ## 4 · Name it
 `meet-leak`
@@ -109,6 +108,6 @@
 ## 8 · Wrap
 `recap`
 - **Takeaway:** Every account gets its own password; a password manager remembers them for you.
-- **Try this:** Is your email password used anywhere else? If so, change it to a new passphrase,
-  and ask a trusted adult about setting up a password manager.
+- **Try this:** If your email password is used anywhere else, change it to a new passphrase. With a
+  trusted adult, or on your own if you're 18+, set up a password manager.
 - **Next:** The second lock that stops a stolen password cold.

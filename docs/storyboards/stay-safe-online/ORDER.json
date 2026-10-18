@@ -1,6 +1,6 @@
 {
   "title": "Stay Safe Online Storyboards",
-  "intro": "Every lesson rebuilt to Lesson Blueprint v1: one idea, 6–8 cards, one story, the 8 beats, and feedback for right, 1st wrong and 2nd wrong. Nothing is built yet. Read the decisions first, then each lesson card by card. Reply with your OK (or changes) and I'll build the course to these.",
+  "intro": "Approved 18 Oct 2026 with three changes, now applied (Lesson Blueprint v1.1): Predict cards aren't scored (\"Not sure\" plus straight to the reveal), every question has at least 3 answers, and one \"Try this\" wording that suits adults too. Module 1 is being built first.",
   "decisions": [
     "**Splits: 10 lessons become 17.** Seven of today's lessons each teach two ideas, so each is split in two. New lessons: `one-password-each`, `strongest-lock`, `scam-calls`, `privacy-settings`, `public-wi-fi`, `take-back-your-account` and `save-the-evidence`. Each lesson is shorter (6–8 cards), but free accounts open 3 new lessons a day, so the course takes more days.",
     "**Four new titles, same ids:** Phishing Emails → **Scam Emails** (\"phishing\" appears once, as the nickname people hear); Scam Texts and Calls → **Scam Texts**; Apps and Public Wi-Fi → **App Permissions**; Signs of a Hack → **Signs of a Take-Over**.",
@@ -15,22 +15,47 @@
     {
       "title": "Lock Your Accounts",
       "access": "Free",
-      "lessons": ["strong-passwords", "one-password-each", "two-step-sign-in", "strongest-lock", "lock-your-accounts-quiz"]
+      "lessons": [
+        "strong-passwords",
+        "one-password-each",
+        "two-step-sign-in",
+        "strongest-lock",
+        "lock-your-accounts-quiz"
+      ]
     },
     {
       "title": "Spot the Scam",
       "access": "Pro",
-      "lessons": ["phishing-emails", "scam-texts-and-calls", "scam-calls", "fake-websites", "spot-the-scam-quiz"]
+      "lessons": [
+        "phishing-emails",
+        "scam-texts-and-calls",
+        "scam-calls",
+        "fake-websites",
+        "spot-the-scam-quiz"
+      ]
     },
     {
       "title": "Guard Your Privacy",
       "access": "Pro",
-      "lessons": ["your-digital-footprint", "privacy-settings", "apps-and-wi-fi", "public-wi-fi", "guard-your-privacy-quiz"]
+      "lessons": [
+        "your-digital-footprint",
+        "privacy-settings",
+        "apps-and-wi-fi",
+        "public-wi-fi",
+        "guard-your-privacy-quiz"
+      ]
     },
     {
       "title": "When Things Go Wrong",
       "access": "Free",
-      "lessons": ["signs-of-a-hack", "take-back-your-account", "deepfake-scams", "save-the-evidence", "getting-help", "stay-safe-online-final"]
+      "lessons": [
+        "signs-of-a-hack",
+        "take-back-your-account",
+        "deepfake-scams",
+        "save-the-evidence",
+        "getting-help",
+        "stay-safe-online-final"
+      ]
     }
   ]
 }

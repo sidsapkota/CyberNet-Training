@@ -46,7 +46,6 @@
     "e2e:combo": "node scripts/e2e/combo.mjs",
     "e2e:visual-qa": "node scripts/e2e/visual-qa.mjs",
     "e2e:visual-qa:gate": "node scripts/e2e/visual-qa.mjs --gate",
-    "e2e:combo": "node scripts/e2e/combo.mjs",
     "e2e:challenge": "node scripts/e2e/challenge.mjs",
     "e2e:dashboard-numbers": "node scripts/e2e/dashboard-numbers.mjs",
     "e2e:player-flow": "node scripts/e2e/player-flow-shots.mjs",
@@ -55,7 +54,8 @@
     "e2e:leagues": "node scripts/e2e/leagues.mjs",
     "e2e:leagues-rehearsal": "node scripts/e2e/leagues-rehearsal.mjs",
     "e2e:league-xp": "node scripts/e2e/league-xp.mjs",
-    "e2e:prod-checks": "node scripts/e2e/prod-checks.mjs"
+    "e2e:prod-checks": "node scripts/e2e/prod-checks.mjs",
+    "e2e:blueprint": "node scripts/e2e/blueprint.mjs"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

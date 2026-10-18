@@ -8,7 +8,7 @@ import { packetPathDefinition } from "./packet-path/definition";
 import { photoDefinition } from "./photo/definition";
 import { hotspotDefinition, hotspotExploreDefinition } from "./hotspot/definition";
 import { scenarioDefinition } from "./scenario/definition";
-import { simulatorDefinition } from "./simulator/definition";
+import { simulatorDefinition, simulatorPlayDefinition } from "./simulator/definition";
 import { sortBinsDefinition } from "./sort-bins/definition";
 import { teardownDefinition } from "./teardown/definition";
 import { terminalDefinition } from "./terminal/definition";
@@ -17,7 +17,8 @@ import { trainModelDefinition } from "./train-model/definition";
 import { revealDefinition } from "./reveal/definition";
 import { trueFalseDefinition } from "./true-false/definition";
 import { fillGapDefinition } from "./fill-gap/definition";
-import { type Card, type CardType, isExploreCard } from "./schema";
+import { hookDefinition } from "./hook/definition";
+import { type Card, type CardType, isExploreCard, isSimulatorPlay } from "./schema";
 import type { GuidedCardDefinition, InteractiveCardDefinition, StaticCardDefinition } from "./types";
 
 /**
@@ -45,6 +46,7 @@ const definitions = {
   reveal: revealDefinition,
   true_false: trueFalseDefinition,
   fill_gap: fillGapDefinition,
+  hook: hookDefinition,
 } satisfies { [K in CardType]: { type: K } };
 
 /** Type-erased views used by the player, which treats answers as opaque values. */
@@ -60,6 +62,8 @@ export function isGuidedDefinition(definition: AnyCardDefinition): definition is
 export function getCardDefinition(card: Card): AnyCardDefinition {
   // Hotspot's explore mode is ungraded, so it has its own (guided) definition.
   if (isExploreCard(card)) return hotspotExploreDefinition as unknown as AnyCardDefinition;
+  // So is a simulator in play mode (a toy: Continue unlocks after the first change).
+  if (isSimulatorPlay(card)) return simulatorPlayDefinition as unknown as AnyCardDefinition;
   // Safe: `definitions` is keyed by card type, and each definition only ever
   // receives cards of its own type plus answers it created itself.
   return definitions[card.type] as unknown as AnyCardDefinition;

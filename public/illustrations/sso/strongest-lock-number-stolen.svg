@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 180" width="340" height="180" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Mia's Sign-in options screen with three choices, Text me a code, Authenticator app and Passkey, each with a shut padlock. Far away, a scammer holds a second phone tagged Mia's number, as a text message arrives on it.</title>
+  <!-- Mia's sign-in options -->
+  <rect x="4" y="4" width="214" height="172" rx="14" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="16" y="30" font-size="16" font-weight="600" fill="#e6eef9">Sign-in options</text>
+  <rect x="12" y="42" width="198" height="38" rx="8" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="22" y="67" font-size="16" font-weight="600" fill="#e6eef9">Text me a code</text>
+  <rect x="12" y="86" width="198" height="38" rx="8" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="22" y="111" font-size="16" font-weight="600" fill="#e6eef9">Authenticator app</text>
+  <rect x="12" y="130" width="198" height="38" rx="8" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="22" y="155" font-size="16" font-weight="600" fill="#e6eef9">Passkey</text>
+  <!-- Shut padlocks -->
+  <g transform="translate(194 58)"><path d="M-5 -2V-6A5 5 0 0 1 5 -6V-2" fill="none" stroke="#8be3ff" stroke-width="2.5"/><rect x="-8" y="-2" width="16" height="12" rx="2.5" fill="#8be3ff"/><circle cx="0" cy="3.5" r="1.8" fill="#122b52"/></g>
+  <g transform="translate(194 102)"><path d="M-5 -2V-6A5 5 0 0 1 5 -6V-2" fill="none" stroke="#8be3ff" stroke-width="2.5"/><rect x="-8" y="-2" width="16" height="12" rx="2.5" fill="#8be3ff"/><circle cx="0" cy="3.5" r="1.8" fill="#122b52"/></g>
+  <g transform="translate(194 146)"><path d="M-5 -2V-6A5 5 0 0 1 5 -6V-2" fill="none" stroke="#8be3ff" stroke-width="2.5"/><rect x="-8" y="-2" width="16" height="12" rx="2.5" fill="#8be3ff"/><circle cx="0" cy="3.5" r="1.8" fill="#122b52"/></g>
+  <!-- Far away -->
+  <path d="M226 8V172" stroke="#6f8fbd" stroke-width="2" stroke-dasharray="2 6" stroke-linecap="round"/>
+  <rect x="230" y="6" width="108" height="26" rx="6" fill="#ffb547"/>
+  <text x="284" y="24" font-size="16" font-weight="600" fill="#041937" text-anchor="middle">Mia's number</text>
+  <!-- The scammer, holding a second phone; a text arrives on it -->
+  <g transform="translate(258 112)">
+    <rect x="-18" y="14" width="36" height="40" rx="12" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2"/>
+    <path d="M-16 8Q-18 -18 0 -18Q18 -18 16 8Q0 14 -16 8Z" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2"/>
+    <ellipse cx="0" cy="-1" rx="9.5" ry="10" fill="#1d2a3d"/>
+  </g>
+  <path d="M270 142Q284 144 294 130" fill="none" stroke="#a3b6d2" stroke-width="9" stroke-linecap="round"/>
+  <path d="M270 142Q284 144 294 130" fill="none" stroke="#4a5a72" stroke-width="5" stroke-linecap="round"/>
+  <rect x="288" y="84" width="32" height="56" rx="7" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <path d="M299 90H309" stroke="#6f8fbd" stroke-width="2" stroke-linecap="round"/>
+  <path d="M294 69L306 69L304 80Z" fill="#24507f" stroke="#8be3ff" stroke-width="2" stroke-linejoin="round"/>
+  <rect x="238" y="42" width="72" height="28" rx="10" fill="#24507f" stroke="#8be3ff" stroke-width="2"/>
+  <circle cx="258" cy="56" r="3" fill="#e6eef9"/>
+  <circle cx="274" cy="56" r="3" fill="#e6eef9"/>
+  <circle cx="290" cy="56" r="3" fill="#e6eef9"/>
+</svg>

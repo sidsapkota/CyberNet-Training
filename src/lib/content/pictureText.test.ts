@@ -10,7 +10,7 @@ import { loadContent } from "./load";
  * wide. Text that's big enough there is bigger still on tablets and desktops.
  */
 const MIN_PX = 14;
-const PHONE_WIDTH: Record<string, number> = { multiple_choice: 328 - 2 - 16, explainer: 328 - 2 - 32 };
+const PHONE_WIDTH: Record<string, number> = { multiple_choice: 328 - 2 - 16, hook: 328 - 2 - 16, explainer: 328 - 2 - 32 };
 
 function smallestText(svg: string): { viewWidth: number; size: number } | null {
   const viewWidth = Number(svg.match(/viewBox="[\d.-]+\s+[\d.-]+\s+([\d.]+)/)?.[1]);

@@ -45,17 +45,16 @@
 - Continue unlocks once all four have been tapped.
 
 ## 3 · Predict (`do-nothing-tonight`, easy · multiple choice with picture)
+Predict: not scored (any answer, including Not sure, goes straight to the reveal; no hint, no 2nd-wrong step; not counted in first-try accuracy).
 - **Situation:** Whoever got in still has your password. You do nothing.
 - **Picture:** the same activity list, the 2:13 am laptop row lightly outlined. A small moon in the
   corner. → **Reveal:** a new row at the bottom, "Sign-in · Laptop · Tonight 1:48 am", and a message
   bubble from Jai over the list: "You sent it again?"
 - **Action:** Tap what happens tonight.
 - **Answers:** "They sign in again and send more links" · "The app throws them out on its own" ·
-  "They can't: a password only works once"
-- **Correct:** "They sign in again and send more links"
-- **Right:** They still have your password, so nothing stops them coming back.
-- **1st wrong:** Think about what they're holding that lets them in.
-- **2nd wrong:** They sign in again and send more links: your password still works for them.
+  "They can't: a password only works once" · "Not sure"
+- **What happens:** "They sign in again and send more links".
+- **Reveal line:** Here's what happens… your password still works for them, so they come back tonight.
 
 ## 4 · Name it (`meet-take-over`, explainer)
 - **Says:** Someone else using your account is a **take-over**. The warning sign is anything your

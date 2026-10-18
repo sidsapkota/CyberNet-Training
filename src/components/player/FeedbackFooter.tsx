@@ -11,7 +11,11 @@ import { StreakIcon } from "@/components/streak/StreakIcon";
 import type { MascotExpression } from "@/components/mascot/poses";
 import { PRESS_SPRING } from "@/lib/motion";
 
-export type FeedbackTone = "neutral" | "correct" | "incorrect";
+/**
+ * `reveal` (Lesson Blueprint): a calm panel with a lightbulb, never a tick or cross: a Predict card's
+ * "Here's what happens…", and the answer shown after a second wrong try ("Here's the answer").
+ */
+export type FeedbackTone = "neutral" | "correct" | "incorrect" | "reveal";
 
 /** The card's hint (lessons and Mistake review): a footer button, its text above the buttons. */
 export interface FooterHint {
@@ -58,7 +62,17 @@ const toneStyles: Record<FeedbackTone, { panel: string; text: string; button: Bu
   neutral: { panel: "border-line bg-canvas", text: "text-ink", button: "primary" },
   correct: { panel: "border-success bg-success-soft", text: "text-success", button: "success" },
   incorrect: { panel: "border-danger bg-danger-soft", text: "text-danger", button: "danger" },
+  reveal: { panel: "border-line-strong bg-surface", text: "text-ink", button: "primary" },
 };
+
+/** The reveal tone's mark: a lightbulb in a node (it explains; it doesn't mark right or wrong). */
+function RevealNode() {
+  return (
+    <span className="grid size-9 shrink-0 place-items-center rounded-node border-2 border-line-strong bg-surface-raised text-ink">
+      <HintIcon className="size-5" />
+    </span>
+  );
+}
 
 /**
  * Status node: fills in with a check (correct) or shows a cross (wrong). Icon + heading text
@@ -139,7 +153,7 @@ export function FeedbackFooter({
             >
               <div className="flex items-center gap-3">
                 <span className="relative grid shrink-0 place-items-center">
-                  <StatusNode correct={tone === "correct"} />
+                  {tone === "reveal" ? <RevealNode /> : <StatusNode correct={tone === "correct"} />}
                   {/* The course's little wrong-answer moment, over the cross (never in the way). */}
                   {tone === "incorrect" && wrongTheme && (
                     <span className="pointer-events-none absolute -inset-2 grid place-items-center">

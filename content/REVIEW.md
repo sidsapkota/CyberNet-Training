@@ -1524,52 +1524,79 @@ cards removed only re-checked vocabulary taught elsewhere.
 
 ## Module 1: Lock Your Accounts (free)
 
+Rebuilt 18–19 October 2026 to Lesson Blueprint v1.1 (storyboards in `docs/storyboards/stay-safe-online/`):
+two lessons became four, one idea each. The story: Mia, her phone, her Game Club, Email and Music apps,
+and a calm grey scammer far away. No longer covered: backup codes, and "know, have or are" as a framework.
+
 ### 1.1 Strong Passwords (`strong-passwords`)
-**Goals:**
-- Know how passwords get guessed.
-- Length matters most.
-- Passphrases.
-- One password per account.
+**Goals:** how computers guess passwords; length matters most; the guess list; passphrases.
 
 **Key claims:**
-- Stolen password lists are usually scrambled, so attackers guess with computers. They try common
-  passwords, words, names, birthdays and substitutions (`@` for `a`) first.
-- Each extra lowercase letter multiplies the combinations by 26: 26 × 26 = 676.
-- A passphrase is 4+ random words and at least 15 characters (cyber.gov.au). Lyrics, quotes and
-  personal details are guessable however long they are.
-- Passwords reused from a data breach get tried on other sites. Change it everywhere, starting
-  with email, which can reset other accounts.
+- Guessing computers try a **guess list** first: common passwords, names, years, song lines and the
+  swaps people make (`$` for S, `1` for i, `@` for a).
+- Each extra random lowercase letter multiplies the combinations by 26.
+- A passphrase is four or more random words (cyber.gov.au also asks for at least 15 characters; every
+  example in the lesson is longer). Lyrics, quotes and personal details are guessable however long.
 
 **Simplifications:**
-- The simulator (`password` model) counts every combination of a **random** password at an
-  illustrative **one billion guesses a second**. Real speeds range from a few guesses a second (a
-  website's sign-in page) to far more (fast hardware against weakly stored passwords). The model
-  only applies to random passwords; the lesson says real guessers try predictable ones first.
-- The simulator doesn't model passphrases (guessing whole words from a word list). At a billion
-  guesses a second, four random words from a typical list would fall faster than their character
-  count suggests. That would seem to contradict the official advice, which assumes passwords are
-  well protected when stored. So the lesson teaches passphrases as "length you can remember", in
-  an explainer.
-- At that speed: 14 lowercase letters ≈ 2,000 years; 13 ≈ 78 years; 10 characters from all 95
-  printable characters ≈ 1,900 years.
+- The play simulator (`password` model) counts every combination of a **random** lowercase password at
+  an illustrative **one billion guesses a second**: 6 letters ≈ 0.3 s, 10 ≈ 1.6 days, 14 ≈ 2,044 years,
+  20 ≈ 632 billion years (quiz: 15 ≈ 53,000 years, 16 ≈ 1 million years). Real speeds range from a few
+  guesses a second (a sign-in page) to far more (fast hardware against weakly stored passwords).
+- It doesn't model word-list guessing, so the race picture's passphrase "still guessing" is the
+  official advice's view (passphrases are strong when passwords are stored properly), shown as a story.
+- The play card shows the simulator's own readout; the drawn phone and dial are on the Hook picture.
 
-### 1.2 Two-Step Sign-In (`two-step-sign-in`)
-**Goals:**
-- Know, have or are.
-- Rank second factors from strongest to weakest.
-- Never share a code.
-- Password managers.
-- Backup codes.
+### 1.2 One Password Each (`one-password-each`, new)
+**Goals:** a leak opens every account that shares the password; one password per account; change your
+email first; a password manager remembers them.
 
 **Key claims:**
-- Strongest to weakest: passkeys, then authenticator apps, then SMS codes (cyber.gov.au).
-- No real company asks for a sign-in code. An unexpected code means someone has your password.
-- A password manager fills in only on the real site.
-- Save your backup codes.
+- Leaked passwords get tried on other sites, so one password reused everywhere opens every account.
+- "Forgot password?" reset links go to your email, so whoever has your email can reset the rest:
+  change the email password first, then give each account its own.
+- A password manager is opened with one **master password**, which should be your strongest
+  passphrase and used nowhere else (cyber.gov.au, *Personal cyber security: Next steps*; checked
+  18 October 2026).
+- A password manager fills in only on the real site (Fake Websites relies on this; as verified for
+  the old 1.2).
 
-**Simplifications:**
-- "Two-step", "two-factor" and "multi-factor" are treated as the same thing.
-- Security questions are described as weak (they can be guessed or found), not as a factor.
+**Simplifications:** "leak" is the plain word for a data breach; passwords and accounts are drawn as
+keys and padlocks.
+
+### 1.3 Two-Step Sign-In (`two-step-sign-in`)
+**Goals:** what two-step sign-in is; never share a sign-in code; a code you didn't ask for means change
+your password now; turn it on for email first.
+
+**Key claims:**
+- The code is only sent after the right password is typed, and it goes to the phone set up on the
+  account, not to whoever is signing in.
+- No real company asks for a sign-in code. A code you didn't ask for means someone has your password.
+- Never send a code to anyone, even a "friend": their account may have been taken over.
+- Email first, because "Forgot password?" links go to your email. The code 481 902 is made up.
+
+**Simplifications:** "two-step", "two-factor" and "multi-factor" are treated as the same thing; a code
+"arrives on your phone" (text or app notification), and codes sent by email aren't covered.
+
+### 1.4 The Strongest Lock (`strongest-lock`, new)
+**Goals:** some second locks are harder to steal than others: passkey, then authenticator app, then text
+code; any of them beats a password alone.
+
+**Key claims:**
+- Strongest to weakest: passkeys, then authenticator apps, then text (SMS) codes (cyber.gov.au).
+- A stolen phone number only beats text codes: an authenticator app makes its code on the phone and
+  nothing is sent; a passkey stays on the device.
+- A passkey only works on the real site; a code typed into a fake copy goes to the scammer.
+- If text codes are the only option, turn them on anyway: most scammers only have the password.
+
+**Simplifications:** "only the text code breaks" assumes the scammer already has the password; account
+recovery by text after a stolen number isn't covered; "No passkey for this site" is a simplified
+picture of the browser finding no passkey.
+
+### Module 1 quiz (`lock-your-accounts-quiz`)
+Eight questions, two per lesson, none a copy of a lesson card: the guess list (sort), a million years
+(simulator), the aunt's passphrase, change email first, a password manager and one leak, a stolen
+password with two-step on, "Game Support" asking for a code, and whose lock is strongest.
 
 ## Module 2: Spot the Scam (Pro)
 

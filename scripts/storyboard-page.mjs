@@ -68,7 +68,7 @@ function field(text) {
   const m = text.match(/^\*\*([^*]+?):\*\*\s*(.*)$/);
   if (!m) return inline(text);
   const key = m[1].toLowerCase();
-  const tone = key.startsWith("right") ? "right" : key.startsWith("1st") ? "hint" : key.startsWith("2nd") ? "answer" : key === "correct" ? "correct" : "";
+  const tone = key.startsWith("right") || key === "what happens" ? "right" : key === "reveal line" ? "hint" : key.startsWith("1st") ? "hint" : key.startsWith("2nd") ? "answer" : key === "correct" ? "correct" : "";
   return `<span class="label ${tone}">${esc(m[1])}</span><span class="value">${inline(m[2])}</span>`;
 }
 

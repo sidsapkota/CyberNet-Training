@@ -601,6 +601,152 @@ function FakeWebsiteBase() {
   );
 }
 
+/* ── Stay Safe Online module 1 (Lesson Blueprint): home screen, sign-in options, sign-in ── */
+// Text here is 15–17 units in 320-wide scenes, so it reads at about 14px or more on a phone.
+
+function Padlock({ x, y }: { x: number; y: number }) {
+  return (
+    <g>
+      <rect x={x} y={y + 7} width={16} height={12} rx={2.5} fill={C.ink} />
+      <path d={`M${x + 3.5} ${y + 7}V${y + 4.5}A4.5 4.5 0 0 1 ${x + 12.5} ${y + 4.5}V${y + 7}`} fill="none" stroke={C.ink} strokeWidth={2} />
+    </g>
+  );
+}
+
+function AppIcon({ x, label, glyph }: { x: number; label: string; glyph: ReactNode }) {
+  return (
+    <g>
+      <rect x={x + 7} y={62} width={56} height={56} rx={14} fill={C.part} stroke={C.edge} strokeWidth={1.5} />
+      <g transform={`translate(${x + 35} 90)`}>{glyph}</g>
+      <Padlock x={x + 4} y={50} />
+      <text x={x + 35} y={146} fontSize={15} fontWeight={600} fill={C.ink} fontFamily={sans} textAnchor="middle">
+        {label}
+      </text>
+    </g>
+  );
+}
+
+const HOME: Record<string, ReactNode> = {
+  "app-game-club": (
+    <AppIcon
+      x={14}
+      label="Game Club"
+      glyph={<path d="M-14 -6H14A6 6 0 0 1 14 8H-14A6 6 0 0 1 -14 -6ZM-8 -2V4M-11 1H-5" fill="none" stroke={C.ink} strokeWidth={2.2} strokeLinecap="round" />}
+    />
+  ),
+  "app-email": (
+    <AppIcon x={90} label="Email" glyph={<path d="M-14 -9H14V9H-14ZM-14 -9L0 2L14 -9" fill="none" stroke={C.ink} strokeWidth={2.2} strokeLinejoin="round" />} />
+  ),
+  "app-music": (
+    <AppIcon
+      x={166}
+      label="Music"
+      glyph={<path d="M-4 8V-10L10 -13V5M-4 8A4 4 0 1 1 -4 7.9M10 5A4 4 0 1 1 10 4.9" fill="none" stroke={C.ink} strokeWidth={2.2} strokeLinecap="round" />}
+    />
+  ),
+  "app-photos": (
+    <AppIcon
+      x={242}
+      label="Photos"
+      glyph={<path d="M-14 -10H14V10H-14ZM-14 6L-4 -2L4 5L8 1L14 6" fill="none" stroke={C.ink} strokeWidth={2.2} strokeLinejoin="round" />}
+    />
+  ),
+};
+
+function HomeScreenBase() {
+  return (
+    <>
+      <rect x={4} y={4} width={312} height={212} rx={22} fill={C.panel} stroke={C.edge} strokeWidth={2} />
+      <text x={24} y={34} fontSize={15} fontWeight={600} fill={C.muted} fontFamily={sans}>9:41</text>
+      <rect x={130} y={190} width={60} height={5} rx={2.5} fill={C.edge} />
+    </>
+  );
+}
+
+function OptionRow({ y, label, glyph }: { y: number; label: string; glyph: ReactNode }) {
+  return (
+    <g>
+      <rect x={16} y={y} width={288} height={46} rx={10} fill={C.part} stroke={C.edge} strokeWidth={1.5} />
+      <g transform={`translate(42 ${y + 23})`}>{glyph}</g>
+      <text x={70} y={y + 29} fontSize={16} fontWeight={600} fill={C.ink} fontFamily={sans}>
+        {label}
+      </text>
+      <path d={`M286 ${y + 16}L293 ${y + 23}L286 ${y + 30}`} fill="none" stroke={C.muted} strokeWidth={2} strokeLinecap="round" />
+    </g>
+  );
+}
+
+const OPTIONS: Record<string, ReactNode> = {
+  "option-text-code": (
+    <OptionRow
+      y={64}
+      label="Text me a code"
+      glyph={<path d="M-11 -8H11V5H-2L-8 10V5H-11Z" fill="none" stroke={C.ink} strokeWidth={2} strokeLinejoin="round" />}
+    />
+  ),
+  "option-authenticator": (
+    <OptionRow
+      y={120}
+      label="Authenticator app"
+      glyph={<path d="M-7 -11H7A2 2 0 0 1 9 -9V9A2 2 0 0 1 7 11H-7A2 2 0 0 1 -9 9V-9A2 2 0 0 1 -7 -11ZM-4 -2H4M-4 3H2" fill="none" stroke={C.ink} strokeWidth={2} strokeLinecap="round" />}
+    />
+  ),
+  "option-passkey": (
+    <OptionRow
+      y={176}
+      label="Passkey"
+      glyph={<path d="M-10 -10H-5M5 -10H10V-5M10 5V10H5M-5 10H-10V5M-10 -5V-10M-3 -2V0M3 -2V0M-3 4A4 3 0 0 0 3 4" fill="none" stroke={C.ink} strokeWidth={2} strokeLinecap="round" />}
+    />
+  ),
+};
+
+function SignInOptionsBase() {
+  return (
+    <>
+      <rect x={4} y={4} width={312} height={228} rx={18} fill={C.panel} stroke={C.edge} strokeWidth={2} />
+      <text x={20} y={34} fontSize={17} fontWeight={600} fill={C.ink} fontFamily={sans}>Sign-in options</text>
+      <text x={20} y={54} fontSize={15} fill={C.muted} fontFamily={sans}>Email</text>
+    </>
+  );
+}
+
+const SIGN_IN: Record<string, ReactNode> = {
+  "sign-in-password": (
+    <g>
+      <text x={20} y={62} fontSize={15} fontWeight={600} fill={C.ink} fontFamily={sans}>Step 1: Password</text>
+      <rect x={20} y={70} width={120} height={24} rx={5} fill={C.bg} stroke={C.edge} strokeWidth={1.2} />
+      <text x={28} y={87} fontSize={16} fill={C.ink} fontFamily={mono}>••••••••</text>
+      <rect x={148} y={70} width={52} height={24} rx={5} fill={C.edge} />
+      <text x={174} y={87} fontSize={15} fontWeight={600} fill={C.ink} fontFamily={sans} textAnchor="middle">Next</text>
+    </g>
+  ),
+  "sign-in-code-box": (
+    <g>
+      <text x={20} y={128} fontSize={15} fontWeight={600} fill={C.ink} fontFamily={sans}>Step 2: Enter the code</text>
+      <rect x={20} y={136} width={120} height={24} rx={5} fill={C.bg} stroke={C.edge} strokeWidth={1.2} strokeDasharray="4 3" />
+    </g>
+  ),
+  "sign-in-phone": (
+    <g>
+      <rect x={226} y={34} width={82} height={152} rx={14} fill={C.panel} stroke={C.edge} strokeWidth={2} />
+      <rect x={232} y={58} width={70} height={74} rx={8} fill={C.part} stroke={C.edge} strokeWidth={1} />
+      <text x={238} y={78} fontSize={15} fontWeight={600} fill={C.muted} fontFamily={sans}>Code</text>
+      <text x={238} y={100} fontSize={16} fontWeight={600} fill={C.ink} fontFamily={mono}>481</text>
+      <text x={238} y={120} fontSize={16} fontWeight={600} fill={C.ink} fontFamily={mono}>902</text>
+    </g>
+  ),
+};
+
+function SignInBase() {
+  return (
+    <>
+      <rect x={6} y={14} width={208} height={168} rx={10} fill={C.panel} stroke={C.edge} strokeWidth={2} />
+      <text x={20} y={38} fontSize={16} fontWeight={600} fill={C.muted} fontFamily={sans}>Email</text>
+      <path d="M0 190H220" stroke={C.edge} strokeWidth={4} strokeLinecap="round" />
+    </>
+  );
+}
+
 /* ── Registry ─────────────────────────────────────────────────────────────────────────── */
 
 const ART: Record<SceneId, { Base: () => ReactNode; parts: Record<string, ReactNode> }> = {
@@ -610,6 +756,9 @@ const ART: Record<SceneId, { Base: () => ReactNode; parts: Record<string, ReactN
   email: { Base: EmailBase, parts: EMAIL },
   "text-message": { Base: TextMessageBase, parts: TEXTS },
   "fake-website": { Base: FakeWebsiteBase, parts: SITE },
+  "home-screen": { Base: HomeScreenBase, parts: HOME },
+  "sign-in-options": { Base: SignInOptionsBase, parts: OPTIONS },
+  "sign-in": { Base: SignInBase, parts: SIGN_IN },
 };
 
 export function sceneHasArt(id: string, partIds: readonly string[]): boolean {

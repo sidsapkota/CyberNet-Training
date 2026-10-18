@@ -45,39 +45,77 @@ Strong passwords, passphrases and two-step sign-in.
 
 #### Strong Passwords
 
-- **What you learn:** How passwords get guessed, and how to make yours hard to crack.
+- **What you learn:** Why long, random passwords beat a scammer's guessing computer.
 - **Access:** Free, no account needed (best for video links)
 - **Link:** `cybernettraining.com/from/<platform>/strong-passwords`
 
 **Key facts**
 
-- *Words it teaches:* Guessers try **common passwords** like `password123`, **names and years**, and **song lines** first. A **passphrase** is four or more **random** words, like `otter planet brick soup`: never a song line.
-- *Recap:* **Length** wins: a **passphrase** is four or more **random** words. Give every account its **own** password.
+- *Meet the passphrase:* Scammers' computers try a **guess list** first: common passwords, names, years and song lines. A **passphrase** is four or more random words: long, and not on the guess list.
+- *Long and random wins:* A **passphrase** is four or more random words: long, and not on the guess list. **Try this:** Make up four random words that don't go together, ready for your next new password.
 
 **Best interactive cards**
 
-- Simulator: A short password cracks fast. **Drag** to reach 100+ years.
-- Simulator: Twist: just **10 characters**. Add character types to reach **100 years**.
-- Choose what happens: A game site was hacked, and passwords were stolen: a data breach.
+- Simulator: **Drag** to make Mia's password longer. Watch the time.
+- Multiple choice: Three passwords race the scammer's computer. **Tap** the one that lasts longest.
+- Sort into groups: Mia jots down four password ideas. **Drag** each into a bin.
+
+#### One Password Each
+
+- **What you learn:** Why every account needs its own password, and how to remember them all.
+- **Access:** Free with a free account
+- **Link:** `cybernettraining.com/from/<platform>/one-password-each`
+
+**Key facts**
+
+- *A leak:* When a site is hacked and passwords are stolen, that's a **leak**. Scammers try leaked passwords on other apps, so give every account its **own** password.
+- *Recap:* Every account gets its own password; a **password manager** remembers them for you. **Try this:** If your email password is used anywhere else, change it to a new passphrase.
+
+**Best interactive cards**
+
+- Explore the picture: **Tap** each app to see how Mia signs in.
+- Multiple choice: Game Club leaks Mia's password. What can the scammer open?
+- Multiple choice: Mia gives each app its own password. Then Game Club leaks. **Tap** what the scammer can open now.
+
+**Surprising facts**
+
+- With a trusted adult, or on your own if you're 18+, set up a password manager.
 
 #### Two-Step Sign-In
 
-- **What you learn:** Add a second lock to your accounts so a password alone isn't enough.
+- **What you learn:** Add a second lock, so a stolen password alone can't get in.
 - **Access:** Free with a free account
 - **Link:** `cybernettraining.com/from/<platform>/two-step-sign-in`
 
 **Key facts**
 
-- *Words it teaches:* **Two-step sign-in** asks for your password **plus** a second proof, like a code on your phone. A **passkey** signs you in with your face, fingerprint or PIN: the strongest, since fake sites can't use it. An **authenticator app** makes fresh codes on your phone, safer than codes sent by text.
-- *Recap:* **Two-step sign-in** adds a second proof, so a stolen password isn't enough. **Never share a sign-in code.** Got one you didn't ask for?
+- *Two-step sign-in:* This is **two-step sign-in**: your password, then a second lock, a **code** sent to your phone.
+- *Recap:* **Two-step sign-in** means a stolen password isn't enough, as long as you never share your code. **Try this:** With a trusted adult, or on your own if you're 18+, turn on two-step sign-in for your email.
 
 **Best interactive cards**
 
-- Choose what happens: A sign-in code arrives when someone types your password.
-- Choose what happens: A password manager keeps a different strong password for every account.
-- Choose what happens: A music app only offers text codes for two-step.
+- Explore the picture: Sign in to Mia's email, the way she does. **Tap each part.**
+- Multiple choice: The scammer types Mia's password and taps Next. **What happens?**
+- Multiple choice: A sign-in code arrives. Mia didn't sign in. **Tap what it means.**
 
-#### Module quiz (7 questions)
+#### The Strongest Lock
+
+- **What you learn:** Some second locks are harder to steal than others. Pick the strongest.
+- **Access:** Free with a free account
+- **Link:** `cybernettraining.com/from/<platform>/strongest-lock`
+
+**Key facts**
+
+- *Three locks, ranked:* Strongest to weakest: a **passkey**, an **authenticator app**, then a text code.
+- *Recap:* **Try this:** With a trusted adult, or on your own if you're 18+, look in one app's settings for a passkey or authenticator app. **Next:** The scam email that pretends to be someone you trust.
+
+**Best interactive cards**
+
+- Explore the picture: Mia's email offers three locks. **Tap** each to see how it works.
+- Multiple choice: The scammer has Mia's password, and now her number. What happens?
+- Put in order: Mia lines up four ways to sign in. Drag them strongest to weakest.
+
+#### Module quiz (8 questions)
 
 Not exported, so the answers stay secret.
 

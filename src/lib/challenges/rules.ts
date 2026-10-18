@@ -44,7 +44,10 @@ export function canSendEmote(id: string, hasPro: boolean): boolean {
  * sense on their own better than the opening "watch it" card).
  */
 export function challengeCards(cards: readonly Card[]): InteractiveCard[] {
-  return cards.filter((c): c is InteractiveCard => c.difficulty === "core" && isInteractiveCard(c)).slice(-CHALLENGE_SIZE);
+  // Predict cards (Lesson Blueprint) aren't scored, so they never go into a duel.
+  return cards
+    .filter((c): c is InteractiveCard => c.difficulty === "core" && isInteractiveCard(c) && !(c.type === "multiple_choice" && c.predict))
+    .slice(-CHALLENGE_SIZE);
 }
 
 export function canChallenge(cards: readonly Card[]): boolean {

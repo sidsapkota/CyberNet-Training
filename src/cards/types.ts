@@ -11,6 +11,11 @@ export interface CardComponentProps<C, A> {
   answer: A;
   onAnswerChange: (answer: A) => void;
   status: CardStatus;
+  /**
+   * Lesson Blueprint: the answer has been shown after a second wrong try. Views that can, mark the
+   * right answer (and show an earned reveal picture); the learner's own wrong pick stays marked wrong.
+   */
+  revealAnswer?: boolean;
 }
 
 export interface GradeResult {

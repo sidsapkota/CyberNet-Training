@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 180" width="340" height="180" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>The scammer at their laptop on Mia's email sign-in page. Step 1, Password, is filled in and the pointer is on Next. Far away, Mia has her phone in her pocket.</title>
+<g>
+    <rect x="66" y="8" width="180" height="120" rx="10" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+    <path d="M80 22h20v14h-20ZM80 22l10 8l10 -8" fill="none" stroke="#a3b6d2" stroke-width="2" stroke-linejoin="round"/>
+    <text x="108" y="35" font-size="16" font-weight="600" fill="#a3b6d2">Email</text>
+    <text x="232" y="35" font-size="16" font-weight="600" fill="#a3b6d2" text-anchor="end">Step 1</text>
+    <text x="80" y="62" font-size="16" font-weight="600" fill="#e6eef9">Password</text>
+    <rect x="80" y="72" width="92" height="28" rx="5" fill="#061630" stroke="#6f8fbd" stroke-width="1.5"/>
+    <text x="88" y="92" font-size="16" font-weight="600" fill="#e6eef9" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace">••••••••</text>
+    <rect x="180" y="72" width="52" height="28" rx="5" fill="#6f8fbd"/>
+    <text x="206" y="92" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Next</text>
+    <path d="M216 88l0 22l6 -5l4 9l4 -2l-4 -9l8 0Z" fill="#e6eef9" stroke="#061630" stroke-width="1.5" stroke-linejoin="round"/>
+    <path d="M60 128H252L258 138H54Z" fill="#24507f" stroke="#6f8fbd" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+  <g transform="translate(34 128) scale(1)">
+    <path d="M-21 14Q-24 36 -24 46L24 46Q24 36 21 14Z" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M0 -18C12 -18 18 -8 18 4L18 16L-18 16L-18 4C-18 -8 -12 -18 0 -18Z" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2" stroke-linejoin="round"/>
+    <ellipse cx="0" cy="3" rx="10" ry="11" fill="#1d2a3d"/>
+  </g>
+  <g>
+    <path d="M264 6V174" stroke="#a3b6d2" stroke-width="3" stroke-linecap="round" stroke-dasharray="0.1 9"/>
+    <g>
+    <rect x="277" y="109" width="38" height="44" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="2"/>
+    <rect x="297" y="123" width="12" height="21" rx="3" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="1.5"/>
+    <rect x="284" y="133" width="24" height="13" rx="4" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+    <circle cx="296" cy="96" r="14" fill="#f2c6a0"/>
+    <path d="M281.4 95A14.6 14.6 0 0 1 310.6 95C305 88 287 88 281.4 95Z" fill="#3b2a1f"/>
+    <circle cx="291" cy="99" r="1.9" fill="#1d2a3d"/>
+    <circle cx="301" cy="99" r="1.9" fill="#1d2a3d"/>
+  </g>
+    <rect x="283" y="153" width="10" height="17" rx="4" fill="#122b52" stroke="#8be3ff" stroke-width="1.5"/>
+    <rect x="299" y="153" width="10" height="17" rx="4" fill="#122b52" stroke="#8be3ff" stroke-width="1.5"/>
+    <ellipse cx="287" cy="172" rx="7" ry="3.5" fill="#e6eef9"/>
+    <ellipse cx="305" cy="172" rx="7" ry="3.5" fill="#e6eef9"/>
+  </g>
+</svg>

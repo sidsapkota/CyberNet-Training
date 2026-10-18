@@ -39,16 +39,15 @@
 - Continue unlocks once all five have been tapped.
 
 ## 3 · Predict (`block-before-saving`, easy · multiple choice with picture)
+Predict: not scored (any answer, including Not sure, goes straight to the reveal; no hint, no 2nd-wrong step; not counted in first-try accuracy).
 - **Situation:** You tap Block before saving anything.
 - **Picture:** the chat, with a finger pressing "Block". → **Reveal:** the `blocked` view: an empty
   chat with one grey line, "You blocked shadow_77", and no messages left.
 - **Action:** Tap what might happen to the messages.
 - **Answers:** "They may vanish, leaving nothing to show" · "The app keeps a copy for you" · "Blocking
-  reports them too"
-- **Correct:** "They may vanish, leaving nothing to show"
-- **Right:** On some apps, blocking hides the chat, and the evidence goes with it.
-- **1st wrong:** After you block someone, can you always still see your chat with them?
-- **2nd wrong:** They may vanish: some apps hide the chat when you block, so screenshot first.
+  reports them too" · "Not sure"
+- **What happens:** "They may vanish, leaving nothing to show".
+- **Reveal line:** Here's what happens… on this app, blocking hid the whole chat, and the evidence went with it.
 
 ## 4 · Name it (`screenshot-first`, explainer)
 - **Says:** Before you block, **save the evidence**: screenshot the messages, the username and the
@@ -100,6 +99,6 @@
 
 ## 8 · Wrap (`recap`)
 - **Takeaway:** Screenshot first, then block, report and tell a trusted adult. It's never your fault.
-- **Try this:** Find out how to take a screenshot on your phone.
+- **Try this:** Practise taking a screenshot on your phone, so you can do it fast.
 - **Talk any time:** **Kids Helpline** 1800 55 1800 (ages 5 to 25) or **Lifeline** 13 11 14.
 - **Next:** Who to tell, and where to go, whatever goes wrong online.

@@ -47,19 +47,16 @@
 - Continue unlocks once all eight have been tapped.
 
 ## 3 · Predict (`bank-can-help`, easy · multiple choice with picture)
+Predict: not scored (any answer, including Not sure, goes straight to the reveal; no hint, no 2nd-wrong step; not counted in first-try accuracy).
 - **Situation:** A scam took money from your card. You call your bank now.
 - **Picture:** the board with the "Your bank" tile lit, and beside it a bank card with a phone
   ringing. → **Reveal:** the card with a lock icon and the word "Blocked", and a payment line reading
   "$30 · Being checked".
 - **Action:** Tap what the bank can do.
 - **Answers:** "Block the card, and maybe stop the payment" · "Nothing: once money's gone, it's gone"
-  · "Tell you off for falling for a scam"
-- **Correct:** "Block the card, and maybe stop the payment"
-- **Right:** Calling fast lets the bank block the card and maybe stop the payment, and you're not in
-  trouble.
-- **1st wrong:** Why would the board say to call your bank straight away?
-- **2nd wrong:** They can block the card and may stop the payment. Scams fool adults too, and banks
-  just want to help.
+  · "Tell you off for falling for a scam" · "Not sure"
+- **What happens:** "Block the card, and maybe stop the payment".
+- **Reveal line:** Here's what happens… calling fast lets the bank block the card and check the payment, and you're not in trouble.
 
 ## 4 · Name it (`meet-helpers`, explainer)
 - **Says:** You never have to handle it alone. Start with a **trusted adult**, then go to the helper
@@ -109,5 +106,5 @@
 - **Takeaway:** You never have to handle it alone: tell a trusted adult, then the right helper. It's
   never your fault.
 - **Try this:** Save **Kids Helpline** (1800 55 1800) and **Lifeline** (13 11 14) in your phone, next
-  to a trusted adult's number.
+  to the number of someone you trust.
 - **Next:** The course final: show everything you've learned.

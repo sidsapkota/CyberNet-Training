@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 180" width="340" height="180" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>A bubble shows the scammer far away, stuck on Enter the code. Mia's phone now shows: Email, password changed, with a green tick.</title>
+<rect x="4" y="2" width="194" height="66" rx="12" fill="#061630" stroke="#a3b6d2" stroke-width="2" stroke-dasharray="5 4"/>
+  <g transform="translate(29 30) scale(0.85)">
+    <path d="M0 -18C12 -18 18 -8 18 4L18 16L-18 16L-18 4C-18 -8 -12 -18 0 -18Z" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2" stroke-linejoin="round"/>
+    <ellipse cx="0" cy="3" rx="10" ry="11" fill="#1d2a3d"/>
+  </g>
+  <rect x="11" y="44" width="38" height="18" rx="3" fill="#4a5a72" stroke="#a3b6d2" stroke-width="1.5"/>
+  <text x="52" y="26" font-size="22" font-weight="700" fill="#ffb547" text-anchor="middle">?</text>
+  <rect x="58" y="10" width="132" height="50" rx="7" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="66" y="30" font-size="16" font-weight="600" fill="#e6eef9">Enter the code</text>
+  <rect x="66" y="37" width="80" height="16" rx="4" fill="#061630" stroke="#6f8fbd" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <g>
+    <rect x="58" y="88" width="108" height="48" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+    <rect x="97" y="150" width="11" height="20" rx="4" fill="#122b52" stroke="#8be3ff" stroke-width="1.5"/>
+    <rect x="116" y="150" width="11" height="20" rx="4" fill="#122b52" stroke="#8be3ff" stroke-width="1.5"/>
+    <ellipse cx="102" cy="172" rx="8" ry="4" fill="#e6eef9"/>
+    <ellipse cx="122" cy="172" rx="8" ry="4" fill="#e6eef9"/>
+    <g>
+    <rect x="93" y="97" width="38" height="44" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="2"/>
+    <rect x="113" y="111" width="12" height="21" rx="3" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="1.5"/>
+    <rect x="100" y="121" width="24" height="13" rx="4" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+    <circle cx="112" cy="84" r="14" fill="#f2c6a0"/>
+    <path d="M97.4 83A14.6 14.6 0 0 1 126.6 83C121 76 103 76 97.4 83Z" fill="#3b2a1f"/>
+    <circle cx="108.5" cy="87" r="1.9" fill="#1d2a3d"/>
+    <circle cx="118.5" cy="87" r="1.9" fill="#1d2a3d"/>
+  </g>
+    <rect x="64" y="134" width="96" height="18" rx="6" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+    <rect x="50" y="114" width="18" height="42" rx="8" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+    <rect x="156" y="114" width="18" height="42" rx="8" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  </g>
+  <g>
+    <path d="M136 120L216 60M136 120L216 168" stroke="#6f8fbd" stroke-width="1.5" stroke-dasharray="3 4"/>
+    <rect x="214" y="6" width="106" height="170" rx="16" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+    <text x="267" y="42" font-size="20" font-weight="600" fill="#e6eef9" text-anchor="middle">9:14 pm</text>
+    <rect x="176" y="72" width="160" height="72" rx="10" fill="#24507f" stroke="#3ddc97" stroke-width="2"/>
+    <path d="M186 81h20v14h-20ZM186 81l10 8l10 -8" fill="none" stroke="#a3b6d2" stroke-width="2" stroke-linejoin="round"/>
+    <text x="214" y="94" font-size="16" font-weight="600" fill="#a3b6d2">Email</text>
+    <text x="186" y="120" font-size="16" font-weight="600" fill="#e6eef9">Password</text>
+    <text x="186" y="138" font-size="16" font-weight="600" fill="#e6eef9">changed</text>
+    <path d="M303 126l5 5l9 -10" fill="none" stroke="#3ddc97" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

@@ -191,7 +191,7 @@ describe("real content in /content", () => {
   it("lists Stay Safe Online's modules and lessons in order", () => {
     const course = loadContent().courses.find((c) => c.id === "stay-safe-online");
     expect(course?.modules.map((m) => m.lessons.map((l) => l.id))).toEqual([
-      ["strong-passwords", "two-step-sign-in", "lock-your-accounts-quiz"],
+      ["strong-passwords", "one-password-each", "two-step-sign-in", "strongest-lock", "lock-your-accounts-quiz"],
       ["phishing-emails", "scam-texts-and-calls", "fake-websites", "spot-the-scam-quiz"],
       ["your-digital-footprint", "apps-and-wi-fi", "guard-your-privacy-quiz"],
       ["signs-of-a-hack", "deepfake-scams", "getting-help", "stay-safe-online-final"],
@@ -220,7 +220,7 @@ describe("real content in /content", () => {
     for (const outline of course.modules.flatMap((m) => m.lessons)) {
       const text = JSON.stringify(lessons.get(outline.id));
       for (const domain of text.match(/\b[a-z0-9-]+(\.[a-z0-9-]+)*\.[a-z]{2,}\b/gi) ?? []) {
-        if (/\.(jpg|png|mp3|mp4|docx|txt|exe)$/i.test(domain)) continue;
+        if (/\.(jpg|png|svg|mp3|mp4|docx|txt|exe)$/i.test(domain)) continue;
         const d = domain.toLowerCase();
         expect(d.endsWith(".example") || official.has(d) || endings.has(d), `${outline.id}: ${domain}`).toBe(true);
       }
@@ -244,7 +244,12 @@ describe("real content in /content", () => {
       for (const card of lesson.cards) {
         if (!isInteractiveCard(card)) continue;
         const where = `${lesson.id}/${card.id}`;
-        expect(card.hint, `${where} needs a hint`).toBeTruthy();
+        // Lesson Blueprint lessons: Predict cards aren't scored (no hint or nudge); every other graded
+        // card needs a nudge (the 1st-wrong hint) and a showAnswer line (shown after the 2nd wrong).
+        if (lesson.blueprint) {
+          if (card.type === "multiple_choice" && card.predict) continue;
+          expect(card.showAnswer, `${where} needs a showAnswer line (Lesson Blueprint: the 2nd wrong try)`).toBeTruthy();
+        } else expect(card.hint, `${where} needs a hint`).toBeTruthy();
         // Scenarios and teardowns already answer each wrong move with its own feedback.
         if (card.type === "scenario" || card.type === "teardown") continue;
         const everyWrongOptionNudged =
@@ -257,7 +262,7 @@ describe("real content in /content", () => {
   it("teaches before testing: every drawn part is explored before a card tests it", () => {
     // These scenes show their own text on screen (file names; the lines of an email, a text or a
     // web page), so they need no introduction. Each clue they test is taught in an explainer first.
-    const selfLabelled = new Set(["file-browser", "email", "text-message", "fake-website"]);
+    const selfLabelled = new Set(["file-browser", "email", "text-message", "fake-website", "home-screen", "sign-in-options", "sign-in"]);
     const { courses, lessons } = loadContent();
     for (const course of courses) {
       const explored = new Map<string, Set<string>>();
@@ -298,7 +303,7 @@ describe("real content in /content", () => {
   it("every simulator card starts unsolved and can be solved", () => {
     for (const lesson of loadContent().lessons.values()) {
       for (const card of lesson.cards) {
-        if (card.type !== "simulator") continue;
+        if (card.type !== "simulator" || card.mode === "play") continue;
         const where = `${lesson.id}/${card.id}`;
         expect(goalMet(card, initialSimulatorAnswer(card)), `${where} is solved before any change`).toBe(false);
         // Try every combination of control values (sliders at each step).

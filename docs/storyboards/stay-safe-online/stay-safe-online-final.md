@@ -70,7 +70,8 @@
   - **Picture:** the app's "Where you're signed in" list: "This phone" and "Tablet", each with
     "Sign out".
   - **Action:** Tap what you do next.
-  - **Answers:** "Sign out the tablet" · "Leave it: the password is new now"
+  - **Answers:** "Sign out the tablet" · "Leave it: the password is new now" · "Change the password
+    again"
   - **Correct:** "Sign out the tablet"
 - **Explanation:** Tell a trusted adult and change the password, then sign out other devices: a device
   that's already in may stay in.

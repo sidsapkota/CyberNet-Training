@@ -59,14 +59,53 @@ export function wordCount(markdown: string): number {
   return text.split(/\s+/).filter((w) => /[A-Za-z0-9]/.test(w)).length;
 }
 
-export const isNonInteractive = (card: Card) => card.type === "explainer" || card.type === "photo";
+export const isNonInteractive = (card: Card) => card.type === "explainer" || card.type === "photo" || card.type === "hook";
 /** Graded cards and explore hotspots (ungraded but hands-on). */
 export const isHandsOn = (card: Card) => !isNonInteractive(card);
 
 /** An interaction style: hotspot modes count separately; learning cards are one style. */
 const styleOf = (card: Card) => (card.type === "hotspot" ? `hotspot-${card.mode}` : card.type);
 
+/** Lesson Blueprint v1.1 (CLAUDE.md): the shape of a lesson built to it (`blueprint` on the lesson). */
+export const BLUEPRINT_RULES = { cards: { min: 6, max: 8 }, explainersMax: 2, optionsMin: 3 } as const;
+
+function blueprintShapeProblems(lesson: RegularLesson, opts: { helpModule?: boolean }): string[] {
+  const problems: string[] = [];
+  const cards = lesson.cards.filter((c) => c.type !== "photo");
+  if (cards.length < BLUEPRINT_RULES.cards.min || cards.length > BLUEPRINT_RULES.cards.max) {
+    problems.push(`has ${cards.length} cards (Lesson Blueprint: ${BLUEPRINT_RULES.cards.min}–${BLUEPRINT_RULES.cards.max})`);
+  }
+  const explainers = cards.filter((c) => c.type === "explainer");
+  if (explainers.length > BLUEPRINT_RULES.explainersMax) problems.push(`has ${explainers.length} explainers (at most ${BLUEPRINT_RULES.explainersMax}: Name it and the Wrap)`);
+  if (cards[0]?.type === "explainer") problems.push("opens with an explainer (the Hook is a picture and a line, or hands-on)");
+  if (lesson.cards.filter((c) => c.type === "photo").length > RULES.photosMax) problems.push(`has more than ${RULES.photosMax} photo`);
+  if (lesson.cards.filter((c) => c.difficulty === "challenge").length > RULES.bonusMax) problems.push(`has more than ${RULES.bonusMax} bonus cards`);
+  cards.forEach((card, i) => {
+    if (card.type === "multiple_choice" && card.options.length < BLUEPRINT_RULES.optionsMin) {
+      problems.push(`${card.id}: has ${card.options.length} answers (at least ${BLUEPRINT_RULES.optionsMin}, never 2)`);
+    }
+    if (card.type === "true_false") problems.push(`${card.id}: true or false has only 2 answers (at least ${BLUEPRINT_RULES.optionsMin})`);
+    if (card.type === "explainer") {
+      const limit = card.mascot || opts.helpModule ? RULES.explainerWordsLong : RULES.explainerWords;
+      const words = wordCount(card.body);
+      if (words > limit) problems.push(`${card.id}: explainer is ${words} words (at most ${limit})`);
+    }
+    const previous = cards[i - 1];
+    if (previous && isNonInteractive(previous) && isNonInteractive(card)) problems.push(`${previous.id} → ${card.id}: two non-interactive cards in a row`);
+  });
+  const last = cards.at(-1);
+  if (last?.type !== "explainer") problems.push("doesn't end with the Wrap (an explainer)");
+  else {
+    if (!/\bTry this:/.test(last.body)) problems.push(`${last.id}: the Wrap needs a "Try this: …" line`);
+    if (!/\bNext:/.test(last.body)) problems.push(`${last.id}: the Wrap needs a one-line "Next: …" tease`);
+    const bullets = last.body.split("\n").filter((line) => /^\s*[-*]\s+/.test(line)).length;
+    if (bullets > RULES.recapBullets) problems.push(`${last.id}: the Wrap has ${bullets} bullets (at most ${RULES.recapBullets})`);
+  }
+  return problems;
+}
+
 export function lessonShapeProblems(lesson: RegularLesson, opts: { helpModule?: boolean } = {}): string[] {
+  if (lesson.blueprint) return blueprintShapeProblems(lesson, opts);
   const problems: string[] = [];
   const cards = lesson.cards;
   const counted = cards.filter((c) => c.type !== "photo");

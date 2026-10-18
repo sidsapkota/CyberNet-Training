@@ -10,6 +10,7 @@ export const SECONDS_BY_TYPE: Record<Card["type"], number> = {
   explainer: 15,
   photo: 0, // a quick look; not counted
   reveal: 8,
+  hook: 5,
   true_false: 8,
   fill_gap: 12,
   multiple_choice: 20,

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 150" width="340" height="150" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Mia sits on her couch with her phone in her hoodie pocket. Far away, across a dotted line over the sea, a grey hooded scammer sits at a laptop with a sticky note on it: Mia's email password.</title>
+  <g>
+    <rect x="18" y="44" width="108" height="48" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+    <rect x="57" y="106" width="11" height="20" rx="4" fill="#122b52" stroke="#8be3ff" stroke-width="1.5"/>
+    <rect x="76" y="106" width="11" height="20" rx="4" fill="#122b52" stroke="#8be3ff" stroke-width="1.5"/>
+    <ellipse cx="62" cy="128" rx="8" ry="4" fill="#e6eef9"/>
+    <ellipse cx="82" cy="128" rx="8" ry="4" fill="#e6eef9"/>
+    <g>
+    <rect x="53" y="53" width="38" height="44" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="2"/>
+    <rect x="73" y="67" width="12" height="21" rx="3" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="1.5"/>
+    <rect x="60" y="77" width="24" height="13" rx="4" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+    <circle cx="72" cy="40" r="14" fill="#f2c6a0"/>
+    <path d="M57.4 39A14.6 14.6 0 0 1 86.6 39C81 32 63 32 57.4 39Z" fill="#3b2a1f"/>
+    <circle cx="67" cy="43" r="1.9" fill="#1d2a3d"/>
+    <circle cx="77" cy="43" r="1.9" fill="#1d2a3d"/>
+  </g>
+    <rect x="24" y="90" width="96" height="18" rx="6" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+    <rect x="10" y="70" width="18" height="42" rx="8" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+    <rect x="116" y="70" width="18" height="42" rx="8" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  </g>
+  <g>
+    <path d="M140 126q5 -6 10 0 t10 0q5 -6 10 0 t10 0q5 -6 10 0 t10 0L200 142L140 142Z" fill="#1d3d6e"/>
+    <path d="M140 126q5 -6 10 0 t10 0q5 -6 10 0 t10 0q5 -6 10 0 t10 0" fill="none" stroke="#6f8fbd" stroke-width="2" stroke-linecap="round"/>
+    <path d="M150 136q5 -5 10 0 t10 0M160 136q5 -5 10 0 t10 0" fill="none" stroke="#6f8fbd" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M136 112Q177 58 218 112" fill="none" stroke="#a3b6d2" stroke-width="3" stroke-linecap="round" stroke-dasharray="0.1 9"/>
+  </g>
+  <g transform="translate(278 26) scale(1)">
+    <path d="M-21 14Q-24 36 -24 46L24 46Q24 36 21 14Z" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M0 -18C12 -18 18 -8 18 4L18 16L-18 16L-18 4C-18 -8 -12 -18 0 -18Z" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2" stroke-linejoin="round"/>
+    <ellipse cx="0" cy="3" rx="10" ry="11" fill="#1d2a3d"/>
+  </g>
+  <g>
+    <rect x="219" y="60" width="118" height="76" rx="8" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2"/>
+    <rect x="214" y="136" width="128" height="7" rx="3" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2"/>
+    <g transform="rotate(-3 278 98)">
+      <rect x="227" y="66" width="102" height="64" rx="3" fill="#ffb547"/>
+      <text x="235" y="86" font-size="16" font-weight="600" fill="#061630">Mia's email</text>
+      <text x="235" y="105" font-size="16" font-weight="600" fill="#061630">password</text>
+      <text x="235" y="123" font-size="16" font-weight="600" fill="#061630" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace">••••••••</text>
+    </g>
+  </g>
+</svg>

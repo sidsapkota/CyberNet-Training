@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 204" width="340" height="204" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Email's padlock is shut, with a tag: Two-step on. Dotted lines run from Email to Game Club, Music and Photos, labelled can reset.</title>
+<rect x="4" y="4" width="332" height="196" rx="22" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="24" y="32" font-size="16" font-weight="600" fill="#a3b6d2">9:41</text>
+  <g>
+    <rect x="20" y="58" width="60" height="60" rx="15" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+    <path transform="translate(50 88) scale(1.1)" d="M-14 -6H14A6 6 0 0 1 14 8H-14A6 6 0 0 1 -14 -6ZM-8 -2V4M-11 1H-5M7 0.5h0.1M10 3.5h0.1" fill="none" stroke="#8be3ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <g><path d="M70 46V41A6 6 0 0 1 82 41V44" fill="none" stroke="#122b52" stroke-width="6" stroke-linecap="round"/><path d="M70 46V41A6 6 0 0 1 82 41V44" fill="none" stroke="#e6eef9" stroke-width="3" stroke-linecap="round"/><rect x="66" y="50" width="20" height="16" rx="3" fill="#e6eef9" stroke="#122b52" stroke-width="1.5"/><circle cx="76" cy="57" r="2.2" fill="#122b52"/><rect x="75" y="57" width="2" height="5" fill="#122b52"/></g>
+    <text x="50" y="142" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Game Club</text>
+  </g>
+  <g>
+    <rect x="100" y="58" width="60" height="60" rx="15" fill="#24507f" stroke="#3ddc97" stroke-width="2.5"/>
+    <path transform="translate(130 88) scale(1.1)" d="M-14 -9H14V9H-14ZM-14 -9L0 2L14 -9" fill="none" stroke="#8be3ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <g><path d="M150 50V45A6 6 0 0 1 162 45V50" fill="none" stroke="#122b52" stroke-width="6" stroke-linecap="round"/><path d="M150 50V45A6 6 0 0 1 162 45V50" fill="none" stroke="#3ddc97" stroke-width="3" stroke-linecap="round"/><rect x="146" y="50" width="20" height="16" rx="3" fill="#3ddc97" stroke="#122b52" stroke-width="1.5"/><circle cx="156" cy="57" r="2.2" fill="#122b52"/><rect x="155" y="57" width="2" height="5" fill="#122b52"/></g>
+    <text x="130" y="142" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Email</text>
+  </g>
+  <g>
+    <rect x="180" y="58" width="60" height="60" rx="15" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+    <path transform="translate(210 88) scale(1.1)" d="M-4 8V-10L10 -13V5M-4 8A4 4 0 1 1 -4 7.9M10 5A4 4 0 1 1 10 4.9" fill="none" stroke="#8be3ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <g><path d="M230 46V41A6 6 0 0 1 242 41V44" fill="none" stroke="#122b52" stroke-width="6" stroke-linecap="round"/><path d="M230 46V41A6 6 0 0 1 242 41V44" fill="none" stroke="#e6eef9" stroke-width="3" stroke-linecap="round"/><rect x="226" y="50" width="20" height="16" rx="3" fill="#e6eef9" stroke="#122b52" stroke-width="1.5"/><circle cx="236" cy="57" r="2.2" fill="#122b52"/><rect x="235" y="57" width="2" height="5" fill="#122b52"/></g>
+    <text x="210" y="142" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Music</text>
+  </g>
+  <g>
+    <rect x="260" y="58" width="60" height="60" rx="15" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+    <path transform="translate(290 88) scale(1.1)" d="M-14 -10H14V10H-14ZM-14 6L-4 -2L4 5L8 1L14 6M6 -5h0.1" fill="none" stroke="#8be3ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <g><path d="M310 46V41A6 6 0 0 1 322 41V44" fill="none" stroke="#122b52" stroke-width="6" stroke-linecap="round"/><path d="M310 46V41A6 6 0 0 1 322 41V44" fill="none" stroke="#e6eef9" stroke-width="3" stroke-linecap="round"/><rect x="306" y="50" width="20" height="16" rx="3" fill="#e6eef9" stroke="#122b52" stroke-width="1.5"/><circle cx="316" cy="57" r="2.2" fill="#122b52"/><rect x="315" y="57" width="2" height="5" fill="#122b52"/></g>
+    <text x="290" y="142" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Photos</text>
+  </g>
+  <rect x="80" y="8" width="100" height="26" rx="13" fill="#3ddc97"/>
+  <text x="130" y="26" font-size="16" font-weight="600" fill="#061630" text-anchor="middle">Two-step on</text>
+  <g fill="none" stroke="#3ddc97" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M130 152V170M50 170H290M50 170V156M210 170V156M290 170V156" stroke-dasharray="0.1 7"/>
+    <path d="M44 160L50 153L56 160M204 160L210 153L216 160M284 160L290 153L296 160"/>
+  </g>
+  <text x="170" y="192" font-size="16" font-weight="600" fill="#3ddc97" text-anchor="middle">can reset</text>
+</svg>

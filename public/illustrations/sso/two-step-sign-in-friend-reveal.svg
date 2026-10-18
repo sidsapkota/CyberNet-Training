@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 180" width="340" height="180" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>The L circle has flipped over: behind it is the grey hooded scammer, typing at a laptop. The padlock by Mia's sign-in code is green and stays shut.</title>
+<rect x="4" y="4" width="332" height="172" rx="18" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <rect x="150" y="10" width="40" height="5" rx="2.5" fill="#6f8fbd"/>
+  <rect x="14" y="20" width="312" height="42" rx="10" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <path d="M26 34h20v14h-20ZM26 34l10 8l10 -8" fill="none" stroke="#a3b6d2" stroke-width="2" stroke-linejoin="round"/>
+  <text x="56" y="47" font-size="16" font-weight="500" fill="#e6eef9">Your sign-in code is <tspan font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace" font-weight="600">481 902</tspan></text>
+  <g><path d="M300 33V28A6 6 0 0 1 312 28V33" fill="none" stroke="#122b52" stroke-width="6" stroke-linecap="round"/><path d="M300 33V28A6 6 0 0 1 312 28V33" fill="none" stroke="#3ddc97" stroke-width="3" stroke-linecap="round"/><rect x="296" y="33" width="20" height="16" rx="3" fill="#3ddc97" stroke="#122b52" stroke-width="1.5"/><circle cx="306" cy="40" r="2.2" fill="#122b52"/><rect x="305" y="40" width="2" height="5" fill="#122b52"/></g>
+  <text x="74" y="88" font-size="16" font-weight="600" fill="#a3b6d2">Leo</text>
+  <clipPath id="leo-circle"><circle cx="40" cy="128" r="22"/></clipPath>
+    <circle cx="40" cy="128" r="22" fill="#061630"/>
+    <g clip-path="url(#leo-circle)"><g transform="translate(40 126) scale(0.75)">
+    <path d="M-21 14Q-24 36 -24 46L24 46Q24 36 21 14Z" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M0 -18C12 -18 18 -8 18 4L18 16L-18 16L-18 4C-18 -8 -12 -18 0 -18Z" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2" stroke-linejoin="round"/>
+    <ellipse cx="0" cy="3" rx="10" ry="11" fill="#1d2a3d"/>
+  </g>
+      <rect x="24" y="140" width="32" height="12" rx="2" fill="#4a5a72" stroke="#a3b6d2" stroke-width="1.5"/></g>
+    <circle cx="40" cy="128" r="22" fill="none" stroke="#ff7a7a" stroke-width="2"/>
+  <rect x="72" y="96" width="254" height="72" rx="12" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="84" y="117" font-size="16" font-weight="500" fill="#e6eef9">Oops, I sent my code to you</text>
+  <text x="84" y="137" font-size="16" font-weight="500" fill="#e6eef9">by mistake! Can you send</text>
+  <text x="84" y="157" font-size="16" font-weight="500" fill="#e6eef9">it back?</text>
+</svg>

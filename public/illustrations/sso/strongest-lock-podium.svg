@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" width="320" height="200" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>A podium: Passkey stands in first place, Authenticator app in second and Text code in third. A grey, dashed key labelled Password alone lies on the floor beside it.</title>
+  <!-- Podium blocks -->
+  <rect x="4" y="126" width="114" height="42" rx="4" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <rect x="120" y="98" width="86" height="70" rx="4" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <rect x="208" y="138" width="108" height="30" rx="4" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="61" y="154" font-size="20" font-weight="700" fill="#a3b6d2" text-anchor="middle">2</text>
+  <text x="163" y="140" font-size="20" font-weight="700" fill="#a3b6d2" text-anchor="middle">1</text>
+  <text x="262" y="160" font-size="20" font-weight="700" fill="#a3b6d2" text-anchor="middle">3</text>
+  <path d="M2 170H318" stroke="#6f8fbd" stroke-width="2" stroke-linecap="round"/>
+  <!-- 1st: Passkey -->
+  <text x="163" y="46" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Passkey</text>
+  <rect x="146" y="59" width="34" height="34" rx="8" fill="#24507f" stroke="#00c2ff" stroke-width="2.5"/>
+  <path transform="translate(163 76)" d="M-10 -10H-5M5 -10H10V-5M10 5V10H5M-5 10H-10V5M-10 -5V-10M-3 -2V0M3 -2V0M-3 4A4 3 0 0 0 3 4" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round"/>
+  <!-- 2nd: Authenticator app -->
+  <text x="61" y="64" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Authenticator</text>
+  <text x="61" y="82" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">app</text>
+  <rect x="44" y="89" width="34" height="34" rx="8" fill="#24507f" stroke="#8be3ff" stroke-width="2"/>
+  <path transform="translate(61 106)" d="M-7 -11H7A2 2 0 0 1 9 -9V9A2 2 0 0 1 7 11H-7A2 2 0 0 1 -9 9V-9A2 2 0 0 1 -7 -11ZM-4 -2H4M-4 3H2" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round"/>
+  <!-- 3rd: Text code -->
+  <text x="262" y="92" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Text code</text>
+  <rect x="245" y="99" width="34" height="34" rx="8" fill="#24507f" stroke="#8be3ff" stroke-width="2"/>
+  <path transform="translate(262 116)" d="M-11 -8H11V5H-2L-8 10V5H-11Z" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linejoin="round"/>
+  <!-- On the floor: a password alone -->
+  <g transform="translate(152 186)" fill="none" stroke="#a3b6d2" stroke-width="2" stroke-dasharray="3 3" stroke-linecap="round">
+    <circle cx="0" cy="0" r="5"/>
+    <path d="M5 0H19M15 0V4M19 0V4"/>
+  </g>
+  <text x="180" y="192" font-size="16" fill="#a3b6d2">Password alone</text>
+</svg>
