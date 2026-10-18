@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 176" width="340" height="176" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>The Weekend Crew chat. Under nobody wants you here, a new message from shadow_77: everyone's laughing at you.</title>
+  <rect x="10" y="4" width="320" height="168" rx="16" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="24" y="32" font-size="18" font-weight="500" fill="#a3b6d2">‹</text>
+  <text x="38" y="32" font-size="16" font-weight="600" fill="#e6eef9">Weekend Crew</text>
+  <rect x="186" y="12" width="60" height="28" rx="7" fill="#061630" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="216" y="32" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Block</text>
+  <rect x="252" y="12" width="70" height="28" rx="7" fill="#061630" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="287" y="32" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Report</text>
+  <path d="M10 48H330" fill="none" stroke="#6f8fbd" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="24" y="70" font-size="16" font-weight="600" fill="#a3b6d2">shadow_77</text>
+  <rect x="22" y="76" width="204" height="33" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <text x="34" y="97" font-size="16" font-weight="500" fill="#e6eef9">nobody wants you here</text>
+  <text x="24" y="126" font-size="16" font-weight="600" fill="#a3b6d2">shadow_77 · just now</text>
+  <rect x="22" y="132" width="232" height="33" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <text x="34" y="153" font-size="16" font-weight="500" fill="#e6eef9">everyone's laughing at you</text>
+</svg>

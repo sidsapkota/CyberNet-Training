@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 164" width="340" height="164" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>A new row at the bottom of the list: Laptop, tonight 1:48 am. Jai messages again: You sent it again?</title>
+  <rect x="10" y="8" width="232" height="154" rx="14" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="24" y="32" font-size="16" font-weight="600" fill="#a3b6d2">Recent activity</text>
+  <rect x="18" y="42" width="216" height="34" rx="9" fill="#24507f" stroke="#ffb547" stroke-width="2"/>
+  <path d="M26 50H46V64H26ZM22 68H50" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="56" y="65" font-size="16" font-weight="600" fill="#e6eef9">Laptop</text>
+  <text x="226" y="65" font-size="16" font-weight="500" fill="#a3b6d2" text-anchor="end">2:13 am</text>
+  <rect x="18" y="82" width="216" height="34" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <path d="M30 88H42V110H30ZM34 106H38" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="56" y="105" font-size="16" font-weight="600" fill="#e6eef9">This phone</text>
+  <text x="226" y="105" font-size="16" font-weight="500" fill="#a3b6d2" text-anchor="end">7:04 am</text>
+  <rect x="18" y="122" width="216" height="34" rx="9" fill="#24507f" stroke="#ff7a7a" stroke-width="2"/>
+  <path d="M26 130H46V144H26ZM22 148H50" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="56" y="145" font-size="16" font-weight="600" fill="#e6eef9">Laptop</text>
+  <text x="226" y="145" font-size="16" font-weight="500" fill="#a3b6d2" text-anchor="end">Tonight 1:48 am</text>
+  <circle cx="316" cy="30" r="13" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <text x="316" y="35.6" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">J</text>
+  <rect x="248" y="50" width="88" height="54" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <text x="260" y="71" font-size="16" font-weight="500" fill="#e6eef9">You sent</text>
+  <text x="260" y="92" font-size="16" font-weight="500" fill="#e6eef9">it again?</text>
+</svg>

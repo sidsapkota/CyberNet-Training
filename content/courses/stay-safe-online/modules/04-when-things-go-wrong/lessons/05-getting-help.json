@@ -1,0 +1,251 @@
+{
+  "id": "getting-help",
+  "kind": "lesson",
+  "title": "Getting Help",
+  "about": "Who to tell, and where to go, whatever goes wrong online.",
+  "order": 5,
+  "icon": "life-buoy",
+  "blueprint": "1.1",
+  "cards": [
+    {
+      "id": "who-can-help",
+      "type": "hook",
+      "difficulty": "core",
+      "teaches": [
+        "not-your-fault"
+      ],
+      "situation": "Something online is worrying you. It's never your fault.",
+      "image": {
+        "src": "/illustrations/sso/getting-help-hook.svg",
+        "alt": "You sit on your bed with your phone, thinking: Who do I even tell? On the phone, the faint outline of a board of helper tiles.",
+        "width": 340,
+        "height": 226
+      }
+    },
+    {
+      "id": "help-board",
+      "type": "hotspot",
+      "difficulty": "core",
+      "teaches": [
+        "trusted-adult",
+        "call-000",
+        "kids-helpline",
+        "lifeline",
+        "contact-bank",
+        "idcare",
+        "report-to-scamwatch",
+        "report-to-esafety"
+      ],
+      "prompt": "These people are here to help. **Tap each one.**",
+      "scene": "help-board",
+      "mode": "explore",
+      "parts": [
+        {
+          "part": "help-adult",
+          "job": "A parent, carer, teacher or school counsellor. Start here for anything."
+        },
+        {
+          "part": "help-000",
+          "job": "Someone could get hurt right now? Call 000."
+        },
+        {
+          "part": "help-kids",
+          "job": "Free, private and open any time, for ages 5 to 25. Call 1800 55 1800."
+        },
+        {
+          "part": "help-lifeline",
+          "job": "For anyone in Australia, any time. Call 13 11 14."
+        },
+        {
+          "part": "help-bank",
+          "job": "Money gone from your card? Call your bank straight away."
+        },
+        {
+          "part": "help-idcare",
+          "job": "Your details were stolen? IDCARE (idcare.org) helps you make a plan, for free."
+        },
+        {
+          "part": "help-scamwatch",
+          "job": "Report a scam at scamwatch.gov.au, to warn others."
+        },
+        {
+          "part": "help-esafety",
+          "job": "Bullying the app won't remove, or a private picture shared or threatened? esafety.gov.au."
+        }
+      ],
+      "explanation": "Eight helpers, and you can always start with a trusted adult."
+    },
+    {
+      "id": "bank-can-help",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "predict": true,
+      "play": "predict",
+      "uses": [],
+      "prompt": "A scam took money from your card. You call your bank now. **What can the bank do?**",
+      "image": {
+        "src": "/illustrations/sso/getting-help-bank.svg",
+        "alt": "The Your bank tile is lit, and you're calling. Beside it, your bank card and a payment: Fake shop, $30.",
+        "width": 340,
+        "height": 170,
+        "revealSrc": "/illustrations/sso/getting-help-bank-reveal.svg",
+        "revealAlt": "The bank card now shows a lock: Frozen. The payment reads: $30, checking."
+      },
+      "options": [
+        {
+          "id": "stop-payment",
+          "text": "Stop payments, and maybe get money back"
+        },
+        {
+          "id": "nothing",
+          "text": "Nothing: once money's gone, it's gone"
+        },
+        {
+          "id": "over-100",
+          "text": "Only help if you lost over $100"
+        }
+      ],
+      "correctOptionId": "stop-payment",
+      "explanation": "Calling fast lets the bank stop payments and check this one. The sooner you call, the better your chance of getting money back."
+    },
+    {
+      "id": "meet-helpers",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "trusted-adult"
+      ],
+      "title": "Who can help",
+      "body": "You never have to handle it alone. Start with a **trusted adult**, then go to the helper made for the problem.",
+      "image": {
+        "src": "/illustrations/sso/getting-help-named.svg",
+        "alt": "The Who can help? board, each tile with what it's for. Trusted adult: anything. 000: danger now. Kids Helpline and Lifeline: need to talk. Your bank: money. IDCARE: stolen details. Scamwatch: scams. eSafety: bullying, pictures.",
+        "width": 320,
+        "height": 198
+      }
+    },
+    {
+      "id": "who-to-tell",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "uses": [
+        "kids-helpline",
+        "lifeline",
+        "trusted-adult"
+      ],
+      "prompt": "You're worried about something online, but not ready to tell family. **Tap who you could talk to.**",
+      "image": {
+        "src": "/illustrations/sso/getting-help-who-to-tell.svg",
+        "alt": "You look unsure, thinking: Not ready to tell family. Beside you, part of the Who can help? board: Trusted adult, Kids Helpline, Lifeline and 000.",
+        "width": 340,
+        "height": 170
+      },
+      "options": [
+        {
+          "id": "helpline",
+          "text": "Kids Helpline, Lifeline or a counsellor"
+        },
+        {
+          "id": "no-one",
+          "text": "No one, until it gets really bad",
+          "nudge": "Look at the board: who could you talk to outside your family?"
+        },
+        {
+          "id": "call-000",
+          "text": "Call 000: they help with anything",
+          "nudge": "000 is for danger right now. Who on the board could you just talk to?"
+        }
+      ],
+      "correctOptionId": "helpline",
+      "explanation": "Yes: Kids Helpline, Lifeline and school counsellors are there to talk, so you don't have to cope alone.",
+      "showAnswer": "Kids Helpline, Lifeline or a school counsellor: you don't need a big problem to ask for help."
+    },
+    {
+      "id": "where-to-go",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "uses": [
+        "report-to-esafety",
+        "contact-bank",
+        "idcare",
+        "call-000"
+      ],
+      "prompt": "Four different problems, four helpers. **Match each problem to its helper.**",
+      "pairs": [
+        {
+          "id": "bullying",
+          "left": "Bullying the app won't remove",
+          "right": "eSafety"
+        },
+        {
+          "id": "card",
+          "left": "Money taken from your card",
+          "right": "Your bank, now"
+        },
+        {
+          "id": "details",
+          "left": "Your details were stolen",
+          "right": "IDCARE"
+        },
+        {
+          "id": "danger",
+          "left": "Danger right now",
+          "right": "Call 000"
+        }
+      ],
+      "explanation": "Right: each problem has a helper made for it, and 000 is for danger right now.",
+      "nudge": "Start with the one you're surest of. What did each helper's tile say it's for?",
+      "showAnswer": "Bullying goes to eSafety, card trouble to your bank, stolen details to IDCARE, and danger to 000."
+    },
+    {
+      "id": "fake-shop",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "play": "consequence",
+      "uses": [
+        "contact-bank",
+        "idcare"
+      ],
+      "prompt": "A fake shop got your card number and a photo of your ID. **Tap who to contact.**",
+      "image": {
+        "src": "/illustrations/sso/getting-help-fake-shop.svg",
+        "alt": "A fake shoe shop. Arrows point to two problems: your card number, and a photo of your ID.",
+        "width": 340,
+        "height": 170,
+        "revealSrc": "/illustrations/sso/getting-help-fake-shop-reveal.svg",
+        "revealAlt": "Both problems ticked: your bank froze the card, and IDCARE helps with the photo of your ID."
+      },
+      "options": [
+        {
+          "id": "bank-idcare",
+          "text": "My bank, then IDCARE"
+        },
+        {
+          "id": "000-esafety",
+          "text": "000, then eSafety",
+          "nudge": "There are two problems here: money and stolen details. Who helps with each?"
+        },
+        {
+          "id": "wait",
+          "text": "Wait to see if any money goes",
+          "nudge": "There are two problems here: money and stolen details. Who helps with each?"
+        }
+      ],
+      "correctOptionId": "bank-idcare",
+      "explanation": "Yes: your bank can protect the card, and IDCARE helps with your ID.",
+      "showAnswer": "Your bank for the card, straight away, then IDCARE for your ID."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "not-your-fault",
+        "kids-helpline",
+        "lifeline"
+      ],
+      "title": "Recap",
+      "body": "You never have to handle it alone: tell a trusted adult, then the right helper. It's never your fault.\n\n**Try this:** Save **Kids Helpline** (1800 55 1800) and **Lifeline** (13 11 14) in your phone, next to someone you trust.\n\n**Next:** The course final: show everything you've learned."
+    }
+  ]
+}

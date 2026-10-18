@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 176" width="340" height="176" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>A small screenshot of the chat, marked Screenshot saved, and a trusted adult beside it saying: Thanks for showing me.</title>
+  <rect x="16" y="14" width="130" height="150" rx="12" fill="#1d3d6e" stroke="#8be3ff" stroke-width="2"/>
+  <rect x="28" y="30" width="106" height="18" rx="6" fill="#24507f"/>
+  <rect x="28" y="58" width="90" height="18" rx="6" fill="#24507f"/>
+  <rect x="28" y="86" width="100" height="18" rx="6" fill="#24507f"/>
+  <path d="M43 134L48 139L58 128" fill="none" stroke="#3ddc97" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="64" y="140" font-size="16" font-weight="600" fill="#3ddc97">Saved</text>
+  <rect x="162" y="12" width="170" height="54" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <path d="M302 65L318 76L314 65" fill="#24507f" stroke="#8be3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="174" y="33" font-size="16" font-weight="500" fill="#e6eef9">Thanks for</text>
+  <text x="174" y="54" font-size="16" font-weight="500" fill="#e6eef9">showing me.</text>
+  <g>
+  <rect x="243" y="122" width="50" height="46" rx="15" fill="#1d3d6e" stroke="#8be3ff" stroke-width="2"/>
+  <path d="M268 124V166" fill="none" stroke="#8be3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="268" cy="106" r="16" fill="#d9a77f"/>
+  <path d="M251.5 105A16.6 16.6 0 0 1 284.5 105C280 94 256 94 251.5 105Z" fill="#5a4636"/>
+  <path d="M252 104l2 6M284 104l-2 6" fill="none" stroke="#a3b6d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="262" cy="109" r="2" fill="#1d2a3d"/>
+  <circle cx="274" cy="109" r="2" fill="#1d2a3d"/>
+  <path d="M263 115Q268 119 273 115" fill="none" stroke="#1d2a3d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

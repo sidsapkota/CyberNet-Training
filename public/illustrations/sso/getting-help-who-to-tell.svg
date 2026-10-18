@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 170" width="340" height="170" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>You look unsure, thinking: Not ready to tell family. Beside you, part of the Who can help? board: Trusted adult, Kids Helpline, Lifeline and 000.</title>
+  <rect x="6" y="8" width="150" height="54" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <path d="M24 61L20 72L36 61" fill="#24507f" stroke="#8be3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="18" y="29" font-size="16" font-weight="500" fill="#e6eef9">Not ready to</text>
+  <text x="18" y="50" font-size="16" font-weight="500" fill="#e6eef9">tell family…</text>
+  <g>
+  <rect x="48" y="122" width="44" height="40" rx="14" fill="#24507f" stroke="#8be3ff" stroke-width="2"/>
+  <path d="M61 124Q70 134 79 124" fill="none" stroke="#8be3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="70" cy="108" r="14" fill="#f2c6a0"/>
+  <path d="M55.5 107A14.6 14.6 0 0 1 84.5 107C80 99 68 98 55.5 107Z" fill="#3b2a1f"/>
+  <circle cx="65" cy="111" r="1.9" fill="#1d2a3d"/>
+  <circle cx="75" cy="111" r="1.9" fill="#1d2a3d"/>
+  <path d="M66 116Q70 119 74 116" fill="none" stroke="#1d2a3d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="108" y="100" font-size="24" font-weight="700" fill="#ffb547">?</text>
+  <rect x="166" y="4" width="168" height="162" rx="14" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <rect x="176" y="14" width="148" height="31" rx="8" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="188" y="35" font-size="16" font-weight="600" fill="#e6eef9">Trusted adult</text>
+  <rect x="176" y="51" width="148" height="31" rx="8" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="188" y="72" font-size="16" font-weight="600" fill="#e6eef9">Kids Helpline</text>
+  <rect x="176" y="88" width="148" height="31" rx="8" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="188" y="109" font-size="16" font-weight="600" fill="#e6eef9">Lifeline</text>
+  <rect x="176" y="125" width="148" height="31" rx="8" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="188" y="146" font-size="16" font-weight="600" fill="#e6eef9" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace">000</text>
+</svg>

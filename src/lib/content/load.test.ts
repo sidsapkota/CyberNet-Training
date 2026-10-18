@@ -194,7 +194,7 @@ describe("real content in /content", () => {
       ["strong-passwords", "one-password-each", "two-step-sign-in", "strongest-lock", "lock-your-accounts-quiz"],
       ["phishing-emails", "scam-texts-and-calls", "fake-websites", "spot-the-scam-quiz"],
       ["your-digital-footprint", "apps-and-wi-fi", "guard-your-privacy-quiz"],
-      ["signs-of-a-hack", "deepfake-scams", "getting-help", "stay-safe-online-final"],
+      ["signs-of-a-hack", "take-back-your-account", "deepfake-scams", "save-the-evidence", "getting-help", "stay-safe-online-final"],
     ]);
   });
 
@@ -262,7 +262,7 @@ describe("real content in /content", () => {
   it("teaches before testing: every drawn part is explored before a card tests it", () => {
     // These scenes show their own text on screen (file names; the lines of an email, a text or a
     // web page), so they need no introduction. Each clue they test is taught in an explainer first.
-    const selfLabelled = new Set(["file-browser", "email", "text-message", "fake-website", "home-screen", "sign-in-options", "sign-in"]);
+    const selfLabelled = new Set(["file-browser", "email", "text-message", "fake-website", "home-screen", "sign-in-options", "sign-in", "account-activity", "account-security", "group-chat", "help-board"]);
     const { courses, lessons } = loadContent();
     for (const course of courses) {
       const explored = new Map<string, Set<string>>();

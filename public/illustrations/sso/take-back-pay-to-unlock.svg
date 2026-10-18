@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 176" width="340" height="176" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Left, faint: the game's own sign-in screen with a Forgot password? link. Right, your phone: a message from an account named Account Fixer: Locked out? I can unlock it in 5 minutes. Just $20.</title>
+  <g opacity="0.7">
+  <rect x="8" y="22" width="144" height="140" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="22" y="48" font-size="16" font-weight="600" fill="#e6eef9">Game Club</text>
+  <rect x="22" y="60" width="116" height="24" rx="6" fill="#061630" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="30" y="78" font-size="16" font-weight="500" fill="#a3b6d2" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace">••••••</text>
+  <text x="22" y="112" font-size="16" font-weight="600" fill="#8be3ff">Forgot</text>
+  <text x="22" y="132" font-size="16" font-weight="600" fill="#8be3ff">password?</text>
+  <path d="M22 136H98" fill="none" stroke="#8be3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <rect x="160" y="4" width="174" height="168" rx="16" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <circle cx="186" cy="30" r="13" fill="#4a5a72" stroke="#a3b6d2" stroke-width="1.5"/>
+  <text x="186" y="35.6" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">A</text>
+  <text x="206" y="36" font-size="16" font-weight="600" fill="#e6eef9">Account Fixer</text>
+  <path d="M160 50H334" fill="none" stroke="#6f8fbd" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="170" y="60" width="156" height="75" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <text x="182" y="81" font-size="16" font-weight="500" fill="#e6eef9">Locked out? I can</text>
+  <text x="182" y="102" font-size="16" font-weight="500" fill="#e6eef9">unlock it in 5</text>
+  <text x="182" y="123" font-size="16" font-weight="500" fill="#e6eef9">minutes. Just $20.</text>
+</svg>

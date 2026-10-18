@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 166" width="340" height="166" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Your account's Security page. Password: changed just now, with a green tick. Where you're signed in: This phone, and Laptop, a little dimmed.</title>
+  <rect x="10" y="6" width="320" height="158" rx="14" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="26" y="30" font-size="16" font-weight="600" fill="#a3b6d2">Security</text>
+  <rect x="18" y="40" width="304" height="34" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="30" y="63" font-size="16" font-weight="600" fill="#e6eef9">Password</text>
+  <path d="M141 57L146 62L156 51" fill="none" stroke="#3ddc97" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="162" y="63" font-size="16" font-weight="500" fill="#3ddc97">Changed just now</text>
+  <text x="26" y="96" font-size="16" font-weight="500" fill="#a3b6d2">Where you're signed in</text>
+  <rect x="18" y="104" width="304" height="26" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <path d="M30 106H42V128H30ZM34 124H38" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="54" y="123" font-size="16" font-weight="600" fill="#e6eef9">This phone</text>
+  <g opacity="0.55">
+  <rect x="18" y="132" width="304" height="26" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <path d="M26 136H46V150H26ZM22 154H50" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="54" y="151" font-size="16" font-weight="600" fill="#e6eef9">Laptop</text>
+  </g>
+</svg>

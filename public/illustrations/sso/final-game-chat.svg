@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 180" width="340" height="180" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>A game's chat window with a Block button at the top. Three nasty messages from rex_404, the latest at Sunday 6:15 pm.</title>
+  <rect x="8" y="4" width="324" height="172" rx="14" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="22" y="30" font-size="16" font-weight="600" fill="#e6eef9">Game chat</text>
+  <rect x="254" y="10" width="66" height="28" rx="7" fill="#061630" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="287" y="30" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Block</text>
+  <path d="M8 46H332" fill="none" stroke="#6f8fbd" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="22" y="66" font-size="16" font-weight="600" fill="#a3b6d2">rex_404</text>
+  <text x="318" y="66" font-size="16" font-weight="500" fill="#a3b6d2" text-anchor="end">Sunday 6:15 pm</text>
+  <rect x="18" y="72" width="150" height="33" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <text x="30" y="93" font-size="16" font-weight="500" fill="#e6eef9">you're so bad</text>
+  <rect x="18" y="106" width="186" height="33" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <text x="30" y="127" font-size="16" font-weight="500" fill="#e6eef9">quit, nobody likes you</text>
+  <rect x="18" y="140" width="116" height="33" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <text x="30" y="161" font-size="16" font-weight="500" fill="#e6eef9">uninstall</text>
+</svg>

@@ -7,7 +7,7 @@
   { "id": "cafe-wi-fi", "hook": "Free café Wi-Fi. Then it asks for something odd.", "lesson": "apps-and-wi-fi", "card": "wi-fi-wants-password" },
   { "id": "torch-wants-contacts", "hook": "Why would a torch app want your contacts?", "lesson": "apps-and-wi-fi", "card": "needs-it" },
   { "id": "already-hacked", "hook": "Your account could be taken over right now. Spot the signs.", "lesson": "signs-of-a-hack", "card": "hacked-or-normal" },
-  { "id": "mum-on-the-phone", "hook": "It sounds exactly like Mum. It isn't her.", "lesson": "deepfake-scams", "card": "safe-word-check", "rare": true },
+  { "id": "mum-on-the-phone", "hook": "It looks exactly like Grandma. It isn't her.", "lesson": "deepfake-scams", "card": "best-check", "rare": true },
 
   { "id": "phone-ram-upgrade", "hook": "Can you upgrade a phone's memory like a gaming PC?", "lesson": "whats-in-the-box", "card": "phone-ram-swap" },
   { "id": "phone-full", "hook": "Your phone says it's full. Full of what, exactly?", "lesson": "memory-vs-storage", "card": "download-needs-storage" },

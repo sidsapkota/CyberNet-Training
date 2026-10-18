@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 178" width="340" height="178" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>A video call from an unknown number. Grandma's face fills the screen and a bubble says: Quick, love, send it now!</title>
+  <rect x="8" y="6" width="324" height="166" rx="16" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="24" y="32" font-size="16" font-weight="600" fill="#a3b6d2">Video call · Unknown number</text>
+  <rect x="18" y="44" width="304" height="118" rx="10" fill="#061630" stroke="#6f8fbd" stroke-width="1.5"/>
+  <g>
+  <rect x="60" y="114.5" width="72" height="54" rx="22.5" fill="#7a5c8a" stroke="#8be3ff" stroke-width="2"/>
+  <g>
+  <circle cx="96" cy="63.5" r="10.5" fill="#d9dde4"/>
+  <circle cx="96" cy="92" r="24" fill="#f2c6a0"/>
+  <path d="M71.25 95A16.6 16.6 0 0 1 120.75 95C114 80 78 80 71.25 95Z" fill="#d9dde4"/>
+  <circle cx="87" cy="95" r="6.75" fill="none" stroke="#1d2a3d" stroke-width="2.0999999999999996"/>
+  <circle cx="105" cy="95" r="6.75" fill="none" stroke="#1d2a3d" stroke-width="2.0999999999999996"/>
+  <path d="M93.75 95H98.25" fill="none" stroke="#1d2a3d" stroke-width="2.0999999999999996" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="87" cy="95" r="2.25" fill="#1d2a3d"/>
+  <circle cx="105" cy="95" r="2.25" fill="#1d2a3d"/>
+  <path d="M87 105.5Q96 113 105 105.5" fill="none" stroke="#1d2a3d" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  </g>
+  <rect x="170" y="66" width="140" height="54" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <text x="182" y="87" font-size="16" font-weight="500" fill="#e6eef9">Quick, love,</text>
+  <text x="182" y="108" font-size="16" font-weight="500" fill="#e6eef9">send it now!</text>
+</svg>

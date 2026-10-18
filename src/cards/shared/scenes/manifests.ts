@@ -227,6 +227,85 @@ export const SCENES = {
     ],
     views: { default: [] },
   },
+  /*
+   * Stay Safe Online module 4 (Lesson Blueprint): a chat app's account pages, a group chat and a
+   * "Who can help?" board. Self-labelled: every part's name is exactly the text it shows. Text is
+   * 15–17 units in 320-wide scenes. The chat app is just "Chat": no real app's layout or wording.
+   */
+  "account-activity": {
+    id: "account-activity",
+    description: "A chat app's Recent activity page on a phone: a list of what your account did, newest at the bottom.",
+    width: 320,
+    height: 240,
+    parts: [
+      // View "activity": the night someone else signed in.
+      { id: "act-code", name: "Code sent · Yesterday 4:01 pm", box: { x: 14, y: 44, w: 292, h: 44 } },
+      { id: "act-phone", name: "Sign-in · This phone · Yesterday 4:02 pm", box: { x: 14, y: 92, w: 292, h: 44 } },
+      { id: "act-laptop", name: "Sign-in · Laptop · Today 2:13 am", box: { x: 14, y: 140, w: 292, h: 44 } },
+      { id: "act-phone-morning", name: "Sign-in · This phone · Today 7:04 am", box: { x: 14, y: 188, w: 292, h: 44 } },
+      // View "activity-2": a new day.
+      { id: "act2-code", name: "Code sent · Today 8:09 am", box: { x: 14, y: 44, w: 292, h: 44 } },
+      { id: "act2-phone", name: "Sign-in · This phone · Today 8:10 am", box: { x: 14, y: 92, w: 292, h: 44 } },
+      { id: "act2-tablet", name: "Sign-in · Tablet · Today 11:52 am", box: { x: 14, y: 140, w: 292, h: 44 } },
+    ],
+    views: {
+      activity: ["act2-code", "act2-phone", "act2-tablet"],
+      "activity-2": ["act-code", "act-phone", "act-laptop", "act-phone-morning"],
+    },
+  },
+  "account-security": {
+    id: "account-security",
+    description: "A chat app's Security page on a phone: password, where you're signed in, recovery email and two-step sign-in.",
+    width: 320,
+    height: 254,
+    parts: [
+      // View "security": the four settings.
+      { id: "sec-password", name: "Password · Change", box: { x: 14, y: 40, w: 292, h: 32 } },
+      { id: "sec-devices", name: "Where you're signed in: This phone · Sign out, Laptop · Sign out", box: { x: 14, y: 78, w: 292, h: 86 } },
+      // View "changed": the password is new, and each device row is its own part.
+      { id: "sec-password-changed", name: "Password · Changed just now · Change", box: { x: 14, y: 40, w: 292, h: 32 } },
+      { id: "sec-phone", name: "This phone · Sign out", box: { x: 14, y: 98, w: 292, h: 30 } },
+      { id: "sec-laptop", name: "Laptop · Sign out", box: { x: 14, y: 132, w: 292, h: 30 } },
+      // Both views.
+      { id: "sec-recovery", name: "Recovery email: x9help@mail.example · Edit", box: { x: 14, y: 168, w: 292, h: 38 } },
+      { id: "sec-two-step", name: "Two-step sign-in · Off", box: { x: 14, y: 212, w: 292, h: 32 } },
+    ],
+    views: {
+      security: ["sec-password-changed", "sec-phone", "sec-laptop"],
+      changed: ["sec-password", "sec-devices"],
+    },
+  },
+  "group-chat": {
+    id: "group-chat",
+    description: "A group chat called Weekend Crew on a phone, with Block and Report buttons at the top. An account called shadow_77 is posting mean messages.",
+    width: 320,
+    height: 240,
+    parts: [
+      { id: "chat-block", name: "Block", box: { x: 176, y: 10, w: 60, h: 28 } },
+      { id: "chat-report", name: "Report", box: { x: 242, y: 10, w: 66, h: 28 } },
+      { id: "chat-username", name: "shadow_77", box: { x: 12, y: 164, w: 104, h: 22 } },
+      { id: "chat-time", name: "Saturday 8:40 pm", box: { x: 172, y: 164, w: 138, h: 22 } },
+      { id: "chat-message", name: "nobody wants you here", box: { x: 12, y: 188, w: 206, h: 38 } },
+    ],
+    views: { chat: [] },
+  },
+  "help-board": {
+    id: "help-board",
+    description: "A phone screen titled Who can help? with eight tiles: Trusted adult, 000, Kids Helpline, Lifeline, Your bank, IDCARE, Scamwatch and eSafety.",
+    width: 320,
+    height: 252,
+    parts: [
+      { id: "help-adult", name: "Trusted adult", box: { x: 12, y: 42, w: 144, h: 46 } },
+      { id: "help-000", name: "000", box: { x: 164, y: 42, w: 144, h: 46 } },
+      { id: "help-kids", name: "Kids Helpline 1800 55 1800", box: { x: 12, y: 94, w: 144, h: 46 } },
+      { id: "help-lifeline", name: "Lifeline 13 11 14", box: { x: 164, y: 94, w: 144, h: 46 } },
+      { id: "help-bank", name: "Your bank", box: { x: 12, y: 146, w: 144, h: 46 } },
+      { id: "help-idcare", name: "IDCARE", box: { x: 164, y: 146, w: 144, h: 46 } },
+      { id: "help-scamwatch", name: "Scamwatch", box: { x: 12, y: 198, w: 144, h: 46 } },
+      { id: "help-esafety", name: "eSafety", box: { x: 164, y: 198, w: 144, h: 46 } },
+    ],
+    views: { default: [] },
+  },
 } as const satisfies Record<string, SceneManifest>;
 
 export type SceneId = keyof typeof SCENES;

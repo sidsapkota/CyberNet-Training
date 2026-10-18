@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 254" width="340" height="254" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Your phone shows the group chat Weekend Crew. shadow_77: just leave the chat. kai_m: lol. shadow_77: nobody wants you here. Under the phone: It's never your fault.</title>
+  <rect x="10" y="4" width="320" height="214" rx="18" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="24" y="32" font-size="18" font-weight="500" fill="#a3b6d2">‹</text>
+  <text x="38" y="32" font-size="16" font-weight="600" fill="#e6eef9">Weekend Crew</text>
+  <path d="M10 48H330" fill="none" stroke="#6f8fbd" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="24" y="70" font-size="16" font-weight="600" fill="#a3b6d2">shadow_77</text>
+  <rect x="22" y="76" width="176" height="33" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <text x="34" y="97" font-size="16" font-weight="500" fill="#e6eef9">just leave the chat</text>
+  <text x="24" y="126" font-size="16" font-weight="600" fill="#a3b6d2">kai_m</text>
+  <rect x="22" y="132" width="56" height="33" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <text x="34" y="153" font-size="16" font-weight="500" fill="#e6eef9">lol</text>
+  <text x="24" y="182" font-size="16" font-weight="600" fill="#a3b6d2">shadow_77</text>
+  <rect x="22" y="188" width="204" height="33" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <text x="34" y="209" font-size="16" font-weight="500" fill="#e6eef9">nobody wants you here</text>
+  <text x="170" y="244" font-size="16" font-weight="600" fill="#3ddc97" text-anchor="middle">It's never your fault.</text>
+</svg>

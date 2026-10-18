@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 170" width="340" height="170" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>A fake shoe shop. Arrows point to two problems: your card number, and a photo of your ID.</title>
+  <rect x="8" y="10" width="120" height="150" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2" opacity="0.8"/>
+  <text x="22" y="36" font-size="16" font-weight="600" fill="#a3b6d2">Shoe shop</text>
+  <path d="M24 92h56l18 10v12H24Z" fill="#24507f" stroke="#a3b6d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="22" y="140" font-size="16" font-weight="700" fill="#ff7a7a">Fake!</text>
+  <path d="M134 60H158M150 52L160 60L150 68M134 116H158M150 108L160 116L150 124" fill="none" stroke="#a3b6d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="168" y="28" width="164" height="58" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <path d="M179 49H201V65H179ZM179 54H201" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="210" y="52" font-size="16" font-weight="600" fill="#e6eef9">Card number</text>
+  <rect x="168" y="92" width="164" height="58" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <path d="M190 117m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0M181 132A9 9 0 0 1 199 132" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="210" y="116" font-size="16" font-weight="600" fill="#e6eef9">Photo of</text>
+  <text x="210" y="136" font-size="16" font-weight="600" fill="#e6eef9">your ID</text>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 168" width="340" height="168" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>The chat is empty. One grey line: You blocked shadow_77. No messages are left.</title>
+  <rect x="10" y="4" width="320" height="160" rx="16" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="24" y="32" font-size="18" font-weight="500" fill="#a3b6d2">‹</text>
+  <text x="38" y="32" font-size="16" font-weight="600" fill="#e6eef9">Weekend Crew</text>
+  <path d="M10 48H330" fill="none" stroke="#6f8fbd" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="60" y="82" width="220" height="30" rx="15" fill="#061630" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="170" y="103" font-size="16" font-weight="600" fill="#a3b6d2" text-anchor="middle">You blocked shadow_77</text>
+  <text x="170" y="142" font-size="16" font-weight="500" fill="#a3b6d2" text-anchor="middle">No messages</text>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 176" width="340" height="176" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Your Recent activity list slides up. A new row: Code sent, today 7:30 pm, tagged Not you. No sign-in from you comes after it.</title>
+  <rect x="10" y="8" width="320" height="160" rx="14" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="26" y="34" font-size="16" font-weight="600" fill="#a3b6d2">Recent activity</text>
+  <rect x="20" y="48" width="300" height="44" rx="10" fill="#24507f" stroke="#ffb547" stroke-width="2"/>
+  <path d="M29 62H51V75H38L32 80V75H29Z" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="60" y="76" font-size="16" font-weight="600" fill="#e6eef9">Code sent · 7:30 pm</text>
+  <rect x="218" y="61" width="96" height="24" rx="12" fill="#061630" stroke="#ffb547" stroke-width="1.5"/>
+  <path d="M234 66L241 79H227Z" fill="none" stroke="#ffb547" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M234 71V75" fill="none" stroke="#ffb547" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="246" y="78" font-size="16" font-weight="600" fill="#ffb547">Not you</text>
+  <rect x="20" y="104" width="300" height="44" rx="10" fill="none" stroke="#6f8fbd" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <text x="170" y="132" font-size="16" font-weight="500" fill="#a3b6d2" text-anchor="middle">No sign-in from you</text>
+</svg>

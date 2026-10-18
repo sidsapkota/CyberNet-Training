@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 222" width="340" height="222" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Your phone's lock screen at 7:04. A message from your friend Jai: Why did you send me this weird link?? Under it, a link: prize-win.example/free.</title>
+  <rect x="100" y="6" width="140" height="210" rx="16" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="170" y="54" font-size="40" font-weight="600" fill="#e6eef9" text-anchor="middle">7:04</text>
+  <text x="170" y="76" font-size="16" font-weight="500" fill="#a3b6d2" text-anchor="middle">Tuesday</text>
+  <rect x="14" y="90" width="312" height="112" rx="14" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <circle cx="42" cy="118" r="15" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <text x="42" y="123.6" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">J</text>
+  <text x="66" y="115" font-size="16" font-weight="600" fill="#e6eef9">Jai</text>
+  <text x="66" y="134" font-size="16" font-weight="500" fill="#a3b6d2">Chat · now</text>
+  <text x="28" y="162" font-size="16" font-weight="500" fill="#e6eef9">Why did you send me this weird link??</text>
+  <rect x="28" y="172" width="230" height="24" rx="12" fill="#061630" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="40" y="190" font-size="16" font-weight="500" fill="#e6eef9" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace">prize-win.example/free</text>
+</svg>
