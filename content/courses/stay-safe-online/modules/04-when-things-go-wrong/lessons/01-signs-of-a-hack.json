@@ -57,7 +57,7 @@
       "predict": true,
       "play": "predict",
       "uses": [],
-      "prompt": "Whoever got in still has your password. You do nothing. **What happens tonight?**",
+      "prompt": "They still have your password. You do nothing. **What happens tonight?**",
       "image": {
         "src": "/illustrations/sso/signs-of-a-hack-tonight.svg",
         "alt": "Your Recent activity list: Laptop, 2:13 am, outlined; This phone, 7:04 am. Below, an empty dashed row for tonight. A moon and stars in the corner.",
@@ -69,15 +69,15 @@
       "options": [
         {
           "id": "again",
-          "text": "They sign in again and send more links"
+          "text": "They sign in again"
         },
         {
           "id": "app-removes",
-          "text": "The app throws them out on its own"
+          "text": "The app kicks them out"
         },
         {
           "id": "works-once",
-          "text": "They can't: a password only works once"
+          "text": "They can't: passwords work once"
         }
       ],
       "correctOptionId": "again",
@@ -126,7 +126,7 @@
         "code-follows-password",
         "account-take-over"
       ],
-      "prompt": "You're watching TV, not signing in. A Chat code pops up. **Tap what it means.**",
+      "prompt": "You're watching TV, not signing in. A code pops up. **Tap what it means.**",
       "image": {
         "src": "/illustrations/sso/signs-of-a-hack-code.svg",
         "alt": "You're on the sofa watching TV in the evening. Your phone on the cushion shows a notification: Chat code: 482 913.",
@@ -138,16 +138,16 @@
       "options": [
         {
           "id": "warning",
-          "text": "Warning sign: someone typed my password"
+          "text": "Someone typed my password"
         },
         {
           "id": "now-and-then",
-          "text": "Normal: apps send codes now and then",
+          "text": "Normal: apps send codes randomly",
           "nudge": "This morning, the 8:09 code came just before your own sign-in. Who's signing in now?"
         },
         {
           "id": "reminder",
-          "text": "Normal: it's reminding me to sign in",
+          "text": "A reminder to sign in",
           "nudge": "This morning, the 8:09 code came just before your own sign-in. Who's signing in now?"
         }
       ],

@@ -62,7 +62,7 @@
         "attacker-stays-signed-in"
       ],
       "uses": [],
-      "prompt": "You change your password. The laptop was already signed in. **What happens to it?**",
+      "prompt": "You change your password. The laptop was already in. **What happens to it?**",
       "image": {
         "src": "/illustrations/sso/take-back-still-signed-in.svg",
         "alt": "Your account's Security page. Password: changed just now, with a green tick. Where you're signed in: This phone, and Laptop, a little dimmed.",
@@ -74,15 +74,15 @@
       "options": [
         {
           "id": "still-in",
-          "text": "It may still be signed in"
+          "text": "It may stay signed in"
         },
         {
           "id": "kicked-out",
-          "text": "The new password kicks it out"
+          "text": "It's kicked out"
         },
         {
           "id": "app-removes",
-          "text": "The app spots it and removes it"
+          "text": "The app removes it"
         }
       ],
       "correctOptionId": "still-in",
@@ -94,16 +94,15 @@
       "difficulty": "core",
       "teaches": [
         "first-steps-after-hack",
-        "trusted-adult",
-        "report-cyber"
+        "trusted-adult"
       ],
       "title": "Lock every door",
-      "body": "A new password alone isn't enough. After telling a trusted adult, lock every door: **change the password**, fix the **recovery email**, **sign out other devices** and turn on **two-step sign-in**.\n\nYou can also report it at cyber.gov.au/report.",
+      "body": "A new password alone isn't enough. After telling a trusted adult, **lock every door**, in this order.",
       "image": {
         "src": "/illustrations/sso/take-back-named.svg",
-        "alt": "The Security page with a banner on top: First, tell a trusted adult. Then numbered steps: 1, change the password. 2, fix the recovery email. 3, sign out the laptop. 4, turn two-step sign-in on.",
+        "alt": "The Security page with a banner on top: First, tell a trusted adult. Then numbered steps: 1, change the password. 2, edit the recovery email. 3, sign out the laptop. 4, turn two-step sign-in on.",
         "width": 320,
-        "height": 198
+        "height": 172
       }
     },
     {
@@ -134,23 +133,23 @@
         "recovery-email",
         "first-steps-after-hack"
       ],
-      "prompt": "Laptop gone. But you've never seen this recovery email before. **Tap what you do.**",
+      "prompt": "Laptop gone. But you've never seen this recovery email. **Tap what you do.**",
       "image": {
         "src": "/illustrations/sso/take-back-recovery.svg",
         "alt": "The Security page. Password changed and the laptop signed out, both ticked. The recovery email is x9help@mail.example, outlined with a question mark: you've never seen it. Two-step sign-in is off.",
         "width": 340,
-        "height": 192,
+        "height": 178,
         "revealSrc": "/illustrations/sso/take-back-recovery-reveal.svg",
         "revealAlt": "The recovery email now reads me@mail.example, with a green tick, and two-step sign-in is switched on."
       },
       "options": [
         {
           "id": "remove",
-          "text": "Remove it and add my own email"
+          "text": "Swap it for my own email"
         },
         {
           "id": "leave-signed-out",
-          "text": "Leave it: the laptop's signed out now",
+          "text": "Leave it: the laptop's gone",
           "nudge": "What can a recovery email do if someone says they forgot the password?"
         },
         {
@@ -183,16 +182,16 @@
       "options": [
         {
           "id": "forgot-password",
-          "text": "Use the game's own Forgot password"
+          "text": "Use the game's Forgot password"
         },
         {
           "id": "pay",
-          "text": "Pay: $20 is worth it to get back in",
+          "text": "Pay: $20 is worth it",
           "nudge": "Can anyone outside the game open your account for you?"
         },
         {
           "id": "ask-proof",
-          "text": "Ask Account Fixer to prove it works",
+          "text": "Ask them to prove it first",
           "nudge": "Can anyone outside the game open your account for you?"
         }
       ],
@@ -205,10 +204,11 @@
       "type": "explainer",
       "difficulty": "core",
       "teaches": [
-        "first-steps-after-hack"
+        "first-steps-after-hack",
+        "report-cyber"
       ],
       "title": "Recap",
-      "body": "Tell a trusted adult, lock every door, then change that password anywhere else you used it.\n\n**Try this:** Check that the recovery email on one of your accounts is really yours.\n\n**Next:** A call in Grandma's voice that isn't Grandma."
+      "body": "Tell a trusted adult, lock every door, then change that password anywhere else you used it.\n\n**Report it too:** at cyber.gov.au/report, which passes it to the police.\n\n**Try this:** Check that the recovery email on one of your accounts is really yours.\n\n**Next:** A call in Grandma's voice that isn't Grandma."
     }
   ]
 }

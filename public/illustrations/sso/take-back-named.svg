@@ -1,30 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 198" width="320" height="198" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
-  <title>The Security page with a banner on top: First, tell a trusted adult. Then numbered steps: 1, change the password. 2, fix the recovery email. 3, sign out the laptop. 4, turn two-step sign-in on.</title>
-  <rect x="4" y="4" width="312" height="32" rx="10" fill="#061630" stroke="#ffb547" stroke-width="2"/>
-  <path d="M24 16m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0M15 31A9 9 0 0 1 33 31" fill="none" stroke="#ffb547" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="42" y="26" font-size="16" font-weight="600" fill="#ffb547">First: tell a trusted adult</text>
-  <circle cx="18" cy="60" r="11" fill="#00c2ff"/>
-  <text x="18" y="65.5" font-size="16" font-weight="700" fill="#061630" text-anchor="middle">1</text>
-  <rect x="36" y="44" width="280" height="32" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
-  <text x="48" y="66" font-size="16" font-weight="600" fill="#e6eef9">Password</text>
-  <rect x="222" y="49" width="84" height="22" rx="6" fill="#061630" stroke="#6f8fbd" stroke-width="1.5"/>
-  <text x="264" y="65" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Change</text>
-  <circle cx="18" cy="98" r="11" fill="#00c2ff"/>
-  <text x="18" y="103.5" font-size="16" font-weight="700" fill="#061630" text-anchor="middle">2</text>
-  <rect x="36" y="82" width="280" height="32" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
-  <text x="48" y="104" font-size="16" font-weight="600" fill="#e6eef9">Recovery email</text>
-  <rect x="222" y="87" width="84" height="22" rx="6" fill="#061630" stroke="#6f8fbd" stroke-width="1.5"/>
-  <text x="264" y="103" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Edit</text>
-  <circle cx="18" cy="136" r="11" fill="#00c2ff"/>
-  <text x="18" y="141.5" font-size="16" font-weight="700" fill="#061630" text-anchor="middle">3</text>
-  <rect x="36" y="120" width="280" height="32" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
-  <text x="48" y="142" font-size="16" font-weight="600" fill="#e6eef9">Laptop</text>
-  <rect x="222" y="125" width="84" height="22" rx="6" fill="#061630" stroke="#6f8fbd" stroke-width="1.5"/>
-  <text x="264" y="141" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Sign out</text>
-  <circle cx="18" cy="174" r="11" fill="#00c2ff"/>
-  <text x="18" y="179.5" font-size="16" font-weight="700" fill="#061630" text-anchor="middle">4</text>
-  <rect x="36" y="158" width="280" height="32" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
-  <text x="48" y="180" font-size="16" font-weight="600" fill="#e6eef9">Two-step sign-in</text>
-  <rect x="222" y="163" width="84" height="22" rx="6" fill="#061630" stroke="#3ddc97" stroke-width="1.5"/>
-  <text x="264" y="179" font-size="16" font-weight="600" fill="#3ddc97" text-anchor="middle">On</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 172" width="320" height="172" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>The Security page with a banner on top: First, tell a trusted adult. Then numbered steps: 1, change the password. 2, edit the recovery email. 3, sign out the laptop. 4, turn two-step sign-in on.</title>
+  <rect x="4" y="2" width="312" height="28" rx="10" fill="#061630" stroke="#ffb547" stroke-width="2"/>
+  <path d="M24 12m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0M15 27A9 9 0 0 1 33 27" fill="none" stroke="#ffb547" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="42" y="22" font-size="16" font-weight="600" fill="#ffb547">First: tell a trusted adult</text>
+  <circle cx="18" cy="51" r="11" fill="#00c2ff"/>
+  <text x="18" y="56.5" font-size="16" font-weight="700" fill="#061630" text-anchor="middle">1</text>
+  <rect x="36" y="36" width="280" height="30" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="48" y="57" font-size="16" font-weight="600" fill="#e6eef9">Password</text>
+  <rect x="222" y="40" width="84" height="22" rx="6" fill="#061630" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="264" y="56" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Change</text>
+  <circle cx="18" cy="85" r="11" fill="#00c2ff"/>
+  <text x="18" y="90.5" font-size="16" font-weight="700" fill="#061630" text-anchor="middle">2</text>
+  <rect x="36" y="70" width="280" height="30" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="48" y="91" font-size="16" font-weight="600" fill="#e6eef9">Recovery email</text>
+  <rect x="222" y="74" width="84" height="22" rx="6" fill="#061630" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="264" y="90" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Edit</text>
+  <circle cx="18" cy="119" r="11" fill="#00c2ff"/>
+  <text x="18" y="124.5" font-size="16" font-weight="700" fill="#061630" text-anchor="middle">3</text>
+  <rect x="36" y="104" width="280" height="30" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="48" y="125" font-size="16" font-weight="600" fill="#e6eef9">Laptop</text>
+  <rect x="222" y="108" width="84" height="22" rx="6" fill="#061630" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="264" y="124" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Sign out</text>
+  <circle cx="18" cy="153" r="11" fill="#00c2ff"/>
+  <text x="18" y="158.5" font-size="16" font-weight="700" fill="#061630" text-anchor="middle">4</text>
+  <rect x="36" y="138" width="280" height="30" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="48" y="159" font-size="16" font-weight="600" fill="#e6eef9">Two-step sign-in</text>
+  <rect x="222" y="142" width="84" height="22" rx="6" fill="#061630" stroke="#3ddc97" stroke-width="1.5"/>
+  <text x="264" y="158" font-size="16" font-weight="600" fill="#3ddc97" text-anchor="middle">On</text>
 </svg>

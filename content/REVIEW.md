@@ -1381,12 +1381,9 @@ No real people, brands or logos appear. The three new scenes (`email`, `text-mes
 Re-check all of these before each review: services and numbers change.
 
 **Tone:** calm and practical. Every "what went wrong" card says it's not the learner's fault and
-points to a trusted adult. The one sensitive topic is 4.2 `photo-threat`: a threat to share a
-private photo. It is a challenge card, gives no detail beyond "a private photo", and follows
-eSafety's and the ACCCE's advice: don't pay, stop replying, screenshot the messages and profile
-(never the image), block, tell a trusted adult, and report to the app, eSafety, and, for under-18s,
-the ACCCE. The card says plainly that it is **never the young person's fault** and that they won't be
-in trouble, and gives **Kids Helpline (1800 55 1800)** and **000** directly.
+points to a trusted adult. The one sensitive topic is a threat to share a fake private picture, in
+4.4 Save the Evidence (see that lesson's notes): never shown, never the young person's fault, and
+they won't be in trouble.
 
 ## Right-level rewrite (October 2026)
 
@@ -1660,51 +1657,104 @@ like `.com.au`, have two parts, and the examples only use `.example`.
 
 ## Module 4: When Things Go Wrong (free: help, reporting and recovery are always free)
 
-### 4.1 Signs of a Hack (`signs-of-a-hack`)
-**Key claims:**
-- The signs of an account take-over.
-- The steps, in order: tell a trusted adult, change the password, check the recovery details, sign
-  out other devices, turn on two-step sign-in. Then change reused passwords and warn friends.
-- Use the official recovery. Paid "recovery" offers are scams.
+Rebuilt 19 October 2026 to Lesson Blueprint v1.1 (storyboards in `docs/storyboards/stay-safe-online/`): three
+lessons became five, one idea each, plus a rebuilt course final. Every lesson speaks to "you" (no named
+character), uses a fictional app called "Chat", and is open to guests. New self-labelled scenes:
+`account-activity`, `account-security`, `group-chat`, `help-board` (generic screens, `.example` addresses only).
+Every service, number and step below was checked against its official page on **19 October 2026**.
 
-**Simplifications:** real apps word these settings differently. The order is a sensible default,
-not a rule every service states.
+**Help facts checked 19 October 2026 (re-check before each review):**
 
-### 4.2 Deepfake Scams and Fakes (`deepfake-scams`)
-Added 1 October 2026 (moved here from the AI course plan, because help is always free and this
-module is open to guests). Self-contained: Spot the Scam is Pro, so the red flags it needs are
-re-taught here.
+| Fact as taught | Source (fetched 19 Oct 2026) |
+|---|---|
+| Kids Helpline 1800 55 1800: free, private, any time (24/7), ages 5 to 25 | kidshelpline.com.au/about ("free support and counselling to people aged five to 25", "private and confidential", "open 24/7, it's a free call"); number on kidshelpline.com.au |
+| Lifeline 13 11 14: any time, anyone in Australia. Never called "free" (the site doesn't say) | lifeline.org.au/131114 ("available 24/7, to anyone in Australia") |
+| eSafety helps with cyberbullying the app won't remove (report to the app first), and with a private picture shared or threatened, real or faked (deepfakes included); it can help remove it | esafety.gov.au/report; esafety.gov.au/key-topics/cyberbullying/report-cyberbullying ("will only investigate … if it has been reported to the service or platform"; "reported to the site, game or app, but they did not remove it"); esafety.gov.au/key-topics/image-based-abuse/report-image-based-abuse ("digitally altered or faked to look like you (such as a deepfake …)"; "eSafety can help remove the content or stop the threats") |
+| Save evidence before blocking or deleting: the messages, the username or profile, the date and time | eSafety report-cyberbullying page ("don't do it yet! First you need to get some proof": what it says, the user profile, the date and time); image-based abuse page ("After collecting evidence you can also block them") |
+| Never save or share the picture itself | eSafety image-based abuse page ("don't save or share nudes … of anyone under 18"); accce.gov.au/help-and-support/how-and-what-to-report ("not screenshot, save, share or distribute any explicit images") |
+| Paying usually leads to more demands | esafety.gov.au/key-topics/image-based-abuse/deal-with-sextortion ("If you give them what they want they will just keep asking for more"); accce.gov.au/sextortionhelp ("Once you pay the first time, they will ask you to pay again") |
+| ACCCE: under-18s who are threatened report to accce.gov.au/report; "you will not be in trouble" | accce.gov.au/report (lists sexual extortion); accce.gov.au/sextortionhelp ("you will not be in trouble with law enforcement"; stop the chat, screenshot the messages and the offender's profile, block and report, report to the ACCCE, don't pay) |
+| Scamwatch: report a scam to warn others; after a scam call your bank straight away, get IDCARE's free help | scamwatch.gov.au/report-a-scam ("helps us … warn others"); scamwatch.gov.au/stop-check-protect/what-to-do-if-youve-been-scammed ("Contact your bank … immediately … Ask them to stop any transactions"; IDCARE "can help you make a plan (for free)") |
+| A voice can be cloned from a few seconds; call family back on the number you already have | scamwatch.gov.au/stop-check-protect/help-to-spot-and-avoid-scams/how-scammers-use-technology-and-ai ("a few seconds of a voice recording to create AI clones"; "call your friend or family member back on their real number"; deepfake videos of family "asking for money") |
+| The bank can stop payments; the sooner you call, the better the chance of money back | moneysmart.gov.au/check-and-report-scams/what-to-do-if-youve-been-scammed ("Ask them to stop any transactions"); moneysmart.gov.au/banking/unauthorised-and-mistaken-transactions ("The sooner you contact your bank, the more likely you are to get your money back") |
+| "Frozen" card in the reveal picture | cyber.gov.au/recovering-a-compromised-online-account ("freezing any affected accounts or cards") |
+| IDCARE (idcare.org): free identity and cyber support, a response plan | idcare.org/about-idcare/what-is-idcare ("We do not charge … for our base support service"); idcare.org ("develop a tailored response plan"). Not 24/7 (Moneysmart lists weekday hours), so the course never says "any time" for IDCARE |
+| Taking back an account: change the password, check recovery options (remove any you don't recognise), log out of all devices, turn on multi-factor authentication; report it with ReportCyber | cyber.gov.au/recovering-a-compromised-online-account (those steps in that order, then "Notify your contacts" and "Report the incident … Use ReportCyber") |
+| cyber.gov.au/report passes reports to the police (ReportCyber) | cyber.gov.au/report redirects to cyber.gov.au/submit-a-report ("Cybercrimes are reported to the police through … ReportCyber") |
+| 000 for danger right now | infrastructure.gov.au/media-communications/phone/triple-zero ("Australia's main emergency number for life threatening or time critical situations") |
 
-**Goals:** know that AI can copy voices and faces; spot the red flags anyway (hurry, secrecy,
-money or codes, a new number) and know why scammers use each; check by hanging up and contacting
-the person on the number you already have, a question only they'd know, or a trusted adult; know
-what to do if someone fakes a picture of you.
+"Tell a trusted adult first" is the course's own rule (calm, never alone), not a cyber.gov.au step.
 
-**Key claims (sources checked 1 October 2026):**
-- AI can make convincing fake video and audio of a real person from real recordings, sometimes a
-  few seconds long. You can't always tell by looking or listening.
-- Scamwatch (Text or SMS scams): if someone says they have a new number, call them on the
-  **existing number** you have for them, or ask a question only they would know.
-- A family code word: common advice, not a Scamwatch quote, so it's offered as something "some
-  families" do, beside the question only they'd know.
-- eSafety (Image-based abuse, esafety.gov.au/key-topics/image-based-abuse): covers intimate images
-  "digitally altered or faked to look like you (such as a deepfake created with an AI tool or
-  app)", which can be reported to eSafety, which can help get them removed. Its deepfakes guide
-  page (esafety-guide/deepfakes) returned 404 on this date, so it isn't cited.
-- Evidence, ACCCE and "never save the image itself" match 4.3 Getting Help (verified 30 September
-  2026).
+### 4.1 Signs of a Take-Over (`signs-of-a-hack`)
+**Goals:** anything your account did that wasn't you is a warning sign; a sign-in code you didn't ask
+for means someone typed your password.
 
-**Simplifications:** "a few seconds" of audio is the low end; quality varies. The step order
-(don't share, save evidence, tell an adult, report) is a sensible default that matches Getting
-Help.
+**Key claims:** apps text a code after the password is typed; a sign-in from a device you don't own,
+or a code while you weren't signing in, means someone else has your password; whoever got in can keep
+coming back while the password works.
 
-### 4.3 Getting Help (`getting-help`)
-**Key claims:**
-- The help services verified above.
-- Save evidence before blocking: screenshots of messages, usernames, addresses and dates. Never
-  copy, save or share a private or nude image itself.
-- Paying a scammer usually leads to more demands.
-- Call 000 for danger right now.
+**Simplifications:** real apps word and lay out their activity lists differently ("Recent activity" in
+a fictional "Chat" app); the code is "texted" (apps also use notifications).
+
+### 4.2 Take Your Account Back (`take-back-your-account`, new)
+**Goals:** a new password alone isn't enough: after telling a trusted adult, change the password, fix
+the recovery email, sign out other devices and turn on two-step sign-in; never pay a stranger to
+"unlock" an account; report it at cyber.gov.au/report.
+
+**Key claims:** a device already signed in **may** stay signed in after a password change (some apps
+offer to sign out other devices when you change it, so the lesson never says it always does); a
+recovery email can reset your password, so only yours belongs there; only the app's own "Forgot
+password" gets you back in, and it's free.
+
+**Simplifications:** the step order follows cyber.gov.au (password, recovery, sign out, two-step); the
+cards play sign-out before the recovery email, and nothing grades the order. Real apps word these
+settings differently.
+
+### 4.3 Deepfake Scams (`deepfake-scams`)
+**Goals:** a voice or face you know can be faked with AI (a **deepfake**); warning signs (an unknown
+number, a rush for money, a secret); check by hanging up and calling the number you already have.
+
+**Key claims:** a few seconds of voice is enough to clone it (Scamwatch); faces and video can be faked
+too; a deepfake can't answer the real person's saved number; "keep it between us" is a warning sign
+whatever the face.
+
+**Simplifications:** "5 seconds" is the low end and quality varies. The **family safe word** is common
+advice, not an official quote, so it's only the Wrap's "Try this", never tested. The Hook doubles as
+Play (no `phone-call` scene here: that scene belongs to module 2's Scam Calls), so this lesson has 7
+cards.
+
+### 4.4 Save the Evidence (`save-the-evidence`, new)
+**Goals:** before you block, screenshot who it was, what they said and when; then block, report in the
+app and tell a trusted adult; a threat with a private picture, even a fake one, also goes to eSafety,
+and for under-18s to the ACCCE; never save the picture, never pay; it's never your fault.
+
+**Key claims:** as in the table above (eSafety evidence advice, ACCCE, paying leads to more demands).
+
+**Simplifications:** "blocking hid the whole chat" is what happens *on this app*; some apps keep the
+messages. The picture is never shown (a grey "Picture hidden" box), and "private" is as specific as the
+lesson gets.
+
+**Tone:** the one sensitive topic is the fake private picture (`fake-picture`, `fake-image-report`):
+calm, "It's never your fault" on the picture itself, "you will not be in trouble", Kids Helpline and
+Lifeline in the Wrap.
+
+### 4.5 Getting Help (`getting-help`)
+**Goals:** you never have to handle it alone: start with a trusted adult, then the helper made for the
+problem (Kids Helpline and Lifeline to talk, your bank for money, IDCARE for stolen details, Scamwatch
+for scams, eSafety for bullying or pictures, 000 for danger).
+
+**Key claims:** as in the table above. Kids Helpline and Lifeline always sit side by side, and their
+numbers never break across lines (non-breaking spaces in the text).
+
+**Simplifications:** the board shows eight helpers; ReportCyber is taught in 4.2 instead, to keep the
+board short. School counsellors are named in feedback as people to talk to.
+
+### Course final (`stay-safe-online-final`)
+Eight questions, one try each, pass at 70%. Tests modules 1 and 4 only, because guests can play it and
+modules 2 and 3 are Pro: the guess list (sort), a leaked password with two-step on, a "cousin" asking
+for a code, take-over alerts (sort), a music account take-over (scenario: tell an adult and change the
+password, then sign out the tablet), an aunt's voice message from a new number, screenshot before
+blocking, and four helpers (match). None copies a lesson card word for word.
 
 ## Teach before test: self-check fixes (before the audit)
 - 1.1 `the-leak` rewarded changing the **email** password first, but "email can reset other

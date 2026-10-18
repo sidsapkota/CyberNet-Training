@@ -76,11 +76,11 @@
       "options": [
         {
           "id": "vanish",
-          "text": "They may vanish, leaving nothing to show"
+          "text": "They may vanish with the chat"
         },
         {
           "id": "copy",
-          "text": "The app keeps a copy for you"
+          "text": "The app keeps a copy"
         },
         {
           "id": "reports",
@@ -102,12 +102,12 @@
         "report-to-accce"
       ],
       "title": "Screenshot first",
-      "body": "Before you block, **save the evidence**: screenshot the messages, the username and the date. Then block, report it in the app, and tell a trusted adult.\n\nA threat to share a private picture, even a fake one? Report it to **eSafety** too, and if you're under 18, to the **ACCCE**.",
+      "body": "Before you block, **save the evidence**: screenshot the messages, username and date. Then block, report and tell a trusted adult. A picture threat, even a fake? Report it to **eSafety**, and under 18s to the **ACCCE**.",
       "image": {
         "src": "/illustrations/sso/save-evidence-named.svg",
         "alt": "The same chat, labelled. A dashed frame around the username, the time and the message, marked 1, Screenshot. The Block button is marked 2, and the Report button 3.",
         "width": 320,
-        "height": 198
+        "height": 132
       }
     },
     {
@@ -131,7 +131,7 @@
       "options": [
         {
           "id": "screenshot",
-          "text": "Screenshot it, then tell a trusted adult"
+          "text": "Screenshot, tell a trusted adult"
         },
         {
           "id": "reply",
@@ -155,26 +155,26 @@
       "uses": [
         "save-evidence"
       ],
-      "prompt": "A new account says it made a fake private picture of you, and wants money. **Tap what you save.**",
+      "prompt": "An account says it made a fake private picture of you. **Tap what you save.**",
       "image": {
         "src": "/illustrations/sso/save-evidence-fake-picture.svg",
         "alt": "A new chat from unknown_acc, with a grey picture. A grey box with a crossed-out eye reads Picture hidden. Then the message: Pay $50 or I share it. Under the phone: It's never your fault.",
         "width": 340,
-        "height": 182
+        "height": 166
       },
       "options": [
         {
           "id": "messages-profile",
-          "text": "The messages and their profile, not the picture"
+          "text": "Their messages and profile"
         },
         {
           "id": "picture",
-          "text": "The picture too, as extra proof",
+          "text": "The picture too, as proof",
           "nudge": "What shows who did this, without keeping the picture?"
         },
         {
           "id": "pay",
-          "text": "Nothing: I'll pay, so it never gets shared",
+          "text": "Nothing: I'll just pay",
           "nudge": "Paying usually leads to more demands. What shows who did this?"
         }
       ],
@@ -191,7 +191,7 @@
         "report-to-esafety",
         "report-to-accce"
       ],
-      "prompt": "You're 14, and you've shown a trusted adult the threat. **Tap where you report it.**",
+      "prompt": "You're 14, and you've shown a trusted adult. **Tap where you report it.**",
       "image": {
         "src": "/illustrations/sso/save-evidence-report.svg",
         "alt": "You show your phone to a trusted adult. On it: unknown_acc, Picture hidden, Pay $50 or I share it. The adult says: We'll report it together.",
@@ -229,7 +229,7 @@
         "lifeline"
       ],
       "title": "Recap",
-      "body": "Screenshot first, then block, report and tell a trusted adult. It's never your fault.\n\n**Talk any time:** **Kids Helpline** 1800 55 1800 (ages 5 to 25) or **Lifeline** 13 11 14.\n\n**Try this:** Practise taking a screenshot on your phone, so you can do it fast.\n\n**Next:** Who to tell, and where to go, whatever goes wrong online."
+      "body": "Screenshot first, then block, report and tell a trusted adult. It's never your fault.\n\n**Talk any time:** **Kids Helpline** 1800 55 1800 (ages 5 to 25) or **Lifeline** 13 11 14.\n\n**Try this:** Practise taking a screenshot on your phone, so you can do it fast.\n\n**Next:** Who to tell, and where to go, whatever goes wrong online."
     }
   ]
 }

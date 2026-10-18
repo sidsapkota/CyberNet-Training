@@ -59,7 +59,7 @@
         "authenticator-app",
         "data-breach"
       ],
-      "prompt": "Your password leaked, but two-step sign-in is on. **Tap what else they'd need to get in.**",
+      "prompt": "Your password leaked, but two-step sign-in is on. **Tap what else they'd need.**",
       "image": {
         "src": "/illustrations/sso/final-two-step.svg",
         "alt": "A stranger's laptop on your sign-in page. The password box is filled with dots. A second box, Code from your authenticator app, is empty. Your phone, showing a code, is with you.",
@@ -69,15 +69,15 @@
       "options": [
         {
           "id": "phone-code",
-          "text": "The code that appears on your phone"
+          "text": "The code from your phone"
         },
         {
           "id": "nothing",
-          "text": "Nothing more: the password gets them in"
+          "text": "Nothing more: the password works"
         },
         {
           "id": "username",
-          "text": "Just your username, which is easy to find"
+          "text": "Just your username"
         }
       ],
       "correctOptionId": "phone-code",
@@ -100,15 +100,15 @@
       "options": [
         {
           "id": "warn",
-          "text": "Don't send it; warn your cousin another way"
+          "text": "Don't send it; warn your cousin"
         },
         {
           "id": "send",
-          "text": "Send it: it's your cousin, so it's safe"
+          "text": "Send it: it's your cousin"
         },
         {
           "id": "send-change",
-          "text": "Send it, then change your password after"
+          "text": "Send it, then change my password"
         }
       ],
       "correctOptionId": "warn",
@@ -228,7 +228,7 @@
         "deepfake",
         "call-back-on-known-number"
       ],
-      "prompt": "A new number sends a voice message in your aunt's voice: \"Send $100, quick!\" **Tap what you do.**",
+      "prompt": "A new number sends a voice message in your aunt's voice. **Tap what you do.**",
       "image": {
         "src": "/illustrations/sso/final-voice-message.svg",
         "alt": "A voice message from a new number, 6 seconds long, in your aunt's voice: Send $100, quick! Beside the phone, a saved contact card: Aunt Rosa.",
@@ -238,15 +238,15 @@
       "options": [
         {
           "id": "call-saved",
-          "text": "Call Aunt Rosa on her saved number"
+          "text": "Call Aunt Rosa's saved number"
         },
         {
           "id": "send",
-          "text": "Send it: that's definitely her voice"
+          "text": "Send it: it's her voice"
         },
         {
           "id": "reply",
-          "text": "Reply to the new number to ask if it's her"
+          "text": "Reply to ask if it's her"
         }
       ],
       "correctOptionId": "call-saved",
@@ -270,15 +270,15 @@
       "options": [
         {
           "id": "screenshot-block",
-          "text": "Screenshot the chat, then block them"
+          "text": "Screenshot first, then block"
         },
         {
           "id": "block-first",
-          "text": "Block them, then screenshot the chat"
+          "text": "Block first, then screenshot"
         },
         {
           "id": "delete",
-          "text": "Delete the chat, then block them"
+          "text": "Delete the chat, then block"
         }
       ],
       "correctOptionId": "screenshot-block",

@@ -1,13 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 170" width="340" height="170" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 150" width="340" height="150" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
   <title>The Your bank tile is lit, and you're calling. Beside it, your bank card and a payment: Fake shop, $30.</title>
-  <rect x="10" y="20" width="150" height="120" rx="14" fill="#24507f" stroke="#8be3ff" stroke-width="2.5"/>
-  <path d="M25 40H47V56H25ZM25 45H47" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="56" y="54" font-size="16" font-weight="600" fill="#e6eef9">Your bank</text>
-  <path d="M28 87L32 87L34 92L32 94Q35 100 38 100L40 98L45 100L45 104Q45 106 42 106Q27 104 26 90Q26 87 28 87Z" fill="none" stroke="#3ddc97" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="56" y="102" font-size="16" font-weight="600" fill="#3ddc97">Calling…</text>
-  <rect x="176" y="20" width="154" height="92" rx="12" fill="#1d3d6e" stroke="#8be3ff" stroke-width="2"/>
-  <rect x="176" y="40" width="154" height="16" rx="0" fill="#061630"/>
-  <text x="190" y="94" font-size="16" font-weight="600" fill="#e6eef9" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace">•••• 4821</text>
-  <rect x="176" y="122" width="154" height="40" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
-  <text x="188" y="148" font-size="16" font-weight="600" fill="#e6eef9">Fake shop · $30</text>
+  <rect x="10" y="14" width="150" height="112" rx="14" fill="#24507f" stroke="#8be3ff" stroke-width="2.5"/>
+  <path d="M25 34H47V50H25ZM25 39H47" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="56" y="48" font-size="16" font-weight="600" fill="#e6eef9">Your bank</text>
+  <path d="M28 81L32 81L34 86L32 88Q35 94 38 94L40 92L45 94L45 98Q45 100 42 100Q27 98 26 84Q26 81 28 81Z" fill="none" stroke="#3ddc97" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="56" y="96" font-size="16" font-weight="600" fill="#3ddc97">Calling…</text>
+  <rect x="176" y="8" width="154" height="88" rx="12" fill="#1d3d6e" stroke="#8be3ff" stroke-width="2"/>
+  <rect x="176" y="26" width="154" height="16" rx="0" fill="#061630"/>
+  <text x="190" y="80" font-size="16" font-weight="600" fill="#e6eef9" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace">•••• 4821</text>
+  <rect x="176" y="104" width="154" height="40" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="188" y="130" font-size="16" font-weight="600" fill="#e6eef9">Fake shop · $30</text>
 </svg>

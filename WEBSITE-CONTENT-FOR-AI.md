@@ -223,7 +223,7 @@ Not exported, so the answers stay secret.
 
 ### Module 4: When Things Go Wrong (Free)
 
-Signs of a hack, what to do step by step, and where to get help.
+Signs of a take-over, getting your account back, deepfakes, and where to get help.
 
 #### Signs of a Take-Over
 
@@ -250,13 +250,13 @@ Signs of a hack, what to do step by step, and where to get help.
 
 **Key facts**
 
-- *Lock every door:* After telling a trusted adult, lock every door: **change the password**, fix the **recovery email**, **sign out other devices** and turn on **two-step sign-in**.
-- *Recap:* **Try this:** Check that the recovery email on one of your accounts is really yours. **Next:** A call in Grandma's voice that isn't Grandma.
+- *Lock every door:* After telling a trusted adult, **lock every door**, in this order.
+- *Recap:* **Report it too:** at cyber.gov.au/report, which passes it to the police. **Try this:** Check that the recovery email on one of your accounts is really yours.
 
 **Best interactive cards**
 
 - Explore the picture: This is your account's Security page. **Tap each setting.**
-- Multiple choice: You change your password. The laptop was already signed in. **What happens to it?**
+- Multiple choice: You change your password. The laptop was already in. **What happens to it?**
 - Tap the picture: Password changed. The laptop is still signed in. **Tap what kicks it out.**
 
 #### Deepfake Scams
@@ -272,9 +272,9 @@ Signs of a hack, what to do step by step, and where to get help.
 
 **Best interactive cards**
 
-- Multiple choice: A scammer copies 5 seconds of Grandma's voice from a video. **What can they make?**
+- Multiple choice: A scammer copies 5 seconds of Grandma's voice. **What can they make?**
 - Multiple choice: You've hung up. Now check it was really Grandma. **Tap how you check.**
-- Multiple choice: Next day, a video call. Grandma's face asks for $200, right now. **Tap what you do.**
+- Multiple choice: Next day, a video call. Grandma's face asks for $200 now. **Tap what you do.**
 
 #### Save the Evidence
 
@@ -284,7 +284,7 @@ Signs of a hack, what to do step by step, and where to get help.
 
 **Key facts**
 
-- *Screenshot first:* Before you block, **save the evidence**: screenshot the messages, the username and the date. Report it to **eSafety** too, and if you're under 18, to the **ACCCE**.
+- *Screenshot first:* Before you block, **save the evidence**: screenshot the messages, username and date. Report it to **eSafety**, and under 18s to the **ACCCE**.
 - *Recap:* **Talk any time:** **Kids Helpline** 1800 55 1800 (ages 5 to 25) or **Lifeline** 13 11 14. **Try this:** Practise taking a screenshot on your phone, so you can do it fast.
 
 **Best interactive cards**
@@ -307,7 +307,7 @@ Signs of a hack, what to do step by step, and where to get help.
 **Best interactive cards**
 
 - Explore the picture: These people are here to help. **Tap each one.**
-- Multiple choice: A scam took money from your card. You call your bank now. **What can the bank do?**
+- Multiple choice: A scam took money from your card. You call your bank. **What can it do?**
 - Match pairs: Four different problems, four helpers. **Match each problem to its helper.**
 
 #### Module quiz (8 questions)

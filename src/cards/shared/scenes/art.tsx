@@ -913,22 +913,22 @@ function SmallButtonTall({ x, w, label }: { x: number; w: number; label: string 
 const CHAT: Record<string, ReactNode> = {
   "chat-block": <SmallButtonTall x={176} w={60} label="Block" />,
   "chat-report": <SmallButtonTall x={242} w={66} label="Report" />,
-  "chat-username": <Txt x={16} y={181} size={15} weight={600} fill={C.muted}>shadow_77</Txt>,
-  "chat-time": <Txt x={306} y={181} size={15} fill={C.muted} anchor="end">Saturday 8:40 pm</Txt>,
-  "chat-message": <ChatBubble x={14} y={190} w={202} text="nobody wants you here" />,
+  "chat-username": <Txt x={16} y={179} size={15} weight={600} fill={C.muted}>shadow_77</Txt>,
+  "chat-message": <ChatBubble x={14} y={188} w={202} text="nobody wants you here" />,
+  "chat-time": <Txt x={16} y={239} size={15} fill={C.muted}>Saturday 8:40 pm</Txt>,
 };
 
 function GroupChatBase() {
   return (
     <>
-      <rect x={4} y={4} width={312} height={232} rx={18} fill={C.panel} stroke={C.edge} strokeWidth={2} />
+      <rect x={4} y={4} width={312} height={240} rx={18} fill={C.panel} stroke={C.edge} strokeWidth={2} />
       <Txt x={16} y={30} size={17} weight={300} fill={C.muted}>‹</Txt>
       <Txt x={30} y={30} size={16} weight={600}>Weekend Crew</Txt>
       <path d="M4 44H316" stroke={C.edge} strokeWidth={0.75} opacity={0.6} />
-      <Txt x={16} y={66} size={15} weight={600} fill={C.muted}>shadow_77</Txt>
-      <ChatBubble x={14} y={72} w={176} text="just leave the chat" />
-      <Txt x={16} y={124} size={15} weight={600} fill={C.muted}>kai_m</Txt>
-      <ChatBubble x={14} y={130} w={56} text="lol" />
+      <Txt x={16} y={64} size={15} weight={600} fill={C.muted}>shadow_77</Txt>
+      <ChatBubble x={14} y={70} w={176} text="just leave the chat" />
+      <Txt x={16} y={120} size={15} weight={600} fill={C.muted}>kai_m</Txt>
+      <ChatBubble x={14} y={126} w={56} text="lol" />
     </>
   );
 }
@@ -972,14 +972,14 @@ function HelpTile({ x, y, icon, name, number }: { x: number; y: number; icon: He
   return (
     <g>
       <rect x={x + 1} y={y + 1} width={142} height={44} rx={10} fill={C.part} stroke={C.edge} strokeWidth={1.5} />
-      <HelpIcon kind={icon} x={x + 17} y={y + 23} />
+      <HelpIcon kind={icon} x={x + 15} y={y + 23} />
       {number ? (
         <>
-          <Txt x={x + 33} y={y + 20} size={15} weight={600}>{name}</Txt>
-          <Txt x={x + 33} y={y + 38} size={15} weight={600} font={mono}>{number}</Txt>
+          <Txt x={x + 30} y={y + 20} size={15} weight={600}>{name}</Txt>
+          <Txt x={x + 30} y={y + 38} size={15} weight={600} font={mono}>{number}</Txt>
         </>
       ) : (
-        <Txt x={x + 33} y={y + 29} size={name === "000" ? 17 : 15} weight={600} font={name === "000" ? mono : sans}>{name}</Txt>
+        <Txt x={x + 30} y={y + 29} size={name === "000" ? 17 : 15} weight={600} font={name === "000" ? mono : sans}>{name}</Txt>
       )}
     </g>
   );

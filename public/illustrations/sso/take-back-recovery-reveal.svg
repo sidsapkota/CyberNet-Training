@@ -1,22 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 192" width="340" height="192" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 178" width="340" height="178" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
   <title>The recovery email now reads me@mail.example, with a green tick, and two-step sign-in is switched on.</title>
-  <rect x="10" y="6" width="320" height="182" rx="14" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <rect x="10" y="6" width="320" height="168" rx="14" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
   <text x="26" y="30" font-size="16" font-weight="600" fill="#a3b6d2">Security</text>
-  <rect x="18" y="40" width="304" height="30" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
-  <text x="30" y="61" font-size="16" font-weight="600" fill="#e6eef9">Password</text>
-  <path d="M181 55L186 60L196 49" fill="none" stroke="#3ddc97" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="202" y="61" font-size="16" font-weight="500" fill="#3ddc97">Changed</text>
-  <rect x="18" y="74" width="304" height="30" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
-  <text x="30" y="95" font-size="16" font-weight="600" fill="#e6eef9">Laptop</text>
-  <path d="M181 89L186 94L196 83" fill="none" stroke="#3ddc97" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="202" y="95" font-size="16" font-weight="500" fill="#3ddc97">Signed out</text>
-  <rect x="18" y="108" width="304" height="40" rx="9" fill="#24507f" stroke="#3ddc97" stroke-width="2"/>
-  <text x="30" y="124" font-size="16" font-weight="500" fill="#a3b6d2">Recovery email</text>
-  <text x="30" y="142" font-size="16" font-weight="600" fill="#e6eef9" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace">me@mail.example</text>
-  <path d="M293 126L298 131L308 120" fill="none" stroke="#3ddc97" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <rect x="18" y="152" width="304" height="30" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
-  <text x="30" y="173" font-size="16" font-weight="600" fill="#e6eef9">Two-step sign-in</text>
-  <text x="262" y="173" font-size="16" font-weight="500" fill="#3ddc97" text-anchor="end">On</text>
-  <rect x="270" y="158" width="42" height="20" rx="10" fill="#3ddc97" stroke="#3ddc97" stroke-width="1.5"/>
-  <circle cx="301" cy="168" r="7" fill="#061630"/>
+  <rect x="18" y="36" width="304" height="28" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="30" y="56" font-size="16" font-weight="600" fill="#e6eef9">Password</text>
+  <path d="M181 50L186 55L196 44" fill="none" stroke="#3ddc97" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="202" y="56" font-size="16" font-weight="500" fill="#3ddc97">Changed</text>
+  <rect x="18" y="68" width="304" height="28" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="30" y="88" font-size="16" font-weight="600" fill="#e6eef9">Laptop</text>
+  <path d="M181 82L186 87L196 76" fill="none" stroke="#3ddc97" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="202" y="88" font-size="16" font-weight="500" fill="#3ddc97">Signed out</text>
+  <rect x="18" y="100" width="304" height="38" rx="9" fill="#24507f" stroke="#3ddc97" stroke-width="2"/>
+  <text x="30" y="115" font-size="16" font-weight="500" fill="#a3b6d2">Recovery email</text>
+  <text x="30" y="133" font-size="16" font-weight="600" fill="#e6eef9" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace">me@mail.example</text>
+  <path d="M293 118L298 123L308 112" fill="none" stroke="#3ddc97" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="18" y="142" width="304" height="28" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="30" y="162" font-size="16" font-weight="600" fill="#e6eef9">Two-step sign-in</text>
+  <text x="262" y="162" font-size="16" font-weight="500" fill="#3ddc97" text-anchor="end">On</text>
+  <rect x="270" y="146" width="42" height="20" rx="10" fill="#3ddc97" stroke="#3ddc97" stroke-width="1.5"/>
+  <circle cx="301" cy="156" r="7" fill="#061630"/>
 </svg>

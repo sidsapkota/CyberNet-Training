@@ -29,27 +29,27 @@
         "voice-clone"
       ],
       "uses": [],
-      "prompt": "A scammer copies 5 seconds of Grandma's voice from a video. **What can they make?**",
+      "prompt": "A scammer copies 5 seconds of Grandma's voice. **What can they make?**",
       "image": {
         "src": "/illustrations/sso/deepfake-few-seconds.svg",
         "alt": "Left, a social post: Grandma blowing out birthday candles, a 5-second video. An arrow points to a scammer at a laptop on the right.",
         "width": 340,
-        "height": 170,
+        "height": 158,
         "revealSrc": "/illustrations/sso/deepfake-few-seconds-reveal.svg",
         "revealAlt": "The scammer's laptop now plays a sound wave in Grandma's voice, saying words she never said: I've lost my purse. Send me $200 now."
       },
       "options": [
         {
           "id": "anything",
-          "text": "Her voice, saying anything they type"
+          "text": "Her voice, saying anything"
         },
         {
           "id": "same-clip",
-          "text": "Only that same clip, word for word"
+          "text": "Only that same clip"
         },
         {
           "id": "nothing",
-          "text": "Nothing: it takes hours of recordings"
+          "text": "Nothing: it needs hours"
         }
       ],
       "correctOptionId": "anything",
@@ -65,12 +65,12 @@
         "call-back-on-known-number"
       ],
       "title": "Deepfakes",
-      "body": "A voice, face or video faked with AI is a **deepfake**. Warning signs: an unknown number, a rush for money, and a secret.\n\nA voice you know proves nothing, so hang up and call the number you already have.",
+      "body": "A voice, face or video faked with AI is a **deepfake**. Warning signs: an unknown number, a rush for money, a secret. Hang up and call the number you already have.",
       "image": {
         "src": "/illustrations/sso/deepfake-named.svg",
         "alt": "The call from an unknown number, its voice tagged: Could be a deepfake. Beside the phone, a contact card: Grandma, saved in your phone, tagged: Call this one.",
         "width": 320,
-        "height": 196
+        "height": 170
       }
     },
     {
@@ -136,7 +136,7 @@
         "deepfake",
         "call-back-on-known-number"
       ],
-      "prompt": "Next day, a video call. Grandma's face asks for $200, right now. **Tap what you do.**",
+      "prompt": "Next day, a video call. Grandma's face asks for $200 now. **Tap what you do.**",
       "image": {
         "src": "/illustrations/sso/deepfake-video-call.svg",
         "alt": "A video call from an unknown number. Grandma's face fills the screen and a bubble says: Quick, love, send it now!",
@@ -148,7 +148,7 @@
       "options": [
         {
           "id": "hang-up-call",
-          "text": "Hang up and call her saved number"
+          "text": "Hang up, call her saved number"
         },
         {
           "id": "send",
@@ -157,7 +157,7 @@
         },
         {
           "id": "another-video",
-          "text": "Ask for another video to prove it",
+          "text": "Ask for another video",
           "nudge": "Faces can be copied, just like voices. What can't a scammer fake?"
         }
       ],
