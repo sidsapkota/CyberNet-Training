@@ -1,7 +1,7 @@
 # Handover
 
 Read this first in every session. It is replaced, not appended: git keeps the history.
-Last updated: 8 October 2026.
+Last updated: 18 October 2026.
 
 ## 0. Built 7 Oct while the owner was away
 
@@ -31,6 +31,16 @@ Plans: `docs/plans/retention-and-fun.md` (parts 1–4 + the content quality pass
 | /pro redesign (crowned mascot, one Pro box: Lifetime / Yearly / Monthly, Free vs Pro table), also on `/account/plan`; "Can't pay? Send it to a parent" under every lifetime button (/pro, paywall, daily limit) | `pro-redesign` | LIVE (merged 8 Oct, owner approved); full gate passed (`e2e:plans` 39, `e2e:founder` 66, `e2e:daily-limit`, `e2e:pro-declined`, visual QA); screenshots in `docs/plans/pro-redesign/` |
 
 - **Staging leagues have been open since 6 Oct** (20+ test learners earned XP in one week, so they opened for good, as the rules say). E2e scripts that open the dashboard must call `closeLeaguesWelcome` (`scripts/e2e/lib/welcome.mjs`); `e2e:founder` and `e2e:reminders` now do.
+
+### 18 Oct: Lesson Blueprint v1 (owner)
+
+| Part | Branch | Status |
+|---|---|---|
+| Lesson Blueprint v1 in CLAUDE.md (replaces the 7-beat pattern and the 12-word rule; storyboard-first process; changelog) | `fix-spot-the-ai` | committed, waits for the gate |
+| Bug fix: answers never shown before they're earned (multiple-choice reveal pictures only after a right answer; hotspot no longer marks missed parts), Spot the AI card 2's situation line, pictures fill the card with text at 14px+ on a phone (`pictureText.test.ts`) | `fix-spot-the-ai` | lint, typecheck, tests, build pass; **design QA and the visual QA gate wait for staging** (paused, see section 3) |
+| Stay Safe Online storyboards (17 lessons + 4 quizzes; 7 proposed splits) | `sso-storyboards` | **waiting for the owner's OK**: review page https://claude.ai/artifact/2QiqWDSdfk7i3raNT74xcv, built by `node scripts/storyboard-page.mjs stay-safe-online` from `docs/storyboards/stay-safe-online/` (`ORDER.json` holds the order and the decisions) |
+
+- **After the OK:** build Stay Safe Online to the storyboards in the order on the review page's "New things to build" (the 2nd-wrong step and the Hook card first), update `shape.ts` and `scripts/lesson-length-report.mjs` to the blueprint's numbers for rebuilt courses, add the new lessons and facts to `content/REVIEW.md` (the password-manager master password fact was checked 18 Oct at cyber.gov.au), full gate + visual QA, merge. Then storyboard the next course.
 
 ## 1. Live on production (https://cybernettraining.com, branch `main`)
 
@@ -63,6 +73,9 @@ One payment (A$29, `STRIPE_PRICE_FOUNDER`) for lifetime Pro, first 50 buyers; `F
 - Tested: unit tests, `e2e:founder` (36 checks, screenshots in `.e2e-shots/founder/`, standing in for the founder API while the flag is off), all gates. **Not tested: a real Stripe Checkout payment** (no founding price exists in the Stripe sandbox, and creating one was off limits).
 
 ## 3. Waiting on the owner
+
+0. **Unpause staging:** Supabase paused `cybernet-staging` after about 10 idle days (`npx supabase projects list` shows INACTIVE; its URL doesn't resolve). Press **Restore project** in the Supabase dashboard. Every e2e script and the visual QA gate need it. Free projects pause after a week idle: run any e2e at least weekly to keep it awake.
+0. **Stay Safe Online storyboards:** your OK (or changes) on the review page above.
 
 0. **Admin dashboard: add `ADMIN_USER_IDS = cf5b0efc-1c8f-490c-b90d-a1ca081b16e8` in Vercel → project → Settings → Environment Variables, Production only, then redeploy.** Until then `/admin` is a 404 for everyone, you included. Sign in again if your last sign-in is over 12 hours old.
 0. **IYD rollout branch:** `rollout-inside-your-devices` (`9c562b7`, the 3 approved samples) isn't on GitHub. Push it from the Mac (`git push -u origin rollout-inside-your-devices`) to continue on Windows. **It also rebuilt Power Problems: when it arrives, merge `main` into it first** so it gets the 6 Oct simulator hotfix (`SimulatorCardView.tsx`, the battery card's prompt) and the 7-size fit audit, and re-run `npm run e2e:fit-audit COURSE=inside-your-devices`. **Seven Feed bytes point at Inside Your Devices cards** (`content/bytes/bytes.json`: phone-ram-swap, apps-need-ram, download-needs-storage, still-there-after-off, more-ghz-more-steps, blanket-slows-it, swollen-battery): if the rebuild removes any of those card ids, `feed.test.ts` fails; re-point the bytes (compact cards that fit 360×560) and run `npm run e2e:feed`.
@@ -105,6 +118,7 @@ Stay Safe Online (done, merged 5 Oct) → **Inside Your Devices (next)** → How
 - **Local `.env.local`** now also holds `ADMIN_USER_IDS` = the staging admin test account (admin-e2e@example.com), for `e2e:admin`. Never put a production id there.
 - **The dev server's first request** after an idle spell sometimes 500s ("Unexpected end of JSON input" inside Next's handler); the e2e scripts reload once. It's dev-only.
 - **Test dates:** seed "n days ago" by calendar day in the learner's time zone, never by subtracting 24-hour steps: Sydney's daylight-saving days have 23 or 25 hours, so 24-hour steps skip a date in the hour after midnight (it broke `e2e:rewards` on 8 Oct; fixed).
+- **Scratchpad launchers** (`dev.cmd`, `fullgate.cmd`) live in the session scratchpad, which can be cleaned between sessions; recreate them from this file's description if missing (`fullgate.cmd <name> [npm scripts...]` runs lint, typecheck, vitest, build, design QA, the extras, then the visual QA gate, logging `STEP <name> <code>`).
 - **Stale servers:** on Windows a stopped background `next start` can leave its node process running; it then serves (and re-caches) pages from the old build. Free the port (`netstat -ano`, `Stop-Process`) and rebuild before trusting a run.
 - **Turbopack won't follow a `node_modules` junction** in a second worktree (`next dev --webpack` works, or check the branch out in a worktree with real `node_modules`).
 - **Vercel's security checkpoint** once challenged this machine after many automated runs: check `X-Vercel-Mitigated` before rolling back.

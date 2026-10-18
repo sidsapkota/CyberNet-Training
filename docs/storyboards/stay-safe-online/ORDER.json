@@ -1,0 +1,36 @@
+{
+  "title": "Stay Safe Online Storyboards",
+  "intro": "Every lesson rebuilt to Lesson Blueprint v1: one idea, 6–8 cards, one story, the 8 beats, and feedback for right, 1st wrong and 2nd wrong. Nothing is built yet. Read the decisions first, then each lesson card by card. Reply with your OK (or changes) and I'll build the course to these.",
+  "decisions": [
+    "**Splits: 10 lessons become 17.** Seven of today's lessons each teach two ideas, so each is split in two. New lessons: `one-password-each`, `strongest-lock`, `scam-calls`, `privacy-settings`, `public-wi-fi`, `take-back-your-account` and `save-the-evidence`. Each lesson is shorter (6–8 cards), but free accounts open 3 new lessons a day, so the course takes more days.",
+    "**Four new titles, same ids:** Phishing Emails → **Scam Emails** (\"phishing\" appears once, as the nickname people hear); Scam Texts and Calls → **Scam Texts**; Apps and Public Wi-Fi → **App Permissions**; Signs of a Hack → **Signs of a Take-Over**.",
+    "**Progress:** finished lessons stay finished. Cards that move to a new lesson start fresh there, and the 7 new lessons show as not started.",
+    "**Characters:** Mia in module 1; Sam (with friend Alex and cousin Jess) in modules 2 and 3; \"you\" in module 4's help lessons. One character for the whole course is possible if you'd rather.",
+    "**Words used the same way everywhere:** leak (never \"data breach\"), second lock, passkey, scam and scammer, warning sign, fake Wi-Fi (never \"hotspot\"), trusted adult, deepfake.",
+    "**The course final** keeps testing modules 1 and 4 only, as today, because guests can play it (modules 2 and 3 are Pro).",
+    "**New things to build** (in this order): (1) the player's 2nd-wrong step: show the answer and one line, then Continue; (2) a Hook card: a full-width picture, one line, tap to start; (3) answers you tap on the picture itself; (4) a reveal picture for tap cards, after a right answer only; (5) a play mode for the simulator (no goal), plus three picture models (a post spreading to phones, privacy switches, app permissions); (6) new scenes: home screen, sign-in options, social post, café, account settings, phone call (shared by Scam Calls and Deepfake Scams), group chat and the help board; (7) one set of story pictures per lesson. Every card that needs (3)–(6) also has a fallback using cards that exist today.",
+    "**One fact checked today:** a password manager is opened with one master password, your strongest passphrase, used nowhere else (cyber.gov.au, 18 Oct 2026). Every other fact, service and number is as already verified in REVIEW.md."
+  ],
+  "modules": [
+    {
+      "title": "Lock Your Accounts",
+      "access": "Free",
+      "lessons": ["strong-passwords", "one-password-each", "two-step-sign-in", "strongest-lock", "lock-your-accounts-quiz"]
+    },
+    {
+      "title": "Spot the Scam",
+      "access": "Pro",
+      "lessons": ["phishing-emails", "scam-texts-and-calls", "scam-calls", "fake-websites", "spot-the-scam-quiz"]
+    },
+    {
+      "title": "Guard Your Privacy",
+      "access": "Pro",
+      "lessons": ["your-digital-footprint", "privacy-settings", "apps-and-wi-fi", "public-wi-fi", "guard-your-privacy-quiz"]
+    },
+    {
+      "title": "When Things Go Wrong",
+      "access": "Free",
+      "lessons": ["signs-of-a-hack", "take-back-your-account", "deepfake-scams", "save-the-evidence", "getting-help", "stay-safe-online-final"]
+    }
+  ]
+}
