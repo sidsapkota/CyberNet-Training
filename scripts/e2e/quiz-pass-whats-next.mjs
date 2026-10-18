@@ -1,6 +1,6 @@
-// "What's next" on the quiz-pass screen: a throwaway learner without Pro (with a seeded passing
+// The quiz-pass screen for a free account: a throwaway learner without Pro (with a seeded passing
 // attempt) plays How the Internet Works' module 1 quiz with known answers, passes, and the screen
-// shows the next (Pro) module with its teaser. Cleaned up afterwards.
+// shows "Start the next module" with no Pro pitch (free accounts open every module). Cleaned up afterwards.
 import fs from "node:fs";
 import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
@@ -59,18 +59,30 @@ try {
     } else if (card.type === "numeric_input") {
       await page.locator("main input").first().fill(String([].concat(card.answer)[0]));
     }
-    // drag_to_order: answered as shown (it doesn't matter; five right answers pass).
+    else if (card.type === "drag_to_order") {
+      // Check stays off until the order changes, so move the first item down one place with the
+      // keyboard (Space, ArrowDown, Space). Right or wrong doesn't matter: six right answers pass.
+      const item = page.locator('[aria-roledescription="sortable item"]').first();
+      await item.focus();
+      for (const key of ["Space", "ArrowDown", "Space"]) {
+        await page.keyboard.press(key);
+        await page.waitForTimeout(250);
+      }
+      await page.waitForTimeout(300);
+    }
     await page.getByRole("button", { name: "Check" }).click();
     await page.getByRole("button", { name: i === quiz.cards.length - 1 ? "See results" : "Next question" }).click();
   }
 
   await page.getByText("Passed · module complete").waitFor({ timeout: 20_000 });
   record("The learner passes the quiz", true);
-  const whatsNext = page.getByRole("heading", { name: "IP Addresses" });
-  const shown = await whatsNext.waitFor({ timeout: 10_000 }).then(() => true, () => false);
-  record("The quiz-pass screen shows What's next for the next (Pro) module", shown);
-  record("…with its teaser card", await page.getByRole("region", { name: "Try a card from this module" }).isVisible().catch(() => false));
-  record("…one trial CTA, and no 'Start the next module' into a locked lesson", (await page.getByText("Start your 7-day free trial").count()) === 1 && (await page.getByRole("link", { name: /Start the next module/ }).count()) === 0);
+  // With accounts, free learners open any module (3 new lessons a day), so passing leads straight on:
+  // "What's next" (the Pro pitch) only shows in a copy without accounts, where Pro modules are locked.
+  const next = page.getByRole("link", { name: /Start the next module/ });
+  const shown = await next.waitFor({ timeout: 10_000 }).then(() => true, () => false);
+  record("The quiz-pass screen offers 'Start the next module' to a free account", shown);
+  record("…into a lesson", /^\/lesson\//.test((await next.getAttribute("href").catch(() => "")) ?? ""));
+  record("…and no Pro pitch after a pass", (await page.getByText(/Start your 7-day free trial|Get lifetime Pro/).count()) === 0);
   await page.screenshot({ path: path.join(SHOTS, "360-quiz-pass-whats-next.png"), fullPage: true });
   await context.close();
 } finally {

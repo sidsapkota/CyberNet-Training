@@ -27,7 +27,7 @@ const record = (name, ok, detail = "") => {
 
 const LESSONS = path.join(APP, "content/courses/stay-safe-online/modules/01-lock-your-accounts/lessons");
 const lesson1 = JSON.parse(fs.readFileSync(path.join(LESSONS, "01-strong-passwords.json"), "utf8"));
-const lesson2 = JSON.parse(fs.readFileSync(path.join(LESSONS, "02-two-step-sign-in.json"), "utf8"));
+const lesson2 = JSON.parse(fs.readFileSync(path.join(LESSONS, "02-one-password-each.json"), "utf8"));
 const GATE = "Create a free account to keep going.";
 
 /**
@@ -114,24 +114,24 @@ try {
   // then the magic link. New account → name → back on lesson 2, which now plays.
   const { data: created } = await admin.auth.admin.createUser({ email, email_confirm: true });
   userId = created.user.id;
-  await page.evaluate((lessonId) => {
+  await page.evaluate(([lessonId, nextId]) => {
     localStorage.setItem("cybernet.ageConfirmed.pending", "1");
     localStorage.setItem("cybernet.signupLesson", JSON.stringify({ lesson: lessonId, at: Date.now() }));
-    document.cookie = `cybernet_next=${encodeURIComponent("/lesson/two-step-sign-in")}; Path=/; Max-Age=3600; SameSite=Lax`;
-  }, lesson1.id);
+    document.cookie = `cybernet_next=${encodeURIComponent(`/lesson/${nextId}`)}; Path=/; Max-Age=3600; SameSite=Lax`;
+  }, [lesson1.id, lesson2.id]);
   const link = await admin.auth.admin.generateLink({ type: "magiclink", email });
   await page.goto(`${BASE}/auth/callback?token_hash=${link.data.properties.hashed_token}&type=magiclink`);
   await page.waitForURL(/\/account\?welcome=1/, { timeout: 15_000 });
-  record("A new account picks a name first, keeping where it was going", page.url().includes(`next=${encodeURIComponent("/lesson/two-step-sign-in")}`), page.url());
+  record("A new account picks a name first, keeping where it was going", page.url().includes(`next=${encodeURIComponent(`/lesson/${lesson2.id}`)}`), page.url());
   // "Pick a username" starts with a suggestion, so keeping it is one tap.
   await page.waitForFunction(() => (document.querySelector("input[autocomplete=username]")?.value ?? "") !== "", null, { timeout: 30_000 });
   await page.getByRole("button", { name: "Use this" }).click();
-  await page.waitForURL(/\/lesson\/two-step-sign-in/, { timeout: 15_000 });
+  await page.waitForURL(new RegExp(`/lesson/${lesson2.id}`), { timeout: 15_000 });
   const plays = await page.getByRole("heading", { name: GATE }).isVisible().catch(() => false);
   await page.waitForTimeout(2500);
   const first = lesson2.cards[0];
-  // The first card's title, or a plain bit of its prompt (markdown and glossary marks removed).
-  const firstText = (first.title ?? first.prompt.replace(/\[\[([^\]|]+)(\|[^\]]+)?\]\]/g, "$1").replace(/[*`_]/g, "")).slice(0, 24);
+  // The first card's title, or a plain bit of its prompt or Hook line (markdown and glossary marks removed).
+  const firstText = (first.title ?? (first.prompt ?? first.situation).replace(/\[\[([^\]|]+)(\|[^\]]+)?\]\]/g, "$1").replace(/[*`_]/g, "")).slice(0, 24);
   const cardShown = await page.getByText(firstText).first().isVisible().catch(() => false);
   record("…then lesson 2 opens and plays", !plays && cardShown);
   await page.screenshot({ path: path.join(SHOTS, "360-gate-after-signup.png"), fullPage: true });
