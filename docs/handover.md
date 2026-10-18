@@ -1,62 +1,156 @@
 # Handover
 
 Read this first in every session. It is replaced, not appended: git keeps the history.
-Last updated: 19 October 2026 (morning).
+Last updated: 19 October 2026 (evening).
 
-## Morning report (night of 18–19 October 2026, worked autonomously)
+## Report for Sid (19 October 2026)
 
-**Shipped to production: nothing.** Production is exactly as it was (`main` at `7f9a853`).
-- `fix-spot-the-ai` was pre-approved for production *only if* the visual QA gate passed on staging. The
-  staging Supabase project (`cybernet-staging`) has been **paused by Supabase** since about 10 idle
-  days (INACTIVE in `npx supabase projects list`; its address doesn't resolve). The CLI has no restore
-  command and I didn't pull your login token out of Windows' credential store to call the API, so the
-  full gate couldn't run and, per your rule, **it was not deployed**. Lint, typecheck, all tests, the
-  build and the card half of the visual QA sweep (every card in every course, phone/tablet/desktop)
-  pass on it; design QA and the page half of the gate need staging.
+### Shipped to production
+- **`fix-spot-the-ai`** (main `ee9d6e2`). The full gate passed on staging: lint, typecheck, tests, build,
+  design QA, `check:rls`, 18 staging e2e suites and the visual QA gate. Then I deployed it with your OK, and
+  `npm run e2e:prod-checks` passed all 7 suites. Nothing else went to production.
 
-**Ready on staging (branch `sso-module-1`, pushed; includes the bug fix and the storyboards):**
-Stay Safe Online module 1 rebuilt to Lesson Blueprint v1.1: Strong Passwords, One Password Each (new),
-Two-Step Sign-In, The Strongest Lock (new) and the module quiz, with 40 new pictures (`public/illustrations/sso/`).
-- **Play it:** https://cyber-net-training-git-sso-module-1-sidsapkotas-projects.vercel.app/dev/lessons
-  (Vercel login; every lesson from card 1, throwaway progress, no account, nothing saved). Locally:
-  http://localhost:3000/dev/lessons. Don't sign in elsewhere on the preview: previews share the
-  production database.
-- **Checks passed:** lint, typecheck, 101 test files / 1,271 tests, build; fit audit 322 card views at all
-  7 sizes (every control on screen, no broken layouts); visual QA card sweep on module 1 and on every
-  course (CARDS_ONLY, no database needed); new `npm run e2e:blueprint` (20 checks); `e2e:combo`,
-  `e2e:pacing`, `e2e:player-back`. **Not run (need staging):** design QA, the page half of the visual
-  QA gate, `check:rls` and the staging-only e2e suites.
+### Ready for your OK (not merged)
+- **`sso-module-1`:** Stay Safe Online module 1 to Blueprint v1.1. The six cards that ran past the bottom
+  at 360×560 now fit: two explainers and two questions are shorter, and two quiz pictures are cropped.
+  The fit audit passes at all 7 sizes, and nothing in module 1 scrolls on a phone. **Full gate:** GATE_SSO.
+  Play: https://cyber-net-training-git-sso-module-1-sidsapkotas-projects.vercel.app/dev/lessons
+- **`next-batch`** (Part C, staging only; builds on `sso-module-1`). **Don't ship until you've read the
+  parent wording below.** **Gate:** GATE_NEXT.
+  - **Home:** the big Continue is the first thing (before the name row and any notice; its picture is short on
+    phones so the button is in view at 360×560). Today's bytes sit under it, with how many are left and Play.
+  - **Feed:** finite. 3 bytes a day for everyone, then "That's today's bytes. Back tomorrow for 3 more." with
+    "Next lesson: …" (guests also get "Create a free account to keep your XP"). The same 3 all day on a device;
+    the server pays for 3 at most. The 15-minute break card is gone. The header says "1/3 today".
+  - **Founder offer:** ends 30 Nov 2026, 11:59 pm AEDT, the same moment for everyone. /pro shows
+    "First 50 learners only · Ends 30 Nov". After the end it hides everywhere and checkout refuses, with no switch.
+  - **XP labels:** "XP total" in the header, "Total XP" on the dashboard and player cards, "XP this week" above
+    the league table and on each row's screen-reader label, "XP last week" on the result screen, "XP earned" on
+    quiz results.
+  - **Send to a parent and /parents:** wording below.
+- **`first-five`** (Step 2; builds on `next-batch`), in progress:
+  - **Landing:** "Learn how tech works by playing with it. Free. For ages 13+.", then a live Stay Safe Online
+    byte (lesson 1's password question), then one button into that lesson.
+  - **The sign-up gate:** its buttons are in view on a phone.
+  - **"Your mistakes" card:** shows the Pro price.
+  - **The audit:** `docs/audit.md`, ranked by cost to sign-ups and sales. Per-course tables are in `docs/audit/`.
+  - **A test** that keeps `/dev` pages out of production builds.
 
-**Decisions I made (say if you'd like any changed):**
-1. **Opt-in per lesson:** only lessons with `"blueprint": "1.1"` get the new player behaviour (2nd wrong
-   shows the answer, unscored Predict cards, no Hint button); every other lesson plays exactly as before.
-2. **XP:** a Predict card pays its first-try XP (nothing to get wrong); a card whose answer was shown
-   after the 2nd wrong pays the retry XP and counts as done, so a lesson can always be finished.
-3. **No Hint button** in blueprint lessons: the 1st-wrong hint is the nudge, as the blueprint says.
-4. **"Tap the app" cards** are multiple choice with the answers drawn on the picture and a reveal
-   picture after a right answer (one answer each), rather than hotspot scenes with a reveal state (not
-   built). The two hotspot Predict cards became multiple choice with short text answers, the
-   storyboards' own fallback. One Password Each's Easy win asks for the one app the scammer can open.
-5. **Play cards:** Strong Passwords' toy is the password simulator in play mode; it shows its own
-   readout, not the drawn phone and dial (that picture is on the Hook). The three explore Play cards
-   use the new scenes (home screen, sign-in options, sign-in); a tap shows a callout, no animation.
-6. **Fit at 360×560:** under a picture, answers of up to 34 characters now sit two to a row; I trimmed
-   11 questions and answers to fit (same meaning) and tightened explainer pictures on short screens.
-   **Six cards still run 8–43px past the bottom of a 360×560 screen** (the end of two explainers, the
-   edge of four pictures; never a control). A redraw of those pictures would fix it.
-7. **Knock-on guards:** quizzes can't contain Predict cards, duels skip them, and Feed bytes can't point
-   at them; the `stolen-password` byte was re-pointed to Two-Step Sign-In's Easy win (the only Feed edit).
-8. **Blueprint v1.1's changelog** also records your other two rules (3+ answers; one "Try this"
-   wording); the storyboard review page is republished with all three changes (same link).
+### Courses: ready for Sid to play
+(Each gets the full gate first; preview links go here.)
+| Course | Branch | Status |
+|---|---|---|
+| Stay Safe Online modules 2–4 | `sso-m2`, `sso-m3`, `sso-m4` → merged into `sso-rebuild` | building |
+| How AI Really Works module 1 (Spot the AI) | `ai-rebuild` | building |
+| How the Internet Works (plan + module 1) | `internet-rebuild` | building |
+| Inside Your Devices | none | **blocked: the rebuild branch is only on the Mac** |
 
-**Blocked / waiting on you:**
-1. **Restore staging:** Supabase dashboard → `cybernet-staging` → **Restore project**. Then: the full
-   gate on `fix-spot-the-ai` (design QA + visual QA gate) and, with your OK, its deploy; the same full
-   gate plus `check:rls` on `sso-module-1`.
-2. **Play module 1** on the preview and tell me what to change; then whether to merge it to production
-   (it replaces the live module 1) and start module 2's build.
-3. Still open from before: `ADMIN_USER_IDS` in Vercel Production; push the Inside Your Devices branch
-   from the Mac.
+### Vercel: point previews at staging (you make these changes; I haven't touched Vercel)
+Vercel → project → Settings → Environment Variables. For each variable below, if one entry covers
+Production *and* Preview, edit it to **Production only**, then **Add** a new entry for **Preview** only with
+the staging value (from the Supabase dashboard, `cybernet-staging` → Project Settings → API):
+1. `NEXT_PUBLIC_SUPABASE_URL` = `https://sfacbjpgkbrqmteajmfl.supabase.co`
+2. `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` = staging's publishable key (`sb_publishable_…`)
+3. `SUPABASE_SECRET_KEY` = staging's secret key (`sb_secret_…`). Server-only; never a `NEXT_PUBLIC_` name.
+
+Then also:
+4. `ADMIN_USER_IDS` (Preview): remove it, or set it to the staging admin test account's id. Production user
+   ids don't exist on staging.
+5. `RESEND_API_KEY` (Preview): remove it. Outside production, reminders only ever go to the feedback inbox,
+   but previews don't need email at all.
+6. Leave as they are: the Stripe variables (Preview is already sandbox; live keys are refused outside
+   production), `CRON_SECRET` (crons don't run on previews) and `PRO_LAUNCH_AT` (Production only).
+7. **Redeploy** the open previews: `NEXT_PUBLIC_` values are baked in at build time.
+
+**Not in Vercel, but needed for sign-in on previews:**
+- In the Supabase dashboard for `cybernet-staging` → Authentication → URL Configuration, add
+  `https://cyber-net-training-git-*-sidsapkotas-projects.vercel.app/**` to the redirect URLs.
+- Google sign-in on previews needs the Google provider set up on staging too; the email code works without it.
+
+### /dev/lessons on production
+`https://cybernettraining.com/dev/lessons` returns **404** (checked 19 Oct, as do `/dev/cards`, `/dev/fit` and
+`/dev/mascot`). The guarantee is `next.config.ts`:
+```ts
+const devRoutes = phase === PHASE_DEVELOPMENT_SERVER || process.env.VERCEL_ENV === "preview";
+pageExtensions: devRoutes ? ["dev.tsx", "tsx", "ts", "jsx", "js"] : ["tsx", "ts", "jsx", "js"],
+```
+Every dev page is `page.dev.tsx`, so a production build never compiles it. The production build's route
+list has no `/dev` routes. On `first-five`, `src/lib/devRoutes.test.ts` fails if a dev page uses another
+extension, or if the config ever lets `dev.tsx` into a production build.
+
+### Parent wording to approve (in `src/lib/pro/parentCopy.ts`; `parentCopy.test.ts` screens it for pressure words)
+- **Link under every lifetime button** (was "Can't pay? Send it to a parent"): **Send the details to a parent**
+- **Shown to the learner after making the link:** "This link opens a page for a parent or guardian: what
+  CyberNet is, what Pro includes, the price and the terms. It works for 7 days and pays once."
+- **Text sent with the link** (the adult reads it): "CyberNet Training is a website that teaches online safety and
+  how technology works, for ages 13 and up. This page has what its Pro plan includes, the price and the refund
+  terms:" + the link.
+- **The parent's page (/pay):**
+  - **Heading:** "CyberNet Pro: the details".
+  - **Intro:** "[username] shared this page. CyberNet Training is a website with short, hands-on lessons on online
+    safety and how technology works: passwords and scams, devices, the internet and AI. It's for ages 13 and up,
+    and no experience is needed."
+  - **What Pro includes:** Unlimited lessons every day · Review your mistakes · Certificates for every course · An
+    extra streak freeze. Then: "Without Pro, every course stays free to use, with up to 3 new lessons a day."
+  - **Price:** "One payment of A$29. It isn't a subscription: nothing renews and there are no further charges.
+    Pro stays on the account for as long as CyberNet Training runs."
+  - **Refunds:** "No refunds for a change of mind, except where the law requires one. Your rights under the
+    Australian Consumer Law always apply. Questions: hello@cybernettraining.com."
+  - **Link:** "Privacy and safety for parents and guardians" → /parents.
+  - **Button:** "Pay A$29 with Stripe".
+  - **Under it:** "No account needed. Stripe handles the payment and emails you the receipt; CyberNet never sees
+    card details. See our Terms and Privacy policy."
+  - **Removed:** "[username] asked you to get them…", "Lifetime Pro for [username]" and "securely".
+- **/parents** ("For parents and guardians"; linked from /pay; in the sitemap):
+  - **Intro:** the same as /pay.
+  - **What's free:** the same line as /pay.
+  - **What Pro includes:** the same list.
+  - **Prices** (from Stripe): Monthly A$7.99 a month; Yearly A$59.99 a year; Lifetime (Founding Member, for
+    the first 50 buyers, until 30 November 2026): the price line above.
+  - **Cancelling and refunds:**
+    - "The first subscription starts with a 7-day free trial; cancel before it ends and nothing is charged."
+    - "Subscriptions renew automatically until cancelled. Cancel any time from the account page (Manage
+      subscription): Pro stays until the end of the paid period, with no further charges."
+    - "Deleting the account cancels any subscription straight away."
+    - The refunds line.
+  - **Privacy:**
+    - "We keep an email address, a made-up username, learning progress and settings. No real names, photos or
+      dates of birth."
+    - "No ads, no tracking cookies, and we never sell or rent anyone's information."
+    - "Card details go to Stripe, never to us."
+  - **Safety:**
+    - "Accounts are for ages 13 and up. Anyone can try a course's first lesson without an account."
+    - "There's no chat, messaging or public profile. Usernames are checked so they can't be real names, contact
+      details or rude words, and learners can hide from leaderboards."
+    - "Reactions in friend challenges come from a fixed list: there's no free text anywhere."
+    - "Reminder emails are off unless the learner turns them on."
+    - "Lessons about getting help (after a scam or a hacked account) are always free."
+  - **Contact:** hello@, with links to the Privacy policy and Terms.
+- **Unchanged:** "Under 18? Ask a parent before buying." stays under the buy buttons. It's advice to the learner,
+  not pressure on the adult; say if you want it reworded.
+
+### Decisions I made (say if you'd like any changed)
+1. **The Feed's 3 a day apply to guests too** (before, guests had 5 in total and then a sign-up card).
+   - A guest's bytes that come across at sign-up: up to 9.
+   - The landing byte counts as one of the day's 3.
+   - A wrong answer counts as played on that device.
+2. **Home for signed-in learners:** the name row, the Founding Member line and the one-time notices moved
+   below Continue and today's bytes.
+3. **The landing's first byte** is now Stay Safe Online's "pick the strongest password" (lesson 1's
+   real-life card) instead of the AI robots, and its button goes into that lesson instead of the Feed. The
+   Feed is a small link.
+4. **The sign-up gate** dropped "Weekly leagues" (4 perks → 3) so the buttons fit on a phone; the mascot
+   hides on screens under 700px tall.
+5. **How the Internet Works:** the plan recommends making its free module about the internet itself and
+   moving binary later. **That changes what's free, so it's yours to confirm** when you play it.
+6. **Branch chain:** `sso-module-1` → `next-batch` → `first-five` → each course branch. Merging in that
+   order keeps conflicts away; a course branch can't ship before the ones it builds on.
+
+### Blocked / waiting on you
+1. Your OK on `sso-module-1` (once GATE_SSO is in), and on `next-batch` after reading the parent wording.
+2. The Vercel Preview changes above, and the staging redirect URL.
+3. Inside Your Devices: push its rebuild branch from the Mac.
+4. Still open: `ADMIN_USER_IDS` in Vercel Production.
 
 
 ## 0. Built 7 Oct while the owner was away
@@ -121,6 +215,7 @@ Plans: `docs/plans/retention-and-fun.md` (parts 1–4 + the content quality pass
 - **Founder funnel fixes (merged and live 6 Oct, `16028da`):** step events `founder_signup_wall`, `founder_checkout_created`, `founder_checkout_error` (with a reason code), "See it" on the dashboard line sends `founder_line_opened` (no longer counted as `founder_clicked`), guests come back to /pro after sign-in with a one-tap "continue to checkout", the 13+ check is asked right on the button, and errors are friendly with Try again.
 - **Production checks:** `npm run e2e:prod-checks` (7 suites against the live site, using `.env.production-checks`, a git-ignored file with only the production Supabase URL, publishable key and secret key). All e2e scripts read settings through `scripts/e2e/lib/env.mjs`, which refuses to mix the live site with staging keys or a local server with production keys.
 - Feedback form emails cybernettraining10@gmail.com (`FEEDBACK_INBOX`). Functions run in syd1. Help lines verified.
+- **Spot the AI fix (live 19 Oct, `ee9d6e2`):** answers never show before they are earned (every card type), Spot the AI card 2 has its situation line and a readable picture, and Lesson Blueprint v1 is in CLAUDE.md. The full staging gate and the 7 production suites passed.
 
 ## 2. Founding Member (merged 2 Oct; the offer is ON in production since about 5 Oct)
 
