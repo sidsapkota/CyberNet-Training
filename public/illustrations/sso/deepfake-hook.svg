@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 252" width="340" height="252" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>A call on your phone from an unknown number, 12 seconds in. A sound wave, then the caller's words in bubbles: It's Grandma! I've lost my purse. Send me $200 now. Don't tell your parents.</title>
+  <rect x="60" y="4" width="220" height="244" rx="20" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="170" y="34" font-size="18" font-weight="600" fill="#e6eef9" text-anchor="middle">Unknown number</text>
+  <text x="170" y="56" font-size="16" font-weight="500" fill="#a3b6d2" text-anchor="middle">0:12</text>
+  <path d="M134 76V84M142 72V88M150 67V93M158 71V89M166 65V95M174 73V87M182 69V91M190 75V85M198 71V89M206 76V84" fill="none" stroke="#00c2ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="24" y="102" width="292" height="33" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <text x="36" y="123" font-size="16" font-weight="500" fill="#e6eef9">It's Grandma! I've lost my purse.</text>
+  <rect x="24" y="146" width="188" height="33" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <text x="36" y="167" font-size="16" font-weight="500" fill="#e6eef9">Send me $200 now.</text>
+  <rect x="24" y="190" width="222" height="33" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <text x="36" y="211" font-size="16" font-weight="500" fill="#e6eef9">Don't tell your parents.</text>
+</svg>

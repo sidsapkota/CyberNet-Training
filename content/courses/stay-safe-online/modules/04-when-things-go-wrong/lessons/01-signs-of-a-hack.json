@@ -1,272 +1,214 @@
 {
   "id": "signs-of-a-hack",
   "kind": "lesson",
-  "title": "Signs of a Hack",
-  "about": "Know when an account has been taken over, and the steps to get it back.",
+  "title": "Signs of a Take-Over",
+  "about": "Spot when someone else is using your account.",
   "order": 1,
   "icon": "shield-alert",
+  "blueprint": "1.1",
   "cards": [
     {
-      "id": "hacked-or-normal",
-      "type": "sort_bins",
+      "id": "jai-weird-link",
+      "type": "hook",
+      "difficulty": "core",
+      "situation": "7:04 am. Your friend Jai has sent you a message.",
+      "image": {
+        "src": "/illustrations/sso/signs-of-a-hack-hook.svg",
+        "alt": "Your phone's lock screen at 7:04. A message from your friend Jai: Why did you send me this weird link?? Under it, a link: prize-win.example/free.",
+        "width": 340,
+        "height": 222
+      }
+    },
+    {
+      "id": "recent-activity",
+      "type": "hotspot",
+      "difficulty": "core",
+      "teaches": [
+        "code-follows-password"
+      ],
+      "prompt": "Your Chat app keeps a list of what your account did. **Tap each line.**",
+      "scene": "account-activity",
+      "view": "activity",
+      "mode": "explore",
+      "parts": [
+        {
+          "part": "act-code",
+          "job": "The app texts a code after your password is typed, to check it's you. You were signing in."
+        },
+        {
+          "part": "act-phone",
+          "job": "You, after school."
+        },
+        {
+          "part": "act-laptop",
+          "job": "A laptop you don't own, while you were asleep. Someone else signed in with your password."
+        },
+        {
+          "part": "act-phone-morning",
+          "job": "You, this morning, opening Jai's message."
+        }
+      ],
+      "explanation": "Three lines were you. One wasn't."
+    },
+    {
+      "id": "do-nothing-tonight",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "predict": true,
+      "play": "predict",
+      "uses": [],
+      "prompt": "They still have your password. You do nothing. **What happens tonight?**",
+      "image": {
+        "src": "/illustrations/sso/signs-of-a-hack-tonight.svg",
+        "alt": "Your Recent activity list: Laptop, 2:13 am, outlined; This phone, 7:04 am. Below, an empty dashed row for tonight. A moon and stars in the corner.",
+        "width": 340,
+        "height": 164,
+        "revealSrc": "/illustrations/sso/signs-of-a-hack-tonight-reveal.svg",
+        "revealAlt": "A new row at the bottom of the list: Laptop, tonight 1:48 am. Jai messages again: You sent it again?"
+      },
+      "options": [
+        {
+          "id": "again",
+          "text": "They sign in again"
+        },
+        {
+          "id": "app-removes",
+          "text": "The app kicks them out"
+        },
+        {
+          "id": "works-once",
+          "text": "They can't: passwords work once"
+        }
+      ],
+      "correctOptionId": "again",
+      "explanation": "Your password still works for them, so they come back tonight."
+    },
+    {
+      "id": "meet-take-over",
+      "type": "explainer",
       "difficulty": "core",
       "teaches": [
         "account-take-over"
       ],
-      "uses": [],
-      "prompt": "Someone else in your account is a **take-over**. Which is a sign?",
-      "bins": [
-        {
-          "id": "hacked",
-          "label": "Sign of a take-over"
-        },
-        {
-          "id": "normal",
-          "label": "Normal"
-        }
-      ],
-      "items": [
-        {
-          "id": "new-sign-in",
-          "label": "Alert: a sign-in you didn't make",
-          "bin": "hacked"
-        },
-        {
-          "id": "messages",
-          "label": "Friends got links you didn't send",
-          "bin": "hacked"
-        },
-        {
-          "id": "own-code",
-          "label": "A code while you were signing in",
-          "bin": "normal"
-        },
-        {
-          "id": "app-reauth",
-          "label": "The app asked you to sign in again",
-          "bin": "normal"
-        }
-      ],
-      "explanation": "Anything that **wasn't you** is a sign. A code or sign-in that matches something **you** just did is normal.",
-      "hint": "For each one, ask: did I do this, or did someone else?",
-      "nudge": "A code or alert is normal when it matches something you just did, and a warning sign when it doesn't."
+      "title": "A take-over",
+      "body": "Someone else using your account is a **take-over**. The warning sign is anything your account did that **wasn't you**.",
+      "image": {
+        "src": "/illustrations/sso/signs-of-a-hack-named.svg",
+        "alt": "The same activity list, each row tagged. Code sent 4:01 pm: You. This phone 4:02 pm: You. Laptop 2:13 am: Not you, with a warning sign. This phone 7:04 am: You.",
+        "width": 320,
+        "height": 196
+      }
     },
     {
-      "id": "step-by-step",
-      "type": "explainer",
-      "difficulty": "core",
-      "teaches": [
-        "first-steps-after-hack",
-        "trusted-adult",
-        "recovery-email"
-      ],
-      "title": "What to do first",
-      "body": "Spotted a sign? Do these first, in order:\n\n1. **Tell a trusted adult.** You're not in trouble, and they can help you work through it.\n2. **Change the password** on a device you trust, in the real app or website. Make it new, strong and unique.\n3. **Check the recovery email and phone**, and remove anything that isn't yours, so the attacker can't reset your new password."
-    },
-    {
-      "id": "order-the-steps",
-      "type": "drag_to_order",
+      "id": "tap-not-you",
+      "type": "hotspot",
       "difficulty": "core",
       "uses": [
-        "first-steps-after-hack"
+        "account-take-over"
       ],
-      "prompt": "Put the first three steps in order.",
-      "items": [
-        {
-          "id": "tell",
-          "label": "Tell a trusted adult"
-        },
-        {
-          "id": "password",
-          "label": "Change the password"
-        },
-        {
-          "id": "recovery",
-          "label": "Check the recovery email and phone"
-        }
+      "prompt": "A new day. You only ever use your phone. **Tap the sign-in that wasn't you.**",
+      "scene": "account-activity",
+      "view": "activity-2",
+      "mode": "tap",
+      "targets": [
+        "act2-tablet"
       ],
-      "explanation": "**Tell a trusted adult** so you're not alone, **change the password** to lock the attacker out, then **check the recovery details** so they can't reset it.",
-      "hint": "Why would checking recovery details only help **after** there's a new password?",
-      "nudge": "Checking recovery details protects the new password. Which has to come first?"
+      "explanation": "Right: you don't own a tablet, so that sign-in wasn't you.",
+      "nudge": "Look at the device on each line. Which one isn't yours?",
+      "showAnswer": "It's the tablet: you only use your phone, so someone else signed in."
     },
     {
-      "id": "weird-messages",
-      "type": "scenario",
+      "id": "code-out-of-nowhere",
+      "type": "multiple_choice",
       "difficulty": "core",
-      "teaches": [
-        "attacker-stays-signed-in"
-      ],
+      "play": "consequence",
       "uses": [
-        "first-steps-after-hack",
-        "recovery-email",
-        "two-step-sign-in"
+        "code-follows-password",
+        "account-take-over"
       ],
-      "prompt": "Your friends say you've been sending them strange links. You haven't.",
-      "start": "start",
-      "steps": [
+      "prompt": "You're watching TV, not signing in. A code pops up. **Tap what it means.**",
+      "image": {
+        "src": "/illustrations/sso/signs-of-a-hack-code.svg",
+        "alt": "You're on the sofa watching TV in the evening. Your phone on the cushion shows a notification: Chat code: 482 913.",
+        "width": 340,
+        "height": 176,
+        "revealSrc": "/illustrations/sso/signs-of-a-hack-code-reveal.svg",
+        "revealAlt": "Your Recent activity list slides up. A new row: Code sent, today 7:30 pm, tagged Not you. No sign-in from you comes after it."
+      },
+      "options": [
         {
-          "id": "start",
-          "text": "You can still sign in. What do you do first?",
-          "choices": [
-            {
-              "id": "tell-change",
-              "text": "Tell a trusted adult, and change your password",
-              "consequence": "Good start. The attacker's password no longer works.",
-              "next": "then"
-            },
-            {
-              "id": "delete",
-              "text": "Delete the whole account",
-              "consequence": "You'd lose everything, and the attacker might already have your password for other sites.",
-              "outcome": "fail"
-            },
-            {
-              "id": "ignore",
-              "text": "Ignore it. Friends will work it out",
-              "consequence": "Every hour gives the attacker more time to trick your friends.",
-              "outcome": "fail"
-            }
-          ]
+          "id": "warning",
+          "text": "Someone typed my password"
         },
         {
-          "id": "then",
-          "text": "Password changed. But the attacker may **still be signed in**. What next?",
-          "choices": [
-            {
-              "id": "lock-down",
-              "text": "Sign out other devices, check recovery details, turn on two-step",
-              "consequence": "Whoever was in is kicked out, and a password alone can't get them back in.",
-              "outcome": "success"
-            },
-            {
-              "id": "done",
-              "text": "That's enough, you're done",
-              "consequence": "The attacker may still be signed in on their device. Sign out other devices too.",
-              "outcome": "fail"
-            }
-          ]
+          "id": "now-and-then",
+          "text": "Normal: apps send codes randomly",
+          "nudge": "This morning, the 8:09 code came just before your own sign-in. Who's signing in now?"
+        },
+        {
+          "id": "reminder",
+          "text": "A reminder to sign in",
+          "nudge": "This morning, the 8:09 code came just before your own sign-in. Who's signing in now?"
         }
       ],
-      "explanation": "Change the password, then **sign out other devices**, check recovery details, turn on **two-step sign-in**, change that password everywhere else, and warn your friends.",
-      "hint": "If someone's still signed in, is a new password enough? And where else does the old one work?"
+      "correctOptionId": "warning",
+      "explanation": "Yes: a code comes after someone types your password, and this time it wasn't you.",
+      "showAnswer": "It's a warning sign: someone else typed your password, because codes only come after that."
     },
     {
-      "id": "lock-them-out",
+      "id": "hacked-or-normal",
       "type": "sort_bins",
       "difficulty": "core",
       "uses": [
-        "first-steps-after-hack",
-        "attacker-stays-signed-in"
+        "account-take-over"
       ],
-      "prompt": "Which of these **locks the attacker out**?",
+      "prompt": "Your own accounts this week. Some alerts are you, some aren't. **Sort each one.**",
       "bins": [
         {
-          "id": "locks",
-          "label": "Locks them out"
+          "id": "hacked",
+          "label": "Warning sign"
         },
         {
-          "id": "nope",
-          "label": "Doesn't help"
+          "id": "normal",
+          "label": "That was me"
         }
       ],
       "items": [
         {
-          "id": "new-password",
-          "label": "Change the password",
-          "bin": "locks"
+          "id": "new-phone",
+          "label": "Sign-in alert as you set up a new phone",
+          "bin": "normal"
         },
         {
-          "id": "sign-out",
-          "label": "Sign out all other devices",
-          "bin": "locks"
+          "id": "link",
+          "label": "Friends got a link you never sent",
+          "bin": "hacked"
         },
         {
-          "id": "photo",
-          "label": "Delete your profile picture",
-          "bin": "nope"
+          "id": "post",
+          "label": "A post on your page you didn't make",
+          "bin": "hacked"
         },
         {
-          "id": "reply",
-          "label": "Reply telling them to stop",
-          "bin": "nope"
+          "id": "update",
+          "label": "Asked to sign in again after an update",
+          "bin": "normal"
         }
       ],
-      "explanation": "A new password plus **signing out other devices** locks them out. Deleting a photo or replying does nothing.",
-      "hint": "The attacker knows the old password and may still be signed in. What fixes both?",
-      "nudge": "Which actions change what the attacker can sign in with, or kick out a device they're already on?"
-    },
-    {
-      "id": "pay-to-unlock",
-      "type": "multiple_choice",
-      "difficulty": "core",
-      "teaches": [
-        "official-account-recovery"
-      ],
-      "uses": [],
-      "prompt": "You pay a stranger $20 to unlock your account. What happens?",
-      "options": [
-        {
-          "id": "money-gone",
-          "text": "They keep the $20, and your account stays locked"
-        },
-        {
-          "id": "they-unlock",
-          "text": "They unlock it, like a paid recovery expert would",
-          "nudge": "Only the app itself can unlock your account. Nobody else can, however much you pay."
-        },
-        {
-          "id": "support-unlocks",
-          "text": "The app's support team steps in and unlocks it",
-          "nudge": "Real support teams never message you asking for money. The app's own recovery is free."
-        }
-      ],
-      "correctOptionId": "money-gone",
-      "explanation": "Strangers can't unlock accounts, so the money's just gone. Use the app's own **Forgot password**, tell a trusted adult, and never pay.",
-      "hint": "Can anyone outside the app open your account for you?"
-    },
-    {
-      "id": "recovery-changed",
-      "type": "scenario",
-      "difficulty": "core",
-      "uses": [
-        "recovery-email",
-        "two-step-sign-in"
-      ],
-      "prompt": "You check your account's security settings.",
-      "start": "start",
-      "steps": [
-        {
-          "id": "start",
-          "text": "The **recovery email** is one you've never seen. What do you do?",
-          "choices": [
-            {
-              "id": "replace",
-              "text": "Remove it, add your own, and turn on two-step sign-in",
-              "consequence": "Now only you can reset the password.",
-              "outcome": "success"
-            },
-            {
-              "id": "leave",
-              "text": "Leave it. It's only a backup",
-              "consequence": "The recovery email can reset your password, so whoever owns it could get back in.",
-              "outcome": "fail"
-            }
-          ]
-        }
-      ],
-      "explanation": "The **recovery email** can reset your password, so it must be yours. Remove anything you don't recognise, and add a second lock.",
-      "hint": "What is the recovery email used for?"
+      "explanation": "Anything that wasn't you is a warning sign; an alert that matches what you just did is you.",
+      "nudge": "For each one, ask: did I just do this, or did someone else?",
+      "showAnswer": "The link and the post weren't you, so they're warning signs. The other two match something you did."
     },
     {
       "id": "recap",
       "type": "explainer",
       "difficulty": "core",
       "teaches": [
-        "first-steps-after-hack",
-        "official-account-recovery"
+        "account-take-over",
+        "trusted-adult"
       ],
       "title": "Recap",
-      "body": "- First: **tell an adult**, **change the password**, **check recovery details**.\n- Locked out? Use the **official recovery**. Never pay a stranger.\n- **Try this:** check your account's recovery email and phone today.\n\n**Next:** the video call from a face that isn't real."
+      "body": "Anything your account did that **wasn't you** is a warning sign. Spot one? Tell a trusted adult.\n\n**Try this:** Open one app's settings and find the list of devices signed in to your account.\n\n**Next:** How to kick whoever got in out of your account, and keep them out."
     }
   ]
 }

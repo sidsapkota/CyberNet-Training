@@ -273,59 +273,92 @@ Not exported, so the answers stay secret.
 
 ### Module 4: When Things Go Wrong (Free)
 
-Signs of a hack, what to do step by step, and where to get help.
+Signs of a take-over, getting your account back, deepfakes, and where to get help.
 
-#### Signs of a Hack
+#### Signs of a Take-Over
 
-- **What you learn:** Know when an account has been taken over, and the steps to get it back.
+- **What you learn:** Spot when someone else is using your account.
 - **Access:** Free, no account needed (best for video links)
 - **Link:** `cybernettraining.com/from/<platform>/signs-of-a-hack`
 
 **Key facts**
 
-- *What to do first:* **Tell a trusted adult.** You're not in trouble, and they can help you work through it. **Change the password** on a device you trust, in the real app or website.
-- *Recap:* First: **tell an adult**, **change the password**, **check recovery details**. Use the **official recovery**.
+- *A take-over:* Someone else using your account is a **take-over**. The warning sign is anything your account did that **wasn't you**.
+- *Recap:* Anything your account did that **wasn't you** is a warning sign. **Try this:** Open one app's settings and find the list of devices signed in to your account.
 
 **Best interactive cards**
 
-- Sort into groups: Someone else in your account is a **take-over**. Which is a sign?
-- Choose what happens: Your friends say you've been sending them strange links. You haven't.
-- Choose what happens: You check your account's security settings.
+- Explore the picture: Your Chat app keeps a list of what your account did. **Tap each line.**
+- Tap the picture: A new day. You only ever use your phone. **Tap the sign-in that wasn't you.**
+- Sort into groups: Your own accounts this week. Some alerts are you, some aren't. **Sort each one.**
 
-#### Deepfake Scams and Fakes
+#### Take Your Account Back
 
-- **What you learn:** Spot the red flags of a faked voice or video, and check who is really there.
+- **What you learn:** Kick out whoever got in, and lock every door behind them.
+- **Access:** Free, no account needed (best for video links)
+- **Link:** `cybernettraining.com/from/<platform>/take-back-your-account`
+
+**Key facts**
+
+- *Lock every door:* After telling a trusted adult, **lock every door**, in this order.
+- *Recap:* **Report it too:** at cyber.gov.au/report, which passes it to the police. **Try this:** Check that the recovery email on one of your accounts is really yours.
+
+**Best interactive cards**
+
+- Explore the picture: This is your account's Security page. **Tap each setting.**
+- Multiple choice: You change your password. The laptop was already in. **What happens to it?**
+- Tap the picture: Password changed. The laptop is still signed in. **Tap what kicks it out.**
+
+#### Deepfake Scams
+
+- **What you learn:** Spot a faked voice or video, and check who's really there.
 - **Access:** Free, no account needed (best for video links)
 - **Link:** `cybernettraining.com/from/<platform>/deepfake-scams`
 
 **Key facts**
 
-- *Fake voices and faces:* AI can copy a voice from real recordings, sometimes just a few seconds of video posted online: a **voice clone**. A faked video or picture is a **deepfake**.
-- *Recap:* **Try this:** agree a family safe word tonight. Talk any time: **Kids Helpline** 1800 55 1800 (up to 25) or **Lifeline** 13 11 14.
+- *Deepfakes:* A voice, face or video faked with AI is a **deepfake**.
+- *Recap:* **Try this:** Agree a secret family word with your family tonight, to check calls like this. **Next:** Something mean online: what to save before you block.
 
 **Best interactive cards**
 
-- Choose what happens: A call from an unknown number sounds just like your grandma.
-- Choose what happens: A video message from an account with your coach's face.
-- Choose what happens: Someone made a fake picture of you and wants money.
+- Multiple choice: A scammer copies 5 seconds of Grandma's voice. **What can they make?**
+- Multiple choice: You've hung up. Now check it was really Grandma. **Tap how you check.**
+- Multiple choice: Next day, a video call. Grandma's face asks for $200 now. **Tap what you do.**
+
+#### Save the Evidence
+
+- **What you learn:** Screenshot first, then block, report and tell someone you trust.
+- **Access:** Free, no account needed (best for video links)
+- **Link:** `cybernettraining.com/from/<platform>/save-the-evidence`
+
+**Key facts**
+
+- *Screenshot first:* Before you block, **save the evidence**: screenshot the messages, username and date. Report it to **eSafety**, and under 18s to the **ACCCE**.
+- *Recap:* **Talk any time:** **Kids Helpline** 1800 55 1800 (ages 5 to 25) or **Lifeline** 13 11 14. **Try this:** Practise taking a screenshot on your phone, so you can do it fast.
+
+**Best interactive cards**
+
+- Explore the picture: This is the chat. **Tap each part** to see what it is.
+- Multiple choice: You tap Block before saving anything. **What happens to the messages?**
+- Multiple choice: shadow_77 posts again: "everyone's laughing at you". **Tap what you do first.**
 
 #### Getting Help
 
-- **What you learn:** Where to get help, what to save, and who to tell when things go wrong.
+- **What you learn:** Who to tell, and where to go, whatever goes wrong online.
 - **Access:** Free, no account needed (best for video links)
 - **Link:** `cybernettraining.com/from/<platform>/getting-help`
 
 **Key facts**
 
-- *Words it teaches:* Outside your family, **Kids Helpline** (ages 5 to 25) is 1800 55 1800 and **Lifeline** is 13 11 14, any time. **Report** it in the app first, and report a scam to **Scamwatch** (scamwatch.gov.au) to warn others. If money's involved, tell **your bank** straight away; if details are stolen, **IDCARE** (idcare.org) helps. If someone could get hurt right now, call **000**.
-- *Never your fault:* **It's never your fault**, and telling someone is brave. Before you block, **save the evidence**: screenshot the messages, the username, the web address and the date.
-- *Recap:* **Never your fault:** tell a trusted adult, **Kids Helpline** (1800 55 1800) or **Lifeline** (13 11 14). Report in the app, then **eSafety** (esafety.gov.au), **Scamwatch**, your **bank**, or **000** if there's danger.
+- *Who can help:* Start with a **trusted adult**, then go to the helper made for the problem.
+- *Recap:* **Try this:** Save **Kids Helpline** (1800 55 1800) and **Lifeline** (13 11 14) in your phone, next to someone you trust. **Next:** The course final: show everything you've learned.
 
 **Best interactive cards**
 
-- Multiple choice: You block a bully before saving their messages. What happens?
-- Choose what happens: People in a group chat post mean messages about you.
-- Match pairs: Match each problem to where to go.
+- Explore the picture: These people are here to help. **Tap each one.**
+- Multiple choice: A scam took money from your card. You call your bank. **What can it do?**
+- Match pairs: Four different problems, four helpers. **Match each problem to its helper.**
 
 #### Module quiz (8 questions)
 

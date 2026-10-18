@@ -55,7 +55,7 @@ const MIN_HEIGHT = 150;
  * unreadable and their parts too small to tap apart. They grow up to READABLE_MAX when there's room.
  * A card using one that doesn't fit must be split (the fit audit lists it).
  */
-const READABLE = new Set<SceneId>(["file-browser", "email", "email-frozen-card", "email-payment", "text-message", "text-message-tolls", "fake-website", "phone-call", "home-screen", "sign-in-options", "sign-in", "social-post", "cafe"]);
+const READABLE = new Set<SceneId>(["file-browser", "email", "email-frozen-card", "email-payment", "text-message", "text-message-tolls", "fake-website", "phone-call", "home-screen", "sign-in-options", "sign-in", "social-post", "cafe", "account-activity", "account-security", "group-chat", "help-board"]);
 const READABLE_MAX = 1.25;
 /** Room kept under the scene: the page's bottom padding (the hint and Back live in the footer). */
 const BELOW = 28;

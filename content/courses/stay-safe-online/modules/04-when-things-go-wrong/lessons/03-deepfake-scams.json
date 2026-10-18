@@ -1,0 +1,215 @@
+{
+  "id": "deepfake-scams",
+  "kind": "lesson",
+  "title": "Deepfake Scams",
+  "about": "Spot a faked voice or video, and check who's really there.",
+  "order": 3,
+  "icon": "audio-lines",
+  "blueprint": "1.1",
+  "cards": [
+    {
+      "id": "grandma-call",
+      "type": "hook",
+      "difficulty": "core",
+      "situation": "Unknown number. It sounds exactly like Grandma, and she needs money.",
+      "image": {
+        "src": "/illustrations/sso/deepfake-hook.svg",
+        "alt": "A call on your phone from an unknown number, 12 seconds in. A sound wave, then the caller's words in bubbles: It's Grandma! I've lost my purse. Send me $200 now. Don't tell your parents.",
+        "width": 340,
+        "height": 252
+      }
+    },
+    {
+      "id": "few-seconds-of-voice",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "predict": true,
+      "play": "predict",
+      "teaches": [
+        "voice-clone"
+      ],
+      "uses": [],
+      "prompt": "A scammer copies 5 seconds of Grandma's voice. **What can they make?**",
+      "image": {
+        "src": "/illustrations/sso/deepfake-few-seconds.svg",
+        "alt": "Left, a social post: Grandma blowing out birthday candles, a 5-second video. An arrow points to a scammer at a laptop on the right.",
+        "width": 340,
+        "height": 158,
+        "revealSrc": "/illustrations/sso/deepfake-few-seconds-reveal.svg",
+        "revealAlt": "The scammer's laptop now plays a sound wave in Grandma's voice, saying words she never said: I've lost my purse. Send me $200 now."
+      },
+      "options": [
+        {
+          "id": "anything",
+          "text": "Her voice, saying anything"
+        },
+        {
+          "id": "same-clip",
+          "text": "Only that same clip"
+        },
+        {
+          "id": "nothing",
+          "text": "Nothing: it needs hours"
+        }
+      ],
+      "correctOptionId": "anything",
+      "explanation": "AI learns how Grandma sounds from a short clip, then makes her voice say new things."
+    },
+    {
+      "id": "meet-deepfake",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "deepfake",
+        "deepfake-warning-signs",
+        "call-back-on-known-number"
+      ],
+      "title": "Deepfakes",
+      "body": "A voice, face or video faked with AI is a **deepfake**. Warning signs: an unknown number, a rush for money, a secret. Hang up and call the number you already have.",
+      "image": {
+        "src": "/illustrations/sso/deepfake-named.svg",
+        "alt": "The call from an unknown number, its voice tagged: Could be a deepfake. Beside the phone, a contact card: Grandma, saved in your phone, tagged: Call this one.",
+        "width": 320,
+        "height": 170
+      }
+    },
+    {
+      "id": "call-saved-number",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "play": "consequence",
+      "uses": [
+        "call-back-on-known-number"
+      ],
+      "prompt": "You've hung up. Now check it was really Grandma. **Tap how you check.**",
+      "image": {
+        "src": "/illustrations/sso/deepfake-call-back.svg",
+        "alt": "Your phone after the call, with three big buttons: Call back Unknown number. Call Grandma (saved). Text Unknown number: Is it you?",
+        "width": 340,
+        "height": 222,
+        "revealSrc": "/illustrations/sso/deepfake-call-back-reveal.svg",
+        "revealAlt": "Call Grandma (saved) is lit. The real Grandma answers at home: My purse? It's right here!"
+      },
+      "options": [
+        {
+          "id": "call-back-unknown",
+          "text": "Call back Unknown number",
+          "area": {
+            "x": 4.1,
+            "y": 20.7,
+            "w": 91.8,
+            "h": 23.4
+          },
+          "nudge": "Which number belongs to the real Grandma, not the caller?"
+        },
+        {
+          "id": "call-saved",
+          "text": "Call Grandma (saved)",
+          "area": {
+            "x": 4.1,
+            "y": 46.8,
+            "w": 91.8,
+            "h": 23.4
+          }
+        },
+        {
+          "id": "text-unknown",
+          "text": "Text Unknown number: Is it you?",
+          "area": {
+            "x": 4.1,
+            "y": 72.9,
+            "w": 91.8,
+            "h": 23.4
+          },
+          "nudge": "Which number belongs to the real Grandma, not the caller?"
+        }
+      ],
+      "correctOptionId": "call-saved",
+      "explanation": "Yes: her saved number reaches the real Grandma, and the scammer can't answer it.",
+      "showAnswer": "Call Grandma's saved number: the unknown number belongs to the caller, who'd just answer again."
+    },
+    {
+      "id": "best-check",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "uses": [
+        "deepfake",
+        "call-back-on-known-number"
+      ],
+      "prompt": "Next day, a video call. Grandma's face asks for $200 now. **Tap what you do.**",
+      "image": {
+        "src": "/illustrations/sso/deepfake-video-call.svg",
+        "alt": "A video call from an unknown number. Grandma's face fills the screen and a bubble says: Quick, love, send it now!",
+        "width": 340,
+        "height": 178,
+        "revealSrc": "/illustrations/sso/deepfake-video-call-reveal.svg",
+        "revealAlt": "The video call has ended. You call Grandma's saved number: she answers at home with a puzzled smile and says: Hello love! What video call?"
+      },
+      "options": [
+        {
+          "id": "hang-up-call",
+          "text": "Hang up, call her saved number"
+        },
+        {
+          "id": "send",
+          "text": "Send it: I can see her face",
+          "nudge": "Faces can be copied, just like voices. What can't a scammer fake?"
+        },
+        {
+          "id": "another-video",
+          "text": "Ask for another video",
+          "nudge": "Faces can be copied, just like voices. What can't a scammer fake?"
+        }
+      ],
+      "correctOptionId": "hang-up-call",
+      "explanation": "Right: faces can be faked too, but a deepfake can't answer Grandma's real phone.",
+      "showAnswer": "Hang up and call her saved number: a deepfake can make another video, but it can't answer her real phone."
+    },
+    {
+      "id": "coach-video",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "uses": [
+        "deepfake-warning-signs",
+        "trusted-adult"
+      ],
+      "prompt": "A video message from an account with your coach's face. **Tap what you do.**",
+      "image": {
+        "src": "/illustrations/sso/deepfake-coach.svg",
+        "alt": "A chat from an account named Coach, with a round picture of a person in a cap with a whistle. A video message shows the same face. Under it: Send me a photo of you in your uniform. Keep it between us.",
+        "width": 340,
+        "height": 180
+      },
+      "options": [
+        {
+          "id": "tell-adult",
+          "text": "Don't reply; tell a trusted adult"
+        },
+        {
+          "id": "send",
+          "text": "Send it: it's Coach's face",
+          "nudge": "Look past the face. Which warning sign is in the message itself?"
+        },
+        {
+          "id": "ask-why",
+          "text": "Ask Coach why, then decide",
+          "nudge": "Look past the face. Which warning sign is in the message itself?"
+        }
+      ],
+      "correctOptionId": "tell-adult",
+      "explanation": "Yes: \"Keep it between us\" is a warning sign, whatever the face, and a trusted adult can check.",
+      "showAnswer": "Don't reply, and tell a trusted adult: real or fake, a secret photo request is a warning sign."
+    },
+    {
+      "id": "deepfake-recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "call-back-on-known-number",
+        "family-safe-word"
+      ],
+      "title": "Recap",
+      "body": "A voice or face you know can be faked: hang up and check on the number you already have, or ask a trusted adult.\n\n**Try this:** Agree a secret family word with your family tonight, to check calls like this.\n\n**Next:** Something mean online: what to save before you block."
+    }
+  ]
+}

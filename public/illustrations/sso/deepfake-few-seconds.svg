@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 158" width="340" height="158" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Left, a social post: Grandma blowing out birthday candles, a 5-second video. An arrow points to a scammer at a laptop on the right.</title>
+  <rect x="8" y="6" width="150" height="146" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <g>
+  <circle cx="62" cy="31.2" r="8.4" fill="#d9dde4"/>
+  <circle cx="62" cy="54" r="19.2" fill="#f2c6a0"/>
+  <path d="M42.2 56.4A16.6 16.6 0 0 1 81.8 56.4C76.4 44.4 47.6 44.4 42.2 56.4Z" fill="#d9dde4"/>
+  <circle cx="54.8" cy="56.4" r="5.4" fill="none" stroke="#1d2a3d" stroke-width="1.68"/>
+  <circle cx="69.2" cy="56.4" r="5.4" fill="none" stroke="#1d2a3d" stroke-width="1.68"/>
+  <path d="M60.2 56.4H63.8" fill="none" stroke="#1d2a3d" stroke-width="1.68" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="54.8" cy="56.4" r="1.8" fill="#1d2a3d"/>
+  <circle cx="69.2" cy="56.4" r="1.8" fill="#1d2a3d"/>
+  <path d="M54.8 64.8Q62 70.8 69.2 64.8" fill="none" stroke="#1d2a3d" stroke-width="1.7999999999999998" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <rect x="92" y="64" width="52" height="30" rx="4" fill="#ffb547"/>
+  <path d="M104 64V52M118 64V52M132 64V52" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="104" cy="48" r="3" fill="#ffb547"/>
+  <circle cx="118" cy="48" r="3" fill="#ffb547"/>
+  <circle cx="132" cy="48" r="3" fill="#ffb547"/>
+  <circle cx="36" cy="124" r="13" fill="#061630" stroke="#8be3ff" stroke-width="1.5"/>
+  <path d="M32 117L42 124L32 131Z" fill="#8be3ff"/>
+  <text x="58" y="130" font-size="16" font-weight="600" fill="#e6eef9" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace">0:05</text>
+  <path d="M164 80H196M188 72L198 80L188 88" fill="none" stroke="#a3b6d2" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <g>
+  <path d="M251 56Q248 78 248 88L296 88Q296 78 293 56Z" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M272 24C284 24 290 34 290 46L290 58L254 58L254 46C254 34 260 24 272 24Z" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <ellipse cx="272" cy="45" rx="10" ry="11" fill="#1d2a3d"/>
+  </g>
+  <rect x="214" y="86" width="116" height="62" rx="8" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2"/>
+  <rect x="208" y="146" width="128" height="8" rx="3" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2"/>
+</svg>

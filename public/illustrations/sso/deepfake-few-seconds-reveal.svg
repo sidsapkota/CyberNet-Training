@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 158" width="340" height="158" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>The scammer's laptop now plays a sound wave in Grandma's voice, saying words she never said: I've lost my purse. Send me $200 now.</title>
+  <rect x="8" y="6" width="150" height="146" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2" opacity="0.5"/>
+  <g opacity="0.5">
+  <g>
+  <circle cx="62" cy="31.2" r="8.4" fill="#d9dde4"/>
+  <circle cx="62" cy="54" r="19.2" fill="#f2c6a0"/>
+  <path d="M42.2 56.4A16.6 16.6 0 0 1 81.8 56.4C76.4 44.4 47.6 44.4 42.2 56.4Z" fill="#d9dde4"/>
+  <circle cx="54.8" cy="56.4" r="5.4" fill="none" stroke="#1d2a3d" stroke-width="1.68"/>
+  <circle cx="69.2" cy="56.4" r="5.4" fill="none" stroke="#1d2a3d" stroke-width="1.68"/>
+  <path d="M60.2 56.4H63.8" fill="none" stroke="#1d2a3d" stroke-width="1.68" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="54.8" cy="56.4" r="1.8" fill="#1d2a3d"/>
+  <circle cx="69.2" cy="56.4" r="1.8" fill="#1d2a3d"/>
+  <path d="M54.8 64.8Q62 70.8 69.2 64.8" fill="none" stroke="#1d2a3d" stroke-width="1.7999999999999998" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  </g>
+  <rect x="10" y="30" width="210" height="54" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <path d="M190 83L206 94L202 83" fill="#24507f" stroke="#8be3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="22" y="51" font-size="16" font-weight="500" fill="#e6eef9">I've lost my purse.</text>
+  <text x="22" y="72" font-size="16" font-weight="500" fill="#e6eef9">Send me $200 now.</text>
+  <g>
+  <path d="M251 56Q248 78 248 88L296 88Q296 78 293 56Z" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M272 24C284 24 290 34 290 46L290 58L254 58L254 46C254 34 260 24 272 24Z" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <ellipse cx="272" cy="45" rx="10" ry="11" fill="#1d2a3d"/>
+  </g>
+  <rect x="214" y="86" width="116" height="62" rx="8" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2"/>
+  <rect x="208" y="146" width="128" height="8" rx="3" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2"/>
+  <path d="M236 114V120M245 110V124M254 105V129M263 109V125M272 104V130M281 111V123M290 107V127M299 113V121M308 110V124" fill="none" stroke="#00c2ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

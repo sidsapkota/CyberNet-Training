@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 176" width="340" height="176" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>A notification slides down: Sign-in code: 615 204. Below it, a chat with Cousin Ana: I entered you in a giveaway! Send me your code.</title>
+  <rect x="10" y="4" width="320" height="168" rx="18" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <circle cx="38" cy="100" r="14" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <text x="38" y="105.6" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">A</text>
+  <text x="60" y="106" font-size="16" font-weight="600" fill="#e6eef9">Cousin Ana</text>
+  <rect x="24" y="118" width="296" height="54" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <text x="36" y="139" font-size="16" font-weight="500" fill="#e6eef9">I entered you in a giveaway! Send</text>
+  <text x="36" y="160" font-size="16" font-weight="500" fill="#e6eef9">me your code.</text>
+  <rect x="20" y="14" width="300" height="66" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <path d="M34 44H50V56H34ZM37 44V40A5 5 0 0 1 47 40V44" fill="none" stroke="#a3b6d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="62" y="40" font-size="16" font-weight="600" fill="#a3b6d2">Sign-in code</text>
+  <text x="62" y="64" font-size="18" font-weight="600" fill="#e6eef9" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace">615 204</text>
+</svg>

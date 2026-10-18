@@ -799,6 +799,264 @@ function CafeBase() {
   );
 }
 
+/* ── Stay Safe Online module 4 (Lesson Blueprint): account pages, group chat, help board ── */
+// Text here is 15–17 units in 320-wide scenes, so it reads at about 14px or more on a phone.
+
+function Txt({ x, y, size = 16, weight = 400, fill = C.ink, font = sans, anchor, children }: {
+  x: number;
+  y: number;
+  size?: number;
+  weight?: number;
+  fill?: string;
+  font?: string;
+  anchor?: "start" | "middle" | "end";
+  children: ReactNode;
+}) {
+  return (
+    <text x={x} y={y} fontSize={size} fontWeight={weight} fill={fill} fontFamily={font} textAnchor={anchor}>
+      {children}
+    </text>
+  );
+}
+
+/** A phone screen with a title on the left and a small app name on the right. */
+function ScreenFrame({ height, title, app }: { height: number; title: string; app?: string }) {
+  return (
+    <>
+      <rect x={4} y={4} width={312} height={height - 8} rx={18} fill={C.panel} stroke={C.edge} strokeWidth={2} />
+      <Txt x={20} y={30} size={17} weight={600}>{title}</Txt>
+      {app && <Txt x={300} y={30} size={15} fill={C.muted} anchor="end">{app}</Txt>}
+    </>
+  );
+}
+
+type Device = "code" | "phone" | "laptop" | "tablet";
+
+function DeviceGlyph({ kind, x, y }: { kind: Device; x: number; y: number }) {
+  const s = { fill: "none", stroke: C.ink, strokeWidth: 2, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  if (kind === "phone") return <path d={`M${x - 6} ${y - 11}H${x + 6}V${y + 11}H${x - 6}ZM${x - 2} ${y + 7}H${x + 2}`} {...s} />;
+  if (kind === "tablet") return <path d={`M${x - 10} ${y - 12}H${x + 10}V${y + 12}H${x - 10}ZM${x - 2} ${y + 8}H${x + 2}`} {...s} />;
+  if (kind === "laptop") return <path d={`M${x - 10} ${y - 9}H${x + 10}V${y + 5}H${x - 10}ZM${x - 14} ${y + 9}H${x + 14}`} {...s} />;
+  return <path d={`M${x - 11} ${y - 8}H${x + 11}V${y + 5}H${x - 2}L${x - 8} ${y + 10}V${y + 5}H${x - 11}Z`} {...s} />;
+}
+
+function ActivityRow({ y, device, what, when }: { y: number; device: Device; what: string; when: string }) {
+  return (
+    <g>
+      <rect x={16} y={y + 1} width={288} height={42} rx={10} fill={C.part} stroke={C.edge} strokeWidth={1.5} />
+      <DeviceGlyph kind={device} x={38} y={y + 22} />
+      <Txt x={62} y={y + 19} size={16} weight={600}>{what}</Txt>
+      <Txt x={62} y={y + 37} size={15} fill={C.muted}>{when}</Txt>
+    </g>
+  );
+}
+
+const ACTIVITY: Record<string, ReactNode> = {
+  "act-code": <ActivityRow y={44} device="code" what="Code sent" when="Yesterday 4:01 pm" />,
+  "act-phone": <ActivityRow y={92} device="phone" what="Sign-in · This phone" when="Yesterday 4:02 pm" />,
+  "act-laptop": <ActivityRow y={140} device="laptop" what="Sign-in · Laptop" when="Today 2:13 am" />,
+  "act-phone-morning": <ActivityRow y={188} device="phone" what="Sign-in · This phone" when="Today 7:04 am" />,
+  "act2-code": <ActivityRow y={44} device="code" what="Code sent" when="Today 8:09 am" />,
+  "act2-phone": <ActivityRow y={92} device="phone" what="Sign-in · This phone" when="Today 8:10 am" />,
+  "act2-tablet": <ActivityRow y={140} device="tablet" what="Sign-in · Tablet" when="Today 11:52 am" />,
+};
+
+function AccountActivityBase() {
+  return <ScreenFrame height={240} title="Recent activity" app="Chat" />;
+}
+
+function SmallButton({ x, y, w, label }: { x: number; y: number; w: number; label: string }) {
+  return (
+    <g>
+      <rect x={x} y={y} width={w} height={24} rx={6} fill={C.bg} stroke={C.edge} strokeWidth={1.5} />
+      <Txt x={x + w / 2} y={y + 17} size={15} weight={600} anchor="middle">{label}</Txt>
+    </g>
+  );
+}
+
+function SettingRow({ y, h, children }: { y: number; h: number; children: ReactNode }) {
+  return (
+    <g>
+      <rect x={16} y={y + 1} width={288} height={h - 2} rx={10} fill={C.part} stroke={C.edge} strokeWidth={1.5} />
+      {children}
+    </g>
+  );
+}
+
+const DEVICES_HEADING = <Txt x={22} y={93} size={15} fill={C.muted}>Where you&apos;re signed in</Txt>;
+
+function DeviceRow({ y, device, label }: { y: number; device: Device; label: string }) {
+  return (
+    <SettingRow y={y} h={30}>
+      <DeviceGlyph kind={device} x={36} y={y + 15} />
+      <Txt x={56} y={y + 21} size={16} weight={600}>{label}</Txt>
+      <SmallButton x={218} y={y + 3} w={80} label="Sign out" />
+    </SettingRow>
+  );
+}
+
+const SECURITY: Record<string, ReactNode> = {
+  "sec-password": (
+    <SettingRow y={40} h={32}>
+      <Txt x={26} y={62} size={16} weight={600}>Password</Txt>
+      <SmallButton x={226} y={44} w={72} label="Change" />
+    </SettingRow>
+  ),
+  "sec-password-changed": (
+    <SettingRow y={40} h={32}>
+      <Txt x={26} y={62} size={16} weight={600}>Password</Txt>
+      <Txt x={110} y={62} size={15} fill={C.muted}>Changed just now</Txt>
+      <SmallButton x={238} y={44} w={60} label="Change" />
+    </SettingRow>
+  ),
+  "sec-devices": (
+    <g>
+      {DEVICES_HEADING}
+      <DeviceRow y={98} device="phone" label="This phone" />
+      <DeviceRow y={132} device="laptop" label="Laptop" />
+    </g>
+  ),
+  "sec-phone": (
+    <g>
+      {DEVICES_HEADING}
+      <DeviceRow y={98} device="phone" label="This phone" />
+    </g>
+  ),
+  "sec-laptop": <DeviceRow y={132} device="laptop" label="Laptop" />,
+  "sec-recovery": (
+    <SettingRow y={168} h={38}>
+      <Txt x={26} y={184} size={15} fill={C.muted}>Recovery email</Txt>
+      <Txt x={26} y={201} size={15} weight={600} font={mono}>x9help@mail.example</Txt>
+      <SmallButton x={242} y={175} w={56} label="Edit" />
+    </SettingRow>
+  ),
+  "sec-two-step": (
+    <SettingRow y={212} h={32}>
+      <Txt x={26} y={234} size={16} weight={600}>Two-step sign-in</Txt>
+      <Txt x={248} y={234} size={15} fill={C.muted} anchor="end">Off</Txt>
+      <rect x={256} y={218} width={42} height={20} rx={10} fill={C.bg} stroke={C.edge} strokeWidth={1.5} />
+      <circle cx={267} cy={228} r={7} fill={C.muted} />
+    </SettingRow>
+  ),
+};
+
+function AccountSecurityBase() {
+  return <ScreenFrame height={254} title="Security" app="Chat" />;
+}
+
+function ChatBubble({ x, y, w, text }: { x: number; y: number; w: number; text: string }) {
+  return (
+    <g>
+      <rect x={x} y={y} width={w} height={32} rx={12} fill={C.part} stroke={C.edge} strokeWidth={1} />
+      <Txt x={x + 12} y={y + 22} size={16}>{text}</Txt>
+    </g>
+  );
+}
+
+function SmallButtonTall({ x, w, label }: { x: number; w: number; label: string }) {
+  return (
+    <g>
+      <rect x={x} y={11} width={w} height={26} rx={7} fill={C.bg} stroke={C.edge} strokeWidth={1.5} />
+      <Txt x={x + w / 2} y={29} size={15} weight={600} anchor="middle">{label}</Txt>
+    </g>
+  );
+}
+
+const CHAT: Record<string, ReactNode> = {
+  "chat-block": <SmallButtonTall x={176} w={60} label="Block" />,
+  "chat-report": <SmallButtonTall x={242} w={66} label="Report" />,
+  "chat-username": <Txt x={16} y={179} size={15} weight={600} fill={C.muted}>shadow_77</Txt>,
+  "chat-message": <ChatBubble x={14} y={188} w={202} text="nobody wants you here" />,
+  "chat-time": (
+    <g>
+      <Txt x={230} y={201} size={15} fill={C.muted}>Saturday</Txt>
+      <Txt x={230} y={219} size={15} fill={C.muted}>8:40 pm</Txt>
+    </g>
+  ),
+};
+
+function GroupChatBase() {
+  return (
+    <>
+      <rect x={4} y={4} width={312} height={232} rx={18} fill={C.panel} stroke={C.edge} strokeWidth={2} />
+      <Txt x={16} y={30} size={17} weight={300} fill={C.muted}>‹</Txt>
+      <Txt x={30} y={30} size={16} weight={600}>Weekend Crew</Txt>
+      <path d="M4 44H316" stroke={C.edge} strokeWidth={0.75} opacity={0.6} />
+      <Txt x={16} y={64} size={15} weight={600} fill={C.muted}>shadow_77</Txt>
+      <ChatBubble x={14} y={70} w={176} text="just leave the chat" />
+      <Txt x={16} y={120} size={15} weight={600} fill={C.muted}>kai_m</Txt>
+      <ChatBubble x={14} y={126} w={56} text="lol" />
+    </>
+  );
+}
+
+type HelpGlyph = "people" | "buoy" | "phone" | "card" | "shield" | "warning" | "alert";
+
+function HelpIcon({ kind, x, y }: { kind: HelpGlyph; x: number; y: number }) {
+  const s = { fill: "none", stroke: C.ink, strokeWidth: 1.8, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  switch (kind) {
+    case "people":
+      return (
+        <g {...s}>
+          <circle cx={x - 3} cy={y - 4} r={3.5} />
+          <path d={`M${x - 10} ${y + 8}A7 7 0 0 1 ${x + 4} ${y + 8}`} />
+          <circle cx={x + 6} cy={y - 5} r={2.8} />
+          <path d={`M${x + 6} ${y + 1}A6 6 0 0 1 ${x + 11} ${y + 7}`} />
+        </g>
+      );
+    case "buoy":
+      return (
+        <g {...s}>
+          <circle cx={x} cy={y} r={9} />
+          <circle cx={x} cy={y} r={4} />
+          <path d={`M${x - 6.4} ${y - 6.4}L${x - 2.8} ${y - 2.8}M${x + 6.4} ${y - 6.4}L${x + 2.8} ${y - 2.8}M${x - 6.4} ${y + 6.4}L${x - 2.8} ${y + 2.8}M${x + 6.4} ${y + 6.4}L${x + 2.8} ${y + 2.8}`} />
+        </g>
+      );
+    case "phone":
+      return <path d={`M${x - 8} ${y - 9}L${x - 4} ${y - 9}L${x - 2} ${y - 4}L${x - 4} ${y - 2}Q${x - 1} ${y + 4} ${x + 2} ${y + 4}L${x + 4} ${y + 2}L${x + 9} ${y + 4}L${x + 9} ${y + 8}Q${x + 9} ${y + 10} ${x + 6} ${y + 10}Q${x - 9} ${y + 8} ${x - 10} ${y - 6}Q${x - 10} ${y - 9} ${x - 8} ${y - 9}Z`} {...s} />;
+    case "card":
+      return <path d={`M${x - 10} ${y - 7}H${x + 10}V${y + 7}H${x - 10}ZM${x - 10} ${y - 2}H${x + 10}M${x - 6} ${y + 3}H${x - 2}`} {...s} />;
+    case "shield":
+      return <path d={`M${x} ${y - 10}L${x + 8} ${y - 6}V${y}C${x + 8} ${y + 5} ${x + 4} ${y + 8} ${x} ${y + 10}C${x - 4} ${y + 8} ${x - 8} ${y + 5} ${x - 8} ${y}V${y - 6}Z`} {...s} />;
+    case "warning":
+      return <path d={`M${x - 10} ${y - 8}H${x + 10}V${y + 5}H${x - 2}L${x - 7} ${y + 10}V${y + 5}H${x - 10}ZM${x} ${y - 5}V${y - 1}M${x} ${y + 2}V${y + 2.2}`} {...s} />;
+    default:
+      return <path d={`M${x} ${y - 10}L${x + 8} ${y - 6}V${y}C${x + 8} ${y + 5} ${x + 4} ${y + 8} ${x} ${y + 10}C${x - 4} ${y + 8} ${x - 8} ${y + 5} ${x - 8} ${y}V${y - 6}ZM${x} ${y - 5}V${y + 1}M${x} ${y + 4}V${y + 4.2}`} {...s} />;
+  }
+}
+
+function HelpTile({ x, y, icon, name, number }: { x: number; y: number; icon: HelpGlyph; name: string; number?: string }) {
+  return (
+    <g>
+      <rect x={x + 1} y={y + 1} width={142} height={44} rx={10} fill={C.part} stroke={C.edge} strokeWidth={1.5} />
+      <HelpIcon kind={icon} x={x + 15} y={y + 23} />
+      {number ? (
+        <>
+          <Txt x={x + 30} y={y + 20} size={15} weight={600}>{name}</Txt>
+          <Txt x={x + 30} y={y + 38} size={15} weight={600} font={mono}>{number}</Txt>
+        </>
+      ) : (
+        <Txt x={x + 30} y={y + 29} size={name === "000" ? 17 : 15} weight={600} font={name === "000" ? mono : sans}>{name}</Txt>
+      )}
+    </g>
+  );
+}
+
+const HELP: Record<string, ReactNode> = {
+  "help-adult": <HelpTile x={12} y={42} icon="people" name="Trusted adult" />,
+  "help-000": <HelpTile x={164} y={42} icon="buoy" name="000" />,
+  "help-kids": <HelpTile x={12} y={94} icon="phone" name="Kids Helpline" number="1800 55 1800" />,
+  "help-lifeline": <HelpTile x={164} y={94} icon="phone" name="Lifeline" number="13 11 14" />,
+  "help-bank": <HelpTile x={12} y={146} icon="card" name="Your bank" />,
+  "help-idcare": <HelpTile x={164} y={146} icon="shield" name="IDCARE" />,
+  "help-scamwatch": <HelpTile x={12} y={198} icon="warning" name="Scamwatch" />,
+  "help-esafety": <HelpTile x={164} y={198} icon="alert" name="eSafety" />,
+};
+
+function HelpBoardBase() {
+  return <ScreenFrame height={252} title="Who can help?" />;
+}
+
 /* ── Registry ─────────────────────────────────────────────────────────────────────────── */
 
 const ART: Record<SceneId, { Base: () => ReactNode; parts: Record<string, ReactNode> }> = {
@@ -817,6 +1075,10 @@ const ART: Record<SceneId, { Base: () => ReactNode; parts: Record<string, ReactN
   "home-screen": { Base: HomeScreenBase, parts: HOME },
   "sign-in-options": { Base: SignInOptionsBase, parts: OPTIONS },
   "sign-in": { Base: SignInBase, parts: SIGN_IN },
+  "account-activity": { Base: AccountActivityBase, parts: ACTIVITY },
+  "account-security": { Base: AccountSecurityBase, parts: SECURITY },
+  "group-chat": { Base: GroupChatBase, parts: CHAT },
+  "help-board": { Base: HelpBoardBase, parts: HELP },
 };
 
 export function sceneHasArt(id: string, partIds: readonly string[]): boolean {

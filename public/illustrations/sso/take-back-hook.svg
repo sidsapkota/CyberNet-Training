@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 226" width="340" height="226" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>You and a trusted adult sit side by side, looking at your phone. You say: Someone's in my account. The adult says: Let's fix it together. The phone shows: Laptop signed in, 2:13 am.</title>
+  <rect x="6" y="6" width="150" height="54" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <path d="M24 59L20 70L36 59" fill="#24507f" stroke="#8be3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="18" y="27" font-size="16" font-weight="500" fill="#e6eef9">Someone's in</text>
+  <text x="18" y="48" font-size="16" font-weight="500" fill="#e6eef9">my account.</text>
+  <rect x="184" y="6" width="150" height="54" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <path d="M304 59L320 70L316 59" fill="#24507f" stroke="#8be3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="196" y="27" font-size="16" font-weight="500" fill="#e6eef9">Let's fix it</text>
+  <text x="196" y="48" font-size="16" font-weight="500" fill="#e6eef9">together.</text>
+  <rect x="20" y="186" width="300" height="34" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <g>
+  <rect x="48" y="152" width="44" height="40" rx="14" fill="#24507f" stroke="#8be3ff" stroke-width="2"/>
+  <path d="M61 154Q70 164 79 154" fill="none" stroke="#8be3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="70" cy="138" r="14" fill="#f2c6a0"/>
+  <path d="M55.5 137A14.6 14.6 0 0 1 84.5 137C80 129 68 128 55.5 137Z" fill="#3b2a1f"/>
+  <circle cx="65" cy="141" r="1.9" fill="#1d2a3d"/>
+  <circle cx="75" cy="141" r="1.9" fill="#1d2a3d"/>
+  <path d="M66 146Q70 149 74 146" fill="none" stroke="#1d2a3d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g>
+  <rect x="243" y="146" width="50" height="46" rx="15" fill="#1d3d6e" stroke="#8be3ff" stroke-width="2"/>
+  <path d="M268 148V190" fill="none" stroke="#8be3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="268" cy="130" r="16" fill="#d9a77f"/>
+  <path d="M251.5 129A16.6 16.6 0 0 1 284.5 129C280 118 256 118 251.5 129Z" fill="#5a4636"/>
+  <path d="M252 128l2 6M284 128l-2 6" fill="none" stroke="#a3b6d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="262" cy="133" r="2" fill="#1d2a3d"/>
+  <circle cx="274" cy="133" r="2" fill="#1d2a3d"/>
+  <path d="M263 139Q268 143 273 139" fill="none" stroke="#1d2a3d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <rect x="132" y="92" width="76" height="116" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <rect x="94" y="116" width="152" height="50" rx="10" fill="#061630" stroke="#ffb547" stroke-width="2"/>
+  <text x="170" y="137" font-size="16" font-weight="600" fill="#ffb547" text-anchor="middle">Laptop signed in</text>
+  <text x="170" y="157" font-size="16" font-weight="500" fill="#ffb547" text-anchor="middle">2:13 am</text>
+</svg>

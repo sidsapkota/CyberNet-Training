@@ -1,0 +1,214 @@
+{
+  "id": "take-back-your-account",
+  "kind": "lesson",
+  "title": "Take Your Account Back",
+  "about": "Kick out whoever got in, and lock every door behind them.",
+  "order": 2,
+  "icon": "key-round",
+  "blueprint": "1.1",
+  "cards": [
+    {
+      "id": "show-an-adult",
+      "type": "hook",
+      "difficulty": "core",
+      "situation": "Someone got into your Chat account. You show a trusted adult.",
+      "image": {
+        "src": "/illustrations/sso/take-back-hook.svg",
+        "alt": "You and a trusted adult sit side by side, looking at your phone. You say: Someone's in my account. The adult says: Let's fix it together. The phone shows: Laptop signed in, 2:13 am.",
+        "width": 340,
+        "height": 226
+      }
+    },
+    {
+      "id": "security-page",
+      "type": "hotspot",
+      "difficulty": "core",
+      "teaches": [
+        "recovery-email",
+        "sign-out-devices",
+        "two-step-sign-in"
+      ],
+      "prompt": "This is your account's Security page. **Tap each setting.**",
+      "scene": "account-security",
+      "view": "security",
+      "mode": "explore",
+      "parts": [
+        {
+          "part": "sec-password",
+          "job": "Your key. A new one stops the old one working."
+        },
+        {
+          "part": "sec-devices",
+          "job": "Every device in your account right now. Sign out kicks one out."
+        },
+        {
+          "part": "sec-recovery",
+          "job": "Forgot your password? A reset link goes to this email."
+        },
+        {
+          "part": "sec-two-step",
+          "job": "When it's on, the app also asks for a code from your phone."
+        }
+      ],
+      "explanation": "Four settings, four doors into your account."
+    },
+    {
+      "id": "still-signed-in",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "predict": true,
+      "play": "predict",
+      "teaches": [
+        "attacker-stays-signed-in"
+      ],
+      "uses": [],
+      "prompt": "You change your password. The laptop was already in. **What happens to it?**",
+      "image": {
+        "src": "/illustrations/sso/take-back-still-signed-in.svg",
+        "alt": "Your account's Security page. Password: changed just now, with a green tick. Where you're signed in: This phone, and Laptop, a little dimmed.",
+        "width": 340,
+        "height": 166,
+        "revealSrc": "/illustrations/sso/take-back-still-signed-in-reveal.svg",
+        "revealAlt": "The Laptop row lights up with a red dot: Active now. The laptop is still signed in to your account."
+      },
+      "options": [
+        {
+          "id": "still-in",
+          "text": "It may stay signed in"
+        },
+        {
+          "id": "kicked-out",
+          "text": "It's kicked out"
+        },
+        {
+          "id": "app-removes",
+          "text": "The app removes it"
+        }
+      ],
+      "correctOptionId": "still-in",
+      "explanation": "A new password stops new sign-ins, but this laptop was already in, so it stayed in."
+    },
+    {
+      "id": "lock-every-door",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "first-steps-after-hack",
+        "trusted-adult"
+      ],
+      "title": "Lock every door",
+      "body": "A new password alone isn't enough. After telling a trusted adult, **lock every door**, in this order.",
+      "image": {
+        "src": "/illustrations/sso/take-back-named.svg",
+        "alt": "The Security page with a banner on top: First, tell a trusted adult. Then numbered steps: 1, change the password. 2, edit the recovery email. 3, sign out the laptop. 4, turn two-step sign-in on.",
+        "width": 320,
+        "height": 172
+      }
+    },
+    {
+      "id": "sign-out-laptop",
+      "type": "hotspot",
+      "difficulty": "core",
+      "uses": [
+        "attacker-stays-signed-in",
+        "sign-out-devices"
+      ],
+      "prompt": "Password changed. The laptop is still signed in. **Tap what kicks it out.**",
+      "scene": "account-security",
+      "view": "changed",
+      "mode": "tap",
+      "targets": [
+        "sec-laptop"
+      ],
+      "explanation": "Right: signing out kicks the laptop out, and your new password keeps it out.",
+      "nudge": "Which setting shows every device that's in your account right now?",
+      "showAnswer": "It's Sign out beside Laptop: that kicks a device out of your account."
+    },
+    {
+      "id": "recovery-changed",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "play": "consequence",
+      "uses": [
+        "recovery-email",
+        "first-steps-after-hack"
+      ],
+      "prompt": "Laptop gone. But you've never seen this recovery email. **Tap what you do.**",
+      "image": {
+        "src": "/illustrations/sso/take-back-recovery.svg",
+        "alt": "The Security page. Password changed and the laptop signed out, both ticked. The recovery email is x9help@mail.example, outlined with a question mark: you've never seen it. Two-step sign-in is off.",
+        "width": 340,
+        "height": 178,
+        "revealSrc": "/illustrations/sso/take-back-recovery-reveal.svg",
+        "revealAlt": "The recovery email now reads me@mail.example, with a green tick, and two-step sign-in is switched on."
+      },
+      "options": [
+        {
+          "id": "remove",
+          "text": "Swap it for my own email"
+        },
+        {
+          "id": "leave-signed-out",
+          "text": "Leave it: the laptop's gone",
+          "nudge": "What can a recovery email do if someone says they forgot the password?"
+        },
+        {
+          "id": "leave-backup",
+          "text": "Leave it: it's only a backup",
+          "nudge": "What can a recovery email do if someone says they forgot the password?"
+        }
+      ],
+      "correctOptionId": "remove",
+      "explanation": "Yes: a recovery email can reset your password, so only yours belongs there.",
+      "showAnswer": "Remove it and add your own: whoever owns that email could reset your password and get back in."
+    },
+    {
+      "id": "pay-to-unlock",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "teaches": [
+        "official-account-recovery"
+      ],
+      "uses": [
+        "recovery-email"
+      ],
+      "prompt": "Your game account won't let you in. Then this message arrives. **Tap what you do.**",
+      "image": {
+        "src": "/illustrations/sso/take-back-pay-to-unlock.svg",
+        "alt": "Left, faint: the game's own sign-in screen with a Forgot password? link. Right, your phone: a message from an account named Account Fixer: Locked out? I can unlock it in 5 minutes. Just $20.",
+        "width": 340,
+        "height": 176
+      },
+      "options": [
+        {
+          "id": "forgot-password",
+          "text": "Use the game's Forgot password"
+        },
+        {
+          "id": "pay",
+          "text": "Pay: $20 is worth it",
+          "nudge": "Can anyone outside the game open your account for you?"
+        },
+        {
+          "id": "ask-proof",
+          "text": "Ask them to prove it first",
+          "nudge": "Can anyone outside the game open your account for you?"
+        }
+      ],
+      "correctOptionId": "forgot-password",
+      "explanation": "Right: only the game can let you back in, and its own Forgot password is free.",
+      "showAnswer": "Use the game's own Forgot password, and never pay a stranger: they can't unlock your account."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "first-steps-after-hack",
+        "report-cyber"
+      ],
+      "title": "Recap",
+      "body": "Tell a trusted adult, lock every door, then change that password anywhere else you used it.\n\n**Report it too:** at cyber.gov.au/report, which passes it to the police.\n\n**Try this:** Check that the recovery email on one of your accounts is really yours.\n\n**Next:** A call in Grandma's voice that isn't Grandma."
+    }
+  ]
+}

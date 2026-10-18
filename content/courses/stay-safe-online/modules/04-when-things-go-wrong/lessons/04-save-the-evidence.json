@@ -1,0 +1,235 @@
+{
+  "id": "save-the-evidence",
+  "kind": "lesson",
+  "title": "Save the Evidence",
+  "about": "Screenshot first, then block, report and tell someone you trust.",
+  "order": 4,
+  "icon": "message-square-warning",
+  "blueprint": "1.1",
+  "cards": [
+    {
+      "id": "mean-group-chat",
+      "type": "hook",
+      "difficulty": "core",
+      "situation": "In your group chat, someone keeps posting mean things about you.",
+      "image": {
+        "src": "/illustrations/sso/save-evidence-hook.svg",
+        "alt": "Your phone shows the group chat Weekend Crew. shadow_77: just leave the chat. kai_m: lol. shadow_77: nobody wants you here. Under the phone: It's never your fault.",
+        "width": 340,
+        "height": 254
+      }
+    },
+    {
+      "id": "chat-parts",
+      "type": "hotspot",
+      "difficulty": "core",
+      "teaches": [
+        "report-in-app"
+      ],
+      "prompt": "This is the chat. **Tap each part** to see what it is.",
+      "scene": "group-chat",
+      "view": "chat",
+      "mode": "explore",
+      "parts": [
+        {
+          "part": "chat-username",
+          "job": "Who sent it."
+        },
+        {
+          "part": "chat-message",
+          "job": "What they said."
+        },
+        {
+          "part": "chat-time",
+          "job": "When it happened."
+        },
+        {
+          "part": "chat-block",
+          "job": "Stops them messaging you."
+        },
+        {
+          "part": "chat-report",
+          "job": "Tells the app, so it can remove it."
+        }
+      ],
+      "explanation": "Who, what and when: keep those, and you have proof."
+    },
+    {
+      "id": "block-before-saving",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "predict": true,
+      "play": "predict",
+      "teaches": [
+        "block-hides-evidence"
+      ],
+      "uses": [],
+      "prompt": "You tap Block before saving anything. **What happens to the messages?**",
+      "image": {
+        "src": "/illustrations/sso/save-evidence-block.svg",
+        "alt": "The Weekend Crew chat. A finger presses the Block button at the top. Below, shadow_77's messages: just leave the chat, and nobody wants you here.",
+        "width": 340,
+        "height": 168,
+        "revealSrc": "/illustrations/sso/save-evidence-block-reveal.svg",
+        "revealAlt": "The chat is empty. One grey line: You blocked shadow_77. No messages are left."
+      },
+      "options": [
+        {
+          "id": "vanish",
+          "text": "They may vanish with the chat"
+        },
+        {
+          "id": "copy",
+          "text": "The app keeps a copy"
+        },
+        {
+          "id": "reports",
+          "text": "Blocking reports them too"
+        }
+      ],
+      "correctOptionId": "vanish",
+      "explanation": "On this app, blocking hid the whole chat, and the proof went with it."
+    },
+    {
+      "id": "screenshot-first",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "save-evidence",
+        "report-in-app",
+        "trusted-adult",
+        "report-to-esafety",
+        "report-to-accce"
+      ],
+      "title": "Screenshot first",
+      "body": "Before you block, **save the evidence**: screenshot the messages, username and date. Then block, report and tell a trusted adult. A picture threat, even a fake? Report it to **eSafety**, and under 18s to the **ACCCE**.",
+      "image": {
+        "src": "/illustrations/sso/save-evidence-named.svg",
+        "alt": "The same chat, labelled. A dashed frame around the username, the time and the message, marked 1, Screenshot. The Block button is marked 2, and the Report button 3.",
+        "width": 320,
+        "height": 132
+      }
+    },
+    {
+      "id": "group-chat",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "play": "consequence",
+      "uses": [
+        "save-evidence",
+        "trusted-adult"
+      ],
+      "prompt": "shadow_77 posts again: \"everyone's laughing at you\". **Tap what you do first.**",
+      "image": {
+        "src": "/illustrations/sso/save-evidence-again.svg",
+        "alt": "The Weekend Crew chat. Under nobody wants you here, a new message from shadow_77: everyone's laughing at you.",
+        "width": 340,
+        "height": 176,
+        "revealSrc": "/illustrations/sso/save-evidence-again-reveal.svg",
+        "revealAlt": "A small screenshot of the chat, marked Saved, and a trusted adult beside it saying: Thanks for showing me."
+      },
+      "options": [
+        {
+          "id": "screenshot",
+          "text": "Screenshot, tell a trusted adult"
+        },
+        {
+          "id": "reply",
+          "text": "Reply with something just as mean",
+          "nudge": "Which choice keeps proof of what they said?"
+        },
+        {
+          "id": "delete",
+          "text": "Delete the chat so I don't see it",
+          "nudge": "Which choice keeps proof of what they said?"
+        }
+      ],
+      "correctOptionId": "screenshot",
+      "explanation": "Yes: now you have the evidence, and someone on your side.",
+      "showAnswer": "Screenshot it, then tell a trusted adult: replying can make it worse, and deleting loses the evidence."
+    },
+    {
+      "id": "fake-picture",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "uses": [
+        "save-evidence"
+      ],
+      "prompt": "An account says it made a fake private picture of you. **Tap what you save.**",
+      "image": {
+        "src": "/illustrations/sso/save-evidence-fake-picture.svg",
+        "alt": "A new chat from unknown_acc, with a grey picture. A grey box with a crossed-out eye reads Picture hidden. Then the message: Pay $50 or I share it. Under the phone: It's never your fault.",
+        "width": 340,
+        "height": 166
+      },
+      "options": [
+        {
+          "id": "messages-profile",
+          "text": "Their messages and profile"
+        },
+        {
+          "id": "picture",
+          "text": "The picture too, as proof",
+          "nudge": "What shows who did this, without keeping the picture?"
+        },
+        {
+          "id": "pay",
+          "text": "Nothing: I'll just pay",
+          "nudge": "Paying usually leads to more demands. What shows who did this?"
+        }
+      ],
+      "correctOptionId": "messages-profile",
+      "explanation": "Right: save who they are and what they said, never the picture itself.",
+      "showAnswer": "Screenshot the messages and their profile, never the picture. And never pay: paying usually leads to more demands."
+    },
+    {
+      "id": "fake-image-report",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "uses": [
+        "report-in-app",
+        "report-to-esafety",
+        "report-to-accce"
+      ],
+      "prompt": "You're 14, and you've shown a trusted adult. **Tap where you report it.**",
+      "image": {
+        "src": "/illustrations/sso/save-evidence-report.svg",
+        "alt": "You show your phone to a trusted adult. On it: unknown_acc, Picture hidden, Pay $50 or I share it. The adult says: We'll report it together.",
+        "width": 340,
+        "height": 178
+      },
+      "options": [
+        {
+          "id": "all",
+          "text": "The app, eSafety and the ACCCE"
+        },
+        {
+          "id": "app-only",
+          "text": "Only the app: it's just a fake",
+          "nudge": "A fake is still serious. Who helps under-18s who are being threatened?"
+        },
+        {
+          "id": "nobody",
+          "text": "Nobody: I might get in trouble",
+          "nudge": "You won't be in trouble for asking for help. Who helps when a picture is used to threaten someone?"
+        }
+      ],
+      "correctOptionId": "all",
+      "explanation": "Yes: eSafety can help remove it, and the ACCCE helps under-18s being threatened.",
+      "showAnswer": "Report it to the app, eSafety and the ACCCE. You will not be in trouble for asking for help."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "save-evidence",
+        "not-your-fault",
+        "kids-helpline",
+        "lifeline"
+      ],
+      "title": "Recap",
+      "body": "Screenshot first, then block, report and tell a trusted adult. It's never your fault.\n\n**Talk any time:** **Kids Helpline** 1800 55 1800 (ages 5 to 25) or **Lifeline** 13 11 14.\n\n**Try this:** Practise taking a screenshot on your phone, so you can do it fast.\n\n**Next:** Who to tell, and where to go, whatever goes wrong online."
+    }
+  ]
+}

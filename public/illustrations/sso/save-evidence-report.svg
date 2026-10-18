@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 178" width="340" height="178" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>You show your phone to a trusted adult. On it: unknown_acc, Picture hidden, Pay $50 or I share it. The adult says: We'll report it together.</title>
+  <rect x="8" y="20" width="150" height="152" rx="16" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="22" y="48" font-size="16" font-weight="600" fill="#e6eef9">unknown_acc</text>
+  <rect x="20" y="60" width="126" height="44" rx="8" fill="#4a5a72" stroke="#a3b6d2" stroke-width="1.5"/>
+  <text x="83" y="88" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Picture hidden</text>
+  <rect x="20" y="112" width="126" height="54" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <text x="32" y="133" font-size="16" font-weight="500" fill="#e6eef9">Pay $50 or</text>
+  <text x="32" y="154" font-size="16" font-weight="500" fill="#e6eef9">I share it.</text>
+  <rect x="172" y="6" width="162" height="54" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <path d="M304 59L320 70L316 59" fill="#24507f" stroke="#8be3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="184" y="27" font-size="16" font-weight="500" fill="#e6eef9">We'll report it</text>
+  <text x="184" y="48" font-size="16" font-weight="500" fill="#e6eef9">together.</text>
+  <g>
+  <rect x="245" y="126" width="50" height="46" rx="15" fill="#1d3d6e" stroke="#8be3ff" stroke-width="2"/>
+  <path d="M270 128V170" fill="none" stroke="#8be3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="270" cy="110" r="16" fill="#d9a77f"/>
+  <path d="M253.5 109A16.6 16.6 0 0 1 286.5 109C282 98 258 98 253.5 109Z" fill="#5a4636"/>
+  <path d="M254 108l2 6M286 108l-2 6" fill="none" stroke="#a3b6d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="264" cy="113" r="2" fill="#1d2a3d"/>
+  <circle cx="276" cy="113" r="2" fill="#1d2a3d"/>
+  <path d="M265 119Q270 123 275 119" fill="none" stroke="#1d2a3d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

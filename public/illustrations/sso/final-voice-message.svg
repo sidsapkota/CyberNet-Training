@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 170" width="340" height="170" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>A voice message from a new number, 6 seconds long, in your aunt's voice: Send $100, quick! Beside the phone, a saved contact card: Aunt Rosa.</title>
+  <rect x="8" y="6" width="196" height="158" rx="16" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="24" y="34" font-size="16" font-weight="600" fill="#e6eef9">New number</text>
+  <rect x="20" y="50" width="172" height="44" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <circle cx="40" cy="72" r="11" fill="#061630" stroke="#8be3ff" stroke-width="1.5"/>
+  <path d="M37 66L45 72L37 78Z" fill="#8be3ff"/>
+  <path d="M82 69V75M90 65V79M98 61V83M106 66V78M114 60V84M122 67V77M130 63V81M138 68V76" fill="none" stroke="#00c2ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="182" y="78" font-size="16" font-weight="500" fill="#a3b6d2" text-anchor="end" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace">0:06</text>
+  <rect x="20" y="104" width="172" height="33" rx="12" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="32" y="125" font-size="16" font-weight="500" fill="#e6eef9">“Send $100, quick!”</text>
+  <rect x="214" y="28" width="118" height="118" rx="14" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <circle cx="273" cy="64" r="18" fill="#1d3d6e" stroke="#8be3ff" stroke-width="1.5"/>
+  <path d="M273 60m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0M264 75A9 9 0 0 1 282 75" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="273" y="106" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Aunt Rosa</text>
+  <text x="273" y="128" font-size="16" font-weight="500" fill="#a3b6d2" text-anchor="middle">Saved</text>
+</svg>

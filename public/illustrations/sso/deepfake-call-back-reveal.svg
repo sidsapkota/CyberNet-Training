@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 222" width="340" height="222" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Call Grandma (saved) is lit. The real Grandma answers at home: My purse? It's right here!</title>
+  <rect x="4" y="4" width="332" height="214" rx="18" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="20" y="30" font-size="16" font-weight="600" fill="#3ddc97">Grandma: “My purse? It's right here!”</text>
+  <rect x="14" y="46" width="312" height="52" rx="12" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <path d="M30 63L34 63L36 68L34 70Q37 76 40 76L42 74L47 76L47 80Q47 82 44 82Q29 80 28 66Q28 63 30 63Z" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="60" y="78" font-size="16" font-weight="600" fill="#e6eef9">Call back Unknown number</text>
+  <rect x="14" y="104" width="312" height="52" rx="12" fill="#24507f" stroke="#3ddc97" stroke-width="2.5"/>
+  <path d="M30 121L34 121L36 126L34 128Q37 134 40 134L42 132L47 134L47 138Q47 140 44 140Q29 138 28 124Q28 121 30 121Z" fill="none" stroke="#3ddc97" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="60" y="136" font-size="16" font-weight="600" fill="#e6eef9">Call Grandma (saved)</text>
+  <rect x="14" y="162" width="312" height="52" rx="12" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <path d="M27 180H49V193H36L30 198V193H27Z" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="60" y="194" font-size="16" font-weight="600" fill="#e6eef9">Text Unknown number: Is it you?</text>
+</svg>

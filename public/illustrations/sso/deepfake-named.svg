@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 170" width="320" height="170" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>The call from an unknown number, its voice tagged: Could be a deepfake. Beside the phone, a contact card: Grandma, saved in your phone, tagged: Call this one.</title>
+  <rect x="4" y="4" width="168" height="162" rx="18" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="88" y="30" font-size="17" font-weight="600" fill="#e6eef9" text-anchor="middle">Unknown</text>
+  <text x="88" y="50" font-size="17" font-weight="600" fill="#e6eef9" text-anchor="middle">number</text>
+  <path d="M56.5 72V80M65.5 68V84M74.5 64V88M83.5 67V85M92.5 63V89M101.5 69V83M110.5 66V86M119.5 71V81" fill="none" stroke="#00c2ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="14" y="98" width="148" height="56" rx="10" fill="#061630" stroke="#ffb547" stroke-width="2"/>
+  <path d="M30 106L38 120H22Z" fill="none" stroke="#ffb547" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="46" y="120" font-size="16" font-weight="600" fill="#ffb547">Could be a</text>
+  <text x="24" y="142" font-size="16" font-weight="600" fill="#ffb547">deepfake</text>
+  <rect x="184" y="18" width="132" height="136" rx="14" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <g>
+  <circle cx="250" cy="33.95" r="6.65" fill="#d9dde4"/>
+  <circle cx="250" cy="52" r="15.2" fill="#f2c6a0"/>
+  <path d="M234.33 53.9A16.6 16.6 0 0 1 265.67 53.9C261.4 44.4 238.6 44.4 234.33 53.9Z" fill="#d9dde4"/>
+  <circle cx="244.3" cy="53.9" r="4.27" fill="none" stroke="#1d2a3d" stroke-width="1.3299999999999998"/>
+  <circle cx="255.7" cy="53.9" r="4.27" fill="none" stroke="#1d2a3d" stroke-width="1.3299999999999998"/>
+  <path d="M248.58 53.9H251.42" fill="none" stroke="#1d2a3d" stroke-width="1.3299999999999998" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="244.3" cy="53.9" r="1.42" fill="#1d2a3d"/>
+  <circle cx="255.7" cy="53.9" r="1.42" fill="#1d2a3d"/>
+  <path d="M244.3 60.55Q250 65.3 255.7 60.55" fill="none" stroke="#1d2a3d" stroke-width="1.4249999999999998" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="250" y="92" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Grandma</text>
+  <text x="250" y="112" font-size="16" font-weight="500" fill="#a3b6d2" text-anchor="middle">Saved</text>
+  <rect x="194" y="122" width="112" height="24" rx="12" fill="#061630" stroke="#3ddc97" stroke-width="1.5"/>
+  <text x="250" y="139" font-size="16" font-weight="600" fill="#3ddc97" text-anchor="middle">Call this one</text>
+</svg>

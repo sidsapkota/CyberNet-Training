@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 198" width="320" height="198" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>The Who can help? board, each tile with what it's for. Trusted adult: anything. 000: danger now. Kids Helpline and Lifeline: need to talk. Your bank: money. IDCARE: stolen details. Scamwatch: scams. eSafety: bullying, pictures.</title>
+  <rect x="2" y="2" width="156" height="45" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="12" y="21" font-size="16" font-weight="600" fill="#e6eef9">Trusted adult</text>
+  <text x="12" y="40" font-size="16" font-weight="500" fill="#ffb547">Anything</text>
+  <rect x="162" y="2" width="156" height="45" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="172" y="21" font-size="16" font-weight="600" fill="#e6eef9">000</text>
+  <text x="172" y="40" font-size="16" font-weight="500" fill="#ffb547">Danger now</text>
+  <rect x="2" y="51" width="156" height="45" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="12" y="70" font-size="16" font-weight="600" fill="#e6eef9">Kids Helpline</text>
+  <text x="12" y="89" font-size="16" font-weight="500" fill="#ffb547">Need to talk</text>
+  <rect x="162" y="51" width="156" height="45" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="172" y="70" font-size="16" font-weight="600" fill="#e6eef9">Lifeline</text>
+  <text x="172" y="89" font-size="16" font-weight="500" fill="#ffb547">Need to talk</text>
+  <rect x="2" y="100" width="156" height="45" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="12" y="119" font-size="16" font-weight="600" fill="#e6eef9">Your bank</text>
+  <text x="12" y="138" font-size="16" font-weight="500" fill="#ffb547">Money</text>
+  <rect x="162" y="100" width="156" height="45" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="172" y="119" font-size="16" font-weight="600" fill="#e6eef9">IDCARE</text>
+  <text x="172" y="138" font-size="16" font-weight="500" fill="#ffb547">Stolen details</text>
+  <rect x="2" y="149" width="156" height="45" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="12" y="168" font-size="16" font-weight="600" fill="#e6eef9">Scamwatch</text>
+  <text x="12" y="187" font-size="16" font-weight="500" fill="#ffb547">Scams</text>
+  <rect x="162" y="149" width="156" height="45" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="172" y="168" font-size="16" font-weight="600" fill="#e6eef9">eSafety</text>
+  <text x="172" y="187" font-size="16" font-weight="500" fill="#ffb547">Bullying, pictures</text>
+</svg>

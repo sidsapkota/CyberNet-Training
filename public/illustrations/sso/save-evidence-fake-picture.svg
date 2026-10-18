@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 166" width="340" height="166" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>A new chat from unknown_acc, with a grey picture. A grey box with a crossed-out eye reads Picture hidden. Then the message: Pay $50 or I share it. Under the phone: It's never your fault.</title>
+  <rect x="10" y="4" width="320" height="132" rx="16" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <circle cx="34" cy="26" r="12" fill="#4a5a72" stroke="#a3b6d2" stroke-width="1.5"/>
+  <path d="M34 22m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0M25 37A9 9 0 0 1 43 37" fill="none" stroke="#a3b6d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="56" y="32" font-size="16" font-weight="600" fill="#e6eef9">unknown_acc</text>
+  <path d="M10 46H330" fill="none" stroke="#6f8fbd" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="22" y="54" width="112" height="74" rx="10" fill="#4a5a72" stroke="#a3b6d2" stroke-width="1.5"/>
+  <path d="M66 74Q78 63 90 74Q78 85 66 74ZM78 74m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0M67 64L89 84" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="78" y="103" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Picture</text>
+  <text x="78" y="121" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">hidden</text>
+  <rect x="142" y="74" width="182" height="33" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <text x="154" y="95" font-size="16" font-weight="500" fill="#e6eef9">Pay $50 or I share it.</text>
+  <text x="170" y="158" font-size="16" font-weight="600" fill="#3ddc97" text-anchor="middle">It's never your fault.</text>
+</svg>
