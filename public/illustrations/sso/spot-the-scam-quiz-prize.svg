@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 170" width="340" height="170" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>An email from Prize Desk, win@headphone-prizes.example. Subject: You WON wireless headphones! Pay $5 postage within 2 hours to claim. A green Pay and claim button and a drawing of headphones.</title>
+  <rect x="2" y="2" width="336" height="166" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="14" y="26" font-size="16" font-weight="500" fill="#a3b6d2">From:</text>
+  <text x="60" y="26" font-size="16" font-weight="600" fill="#e6eef9">Prize Desk</text>
+  <text x="14" y="47" font-size="16" font-weight="500" fill="#a3b6d2" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace">win@headphone-prizes.example</text>
+  <path d="M10 58H330" fill="none" stroke="#6f8fbd" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="14" y="80" font-size="16" font-weight="700" fill="#e6eef9">You WON wireless headphones!</text>
+  <text x="14" y="102" font-size="16" font-weight="500" fill="#e6eef9">Pay $5 postage within</text>
+  <text x="14" y="122" font-size="16" font-weight="500" fill="#e6eef9">2 hours to claim.</text>
+  <rect x="14" y="130" width="150" height="30" rx="7" fill="#3ddc97"/>
+  <text x="89" y="151" font-size="16" font-weight="700" fill="#061630" text-anchor="middle">Pay and claim</text>
+  <path d="M258 126V114a28 28 0 0 1 56 0V126" fill="none" stroke="#8be3ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="252" y="120" width="16" height="26" rx="6" fill="#24507f" stroke="#8be3ff" stroke-width="2"/>
+  <rect x="304" y="120" width="16" height="26" rx="6" fill="#24507f" stroke="#8be3ff" stroke-width="2"/>
+</svg>

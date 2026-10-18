@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" width="320" height="200" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>The same call, labelled. Card used now: rushing you. Read me the code: asks for secrets. Buy gift cards: asks for money. Don't tell anyone: tell no one. Below, the red End call button with a cyan ring, Hang up, and the back of a bank card with an arrow: call back here.</title>
+  <rect x="2" y="2" width="316" height="134" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="16" y="28" font-size="16" font-weight="500" fill="#e6eef9">Card used now!</text>
+  <rect x="202" y="10" width="110" height="26" rx="6" fill="#ffb547"/>
+  <text x="257" y="28.5" font-size="16" font-weight="600" fill="#061630" text-anchor="middle">Rushing you</text>
+  <text x="16" y="60" font-size="16" font-weight="500" fill="#e6eef9">Read me the code</text>
+  <rect x="160" y="42" width="152" height="26" rx="6" fill="#ffb547"/>
+  <text x="236" y="60.5" font-size="16" font-weight="600" fill="#061630" text-anchor="middle">Asks for secrets</text>
+  <text x="16" y="92" font-size="16" font-weight="500" fill="#e6eef9">Buy gift cards</text>
+  <rect x="176" y="74" width="136" height="26" rx="6" fill="#ffb547"/>
+  <text x="244" y="92.5" font-size="16" font-weight="600" fill="#061630" text-anchor="middle">Asks for money</text>
+  <text x="16" y="124" font-size="16" font-weight="500" fill="#e6eef9">Don't tell anyone</text>
+  <rect x="202" y="106" width="110" height="26" rx="6" fill="#ffb547"/>
+  <text x="257" y="124.5" font-size="16" font-weight="600" fill="#061630" text-anchor="middle">Tell no one</text>
+  <circle cx="30" cy="168" r="25" fill="none" stroke="#00c2ff" stroke-width="2.5"/>
+  <circle cx="30" cy="168" r="18" fill="#ff7a7a"/>
+  <g transform="translate(30 169) scale(0.95)">
+  <path d="M-9 -10C-11 -4 -8 4 -2 9C3 13 8 13 11 10L8 5L4 7C1 5 -3 1 -4 -3L-1 -6L-4 -11Z" fill="#061630"/>
+  </g>
+  <text x="62" y="174" font-size="16" font-weight="700" fill="#e6eef9">Hang up</text>
+  <path d="M130 168L152 168" fill="none" stroke="#00c2ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M143.9 171.9L152 168L143.9 164.1" fill="none" stroke="#00c2ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="158" y="146" width="72" height="44" rx="7" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <rect x="158" y="155" width="72" height="10" fill="#122b52"/>
+  <rect x="166" y="172" width="44" height="8" rx="3" fill="#a3b6d2"/>
+  <text x="238" y="164" font-size="16" font-weight="700" fill="#00c2ff">Call back</text>
+  <text x="238" y="184" font-size="16" font-weight="700" fill="#00c2ff">here</text>
+</svg>

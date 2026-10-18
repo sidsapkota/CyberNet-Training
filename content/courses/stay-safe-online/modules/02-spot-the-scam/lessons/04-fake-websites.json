@@ -1,0 +1,247 @@
+{
+  "id": "fake-websites",
+  "kind": "lesson",
+  "title": "Fake Websites",
+  "about": "Read a web address to see who really owns the page.",
+  "order": 4,
+  "icon": "globe",
+  "blueprint": "1.1",
+  "cards": [
+    {
+      "id": "alex-sends-a-page",
+      "type": "hook",
+      "difficulty": "core",
+      "situation": "Alex messages Sam: \"Is this page really Your Bank?\"",
+      "image": {
+        "src": "/illustrations/sso/fake-websites-hook.svg",
+        "alt": "Sam's phone shows a chat with Alex: Email said my card's locked. Tapped the link and this opened. Real?? Under it, a screenshot of a sign-in page with a big Your Bank logo.",
+        "width": 340,
+        "height": 230
+      }
+    },
+    {
+      "id": "meet-the-page",
+      "type": "hotspot",
+      "difficulty": "core",
+      "teaches": [
+        "fake-sites-copy-looks",
+        "padlock-not-proof",
+        "domain-owner"
+      ],
+      "uses": [
+        "rushing-is-a-scam-sign",
+        "companies-never-ask-for-secrets"
+      ],
+      "prompt": "It looks just like Your Bank. **Tap each part** to look closer.",
+      "scene": "fake-website",
+      "mode": "explore",
+      "parts": [
+        {
+          "part": "site-logo",
+          "job": "Looks just like Your Bank's. But anyone can copy a logo in minutes."
+        },
+        {
+          "part": "site-padlock",
+          "job": "It means what you type is scrambled on the way. Scam sites get padlocks too."
+        },
+        {
+          "part": "site-banner",
+          "job": "10 minutes! Rushing you, like the scam email."
+        },
+        {
+          "part": "site-pin",
+          "job": "Asks for secrets. A real bank never asks for your card PIN on a web page."
+        },
+        {
+          "part": "site-address",
+          "job": "Look at the end: the name just before the ending (.example) owns the page. Here that's login-check, not Your Bank."
+        }
+      ],
+      "explanation": "A copied logo and a padlock prove nothing; the address shows who owns the page."
+    },
+    {
+      "id": "who-gets-it",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "predict": true,
+      "play": "predict",
+      "uses": [
+        "domain-owner",
+        "padlock-not-proof",
+        "fake-sites-copy-looks"
+      ],
+      "prompt": "Alex types the password into this page. **Who gets it?**",
+      "image": {
+        "src": "/illustrations/sso/fake-websites-predict.svg",
+        "alt": "The fake page, yourbank.example.login-check.example, with the Your Bank logo and a password typed in; Alex taps Sign in. Below, three choices: Your Bank; login-check; nobody, it's padlocked.",
+        "width": 340,
+        "height": 220,
+        "revealSrc": "/illustrations/sso/fake-websites-predict-reveal.svg",
+        "revealAlt": "The password travels, scrambled on the way, and comes out at login-check's laptop: Got it. Your Bank's building is untouched."
+      },
+      "options": [
+        {
+          "id": "your-bank",
+          "text": "Your Bank: it's their logo",
+          "area": { "x": 1.2, "y": 49.1, "w": 31.8, "h": 49.1 }
+        },
+        {
+          "id": "login-check",
+          "text": "login-check",
+          "area": { "x": 34.1, "y": 49.1, "w": 31.8, "h": 49.1 }
+        },
+        {
+          "id": "nobody",
+          "text": "Nobody: the padlock keeps it safe",
+          "area": { "x": 67.1, "y": 49.1, "w": 31.8, "h": 49.1 }
+        }
+      ],
+      "correctOptionId": "login-check",
+      "explanation": "The address says login-check owns the page, and the padlock only scrambles the password on the way."
+    },
+    {
+      "id": "read-the-address",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "domain-owner",
+        "fake-sites-copy-looks"
+      ],
+      "title": "Read the address",
+      "body": "A fake site can copy a logo, but not the real **web address**. Find the ending (like .example, .com or .com.au) and read the name just before it: that's the owner.",
+      "image": {
+        "src": "/illustrations/sso/fake-websites-named.svg",
+        "alt": "The address yourbank.example.login-check.example, taken apart. yourbank.example is a decoy. login-check is the owner: the name just before the ending. .example is the ending. The real address is yourbank.example.",
+        "width": 320,
+        "height": 200
+      }
+    },
+    {
+      "id": "real-address",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "uses": [
+        "domain-owner",
+        "lookalike-domain"
+      ],
+      "prompt": "Alex closes the fake page. **Tap Your Bank's real address.**",
+      "image": {
+        "src": "/illustrations/sso/fake-websites-real-address.svg",
+        "alt": "Your Bank's real address: yourbank.example. Three web addresses, each with a padlock: yourbank.example/signin; login-check.example/signin; yourbank-secure.example/signin.",
+        "width": 340,
+        "height": 222
+      },
+      "options": [
+        {
+          "id": "real",
+          "text": "yourbank.example/signin",
+          "area": { "x": 1.2, "y": 27, "w": 97.6, "h": 22.5 }
+        },
+        {
+          "id": "login-check",
+          "text": "login-check.example/signin",
+          "area": { "x": 1.2, "y": 51.4, "w": 97.6, "h": 22.5 },
+          "nudge": "Find the ending in each, then read the name just before it."
+        },
+        {
+          "id": "secure",
+          "text": "yourbank-secure.example/signin",
+          "area": { "x": 1.2, "y": 75.7, "w": 97.6, "h": 22.5 },
+          "nudge": "Find the ending in each, then read the name just before it. Is it exactly yourbank?"
+        }
+      ],
+      "correctOptionId": "real",
+      "explanation": "The name before the ending is exactly yourbank, so it's Your Bank's.",
+      "showAnswer": "yourbank.example/signin. The others belong to login-check and yourbank-secure, which isn't the same name."
+    },
+    {
+      "id": "word-in-front",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "play": "consequence",
+      "uses": [
+        "domain-owner"
+      ],
+      "prompt": "This address starts with login: login.yourbank.example. **Tap who owns it.**",
+      "image": {
+        "src": "/illustrations/sso/fake-websites-word-in-front.svg",
+        "alt": "One big address bar with a padlock: login.yourbank.example. Below, three choices: Your Bank; someone called login; nobody can tell.",
+        "width": 340,
+        "height": 200,
+        "revealSrc": "/illustrations/sso/fake-websites-word-in-front-reveal.svg",
+        "revealAlt": "The address lights up from the right: .example is the ending, yourbank just before it is the owner, and login. in front is just a part of Your Bank's site."
+      },
+      "options": [
+        {
+          "id": "your-bank",
+          "text": "Your Bank",
+          "area": { "x": 1.2, "y": 48, "w": 31.8, "h": 50 }
+        },
+        {
+          "id": "login",
+          "text": "Someone called login",
+          "area": { "x": 34.1, "y": 48, "w": 31.8, "h": 50 },
+          "nudge": "Start from the right: find the ending, then the name just before it."
+        },
+        {
+          "id": "cant-tell",
+          "text": "Nobody can tell",
+          "area": { "x": 67.1, "y": 48, "w": 31.8, "h": 50 },
+          "nudge": "Start from the right: find the ending, then the name just before it."
+        }
+      ],
+      "correctOptionId": "your-bank",
+      "explanation": "The name just before the ending is yourbank, so it's Your Bank's own page.",
+      "showAnswer": "Your Bank owns it. Words in front don't change the owner; only the name before the ending counts."
+    },
+    {
+      "id": "manager-stays-quiet",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "teaches": [
+        "manager-fills-only-real-site"
+      ],
+      "uses": [
+        "password-manager",
+        "domain-owner"
+      ],
+      "prompt": "Your password manager fills in only on real sites. **Here it won't. Why?**",
+      "image": {
+        "src": "/illustrations/sso/fake-websites-manager.svg",
+        "alt": "Your phone shows a page that looks exactly like Your Bank's sign-in, with its address cut off after the first few letters. The password box is empty, and a key pop-up says: No saved passwords for this site.",
+        "width": 340,
+        "height": 156
+      },
+      "options": [
+        {
+          "id": "not-real",
+          "text": "It isn't Your Bank's real address"
+        },
+        {
+          "id": "broken",
+          "text": "The manager's broken: type it in",
+          "nudge": "Where does a password manager fill in, and what does it check first?"
+        },
+        {
+          "id": "turned-off",
+          "text": "Your Bank turned managers off today",
+          "nudge": "Where does a password manager fill in, and what does it check first?"
+        }
+      ],
+      "correctOptionId": "not-real",
+      "explanation": "A password manager reads the whole address for you, so a quiet one is a warning sign.",
+      "showAnswer": "It isn't Your Bank's real address. Close it and open the Your Bank app or a bookmark instead."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "domain-owner",
+        "padlock-not-proof"
+      ],
+      "title": "Recap",
+      "body": "Logos can be copied and scam sites get padlocks too; only the web address shows who owns a page.\n\n**Try this:** Bookmark the sign-in pages you use, and open them from there.\n\n**Next:** What your posts and photos quietly reveal about you."
+    }
+  ]
+}

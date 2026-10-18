@@ -1,11 +1,24 @@
 {
   "id": "phishing-emails",
   "kind": "lesson",
-  "title": "Phishing Emails",
-  "about": "Spot the warning signs of a fake email before you click.",
+  "title": "Scam Emails",
+  "about": "Spot the warning signs that give a scam email away.",
   "order": 1,
   "icon": "mail-warning",
+  "blueprint": "1.1",
   "cards": [
+    {
+      "id": "sam-gets-an-email",
+      "type": "hook",
+      "difficulty": "core",
+      "situation": "Sam's phone buzzes. Your Bank says the account closes tomorrow.",
+      "image": {
+        "src": "/illustrations/sso/phishing-emails-hook.svg",
+        "alt": "Sam stands beside a big phone lock screen showing 9:12 and one notification from Your Bank: URGENT: Your account will be closed in 24 hours.",
+        "width": 340,
+        "height": 230
+      }
+    },
     {
       "id": "meet-the-signs",
       "type": "hotspot",
@@ -19,93 +32,102 @@
         "companies-never-ask-for-secrets",
         "hidden-link"
       ],
-      "uses": [],
-      "prompt": "An email says it's from Your Bank. **Tap** each part.",
+      "prompt": "Sam opens the email. **Tap each line** to look closer.",
       "scene": "email",
       "mode": "explore",
       "parts": [
         {
           "part": "email-from",
-          "job": "Fake sender: anyone can type any name. The address after the @ is what counts: Your Bank uses yourbank.example, not yourbank-help.example."
+          "job": "The name says Your Bank, but look after the @: yourbank-help.example. Your Bank's real address is yourbank.example."
         },
         {
           "part": "email-subject",
-          "job": "Rushing you: \"Closed in 24 hours!\" Pressure stops you thinking."
+          "job": "URGENT, 24 hours! A hurry like this stops you thinking it through."
         },
         {
           "part": "email-greeting",
-          "job": "\"Dear Customer\": real companies usually use your name. But scammers can find names too, so a name proves nothing."
+          "job": "Your Bank knows your name. But names are easy to find, so a name never proves an email is real."
         },
         {
           "part": "email-secrets",
-          "job": "Asks for secrets: real companies never ask for passwords, codes, card numbers or PINs by email."
+          "job": "It wants your password and card number. Real companies never ask for those by email."
         },
         {
           "part": "email-link",
-          "job": "Hidden link: it really goes to yourbank-verify.example. Hover over a link, or press and hold it, to see where it goes."
+          "job": "Press and hold a link to see where it goes. This one goes to yourbank-verify.example, not Your Bank."
         }
       ],
-      "explanation": "Five warning signs: a **fake sender**, **rushing you**, **\"Dear Customer\"**, **asking for secrets** and a **hidden link**."
+      "explanation": "Five lines give this email away."
     },
     {
       "id": "type-in-the-button",
       "type": "multiple_choice",
       "difficulty": "core",
+      "predict": true,
+      "play": "predict",
       "uses": [
         "hidden-link"
       ],
-      "prompt": "You tap this email's button and type your password. What happens?",
+      "prompt": "Sam taps \"Verify my account\" and types the password. **Who gets it?**",
+      "image": {
+        "src": "/illustrations/sso/phishing-emails-predict.svg",
+        "alt": "Sam has tapped Verify my account, which opened a sign-in page with a password typed in. Below, three choices: Your Bank's building; a laptop for yourbank-verify.example; a phone with a shield, Nobody: it's blocked.",
+        "width": 340,
+        "height": 220,
+        "revealSrc": "/illustrations/sso/phishing-emails-predict-reveal.svg",
+        "revealAlt": "The password flies as a key from the sign-in page to the yourbank-verify.example laptop, which now has it. Your Bank's building is untouched."
+      },
       "options": [
         {
-          "id": "scammer-gets-it",
-          "text": "The scammer gets it, and tries it on the real bank"
+          "id": "the-bank",
+          "text": "Your Bank",
+          "area": { "x": 0.6, "y": 50.9, "w": 29.4, "h": 47.3 }
         },
         {
-          "id": "bank-blocks",
-          "text": "Your Bank spots the fake page and blocks it for you",
-          "nudge": "The button goes to `yourbank-verify.example`. Your Bank never sees what you type there."
+          "id": "the-link-site",
+          "text": "yourbank-verify.example",
+          "area": { "x": 31.2, "y": 50.9, "w": 37.6, "h": 47.3 }
         },
         {
-          "id": "needs-card",
-          "text": "Nothing yet: they'd also need your card number",
-          "nudge": "A password is enough to try your account. That's why it's a secret."
-        },
-        {
-          "id": "phone-warns",
-          "text": "Your phone warns you and wipes what you typed",
-          "nudge": "Phones can't always spot a new fake page. You're the check."
+          "id": "nobody",
+          "text": "Nobody: the phone blocks it",
+          "area": { "x": 70, "y": 50.9, "w": 29.4, "h": 47.3 }
         }
       ],
-      "correctOptionId": "scammer-gets-it",
-      "explanation": "The button goes to `yourbank-verify.example`, the scammer's page. Anything you type there goes straight to them.",
-      "hint": "Remember the hidden link: where does the button really go?"
+      "correctOptionId": "the-link-site",
+      "explanation": "The button really goes to yourbank-verify.example, so the password goes straight to them."
     },
     {
       "id": "meet-phishing",
-      "type": "reveal",
+      "type": "explainer",
       "difficulty": "core",
       "teaches": [
-        "phishing"
+        "scam-warning-signs",
+        "go-there-yourself"
       ],
-      "show": {
-        "kind": "term",
-        "term": "phishing"
-      },
-      "sentence": "**Phishing** is a message pretending to be someone you trust, to trick you."
+      "title": "Warning signs",
+      "body": "A **scam** email pretends to be someone you trust, and each clue that gives it away is a **warning sign**. Spot one? Skip its link and open the real app or website yourself.",
+      "image": {
+        "src": "/illustrations/sso/phishing-emails-named.svg",
+        "alt": "The same email with five amber tags: the sender @yourbank-help is a fake sender; URGENT, 24 hours is rushing you; Dear Customer has no name; asking for your password and card number asks for secrets; Verify my account is a fake link.",
+        "width": 320,
+        "height": 196
+      }
     },
     {
       "id": "spot-the-signs",
       "type": "hotspot",
       "difficulty": "core",
       "uses": [
+        "scam-warning-signs",
         "fake-sender-address",
         "rushing-is-a-scam-sign",
         "generic-greeting",
         "companies-never-ask-for-secrets",
         "hidden-link"
       ],
-      "prompt": "Tap **every** warning sign in this email.",
-      "scene": "email",
+      "prompt": "Another \"Your Bank\" email. It's a scam. **Tap every warning sign.**",
+      "scene": "email-frozen-card",
       "mode": "tap",
       "targets": [
         "email-from",
@@ -114,136 +136,88 @@
         "email-secrets",
         "email-link"
       ],
-      "explanation": "The sender isn't `@yourbank.example`, the subject **rushes you**, it says **\"Dear Customer\"**, it **asks for secrets** and the button goes to `yourbank-verify.example`.",
-      "hint": "Go back over the five signs you just met. Each one is on its own line.",
-      "nudge": "There are five. Look for each sign you just met, one at a time."
+      "explanation": "All five: a fake sender, rushing you, no name, asking for secrets and a fake link.",
+      "nudge": "There are five. Go line by line and ask: would the real Your Bank do this?",
+      "showAnswer": "The sender, the subject, \"Dear Valued Customer\", the request for your PIN and the button. The time and sign-off are normal."
     },
     {
       "id": "prize-email",
-      "type": "scenario",
+      "type": "multiple_choice",
       "difficulty": "core",
       "teaches": [
-        "dont-reply-to-scams"
+        "too-good-to-be-true"
       ],
       "uses": [
-        "dont-reply-to-scams"
+        "rushing-is-a-scam-sign",
+        "hidden-link"
       ],
-      "prompt": "You've \"won\" a prize by email. What do you do?",
-      "start": "start",
-      "steps": [
+      "prompt": "Sam won a console but never entered. **Is \"Claim my prize\" safe?**",
+      "image": {
+        "src": "/illustrations/sso/phishing-emails-prize.svg",
+        "alt": "An email from Prize Team, win@big-prizes.example. Subject: You WON a games console! Congratulations! Claim it within 1 hour. A big green Claim my prize button and a drawing of a games controller.",
+        "width": 340,
+        "height": 170,
+        "revealSrc": "/illustrations/sso/phishing-emails-prize-reveal.svg",
+        "revealAlt": "The claim page at big-prizes.example: Pay $4.99 postage to get your prize, with empty boxes for card number, expiry and CVC. A tag says: Too good to be true."
+      },
+      "options": [
         {
-          "id": "start",
-          "text": "**\"You've won a games console! Claim it within 1 hour.\"** You never entered. What do you do?",
-          "choices": [
-            {
-              "id": "click",
-              "text": "Click fast, before the hour ends",
-              "consequence": "The rush is the trick. The link leads to a page that asks for your details or payment.",
-              "outcome": "fail"
-            },
-            {
-              "id": "reply",
-              "text": "Reply to ask if it's real",
-              "consequence": "Replying tells the scammer your address works, so you'll get more scams.",
-              "outcome": "fail"
-            },
-            {
-              "id": "report",
-              "text": "Report it, then delete it",
-              "consequence": "No prize is lost, because there never was one. Reporting helps your mail app catch the next one.",
-              "outcome": "success"
-            }
-          ]
+          "id": "safe-giving",
+          "text": "Yes: it's giving, not asking",
+          "nudge": "Forget how nice it sounds. Which warning signs from Sam's first email are here too?"
+        },
+        {
+          "id": "not-safe",
+          "text": "No: it still rushes you to a link"
+        },
+        {
+          "id": "safe-no-password",
+          "text": "Yes: there's no password box",
+          "nudge": "Forget how nice it sounds. Which warning signs from Sam's first email are here too?"
         }
       ],
-      "explanation": "A prize you never entered, plus a deadline, is a classic scam. **Don't click, don't reply**: report it and delete it.",
-      "hint": "You never entered a competition, so why a prize, and why only one hour to claim it?"
+      "correctOptionId": "not-safe",
+      "explanation": "A prize you never entered is too good to be true, and it still rushes you to a link.",
+      "showAnswer": "No: it rushes you (1 hour) to a link, for a competition Sam never entered. No entry means no real prize."
     },
     {
       "id": "knows-your-name",
-      "type": "scenario",
+      "type": "multiple_choice",
       "difficulty": "core",
+      "play": "consequence",
       "uses": [
         "name-proves-nothing",
-        "change-stolen-password"
+        "go-there-yourself"
       ],
-      "prompt": "This email uses your real name.",
-      "start": "start",
-      "steps": [
-        {
-          "id": "start",
-          "text": "**\"Hi Sam, your school account will be deleted today. Sign in here to keep it.\"** It uses your real name and school. What do you do?",
-          "choices": [
-            {
-              "id": "sign-in",
-              "text": "Sign in with the link. It knows your name, so it's real",
-              "consequence": "Scammers can find names and schools online. Using your name doesn't make it real.",
-              "outcome": "fail"
-            },
-            {
-              "id": "check",
-              "text": "Skip the link: sign in the usual way, or ask your teacher",
-              "consequence": "Your account is fine, and your teacher reports the scam to the school.",
-              "next": "already-clicked"
-            }
-          ]
-        },
-        {
-          "id": "already-clicked",
-          "text": "Your friend Alex **already typed in their password**. What should Alex do?",
-          "choices": [
-            {
-              "id": "hide",
-              "text": "Keep quiet and hope nobody uses it",
-              "consequence": "Hiding it gives the scammer time to get in. Fixing it fast matters more than feeling silly.",
-              "outcome": "fail"
-            },
-            {
-              "id": "reply-delete",
-              "text": "Reply to the email and ask them to delete it",
-              "consequence": "That goes straight to the scammer, and shows them the address works.",
-              "outcome": "fail"
-            },
-            {
-              "id": "change-and-tell",
-              "text": "Change that password straight away and tell a trusted adult",
-              "consequence": "Now the stolen password is useless. Alex isn't in trouble: scams fool adults too.",
-              "outcome": "success"
-            }
-          ]
-        }
-      ],
-      "explanation": "A name doesn't prove an email is real: go the **usual way**. If a password slips out, change it and tell an adult.",
-      "hint": "Can a name prove an email is real? And what makes a stolen password useless?"
-    },
-    {
-      "id": "real-sender",
-      "type": "multiple_choice",
-      "difficulty": "challenge",
-      "uses": [
-        "fake-sender-address",
-        "lookalike-domain"
-      ],
-      "prompt": "Your Bank's website is `yourbank.example`. Which email address is **really** Your Bank's?",
+      "prompt": "An email uses Sam's real name and school: \"Sign in today.\" **Tap what Sam should do.**",
+      "image": {
+        "src": "/illustrations/sso/phishing-emails-school.svg",
+        "alt": "An email from Your School, it@yourschool-accounts.example. Subject: Account deleted TODAY. Hi Sam, sign in today, or your school account is deleted. Below, three choices: tap Sign in; reply Is this real?; a school building, open the site yourself.",
+        "width": 340,
+        "height": 230
+      },
       "options": [
         {
-          "id": "real",
-          "text": "alerts@yourbank.example"
+          "id": "sign-in",
+          "text": "Tap Sign in",
+          "area": { "x": 1.2, "y": 53.9, "w": 31.8, "h": 44.3 },
+          "nudge": "Does knowing Sam's name prove anything? And where would a tap really go?"
         },
         {
-          "id": "dash",
-          "text": "alerts@yourbank-alerts.example",
-          "nudge": "`yourbank-alerts` is a different name from `yourbank`: that's a lookalike."
+          "id": "reply",
+          "text": "Reply: Is this real?",
+          "area": { "x": 34.1, "y": 53.9, "w": 31.8, "h": 44.3 },
+          "nudge": "Does knowing Sam's name prove anything? And where would a reply really go?"
         },
         {
-          "id": "flipped",
-          "text": "yourbank@mail-alerts.example",
-          "nudge": "The part after the @ is what counts. `mail-alerts.example` isn't Your Bank."
+          "id": "go-yourself",
+          "text": "Open the school site yourself, or ask a teacher",
+          "area": { "x": 67.1, "y": 53.9, "w": 31.8, "h": 44.3 }
         }
       ],
-      "correctOptionId": "real",
-      "explanation": "Only `@yourbank.example` is Your Bank. The others change the name after the @, so they belong to someone else.",
-      "hint": "Look only at the part after the @. Is it exactly `yourbank.example`?"
+      "correctOptionId": "go-yourself",
+      "explanation": "A name is easy to find, so it proves nothing: go to the school site yourself.",
+      "showAnswer": "Open the school site yourself, or ask a teacher. The link and the reply both go to whoever sent it."
     },
     {
       "id": "recap",
@@ -251,11 +225,11 @@
       "difficulty": "core",
       "teaches": [
         "phishing",
-        "fake-sender-address",
+        "scam-warning-signs",
         "go-there-yourself"
       ],
       "title": "Recap",
-      "body": "- **Phishing** pretends to be someone you trust.\n- Check the **address after the @**; don't click, **go there yourself**.\n- **Try this:** check the address after the @ on the next email you get.\n\n**Next:** the text message that's really a trap."
+      "body": "Scam emails (people call them **phishing**) pretend to be someone you trust; warning signs give them away.\n\n**Try this:** On the next email you get, check the address after the @.\n\n**Next:** A text says your parcel is stuck. It isn't."
     }
   ]
 }

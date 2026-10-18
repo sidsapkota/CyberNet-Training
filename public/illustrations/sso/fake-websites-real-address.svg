@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 222" width="340" height="222" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Your Bank's real address: yourbank.example. Three web addresses, each with a padlock: yourbank.example/signin; login-check.example/signin; yourbank-secure.example/signin.</title>
+  <rect x="4" y="4" width="332" height="46" rx="10" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="1.2"/>
+  <text x="16" y="33" font-size="16" font-weight="500" fill="#a3b6d2">Real address:</text>
+  <text x="130" y="33" font-size="16" font-weight="700" fill="#e6eef9">yourbank.example</text>
+  <rect x="4" y="60" width="332" height="50" rx="25" fill="#061630" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="20" y="83" width="14" height="11" rx="2.5" fill="#e6eef9"/>
+  <path d="M23 83V80.5A4 4 0 0 1 31 80.5V83" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="46" y="91" font-size="16" font-weight="500" fill="#e6eef9">yourbank.example/signin</text>
+  <rect x="4" y="114" width="332" height="50" rx="25" fill="#061630" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="20" y="137" width="14" height="11" rx="2.5" fill="#e6eef9"/>
+  <path d="M23 137V134.5A4 4 0 0 1 31 134.5V137" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="46" y="145" font-size="16" font-weight="500" fill="#e6eef9">login-check.example/signin</text>
+  <rect x="4" y="168" width="332" height="50" rx="25" fill="#061630" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="20" y="191" width="14" height="11" rx="2.5" fill="#e6eef9"/>
+  <path d="M23 191V188.5A4 4 0 0 1 31 188.5V191" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="46" y="199" font-size="16" font-weight="500" fill="#e6eef9">yourbank-secure.example/signin</text>
+</svg>

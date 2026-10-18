@@ -14,185 +14,133 @@
         "rushing-is-a-scam-sign",
         "hidden-link"
       ],
-      "prompt": "Label three warning signs in this email.",
-      "scene": "email",
+      "prompt": "Alex forwards a \"Your Bank\" email. Label three of its warning signs.",
+      "scene": "email-payment",
       "mode": "label",
       "labels": [
-        {
-          "part": "email-from",
-          "label": "Fake sender"
-        },
-        {
-          "part": "email-subject",
-          "label": "Rushing you"
-        },
-        {
-          "part": "email-link",
-          "label": "Hidden link"
-        }
+        { "part": "email-from", "label": "Fake sender" },
+        { "part": "email-subject", "label": "Rushing you" },
+        { "part": "email-link", "label": "Fake link" }
       ],
-      "explanation": "The address isn't `@yourbank.example` (**fake sender**), the subject is **rushing you**, and the button is a **hidden link** to `yourbank-verify.example`."
+      "explanation": "The address after the @ isn't yourbank.example, the subject rushes you, and the button goes to yourbank-update.example."
     },
     {
-      "id": "q-phish-or-fine",
-      "type": "sort_bins",
+      "id": "q-prize-fee",
+      "type": "multiple_choice",
       "difficulty": "core",
       "uses": [
-        "never-share-sign-in-code",
-        "scam-text-signs",
+        "too-good-to-be-true",
         "rushing-is-a-scam-sign"
       ],
-      "prompt": "Phishing, or probably fine?",
-      "bins": [
-        {
-          "id": "phish",
-          "label": "Phishing"
-        },
-        {
-          "id": "fine",
-          "label": "Probably fine"
-        }
+      "prompt": "An email says you won headphones. Just pay $5 postage. What do you do?",
+      "image": {
+        "src": "/illustrations/sso/spot-the-scam-quiz-prize.svg",
+        "alt": "An email from Prize Desk, win@headphone-prizes.example. Subject: You WON wireless headphones! Pay $5 postage within 2 hours to claim. A green Pay and claim button and a drawing of headphones.",
+        "width": 340,
+        "height": 170
+      },
+      "options": [
+        { "id": "pay", "text": "Pay: $5 is cheap for headphones" },
+        { "id": "reply", "text": "Reply to check it's real" },
+        { "id": "delete", "text": "Delete it: too good to be true" }
       ],
-      "items": [
-        {
-          "id": "secret",
-          "label": "\"Send us your sign-in code\"",
-          "bin": "phish"
-        },
-        {
-          "id": "prize",
-          "label": "\"Claim your prize: pay a small fee\"",
-          "bin": "phish"
-        },
-        {
-          "id": "newsletter",
-          "label": "Your club's usual newsletter",
-          "bin": "fine"
-        },
-        {
-          "id": "rush",
-          "label": "\"Account closes in 1 hour!\"",
-          "bin": "phish"
-        }
-      ],
-      "explanation": "Asking for codes, prize fees and deadlines are phishing signs. A newsletter you always get, asking for nothing, is fine."
+      "correctOptionId": "delete",
+      "explanation": "A prize you never entered that costs money to claim is too good to be true, and a reply goes straight to the scammer."
     },
     {
       "id": "q-parcel-text",
-      "type": "scenario",
+      "type": "multiple_choice",
       "difficulty": "core",
       "uses": [
         "scam-text-signs",
         "official-app-check"
       ],
-      "prompt": "A text: **\"Missed delivery. Pay $2.50 in 1 hour: parcels-fee.example\"**",
-      "start": "start",
-      "steps": [
-        {
-          "id": "start",
-          "text": "You're expecting a parcel. What do you do?",
-          "choices": [
-            {
-              "id": "pay",
-              "text": "Pay it: you are expecting one",
-              "consequence": "The link leads to a fake page that keeps your card details.",
-              "outcome": "fail"
-            },
-            {
-              "id": "reply",
-              "text": "Reply to ask which parcel",
-              "consequence": "The reply goes to the scammer and shows your number works.",
-              "outcome": "fail"
-            },
-            {
-              "id": "app",
-              "text": "Check in the Parcels app instead",
-              "consequence": "The app shows your parcel is on its way. No fee.",
-              "outcome": "success"
-            }
-          ]
-        }
+      "prompt": "You're expecting a parcel. A text says pay $2.50 within 1 hour. What do you do?",
+      "image": {
+        "src": "/illustrations/sso/spot-the-scam-quiz-parcel.svg",
+        "alt": "A text thread headed Parcels: Missed delivery. Pay $2.50 within 1 hour: parcels-fee.example. Below, three choices: pay it; reply Which parcel?; check in the Parcels app.",
+        "width": 340,
+        "height": 230
+      },
+      "options": [
+        { "id": "pay", "text": "Pay it", "area": { "x": 1.2, "y": 55.7, "w": 31.8, "h": 42.6 } },
+        { "id": "reply", "text": "Reply: Which parcel?", "area": { "x": 34.1, "y": 55.7, "w": 31.8, "h": 42.6 } },
+        { "id": "app", "text": "Check in the Parcels app", "area": { "x": 67.1, "y": 55.7, "w": 31.8, "h": 42.6 } }
       ],
-      "explanation": "A small fee, a deadline and an unfamiliar link are scam-text signs, even when you are expecting a parcel. Check in the official app."
+      "correctOptionId": "app",
+      "explanation": "A fee, a rush and a strange link are warning signs, even when you're expecting a parcel: check in the company's own app."
+    },
+    {
+      "id": "q-new-number",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "uses": [
+        "scam-text-signs",
+        "call-back-on-known-number"
+      ],
+      "prompt": "A new number texts: \"It's Dad, phone broke. Send $60 now?\" What do you do?",
+      "image": {
+        "src": "/illustrations/sso/spot-the-scam-quiz-new-number.svg",
+        "alt": "A text from an unknown number, not in your contacts: It's Dad, phone broke. Send $60 now? Below, three choices: send it; reply Is it really you?; call Dad's saved number.",
+        "width": 340,
+        "height": 230
+      },
+      "options": [
+        { "id": "send", "text": "Send it", "area": { "x": 1.2, "y": 55.7, "w": 31.8, "h": 42.6 } },
+        { "id": "reply", "text": "Reply: Is it really you?", "area": { "x": 34.1, "y": 55.7, "w": 31.8, "h": 42.6 } },
+        { "id": "call-saved", "text": "Call Dad's saved number", "area": { "x": 67.1, "y": 55.7, "w": 31.8, "h": 42.6 } }
+      ],
+      "correctOptionId": "call-saved",
+      "explanation": "It asks for money and rushes you; the saved number reaches the real Dad, while a reply goes to the new number."
     },
     {
       "id": "q-bank-call",
-      "type": "scenario",
+      "type": "multiple_choice",
       "difficulty": "core",
       "uses": [
         "never-share-sign-in-code",
-        "scam-call-signs",
         "name-proves-nothing",
+        "scam-call-signs",
         "call-back-on-known-number"
       ],
-      "prompt": "A caller from \"Your Bank's fraud team\" asks you to read out the code just texted to you.",
-      "start": "start",
-      "steps": [
-        {
-          "id": "start",
-          "text": "What do you do?",
-          "choices": [
-            {
-              "id": "read",
-              "text": "Read out the code",
-              "consequence": "That code lets them sign in as you.",
-              "outcome": "fail"
-            },
-            {
-              "id": "name",
-              "text": "Ask them to say your name first",
-              "consequence": "Scammers can find names online. Knowing yours proves nothing.",
-              "outcome": "fail"
-            },
-            {
-              "id": "hang-up",
-              "text": "Hang up; call the bank's real number",
-              "consequence": "The real bank says nobody called you. Scam stopped.",
-              "outcome": "success"
-            }
-          ]
-        }
+      "prompt": "\"Your Bank's fraud team\" calls and asks for the code just texted to you. What do you do?",
+      "image": {
+        "src": "/illustrations/sso/spot-the-scam-quiz-bank-call.svg",
+        "alt": "A call from an unknown number, 1:05 in: Read me the code we just sent, to stop the payment. Below, three choices: read out the code; ask them to say my name first; hang up and call the number on my card.",
+        "width": 340,
+        "height": 230
+      },
+      "options": [
+        { "id": "read-code", "text": "Read out the code", "area": { "x": 1.2, "y": 55.7, "w": 31.8, "h": 42.6 } },
+        { "id": "ask-name", "text": "Ask them to say my name first", "area": { "x": 34.1, "y": 55.7, "w": 31.8, "h": 42.6 } },
+        { "id": "hang-up", "text": "Hang up and call the number on my card", "area": { "x": 67.1, "y": 55.7, "w": 31.8, "h": 42.6 } }
       ],
-      "explanation": "Never share a sign-in code. Hang up and call back on a number you found yourself."
+      "correctOptionId": "hang-up",
+      "explanation": "A code lets them sign in as you, and knowing your name proves nothing: hang up and call a number you already have."
     },
     {
       "id": "q-padlock-pin",
-      "type": "scenario",
+      "type": "multiple_choice",
       "difficulty": "core",
       "uses": [
         "padlock-not-proof",
         "companies-never-ask-for-secrets",
         "fake-sites-copy-looks"
       ],
-      "prompt": "A page you opened from a text has a padlock, and it asks for your **card PIN**.",
-      "start": "start",
-      "steps": [
-        {
-          "id": "start",
-          "text": "What do you do?",
-          "choices": [
-            {
-              "id": "type-pin",
-              "text": "Type it: there's a padlock",
-              "consequence": "A padlock only means encrypted. Your PIN goes safely to whoever runs the page, and that could be a scammer.",
-              "outcome": "fail"
-            },
-            {
-              "id": "check-logo",
-              "text": "Check the logo, then type it",
-              "consequence": "A logo can be copied in minutes. And a bank never asks for your PIN on a website.",
-              "outcome": "fail"
-            },
-            {
-              "id": "close",
-              "text": "Close it: banks never ask for a PIN",
-              "consequence": "Right. Padlock or not, a page asking for your PIN is a scam.",
-              "outcome": "success"
-            }
-          ]
-        }
+      "prompt": "A page with a padlock asks for your card PIN. What do you do?",
+      "image": {
+        "src": "/illustrations/sso/spot-the-scam-quiz-padlock-pin.svg",
+        "alt": "A browser page with a padlock and the address cardcheck.example/verify. It shows a Your Bank logo and one box, Card PIN, with a Confirm button.",
+        "width": 340,
+        "height": 150
+      },
+      "options": [
+        { "id": "type-it", "text": "Type it: there's a padlock" },
+        { "id": "check-logo", "text": "Check the logo, then type it" },
+        { "id": "close", "text": "Close it: banks never ask this" }
       ],
-      "explanation": "A padlock only means **encrypted**. It doesn't tell you who runs the site, and a bank **never** asks for your card PIN."
+      "correctOptionId": "close",
+      "explanation": "A padlock only means scrambled on the way, a logo can be copied, and a real bank never asks for your PIN on a web page."
     },
     {
       "id": "q-addresses",
@@ -202,66 +150,18 @@
         "domain-owner",
         "lookalike-domain"
       ],
-      "prompt": "Really Your Bank's (`yourbank.example`)?",
+      "prompt": "Your Bank's real address is yourbank.example. Sort each address.",
       "bins": [
-        {
-          "id": "real",
-          "label": "Your Bank"
-        },
-        {
-          "id": "fake",
-          "label": "Not Your Bank"
-        }
+        { "id": "bank", "label": "Your Bank" },
+        { "id": "not-bank", "label": "Not Your Bank" }
       ],
       "items": [
-        {
-          "id": "sub",
-          "label": "cards.yourbank.example",
-          "bin": "real"
-        },
-        {
-          "id": "main",
-          "label": "yourbank.example/help",
-          "bin": "real"
-        },
-        {
-          "id": "nested",
-          "label": "yourbank.example.sign-in.example",
-          "bin": "fake"
-        },
-        {
-          "id": "look",
-          "label": "yourbank-login.example",
-          "bin": "fake"
-        }
+        { "id": "cards-sub", "label": "`cards.\u200byourbank.\u200bexample`", "bin": "bank" },
+        { "id": "help-page", "label": "`yourbank.\u200bexample\u200b/help`", "bin": "bank" },
+        { "id": "decoy", "label": "`yourbank.\u200bexample.\u200bsign-in.\u200bexample`", "bin": "not-bank" },
+        { "id": "lookalike", "label": "`yourbank-login.\u200bexample`", "bin": "not-bank" }
       ],
-      "explanation": "Only addresses ending in `yourbank.example` belong to Your Bank."
-    },
-    {
-      "id": "q-gift-cards",
-      "type": "multiple_choice",
-      "difficulty": "core",
-      "uses": [
-        "gift-cards-scam-payment",
-        "scam-text-signs"
-      ],
-      "prompt": "A message says you've won, and asks you to pay a fee in gift cards. What is it?",
-      "options": [
-        {
-          "id": "scam",
-          "text": "A scam: real prizes never cost anything to claim"
-        },
-        {
-          "id": "real",
-          "text": "A real prize: the small fee just covers postage"
-        },
-        {
-          "id": "forgot",
-          "text": "A competition win you've forgotten you entered"
-        }
-      ],
-      "correctOptionId": "scam",
-      "explanation": "Real prizes never cost money to claim, and gift cards are a favourite scam payment."
+      "explanation": "Only the name just before the ending counts, and it must be exactly yourbank."
     }
   ]
 }

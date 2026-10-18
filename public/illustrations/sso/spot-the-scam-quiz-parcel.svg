@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 230" width="340" height="230" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>A text thread headed Parcels: Missed delivery. Pay $2.50 within 1 hour: parcels-fee.example. Below, three choices: pay it; reply Which parcel?; check in the Parcels app.</title>
+  <rect x="4" y="4" width="332" height="116" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <circle cx="28" cy="28" r="14" fill="#24507f" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="28" y="34" font-size="16" font-weight="700" fill="#e6eef9" text-anchor="middle">P</text>
+  <text x="50" y="34" font-size="16" font-weight="700" fill="#e6eef9">Parcels</text>
+  <rect x="12" y="52" width="316" height="60" rx="12" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="22" y="76" font-size="16" font-weight="500" fill="#e6eef9">Missed delivery. Pay $2.50</text>
+  <text x="22" y="98" font-size="16" font-weight="500" fill="#e6eef9">within 1 hour: parcels-fee.example</text>
+  <rect x="4" y="128" width="108" height="98" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="30" y="140" width="56" height="36" rx="7" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <rect x="39" y="154" width="15" height="11" rx="2" fill="#ffb547"/>
+  <text x="58" y="210" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Pay it</text>
+  <rect x="116" y="128" width="108" height="98" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="150" y="138" width="40" height="22" rx="8" fill="#1d3d6e" stroke="#e6eef9" stroke-width="2"/>
+  <path d="M158 160l-4 7l10 -7" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="170" y="194" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Reply: Which</text>
+  <text x="170" y="213" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">parcel?</text>
+  <rect x="228" y="128" width="108" height="98" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="262" y="136" width="40" height="40" rx="10" fill="#1d3d6e" stroke="#8be3ff" stroke-width="1.5"/>
+  <path d="M270 148l12 -6l12 6v14l-12 6l-12 -6Z" fill="#24507f" stroke="#8be3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="282" y="194" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Check in the</text>
+  <text x="282" y="213" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Parcels app</text>
+</svg>

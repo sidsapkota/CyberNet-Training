@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 230" width="340" height="230" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>An email from Your School, it@yourschool-accounts.example. Subject: Account deleted TODAY. Hi Sam, sign in today, or your school account is deleted. Below, three choices: tap Sign in; reply Is this real?; a school building, open the site yourself.</title>
+  <rect x="2" y="2" width="336" height="116" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="14" y="24" font-size="16" font-weight="500" fill="#a3b6d2">From:</text>
+  <text x="60" y="24" font-size="16" font-weight="600" fill="#e6eef9">Your School</text>
+  <text x="14" y="44" font-size="16" font-weight="500" fill="#a3b6d2" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace">it@yourschool-accounts.example</text>
+  <text x="14" y="68" font-size="16" font-weight="700" fill="#e6eef9">Account deleted TODAY</text>
+  <text x="14" y="90" font-size="16" font-weight="500" fill="#e6eef9">Hi Sam, sign in today, or your</text>
+  <text x="14" y="110" font-size="16" font-weight="500" fill="#e6eef9">school account is deleted.</text>
+  <rect x="4" y="124" width="108" height="102" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="18" y="140" width="80" height="30" rx="7" fill="#00c2ff"/>
+  <text x="58" y="161" font-size="16" font-weight="700" fill="#061630" text-anchor="middle">Sign in</text>
+  <text x="58" y="210" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Tap Sign in</text>
+  <rect x="116" y="124" width="108" height="102" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <path d="M150 160l-12 -10l12 -10M138 150h24c10 0 16 6 16 16" fill="none" stroke="#e6eef9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="170" y="186" font-size="16" font-weight="500" fill="#a3b6d2" text-anchor="middle">Is this real?</text>
+  <text x="170" y="210" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Reply</text>
+  <rect x="228" y="124" width="108" height="102" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <path d="M258 154L282 136L306 154Z" fill="#24507f" stroke="#8be3ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="262" y="154" width="40" height="24" fill="#24507f" stroke="#8be3ff" stroke-width="2"/>
+  <rect x="277" y="162" width="10" height="16" fill="#1d3d6e" stroke="#8be3ff" stroke-width="1.5"/>
+  <path d="M282 136V126h10v5h-10" fill="none" stroke="#8be3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="282" y="199" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Open the site</text>
+  <text x="282" y="218" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">yourself</text>
+</svg>

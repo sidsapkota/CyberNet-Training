@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200" width="340" height="200" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>The address lights up from the right: .example is the ending, yourbank just before it is the owner, and login. in front is just a part of Your Bank's site.</title>
+  <rect x="10" y="12" width="80" height="40" rx="10" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="50" y="39" font-size="20" font-weight="700" fill="#a3b6d2" text-anchor="middle">login.</text>
+  <text x="50" y="80" font-size="16" font-weight="600" fill="#a3b6d2" text-anchor="middle">Part of it</text>
+  <rect x="96" y="12" width="128" height="40" rx="10" fill="#06304a" stroke="#00c2ff" stroke-width="2"/>
+  <text x="160" y="39" font-size="20" font-weight="700" fill="#e6eef9" text-anchor="middle">yourbank</text>
+  <text x="160" y="80" font-size="16" font-weight="600" fill="#00c2ff" text-anchor="middle">Owner</text>
+  <rect x="230" y="12" width="100" height="40" rx="10" fill="#1d3d6e" stroke="#ffb547" stroke-width="2"/>
+  <text x="280" y="39" font-size="20" font-weight="700" fill="#e6eef9" text-anchor="middle">.example</text>
+  <text x="280" y="80" font-size="16" font-weight="600" fill="#ffb547" text-anchor="middle">Ending</text>
+  <rect x="4" y="96" width="108" height="100" rx="10" fill="#24507f" stroke="#3ddc97" stroke-width="1.5"/>
+  <path d="M26 121.232L58 106L90 121.232Z" fill="#24507f" stroke="#8be3ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="38.2" y="123.136" width="6" height="21.896" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <rect x="49.400000000000006" y="123.136" width="6" height="21.896" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <rect x="60.6" y="123.136" width="6" height="21.896" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <rect x="71.80000000000001" y="123.136" width="6" height="21.896" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <rect x="26" y="145.984" width="64" height="7.6160000000000005" rx="2" fill="#24507f" stroke="#8be3ff" stroke-width="2"/>
+  <text x="58" y="184" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Your Bank</text>
+  <rect x="116" y="96" width="108" height="100" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="142" y="106" width="56" height="36" rx="7" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2"/>
+  <rect x="148" y="112" width="44" height="24" rx="3" fill="#1d2a3d"/>
+  <rect x="136" y="142" width="68" height="7" rx="3" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2"/>
+  <text x="170" y="166" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Someone</text>
+  <text x="170" y="185" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">called login</text>
+  <rect x="228" y="96" width="108" height="100" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="282" y="140" font-size="40" font-weight="700" fill="#a3b6d2" text-anchor="middle">?</text>
+  <text x="282" y="166" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Nobody</text>
+  <text x="282" y="185" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">can tell</text>
+</svg>

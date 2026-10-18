@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 220" width="340" height="220" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>The caller's laptop now says Hi, Sam: they're signed in to Sam's account. Sam's phone shows: New sign-in on another device.</title>
+  <rect x="4" y="4" width="222" height="58" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <text x="16" y="26" font-size="16" font-weight="700" fill="#e6eef9">Your Bank code:</text>
+  <text x="146" y="26" font-size="16" font-weight="700" fill="#e6eef9" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace">482 913</text>
+  <text x="16" y="48" font-size="16" font-weight="500" fill="#a3b6d2">Never share this code.</text>
+  <circle cx="300" cy="24" r="18" fill="#24507f" stroke="#8be3ff" stroke-width="2"/>
+  <g transform="translate(300 24) scale(0.9)">
+  <clipPath id="av-sam-300-24"><circle cx="0" cy="0" r="19"/></clipPath>
+  <g clip-path="url(#av-sam-300-24)">
+  <rect x="-14" y="8" width="28" height="20" rx="9" fill="#24507f"/>
+  <circle cx="0" cy="-2" r="9" fill="#b9784a"/>
+  <path d="M-9.4 -3A9.4 9.4 0 0 1 9.4 -3C5.8 -7 1.3 -6.4 -1.3 -8.3C-3.9 -6.4 -7 -6.4 -9.4 -3Z" fill="#1d1410"/>
+  </g>
+  </g>
+  <rect x="232" y="48" width="104" height="34" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="284" y="71" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">4, 8, 2…</text>
+  <rect x="4" y="108" width="108" height="108" rx="10" fill="#24507f" stroke="#ff7a7a" stroke-width="1.5"/>
+  <rect x="22" y="118" width="72" height="46" rx="7" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2"/>
+  <rect x="28" y="124" width="60" height="34" rx="3" fill="#1d3d6e"/>
+  <rect x="16" y="164" width="84" height="7" rx="3" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2"/>
+  <text x="58" y="140" font-size="16" font-weight="700" fill="#e6eef9" text-anchor="middle">Hi,</text>
+  <text x="58" y="158" font-size="16" font-weight="700" fill="#e6eef9" text-anchor="middle">Sam</text>
+  <text x="58" y="186" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Sign in</text>
+  <text x="58" y="205" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">as Sam</text>
+  <rect x="116" y="108" width="108" height="108" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="142" y="120" width="56" height="36" rx="7" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <rect x="151" y="134" width="15" height="11" rx="2" fill="#ffb547"/>
+  <rect x="150" y="128" width="44" height="20" rx="3" fill="none" stroke="#ff7a7a" stroke-width="2.5" transform="rotate(-12 172 138)"/>
+  <text x="170" y="186" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Stop the</text>
+  <text x="170" y="205" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">payment</text>
+  <rect x="228" y="108" width="108" height="108" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <path d="M264 128h28l-3 30h-22Z" fill="#1d3d6e" stroke="#8be3ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M260 128h36M274 124h8" fill="none" stroke="#8be3ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="278" y="151" font-size="16" font-weight="500" fill="#a3b6d2" text-anchor="middle" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace">482</text>
+  <text x="282" y="186" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Nothing:</text>
+  <text x="282" y="205" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">it's useless</text>
+  <rect x="39" y="78" width="262" height="26" rx="6" fill="#ff7a7a"/>
+  <text x="170" y="96.5" font-size="16" font-weight="600" fill="#061630" text-anchor="middle">New sign-in on another device</text>
+</svg>

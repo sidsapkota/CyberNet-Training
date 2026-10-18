@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" width="320" height="200" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>The same text, labelled. The sender name Parcels has a grey note: names can be faked. Pay a $1.95 fee: asks for money. Within 2 hours: rushing you. The link parcels-redelivery: fake link. Below, the real Parcels app with an arrow, check here: Hoodie on its way, nothing to pay.</title>
+  <rect x="2" y="2" width="316" height="134" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="16" y="28" font-size="16" font-weight="700" fill="#e6eef9">Parcels</text>
+  <rect x="143" y="10" width="169" height="26" rx="6" fill="#6f8fbd"/>
+  <text x="227.5" y="28.5" font-size="16" font-weight="600" fill="#061630" text-anchor="middle">Names can be faked</text>
+  <text x="16" y="60" font-size="16" font-weight="500" fill="#e6eef9">Pay a $1.95 fee</text>
+  <rect x="176" y="42" width="136" height="26" rx="6" fill="#ffb547"/>
+  <text x="244" y="60.5" font-size="16" font-weight="600" fill="#061630" text-anchor="middle">Asks for money</text>
+  <text x="16" y="92" font-size="16" font-weight="500" fill="#e6eef9">within 2 hours</text>
+  <rect x="202" y="74" width="110" height="26" rx="6" fill="#ffb547"/>
+  <text x="257" y="92.5" font-size="16" font-weight="600" fill="#061630" text-anchor="middle">Rushing you</text>
+  <text x="16" y="124" font-size="16" font-weight="500" fill="#e6eef9">parcels-redelivery</text>
+  <rect x="218" y="106" width="94" height="26" rx="6" fill="#ffb547"/>
+  <text x="265" y="124.5" font-size="16" font-weight="600" fill="#061630" text-anchor="middle">Fake link</text>
+  <rect x="14" y="146" width="48" height="48" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="2"/>
+  <path d="M24 158.96L37.92 152L51.839999999999996 158.96V175.2L37.92 182.16L24 175.2Z" fill="#24507f" stroke="#8be3ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M24 158.96L37.92 165.92L51.839999999999996 158.96M37.92 165.92V182.16" fill="none" stroke="#8be3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M68 170L94 170" fill="none" stroke="#00c2ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M85.9 173.9L94 170L85.9 166.1" fill="none" stroke="#00c2ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="100" y="164" font-size="16" font-weight="700" fill="#00c2ff">Parcels app: check here</text>
+  <text x="100" y="186" font-size="16" font-weight="600" fill="#3ddc97">Hoodie: nothing to pay</text>
+</svg>

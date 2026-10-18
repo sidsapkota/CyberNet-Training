@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200" width="340" height="200" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>One big address bar with a padlock: login.yourbank.example. Below, three choices: Your Bank; someone called login; nobody can tell.</title>
+  <rect x="4" y="6" width="332" height="52" rx="26" fill="#061630" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="22" y="29" width="14" height="11" rx="2.5" fill="#e6eef9"/>
+  <path d="M25 29V26.5A4 4 0 0 1 33 26.5V29" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="50" y="41" font-size="22" font-weight="600" fill="#e6eef9">login.yourbank.example</text>
+  <text x="170" y="84" font-size="16" font-weight="500" fill="#a3b6d2" text-anchor="middle">Who owns this page?</text>
+  <rect x="4" y="96" width="108" height="100" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <path d="M26 121.232L58 106L90 121.232Z" fill="#24507f" stroke="#8be3ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="38.2" y="123.136" width="6" height="21.896" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <rect x="49.400000000000006" y="123.136" width="6" height="21.896" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <rect x="60.6" y="123.136" width="6" height="21.896" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <rect x="71.80000000000001" y="123.136" width="6" height="21.896" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <rect x="26" y="145.984" width="64" height="7.6160000000000005" rx="2" fill="#24507f" stroke="#8be3ff" stroke-width="2"/>
+  <text x="58" y="184" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Your Bank</text>
+  <rect x="116" y="96" width="108" height="100" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="142" y="106" width="56" height="36" rx="7" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2"/>
+  <rect x="148" y="112" width="44" height="24" rx="3" fill="#1d2a3d"/>
+  <rect x="136" y="142" width="68" height="7" rx="3" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2"/>
+  <text x="170" y="166" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Someone</text>
+  <text x="170" y="185" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">called login</text>
+  <rect x="228" y="96" width="108" height="100" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="282" y="140" font-size="40" font-weight="700" fill="#a3b6d2" text-anchor="middle">?</text>
+  <text x="282" y="166" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Nobody</text>
+  <text x="282" y="185" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">can tell</text>
+</svg>

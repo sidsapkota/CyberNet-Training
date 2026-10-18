@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 150" width="340" height="150" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>A browser page with a padlock and the address cardcheck.example/verify. It shows a Your Bank logo and one box, Card PIN, with a Confirm button.</title>
+  <rect x="4" y="4" width="332" height="142" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <rect x="10" y="11" width="320" height="28" rx="14" fill="#061630" stroke="#6f8fbd" stroke-width="1"/>
+  <rect x="18" y="22" width="14" height="11" rx="2.5" fill="#e6eef9"/>
+  <path d="M21 22V19.5A4 4 0 0 1 29 19.5V22" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="40" y="31" font-size="16" font-weight="500" fill="#e6eef9">cardcheck.example/verify</text>
+  <rect x="16" y="52" width="26" height="26" rx="6" fill="#6f8fbd"/>
+  <path d="M21 73L29 58L37 73Z" fill="#061630"/>
+  <text x="52" y="72" font-size="16" font-weight="700" fill="#e6eef9">Your Bank</text>
+  <rect x="16" y="94" width="200" height="36" rx="6" fill="#061630" stroke="#6f8fbd" stroke-width="1.2"/>
+  <text x="28" y="118" font-size="16" font-weight="500" fill="#a3b6d2">Card PIN</text>
+  <rect x="226" y="94" width="98" height="36" rx="6" fill="#6f8fbd"/>
+  <text x="275" y="118" font-size="16" font-weight="700" fill="#061630" text-anchor="middle">Confirm</text>
+</svg>

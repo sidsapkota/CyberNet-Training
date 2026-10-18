@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 156" width="340" height="156" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Your phone shows a page that looks exactly like Your Bank's sign-in, with its address cut off after the first few letters. The password box is empty, and a key pop-up says: No saved passwords for this site.</title>
+  <rect x="4" y="4" width="332" height="148" rx="14" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <rect x="14" y="17" width="14" height="11" rx="2.5" fill="#e6eef9"/>
+  <path d="M17 17V14.5A4 4 0 0 1 25 14.5V17" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="34" y="11" width="160" height="26" rx="13" fill="#061630" stroke="#6f8fbd" stroke-width="1"/>
+  <text x="44" y="30" font-size="16" font-weight="500" fill="#e6eef9">yourbank.exa…</text>
+  <rect x="204" y="11" width="26" height="26" rx="6" fill="#6f8fbd"/>
+  <path d="M209 32L217 17L225 32Z" fill="#061630"/>
+  <text x="236" y="30" font-size="16" font-weight="700" fill="#e6eef9">Your Bank</text>
+  <rect x="16" y="46" width="308" height="30" rx="6" fill="#061630" stroke="#00c2ff" stroke-width="1.5"/>
+  <text x="28" y="67" font-size="16" font-weight="500" fill="#a3b6d2">Password</text>
+  <rect x="40" y="86" width="284" height="56" rx="10" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <path d="M60 84l8 -8l8 8" fill="#24507f" stroke="#8be3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M62 85h12" fill="none" stroke="#24507f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <g transform="translate(62 114) scale(0.8)">
+  <circle cx="0" cy="0" r="7" fill="none" stroke="#a3b6d2" stroke-width="3.5"/>
+  <path d="M7 0H24M18 0V6M23 0V5" fill="none" stroke="#a3b6d2" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="96" y="110" font-size="16" font-weight="600" fill="#e6eef9">No saved passwords</text>
+  <text x="96" y="131" font-size="16" font-weight="500" fill="#a3b6d2">for this site</text>
+</svg>

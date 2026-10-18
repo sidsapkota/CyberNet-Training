@@ -192,7 +192,7 @@ describe("real content in /content", () => {
     const course = loadContent().courses.find((c) => c.id === "stay-safe-online");
     expect(course?.modules.map((m) => m.lessons.map((l) => l.id))).toEqual([
       ["strong-passwords", "one-password-each", "two-step-sign-in", "strongest-lock", "lock-your-accounts-quiz"],
-      ["phishing-emails", "scam-texts-and-calls", "fake-websites", "spot-the-scam-quiz"],
+      ["phishing-emails", "scam-texts-and-calls", "scam-calls", "fake-websites", "spot-the-scam-quiz"],
       ["your-digital-footprint", "apps-and-wi-fi", "guard-your-privacy-quiz"],
       ["signs-of-a-hack", "deepfake-scams", "getting-help", "stay-safe-online-final"],
     ]);
@@ -262,7 +262,7 @@ describe("real content in /content", () => {
   it("teaches before testing: every drawn part is explored before a card tests it", () => {
     // These scenes show their own text on screen (file names; the lines of an email, a text or a
     // web page), so they need no introduction. Each clue they test is taught in an explainer first.
-    const selfLabelled = new Set(["file-browser", "email", "text-message", "fake-website", "home-screen", "sign-in-options", "sign-in"]);
+    const selfLabelled = new Set(["file-browser", "email", "email-frozen-card", "email-payment", "text-message", "text-message-tolls", "fake-website", "phone-call", "home-screen", "sign-in-options", "sign-in"]);
     const { courses, lessons } = loadContent();
     for (const course of courses) {
       const explored = new Map<string, Set<string>>();
