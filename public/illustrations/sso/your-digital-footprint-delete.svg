@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 180" width="340" height="180" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Sam's phone shows the skateboard post, and a finger is on a red Delete button. Around it, four friends' phones are dimmed, each with a question mark.</title>
+  <path d="M130 40L74 40" fill="none" stroke="#8be3ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 6" opacity="0.45"/>
+  <path d="M210 40L266 40" fill="none" stroke="#8be3ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 6" opacity="0.45"/>
+  <path d="M130 136L74 136" fill="none" stroke="#8be3ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 6" opacity="0.45"/>
+  <path d="M210 136L266 136" fill="none" stroke="#8be3ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 6" opacity="0.45"/>
+  <rect x="34" y="8" width="40" height="64" rx="8" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2" opacity="0.45"/>
+  <rect x="48" y="13" width="12" height="3" rx="1.5" fill="#6f8fbd" opacity="0.45"/>
+  <circle cx="54" cy="42" r="12" fill="#061630" stroke="#a3b6d2" stroke-width="2"/>
+  <text x="54" y="48" font-size="18" font-weight="700" fill="#e6eef9" text-anchor="middle">?</text>
+  <rect x="266" y="8" width="40" height="64" rx="8" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2" opacity="0.45"/>
+  <rect x="280" y="13" width="12" height="3" rx="1.5" fill="#6f8fbd" opacity="0.45"/>
+  <circle cx="286" cy="42" r="12" fill="#061630" stroke="#a3b6d2" stroke-width="2"/>
+  <text x="286" y="48" font-size="18" font-weight="700" fill="#e6eef9" text-anchor="middle">?</text>
+  <rect x="34" y="104" width="40" height="64" rx="8" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2" opacity="0.45"/>
+  <rect x="48" y="109" width="12" height="3" rx="1.5" fill="#6f8fbd" opacity="0.45"/>
+  <circle cx="54" cy="138" r="12" fill="#061630" stroke="#a3b6d2" stroke-width="2"/>
+  <text x="54" y="144" font-size="18" font-weight="700" fill="#e6eef9" text-anchor="middle">?</text>
+  <rect x="266" y="104" width="40" height="64" rx="8" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2" opacity="0.45"/>
+  <rect x="280" y="109" width="12" height="3" rx="1.5" fill="#6f8fbd" opacity="0.45"/>
+  <circle cx="286" cy="138" r="12" fill="#061630" stroke="#a3b6d2" stroke-width="2"/>
+  <text x="286" y="144" font-size="18" font-weight="700" fill="#e6eef9" text-anchor="middle">?</text>
+  <rect x="125" y="6" width="90" height="168" rx="14" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <rect x="156.5" y="11" width="27" height="3" rx="1.5" fill="#6f8fbd"/>
+  <g>
+  <rect x="135" y="22" width="70" height="56" rx="2.9166666666666665" fill="#16305a"/>
+  <rect x="135" y="58.96" width="70" height="19.040000000000003" fill="#2a4466"/>
+  <rect x="147.6" y="47.760000000000005" width="44.800000000000004" height="6.72" rx="3.36" fill="#ffb547"/>
+  <circle cx="156" cy="58.96" r="4.2" fill="#e6eef9"/>
+  <circle cx="184" cy="58.96" r="4.2" fill="#e6eef9"/>
+  </g>
+  <text x="170" y="102" font-size="16" font-weight="500" fill="#a3b6d2" text-anchor="middle">1 hour ago</text>
+  <rect x="135" y="116" width="70" height="32" rx="8" fill="#ff7a7a"/>
+  <text x="170" y="137" font-size="16" font-weight="600" fill="#061630" text-anchor="middle">Delete</text>
+  <rect x="184.5" y="136" width="7" height="16" rx="3.5" fill="#e6eef9" stroke="#061630" stroke-width="1.5"/>
+  <rect x="183" y="146" width="18" height="16" rx="6" fill="#e6eef9" stroke="#061630" stroke-width="1.5"/>
+  <rect x="184.5" y="137" width="7" height="13" rx="3.5" fill="#e6eef9"/>
+</svg>

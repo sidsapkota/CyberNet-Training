@@ -36,6 +36,8 @@ export interface SimulatorModel<P> {
   id: string;
   /** One line for authors: what the model simulates. */
   summary: string;
+  /** Has a drawing (`../pictures.tsx`) for its list output, so a card can show it as a `picture` output. */
+  picture?: boolean;
   params: z.ZodType<P>;
   inputs(params: P): Record<string, InputSpec>;
   outputs(params: P): Record<string, OutputSpec>;

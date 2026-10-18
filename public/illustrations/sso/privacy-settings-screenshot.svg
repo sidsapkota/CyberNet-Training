@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 180" width="340" height="180" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Left: your settings with Private account switched on and a padlock. Right: a follower's phone with your post, a white screenshot flash and a camera badge, and a Share arrow lifting off.</title>
+  <rect x="4" y="30" width="136" height="120" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="18" y="60" font-size="16" font-weight="700" fill="#e6eef9">Private</text>
+  <text x="18" y="82" font-size="16" font-weight="700" fill="#e6eef9">account</text>
+  <rect x="18" y="98" width="36" height="20" rx="10" fill="#00c2ff" stroke="#8be3ff" stroke-width="1.5"/>
+  <circle cx="44" cy="108" r="7" fill="#e6eef9"/>
+  <path d="M107 104V100A5 5 0 0 1 117 100V104" fill="none" stroke="#3ddc97" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="104" y="104" width="16" height="13" rx="2.5" fill="#3ddc97"/>
+  <rect x="168" y="6" width="96" height="168" rx="14" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <rect x="201.6" y="11" width="28.799999999999997" height="3" rx="1.5" fill="#6f8fbd"/>
+  <rect x="176" y="24" width="80" height="66" rx="4" fill="#e6eef9"/>
+  <g>
+  <rect x="181" y="29" width="70" height="56" rx="2.9166666666666665" fill="#16305a"/>
+  <rect x="181" y="65.96000000000001" width="70" height="19.040000000000003" fill="#2a4466"/>
+  <rect x="193.6" y="54.760000000000005" width="44.800000000000004" height="6.72" rx="3.36" fill="#ffb547"/>
+  <circle cx="202" cy="65.96000000000001" r="4.2" fill="#e6eef9"/>
+  <circle cx="230" cy="65.96000000000001" r="4.2" fill="#e6eef9"/>
+  </g>
+  <circle cx="254" cy="26" r="11" fill="#061630" stroke="#ffb547" stroke-width="1.5"/>
+  <path d="M247 23h3l1.5 -2.5h5l1.5 2.5h3v8h-14ZM254 30A2.5 2.5 0 1 0 254 25A2.5 2.5 0 1 0 254 30Z" fill="none" stroke="#ffb547" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="216" y="116" font-size="16" font-weight="600" fill="#a3b6d2" text-anchor="middle">Your post</text>
+  <path d="M266 90Q296 86 306 60" fill="none" stroke="#8be3ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 5"/>
+  <circle cx="312" cy="48" r="11" fill="#061630" stroke="#8be3ff" stroke-width="1.5"/>
+  <path d="M307 52Q308 43 317 43M313 39l4 4l-4 4" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -4,7 +4,7 @@
   { "id": "stolen-password", "hook": "One text can tell you someone has your password.", "lesson": "two-step-sign-in", "card": "the-code-text" },
   { "id": "parcel-fee", "hook": "A text says your parcel is stuck. Pay $1.95?", "lesson": "scam-texts-and-calls", "card": "pay-the-fee" },
   { "id": "fake-bank-address", "hook": "Fake bank sites look perfect. The address doesn't.", "lesson": "fake-websites", "card": "bank-or-not" },
-  { "id": "cafe-wi-fi", "hook": "Free café Wi-Fi. Then it asks for something odd.", "lesson": "apps-and-wi-fi", "card": "wi-fi-wants-password" },
+  { "id": "cafe-wi-fi", "hook": "Two networks wear the café's name. Only one is real.", "lesson": "public-wi-fi", "card": "ask-the-staff" },
   { "id": "torch-wants-contacts", "hook": "Why would a torch app want your contacts?", "lesson": "apps-and-wi-fi", "card": "needs-it" },
   { "id": "already-hacked", "hook": "Your account could be taken over right now. Spot the signs.", "lesson": "signs-of-a-hack", "card": "hacked-or-normal" },
   { "id": "mum-on-the-phone", "hook": "It sounds exactly like Mum. It isn't her.", "lesson": "deepfake-scams", "card": "safe-word-check", "rare": true },

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 196" width="320" height="196" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>The Wi-Fi list, labelled. CornerCafe, from the café's Wi-Fi box, is public Wi-Fi. CornerCafe_Free, from someone's laptop, is fake Wi-Fi.</title>
+  <g>
+  <rect x="4" y="6" width="312" height="36" rx="8" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="16" y="30" font-size="16" font-weight="600" fill="#e6eef9">CornerCafe</text>
+  <rect x="282" y="28" width="4" height="4" rx="1" fill="#e6eef9" opacity="1"/>
+  <rect x="288" y="24" width="4" height="8" rx="1" fill="#e6eef9" opacity="1"/>
+  <rect x="294" y="20" width="4" height="12" rx="1" fill="#e6eef9" opacity="1"/>
+  <rect x="300" y="16" width="4" height="16" rx="1" fill="#6f8fbd" opacity="0.5"/>
+  </g>
+  <rect x="164" y="12" width="96" height="24" rx="12" fill="#061630" stroke="#3ddc97" stroke-width="1.5"/>
+  <text x="212" y="29" font-size="16" font-weight="600" fill="#3ddc97" text-anchor="middle">public Wi-Fi</text>
+  <g>
+  <rect x="4" y="48" width="312" height="36" rx="8" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="16" y="72" font-size="16" font-weight="600" fill="#e6eef9">CornerCafe_Free</text>
+  <rect x="282" y="70" width="4" height="4" rx="1" fill="#e6eef9" opacity="1"/>
+  <rect x="288" y="66" width="4" height="8" rx="1" fill="#e6eef9" opacity="1"/>
+  <rect x="294" y="62" width="4" height="12" rx="1" fill="#e6eef9" opacity="1"/>
+  <rect x="300" y="58" width="4" height="16" rx="1" fill="#e6eef9" opacity="1"/>
+  </g>
+  <rect x="174" y="54" width="86" height="24" rx="12" fill="#061630" stroke="#ff7a7a" stroke-width="1.5"/>
+  <text x="217" y="71" font-size="16" font-weight="600" fill="#ff7a7a" text-anchor="middle">fake Wi-Fi</text>
+  <path d="M60 42V96" fill="none" stroke="#3ddc97" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4"/>
+  <path d="M150 84Q200 110 236 118" fill="none" stroke="#ff7a7a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4"/>
+  <rect x="14" y="134" width="112" height="26" rx="3" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <g>
+  <path d="M52 120L48 100M78 120L82 100" fill="none" stroke="#e6eef9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="46" y="118" width="38" height="16" rx="4" fill="#24507f" stroke="#e6eef9" stroke-width="1.5"/>
+  <circle cx="56" cy="126" r="2" fill="#3ddc97"/>
+  <circle cx="64" cy="126" r="2" fill="#3ddc97"/>
+  </g>
+  <text x="70" y="184" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Café's Wi-Fi box</text>
+  <rect x="186" y="156" width="110" height="5" rx="2" fill="#6f8fbd"/>
+  <g>
+  <path d="M216 152L222 122H258L264 152Z" fill="#24507f" stroke="#e6eef9" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M210 154H270" fill="none" stroke="#e6eef9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="240" y="184" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Someone's laptop</text>
+</svg>

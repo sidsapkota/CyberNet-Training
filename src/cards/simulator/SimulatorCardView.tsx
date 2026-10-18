@@ -8,6 +8,7 @@ import { CardStatusNote } from "../CardStatusNote";
 import type { CardComponentProps } from "../types";
 import { initialValue, runSimulator, sliderRange } from "./grade";
 import type { ListItem, OutputValue } from "./models/types";
+import { SimulatorPicture } from "./pictures";
 import type { SimulatorAnswer, SimulatorCard, SimulatorControl, SimulatorOutput } from "./schema";
 
 /* ── Outputs ───────────────────────────────────────────────────────────────────────────── */
@@ -166,6 +167,7 @@ function ControlView({
   locked,
   onChange,
   compact = false,
+  waiting = false,
 }: {
   card: SimulatorCard;
   control: SimulatorControl;
@@ -174,6 +176,8 @@ function ControlView({
   onChange: (v: number | boolean) => void;
   /** Half-width switch on phones: the On/Off word is for screen readers only there (the knob shows it). */
   compact?: boolean;
+  /** A button whose `requires` button hasn't been pressed yet: shown dim and disabled. */
+  waiting?: boolean;
 }) {
   const id = useId();
   if (control.kind === "toggle") {
@@ -231,10 +235,14 @@ function ControlView({
     <button
       type="button"
       data-keyboard-passthrough
-      disabled={locked || done}
+      disabled={locked || done || waiting}
       onClick={() => onChange(true)}
       className={`flex min-h-12 w-full items-center justify-between gap-3 rounded-control border px-3 text-left text-small font-semibold ${
-        done ? "border-line bg-surface-raised text-ink-faint" : "border-line-strong bg-surface text-ink hover:border-accent-ink hover:text-accent-ink"
+        done
+          ? "border-line bg-surface-raised text-ink-faint"
+          : waiting
+            ? "cursor-default border-dashed border-line bg-surface text-ink-faint"
+            : "border-line-strong bg-surface text-ink hover:border-accent-ink hover:text-accent-ink"
       }`}
     >
       {done ? (control.doneLabel ?? `${control.label}: done`) : control.label}
@@ -249,7 +257,8 @@ export function SimulatorCardView({ card, answer, onAnswerChange, status }: Card
   const locked = status !== "answering";
   const outputs = runSimulator(card, answer);
   const device = card.outputs.filter((o) => o.kind === "device");
-  const others = card.outputs.filter((o) => o.kind !== "device");
+  const pictures = card.outputs.filter((o) => o.kind === "picture");
+  const others = card.outputs.filter((o) => o.kind !== "device" && o.kind !== "picture");
   const tiles = others.filter((o) => o.kind !== "list");
   // Three or more switches or buttons sit two to a row on phones; sliders keep the full width.
   // A control for one row of a list output sits on that row, not below: `end-<row>` (a button, the
@@ -314,6 +323,10 @@ export function SimulatorCardView({ card, answer, onAnswerChange, status }: Card
       <div className="mt-3 grid gap-3 sm:mt-5 sm:grid-cols-2 sm:gap-4">
         {/* On phones the device sits beside the other outputs, so the controls stay on screen. */}
         <section aria-label="What's happening" className={listBeside ? "sm:space-y-2.5" : device.length > 0 ? "flex items-start gap-3 sm:block sm:space-y-2.5" : "space-y-2.5"}>
+          {pictures.map((o) => {
+            const value = outputs[o.id];
+            return Array.isArray(value) ? <SimulatorPicture key={o.id} modelId={card.model} params={card.params} items={value} label={o.label} /> : null;
+          })}
           {device.map((o) => (
             <OutputView key={o.id} output={o} value={outputs[o.id]} statusOnlyOnPhones={listBeside} />
           ))}
@@ -354,6 +367,7 @@ export function SimulatorCardView({ card, answer, onAnswerChange, status }: Card
                 locked={locked}
                 onChange={(v) => onAnswerChange({ ...answer, [control.id]: v })}
                 compact={compact}
+                waiting={control.kind === "button" && Boolean(control.requires) && answer[control.requires!] !== true}
               />
             ))}
           </section>

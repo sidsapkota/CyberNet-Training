@@ -55,7 +55,7 @@ const MIN_HEIGHT = 150;
  * unreadable and their parts too small to tap apart. They grow up to READABLE_MAX when there's room.
  * A card using one that doesn't fit must be split (the fit audit lists it).
  */
-const READABLE = new Set<SceneId>(["file-browser", "email", "text-message", "fake-website", "home-screen", "sign-in-options", "sign-in"]);
+const READABLE = new Set<SceneId>(["file-browser", "email", "text-message", "fake-website", "home-screen", "sign-in-options", "sign-in", "social-post", "cafe"]);
 const READABLE_MAX = 1.25;
 /** Room kept under the scene: the page's bottom padding (the hint and Back live in the footer). */
 const BELOW = 28;

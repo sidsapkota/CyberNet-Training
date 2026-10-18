@@ -2,291 +2,205 @@
   "id": "your-digital-footprint",
   "kind": "lesson",
   "title": "Your Digital Footprint",
-  "about": "What to keep private online, and the privacy settings that help.",
+  "about": "Your posts can last, so keep out what finds you or unlocks you.",
   "order": 1,
   "icon": "footprints",
+  "blueprint": "1.1",
   "cards": [
     {
-      "id": "share-or-private",
-      "type": "sort_bins",
-      "difficulty": "core",
-      "uses": [],
-      "prompt": "You fill in a new profile. Share, or keep private?",
-      "bins": [
-        {
-          "id": "share",
-          "label": "Fine to share"
-        },
-        {
-          "id": "private",
-          "label": "Keep it private"
-        }
-      ],
-      "items": [
-        {
-          "id": "band",
-          "label": "Favourite band",
-          "bin": "share"
-        },
-        {
-          "id": "drawing",
-          "label": "Your drawing",
-          "bin": "share"
-        },
-        {
-          "id": "address",
-          "label": "Home address",
-          "bin": "private"
-        },
-        {
-          "id": "phone",
-          "label": "Phone number",
-          "bin": "private"
-        }
-      ],
-      "explanation": "Interests and things you make are fine to share. Your address and phone number help strangers find you, so keep them private.",
-      "hint": "Could a stranger use it to find where you live?",
-      "nudge": "Look again: could it show where you live or your number?"
-    },
-    {
-      "id": "meet-footprint",
-      "type": "reveal",
+      "id": "post-and-spread",
+      "type": "simulator",
+      "mode": "play",
       "difficulty": "core",
       "teaches": [
-        "digital-footprint"
+        "posts-can-be-copied"
       ],
-      "show": {
-        "kind": "term",
-        "term": "digital-footprint"
-      },
-      "sentence": "Your **digital footprint** is the trail of everything you post and do online."
+      "uses": [],
+      "prompt": "Sam's posting a skateboard photo. **Tap Post**, then see what friends can do.",
+      "model": "post-spread",
+      "params": {},
+      "controls": [
+        {
+          "id": "post",
+          "kind": "button",
+          "label": "Post",
+          "doneLabel": "Posted"
+        },
+        {
+          "id": "share",
+          "kind": "button",
+          "label": "Jo: Share",
+          "doneLabel": "Jo shared it",
+          "requires": "post"
+        },
+        {
+          "id": "screenshot",
+          "kind": "button",
+          "label": "Mo: Screenshot",
+          "doneLabel": "Mo saved it",
+          "requires": "post"
+        }
+      ],
+      "outputs": [
+        {
+          "id": "phones",
+          "kind": "picture",
+          "label": "Sam's post"
+        }
+      ],
+      "playChanges": 2,
+      "explanation": "Once it's posted, friends can share it on or save a copy."
     },
     {
       "id": "delete-an-hour-later",
       "type": "multiple_choice",
       "difficulty": "core",
+      "predict": true,
+      "play": "predict",
       "uses": [
-        "digital-footprint"
+        "posts-can-be-copied"
       ],
-      "prompt": "You post a photo, then delete it an hour later. What happens?",
+      "prompt": "An hour later, Sam deletes the post. **What's left?**",
+      "image": {
+        "src": "/illustrations/sso/your-digital-footprint-delete.svg",
+        "alt": "Sam's phone shows the skateboard post, and a finger is on a red Delete button. Around it, four friends' phones are dimmed, each with a question mark.",
+        "width": 340,
+        "height": 180,
+        "revealSrc": "/illustrations/sso/your-digital-footprint-delete-reveal.svg",
+        "revealAlt": "Sam's phone now says Post deleted. Two friends' phones still show the photo: one tagged Shared, one tagged Saved with a camera. The other two are blank."
+      },
       "options": [
         {
-          "id": "copies-live-on",
-          "text": "Copies may live on: someone could have saved it"
-        },
-        {
           "id": "gone-everywhere",
-          "text": "It's gone everywhere, as if you never posted it",
-          "nudge": "Deleting removes your copy. In that hour, anyone could have taken a screenshot."
+          "text": "Nothing, anywhere"
         },
         {
-          "id": "gone-if-no-likes",
-          "text": "It's gone, as long as nobody liked or commented",
-          "nudge": "Saving a photo or taking a screenshot leaves no like or comment behind."
+          "id": "copies-live-on",
+          "text": "Friends' saved copies"
+        },
+        {
+          "id": "only-likes",
+          "text": "Only the likes"
         }
       ],
       "correctOptionId": "copies-live-on",
-      "explanation": "Deleting removes it from your page, but anyone could have screenshotted or saved it. Your digital footprint can last.",
-      "hint": "In that hour, what could someone else have done with the photo?"
+      "explanation": "Deleting removes Sam's copy, but friends saved and shared it in that hour."
     },
     {
-      "id": "meet-security-question",
-      "type": "reveal",
+      "id": "meet-footprint",
+      "type": "explainer",
       "difficulty": "core",
       "teaches": [
-        "security-question"
+        "digital-footprint"
       ],
-      "show": {
-        "kind": "term",
-        "term": "security-question"
-      },
-      "sentence": "A **security question** (like your first pet) can reset an account, so keep its answer private."
+      "title": "Your digital footprint",
+      "body": "Everything you post adds to your **digital footprint**: the trail you leave online. Copies can last, even after you delete.",
+      "image": {
+        "src": "/illustrations/sso/your-digital-footprint-named.svg",
+        "alt": "The same picture, labelled. A dotted trail of small footprints runs from Sam's phone, which says Post deleted, to the friends' phones still holding the photo: one Shared, one Saved. The trail is labelled digital footprint.",
+        "width": 320,
+        "height": 192
+      }
+    },
+    {
+      "id": "front-steps-photo",
+      "type": "hotspot",
+      "difficulty": "core",
+      "teaches": [
+        "keep-locating-info-private"
+      ],
+      "uses": [
+        "digital-footprint"
+      ],
+      "prompt": "Sam took this photo on the front steps at home. **Tap the 2 things** that show where Sam lives.",
+      "scene": "social-post",
+      "mode": "tap",
+      "targets": [
+        "post-letterbox",
+        "post-street-sign"
+      ],
+      "explanation": "A house number and a street name lead a stranger straight to Sam's door.",
+      "nudge": "Imagine a stranger trying to walk to this house: what would help them?",
+      "showAnswer": "The letterbox and the street sign: together they're Sam's address."
     },
     {
       "id": "band-name-quiz",
-      "type": "scenario",
+      "type": "multiple_choice",
       "difficulty": "core",
-      "uses": [
+      "play": "consequence",
+      "teaches": [
         "security-question"
       ],
-      "prompt": "A fun quiz is going around on social media.",
-      "start": "start",
-      "steps": [
+      "uses": [
+        "keep-locating-info-private"
+      ],
+      "prompt": "A fun quiz asks for your first pet and your street. **Tap what you'd do.**",
+      "image": {
+        "src": "/illustrations/sso/your-digital-footprint-quiz.svg",
+        "alt": "A phone shows two screens. Top: a post from QuizTime with a star: Pop star name = first pet + street! Two replies: Biscuit Wattle and Mochi Hill. Bottom: your account's Forgot password? screen, asking the security question: first pet's name?",
+        "width": 340,
+        "height": 180,
+        "revealSrc": "/illustrations/sso/your-digital-footprint-quiz-reveal.svg",
+        "revealAlt": "The quiz post is scrolled past, with no reply. Below, the Forgot password? screen still asks for the first pet's name, and a green padlock says Still locked."
+      },
+      "options": [
         {
-          "id": "start",
-          "text": "**\"Find your pop star name! It's your first pet plus your street. Share yours below!\"** What do you do?",
-          "choices": [
-            {
-              "id": "share",
-              "text": "Share it. It's just a bit of fun",
-              "consequence": "You just shared answers to two security questions. That can help someone reset your accounts.",
-              "outcome": "fail"
-            },
-            {
-              "id": "skip",
-              "text": "Scroll past without answering",
-              "consequence": "Nothing shared. Quizzes like this are sometimes built to collect those exact answers.",
-              "outcome": "success"
-            }
-          ]
+          "id": "street-only",
+          "text": "Reply with the street only",
+          "nudge": "Could a street name help a stranger find someone?"
+        },
+        {
+          "id": "pet-only",
+          "text": "Reply with the pet only",
+          "nudge": "Look at the bottom screen: what does your account ask?"
+        },
+        {
+          "id": "skip",
+          "text": "Scroll past, reply with nothing"
         }
       ],
-      "explanation": "Fun quizzes can collect security question answers like your first pet or street. Enjoy them without posting the answers.",
-      "hint": "Where else have you been asked your first pet or street?"
-    },
-    {
-      "id": "match-settings",
-      "type": "match_pairs",
-      "difficulty": "core",
-      "teaches": [
-        "privacy-settings"
-      ],
-      "uses": [],
-      "prompt": "Match each privacy setting to what it does.",
-      "pairs": [
-        {
-          "id": "private",
-          "left": "Private account",
-          "right": "Only followers see posts"
-        },
-        {
-          "id": "messages",
-          "left": "Messages from friends only",
-          "right": "Strangers can't message"
-        },
-        {
-          "id": "location",
-          "left": "Location sharing off",
-          "right": "Nobody sees where you are"
-        },
-        {
-          "id": "tags",
-          "left": "Tag review",
-          "right": "You approve tagged photos"
-        }
-      ],
-      "explanation": "Each setting controls one thing: who sees your posts, who can message you, your location, or your photos.",
-      "hint": "What does each control: posts, messages, location or photos?",
-      "nudge": "Go through each again: who does it keep out, or what does it hide?"
+      "correctOptionId": "skip",
+      "explanation": "Your street can find you, and your first pet can unlock a password reset.",
+      "showAnswer": "Scroll past: the street finds you and the first pet unlocks the reset."
     },
     {
       "id": "post-while-away",
-      "type": "scenario",
-      "difficulty": "core",
-      "uses": [],
-      "prompt": "Mia is on holiday and wants to post her beach photos.",
-      "start": "start",
-      "steps": [
-        {
-          "id": "start",
-          "text": "She could post now, or wait until she's home. Which is safer?",
-          "choices": [
-            {
-              "id": "now",
-              "text": "Post now: the photos look great",
-              "consequence": "Posting while away shows her home is empty, and where she is.",
-              "outcome": "fail"
-            },
-            {
-              "id": "wait",
-              "text": "Wait until she's home to post",
-              "consequence": "Smart. The memories keep, and nobody learns her house is empty.",
-              "outcome": "success"
-            }
-          ]
-        }
-      ],
-      "explanation": "Holiday posts tell people where you are, and that you're not home. Share them once you're back.",
-      "hint": "What does a holiday photo say about where she is, and her home?"
-    },
-    {
-      "id": "meet-block-report",
-      "type": "reveal",
+      "type": "multiple_choice",
       "difficulty": "core",
       "teaches": [
-        "block-and-report",
-        "trusted-adult"
+        "post-when-home"
       ],
-      "show": {
-        "kind": "icon",
-        "icon": "shield-check"
-      },
-      "sentence": "In any app you can **block** and **report** someone, and you can always tell a trusted adult."
-    },
-    {
-      "id": "friendly-stranger",
-      "type": "scenario",
-      "difficulty": "core",
       "uses": [
-        "block-and-report",
-        "trusted-adult"
+        "digital-footprint"
       ],
-      "prompt": "A new friend from a game seems really nice.",
-      "start": "start",
-      "steps": [
+      "prompt": "You're on a beach holiday with a great photo. **Tap when to post it.**",
+      "image": {
+        "src": "/illustrations/sso/your-digital-footprint-beach.svg",
+        "alt": "Your phone with a draft post: a sunny beach photo with a sandcastle, no people and no place names. The clock says 2:15 pm, and there's a Post button.",
+        "width": 340,
+        "height": 180,
+        "revealSrc": "/illustrations/sso/your-digital-footprint-beach-reveal.svg",
+        "revealAlt": "The same beach photo, posted with a tag: Posted from home. Beside it, your house with its lights on and a green tick."
+      },
+      "options": [
         {
-          "id": "start",
-          "text": "After a while they ask: **\"What school do you go to? Send a photo!\"** What now?",
-          "choices": [
-            {
-              "id": "send",
-              "text": "Send it. They've been really nice",
-              "consequence": "Being friendly online doesn't prove who someone is. A school and photo help them find you.",
-              "outcome": "fail"
-            },
-            {
-              "id": "safe",
-              "text": "Send nothing, block and report, and tell an adult",
-              "consequence": "Exactly right. You're not in trouble, and telling someone keeps you safe.",
-              "outcome": "success"
-            }
-          ]
+          "id": "now",
+          "text": "Right now, while it's sunny",
+          "nudge": "The photo shows no address, but a post says something about right now: what?"
+        },
+        {
+          "id": "tonight",
+          "text": "Tonight, with no caption",
+          "nudge": "Tonight you're still away: what does any post say about right now?"
+        },
+        {
+          "id": "wait",
+          "text": "When you're back home"
         }
       ],
-      "explanation": "Keep your school, photos and location from people you only know online. Block, report and tell a trusted adult.",
-      "hint": "Is a school and a photo stuff that finds you? What can you always do?"
-    },
-    {
-      "id": "username-check",
-      "type": "sort_bins",
-      "difficulty": "challenge",
-      "uses": [],
-      "prompt": "Safe username, or gives too much away?",
-      "bins": [
-        {
-          "id": "safe",
-          "label": "Safe"
-        },
-        {
-          "id": "too-much",
-          "label": "Too much"
-        }
-      ],
-      "items": [
-        {
-          "id": "sky",
-          "label": "SkyDiver_77",
-          "bin": "safe"
-        },
-        {
-          "id": "comet",
-          "label": "PurpleComet",
-          "bin": "safe"
-        },
-        {
-          "id": "full",
-          "label": "MiaJones_Brisbane",
-          "bin": "too-much"
-        },
-        {
-          "id": "school",
-          "label": "Liam_HillsideHigh",
-          "bin": "too-much"
-        }
-      ],
-      "explanation": "A good username says nothing about who you are. A real name, city or school gives too much away.",
-      "hint": "Look for a real name, a school or a place in each.",
-      "nudge": "Check each again: could it point to who you really are?"
+      "correctOptionId": "wait",
+      "explanation": "Posting later keeps where you are, and your empty home, to yourself.",
+      "showAnswer": "Post once you're home: posting now shows where you are and that home is empty."
     },
     {
       "id": "recap",
@@ -295,11 +209,10 @@
       "teaches": [
         "digital-footprint",
         "keep-locating-info-private",
-        "privacy-settings",
-        "block-and-report"
+        "security-question"
       ],
       "title": "Recap",
-      "body": "- Your **digital footprint** can last: keep anything that **finds you** or **unlocks you** private.\n- Use **privacy settings**. Block, report and tell a trusted adult.\n- **Try this:** set one social account to private.\n\n**Next:** the café Wi-Fi that isn't really the café's, and the app that asks for too much."
+      "body": "Your posts can last, so check each one can't **find you** or **unlock your accounts**.\n\n**Try this:** Read your own bio and username, and take out your school, street or full name.\n\n**Next:** Four switches that decide who can see your posts at all."
     }
   ]
 }

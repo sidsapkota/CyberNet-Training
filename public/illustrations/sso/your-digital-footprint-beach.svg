@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 180" width="340" height="180" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Your phone with a draft post: a sunny beach photo with a sandcastle, no people and no place names. The clock says 2:15 pm, and there's a Post button.</title>
+  <rect x="4" y="4" width="332" height="172" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="16" y="28" font-size="16" font-weight="700" fill="#e6eef9">New post</text>
+  <text x="324" y="28" font-size="16" font-weight="600" fill="#a3b6d2" text-anchor="end">2:15 pm</text>
+  <g>
+  <rect x="14" y="38" width="312" height="96" rx="4" fill="#5fb4f0"/>
+  <rect x="14" y="84.08" width="312" height="19.200000000000003" fill="#2f7fc1"/>
+  <rect x="14" y="101.36" width="312" height="32.64" fill="#e9cf8f"/>
+  <circle cx="276.08" cy="57.2" r="9.600000000000001" fill="#ffd43b"/>
+  <path d="M82.64 124.4V101.36h15.600000000000001v-5.76h12.48v5.76h15.600000000000001v-5.76h12.48v5.76h15.600000000000001V124.4Z" fill="#c9a85a" stroke="#7a5230" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="16" y="162" font-size="16" font-weight="500" fill="#a3b6d2">Add a caption…</text>
+  <rect x="248" y="142" width="78" height="28" rx="8" fill="#00c2ff"/>
+  <text x="287" y="161" font-size="16" font-weight="600" fill="#061630" text-anchor="middle">Post</text>
+</svg>

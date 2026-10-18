@@ -227,6 +227,37 @@ export const SCENES = {
     ],
     views: { default: [] },
   },
+  /*
+   * Stay Safe Online module 3 (Lesson Blueprint): a photo posted on a social app, and a café with
+   * its Wi-Fi list. Fictional and self-labelled: each part's name is the text or thing shown.
+   */
+  "social-post": {
+    id: "social-post",
+    description: "A photo posted on a social app: the front steps of a house, with a letterbox, a street sign, a skateboard, sneakers and a pot plant.",
+    width: 320,
+    height: 240,
+    parts: [
+      { id: "post-letterbox", name: "Letterbox: 12", box: { x: 18, y: 100, w: 56, h: 98 } },
+      { id: "post-street-sign", name: "Street sign: Fern St", box: { x: 234, y: 60, w: 76, h: 40 } },
+      { id: "post-sneakers", name: "Sneakers", box: { x: 110, y: 144, w: 40, h: 28 } },
+      { id: "post-plant", name: "Pot plant", box: { x: 194, y: 112, w: 36, h: 60 } },
+      { id: "post-skateboard", name: "Skateboard", box: { x: 54, y: 202, w: 64, h: 24 } },
+    ],
+    views: { default: [] },
+  },
+  cafe: {
+    id: "cafe",
+    description:
+      "A café. At the top, a phone's Wi-Fi list: CornerCafe, CornerCafe_Free and Library_Guest. Below, the library through the window, the counter with a Wi-Fi box and a staff member, and a laptop on table 4.",
+    width: 320,
+    height: 256,
+    parts: [
+      { id: "cafe-library", name: "Library window", box: { x: 10, y: 118, w: 90, h: 82 } },
+      { id: "cafe-wifi-box", name: "The café's Wi-Fi box", box: { x: 168, y: 136, w: 46, h: 42 } },
+      { id: "cafe-laptop", name: "Laptop at table 4", box: { x: 230, y: 166, w: 80, h: 44 } },
+    ],
+    views: { default: [] },
+  },
 } as const satisfies Record<string, SceneManifest>;
 
 export type SceneId = keyof typeof SCENES;

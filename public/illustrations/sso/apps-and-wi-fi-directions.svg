@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 230" width="340" height="230" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>A map app with a pin: Skate park. Over it, a pop-up: Allow Maps to use your location? with three buttons: Always (even when closed), Only while using the app, and Don't allow.</title>
+  <g opacity="1">
+  <rect x="4" y="4" width="332" height="222" rx="12" fill="#16305a" stroke="#6f8fbd" stroke-width="2"/>
+  <path d="M4 60H336M4 150H336M90 4V226M230 4V226" fill="none" stroke="#1d3d6e" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <path d="M260 34C253.7 25.9 251.9 22.299999999999997 251.9 18.7A8.1 8.1 0 0 1 268.1 18.7C268.1 22.299999999999997 266.3 25.9 260 34ZM260 21.4A2.7 2.7 0 1 0 260 16A2.7 2.7 0 1 0 260 21.4Z" fill="#ffb547" fill-rule="evenodd"/>
+  <text x="244" y="30" font-size="16" font-weight="700" fill="#e6eef9" text-anchor="end">Skate park</text>
+  <rect x="12" y="40" width="316" height="188" rx="12" fill="#1d3d6e" stroke="#8be3ff" stroke-width="2"/>
+  <text x="170" y="62" font-size="16" font-weight="700" fill="#e6eef9" text-anchor="middle">Allow Maps to use your location?</text>
+  <rect x="20" y="72" width="300" height="48" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="170" y="102" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Always (even when closed)</text>
+  <rect x="20" y="124" width="300" height="48" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="170" y="154" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Only while using the app</text>
+  <rect x="20" y="176" width="300" height="48" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="170" y="206" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Don't allow</text>
+</svg>

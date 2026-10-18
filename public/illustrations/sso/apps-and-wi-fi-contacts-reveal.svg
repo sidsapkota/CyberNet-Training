@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 180" width="340" height="180" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>The pop-up is gone. The cat is finished in bright colours and the brushes work. A small crossed-out contacts icon says Contacts: off.</title>
+  <rect x="4" y="4" width="332" height="172" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <rect x="12" y="12" width="316" height="124" rx="6" fill="#24507f"/>
+  <ellipse cx="170" cy="112" rx="40" ry="20" fill="#ffb547" stroke="#8be3ff" stroke-width="2"/>
+  <path d="M208 108Q232 96 226 76" fill="none" stroke="#ffb547" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="146" cy="88" r="24" fill="#ffb547" stroke="#8be3ff" stroke-width="2"/>
+  <path d="M128 74L124 54L142 68ZM164 74L168 54L150 68Z" fill="#ffb547" stroke="#8be3ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="138" cy="86" r="2.5" fill="#061630"/>
+  <circle cx="154" cy="86" r="2.5" fill="#061630"/>
+  <path d="M118 94H132M160 94H174M146 92v4" fill="none" stroke="#061630" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="30" cy="154" r="9" fill="#e6eef9"/>
+  <circle cx="60" cy="154" r="9" fill="#ffb547"/>
+  <circle cx="90" cy="154" r="9" fill="#ff7a7a"/>
+  <circle cx="120" cy="154" r="9" fill="#3ddc97"/>
+  <circle cx="150" cy="154" r="9" fill="#00c2ff"/>
+  <rect x="196" y="146" width="132" height="26" rx="13" fill="#061630" stroke="#6f8fbd" stroke-width="1.5"/>
+  <path d="M212 159A4.5 4.5 0 1 0 212 150A4.5 4.5 0 1 0 212 159ZM203 170C203 163 208 161 212 161C216 161 221 163 221 170Z" fill="none" stroke="#a3b6d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M202 150L222 170" fill="none" stroke="#ff7a7a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="230" y="165" font-size="16" font-weight="600" fill="#a3b6d2">Contacts: off</text>
+</svg>

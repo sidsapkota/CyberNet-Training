@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 180" width="340" height="180" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Sam's Wi-Fi list: CornerCafe with two bars and CornerCafe_Free with four bars. Below, the café counter with its Wi-Fi box and a staff member in an apron.</title>
+  <rect x="4" y="4" width="332" height="80" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="16" y="26" font-size="16" font-weight="600" fill="#a3b6d2">Wi-Fi</text>
+  <g>
+  <rect x="12" y="34" width="316" height="22" rx="8" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="24" y="51" font-size="16" font-weight="600" fill="#e6eef9">CornerCafe</text>
+  <rect x="294" y="49" width="4" height="4" rx="1" fill="#e6eef9" opacity="1"/>
+  <rect x="300" y="45" width="4" height="8" rx="1" fill="#e6eef9" opacity="1"/>
+  <rect x="306" y="41" width="4" height="12" rx="1" fill="#6f8fbd" opacity="0.5"/>
+  <rect x="312" y="37" width="4" height="16" rx="1" fill="#6f8fbd" opacity="0.5"/>
+  </g>
+  <g>
+  <rect x="12" y="58" width="316" height="22" rx="8" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="24" y="75" font-size="16" font-weight="600" fill="#e6eef9">CornerCafe_Free</text>
+  <rect x="294" y="73" width="4" height="4" rx="1" fill="#e6eef9" opacity="1"/>
+  <rect x="300" y="69" width="4" height="8" rx="1" fill="#e6eef9" opacity="1"/>
+  <rect x="306" y="65" width="4" height="12" rx="1" fill="#e6eef9" opacity="1"/>
+  <rect x="312" y="61" width="4" height="16" rx="1" fill="#e6eef9" opacity="1"/>
+  </g>
+  <g>
+  <path d="M150 158Q150 124 170 124Q190 124 190 158Z" fill="#24507f" stroke="#8be3ff" stroke-width="2" stroke-linejoin="round"/>
+  <rect x="161" y="130" width="18" height="28" rx="2" fill="#e6eef9" opacity="0.85"/>
+  <circle cx="170" cy="108" r="12" fill="#c99a74"/>
+  <path d="M157.5 107A12.5 12.5 0 0 1 182.5 107C177 101 163 101 157.5 107Z" fill="#3b2a1f"/>
+  <circle cx="166" cy="110" r="1.7" fill="#1d2a3d"/>
+  <circle cx="174" cy="110" r="1.7" fill="#1d2a3d"/>
+  </g>
+  <rect x="70" y="140" width="200" height="36" rx="3" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <g>
+  <path d="M228 124L224 104M254 124L258 104" fill="none" stroke="#e6eef9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="222" y="122" width="38" height="16" rx="4" fill="#24507f" stroke="#e6eef9" stroke-width="1.5"/>
+  <circle cx="232" cy="130" r="2" fill="#3ddc97"/>
+  <circle cx="240" cy="130" r="2" fill="#3ddc97"/>
+  </g>
+</svg>

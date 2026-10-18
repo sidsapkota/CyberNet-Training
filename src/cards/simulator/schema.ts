@@ -20,12 +20,14 @@ const Control = z.discriminatedUnion("kind", [
     unit: nonEmpty.max(8).optional(),
   }),
   /** One-way action, e.g. "End task": sets its input to true. */
-  z.object({ id: ModelKey, kind: z.literal("button"), label: Label, doneLabel: Label.optional() }),
+  /** `requires`: another button that must be pressed first (e.g. "Share" waits for "Post"). */
+  z.object({ id: ModelKey, kind: z.literal("button"), label: Label, doneLabel: Label.optional(), requires: ModelKey.optional() }),
 ]);
 
 const Output = z.object({
   id: ModelKey,
-  kind: z.enum(["meter", "bar", "timer", "device", "list"]),
+  /** `picture`: a list output drawn as the model's own picture (models with `picture: true`), read as text by screen readers. */
+  kind: z.enum(["meter", "bar", "timer", "device", "list", "picture"]),
   label: Label,
   unit: nonEmpty.max(8).optional(),
   /** Device mockup frame. */
@@ -53,6 +55,8 @@ export const SimulatorCardSchema = z
     goal: z.object({ all: z.array(Condition).min(1).max(5) }).optional(),
     /** "play": a toy to mess with, not graded (Lesson Blueprint's Play beat). */
     mode: z.literal("play").optional(),
+    /** Play mode: how many controls must differ from their start before Continue unlocks (default 1). */
+    playChanges: z.number().int().min(1).max(5).optional(),
   })
   .superRefine((card, ctx) => {
     const model = MODELS[card.model];
@@ -97,10 +101,24 @@ export const SimulatorCardSchema = z
       outputIds.add(output.id);
       if (!spec) {
         ctx.addIssue({ code: "custom", message: `model "${card.model}" has no output "${output.id}"`, path: ["outputs", i, "id"] });
-      } else if ((output.kind === "list") !== (spec.type === "list")) {
+      } else if ((output.kind === "list" || output.kind === "picture") !== (spec.type === "list")) {
         ctx.addIssue({ code: "custom", message: `output "${output.id}" is a ${spec.type}; "${output.kind}" can't show it`, path: ["outputs", i, "kind"] });
+      } else if (output.kind === "picture" && !model.picture) {
+        ctx.addIssue({ code: "custom", message: `model "${card.model}" has no picture`, path: ["outputs", i, "kind"] });
       }
     });
+
+    card.controls.forEach((control, i) => {
+      if (control.kind !== "button" || !control.requires) return;
+      const needed = card.controls.find((c) => c.id === control.requires);
+      if (!needed || needed.kind !== "button" || needed.id === control.id) {
+        ctx.addIssue({ code: "custom", message: `"${control.id}" requires "${control.requires}", which must be another button`, path: ["controls", i, "requires"] });
+      }
+    });
+    if (card.playChanges !== undefined && card.mode !== "play") ctx.addIssue({ code: "custom", message: "playChanges is for play mode", path: ["playChanges"] });
+    if (card.playChanges !== undefined && card.playChanges > card.controls.length) {
+      ctx.addIssue({ code: "custom", message: "playChanges can't be more than the number of controls", path: ["playChanges"] });
+    }
 
     if (card.mode === "play" && card.goal) ctx.addIssue({ code: "custom", message: "play mode has no goal", path: ["goal"] });
     if (card.mode !== "play" && !card.goal) ctx.addIssue({ code: "custom", message: "a simulator needs a goal (or mode: play)", path: ["goal"] });

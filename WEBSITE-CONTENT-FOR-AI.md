@@ -181,43 +181,77 @@ Not exported, so the answers stay secret.
 
 ### Module 3: Guard Your Privacy (Pro)
 
-Your digital footprint, app permissions and public Wi-Fi.
+Your digital footprint, privacy settings, app permissions and public Wi-Fi.
 
 #### Your Digital Footprint
 
-- **What you learn:** What to keep private online, and the privacy settings that help.
+- **What you learn:** Your posts can last, so keep out what finds you or unlocks you.
 - **Access:** Pro
 - **Link:** `cybernettraining.com/from/<platform>/your-digital-footprint`
 
 **Key facts**
 
-- *Words it teaches:* Your **digital footprint** is the trail of everything you post and do online. A **security question** (like your first pet) can reset an account, so keep its answer private. In any app you can **block** and **report** someone, and you can always tell a trusted adult.
-- *Recap:* Your **digital footprint** can last: keep anything that **finds you** or **unlocks you** private. Use **privacy settings**.
+- *Your digital footprint:* Everything you post adds to your **digital footprint**: the trail you leave online.
+- *Recap:* Your posts can last, so check each one can't **find you** or **unlock your accounts**. **Try this:** Read your own bio and username, and take out your school, street or full name.
 
 **Best interactive cards**
 
-- Choose what happens: A fun quiz is going around on social media.
-- Choose what happens: Mia is on holiday and wants to post her beach photos.
-- Choose what happens: A new friend from a game seems really nice.
+- Simulator: Sam's posting a skateboard photo. **Tap Post**, then see what friends can do.
+- Multiple choice: An hour later, Sam deletes the post. **What's left?**
+- Tap the picture: Sam took this photo on the front steps at home. **Tap the 2 things** that show where Sam lives.
 
-#### Apps and Public Wi-Fi
+#### Privacy Settings
 
-- **What you learn:** Choose what apps can use, and stay safe on public Wi-Fi.
+- **What you learn:** Choose who sees your posts and who can reach you.
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/privacy-settings`
+
+**Key facts**
+
+- *Privacy settings:* **Privacy settings** choose who can see your posts and who can reach you.
+- *Recap:* **Privacy settings** choose who sees and reaches you. If someone crosses the line, **report, block and tell a trusted adult**.
+
+**Best interactive cards**
+
+- Simulator: Sam's account is public. **Flip a switch** and watch what strangers can see.
+- Multiple choice: Sam turns on "Messages: friends only". Then a stranger taps Send. **What happens?**
+- Multiple choice: Jo tagged Sam in a photo outside school. **Tap the switch** that lets Sam OK tags first.
+
+#### App Permissions
+
+- **What you learn:** Choose what each app can use, and change it any time.
 - **Access:** Pro
 - **Link:** `cybernettraining.com/from/<platform>/apps-and-wi-fi`
 
 **Key facts**
 
-- *Words it teaches:* An **app permission** lets an app use your camera, microphone, location or contacts. For location, pick **"Only while using the app"**, so a closed app can't track you. **Public Wi-Fi** in cafés and shops is shared, and you can't always be sure it's real. A **fake hotspot** is Wi-Fi a stranger names to look like the café's.
-- *Recap:* Give apps only the **permissions** they need; pick **"Only while using"** for location. On **public Wi-Fi**, check the name, and bank on **mobile data**.
+- *App permissions:* An **app permission** is your OK for an app to use your camera, microphone, location or contacts. Allow only what it needs, and change it any time in **Settings**.
+- *Recap:* Only let an app use what it needs for its job, and change your mind any time in **Settings**. **Try this:** Open Settings and switch one app's location to "Only while using the app".
 
 **Best interactive cards**
 
-- Sort into groups: Does the app need it for its job?
-- Choose what happens: You install a new drawing game.
-- Choose what happens: A **microphone dot** shows an app is using the mic.
+- Simulator: Sam installs a drawing game. **Flip each switch** to see what it can reach.
+- Multiple choice: The drawing game asks for Sam's contacts. Sam taps Don't allow. **What happens?**
+- Sort into groups: Four apps each ask for one thing. **Drag** each into Needs it or Doesn't need it.
 
-#### Module quiz (6 questions)
+#### Public Wi-Fi
+
+- **What you learn:** Spot fake Wi-Fi, and keep money off public Wi-Fi.
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/public-wi-fi`
+
+**Key facts**
+
+- *Public Wi-Fi and fake Wi-Fi:* On **public Wi-Fi**, anyone can name a network after the café. A copycat like CornerCafe_Free is **fake Wi-Fi**: its name can look just right.
+- *Recap:* Anyone can name Wi-Fi after the café: **ask staff** for the real one, and use **mobile data** for money. **Try this:** Next time you're out, ask staff for the Wi-Fi name before you join.
+
+**Best interactive cards**
+
+- Explore the picture: Sam's at the Corner Café, and three Wi-Fi networks show up. **Tap each glowing thing.**
+- Multiple choice: Sam joins CornerCafe_Free. It asks for Sam's email password. **Tap who gets it.**
+- Sort into groups: Some jobs are too important for Wi-Fi you can't be sure of. **Drag** each into a bin.
+
+#### Module quiz (8 questions)
 
 Not exported, so the answers stay secret.
 

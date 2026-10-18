@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 180" width="340" height="180" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>The chat with GameMate_8 is closed, marked Reported and Blocked. Sam stands beside a grown-up at home and says: Can I show you something?</title>
+  <rect x="4" y="20" width="160" height="150" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2" opacity="0.9"/>
+  <circle cx="26" cy="46" r="14" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <path d="M17 43h18a4 4 0 0 1 0 8h-18a4 4 0 0 1 0 -8ZM21 45v4M19 47h4" fill="none" stroke="#e6eef9" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="31" cy="47" r="1.6" fill="#e6eef9"/>
+  <text x="48" y="52" font-size="16" font-weight="700" fill="#a3b6d2">GameMate_8</text>
+  <rect x="16" y="80" width="120" height="24" rx="12" fill="#061630" stroke="#3ddc97" stroke-width="1.5"/>
+  <text x="76" y="97" font-size="16" font-weight="600" fill="#3ddc97" text-anchor="middle">Reported</text>
+  <rect x="16" y="116" width="120" height="24" rx="12" fill="#061630" stroke="#3ddc97" stroke-width="1.5"/>
+  <text x="76" y="133" font-size="16" font-weight="600" fill="#3ddc97" text-anchor="middle">Blocked</text>
+  <rect x="176" y="6" width="160" height="58" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <path d="M214 64l-4 12l14 -12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="208" y="60" width="20" height="4" fill="#24507f"/>
+  <text x="188" y="30" font-size="16" font-weight="600" fill="#e6eef9">Can I show you</text>
+  <text x="188" y="52" font-size="16" font-weight="600" fill="#e6eef9">something?</text>
+  <g>
+  <path d="M198 164Q198 128 220 128Q242 128 242 164Z" fill="#24507f" stroke="#8be3ff" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M214 130L220 138L226 130" fill="none" stroke="#8be3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="220" cy="110" r="14" fill="#b9784a"/>
+  <path d="M205.4 109A14.6 14.6 0 0 1 234.6 109C229 103 222 104 218 101C214 104 209 104 205.4 109Z" fill="#1d1410"/>
+  <circle cx="215" cy="113" r="1.9" fill="#1d2a3d"/>
+  <circle cx="225" cy="113" r="1.9" fill="#1d2a3d"/>
+  </g>
+  <g>
+  <path d="M274 168Q274 124 298 124Q322 124 322 168Z" fill="#122b52" stroke="#8be3ff" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="298" cy="104" r="15" fill="#e0b48c"/>
+  <path d="M282.4 104A15.6 15.6 0 0 1 313.6 104C308 96 288 96 282.4 104Z" fill="#5b5b5b"/>
+  <circle cx="293" cy="107" r="1.9" fill="#1d2a3d"/>
+  <circle cx="303" cy="107" r="1.9" fill="#1d2a3d"/>
+  </g>
+</svg>

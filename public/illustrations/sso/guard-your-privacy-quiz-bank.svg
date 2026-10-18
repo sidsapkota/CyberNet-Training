@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 180" width="340" height="180" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Your phone at a café table: the café's Wi-Fi list, CornerCafe and CornerCafe_Free, and a separate switch, Mobile data, which is off. Beside it, a banking app: Your Bank.</title>
+  <rect x="4" y="4" width="228" height="172" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="16" y="28" font-size="16" font-weight="600" fill="#a3b6d2">Wi-Fi</text>
+  <rect x="12" y="38" width="212" height="34" rx="6" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="24" y="61" font-size="16" font-weight="600" fill="#e6eef9">CornerCafe</text>
+  <rect x="190" y="59" width="4" height="4" rx="1" fill="#e6eef9" opacity="1"/>
+  <rect x="196" y="55" width="4" height="8" rx="1" fill="#e6eef9" opacity="1"/>
+  <rect x="202" y="51" width="4" height="12" rx="1" fill="#e6eef9" opacity="1"/>
+  <rect x="208" y="47" width="4" height="16" rx="1" fill="#6f8fbd" opacity="0.5"/>
+  <rect x="12" y="78" width="212" height="34" rx="6" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="24" y="101" font-size="16" font-weight="600" fill="#e6eef9">CornerCafe_Free</text>
+  <rect x="190" y="99" width="4" height="4" rx="1" fill="#e6eef9" opacity="1"/>
+  <rect x="196" y="95" width="4" height="8" rx="1" fill="#e6eef9" opacity="1"/>
+  <rect x="202" y="91" width="4" height="12" rx="1" fill="#e6eef9" opacity="1"/>
+  <rect x="208" y="87" width="4" height="16" rx="1" fill="#e6eef9" opacity="1"/>
+  <rect x="12" y="126" width="212" height="40" rx="6" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="24" y="152" font-size="16" font-weight="600" fill="#e6eef9">Mobile data</text>
+  <rect x="178" y="136" width="36" height="20" rx="10" fill="#16305a" stroke="#6f8fbd" stroke-width="1.5"/>
+  <circle cx="188" cy="146" r="7" fill="#e6eef9"/>
+  <rect x="240" y="40" width="96" height="126" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <path d="M262 96h52M266 96v-22M278 96v-22M290 96v-22M302 96v-22M262 74l26 -16l26 16Z" fill="none" stroke="#e6eef9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="288" y="128" font-size="16" font-weight="700" fill="#e6eef9" text-anchor="middle">Your</text>
+  <text x="288" y="150" font-size="16" font-weight="700" fill="#e6eef9" text-anchor="middle">Bank</text>
+</svg>

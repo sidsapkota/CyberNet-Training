@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 180" width="340" height="180" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>The quiz post is scrolled past, with no reply. Below, the Forgot password? screen still asks for the first pet's name, and a green padlock says Still locked.</title>
+  <g opacity="0.35">
+  <rect x="4" y="4" width="332" height="56" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <path d="M24 16l3 6.5l7 1l-5 5l1.2 7l-6.2 -3.3l-6.2 3.3l1.2 -7l-5 -5l7 -1z" fill="#ffb547" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="40" y="31" font-size="16" font-weight="700" fill="#e6eef9">QuizTime</text>
+  <text x="16" y="52" font-size="16" font-weight="600" fill="#e6eef9">Pop star name = first pet…</text>
+  </g>
+  <rect x="196" y="18" width="128" height="24" rx="12" fill="#061630" stroke="#3ddc97" stroke-width="1.5"/>
+  <text x="260" y="35" font-size="16" font-weight="600" fill="#3ddc97" text-anchor="middle">Scrolled past</text>
+  <rect x="4" y="70" width="332" height="106" rx="12" fill="#24507f" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="16" y="96" font-size="16" font-weight="600" fill="#a3b6d2">Forgot password?</text>
+  <text x="16" y="122" font-size="16" font-weight="600" fill="#e6eef9">Security question:</text>
+  <text x="16" y="144" font-size="16" font-weight="600" fill="#e6eef9">first pet's name?</text>
+  <path d="M272 111.6V105.2A8 8 0 0 1 288 105.2V111.6" fill="none" stroke="#3ddc97" stroke-width="3.84" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="267.2" y="111.6" width="25.6" height="20.8" rx="4" fill="#3ddc97"/>
+  <text x="280" y="162" font-size="16" font-weight="700" fill="#3ddc97" text-anchor="middle">Still locked</text>
+</svg>
