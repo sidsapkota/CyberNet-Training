@@ -14,7 +14,7 @@
       "teaches": [
         "anyone-can-name-wi-fi"
       ],
-      "prompt": "Sam's at the Corner Café, and three Wi-Fi networks show up. **Tap each glowing thing.**",
+      "prompt": "Three Wi-Fi networks show up at the Corner Café. **Tap each glowing thing.**",
       "scene": "cafe",
       "mode": "explore",
       "parts": [

@@ -214,7 +214,7 @@ Your digital footprint, privacy settings, app permissions and public Wi-Fi.
 **Best interactive cards**
 
 - Simulator: Sam's account is public. **Flip a switch** and watch what strangers can see.
-- Multiple choice: Sam turns on "Messages: friends only". Then a stranger taps Send. **What happens?**
+- Multiple choice: Messages are now friends only. A stranger taps Send. **What happens?**
 - Multiple choice: Jo tagged Sam in a photo outside school. **Tap the switch** that lets Sam OK tags first.
 
 #### App Permissions
@@ -231,7 +231,7 @@ Your digital footprint, privacy settings, app permissions and public Wi-Fi.
 **Best interactive cards**
 
 - Simulator: Sam installs a drawing game. **Flip each switch** to see what it can reach.
-- Multiple choice: The drawing game asks for Sam's contacts. Sam taps Don't allow. **What happens?**
+- Multiple choice: The game asks for Sam's contacts. Sam taps Don't allow. **What happens?**
 - Sort into groups: Four apps each ask for one thing. **Drag** each into Needs it or Doesn't need it.
 
 #### Public Wi-Fi
@@ -247,7 +247,7 @@ Your digital footprint, privacy settings, app permissions and public Wi-Fi.
 
 **Best interactive cards**
 
-- Explore the picture: Sam's at the Corner Café, and three Wi-Fi networks show up. **Tap each glowing thing.**
+- Explore the picture: Three Wi-Fi networks show up at the Corner Café. **Tap each glowing thing.**
 - Multiple choice: Sam joins CornerCafe_Free. It asks for Sam's email password. **Tap who gets it.**
 - Sort into groups: Some jobs are too important for Wi-Fi you can't be sure of. **Drag** each into a bin.
 

@@ -1,23 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 190" width="320" height="190" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 194" width="320" height="194" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
   <title>Sam's settings with four switches, each labelled with the one thing it controls: Private account (on) controls posts, Messages: friends only (on) controls messages, Share location (off) controls location, and Review tags (on) controls tags.</title>
-  <rect x="4" y="6" width="312" height="42" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
-  <text x="16" y="24" font-size="16" font-weight="600" fill="#e6eef9">Private account</text>
+  <rect x="4" y="4" width="312" height="44" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="16" y="23" font-size="16" font-weight="600" fill="#e6eef9">Private account</text>
   <text x="16" y="43" font-size="16" font-weight="700" fill="#8be3ff">controls posts</text>
-  <rect x="268" y="17" width="36" height="20" rx="10" fill="#00c2ff" stroke="#8be3ff" stroke-width="1.5"/>
-  <circle cx="294" cy="27" r="7" fill="#e6eef9"/>
-  <rect x="4" y="52" width="312" height="42" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="268" y="16" width="36" height="20" rx="10" fill="#00c2ff" stroke="#8be3ff" stroke-width="1.5"/>
+  <circle cx="294" cy="26" r="7" fill="#e6eef9"/>
+  <rect x="4" y="51" width="312" height="44" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
   <text x="16" y="70" font-size="16" font-weight="600" fill="#e6eef9">Messages: friends only</text>
-  <text x="16" y="89" font-size="16" font-weight="700" fill="#8be3ff">controls messages</text>
+  <text x="16" y="90" font-size="16" font-weight="700" fill="#8be3ff">controls messages</text>
   <rect x="268" y="63" width="36" height="20" rx="10" fill="#00c2ff" stroke="#8be3ff" stroke-width="1.5"/>
   <circle cx="294" cy="73" r="7" fill="#e6eef9"/>
-  <rect x="4" y="98" width="312" height="42" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
-  <text x="16" y="116" font-size="16" font-weight="600" fill="#e6eef9">Share location</text>
-  <text x="16" y="135" font-size="16" font-weight="700" fill="#8be3ff">controls location</text>
-  <rect x="268" y="109" width="36" height="20" rx="10" fill="#16305a" stroke="#6f8fbd" stroke-width="1.5"/>
-  <circle cx="278" cy="119" r="7" fill="#e6eef9"/>
-  <rect x="4" y="144" width="312" height="42" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
-  <text x="16" y="162" font-size="16" font-weight="600" fill="#e6eef9">Review tags</text>
-  <text x="16" y="181" font-size="16" font-weight="700" fill="#8be3ff">controls tags</text>
-  <rect x="268" y="155" width="36" height="20" rx="10" fill="#00c2ff" stroke="#8be3ff" stroke-width="1.5"/>
-  <circle cx="294" cy="165" r="7" fill="#e6eef9"/>
+  <rect x="4" y="98" width="312" height="44" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="16" y="117" font-size="16" font-weight="600" fill="#e6eef9">Share location</text>
+  <text x="16" y="137" font-size="16" font-weight="700" fill="#8be3ff">controls location</text>
+  <rect x="268" y="110" width="36" height="20" rx="10" fill="#16305a" stroke="#6f8fbd" stroke-width="1.5"/>
+  <circle cx="278" cy="120" r="7" fill="#e6eef9"/>
+  <rect x="4" y="145" width="312" height="44" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="16" y="164" font-size="16" font-weight="600" fill="#e6eef9">Review tags</text>
+  <text x="16" y="184" font-size="16" font-weight="700" fill="#8be3ff">controls tags</text>
+  <rect x="268" y="157" width="36" height="20" rx="10" fill="#00c2ff" stroke="#8be3ff" stroke-width="1.5"/>
+  <circle cx="294" cy="167" r="7" fill="#e6eef9"/>
 </svg>

@@ -247,7 +247,7 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
 | `terminal` | `commands`, `success`, `promptLabel?`, `intro?`, `caseSensitive?` (see below) | `{history, response}` | success condition met |
 | `hotspot` | `scene`, `view?`, `mode` (`tap` + `targets[]`, `label` + `labels[] {part, label}`, or `explore` + `parts[] {part, job}`) | `{selected[], placed{part: labelIndex}}` (explore: `{seen[]}`) | exactly the targets / every label on its part (explore: not graded) |
 | `teardown` | `scene`, `view?`, `actions[] {id, part, verb, after?, nudge}`, `maxNudges?` | `{done[], nudges}` | all actions, each after its `after`, nudges ≤ max |
-| `simulator` | `model`, `params`, `controls[]` (toggle/slider/button), `outputs[]` (meter/bar/timer/device/list), `goal.all[]`, or `mode: "play"` with no goal | `{controlId: value}` | every goal condition holds (play mode: not graded) |
+| `simulator` | `model`, `params`, `controls[]` (toggle/slider/button), `outputs[]` (meter/bar/timer/device/list/picture), `goal.all[]`, or `mode: "play"` with no goal | `{controlId: value}` | every goal condition holds (play mode: not graded) |
 | `scenario` | `start`, `steps[] {id, text, choices[] {id, text, consequence, next \| outcome}}` | choice ids in order | the last choice's outcome is `success` |
 | `sort_bins` | `bins[]` (2–3), `items[] {id, label, bin}` (4–10) | `{itemId: binId}` | every item in its bin |
 | `train_model` | `model` (`nearest` + `k` 1/3 + `scene`: `fruit`/`ball`/`weather`/`daynight`, or `word-vote`), `labels[]` (2–3), `examples[] {id, text, x?, y?, label, given?}` (3–12; at most 4 not `given`), `tests[] {id, text, x?, y?, truth}` (1–3), `task` (`label`, or `fix` + `action` `add`/`remove`) | `{labels: {exampleId: labelId}, included: [exampleId?]}` | label: every example labelled right; fix: the one change makes the model get every test right |
@@ -266,10 +266,17 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - **Reveal pictures** (`image.revealSrc`) show only once earned: after a right answer, after any Predict
     answer, or with the answer after a second wrong try. Never after a first wrong one.
   - **Play-mode simulator** (`mode: "play"`, no `goal`): a guided card (`simulatorPlayDefinition`): Continue
-    unlocks once a control moves from its starting value; pays `XP.explore`; no how-to-play panel.
+    unlocks once a control moves from its starting value (or `playChanges` controls); pays `XP.explore`; no
+    how-to-play panel.
+  - **Picture models** (module 3): a `picture` output draws a model's list output as its own SVG
+    (`src/cards/simulator/pictures.tsx`, models with `picture: true`: `post-spread`, `privacy-switches`,
+    `app-permissions`), read as text by screen readers. A button may `require` another button first (Share
+    waits for Post).
   - **Scenes** for Stay Safe Online module 1: `home-screen` (Game Club, Email, Music, Photos; view `three-apps`),
     `sign-in-options` (Text me a code, Authenticator app, Passkey) and `sign-in` (password box, code box, the
-    phone's code). Self-labelled, text at 15+ units in 320-wide scenes.
+    phone's code); module 3: `social-post` (a front-steps photo: letterbox "12", "Fern St" sign, skateboard,
+    sneakers, pot plant) and `cafe` (the Wi-Fi list, the café's Wi-Fi box, a laptop on table 4, the library
+    window). Self-labelled, text at 15+ units in 320-wide scenes.
 - **`multiple_choice`:** options are shown in a stable shuffle per card (`displayOptions`), so the
   right answer's written position never gives it away; digit keys follow the order on screen.
   Answers and grading use option ids, so the order can't change a score.
@@ -378,7 +385,8 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   - `model` names a registered pure function in `src/cards/simulator/models/`: `memory`,
     `cpu-cores`, `thermal`, `task-manager`, `storage`, `battery` or `password` (time to try every
     combination of a random password at an illustrative billion guesses a second; outputs `years`
-    and a `strength` list). Each has its own params schema, inputs and outputs, and a unit test.
+    and a `strength` list), plus the picture models `post-spread`, `privacy-switches` and
+    `app-permissions`. Each has its own params schema, inputs and outputs, and a unit test.
   - Slider units are trimmed by the schema; the view adds the space (none before `%` or `°`).
   - **Never eval.** Content only configures models, and goals are declarative conditions.
   - Control and output ids are model input/output names (camelCase allowed). The schema checks they

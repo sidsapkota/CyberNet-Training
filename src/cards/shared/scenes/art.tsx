@@ -803,7 +803,9 @@ function SocialPostBase() {
   return (
     <>
       <rect x={4} y={4} width={312} height={232} rx={14} fill={C.panel} stroke={C.edge} strokeWidth={2} />
-      <circle cx={24} cy={22} r={10} fill={C.part} stroke={C.edge} strokeWidth={1.5} />
+      {/* The poster's picture: filled, so it never looks like a tap ring. */}
+      <circle cx={24} cy={22} r={10} fill={C.edge} />
+      <path d="M18 27Q24 18 30 27M24 21A3 3 0 1 0 24 15A3 3 0 1 0 24 21Z" fill={C.panel} />
       <text x={42} y={28} fontSize={16} fontWeight={600} fill={C.ink} fontFamily={sans}>PixelFox</text>
       {/* The photo: a house front, its door and steps, and the footpath. */}
       <rect x={12} y={40} width={296} height={188} rx={6} fill={P.wall} />

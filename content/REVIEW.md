@@ -1636,27 +1636,101 @@ like `.com.au`, have two parts, and the examples only use `.example`.
 
 ## Module 3: Guard Your Privacy (Pro)
 
+Rebuilt 19 October 2026 to Lesson Blueprint v1.1 (storyboards in `docs/storyboards/stay-safe-online/`):
+two lessons became four, one idea each. The story: Sam (username PixelFox), Sam's phone, Sam's friends
+Jo, Mo, Ali and Kai, a drawing game, and the Corner Café. Teaser card: `band-name-quiz` (now three
+answers with the reset screen in its picture, so it stands on its own). One word for the copycat
+network everywhere: **fake Wi-Fi** (never "hotspot", which also means sharing your phone's data).
+
+**Facts checked 19 October 2026** (each page read in full):
+- Posts can last after you delete them: copies, shares and screenshots (esafety.gov.au *Photo and
+  video sharing*: "adds to your lasting digital footprint… hard to delete, especially if it has been
+  copied or shared"; eSafety Kids *Personal information online*: "It could be shared or copied by
+  someone else").
+- Keep private: address, school, phone number, where you are; check photos for anything that shows
+  where you live, like the front of your house or the street (eSafety Kids *Personal information
+  online*; eSafety *Protecting your identity*); "avoid including location details such as check-ins,
+  street signs" (cyber.gov.au *Personal cyber security handbook: Secure your online activity*,
+  reviewed 7 Oct 2026). The letterbox's house number is our example of "the front of your house".
+- Post holiday photos once you're home: posting while away shows your house is probably empty
+  (beconnected.esafety.gov.au *Key safety tips for using social media*; cyber.gov.au handbook,
+  *Travelling overseas*).
+- Don't give answers that could guess account recovery (security) questions; quizzes asking for a
+  first pet or first school can collect them (cyber.gov.au *Security tips for social media and
+  messaging apps*, reviewed 9 Apr 2026; ACSC *First steps* guide; the Be Connected scams podcast with
+  the ACCC Deputy Chair is the only source that names quizzes).
+- Privacy settings: keep profiles private; review who can find, tag or message you; limit messages
+  from unknown accounts; turn off location sharing (cyber.gov.au handbook); approve tags before they
+  show (Be Connected, Instagram privacy settings: "Manually approve tags"). Names differ by app, so the
+  lesson's four switches are generic.
+- Followers can still screenshot or copy a private account's posts (esafety.gov.au *Content
+  creation*: "Even if you've limited your content to subscribers or followers, they may still take a
+  screenshot"; *Screen capture*).
+- Unsafe contact, including from someone you've added: collect evidence, report to the app, then
+  block, and tell a trusted adult; it's not your fault (esafety.gov.au *Unsafe contact*; eSafety Kids
+  *Someone is contacting me*; *I need help*: "not to block them just yet, in case you need to make a
+  report"). So the answer reads **report, block, tell a trusted adult**, and the lines say "it's not
+  your fault" (eSafety's words) rather than "you're not in trouble".
+- App permissions: an app doesn't need what isn't part of its job; review and change permissions in
+  Settings any time; prefer "while using the app" to "always" (Be Connected *8 ways to protect your
+  privacy online*; Apple support 102647, "While Using the App"; Google Android help 9431959, "Allow
+  only while using the app"; cyber.gov.au: be wary of apps that request excessive permissions).
+- Mic indicator: iPhone (iOS 14+) shows an orange dot when the microphone is in use, green when the
+  camera is too (Apple support 108331); Android 12+ shows a green indicator (Google Android help
+  13532937). The lesson says "on many phones" and draws an orange dot.
+- Public Wi-Fi: anyone can set up a fake network named after a trusted business (esafety.gov.au
+  *Wi-Fi hotspots*, "sometimes called a 'pineapple' network"); confirm the network name with staff or
+  signage (cyber.gov.au handbook; ACSC *Secure your mobile phone*); avoid logging in, purchases and
+  banking on public Wi-Fi and use mobile data (cyber.gov.au handbook; eSafety).
+
+**Simplifications and reasoning (not quoted advice):**
+- The fake Wi-Fi's sign-in page asks for an email password, and the lesson says whoever made the
+  network gets what's typed. No official page says "café Wi-Fi never needs your email password" (Be
+  Connected notes venue pages may ask for a name and email address), so the cards don't claim it.
+- "A laptop nearby can have strong bars" is plain reasoning (signal depends on distance) backing up
+  the sourced advice to ask staff; no official source states it.
+- Apple and Google only say to change permissions in Settings, so the mic card's lines say Settings
+  takes the permission back, and the restart nudge asks a question. (Android can also remove
+  permissions from apps unused for a long time; not covered.)
+- iOS also counts a feature still visibly running (blue status bar) as "in use", so the lines say the
+  map can only use location "while Sam's using it".
+- "Messages: friends only" means strangers can't send at all in the story; some apps send strangers'
+  messages to a requests folder instead.
+- VPNs aren't covered: the current ACSC handbook doesn't mention them, and eSafety says even with a VPN
+  it's best not to bank on public Wi-Fi.
+- Since 10 December 2025, age-restricted social media platforms must stop Australians under 16 having
+  accounts (eSafety notice). The lessons use a generic "social app", games and chats; the "Try this"
+  lines say "one of your accounts", and nothing tells a learner to make an account.
+- Picture models (`post-spread`, `privacy-switches`, `app-permissions`) are toys: 4 friends see a post,
+  a share reaches 3 more people; each privacy switch hides one thing; each permission reaches one thing.
+
 ### 3.1 Your Digital Footprint (`your-digital-footprint`)
-**Key claims:**
-- Posts can be copied, and they last.
-- Keep private: your address, phone, school, where you are right now, passwords, and the answers
-  to security questions. That includes usernames.
-- "Fun" quizzes can harvest security-question answers.
-- Privacy settings: private account, message limits, location off, tag review.
-- Block, report, and tell a trusted adult.
+**Goals:** posts can be copied and last after you delete them (digital footprint); keep out what finds
+you (address, street, where you are) or unlocks you (security-question answers); post holiday photos
+once you're home. Cards: play (post and spread), predict (delete an hour later), name it, the
+front-steps photo (tap the letterbox "12" and the "Fern St" sign, fictional), the pop star name quiz
+(teaser), the beach photo, wrap. Dropped: `share-or-private`, `meet-security-question` and the
+`username-check` bonus (its idea is the "Try this"); the settings cards moved to 3.2.
 
-### 3.2 Apps and Public Wi-Fi (`apps-and-wi-fi`)
-**Key claims:**
-- Grant only the permissions an app needs; choose "Only while using the app"; change them in
-  Settings.
-- Many phones show an indicator when the camera or microphone is in use.
-- Download from official app stores.
-- On public Wi-Fi, HTTPS protects what you send to most sites. The bigger risk is a fake hotspot,
-  so check the network's name with staff and use mobile data for banking.
+### 3.2 Privacy Settings (`privacy-settings`, new)
+**Goals:** each privacy switch controls one thing (posts, messages, location, tags); review tags; for
+someone already let in, report, block and tell a trusted adult; followers can still copy a private
+post. GameMate_8 and GiftBuddy_4 (quiz) are fictional, faceless avatars.
 
-**Simplifications:**
-- VPNs aren't covered.
-- Indicator dots exist on current iOS and Android versions; older devices may not show them.
+### 3.3 App Permissions (`apps-and-wi-fi`, retitled; id kept)
+**Goals:** an app permission is your OK to use the camera, mic, location or contacts; allow only what
+the app's job needs; "Only while using the app" for location; the mic dot, and switching an app's mic
+off in Settings. "Drawing game", "Sticker app" and the other apps are generic.
+
+### 3.4 Public Wi-Fi (`public-wi-fi`, new)
+**Goals:** anyone can name a network after the café (fake Wi-Fi); ask staff for the real name; use
+mobile data for money and important accounts. CornerCafe, CornerCafe_Free, Library_Guest, Airport
+Wi-Fi, Airport_Free and the pool networks are made up.
+
+### Module 3 quiz (`guard-your-privacy-quiz`)
+Eight questions, two per lesson, none a copy of a lesson card: share or keep private (sort), a
+deleted photo back online, match problems to switches, the gift offer, which apps need it (sort), the
+bus timetable's location button, the pool's two networks, banking at a café.
 
 ## Module 4: When Things Go Wrong (free: help, reporting and recovery are always free)
 

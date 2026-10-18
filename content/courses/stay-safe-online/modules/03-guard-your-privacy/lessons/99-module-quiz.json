@@ -61,7 +61,7 @@
         "src": "/illustrations/sso/guard-your-privacy-quiz-old-photo.svg",
         "alt": "Left: Jo's phone says Post deleted, last year. Right: a different phone shows the same photo, a cartoon kid mid-sneeze, shared in a group chat today.",
         "width": 340,
-        "height": 180
+        "height": 150
       },
       "options": [
         {
@@ -128,7 +128,7 @@
         "src": "/illustrations/sso/guard-your-privacy-quiz-gift.svg",
         "alt": "A chat with GiftBuddy_4, a gift-box picture with no face: i'll send u a gift! what suburb r u in? send a pic so i know it's u. The chat's menu shows Block and Report.",
         "width": 340,
-        "height": 180
+        "height": 150
       },
       "options": [
         {
@@ -269,7 +269,7 @@
         "src": "/illustrations/sso/guard-your-privacy-quiz-bank.svg",
         "alt": "Your phone at a café table: the café's Wi-Fi list, CornerCafe and CornerCafe_Free, and a separate switch, Mobile data, which is off. Beside it, a banking app: Your Bank.",
         "width": 340,
-        "height": 180
+        "height": 150
       },
       "options": [
         {

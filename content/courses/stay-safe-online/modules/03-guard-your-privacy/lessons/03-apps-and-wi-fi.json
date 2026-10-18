@@ -60,12 +60,12 @@
       "uses": [
         "apps-reach-phone-parts"
       ],
-      "prompt": "The drawing game asks for Sam's contacts. Sam taps Don't allow. **What happens?**",
+      "prompt": "The game asks for Sam's contacts. Sam taps Don't allow. **What happens?**",
       "image": {
         "src": "/illustrations/sso/apps-and-wi-fi-contacts.svg",
         "alt": "The drawing game with a half-drawn cat and a row of brush colours. Over it, a pop-up: Allow Drawing game to see your contacts? with Don't allow and Allow. A finger is on Don't allow.",
         "width": 340,
-        "height": 180,
+        "height": 160,
         "revealSrc": "/illustrations/sso/apps-and-wi-fi-contacts-reveal.svg",
         "revealAlt": "The pop-up is gone. The cat is finished in bright colours and the brushes work. A small crossed-out contacts icon says Contacts: off."
       },
@@ -206,14 +206,14 @@
         "src": "/illustrations/sso/apps-and-wi-fi-mic-dot.svg",
         "alt": "The top of your phone screen, zoomed in: the time 3:45, the battery, and a small glowing orange dot labelled mic in use (on many phones). Below, the home screen, with no call open.",
         "width": 340,
-        "height": 180,
+        "height": 150,
         "revealSrc": "/illustrations/sso/apps-and-wi-fi-mic-dot-reveal.svg",
         "revealAlt": "Settings open at Microphone: a list of apps with switches. Sticker app is switched off, and the orange dot is gone from the top of the screen."
       },
       "options": [
         {
           "id": "ignore",
-          "text": "Ignore it: phones show dots all the time",
+          "text": "Ignore it: dots like this are normal",
           "nudge": "No call is on: should any app be using your mic right now?"
         },
         {
