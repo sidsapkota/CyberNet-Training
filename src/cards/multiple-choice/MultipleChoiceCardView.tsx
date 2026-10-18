@@ -34,8 +34,14 @@ export function MultipleChoiceCardView({
 }: CardComponentProps<MultipleChoiceCard, MultipleChoiceAnswer>) {
   const promptId = useId();
   const locked = status !== "answering";
+  // The reveal picture shows the outcome, so it's earned: only after a right answer, never after a
+  // wrong one (that would give the answer away before Try again).
+  const reveal = status === "correct" && Boolean(card.image?.revealSrc);
   // Shown shuffled (stable per card); digit keys follow the order on screen.
   const options = displayOptions(card);
+  // With a picture, short answers ("Robot A", "Both") sit two to a row, so the full-width picture
+  // and every option fit a 360×560 screen.
+  const pairs = Boolean(card.image) && options.length % 2 === 0 && options.every((o) => o.text.length <= 16);
 
   useGlobalKeyDown((event) => {
     const index = digitKeyIndex(event.key, options.length);
@@ -51,19 +57,20 @@ export function MultipleChoiceCardView({
       <CardPrompt id={promptId}>{card.prompt}</CardPrompt>
       {card.image && (
         <figure className="mt-3 overflow-hidden rounded-card border border-line bg-screen p-2 sm:p-3">
+          {/* The picture fills the card's width, so any text in it reads at 14px or more on a phone. */}
           <Image
-            key={locked && card.image.revealSrc ? "reveal" : "idle"}
-            src={locked && card.image.revealSrc ? card.image.revealSrc : card.image.src}
-            alt={locked && card.image.revealSrc ? (card.image.revealAlt ?? card.image.alt) : card.image.alt}
+            key={reveal ? "reveal" : "idle"}
+            src={reveal && card.image.revealSrc ? card.image.revealSrc : card.image.src}
+            alt={reveal ? (card.image.revealAlt ?? card.image.alt) : card.image.alt}
             width={card.image.width}
             height={card.image.height}
-            className="mx-auto h-auto w-full max-w-[17rem] object-contain"
+            className="mx-auto h-auto w-full object-contain sm:max-w-[28rem]"
             priority
             unoptimized={card.image.src.endsWith(".svg")}
           />
         </figure>
       )}
-      <div role="radiogroup" aria-labelledby={promptId} className="mt-3 grid gap-1.5 sm:mt-6 sm:gap-2.5">
+      <div role="radiogroup" aria-labelledby={promptId} className={`mt-3 grid gap-1.5 sm:mt-6 sm:gap-2.5 ${pairs ? "grid-cols-2" : ""}`}>
         {options.map((option, i) => {
           const selected = answer === option.id;
           const tone: Tone = !selected

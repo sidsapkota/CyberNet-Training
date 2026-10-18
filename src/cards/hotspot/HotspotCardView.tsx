@@ -42,7 +42,7 @@ interface ModeProps extends CardComponentProps<HotspotCard, HotspotAnswer> {
   locked: boolean;
 }
 
-function TapMode({ card, answer, onAnswerChange, status, parts, hidden, locked, onTap }: ModeProps & { onTap: () => void }) {
+function TapMode({ card, answer, onAnswerChange, parts, hidden, locked, onTap }: ModeProps & { onTap: () => void }) {
   const need = card.targets?.length ?? 0;
   const targets = new Set(card.targets);
   const selected = new Set(answer.selected);
@@ -71,15 +71,15 @@ function TapMode({ card, answer, onAnswerChange, status, parts, hidden, locked, 
           {parts.map((part) => {
             const isSelected = selected.has(part.id);
             const isTarget = targets.has(part.id);
-            const result = locked ? (isSelected ? (isTarget ? "correct" : "wrong") : isTarget && status === "incorrect" ? "missed" : null) : null;
+            // Only the learner's own taps are marked. Parts they missed are never shown after a wrong
+            // answer: that would give the answer away before Try again.
+            const result = locked && isSelected ? (isTarget ? "correct" : "wrong") : null;
             const ring =
               result === "correct"
                 ? "border-screen-success"
                 : result === "wrong"
                   ? "border-screen-danger"
-                  : result === "missed"
-                    ? "border-dashed border-screen-success"
-                    : isSelected
+                  : isSelected
                       ? "border-screen-accent shadow-glow"
                       : "border-transparent hover:border-on-screen-muted";
             return (
@@ -89,7 +89,7 @@ function TapMode({ card, answer, onAnswerChange, status, parts, hidden, locked, 
                 data-keyboard-passthrough
                 disabled={locked}
                 aria-pressed={locked ? undefined : isSelected}
-                aria-label={`${part.name}${result === "correct" ? ", correct" : result === "wrong" ? ", not this one" : result === "missed" ? ", this one was needed" : ""}`}
+                aria-label={`${part.name}${result === "correct" ? ", correct" : result === "wrong" ? ", not this one" : ""}`}
                 onClick={() => {
                   onAnswerChange(toggleTap(card, answer, part.id));
                   onTap();

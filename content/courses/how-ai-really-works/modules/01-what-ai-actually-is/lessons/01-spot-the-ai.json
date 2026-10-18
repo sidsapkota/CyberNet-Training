@@ -23,7 +23,7 @@
         "src": "/illustrations/two-robots-fruit.svg",
         "alt": "Two robots sorting a red apple. Robot A holds a recipe card reading red plus round equals apple. Robot B has a stack of apple photos. Both robots say apple.",
         "width": 340,
-        "height": 158
+        "height": 168
       },
       "options": [
         { "id": "photos", "text": "By seeing lots of apple photos" },
@@ -41,12 +41,12 @@
         "rules-based-program",
         "learning-from-examples"
       ],
-      "prompt": "Who gets it right?",
+      "prompt": "A **green** apple rolls in. Which robot still calls it an apple?",
       "image": {
         "src": "/illustrations/two-robots-green.svg",
         "alt": "The same two robots, now with a green apple between them. Neither has answered yet.",
         "width": 340,
-        "height": 158,
+        "height": 168,
         "revealSrc": "/illustrations/two-robots-green-result.svg",
         "revealAlt": "Robot A says not apple (wrong). Robot B says apple (right)."
       },
@@ -112,7 +112,7 @@
         "src": "/illustrations/two-robots-ball.svg",
         "alt": "The same two robots, now with a red ball between them. Neither has answered yet.",
         "width": 340,
-        "height": 158,
+        "height": 168,
         "revealSrc": "/illustrations/two-robots-ball-result.svg",
         "revealAlt": "Robot A says apple (wrong). Robot B says not apple (right)."
       },

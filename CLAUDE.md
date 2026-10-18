@@ -1871,7 +1871,7 @@ this list and fix anything busy.**
 Applies to all content work: the "learn before you do" rollout, new courses and card redesigns.
 1. **Start from real life:** every lesson opens from something the learner does or uses (their
    phone, a game, a scam text), then shows the tech underneath.
-2. **Predict, then play:** open new ideas with "What do you think happens?" before explaining.
+2. **Play, then predict:** let them mess with it, then ask "What do you think happens?" before explaining (see Lesson Blueprint v1).
 3. **Interactive first:** drag, tap and try; explainers are one sentence and come after doing.
 4. **Wrong answers teach:** show visually why it's wrong (the diagram or scene changes), then Try
    again. Never punish mistakes.
@@ -1902,61 +1902,71 @@ a definition question to look like one.
 - **Measure:** card measurements (above) and `npm run report:cards` show which cards are slowest and most
   missed; convert those first.
 
-### The lesson pattern (HARD RULE — every lesson, every course)
-Real users get lost when a "theory" card tells them something and the next card asks them to use it:
-the jump is too big. Simple, fun and Brilliant-style; anyone 13+ gets it first time, never babyish.
-Every lesson follows these beats, in order (some may share a card where the shape rules force it; a
-module on the time-based "learn-first" rules can give each its own card):
-1. **Hook:** a real-life moment they recognise ("Your phone unlocks when it sees your face. How does
-   it know it's you?"). The hook line goes **at the top of the Watch card**, not on its own explainer.
-2. **Watch it happen — ALWAYS an interactive card, NEVER an explainer:** they **see** the idea
-   working *before* it's named, by doing — tap, drag, predict, reveal (an MC with an image, a
-   simulator, a reveal, a train-model card…). A static picture plus a paragraph is still telling, not
-   showing. No paragraphs. The "aha" (e.g. the green apple breaking the recipe) comes **before** the
-   idea is named.
-3. **Name it:** ONE idea, in one or two short plain sentences, right after they've seen it. Pick one
-   word for the idea and use it the same way everywhere (e.g. "follows a recipe" / "learned from
-   examples", never "rule-based" or "learns" alone).
-4. **Easy win:** a question answerable directly from what they just watched; almost everyone gets it.
-5. **Twist:** a slightly harder case with a new example that makes them think (the green apple).
-6. **Try this:** one thing to notice or do in real life today.
-7. **Tease the next lesson** in one exciting line ("Next: how a hacker guesses a weak password in 2
-   seconds"), so they want to keep going (this is what makes people want Pro). This is the **recap's
-   last line**, written as a trailing paragraph (`**Next:** …`), **not** a 4th bullet (recaps allow
-   at most 3 bullets).
+### Lesson Blueprint v1 (HARD RULE — owner, 18 Oct 2026)
+Supersedes the earlier 7-beat lesson pattern and the 12-word question rule.
 
-**Hard rules (enforced by review, and by `load.test.ts`/`concepts.test.ts`/`e2e:fit-audit` where it can):**
-- Never ask about anything the learner hasn't **seen** in this lesson or earlier in the module.
-- **One new idea per lesson.** If a lesson has two, split it.
-- **No jargon before it's shown.** If a term is needed, show it first, then name it.
-- **3-second test** on every card: a 13-year-old knows what to do within 3 seconds.
-- Wrong answers explain why in one friendly line, then let them try again.
-- **Fun beats thorough** — cut anything that's only there for completeness.
-- Lessons stay **3–5 minutes** and fit **360×560**.
-- **At most 2 explainers per lesson** — "Name it" and the recap. Everything else is hands-on. The
-  Watch is never one of them.
-- **Split, don't squeeze:** if the pattern can't fit a lesson within the shape rules (`src/lib/content/shape.ts`),
-  split it into two lessons rather than cramming beats into paragraphs.
-- **Short questions, short feedback (gates):** every question (a graded card's `prompt`, or a
-  scenario step's text) is **≤12 words**, *not counting a quoted scam message* — the quote is the
-  stimulus, like a picture. Every feedback line (an `explanation`, a scenario `consequence`) is
-  **≤2 lines**: at most 2 sentences and ≤26 words. `node scripts/lesson-length-report.mjs <course-id>
-  [module-id]` reports the longest of each per lesson and flags anything over.
+**One lesson = one idea, 6–8 cards, 3–5 minutes, one story.** The same characters or objects stay on
+screen all lesson; each card changes ONE thing.
 
-**Make it feel like a game, not a worksheet (every question card, every course):**
-1. **Picture first, words last:** every question card has a visual. If a picture can show it, don't
-   write it. (An `image` on `multiple_choice`, a scene, a simulator, a `train_model` card…)
-2. **Questions are short:** aim for **under 12 words**. Never re-describe in text what the picture
-   already shows.
-3. **Same characters all lesson:** reuse the same picture or characters card to card, changing **one
-   thing** each time (red apple → green apple → red ball), so each card is the next scene of a story,
-   not a new worksheet. A question card's image may have a **reveal state** (a second SVG shown after
-   Check) so the answer plays out in the picture.
-4. **Tap the thing, not the sentence:** where possible, answers are pictures or objects to tap, not
-   text options.
-5. **Feedback is one line, maybe two:** celebrate or nudge, then move on. Never a paragraph (so a
-   graded card's `explanation` is one or two short sentences, not a lecture).
-6. **The fun test:** if a card feels like a school worksheet, redesign it.
+**The 8 beats**
+1. **Hook:** a real-life situation they recognise, tap to start.
+2. **Play:** a toy or simulator they mess with. Not graded.
+3. **Predict:** guess what happens next, then the reveal.
+4. **Name it:** 1–2 plain sentences, the same picture now labelled.
+5. **Easy win:** apply it straight away (most people get it right).
+6. **Twist:** one thing changes and they have to think.
+7. **Real life:** apply it to their own world (their phone, apps, home).
+8. **Wrap:** a one-line takeaway, a "Try this", and a one-line tease of the next lesson.
+
+**Every question card has 4 parts**
+1. **Situation:** what's happening, in words, under 15 words. Never a question that only makes sense
+   if you remember the last card ("Who gets it right?" alone is not allowed).
+2. **Picture:** fills most of the card's width; any text inside reads at 14px or more, rendered, on
+   phone and desktop (`pictureText.test.ts` checks every lesson SVG at 360px).
+3. **Action:** a clear verb ("Tap the robot that…", "Drag each app into…").
+4. **Answers:** tappable objects where possible, otherwise short text.
+
+**Feedback**
+- **Right:** one line saying WHY, then the reveal picture.
+- **1st wrong:** a hint pointing to the idea. Never show the answer.
+- **2nd wrong:** show the answer and a one-line explanation, then continue. No endless retry loops.
+- **The answer (including reveal pictures) is never visible before it's earned.** The player and
+  card views enforce it: a multiple-choice reveal picture shows only after a right answer, and a
+  hotspot never marks the parts a learner missed.
+
+**Difficulty**
+- Within a lesson: easy, easy, medium, one stretch card.
+- Target 80–85% first-try accuracy; card measurements (`npm run report:cards`) find the cards outside
+  that.
+
+**Words**
+- Plain language a 13-year-old understands on first read.
+- No new term until it has been shown.
+- One word per idea, used the same way everywhere.
+
+**Still in force alongside it:** never test anything not seen earlier in the lesson or module (concept
+tags); one new idea per lesson (split, don't squeeze); every card fits 360×560; feedback lines stay
+short (an `explanation` is one line, maybe two).
+
+**Rollout and process**
+1. **Storyboard first:** for each lesson, a text storyboard in `docs/storyboards/<course>/<lesson>.md`:
+   per card the beat, the situation line, a picture description, the action, the answers, the correct
+   answer, and the feedback for right / 1st wrong / 2nd wrong.
+2. **Review:** all of one course's storyboards go on one review page the owner reads on a phone. Stop
+   for the owner's OK per course.
+3. **Build:** after the OK, build that course to its storyboards, then the full gate and visual QA,
+   then merge. One course at a time: Stay Safe Online first.
+4. **Bugs are fixed everywhere immediately.** Style changes apply only to new or rebuilt lessons;
+   already-approved lessons are only edited for bugs. Until a course is rebuilt, its lessons keep the
+   old shape checks (`src/lib/content/shape.ts`, `scripts/lesson-length-report.mjs`); the rebuild
+   updates them to the blueprint's numbers, and the 2nd-wrong "show the answer, then continue" step
+   lands in the player with the first rebuilt course.
+5. **Blueprint changes get a version bump and a line in the changelog below.**
+
+**Blueprint changelog**
+- **v1** (18 Oct 2026): the 8 beats, the 4-part question card, feedback (hint, then the answer on the
+  2nd wrong), difficulty, words and the storyboard-first rollout. Replaces the 7-beat lesson pattern
+  and the 12-word question rule.
 
 ### Zero-confusion rule (every card type, every course)
 A learner should know what to do within **3 seconds** of seeing a card.
