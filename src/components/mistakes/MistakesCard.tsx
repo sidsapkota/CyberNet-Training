@@ -6,6 +6,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { MistakesIcon, ProIcon } from "@/components/ui/icons";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { usePro } from "@/lib/pro/ProProvider";
+import { usePitchPrices } from "@/components/pro/ProPitch";
 
 /**
  * The dashboard's Mistake review panel, for signed-in learners with mistakes waiting. Pro opens the
@@ -17,6 +18,9 @@ export function MistakesCard({ className = "" }: { className?: string }) {
   const { pro, hasPro } = usePro();
   const signedIn = auth.status === "signed-in";
   const [count, setCount] = useState<number | null>(null);
+  // Every Pro lock says what it costs (owner, 19 Oct 2026): "Pro from A$5 a month".
+  const prices = usePitchPrices(undefined);
+  const from = prices ? (prices.annual.perMonth ? `${prices.annual.perMonth} a month` : `${prices.annual.price} a year`) : null;
 
   useEffect(() => {
     if (!signedIn) return;
@@ -45,6 +49,7 @@ export function MistakesCard({ className = "" }: { className?: string }) {
           <span className="font-mono font-semibold text-ink tabular-nums">{count}</span> {count === 1 ? "card" : "cards"} to try
           again
         </p>
+        {!hasPro && from && <p className="text-small text-ink-muted">Review them with Pro, from {from}.</p>}
       </div>
       <ButtonLink href="/review" variant="secondary" className="w-full sm:w-auto">
         {hasPro ? (

@@ -61,14 +61,15 @@ export function Landing({
     <div className="mx-auto max-w-page px-gutter">
       {/* Hero: a live byte when the Feed is on (play first, read later), otherwise the mascot. */}
       {heroByte ? (
-        <section aria-label="Try one now" className="flex flex-col items-center pt-4 pb-12 sm:pt-10">
-          <HeroByte byte={heroByte} />
-          <div className="mt-3 flex w-full max-w-lesson flex-col items-center gap-1 text-center">
-            <Link href={`/lesson/${firstLessonId}`} className="inline-flex min-h-11 items-center text-small font-semibold text-accent-ink underline-offset-2 hover:underline">
-              Or start a full lesson
-            </Link>
-            <p className="text-small text-ink-muted">{AUDIENCE}</p>
+        <section aria-labelledby="hero-title" className="flex flex-col items-center pt-4 pb-12 sm:pt-10">
+          {/* What this is, in one line, before the first tap (a video visitor has never heard of us). */}
+          <div className="mb-3 w-full max-w-lesson">
+            <h1 id="hero-title" className="text-lead leading-snug font-semibold text-balance">
+              Learn how tech works by playing with it.
+            </h1>
+            <p className="text-small text-ink-muted">Free. {AUDIENCE}</p>
           </div>
+          <HeroByte byte={heroByte} lessonMinutes={lessonMinutes} />
         </section>
       ) : (
       <section className="flex flex-col items-center pt-6 pb-12 text-center sm:pt-12">
@@ -125,7 +126,7 @@ export function Landing({
           {[
             "No ads, and no tracking cookies",
             "We never sell anyone's data",
-            "Start without an account. Free accounts (13+) keep only an email, a display name and learning progress",
+            "Start without an account. Free accounts (13+) keep only an email, a made-up username and learning progress",
           ].map((text) => (
             <li key={text} className="flex items-start gap-3 text-body">
               <SafeIcon className="mt-0.5 size-5 shrink-0 text-ink-muted" />

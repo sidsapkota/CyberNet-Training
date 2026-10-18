@@ -97,7 +97,8 @@ try {
   await page.goto(`${BASE}/lesson/${lesson2.id}`, { waitUntil: "networkidle" });
   const gated = await page.getByRole("heading", { name: GATE }).waitFor({ timeout: 15_000 }).then(() => true, () => false);
   record("Lesson 2 shows the sign-up gate to a guest", gated && (await page.getByRole("link", { name: "Not now" }).isVisible()));
-  record("…with the perks, including leagues", await page.getByText(/Weekly leagues/).isVisible());
+  record("…with the perks", await page.getByText(/Any lesson in any course/).isVisible());
+  record("…and the sign-in buttons in view without scrolling", await page.getByRole("button", { name: /Google/ }).first().evaluate((el) => el.getBoundingClientRect().bottom <= window.innerHeight));
   await page.screenshot({ path: path.join(SHOTS, "360-gate-lesson.png"), fullPage: true });
 
   // 4. Finishing lesson 1: the lesson-complete screen offers the gate with this lesson's XP.

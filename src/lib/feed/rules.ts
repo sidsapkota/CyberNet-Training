@@ -3,8 +3,8 @@
  * order bytes come in, and session-length buckets for analytics.
  */
 
-/** The byte new visitors play on the landing page (it has a picture). */
-export const HERO_BYTE = "red-ball";
+/** The byte new visitors play on the landing page: Stay Safe Online lesson 1, the "Start here" course (it has a picture). */
+export const HERO_BYTE = "strongest-password";
 
 /** Byte XP rides on the normal card ledger under this lesson id (card id = byte id). */
 export const FEED_LESSON_ID = "feed";

@@ -1,4 +1,5 @@
 [
+  { "id": "strongest-password", "hook": "Scammers' computers guess a billion passwords a second.", "lesson": "strong-passwords", "card": "your-new-passphrase" },
   { "id": "guessed-in-a-second", "hook": "Some passwords get guessed in under a second. Which ones?", "lesson": "strong-passwords", "card": "easy-or-hard" },
   { "id": "stolen-password", "hook": "One text can tell you someone has your password.", "lesson": "two-step-sign-in", "card": "the-code-text" },
   { "id": "parcel-fee", "hook": "A text says your parcel is stuck. Pay $1.95?", "lesson": "scam-texts-and-calls", "card": "pay-the-fee" },
