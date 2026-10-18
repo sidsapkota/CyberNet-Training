@@ -1,0 +1,230 @@
+{
+  "id": "scam-calls",
+  "kind": "lesson",
+  "title": "Scam Calls",
+  "about": "Hang up on a caller who wants a code, money or a secret.",
+  "order": 3,
+  "icon": "phone",
+  "blueprint": "1.1",
+  "cards": [
+    {
+      "id": "the-phone-rings",
+      "type": "hook",
+      "difficulty": "core",
+      "situation": "Sam's phone rings. A calm voice says, \"Your Bank fraud team.\"",
+      "image": {
+        "src": "/illustrations/sso/scam-calls-hook.svg",
+        "alt": "Sam beside a phone with an incoming call: a grey silhouette, Unknown number, mobile. At the bottom, a red Decline button and a green Accept button with a soft pulse ring.",
+        "width": 340,
+        "height": 230
+      }
+    },
+    {
+      "id": "listen-to-the-call",
+      "type": "hotspot",
+      "difficulty": "core",
+      "teaches": [
+        "scam-call-signs",
+        "voice-clone",
+        "gift-cards-scam-payment"
+      ],
+      "prompt": "Listen to the caller. **Tap each line** to look closer.",
+      "scene": "phone-call",
+      "mode": "explore",
+      "parts": [
+        {
+          "part": "call-caller",
+          "job": "Anyone can say they're Your Bank, and even a voice can be copied. Neither proves who's calling."
+        },
+        {
+          "part": "call-spending",
+          "job": "A scare to make you hurry. That's rushing you."
+        },
+        {
+          "part": "call-code",
+          "job": "A code arrives when someone types your password. Your Bank never asks for it."
+        },
+        {
+          "part": "call-gift-cards",
+          "job": "Gift cards are a scammer's favourite: once you send the codes, the money is gone."
+        },
+        {
+          "part": "call-secret",
+          "job": "\"Tell no one\" stops anyone helping you check."
+        }
+      ],
+      "explanation": "A code, gift cards and \"tell no one\": this call is a scam."
+    },
+    {
+      "id": "read-out-the-code",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "predict": true,
+      "play": "predict",
+      "uses": [
+        "two-step-sign-in"
+      ],
+      "prompt": "Sam reads the texted code out to the caller. **What can they do now?**",
+      "image": {
+        "src": "/illustrations/sso/scam-calls-predict.svg",
+        "alt": "Sam's phone shows a text: Your Bank code: 482 913. Never share this code. Sam reads it out: 4, 8, 2. Below, three choices: the caller signs in as Sam; stops the payment; nothing, a code alone is useless.",
+        "width": 340,
+        "height": 220,
+        "revealSrc": "/illustrations/sso/scam-calls-predict-reveal.svg",
+        "revealAlt": "The caller's laptop now says Hi, Sam: they're signed in to Sam's account. Sam's phone shows: New sign-in on another device."
+      },
+      "options": [
+        {
+          "id": "sign-in",
+          "text": "Sign in to Sam's account",
+          "area": { "x": 1.2, "y": 49.1, "w": 31.8, "h": 49.1 }
+        },
+        {
+          "id": "stop-payment",
+          "text": "Stop the strange payment",
+          "area": { "x": 34.1, "y": 49.1, "w": 31.8, "h": 49.1 }
+        },
+        {
+          "id": "nothing",
+          "text": "Nothing: a code alone is useless",
+          "area": { "x": 67.1, "y": 49.1, "w": 31.8, "h": 49.1 }
+        }
+      ],
+      "correctOptionId": "sign-in",
+      "explanation": "The code was the last step of signing in, so reading it out lets the caller in."
+    },
+    {
+      "id": "meet-hang-up",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "scam-call-signs",
+        "call-back-on-known-number"
+      ],
+      "title": "Hang up, call back",
+      "body": "If a caller wants a code, money or for you to tell no one, it's a **scam**: hang up. Then call back on a number you already have, like the one on the back of your card.",
+      "image": {
+        "src": "/illustrations/sso/scam-calls-named.svg",
+        "alt": "The same call, labelled. Card used now: rushing you. Read me the code: asks for secrets. Buy gift cards: asks for money. Don't tell anyone: tell no one. Below, the red End call button with a cyan ring, Hang up, and the back of a bank card with an arrow: call back here.",
+        "width": 320,
+        "height": 200
+      }
+    },
+    {
+      "id": "hang-up-or-ok",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "uses": [
+        "scam-call-signs",
+        "never-share-sign-in-code",
+        "gift-cards-scam-payment",
+        "call-back-on-known-number"
+      ],
+      "prompt": "Which calls mean hang up? **Sort each one.**",
+      "bins": [
+        { "id": "hang-up", "label": "Hang up" },
+        { "id": "ok", "label": "That's OK" }
+      ],
+      "items": [
+        { "id": "code", "label": "\"Read me the code we texted.\"", "bin": "hang-up" },
+        { "id": "gift-cards", "label": "\"Pay in gift cards, or lose it all.\"", "bin": "hang-up" },
+        { "id": "secret", "label": "\"Don't tell your parents.\"", "bin": "hang-up" },
+        { "id": "card-number", "label": "You ring the number on your card", "bin": "ok" },
+        { "id": "homework", "label": "A friend calls about homework", "bin": "ok" }
+      ],
+      "explanation": "Codes, gift cards and \"tell no one\" mean hang up; a number you chose is fine.",
+      "nudge": "Check each one: does it want a code, money, or for you to tell no one?",
+      "showAnswer": "Hang up on the code, the gift cards and \"don't tell\". Ringing your card's number and a homework call are fine."
+    },
+    {
+      "id": "sounds-like-cousin",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "play": "consequence",
+      "uses": [
+        "voice-clone",
+        "scam-call-signs",
+        "call-back-on-known-number"
+      ],
+      "prompt": "An unknown number rings. It sounds just like Sam's cousin Jess. **Tap what Sam should do.**",
+      "image": {
+        "src": "/illustrations/sso/scam-calls-jess.svg",
+        "alt": "A call from an unknown number, in a voice like Jess's: Sam, it's Jess! I'm in trouble. Buy gift cards and send me the codes. Tell no one! Below, three choices: buy the gift cards; keep it secret; hang up and call Jess's saved number.",
+        "width": 340,
+        "height": 230,
+        "revealSrc": "/illustrations/sso/scam-calls-jess-reveal.svg",
+        "revealAlt": "Sam hangs up and calls Jess's saved number. The real Jess answers: What? I'm at netball. That wasn't me!"
+      },
+      "options": [
+        {
+          "id": "buy",
+          "text": "Buy them: it's Jess's voice",
+          "area": { "x": 1.2, "y": 58.3, "w": 31.8, "h": 40 },
+          "nudge": "Forget the voice. Which warning signs did you hear?"
+        },
+        {
+          "id": "keep-secret",
+          "text": "Keep it secret, like Jess asked",
+          "area": { "x": 34.1, "y": 58.3, "w": 31.8, "h": 40 },
+          "nudge": "Forget the voice. Which warning signs did you hear?"
+        },
+        {
+          "id": "call-saved",
+          "text": "Hang up and call Jess's saved number",
+          "area": { "x": 67.1, "y": 58.3, "w": 31.8, "h": 40 }
+        }
+      ],
+      "correctOptionId": "call-saved",
+      "explanation": "Voices can be copied, but Jess's saved number reaches the real Jess.",
+      "showAnswer": "Hang up and call Jess's saved number: gift cards and \"tell no one\" are warning signs, whoever's voice it is."
+    },
+    {
+      "id": "which-number",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "uses": [
+        "call-back-on-known-number"
+      ],
+      "prompt": "\"Your Bank\" just rang about your card. **Tap the number you'd call back.**",
+      "image": {
+        "src": "/illustrations/sso/scam-calls-which-number.svg",
+        "alt": "Three numbers to call back: a sticky note with the number the caller gave; the phone's recent calls with a Call back button for the last caller; the back of your bank card, with Your Bank's printed number.",
+        "width": 340,
+        "height": 190
+      },
+      "options": [
+        {
+          "id": "caller-number",
+          "text": "The number the caller gave",
+          "area": { "x": 1.2, "y": 2.1, "w": 31.8, "h": 95.8 },
+          "nudge": "Which of these numbers did you already have before the phone rang?"
+        },
+        {
+          "id": "call-back",
+          "text": "Call back the last caller",
+          "area": { "x": 34.1, "y": 2.1, "w": 31.8, "h": 95.8 },
+          "nudge": "Which of these numbers did you already have before the phone rang?"
+        },
+        {
+          "id": "back-of-card",
+          "text": "The number on the back of your card",
+          "area": { "x": 67.1, "y": 2.1, "w": 31.8, "h": 95.8 }
+        }
+      ],
+      "correctOptionId": "back-of-card",
+      "explanation": "The card's number was there before the call, so the caller can't have chosen it.",
+      "showAnswer": "The back of your card. The caller chose the other two, so they can lead straight back to the scammer."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "scam-call-signs",
+        "call-back-on-known-number"
+      ],
+      "title": "Recap",
+      "body": "A caller wants a code, money or for you to tell no one? Hang up and call back on a number you already have.\n\n**Try this:** Save your bank's real number (from the back of your card or its own app) in your contacts.\n\n**Next:** A website that looks exactly like your bank's, but isn't."
+    }
+  ]
+}

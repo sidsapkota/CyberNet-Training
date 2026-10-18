@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 220" width="340" height="220" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>A pay page at parcels-redelivery.example: Pay $1.95, a card number ending 4821 typed in and the Pay button pressed. Below, three choices: the hoodie arrives; they spend from the card; Parcels refunds it.</title>
+  <rect x="4" y="4" width="332" height="96" rx="10" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <rect x="12" y="10" width="316" height="26" rx="13" fill="#061630" stroke="#6f8fbd" stroke-width="1"/>
+  <text x="26" y="29" font-size="16" font-weight="500" fill="#e6eef9">parcels-redelivery.example</text>
+  <text x="14" y="62" font-size="16" font-weight="700" fill="#e6eef9">Pay $1.95</text>
+  <rect x="98" y="44" width="150" height="26" rx="5" fill="#061630" stroke="#6f8fbd" stroke-width="1.2"/>
+  <text x="106" y="63" font-size="16" font-weight="500" fill="#e6eef9" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace">•••• 4821</text>
+  <rect x="256" y="44" width="70" height="26" rx="5" fill="#6f8fbd"/>
+  <text x="291" y="63" font-size="16" font-weight="700" fill="#061630" text-anchor="middle">Pay</text>
+  <path d="M312 64l8 14l3 -6l7 1Z" fill="#e6eef9" stroke="#061630" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="4" y="108" width="108" height="108" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="22" y="124" width="46" height="30" rx="4" fill="#24507f" stroke="#8be3ff" stroke-width="2"/>
+  <path d="M68 132h14l10 10v12h-24Z" fill="#24507f" stroke="#8be3ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="36" cy="156" r="6" fill="#1d3d6e" stroke="#8be3ff" stroke-width="2"/>
+  <circle cx="80" cy="156" r="6" fill="#1d3d6e" stroke="#8be3ff" stroke-width="2"/>
+  <text x="58" y="186" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Hoodie</text>
+  <text x="58" y="205" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">arrives</text>
+  <rect x="116" y="108" width="108" height="108" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="140" y="118" width="56" height="36" rx="7" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <rect x="149" y="132" width="15" height="11" rx="2" fill="#ffb547"/>
+  <path d="M198 128L214 120" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M208.5 127.1L214 120L205.0 120.1" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M198 142L214 150" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M205.0 149.9L214 150L208.5 142.9" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="170" y="186" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">They spend</text>
+  <text x="170" y="205" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">from the card</text>
+  <rect x="228" y="108" width="108" height="108" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <circle cx="278" cy="140" r="16" fill="#ffb547"/>
+  <text x="278" y="146" font-size="18" font-weight="700" fill="#061630" text-anchor="middle">$</text>
+  <path d="M300 130a24 24 0 0 1 -6 32" fill="none" stroke="#e6eef9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M290 160l4 3l5 -5" fill="none" stroke="#e6eef9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="282" y="186" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Parcels</text>
+  <text x="282" y="205" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">refunds it</text>
+</svg>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 230" width="340" height="230" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>A phone home screen. At the top, a text from Your Bank: Card blocked! Unlock it at yourbank-unlock.example, or call the number we sent. Below, three apps: Messages, to tap the text's link; Phone, to call the text's number; the Your Bank app.</title>
+  <rect x="4" y="4" width="332" height="94" rx="12" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <path d="M16 16h22v14h-12l-6 5v-5h-4Z" fill="none" stroke="#a3b6d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="46" y="30" font-size="16" font-weight="700" fill="#e6eef9">Your Bank</text>
+  <text x="16" y="52" font-size="16" font-weight="500" fill="#e6eef9">Card blocked! Unlock it at</text>
+  <text x="16" y="72" font-size="16" font-weight="500" fill="#e6eef9">yourbank-unlock.example,</text>
+  <text x="16" y="92" font-size="16" font-weight="500" fill="#e6eef9">or call the number we sent.</text>
+  <rect x="4" y="106" width="108" height="120" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="30" y="116" width="56" height="56" rx="14" fill="#1d3d6e" stroke="#8be3ff" stroke-width="1.5"/>
+  <path d="M47 136h22v14h-12l-6 5v-5h-4Z" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="82" cy="120" r="10" fill="#ff7a7a"/>
+  <text x="82" y="126" font-size="16" font-weight="700" fill="#061630" text-anchor="middle">1</text>
+  <text x="58" y="194" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Tap the</text>
+  <text x="58" y="213" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">text's link</text>
+  <rect x="116" y="106" width="108" height="120" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="142" y="116" width="56" height="56" rx="14" fill="#1d3d6e" stroke="#8be3ff" stroke-width="1.5"/>
+  <path d="M159 133c0 12 10 22 22 22l3 -5l-6 -4l-3 3c-4 -2 -8 -6 -10 -10l3 -3l-4 -6Z" fill="#e6eef9"/>
+
+  <text x="170" y="194" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Call the</text>
+  <text x="170" y="213" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">text's number</text>
+  <rect x="228" y="106" width="108" height="120" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="254" y="116" width="56" height="56" rx="14" fill="#1d3d6e" stroke="#8be3ff" stroke-width="1.5"/>
+  <path d="M282 128l13 5v10c0 9 -6 14 -13 17c-7 -3 -13 -8 -13 -17v-10Z" fill="#24507f" stroke="#8be3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="282" cy="145" r="6" fill="#ffb547"/>
+
+  <text x="282" y="194" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Open the</text>
+  <text x="282" y="213" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Your Bank app</text>
+</svg>

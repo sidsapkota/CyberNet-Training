@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 170" width="340" height="170" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>The claim page at big-prizes.example: Pay $4.99 postage to get your prize, with empty boxes for card number, expiry and CVC. A tag says: Too good to be true.</title>
+  <rect x="2" y="2" width="336" height="166" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="10" y="9" width="320" height="28" rx="14" fill="#061630" stroke="#6f8fbd" stroke-width="1"/>
+  <text x="24" y="29" font-size="16" font-weight="500" fill="#e6eef9">big-prizes.example</text>
+  <text x="14" y="62" font-size="16" font-weight="700" fill="#e6eef9">Pay $4.99 postage</text>
+  <text x="14" y="88" font-size="16" font-weight="500" fill="#a3b6d2">to get your prize</text>
+  <rect x="152" y="68" width="178" height="26" rx="6" fill="#ff7a7a"/>
+  <text x="241" y="86.5" font-size="16" font-weight="600" fill="#061630" text-anchor="middle">Too good to be true</text>
+  <rect x="14" y="98" width="312" height="28" rx="6" fill="#061630" stroke="#6f8fbd" stroke-width="1.2"/>
+  <text x="26" y="118" font-size="16" font-weight="500" fill="#a3b6d2">Card number</text>
+  <rect x="14" y="132" width="150" height="28" rx="6" fill="#061630" stroke="#6f8fbd" stroke-width="1.2"/>
+  <text x="26" y="152" font-size="16" font-weight="500" fill="#a3b6d2">Expiry</text>
+  <rect x="176" y="132" width="150" height="28" rx="6" fill="#061630" stroke="#6f8fbd" stroke-width="1.2"/>
+  <text x="188" y="152" font-size="16" font-weight="500" fill="#a3b6d2">CVC</text>
+</svg>

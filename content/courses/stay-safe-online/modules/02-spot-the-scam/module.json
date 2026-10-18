@@ -1,7 +1,7 @@
 {
   "id": "spot-the-scam",
   "title": "Spot the Scam",
-  "description": "Phishing emails, scam texts and calls, and fake websites.",
+  "description": "Scam emails, texts and calls, and fake websites.",
   "order": 2,
   "access": "pro",
   "teaserCard": { "lesson": "phishing-emails", "card": "prize-email" }

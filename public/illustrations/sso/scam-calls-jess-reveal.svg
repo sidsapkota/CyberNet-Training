@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 230" width="340" height="230" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Sam hangs up and calls Jess's saved number. The real Jess answers: What? I'm at netball. That wasn't me!</title>
+  <rect x="4" y="4" width="332" height="122" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <circle cx="30" cy="30" r="16" fill="#24507f" stroke="#8be3ff" stroke-width="2"/>
+  <g transform="translate(30 30) scale(0.8)">
+  <clipPath id="av-jess-30-30"><circle cx="0" cy="0" r="19"/></clipPath>
+  <g clip-path="url(#av-jess-30-30)">
+  <rect x="-14" y="8" width="28" height="20" rx="9" fill="#7a3f4f"/>
+  <circle cx="0" cy="-2" r="9" fill="#f2c6a0"/>
+  <path d="M-10 6V-3A10 10 0 0 1 10 -3V6L7 6V-3C4 -7 -4 -7 -7 -3V6Z" fill="#6b3f22"/>
+  </g>
+  </g>
+  <text x="54" y="26" font-size="16" font-weight="700" fill="#e6eef9">Jess (saved)</text>
+  <text x="54" y="46" font-size="16" font-weight="500" fill="#3ddc97">Calling · 0:04</text>
+  <rect x="12" y="58" width="316" height="56" rx="12" fill="#24507f" stroke="#3ddc97" stroke-width="1.5"/>
+  <text x="22" y="80" font-size="16" font-weight="500" fill="#e6eef9">What? I'm at netball.</text>
+  <text x="22" y="102" font-size="16" font-weight="700" fill="#e6eef9">That wasn't me!</text>
+  <rect x="4" y="134" width="108" height="92" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="30" y="142" width="56" height="32" rx="5" fill="#ffb547"/>
+  <path d="M49.599999999999994 142V174M30 156.4H86" fill="none" stroke="#061630" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M49.599999999999994 156.4c-8 -10 -14 -2 0 0c8 -10 14 -2 0 0" fill="none" stroke="#061630" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="58" y="194" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Buy the</text>
+  <text x="58" y="213" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">gift cards</text>
+  <rect x="116" y="134" width="108" height="92" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <circle cx="170" cy="158" r="15" fill="#f2c6a0"/>
+  <circle cx="164" cy="154" r="1.9" fill="#061630"/>
+  <circle cx="176" cy="154" r="1.9" fill="#061630"/>
+  <rect x="168" y="156" width="5" height="18" rx="2.5" fill="#d9a27a" stroke="#061630" stroke-width="1"/>
+  <text x="170" y="194" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Keep it</text>
+  <text x="170" y="213" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">secret</text>
+  <rect x="228" y="134" width="108" height="92" rx="10" fill="#24507f" stroke="#3ddc97" stroke-width="1.5"/>
+  <circle cx="262" cy="158" r="13" fill="#ff7a7a"/>
+  <g transform="translate(262 159) scale(0.6861111111111111)">
+  <path d="M-9 -10C-11 -4 -8 4 -2 9C3 13 8 13 11 10L8 5L4 7C1 5 -3 1 -4 -3L-1 -6L-4 -11Z" fill="#061630"/>
+  </g>
+  <path d="M278 158L290 158" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M281.9 161.9L290 158L281.9 154.1" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="310" cy="158" r="15" fill="#24507f" stroke="#8be3ff" stroke-width="2"/>
+  <g transform="translate(310 158) scale(0.75)">
+  <clipPath id="av-jess-310-158"><circle cx="0" cy="0" r="19"/></clipPath>
+  <g clip-path="url(#av-jess-310-158)">
+  <rect x="-14" y="8" width="28" height="20" rx="9" fill="#7a3f4f"/>
+  <circle cx="0" cy="-2" r="9" fill="#f2c6a0"/>
+  <path d="M-10 6V-3A10 10 0 0 1 10 -3V6L7 6V-3C4 -7 -4 -7 -7 -3V6Z" fill="#6b3f22"/>
+  </g>
+  </g>
+  <text x="282" y="194" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Hang up, call</text>
+  <text x="282" y="213" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Jess's number</text>
+</svg>

@@ -121,59 +121,75 @@ Not exported, so the answers stay secret.
 
 ### Module 2: Spot the Scam (Pro)
 
-Phishing emails, scam texts and calls, and fake websites.
+Scam emails, texts and calls, and fake websites.
 
-#### Phishing Emails
+#### Scam Emails
 
-- **What you learn:** Spot the warning signs of a fake email before you click.
+- **What you learn:** Spot the warning signs that give a scam email away.
 - **Access:** Pro
 - **Link:** `cybernettraining.com/from/<platform>/phishing-emails`
 
 **Key facts**
 
-- *Words it teaches:* **Phishing** is a message pretending to be someone you trust, to trick you.
-- *Recap:* **Phishing** pretends to be someone you trust. Check the **address after the @**; don't click, **go there yourself**.
+- *Warning signs:* A **scam** email pretends to be someone you trust, and each clue that gives it away is a **warning sign**.
+- *Recap:* Scam emails (people call them **phishing**) pretend to be someone you trust; warning signs give them away. **Try this:** On the next email you get, check the address after the @.
 
 **Best interactive cards**
 
-- Explore the picture: An email says it's from Your Bank. **Tap** each part.
-- Choose what happens: You've "won" a prize by email. What do you do?
-- Choose what happens: This email uses your real name.
+- Explore the picture: Sam opens the email. **Tap each line** to look closer.
+- Multiple choice: Sam taps "Verify my account" and types the password. **Who gets it?**
+- Tap the picture: Another "Your Bank" email. It's a scam. **Tap every warning sign.**
 
-#### Scam Texts and Calls
+#### Scam Texts
 
-- **What you learn:** Spot the signs of a scam text or call before you reply.
+- **What you learn:** Never use a surprise text's link: check in the company's own app.
 - **Access:** Pro
 - **Link:** `cybernettraining.com/from/<platform>/scam-texts-and-calls`
 
 **Key facts**
 
-- *Words it teaches:* Never tap a link in a surprise text: open the company's **own app** to check.
-- *Scam calls:* **Hang up** if they want a **code**, a **password**, **gift cards**, **secrecy** or **control of your computer**. Then **call back** on a number you already have, like the one on your card.
-- *Recap:* A text with a **fee**, a **deadline** and a **link**? Check in the company's **official app**.
+- *Check the real way:* A **scam** text copies a name you trust, then rushes you to pay or tap a link.
+- *Recap:* **Try this:** Find one company text on your phone. **Next:** A call in a voice you know, asking for gift cards.
 
 **Best interactive cards**
 
-- Explore the picture: You're expecting a parcel. **Tap** each part.
-- Choose what happens: A call sounds just like your cousin: a voice clone.
-- Choose what happens: A text arrives from a number you don't know.
+- Explore the picture: Sam opens the Parcels thread. **Tap each part** to look closer.
+- Multiple choice: Sam taps the link and pays the $1.95 fee. **What happens next?**
+- Tap the picture: A new text from Road Tolls. It's a scam. **Tap its three warning signs.**
+
+#### Scam Calls
+
+- **What you learn:** Hang up on a caller who wants a code, money or a secret.
+- **Access:** Pro
+- **Link:** `cybernettraining.com/from/<platform>/scam-calls`
+
+**Key facts**
+
+- *Hang up, call back:* If a caller wants a code, money or for you to tell no one, it's a **scam**: hang up.
+- *Recap:* **Try this:** Save your bank's real number (from the back of your card or its own app) in your contacts. **Next:** A website that looks exactly like your bank's, but isn't.
+
+**Best interactive cards**
+
+- Explore the picture: Listen to the caller. **Tap each line** to look closer.
+- Multiple choice: Sam reads the texted code out to the caller. **What can they do now?**
+- Sort into groups: Which calls mean hang up? **Sort each one.**
 
 #### Fake Websites
 
-- **What you learn:** Check a website's real name before you type anything in.
+- **What you learn:** Read a web address to see who really owns the page.
 - **Access:** Pro
 - **Link:** `cybernettraining.com/from/<platform>/fake-websites`
 
 **Key facts**
 
-- *Read the address:* The **owner** is the name just before the **last ending**, like `.example`. `yourbank.example.login-check.example`: owned by **login-check**.
-- *Recap:* The **owner** is the name just before the very last ending. A **padlock** only means encrypted: scam sites get them too.
+- *Read the address:* A fake site can copy a logo, but not the real **web address**.
+- *Recap:* **Try this:** Bookmark the sign-in pages you use, and open them from there. **Next:** What your posts and photos quietly reveal about you.
 
 **Best interactive cards**
 
-- Explore the picture: This page says it's Your Bank. **Tap** each part.
-- Choose what happens: Your **password manager** only fills in on the real site.
-- Choose what happens: You typed your password and card number into a fake site.
+- Explore the picture: It looks just like Your Bank. **Tap each part** to look closer.
+- Multiple choice: Alex types the password into this page. **Who gets it?**
+- Multiple choice: Alex closes the fake page. **Tap Your Bank's real address.**
 
 #### Module quiz (7 questions)
 

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 170" width="340" height="170" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>An email from Prize Team, win@big-prizes.example. Subject: You WON a games console! Congratulations! Claim it within 1 hour. A big green Claim my prize button and a drawing of a games controller.</title>
+  <rect x="2" y="2" width="336" height="166" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="14" y="26" font-size="16" font-weight="500" fill="#a3b6d2">From:</text>
+  <text x="60" y="26" font-size="16" font-weight="600" fill="#e6eef9">Prize Team</text>
+  <text x="14" y="47" font-size="16" font-weight="500" fill="#a3b6d2" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace">win@big-prizes.example</text>
+  <path d="M10 58H330" fill="none" stroke="#6f8fbd" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="14" y="80" font-size="16" font-weight="700" fill="#e6eef9">You WON a games console!</text>
+  <text x="14" y="102" font-size="16" font-weight="500" fill="#e6eef9">Congratulations!</text>
+  <text x="14" y="122" font-size="16" font-weight="500" fill="#e6eef9">Claim it within 1 hour.</text>
+  <rect x="14" y="130" width="156" height="30" rx="7" fill="#3ddc97"/>
+  <text x="92" y="151" font-size="16" font-weight="700" fill="#061630" text-anchor="middle">Claim my prize</text>
+  <path d="M232 108C232 94 246 94 256 98H288C298 94 312 94 312 108L316 136C318 148 302 152 296 140L290 130H258L252 140C246 152 230 148 232 136Z" fill="#24507f" stroke="#8be3ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M248 112v12M242 118h12" fill="none" stroke="#e6eef9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="294" cy="113" r="3.5" fill="#3ddc97"/>
+  <circle cx="302" cy="121" r="3.5" fill="#ffb547"/>
+</svg>

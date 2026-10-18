@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 230" width="340" height="230" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>A text from an unknown number, not in your contacts: It's Dad, phone broke. Send $60 now? Below, three choices: send it; reply Is it really you?; call Dad's saved number.</title>
+  <rect x="4" y="4" width="332" height="116" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <circle cx="28" cy="28" r="14" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2"/>
+  <text x="28" y="34" font-size="16" font-weight="700" fill="#e6eef9" text-anchor="middle">?</text>
+  <text x="50" y="26" font-size="16" font-weight="700" fill="#e6eef9">Unknown number</text>
+  <text x="50" y="46" font-size="16" font-weight="500" fill="#a3b6d2">Not in your contacts</text>
+  <rect x="12" y="56" width="316" height="56" rx="12" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="22" y="78" font-size="16" font-weight="500" fill="#e6eef9">It's Dad, phone broke.</text>
+  <text x="22" y="100" font-size="16" font-weight="700" fill="#e6eef9">Send $60 now?</text>
+  <rect x="4" y="128" width="108" height="98" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="34" y="140" width="48" height="30" rx="4" fill="#3ddc97"/>
+  <text x="58" y="161" font-size="16" font-weight="700" fill="#061630" text-anchor="middle">$60</text>
+  <text x="58" y="210" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Send it</text>
+  <rect x="116" y="128" width="108" height="98" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="150" y="138" width="40" height="22" rx="8" fill="#1d3d6e" stroke="#e6eef9" stroke-width="2"/>
+  <path d="M158 160l-4 7l10 -7" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="170" y="194" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Reply: Is it</text>
+  <text x="170" y="213" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">really you?</text>
+  <rect x="228" y="128" width="108" height="98" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <circle cx="270" cy="154" r="15" fill="#24507f" stroke="#8be3ff" stroke-width="2"/>
+  <g transform="translate(270 154) scale(0.75)">
+  <clipPath id="av-dad-270-154"><circle cx="0" cy="0" r="19"/></clipPath>
+  <g clip-path="url(#av-dad-270-154)">
+  <rect x="-14" y="8" width="28" height="20" rx="9" fill="#2f5d50"/>
+  <circle cx="0" cy="-2" r="9" fill="#c68a5e"/>
+  <path d="M-9.4 -3A9.4 9.4 0 0 1 9.4 -3C6 -6 1 -5 -1 -8C-4 -5 -7 -6 -9.4 -3Z" fill="#8a8f99"/>
+  </g>
+  </g>
+  <circle cx="298" cy="158" r="11" fill="#3ddc97"/>
+  <g transform="translate(298 158) scale(0.55)">
+  <path d="M-9 -10C-11 -4 -8 4 -2 9C3 13 8 13 11 10L8 5L4 7C1 5 -3 1 -4 -3L-1 -6L-4 -11Z" fill="#061630"/>
+  </g>
+  <text x="282" y="194" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Call Dad's</text>
+  <text x="282" y="213" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">saved number</text>
+</svg>

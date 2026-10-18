@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 196" width="320" height="196" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>The same email with five amber tags: the sender @yourbank-help is a fake sender; URGENT, 24 hours is rushing you; Dear Customer has no name; asking for your password and card number asks for secrets; Verify my account is a fake link.</title>
+  <rect x="2" y="2" width="316" height="192" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="16" y="32" font-size="16" font-weight="500" fill="#e6eef9">@yourbank-help</text>
+  <path d="M170 26H180" fill="none" stroke="#ffb547" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="202" y="13" width="110" height="26" rx="6" fill="#ffb547"/>
+  <text x="257" y="31.5" font-size="16" font-weight="600" fill="#061630" text-anchor="middle">Fake sender</text>
+  <text x="16" y="68" font-size="16" font-weight="700" fill="#e6eef9">URGENT! 24 hours</text>
+  <path d="M170 62H180" fill="none" stroke="#ffb547" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="202" y="49" width="110" height="26" rx="6" fill="#ffb547"/>
+  <text x="257" y="67.5" font-size="16" font-weight="600" fill="#061630" text-anchor="middle">Rushing you</text>
+  <text x="16" y="104" font-size="16" font-weight="500" fill="#e6eef9">Dear Customer,</text>
+  <path d="M170 98H180" fill="none" stroke="#ffb547" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="235" y="85" width="77" height="26" rx="6" fill="#ffb547"/>
+  <text x="273.5" y="103.5" font-size="16" font-weight="600" fill="#061630" text-anchor="middle">No name</text>
+  <text x="16" y="140" font-size="16" font-weight="500" fill="#e6eef9">password, card no.</text>
+  <path d="M170 134H180" fill="none" stroke="#ffb547" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="160" y="121" width="152" height="26" rx="6" fill="#ffb547"/>
+  <text x="236" y="139.5" font-size="16" font-weight="600" fill="#061630" text-anchor="middle">Asks for secrets</text>
+  <text x="16" y="176" font-size="16" font-weight="500" fill="#e6eef9">Verify my account</text>
+  <path d="M170 170H180" fill="none" stroke="#ffb547" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="218" y="157" width="94" height="26" rx="6" fill="#ffb547"/>
+  <text x="265" y="175.5" font-size="16" font-weight="600" fill="#061630" text-anchor="middle">Fake link</text>
+</svg>

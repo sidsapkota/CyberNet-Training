@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 230" width="340" height="230" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Sam's phone shows a chat with Alex: Email said my card's locked. Tapped the link and this opened. Real?? Under it, a screenshot of a sign-in page with a big Your Bank logo.</title>
+  <rect x="4" y="4" width="332" height="222" rx="16" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <circle cx="30" cy="28" r="16" fill="#24507f" stroke="#8be3ff" stroke-width="2"/>
+  <g transform="translate(30 28) scale(0.8)">
+  <clipPath id="av-alex-30-28"><circle cx="0" cy="0" r="19"/></clipPath>
+  <g clip-path="url(#av-alex-30-28)">
+  <rect x="-14" y="8" width="28" height="20" rx="9" fill="#7a4f2a"/>
+  <circle cx="0" cy="-2" r="9" fill="#8d5a3b"/>
+  <circle cx="-6" cy="-8" r="5" fill="#2a1d16"/>
+  <circle cx="0" cy="-11" r="5.5" fill="#2a1d16"/>
+  <circle cx="6" cy="-8" r="5" fill="#2a1d16"/>
+  </g>
+  </g>
+  <text x="54" y="34" font-size="16" font-weight="700" fill="#e6eef9">Alex</text>
+  <path d="M10 52H330" fill="none" stroke="#6f8fbd" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="14" y="60" width="236" height="30" rx="12" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="24" y="81" font-size="16" font-weight="500" fill="#e6eef9">Email said my card's locked</text>
+  <rect x="14" y="96" width="300" height="30" rx="12" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="24" y="117" font-size="16" font-weight="500" fill="#e6eef9">Tapped the link and this opened. Real??</text>
+  <rect x="14" y="134" width="150" height="86" rx="12" fill="none" stroke="#00c2ff" stroke-width="2" stroke-dasharray="5 5"/>
+  <rect x="20" y="140" width="138" height="74" rx="8" fill="#061630" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="30" y="150" width="23.400000000000002" height="23.400000000000002" rx="5.4" fill="#6f8fbd"/>
+  <path d="M34.5 168.9L41.7 155.4L48.900000000000006 168.9Z" fill="#061630"/>
+  <text x="60" y="168" font-size="16" font-weight="700" fill="#e6eef9">Your Bank</text>
+  <rect x="30" y="182" width="116" height="10" rx="3" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="1"/>
+  <rect x="30" y="198" width="116" height="10" rx="3" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="1"/>
+  <path d="M248 204Q248 164 270 164Q292 164 292 204Z" fill="#24507f" stroke="#8be3ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M264 166L270 174L276 166" fill="none" stroke="#8be3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="270" cy="146" r="14" fill="#b9784a"/>
+  <path d="M255.4 145A14.6 14.6 0 0 1 284.6 145C279 139 272 140 268 137C264 140 259 140 255.4 145Z" fill="#1d1410"/>
+  <circle cx="265" cy="149" r="1.9" fill="#1d2a3d"/>
+  <circle cx="275" cy="149" r="1.9" fill="#1d2a3d"/>
+</svg>

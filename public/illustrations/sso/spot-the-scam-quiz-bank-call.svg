@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 230" width="340" height="230" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>A call from an unknown number, 1:05 in: Read me the code we just sent, to stop the payment. Below, three choices: read out the code; ask them to say my name first; hang up and call the number on my card.</title>
+  <rect x="4" y="4" width="332" height="116" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <circle cx="28" cy="28" r="15" fill="#4a5a72" stroke="#a3b6d2" stroke-width="2"/>
+  <circle cx="28" cy="25" r="4.8" fill="#a3b6d2"/>
+  <path d="M19 37.3Q28 27.25 37 37.3Z" fill="#a3b6d2"/>
+  <text x="52" y="26" font-size="16" font-weight="700" fill="#e6eef9">Unknown number</text>
+  <text x="52" y="46" font-size="16" font-weight="500" fill="#a3b6d2" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace">1:05</text>
+  <rect x="12" y="56" width="316" height="56" rx="12" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="22" y="78" font-size="16" font-weight="500" fill="#e6eef9">Read me the code we just sent,</text>
+  <text x="22" y="100" font-size="16" font-weight="500" fill="#e6eef9">to stop the payment.</text>
+  <rect x="4" y="128" width="108" height="98" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="28" y="138" width="60" height="26" rx="8" fill="#1d3d6e" stroke="#e6eef9" stroke-width="2"/>
+  <text x="58" y="157" font-size="16" font-weight="500" fill="#e6eef9" text-anchor="middle" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace">4 8 2</text>
+  <text x="58" y="194" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Read out</text>
+  <text x="58" y="213" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">the code</text>
+  <rect x="116" y="128" width="108" height="98" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="140" y="140" width="60" height="26" rx="5" fill="#1d3d6e" stroke="#e6eef9" stroke-width="2"/>
+  <circle cx="150" cy="153" r="3" fill="#e6eef9"/>
+  <rect x="158" y="150" width="34" height="6" rx="3" fill="#a3b6d2"/>
+  <text x="170" y="194" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Ask them to</text>
+  <text x="170" y="213" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">say my name</text>
+  <rect x="228" y="128" width="108" height="98" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <circle cx="258" cy="154" r="13" fill="#ff7a7a"/>
+  <g transform="translate(258 155) scale(0.6861111111111111)">
+  <path d="M-9 -10C-11 -4 -8 4 -2 9C3 13 8 13 11 10L8 5L4 7C1 5 -3 1 -4 -3L-1 -6L-4 -11Z" fill="#061630"/>
+  </g>
+  <rect x="278" y="140" width="46" height="30" rx="7" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <rect x="278" y="149" width="46" height="10" fill="#122b52"/>
+  <text x="282" y="194" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Hang up, call</text>
+  <text x="282" y="213" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">card's number</text>
+</svg>

@@ -1346,8 +1346,9 @@ take-overs, never how to make or run one.
 **Fictional examples only.** "Your Bank" and "Parcels" are made-up names. Every web and email
 address in an example uses the reserved `.example` domain (RFC 2606), so none can point at a real
 organisation. A test fails if any other address appears, apart from the real help services below.
-No real people, brands or logos appear. The three new scenes (`email`, `text-message`,
-`fake-website`) are generic, and the scene test also checks their addresses.
+No real people, brands or logos appear. The scam scenes (`email`, `text-message`, `fake-website`,
+`phone-call` and the second examples in `textScenes.ts`) are generic, and the scene test also checks
+their addresses.
 
 **Real help services (verified 30 September 2026):**
 - eSafety Commissioner (esafety.gov.au/report): investigates cyberbullying of under-18s, adult cyber
@@ -1600,39 +1601,120 @@ password with two-step on, "Game Support" asking for a code, and whose lock is s
 
 ## Module 2: Spot the Scam (Pro)
 
-### 2.1 Phishing Emails (`phishing-emails`)
-**Key claims:**
-- Warning signs: fake sender, rushing you, "Dear Customer", asks for secrets, hidden link, too good
-  to be true.
-- The address after the @ counts, not the display name. The owner is the name just before the
-  ending.
-- Hover, or press and hold, to preview a link.
-- Report it; don't reply.
+Rebuilt 19 October 2026 to Lesson Blueprint v1.1 (storyboards in `docs/storyboards/stay-safe-online/`):
+three lessons became four, one idea each (Scam Texts and Calls was split into **Scam Texts** and the new
+**Scam Calls**). The story: Sam, Sam's phone, friend Alex and cousin Jess, and the fictional "Your
+Bank", "Parcels" and "Road Tolls". Titles changed, ids kept: Phishing Emails → **Scam Emails**, Scam
+Texts and Calls → **Scam Texts**. "Phishing" appears once (the Wrap of Scam Emails) and is never tested.
 
-**Simplifications:** a generic greeting is a common sign, not proof. The lesson says scammers can
-also use your real name.
+**Scenes, redrawn:** `email`, `text-message` and `fake-website` were redrawn so every word is 15–17
+units in a 320-wide scene (about 15px or more on a 360px phone; the deciding link or address used to be
+7.5px). They and four new scenes are data in `src/cards/shared/scenes/textScenes.ts`:
+`email-frozen-card` and `text-message-tolls` (the "spot it" cards now test a **new** email and a new
+text, never the one just explored), `email-payment` (the quiz's label card, so it isn't a lesson's
+email either) and `phone-call` (Scam Calls' Play). Each part's name is exactly the text it shows, and
+every address ends in `.example`.
 
-### 2.2 Scam Texts and Calls (`scam-texts-and-calls`)
-**Key claims:**
-- Common scam texts: parcel fees, tolls and "Hi Mum".
-- Sender names can be spoofed, so scam texts can appear in a real thread.
-- Scam callers pretend to be banks, government, tech support or police. They ask for codes,
-  passwords, remote access or gift cards.
-- AI can clone a voice from a short clip. Hang up and call back on a number you know, and use a
-  family safe word.
-- Being asked to keep it secret is a red flag.
+**Facts checked 19 October 2026.** Scamwatch's and the ACCC's pages refuse automated readers, so where
+noted their advice was read through the search engine's copy of the page; every claim the lessons make
+also has a cyber.gov.au, eSafety or NCSC source, or was verified for the earlier version of the module.
+- Scammers pretend to be trusted places like banks, rush you ("act quickly or something bad will
+  happen") and offer deals that seem too good to be true. Warning signs include email addresses that
+  look wrong, "Dear customer" instead of your name, and unexpected links. Go to a trusted source (the
+  official website, your account, a verified number) and don't use links or contact details in the
+  message. Banks never ask for things like your password. Scammers can disguise their number as a real
+  business, so a scam text can land in the same thread as real ones. (cyber.gov.au, *Learn about
+  scams*, cyber.gov.au/learn-about-scams)
+- Phishing warning signs: pressure to act quickly; requests for passwords, authentication codes or
+  personal details; suspicious links; caller IDs that look real but may be fake; strange or misspelled
+  email addresses; generic greetings like "Dear customer"; messages that seem too good to be true;
+  voices that sound unusual (possible voice cloning). Use official websites or known phone numbers
+  instead of links in messages; never give out passwords, authentication codes or banking details.
+  Phone scams ("vishing") can use voice cloning and fake caller IDs. (cyber.gov.au, *Learn about
+  phishing scams*, cyber.gov.au/guidance/learn-about-phishing-scams)
+- Hover over a link without clicking to check where it goes. (cyber.gov.au advisory, *Protect
+  yourself and others from myGov-related scams*.) On a phone, pressing and holding a link previews it:
+  the phone's own feature, as in the earlier version of the lesson.
+- If you didn't enter a competition, there is no real prize; scam emails threaten to lock your account
+  unless you "verify" your details; check a website's domain name ("anything before the .com or .org")
+  and that it follows the format `charityname.org.au`; https means what you send is encrypted. (eSafety,
+  *Online scams*, esafety.gov.au/key-topics/staying-safe/online-scams.) This is where the address rule
+  comes from: **the owner is the name just before the ending, and an ending can be one part (.com,
+  .example) or two (.com.au, .org.au)**.
+- The padlock and https protect information "in transit" (cyber.gov.au, *Personal cyber security
+  handbook: secure your devices*). They say nothing about who runs the site, so scam sites can have one
+  too (as verified for the earlier lesson).
+- "Hi Mum" scams: someone poses as a family member or friend with a lost or broken phone and a new
+  number, then asks for money; check by calling the number already saved in your phone. (Scamwatch
+  warning, via search. cyber.gov.au: contact the person through a trusted method, "calling their
+  number from your contact list", *Learn about social engineering*.)
+- Parcel scam texts ask you to tap a link or pay a fee, and scammers can spoof a courier's sender ID so
+  a scam text appears in the same thread as genuine ones. (Scamwatch and state consumer-affairs pages,
+  via search; cyber.gov.au's case study says the same of banks.) Parcel fees, tolls and "Hi Mum" were
+  verified as common scam texts for the earlier lesson; the lesson says "a common scam text", not
+  "the most common".
+- A request to pay with gift cards is a scam, and money paid as gift-card codes is nearly impossible to
+  get back. (ACCC media release *Payment demanded by gift card? It's a scam*, via search; as verified
+  for the earlier lesson.)
+- A password manager only fills in on the correct website, which helps protect you from phishing.
+  (UK NCSC, *Top tips for staying secure online: password managers*; as verified for the old 1.2.)
+- If you've sent money to a scammer, contact your bank straight away using the official number from
+  its website. (cyber.gov.au, *Recover from scams*.) The lessons say "the number on the back of your
+  card or its own app": a number you had before the call.
 
-### 2.3 Fake Websites (`fake-websites`)
-**Key claims:**
-- Read the name just before the ending (`.example`, `.com`, `.com.au`).
-- Subdomains like `login.yourbank.example` belong to the owner.
-- The padlock means an encrypted (HTTPS) connection, not an honest site.
-- Banks never ask for a card PIN on a website.
-- Sign in through the app, a bookmark or a typed address. A password manager that won't fill in is
-  a clue.
+### 2.1 Scam Emails (`phishing-emails`)
+**Goals:** a scam email pretends to be someone you trust; its warning signs give it away (fake sender,
+rushing you, no name, asks for secrets, fake link); a prize you never entered is too good to be true; a
+real name proves nothing, so go to the site yourself.
 
-**Simplifications:** "the name just before the ending" simplifies the real rules. Some endings,
-like `.com.au`, have two parts, and the examples only use `.example`.
+**Key claims:** as above. The address after the @ counts, not the name shown. Real companies never ask
+for your password or card number by email. Press and hold a link to see where it goes.
+
+**Simplifications:** "Dear Customer" is a common sign, not proof (the Play says a real name proves
+nothing either). The prize email's claim page asks for "postage" and card details, a common pattern.
+No longer covered here: reading an address's owner (Fake Websites) and "what if I already typed it"
+(module 4, which is free).
+
+### 2.2 Scam Texts (`scam-texts-and-calls`)
+**Goals:** a scam text copies a name you trust and rushes you to pay or tap a link; check the real
+way, in the company's own app; a friend on a "new number" is checked on the number you already have.
+
+**Key claims:** sender names can be faked, so a scam can appear in a real thread; parcel and toll
+"fees" are common scam texts; a link or number in the text was chosen by whoever sent it.
+
+**Simplifications:** the reveal shows two made-up charges to make "they can spend from the card"
+concrete. "Road Tolls" is a made-up name.
+
+### 2.3 Scam Calls (`scam-calls`, new)
+**Goals:** a caller who wants a code, money (gift cards) or for you to tell no one is a scammer: hang up
+and call back on a number you already have, like the one on the back of your card; a familiar voice
+proves nothing.
+
+**Key claims:** your bank never asks for a sign-in code (module 1: a code arrives when someone types
+your password); gift-card payments are a scam and hard to get back; caller ID and voices can be faked.
+
+**Simplifications:** "voices can be copied" isn't explained further here (module 4's Deepfake Scams goes
+deeper). Calling back "the last caller" is wrong because the caller controls the number shown. No real
+phone numbers appear: printed numbers are drawn as grey bars.
+
+### 2.4 Fake Websites (`fake-websites`)
+**Goals:** a fake site can copy a logo and get a padlock, but only the web address shows who owns the
+page; the owner is the name just before the ending; words in front (`login.`) don't change the owner;
+a password manager that won't fill in is a warning sign.
+
+**Key claims:** as above. Banks never ask for a card PIN on a web page.
+
+**Simplifications:** the rule is taught with `.example` addresses and names `.com` and `.com.au` as
+endings, so `yourbank.com.au` reads correctly (owner `yourbank`; the old "name before the last ending"
+wording misread it as `com`). The scene and pictures show only the domain, as phone browsers do; the
+quiz uses `/help` to show that what comes after a `/` doesn't change the owner. Real browsers may hide
+or shorten addresses, which is one more reason to open sites from a bookmark or the app.
+
+### Module 2 quiz (`spot-the-scam-quiz`)
+Seven questions, none a copy of a lesson card: label a new email's warning signs, a $5 "postage" prize,
+a parcel fee text while expecting a parcel, "Dad" on a new number, a "fraud team" asking for a code, a
+padlocked page asking for a PIN, and sort four addresses by owner. The addresses carry invisible break
+points (`​`) after each dot so they wrap at a dot on a phone.
 
 ## Module 3: Guard Your Privacy (Pro)
 

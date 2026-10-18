@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 190" width="340" height="190" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Three numbers to call back: a sticky note with the number the caller gave; the phone's recent calls with a Call back button for the last caller; the back of your bank card, with Your Bank's printed number.</title>
+  <rect x="4" y="4" width="108" height="182" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="22" y="20" width="72" height="72" rx="3" fill="#ffb547" transform="rotate(-4 58 56)"/>
+  <path d="M32 48q8 -6 14 0t14 0t14 0M32 66q8 -6 14 0t14 0" fill="none" stroke="#061630" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="58" y="152" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Number the</text>
+  <text x="58" y="171" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">caller gave</text>
+  <rect x="116" y="4" width="108" height="182" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="126" y="16" width="88" height="96" rx="10" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="170" y="38" font-size="16" font-weight="500" fill="#a3b6d2" text-anchor="middle">Recents</text>
+  <rect x="136" y="48" width="68" height="9" rx="3" fill="#a3b6d2"/>
+  <text x="170" y="76" font-size="16" font-weight="500" fill="#a3b6d2" text-anchor="middle">2 min ago</text>
+  <rect x="130" y="84" width="80" height="22" rx="11" fill="#3ddc97"/>
+  <text x="170" y="100" font-size="16" font-weight="600" fill="#061630" text-anchor="middle">Call back</text>
+  <text x="170" y="152" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Call back the</text>
+  <text x="170" y="171" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">last caller</text>
+  <rect x="228" y="4" width="108" height="182" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="238" y="30" width="88" height="60" rx="7" fill="#24507f" stroke="#8be3ff" stroke-width="1.5"/>
+  <rect x="238" y="39" width="88" height="10" fill="#122b52"/>
+  <text x="282" y="66" font-size="16" font-weight="700" fill="#e6eef9" text-anchor="middle">Your Bank</text>
+  <rect x="250" y="76" width="64" height="8" rx="3" fill="#a3b6d2"/>
+  <text x="282" y="152" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Back of your</text>
+  <text x="282" y="171" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">bank card</text>
+</svg>
