@@ -915,13 +915,18 @@ const CHAT: Record<string, ReactNode> = {
   "chat-report": <SmallButtonTall x={242} w={66} label="Report" />,
   "chat-username": <Txt x={16} y={179} size={15} weight={600} fill={C.muted}>shadow_77</Txt>,
   "chat-message": <ChatBubble x={14} y={188} w={202} text="nobody wants you here" />,
-  "chat-time": <Txt x={16} y={239} size={15} fill={C.muted}>Saturday 8:40 pm</Txt>,
+  "chat-time": (
+    <g>
+      <Txt x={230} y={201} size={15} fill={C.muted}>Saturday</Txt>
+      <Txt x={230} y={219} size={15} fill={C.muted}>8:40 pm</Txt>
+    </g>
+  ),
 };
 
 function GroupChatBase() {
   return (
     <>
-      <rect x={4} y={4} width={312} height={240} rx={18} fill={C.panel} stroke={C.edge} strokeWidth={2} />
+      <rect x={4} y={4} width={312} height={232} rx={18} fill={C.panel} stroke={C.edge} strokeWidth={2} />
       <Txt x={16} y={30} size={17} weight={300} fill={C.muted}>‹</Txt>
       <Txt x={30} y={30} size={16} weight={600}>Weekend Crew</Txt>
       <path d="M4 44H316" stroke={C.edge} strokeWidth={0.75} opacity={0.6} />
