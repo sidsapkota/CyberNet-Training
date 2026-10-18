@@ -13,7 +13,8 @@ import { Markdown } from "@/components/ui/Markdown";
 import { ArrowRightIcon, CheckIcon, RareIcon, XIcon, XpIcon } from "@/components/ui/icons";
 import { trackWith } from "@/lib/analytics";
 import { useFeedback } from "@/lib/feedback";
-import { byteXp, feedXpOn, FEED_LESSON_ID } from "@/lib/feed/rules";
+import { FEED_LESSON_ID } from "@/lib/feed/rules";
+import { byteXpToday } from "@/lib/feed/today";
 import { useProgress } from "@/lib/progress/ProgressProvider";
 import { useDaily } from "@/lib/progress/useDaily";
 import { PRESS_SPRING } from "@/lib/motion";
@@ -56,7 +57,7 @@ export function ByteView({ byte, onAnswered, onDeeper, compact = false }: { byte
     feedback.haptic(correct ? "success" : "error");
     trackWith("byte_answered", { lesson: byte.lessonId, source: correct ? "right" : "wrong" });
     if (correct) {
-      const xp = done || !snapshot || !daily ? 0 : byteXp(byte.rare, feedXpOn(snapshot.xpEvents, daily.today.day));
+      const xp = done || !snapshot || !daily ? 0 : byteXpToday(byte.rare, snapshot.xpEvents, daily.today.day);
       setEarned(done ? null : xp);
       if (!done) void store.completeByte(byte.id, value, xp);
     } else {
@@ -121,7 +122,7 @@ export function ByteView({ byte, onAnswered, onDeeper, compact = false }: { byte
               </motion.span>
             )}
           </div>
-          {status === "correct" && earned === 0 && <p className="mt-1 text-caption text-ink-muted">Today&apos;s Feed XP is maxed. Lessons still earn XP.</p>}
+          {status === "correct" && earned === 0 && <p className="mt-1 text-caption text-ink-muted">Today&apos;s bytes are paid. Lessons still earn XP.</p>}
           <Markdown className="mt-2 text-small text-ink">{byte.card.explanation}</Markdown>
           <Link
             href={`/lesson/${byte.lessonId}`}

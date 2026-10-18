@@ -5,10 +5,11 @@ import { ParentPayButton } from "@/components/pro/ParentPay";
 import { CheckIcon } from "@/components/ui/icons";
 import { FOUNDER_ERROR_TEXT, type FounderError, founderCopy, PARENT_LINK_TEXT, type ParentLinkState } from "@/lib/pro/founder";
 import { findParentLink } from "@/lib/pro/parentLink";
+import { ABOUT_CYBERNET, lifetimeTerms, PAYMENT_NOTE, REFUND_TERMS, WITHOUT_PRO } from "@/lib/pro/parentCopy";
 import { PRO_BENEFITS } from "@/lib/pro/plans";
 import { getFounderPrice, getPlanPrices } from "@/lib/pro/stripe";
 
-export const metadata: Metadata = { title: "Lifetime Pro for your learner", robots: { index: false, follow: false } };
+export const metadata: Metadata = { title: "CyberNet Pro: the details", robots: { index: false, follow: false } };
 export const dynamic = "force-dynamic";
 
 /**
@@ -23,7 +24,7 @@ export default async function ParentPayPage({ searchParams }: PageProps<"/pay">)
   const link = await findParentLink(token);
   const [founder, plans] = await Promise.all([getFounderPrice().catch(() => null), getPlanPrices().catch(() => null)]);
   const copy = founder ? founderCopy(founder, plans?.monthly ?? null) : null;
-  const who = link.username ?? "your learner";
+  const who = link.username ?? "A CyberNet learner";
   const problemText =
     typeof problem === "string" && problem in FOUNDER_ERROR_TEXT
       ? FOUNDER_ERROR_TEXT[problem as FounderError]
@@ -35,14 +36,15 @@ export default async function ParentPayPage({ searchParams }: PageProps<"/pay">)
     <main className="mx-auto min-h-dvh max-w-lesson px-gutter py-8">
       <LogoLockup />
       {link.state === "ok" && copy ? (
-        <section aria-labelledby="pay-title" className="mt-8 rounded-card border-2 border-accent-ink bg-surface p-5 shadow-pro-card">
+        <section aria-labelledby="pay-title" className="mt-8 rounded-card border border-line bg-surface p-5">
           <h1 id="pay-title" className="text-title font-semibold text-balance">
-            Lifetime Pro for {who}
+            CyberNet Pro: the details
           </h1>
           <p className="mt-2 text-ink-muted">
-            {who} asked you to get them CyberNet Training Pro. It&apos;s one payment of {copy.price}: no subscription, nothing to renew.
+            {who} shared this page. {ABOUT_CYBERNET}
           </p>
-          <ul className="mt-4 grid gap-2">
+          <h2 className="mt-5 font-semibold">What Pro includes</h2>
+          <ul className="mt-2 grid gap-2">
             {PRO_BENEFITS.map((b) => (
               <li key={b} className="flex items-center gap-2.5">
                 <CheckIcon className="size-4 shrink-0 text-ink-muted" />
@@ -50,6 +52,14 @@ export default async function ParentPayPage({ searchParams }: PageProps<"/pay">)
               </li>
             ))}
           </ul>
+          <p className="mt-2 text-small text-ink-muted">{WITHOUT_PRO}</p>
+          <h2 className="mt-5 font-semibold">Price</h2>
+          <p className="mt-1 text-small">{lifetimeTerms(copy.price)}</p>
+          <h2 className="mt-5 font-semibold">Refunds</h2>
+          <p className="mt-1 text-small">{REFUND_TERMS}</p>
+          <Link href="/parents" className="mt-3 inline-flex min-h-11 items-center text-small font-semibold text-accent-ink underline-offset-2 hover:underline">
+            Privacy and safety for parents and guardians
+          </Link>
           {problemText && (
             <p role="alert" className="mt-4 text-small text-danger">
               {problemText}
@@ -57,11 +67,10 @@ export default async function ParentPayPage({ searchParams }: PageProps<"/pay">)
           )}
           <form action="/api/pay" method="post" className="mt-5">
             <input type="hidden" name="t" value={token ?? ""} />
-            <ParentPayButton label={`Pay ${copy.price} securely with Stripe`} />
+            <ParentPayButton label={`Pay ${copy.price} with Stripe`} />
           </form>
           <p className="mt-3 text-caption text-ink-muted">
-            You don&apos;t need an account. Stripe sends the receipt to your email, and we never see card details. Lifetime means for as long
-            as CyberNet Training runs. See our{" "}
+            {PAYMENT_NOTE} See our{" "}
             <Link href="/terms" className="font-semibold text-accent-ink underline-offset-2 hover:underline">
               Terms
             </Link>{" "}

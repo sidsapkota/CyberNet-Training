@@ -145,7 +145,7 @@ function ProBox({
         <h2 id="plan-pro" className="text-lead font-semibold sm:text-title">
           Pro
         </h2>
-        {offer && <SeatsLeft offer={offer} className="ml-auto" />}
+        {offer && <SeatsLeft offer={offer} ends className="ml-auto" />}
         {member && <span className="ml-auto text-small font-semibold text-ink-muted">Your plan</span>}
       </div>
       {continuing && offer && (

@@ -153,6 +153,18 @@ export function getCurrentLesson(state: CourseState): LessonState | null {
   return null;
 }
 
+/**
+ * The course to carry on with (the dashboard's Continue, the Feed's "next lesson"): the first one
+ * started with something left to do, else the first with something to do, else the first course.
+ */
+export function focusCourse(states: readonly CourseState[]): CourseState | undefined {
+  return (
+    states.find((s) => getCurrentLesson(s) && courseProgress(s).cardsDone > 0) ??
+    states.find((s) => getCurrentLesson(s)) ??
+    states[0]
+  );
+}
+
 export interface CourseProgress {
   /** Finished lessons plus passed quizzes, out of all of them (the course is done when they match). */
   completed: number;

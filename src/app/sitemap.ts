@@ -5,7 +5,7 @@ import { absoluteUrl } from "@/lib/site";
 
 /** Public pages only: never /dev, /account, /auth, /login or /feedback. */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const pages = ["/", "/courses", ...(FEED_ENABLED ? ["/feed"] : []), "/privacy", "/terms"];
+  const pages = ["/", "/courses", ...(FEED_ENABLED ? ["/feed"] : []), "/parents", "/privacy", "/terms"];
   const courses = getCourses().map((c) => `/course/${c.id}`);
   const lessons = getAllLessonIds().map((id) => `/lesson/${id}`);
   return [...pages, ...courses, ...lessons].map((path) => ({

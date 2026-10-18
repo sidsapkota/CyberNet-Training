@@ -3,15 +3,18 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { InteractiveCard } from "@/cards/schema";
-import { SignUpGate } from "@/components/account/SignUpGate";
 import { Mascot } from "@/components/mascot/Mascot";
 import { NetworkMark } from "@/components/network/NetworkMark";
-import { Button, ButtonLink } from "@/components/ui/Button";
-import { ChevronDownIcon, XIcon, XpIcon } from "@/components/ui/icons";
+import { ButtonLink } from "@/components/ui/Button";
+import { ChevronDownIcon, PlayIcon, XIcon } from "@/components/ui/icons";
+import type { CourseOutline } from "@/lib/content/schema";
 import { trackEvent, trackWith } from "@/lib/analytics";
 import { useAuth } from "@/lib/auth/AuthProvider";
-import { BREAK_AFTER_MS, courseWeights, FEED_DAILY_CAP, FEED_LESSON_ID, feedOrder, feedXpOn, GUEST_BYTES, seedFrom, sessionBucket } from "@/lib/feed/rules";
+import { courseWeights, DAILY_BYTES, FEED_LESSON_ID, feedOrder, seedFrom, sessionBucket } from "@/lib/feed/rules";
+import { bytesLeft, type FeedDay, feedBytesOn, pickToday, readFeedDay, writeFeedDay } from "@/lib/feed/today";
+import { usePro } from "@/lib/pro/ProProvider";
 import { useProgress } from "@/lib/progress/ProgressProvider";
+import { computeCourseState, focusCourse, getCurrentLesson } from "@/lib/progress/state";
 import { useDaily } from "@/lib/progress/useDaily";
 import { ByteView } from "./ByteView";
 
@@ -26,7 +29,7 @@ export interface FeedByte {
   card: InteractiveCard;
 }
 
-type Item = { kind: "byte"; byte: FeedByte } | { kind: "signup" } | { kind: "break" };
+type Item = { kind: "byte"; byte: FeedByte } | { kind: "done" };
 
 const DEEPER_KEY = "cybernet.feed.deeper";
 function readDeeper(): Record<string, number> {
@@ -38,68 +41,76 @@ function readDeeper(): Record<string, number> {
 }
 
 /**
- * The Feed: a vertical stream of bytes, one per screen (CSS scroll snap: swipe on a phone; arrow
- * keys, j/k or the buttons anywhere). Never moves on by itself. Order: a seeded shuffle per learner
- * per day, leaning toward courses they finish lessons in or tap "Go deeper" on, answered bytes last.
- * Guests play GUEST_BYTES, then the sign-up card. After 15 minutes, one friendly "take a break?".
+ * The Feed: today's 3 bytes, one per screen (CSS scroll snap: swipe on a phone; arrow keys, j/k or
+ * the buttons anywhere), then "That's today's bytes" with a button to the next lesson. Never moves
+ * on by itself, and it's finite: the same three all day, new ones tomorrow. Which three: a seeded
+ * shuffle per learner per day, leaning toward courses they finish lessons in or tap "Go deeper" on,
+ * bytes finished on earlier days last.
  */
-export function Feed({ bytes, start }: { bytes: FeedByte[]; start: string | null }) {
+export function Feed({ bytes, courses, start }: { bytes: FeedByte[]; courses: CourseOutline[]; start: string | null }) {
   const { snapshot } = useProgress();
   const { auth, available } = useAuth();
+  const { pro, hasPro } = usePro();
   const daily = useDaily();
   const scroller = useRef<HTMLDivElement>(null);
-  const [breakDue, setBreakDue] = useState(false);
-  const [breakDismissed, setBreakDismissed] = useState(false);
   const [current, setCurrent] = useState(0);
   const sessionStart = useRef(0);
   const viewed = useRef(new Set<string>());
   const guest = available && auth.status === "guest";
+  const who = auth.status === "signed-in" ? auth.userId : "guest";
   const ready = snapshot !== null && auth.status !== "loading" && daily !== null;
 
-  // The order is worked out once progress is known, then kept for the session (no reshuffling as
-  // bytes are answered).
-  const [order, setOrder] = useState<FeedByte[] | null>(null);
+  // Today's three are worked out once progress is known, then kept (on this device) for the day.
+  const [today, setToday] = useState<FeedDay | null>(null);
+  const [todays, setTodays] = useState<FeedByte[] | null>(null);
   useEffect(() => {
-    if (!ready || order) return;
+    if (!ready || todays) return;
     const finished: Record<string, number> = {};
     const courseOf = new Map(bytes.map((b) => [b.lessonId, b.courseId]));
     for (const id of Object.keys(snapshot.lessons)) {
       const course = courseOf.get(id);
       if (course) finished[course] = (finished[course] ?? 0) + 1;
     }
-    const done = new Set(Object.keys(snapshot.cards).filter((k) => k.startsWith(`${FEED_LESSON_ID}/`)).map((k) => k.slice(FEED_LESSON_ID.length + 1)));
-    const who = auth.status === "signed-in" ? auth.userId : "guest";
-    let ordered = feedOrder(bytes, seedFrom(`${who}|${daily.today.day}`), courseWeights(finished, readDeeper()), done);
+    const doneToday = feedBytesOn(snapshot.xpEvents, daily.today.day);
+    const doneEarlier = new Set(
+      Object.keys(snapshot.cards)
+        .filter((k) => k.startsWith(`${FEED_LESSON_ID}/`))
+        .map((k) => k.slice(FEED_LESSON_ID.length + 1))
+        .filter((id) => !doneToday.includes(id)),
+    );
+    let ordered = feedOrder(bytes, seedFrom(`${who}|${daily.today.day}`), courseWeights(finished, readDeeper()), doneEarlier);
     const first = start ? ordered.find((b) => b.id === start) : undefined;
     if (first) ordered = [first, ...ordered.filter((b) => b !== first)];
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- the order depends on progress, known only after mount
-    setOrder(ordered);
-  }, [ready, order, bytes, snapshot, auth, daily, start]);
+    const picked = pickToday(ordered, readFeedDay(), daily.today.day, who, doneToday);
+    writeFeedDay(picked.record);
+    /* eslint-disable react-hooks/set-state-in-effect -- today's bytes depend on progress, known only after mount */
+    setToday(picked.record);
+    setTodays(picked.bytes);
+    /* eslint-enable react-hooks/set-state-in-effect */
+  }, [ready, todays, bytes, snapshot, who, daily, start]);
 
-  // The break card: due after 15 minutes in this session (once).
+  function answered(byte: FeedByte) {
+    setToday((value) => {
+      if (!value || value.answered.includes(byte.id)) return value;
+      const next = { ...value, answered: [...value.answered, byte.id] };
+      writeFeedDay(next);
+      return next;
+    });
+  }
+
   useEffect(() => {
     sessionStart.current = Date.now();
-    const timer = window.setTimeout(() => setBreakDue(true), BREAK_AFTER_MS);
     const send = () => trackWith("feed_session_length", { source: sessionBucket(Date.now() - sessionStart.current) });
     window.addEventListener("pagehide", send);
     return () => {
-      window.clearTimeout(timer);
       window.removeEventListener("pagehide", send);
       send();
     };
   }, []);
 
-  const items = useMemo<Item[]>(() => {
-    if (!order) return [];
-    const list: Item[] = (guest ? order.slice(0, GUEST_BYTES) : order).map((byte) => ({ kind: "byte", byte }));
-    if (guest) list.push({ kind: "signup" });
-    if (breakDue && !breakDismissed) list.splice(Math.min(current + 1, list.length), 0, { kind: "break" });
-    return list;
-    // `current` is read when the break first becomes due; it doesn't move the card afterwards.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [order, guest, breakDue, breakDismissed]);
+  const items = useMemo<Item[]>(() => (todays ? [...todays.map((byte) => ({ kind: "byte" as const, byte })), { kind: "done" as const }] : []), [todays]);
 
-  // Which screen is in view (for the buttons, byte_viewed and the break card's place).
+  // Which screen is in view (for the buttons and byte_viewed).
   useEffect(() => {
     const root = scroller.current;
     if (!root) return;
@@ -150,7 +161,9 @@ export function Feed({ bytes, start }: { bytes: FeedByte[]; start: string | null
     }
   }
 
-  const xpToday = snapshot && daily ? feedXpOn(snapshot.xpEvents, daily.today.day) : 0;
+  const left = snapshot && daily ? bytesLeft(today, feedBytesOn(snapshot.xpEvents, daily.today.day), daily.today.day, who) : DAILY_BYTES;
+  // The next lesson, as on the dashboard's Continue (null once everything they can open is done).
+  const next = snapshot && !pro.loading ? nextLesson(courses, snapshot, hasPro || available) : null;
 
   return (
     <main className="fixed inset-0 flex flex-col bg-canvas">
@@ -159,22 +172,24 @@ export function Feed({ bytes, start }: { bytes: FeedByte[]; start: string | null
           <XIcon className="size-6" />
         </Link>
         <h1 className="flex-1 text-lead font-semibold">Feed</h1>
-        <span className="inline-flex items-center gap-1 rounded-control border border-line px-2.5 py-1 font-mono text-small font-semibold text-accent-ink" aria-label={`${xpToday} of ${FEED_DAILY_CAP} Feed XP today`}>
-          <XpIcon className="size-4" />
-          {xpToday}/{FEED_DAILY_CAP}
+        <span
+          className="rounded-control border border-line px-2.5 py-1 font-mono text-small font-semibold text-accent-ink"
+          aria-label={`${DAILY_BYTES - left} of today's ${DAILY_BYTES} bytes played`}
+        >
+          {DAILY_BYTES - left}/{DAILY_BYTES} today
         </span>
         {/* Swipe on a phone; these (and the arrow keys) move one byte, anywhere. */}
         <nav aria-label="Feed" className="flex">
-          <button type="button" onClick={() => go(-1)} disabled={!order || current === 0} aria-label="Previous byte" className="grid size-11 place-items-center rounded-control text-ink-muted hover:text-ink disabled:opacity-40">
+          <button type="button" onClick={() => go(-1)} disabled={!todays || current === 0} aria-label="Previous byte" className="grid size-11 place-items-center rounded-control text-ink-muted hover:text-ink disabled:opacity-40">
             <ChevronDownIcon className="size-5 rotate-180" />
           </button>
-          <button type="button" onClick={() => go(1)} disabled={!order || current >= items.length - 1} aria-label="Next byte" className="grid size-11 place-items-center rounded-control text-ink-muted hover:text-ink disabled:opacity-40">
+          <button type="button" onClick={() => go(1)} disabled={!todays || current >= items.length - 1} aria-label="Next byte" className="grid size-11 place-items-center rounded-control text-ink-muted hover:text-ink disabled:opacity-40">
             <ChevronDownIcon className="size-5" />
           </button>
         </nav>
       </header>
 
-      {!order ? (
+      {!todays ? (
         <div className="grid flex-1 place-items-center">
           <NetworkMark mode="loading" className="size-16" label="Loading the Feed" />
         </div>
@@ -184,37 +199,34 @@ export function Feed({ bytes, start }: { bytes: FeedByte[]; start: string | null
             <section
               key={item.kind === "byte" ? item.byte.id : item.kind}
               data-index={index}
-              aria-label={item.kind === "byte" ? `Byte ${index + 1}` : item.kind === "signup" ? "Sign up" : "Take a break"}
+              aria-label={item.kind === "byte" ? `Byte ${index + 1} of ${DAILY_BYTES}` : "That's today's bytes"}
               className="flex min-h-full snap-start flex-col px-gutter pt-3"
             >
-              {item.kind === "byte" && <ByteView byte={item.byte} onDeeper={() => deeper(item.byte)} />}
-              {item.kind === "signup" && (
-                <div
-                  className="mx-auto w-full max-w-lesson"
-                  onClickCapture={(event) => {
-                    const button = (event.target as HTMLElement).closest("button, a");
-                    if (button && !/not now/i.test(button.textContent ?? "")) trackEvent("feed_signup");
-                  }}
-                >
-                  <SignUpGate lessonId={order[0]?.lessonId ?? "feed"} next="/feed" variant="inline" notNowHref="/courses" />
-                </div>
-              )}
-              {item.kind === "break" && (
-                <div className="mx-auto flex w-full max-w-lesson flex-1 flex-col items-center justify-center text-center">
-                  <Mascot expression="happy" size={120} idle />
-                  <h2 className="mt-6 text-title font-semibold">Nice work. Take a break?</h2>
-                  <p className="mt-2 text-ink-muted">You&apos;ve been learning for 15 minutes. Your progress is saved.</p>
-                  <div className="mt-8 flex w-full max-w-sm flex-col gap-2">
-                    <ButtonLink href="/">Done for now</ButtonLink>
-                    <Button
-                      variant="ghost"
-                      onClick={() => {
-                        setBreakDismissed(true);
-                        window.requestAnimationFrame(() => go(0));
-                      }}
-                    >
-                      Keep going
-                    </Button>
+              {item.kind === "byte" && <ByteView byte={item.byte} onAnswered={() => answered(item.byte)} onDeeper={() => deeper(item.byte)} />}
+              {item.kind === "done" && (
+                <div className="mx-auto flex w-full max-w-lesson flex-1 flex-col items-center justify-center pb-6 text-center">
+                  <Mascot expression="happy" size={112} idle />
+                  <h2 className="mt-5 text-title font-semibold">That&apos;s today&apos;s bytes</h2>
+                  <p className="mt-2 text-ink-muted">Back tomorrow for {DAILY_BYTES} more.</p>
+                  <div className="mt-7 flex w-full max-w-sm flex-col items-center gap-2">
+                    {next ? (
+                      <ButtonLink href={`/lesson/${next.id}`} className="w-full" onClick={() => trackEvent("byte_next_lesson", next.id)}>
+                        <PlayIcon className="size-5" /> Next lesson: {next.title}
+                      </ButtonLink>
+                    ) : (
+                      <ButtonLink href="/courses" className="w-full">
+                        See the courses
+                      </ButtonLink>
+                    )}
+                    {guest && (
+                      <Link
+                        href="/login?next=/feed"
+                        onClick={() => trackEvent("feed_signup")}
+                        className="inline-flex min-h-11 items-center text-small font-semibold text-accent-ink underline-offset-2 hover:underline"
+                      >
+                        Create a free account to keep your XP
+                      </Link>
+                    )}
                   </div>
                 </div>
               )}
@@ -222,7 +234,11 @@ export function Feed({ bytes, start }: { bytes: FeedByte[]; start: string | null
           ))}
         </div>
       )}
-
     </main>
   );
+}
+
+function nextLesson(courses: CourseOutline[], snapshot: NonNullable<ReturnType<typeof useProgress>["snapshot"]>, access: boolean) {
+  const focus = focusCourse(courses.map((course) => computeCourseState(snapshot, course, undefined, access)));
+  return focus ? (getCurrentLesson(focus)?.lesson ?? null) : null;
 }

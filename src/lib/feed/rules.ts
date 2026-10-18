@@ -1,6 +1,6 @@
 /**
- * The Feed (docs/plans/feed.md), as pure rules (tested): XP and its daily cap, the guest limit, the
- * break card, the order bytes come in, and session-length buckets for analytics.
+ * The Feed (docs/plans/feed.md), as pure rules (tested): XP and its daily cap, today's 3 bytes, the
+ * order bytes come in, and session-length buckets for analytics.
  */
 
 /** The byte new visitors play on the landing page (it has a picture). */
@@ -12,10 +12,13 @@ export const BYTE_XP = 5;
 export const RARE_BYTE_XP = 15;
 /** Feed XP a day, at most, so it can't be farmed. Lessons still earn XP after it. */
 export const FEED_DAILY_CAP = 50;
-/** Guests play this many bytes, then the sign-up card. */
-export const GUEST_BYTES = 5;
-/** After this long in one session, a friendly "take a break?" card (once a session). */
-export const BREAK_AFTER_MS = 15 * 60_000;
+/**
+ * The Feed is finite: this many bytes a day (guests and accounts alike), then "That's today's bytes"
+ * and a button to the next lesson. The server pays XP for no more than this many a day.
+ */
+export const DAILY_BYTES = 3;
+/** A guest's bytes that come across at sign-up (a few days' worth; more could only be tampering). */
+export const GUEST_MERGE_BYTES = 9;
 
 /** The XP a right answer on a new byte earns today, after the cap. */
 export function byteXp(rare: boolean, earnedToday: number): number {

@@ -47,7 +47,8 @@ import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { after } from "next/server";
 import { onXpEarned } from "@/lib/leagues/server";
 import { gradeUntrusted } from "@/cards/grading";
-import { BYTE_XP, byteXp, FEED_LESSON_ID, RARE_BYTE_XP } from "@/lib/feed/rules";
+import { BYTE_XP, FEED_LESSON_ID, RARE_BYTE_XP } from "@/lib/feed/rules";
+import { byteXpToday } from "@/lib/feed/today";
 import { getByte, getBytes } from "@/lib/feed/server";
 
 const Id = z.string().min(1).max(120);
@@ -222,8 +223,8 @@ export async function completeCardAction(
 
 /**
  * A Feed byte answered (docs/plans/feed.md). The answer is re-graded here; a right answer on a byte
- * not answered right before earns its XP (5, rare 15), capped at FEED_DAILY_CAP a day across the
- * Feed. Stored like a card (lesson "feed", card = the byte), so it counts toward total XP, the daily
+ * not answered right before earns its XP (5, rare 15), for at most DAILY_BYTES bytes a day (and under
+ * FEED_DAILY_CAP). Stored like a card (lesson "feed", card = the byte), so it counts toward total XP, the daily
  * goal, streaks and leagues with no new rules.
  */
 export async function completeByteAction(byteId: string, answer: unknown, timeZone?: string): Promise<{ completion: CardCompletion | null; xp: XpWrite }> {
@@ -233,9 +234,12 @@ export async function completeByteAction(byteId: string, answer: unknown, timeZo
   const admin = createSupabaseAdminClient();
   const tz = safeTimeZone(timeZone);
   const day = await learnerDay(admin, userId, tz, new Date());
-  const today = await admin.from("xp_events").select("xp").match({ user_id: userId, day, lesson_id: FEED_LESSON_ID });
+  const today = await admin.from("xp_events").select("xp, card_id").match({ user_id: userId, day, lesson_id: FEED_LESSON_ID });
   if (today.error) fail("Couldn't read today's Feed XP", today.error);
-  const xp = byteXp(Boolean(byte.rare), (today.data ?? []).reduce((s, r) => s + r.xp, 0));
+  // The Feed is finite: once today's bytes are paid, nothing more is stored or paid until tomorrow.
+  const ledger = (today.data ?? []).map((r) => ({ day, lessonId: FEED_LESSON_ID, cardId: r.card_id, xp: r.xp }));
+  const xp = byteXpToday(Boolean(byte.rare), ledger, day);
+  if (xp === 0) return { completion: null, xp: NO_XP };
   const { data: inserted, error } = await admin
     .from("card_completions")
     .upsert({ user_id: userId, lesson_id: FEED_LESSON_ID, card_id: byte.id, completed_at: new Date().toISOString(), xp }, { onConflict: "user_id,lesson_id,card_id", ignoreDuplicates: true })

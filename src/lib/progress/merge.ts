@@ -21,7 +21,7 @@
 import { cleanCoachSeen } from "@/lib/coach";
 import { type ContentIndex, cardXpFor, practiceXpFor } from "./authority";
 import { dayXp, isDailyGoal, isValidTimeZone, type Ledger, MAX_LOCAL_XP_EVENTS, plausibleEvent } from "./daily";
-import { FEED_LESSON_ID, GUEST_BYTES } from "@/lib/feed/rules";
+import { FEED_LESSON_ID, GUEST_MERGE_BYTES } from "@/lib/feed/rules";
 
 /**
  * Feed bytes' prices (byte id → XP: 5, rare 15), for merging a guest's Feed progress. The Feed is
@@ -33,11 +33,11 @@ const NO_FEED: FeedPrices = new Map();
 const feedCard = (key: string) => (key.startsWith(`${FEED_LESSON_ID}/`) ? key.slice(FEED_LESSON_ID.length + 1) : null);
 
 /**
- * Guests play at most GUEST_BYTES bytes before signing up, so only that many of a guest's bytes
+ * Guests play 3 bytes a day, so only GUEST_MERGE_BYTES (a few days' worth) of a guest's bytes
  * (the earliest, not already on the account) come across, with their XP events. More could only
  * come from tampering.
  */
-export function withFeedLimit(local: ProgressSnapshot, account: Pick<ProgressSnapshot, "cards">, max = GUEST_BYTES): ProgressSnapshot {
+export function withFeedLimit(local: ProgressSnapshot, account: Pick<ProgressSnapshot, "cards">, max = GUEST_MERGE_BYTES): ProgressSnapshot {
   const kept = new Set(
     Object.entries(local.cards)
       .filter(([key]) => feedCard(key) !== null && !account.cards[key])

@@ -21,9 +21,12 @@ import {
   courseProgress,
   progressCounts,
   progressPercent,
+  focusCourse,
   getCurrentLesson,
   hasAnyProgress,
 } from "@/lib/progress/state";
+import { TodaysBytes } from "@/components/feed/TodaysBytes";
+import { FEED_ENABLED } from "@/lib/feed/config";
 import { TodayPanel } from "@/components/streak/TodayPanel";
 import { LeaguesCard } from "@/components/leagues/LeaguesCard";
 import { MistakesCard } from "@/components/mistakes/MistakesCard";
@@ -77,10 +80,7 @@ export function Dashboard({ courses }: { courses: CourseOutline[] }) {
   }
 
   const states = courses.map((course) => computeCourseState(snapshot, course, undefined, hasPro || available));
-  const focus =
-    states.find((s) => getCurrentLesson(s) && courseProgress(s).cardsDone > 0) ??
-    states.find((s) => getCurrentLesson(s)) ??
-    states[0]!;
+  const focus = focusCourse(states)!;
   const stats = learnerStats(snapshot, courses);
   // Progress only renders after mount, so reading the clock here can't cause a hydration mismatch.
   const activity = dailyActivity(snapshot, new Date());
@@ -88,21 +88,31 @@ export function Dashboard({ courses }: { courses: CourseOutline[] }) {
   return (
     <>
       <h1 className="sr-only">Dashboard</h1>
-      <DashboardIdentity />
-      <EarlyUserThanks />
-      <DailyLimitNotice />
-      <ReminderPrompt />
+      {/* Continue comes first, before anything else (owner, 19 Oct 2026); today's bytes sit under it. */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <Rise index={0} className="lg:col-span-2">
           <ContinueHero state={focus} />
         </Rise>
-        <Rise index={1}>
+        {FEED_ENABLED && (
+          <Rise index={1} className="lg:col-span-2">
+            <TodaysBytes className={panel} />
+          </Rise>
+        )}
+        <Rise index={2} className="lg:col-start-3 lg:row-span-2 lg:row-start-1">
           <div className="grid h-full grid-cols-3 gap-3 lg:grid-cols-1">
-            <Stat Icon={XpIcon} value={stats.totalXp} label="XP" accent />
+            <Stat Icon={XpIcon} value={stats.totalXp} label="Total XP" accent />
             <Stat Icon={LessonsIcon} value={stats.lessonsCompleted} label="Lessons" />
             <Stat Icon={ModulesIcon} value={stats.quizzesPassed} label="Quizzes" />
           </div>
         </Rise>
+      </div>
+      <div className="mt-6 empty:hidden">
+        <DashboardIdentity />
+        <EarlyUserThanks />
+        <DailyLimitNotice />
+        <ReminderPrompt />
+      </div>
+      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-3">
         <Rise index={2} className="lg:col-span-2">
           <TodayPanel className={`${panel} h-full`} />
         </Rise>
@@ -151,7 +161,7 @@ function ContinueHero({ state }: { state: CourseState }) {
       <CourseCover
         courseId={course.id}
         title={course.title}
-        className="aspect-[16/9] md:order-2 md:aspect-auto md:w-72 md:shrink-0"
+        className="h-32 sm:h-auto sm:aspect-[16/9] md:order-2 md:aspect-auto md:w-72 md:shrink-0"
       />
       <div className="flex flex-1 flex-col justify-center gap-5 p-5 sm:p-7">
         <div>

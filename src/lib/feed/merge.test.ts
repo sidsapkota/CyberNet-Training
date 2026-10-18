@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { buildContentIndex, canCompleteLesson, cardXpFor } from "@/lib/progress/authority";
 import { priceEvent, recomputeXp, withFeedLimit } from "@/lib/progress/merge";
 import { emptySnapshot, type ProgressSnapshot, type XpEvent } from "@/lib/progress/types";
-import { FEED_LESSON_ID } from "./rules";
+import { FEED_LESSON_ID, GUEST_MERGE_BYTES } from "./rules";
 
 const index = buildContentIndex([]);
 const feed = new Map([
@@ -24,18 +24,19 @@ describe("Feed bytes in the guest merge", () => {
     expect(priceEvent(index, { ...event("a", 5), kind: "practice" }, new Set(), feed)).toBeNull();
   });
 
-  it("keep only the first 5 new bytes (what a guest can play), with their events", () => {
+  it("keep only the first GUEST_MERGE_BYTES new bytes (a few days of 3 a day), with their events", () => {
     const cards: ProgressSnapshot["cards"] = {};
     const xpEvents: XpEvent[] = [];
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < GUEST_MERGE_BYTES + 3; i++) {
       cards[`feed/b${i}`] = { completedAt: at(i), xp: 5 };
       xpEvents.push(event(`b${i}`, 5, i));
     }
     const local = { ...emptySnapshot(), cards, xpEvents };
     const account = { cards: { "feed/b0": { completedAt: at(0), xp: 5 } } };
     const out = withFeedLimit(local, account);
-    expect(Object.keys(out.cards).sort()).toEqual(["feed/b1", "feed/b2", "feed/b3", "feed/b4", "feed/b5"]);
-    expect(out.xpEvents.map((e) => e.cardId)).toEqual(["b1", "b2", "b3", "b4", "b5"]);
+    const kept = Array.from({ length: GUEST_MERGE_BYTES }, (_, i) => `b${i + 1}`);
+    expect(Object.keys(out.cards).sort()).toEqual(kept.map((id) => `feed/${id}`).sort());
+    expect(out.xpEvents.map((e) => e.cardId)).toEqual(kept);
   });
 
   it("can't be paid through the lesson actions (the Feed isn't in the content index)", () => {

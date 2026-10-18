@@ -72,8 +72,8 @@ npm run e2e:blueprint     # Lesson Blueprint v1.1 in the real player (Stay Safe 
 npm run e2e:admin         # /admin: guest, learner and Pro get the plain 404 on every page and the reveal endpoint,
                           # nothing logged; the admin sees every page, views and email reveals are logged. STAGING
                           # ONLY; the dev server needs ADMIN_USER_IDS = the staging admin test account
-npm run e2e:feed          # the Feed: flag, guest flow (XP, events, Go deeper, 5-byte gate), merge at sign-up, server
-                          # XP and the daily cap, the break card, the video view, every byte fits. STAGING ONLY
+npm run e2e:feed          # the Feed: flag, guest flow (XP, events, Go deeper, 3 a day then "That's today's bytes", the
+                          # same 3 after a reload), merge at sign-up, server XP for 3 a day, the video view, every byte fits. STAGING ONLY
 npm run e2e:combo         # the lesson combo ("3 in a row!"), its reset on a miss, and "Best combo" at lesson complete
                           # (guest, 360x560 + desktop; dev server running)
 npm run e2e:challenge     # Challenge a friend: make one (360x560), a guest plays and wins, GG, sign up claims it, the
@@ -681,8 +681,10 @@ keep their focused player shell.
   teachers, FAQ), or the **dashboard** for returning learners. The page is static; an inline script
   (`src/lib/home.ts`) sets `data-returning` on `<html>` before first paint when there's guest
   progress or a Supabase auth cookie, and CSS shows one or the other (`HomeSwitch`). The
-  dashboard (`src/components/dashboard/Dashboard.tsx`) has a big "Continue" hero for the
-  current lesson, real stats (XP, lessons, modules), the Today panel (daily goal and streak), 14 days of activity, a progress ring per
+  dashboard (`src/components/dashboard/Dashboard.tsx`) opens with a big "Continue" hero for the
+  current lesson (first, before the name row and any notice; its picture is short on phones so the
+  button is in view at 360×560), then **Today's bytes** (`TodaysBytes`: the Feed's 3 a day, how many
+  are left, Play), then real stats ("Total XP", lessons, modules), the Today panel (daily goal and streak), 14 days of activity, a progress ring per
   course, and "Your courses"; its one-button welcome now only shows after a progress reset.
 - `/from/<platform>` (and `/from/<platform>/<lesson-id>`): tagged links for videos. Same home
   page (or that lesson), never indexed (canonical is `/` or `/lesson/<id>`); page views then show
@@ -1153,6 +1155,10 @@ off, `/api/pro/founder` answers null and nothing shows. Plan and owner steps:
   headline and comparison ("Lifetime Pro for A$29, less than 4 months of the monthly plan" / "A
   year of monthly is A$95.88. This is A$29, once.") are worked out from Stripe's live prices
   (`founderCopy`). Never a "was" price, timer or fake scarcity; at 50 it disappears.
+- **Fixed end date** (owner, 19 Oct 2026): `FOUNDER_ENDS_AT`, 30 Nov 2026 11:59 pm AEDT, the same moment for
+  everyone; it never resets or extends. /pro shows "Ends 30 Nov" with the counter (`SeatsLeft ends`). After
+  it `founderOfferOn` is false (no checkout, no parent payment) and `showFounderOffer` hides it on every
+  screen, with no switch to flip; checkouts started before it and paid just after are still honoured.
 - **Seats:** `startFounderCheckoutAction` (payment mode, 31-minute session) holds a seat
   (`reserve_founder_seat`, under a lock: sold + held < 50); the webhook's
   `checkout.session.completed` (and `/pro/welcome`) claims it for a paid session with our
@@ -1161,8 +1167,11 @@ off, `/api/pro/founder` answers null and nothing shows. Plan and owner steps:
 - **Shown to** guests, free accounts and early-user grant holders; never subscribers or founders.
   On `/pro` it's the Pro box's first, preselected choice (`/pricing` redirects there), the main button in `ProPitch` (trial one link
   away), one dismissible dashboard line. "Under 18? Ask a parent before buying." under every button.
-- **"Can't pay? Send it to a parent"** (`SendToParent`, `src/lib/pro/parentLink.ts`; owner, 6 and 8 Oct
-  2026): a small text link (44px tap target) **straight under every lifetime button** (/pro, the paywall,
+- **"Send the details to a parent"** (`SendToParent`, `src/lib/pro/parentLink.ts`; owner, 6, 8 and 19 Oct
+  2026): **every line is in `src/lib/pro/parentCopy.ts`**, written for the adult, neutral and factual (what
+  CyberNet is, what Pro includes, the price, cancel and refund terms), with no pressure, urgency or pester
+  wording (`parentCopy.test.ts` screens it); the parent page and `/parents` (privacy and safety too) use
+  it. A small text link (44px tap target) **straight under every lifetime button** (/pro, the paywall,
   the daily-limit screen), in view with it at 360×560. Signed in, it makes a one-time 7-day link
   (`/pay?t=…`, 24 random bytes, only its sha256 stored in `founder_parent_links`, 5 a day) that a
   parent opens on their own device, with no account, to pay on Stripe; the purchase is tied to the
@@ -1215,7 +1224,7 @@ parent or guardian before subscribing" is shown to everyone.
     mascot wearing the circuit crown, "Learn without limits" and one line; then **one Pro box** with a
     three-way picker and **one button whose words follow the choice**: Lifetime (Founding Member, "Best
     value", preselected while seats remain: "Get lifetime Pro for A$29", "Pay once · Under 18? Ask a
-    parent", "Can't pay? Send it to a parent"), Yearly (A$5 a month, 7-day free trial) and Monthly ("Start 7-day free
+    parent", "Send the details to a parent"), Yearly (A$5 a month, 7-day free trial) and Monthly ("Start 7-day free
     trial", "Cancel anytime · Under 18? Ask a parent"). When seats run out Lifetime disappears and Yearly
     is preselected and "Best value" (only if it really saves). Then **Free vs Pro** (`PLAN_TABLE`, 5
     rows, unlimited lessons first; ticks and dashes always with screen-reader text; "Start free" for
@@ -1322,14 +1331,19 @@ A TikTok-style stream of "bytes" (owner, 7 Oct 2026; plan `docs/plans/feed.md`).
 - **The stream** (`/feed`, `Feed`): one byte per screen, CSS scroll snap (swipe), the header's up/down
   buttons and the arrow keys; never moves by itself. One-tap types check themselves; others have a
   Check pinned to the bottom. No second try. Order: `feedOrder` (seeded per learner per day, leaning to
-  courses with finished lessons or "Go deeper" taps, answered bytes last, courses mixed). Guests get
-  `GUEST_BYTES` (5), then the sign-up card. After 15 minutes, one dismissible "Nice work. Take a break?".
-- **XP:** 5 (rare 15) for a right answer on a new byte, at most `FEED_DAILY_CAP` (50) a day.
+  courses with finished lessons or "Go deeper" taps, answered bytes last, courses mixed). **Finite**
+  (owner, 19 Oct 2026): `DAILY_BYTES` (3) a day for everyone, then "That's today's bytes, back tomorrow"
+  with a button to the next lesson (and, for guests, "Create a free account to keep your XP"). Today's 3
+  are kept per device (`src/lib/feed/today.ts`: `pickToday`, `bytesLeft`), so a reload shows the same
+  ones; bytes finished today (the landing byte, another device) count. The header shows "1/3 today". No
+  break card.
+- **XP:** 5 (rare 15) for a right answer on a new byte, for at most 3 bytes a day (`byteXpToday`; the
+  server stores and pays nothing past that), under `FEED_DAILY_CAP` (50) as a backstop.
   `store.completeByte` → `completeByteAction` (re-grades with `gradeUntrusted`, applies the cap) stores it
   as a card completion with lesson id `feed` (card id = byte id) and a `card` XP event, so total XP,
   the daily goal, streaks and leagues count it with no new tables. The Feed is **not** in the content
   index, so the lesson actions can't pay for it. The guest merge prices bytes from the content and keeps
-  at most 5 (`withFeedLimit`, `FeedPrices`).
+  at most `GUEST_MERGE_BYTES` (9) (`withFeedLimit`, `FeedPrices`).
 - **Front door:** with the flag on, new visitors' first screen is a live byte (`HeroByte`, `HERO_BYTE`)
   with "Keep going" into the Feed; the rest of the landing page stays below. "Feed" is a nav tab (the
   phone tab bar says "Home" for Dashboard so six tabs fit).

@@ -63,7 +63,7 @@ export function LeagueResult({ result, onDone }: { result: WeekResult; onDone: (
       <p className="mt-2 font-semibold">{TIER_NAMES[result.toTier]}</p>
       <p className="mt-4 text-ink-muted">
         You finished <span className="font-mono font-semibold text-ink">{ordinal(result.rank)}</span> with{" "}
-        <span className="font-mono font-semibold text-ink">{result.weeklyXp.toLocaleString("en-AU")} XP</span>. {line}
+        <span className="font-mono font-semibold text-ink">{result.weeklyXp.toLocaleString("en-AU")} XP</span> last week. {line}
       </p>
       <Button className="mt-8 w-full sm:w-auto" onClick={onDone} autoFocus>
         See this week&apos;s league

@@ -176,10 +176,13 @@ function Standings({ rows, tier, onOpen }: { rows: StandingRow[]; tier: MyLeague
   const size = rows.length;
   const { up, down } = zoneSizes(size, tier);
   return (
-    <ol aria-label="This week's league" className="mt-6 space-y-1.5">
+    <>
+    {/* Which XP the rows show (owner, 19 Oct 2026): this week's, not the total. */}
+    <p aria-hidden="true" className="mt-6 px-3 text-right text-caption font-semibold text-ink-muted">XP this week</p>
+    <ol aria-label="This week's league" className="mt-1.5 space-y-1.5">
       {rows.map((row, i) => {
         const zone = zoneOf(row.rank, size, tier, row.weeklyXp);
-        const label = `${row.rank}, ${row.isMe ? "you, " : ""}${row.handle}${row.founder ? ", Founding Member" : ""}${row.pro ? ", Pro" : ""}, ${row.weeklyXp} XP${zone === "up" ? ", promotion zone" : zone === "down" ? ", demotion zone" : ""}`;
+        const label = `${row.rank}, ${row.isMe ? "you, " : ""}${row.handle}${row.founder ? ", Founding Member" : ""}${row.pro ? ", Pro" : ""}, ${row.weeklyXp} XP this week${zone === "up" ? ", promotion zone" : zone === "down" ? ", demotion zone" : ""}`;
         return (
           <li key={row.handle}>
             {up > 0 && row.rank === up + 1 && <ZoneDivider kind="up" />}
@@ -224,6 +227,7 @@ function Standings({ rows, tier, onOpen }: { rows: StandingRow[]; tier: MyLeague
         );
       })}
     </ol>
+    </>
   );
 }
 

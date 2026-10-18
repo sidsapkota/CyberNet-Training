@@ -62,6 +62,8 @@ export type AnalyticsEvent =
   | "byte_go_deeper"
   | "feed_session_length"
   | "feed_signup"
+  // "Next lesson" on the Feed's "That's today's bytes" card (with the lesson)
+  | "byte_next_lesson"
   // Challenge a friend (with the lesson): src/components/challenge/
   | "challenge_created"
   | "challenge_opened"

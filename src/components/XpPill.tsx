@@ -28,8 +28,8 @@ export function XpPill() {
           </motion.span>
         </AnimatePresence>
       </span>
-      {/* The label says "XP" too; the narrowest phones drop the visible suffix to fit the streak. */}
-      <span className="text-caption font-medium text-ink-faint max-[399px]:hidden">XP</span>
+      {/* Which XP it is (owner, 19 Oct 2026): the total. The narrowest phones keep the word, drop "XP". */}
+      <span className="text-caption font-medium text-ink-faint"><span className="max-[399px]:hidden">XP </span>total</span>
     </div>
   );
 }

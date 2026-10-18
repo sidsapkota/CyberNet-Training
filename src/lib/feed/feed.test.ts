@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { loadContent } from "@/lib/content/load";
 import { loadBytes } from "./bytes";
-import { BYTE_XP, byteXp, courseWeights, FEED_DAILY_CAP, feedOrder, feedXpOn, RARE_BYTE_XP, seedFrom, sessionBucket } from "./rules";
+import { BYTE_XP, byteXp, courseWeights, DAILY_BYTES, FEED_DAILY_CAP, feedOrder, feedXpOn, RARE_BYTE_XP, seedFrom, sessionBucket } from "./rules";
+import { byteXpToday, bytesLeft, feedBytesOn, pickToday } from "./today";
 
 describe("feed bytes", () => {
   const { lessons, courses } = loadContent();
@@ -60,6 +61,43 @@ describe("feed order", () => {
     expect(early / 200).toBeLessThan(2);
     expect(courseWeights({ a: 6 }, {})("a")).toBe(2);
     expect(courseWeights({}, {})("a")).toBe(1);
+  });
+});
+
+describe("today's bytes (3 a day)", () => {
+  const day = "2026-10-20";
+  const paid = (ids: string[], on = day) => ids.map((cardId) => ({ day: on, lessonId: "feed", cardId, xp: 5 }));
+  const ordered = ["b1", "b2", "b3", "b4", "b5"].map((id) => ({ id }));
+
+  it("pays nothing once today's 3 bytes are paid, even under the XP cap", () => {
+    expect(DAILY_BYTES).toBe(3);
+    expect(byteXpToday(false, paid(["a", "b"]), day)).toBe(BYTE_XP);
+    expect(byteXpToday(true, paid(["a", "b", "c"]), day)).toBe(0);
+    expect(byteXpToday(false, paid(["a", "b", "c"], "2026-10-19"), day)).toBe(BYTE_XP);
+    expect(feedBytesOn([...paid(["a"]), { day, lessonId: "strong-passwords", cardId: "x", xp: 10 }], day)).toEqual(["a"]);
+  });
+
+  it("are the first 3 of the order, then the same 3 all day for the same learner", () => {
+    const first = pickToday(ordered, null, day, "guest");
+    expect(first.bytes.map((b) => b.id)).toEqual(["b1", "b2", "b3"]);
+    const saved = { ...first.record, ids: ["b5", "b4", "b1"], answered: ["b5"] };
+    expect(pickToday(ordered, saved, day, "guest").bytes.map((b) => b.id)).toEqual(["b5", "b4", "b1"]);
+    expect(pickToday(ordered, saved, "2026-10-21", "guest").bytes.map((b) => b.id)).toEqual(["b1", "b2", "b3"]);
+    expect(pickToday(ordered, saved, day, "user-2").record.answered).toEqual([]);
+    expect(pickToday(ordered, { ...saved, ids: ["gone"] }, day, "guest").bytes.map((b) => b.id)).toEqual(["b1", "b2", "b3"]);
+  });
+
+  it("keep a byte already finished today (the landing page's) as one of the 3", () => {
+    expect(pickToday(ordered, null, day, "guest", ["b4"]).bytes.map((b) => b.id)).toEqual(["b4", "b1", "b2"]);
+  });
+
+  it("counts what's left from answers on this device and bytes paid on any device", () => {
+    const saved = { day, who: "u1", ids: ["b1", "b2", "b3"], answered: ["b1"] };
+    expect(bytesLeft(null, [], day, "u1")).toBe(3);
+    expect(bytesLeft(saved, [], day, "u1")).toBe(2);
+    expect(bytesLeft(saved, ["b1", "b2"], day, "u1")).toBe(1);
+    expect(bytesLeft(saved, ["b2", "b3", "b4"], day, "u1")).toBe(0);
+    expect(bytesLeft(saved, [], "2026-10-21", "u1")).toBe(3);
   });
 });
 

@@ -20,6 +20,7 @@ import {
   founderErrorData,
   founderEventData,
   isFounderContinue,
+  FOUNDER_ENDS_TEXT,
   seatCounterText,
   showFounderOffer,
 } from "@/lib/pro/founder";
@@ -91,11 +92,15 @@ export function FounderBadge({ className = "", lit = false }: { className?: stri
   );
 }
 
-/** "First 50 learners only", then "37 of 50 left" (or that the last spots are in someone's checkout). */
-export function SeatsLeft({ offer, className = "" }: { offer: FounderOffer; className?: string }) {
+/**
+ * "First 50 learners only", then "37 of 50 left" (or that the last spots are in someone's checkout);
+ * with `ends`, the fixed end date too ("· Ends 30 Nov", on /pro).
+ */
+export function SeatsLeft({ offer, ends = false, className = "" }: { offer: FounderOffer; ends?: boolean; className?: string }) {
   return (
     <span className={`font-mono text-caption font-semibold whitespace-nowrap text-ink-muted tabular-nums ${className}`}>
       {offer.counter.allHeld ? "The last spots are in checkout right now" : seatCounterText(offer.counter)}
+      {ends && ` · ${FOUNDER_ENDS_TEXT}`}
     </span>
   );
 }

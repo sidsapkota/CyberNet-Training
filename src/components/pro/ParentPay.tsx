@@ -6,6 +6,9 @@ import { createParentLinkAction } from "@/app/actions/pro";
 import { Button } from "@/components/ui/Button";
 import { trackEvent, trackWith } from "@/lib/analytics";
 import { type FounderScreen, parentLinkEventData } from "@/lib/pro/founder";
+import { PARENT_LINK_LABEL, PARENT_LINK_MADE, PARENT_SHARE_TEXT } from "@/lib/pro/parentCopy";
+
+export { PARENT_LINK_LABEL };
 
 /** The parent's one button (a plain form post, so it works even without JavaScript). */
 export function ParentPayButton({ label }: { label: string }) {
@@ -35,11 +38,10 @@ export function ParentLinkPaid() {
 }
 
 /** The small text link under the lifetime button (small text, a 44px tap target). */
-export const PARENT_LINK_LABEL = "Can't pay? Send it to a parent";
 export const PARENT_LINK_CLASS = "inline-flex min-h-11 items-center text-small font-semibold text-accent-ink underline-offset-2 hover:underline";
 
 /**
- * "Can't pay? Send it to a parent", straight under the lifetime button: makes a one-time link a parent can open on their own
+ * "Send the details to a parent", straight under the lifetime button: makes a one-time link a parent can open on their own
  * phone or computer to pay for this learner's account, then offers Share (where the device has it)
  * and Copy. For teens without a card of their own.
  */
@@ -80,10 +82,10 @@ export function SendToParent({ screen }: { screen: FounderScreen }) {
     );
   }
 
-  const message = "Could you get me lifetime CyberNet Training Pro? It's a one-off payment, no account needed:";
+  const message = PARENT_SHARE_TEXT;
   return (
     <div ref={panel} className="mt-2 rounded-control border border-line bg-surface-raised p-3 text-left">
-      <p className="text-small">Send this to a parent or guardian. They can pay on their own phone or computer, no account needed. It works for 7 days.</p>
+      <p className="text-small">{PARENT_LINK_MADE}</p>
       <input readOnly value={url} aria-label="Link for a parent" onFocus={(e) => e.currentTarget.select()} className="mt-2 min-h-11 w-full rounded-control border border-line bg-surface px-3 font-mono text-caption text-ink" />
       <div className="mt-2 flex gap-2">
         {typeof navigator !== "undefined" && "share" in navigator && (

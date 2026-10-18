@@ -89,16 +89,37 @@ export interface FounderOffer extends FounderCopy {
 }
 
 /**
- * The offer is on only with the flag (FOUNDER_OFFER=on) and a founding price. Off by default, so
- * it ships dark until the owner turns it on in Vercel.
+ * The offer's fixed end (owner, 19 Oct 2026): 30 November 2026, 11:59 pm AEDT (Sydney summer time,
+ * UTC+11). It never resets or extends: one moment for everyone, never "N days from your first
+ * visit". After it the offer is off everywhere (server and screens) with no switch to flip.
+ * Checkouts started before it and paid just after are still honoured (the webhook doesn't check it).
  */
-export function founderOfferOn(env: { flag?: string; price?: string }): boolean {
-  return env.flag?.trim().toLowerCase() === "on" && /^price_[A-Za-z0-9]+$/.test(env.price?.trim() ?? "");
+export const FOUNDER_ENDS_AT = Date.parse("2026-11-30T23:59:59+11:00");
+/** Shown beside the seat counter on /pro. */
+export const FOUNDER_ENDS_TEXT = "Ends 30 Nov";
+
+export function founderOfferEnded(now: number = Date.now()): boolean {
+  return now > FOUNDER_ENDS_AT;
 }
 
-/** Who sees the offer: guests, free learners and early-user grant holders; never anyone on a subscription or already a founder. */
-export function showFounderOffer(offer: FounderOffer | null | undefined, pro: { loading: boolean; kind?: string } | null): offer is FounderOffer {
-  if (!offer || offer.counter.soldOut) return false;
+/**
+ * The offer is on only with the flag (FOUNDER_OFFER=on), a founding price, and before its end.
+ * Off by default, so it ships dark until the owner turns it on in Vercel.
+ */
+export function founderOfferOn(env: { flag?: string; price?: string }, now: number = Date.now()): boolean {
+  return env.flag?.trim().toLowerCase() === "on" && /^price_[A-Za-z0-9]+$/.test(env.price?.trim() ?? "") && !founderOfferEnded(now);
+}
+
+/**
+ * Who sees the offer: guests, free learners and early-user grant holders; never anyone on a
+ * subscription or already a founder, and nobody after the end (even with an offer fetched before it).
+ */
+export function showFounderOffer(
+  offer: FounderOffer | null | undefined,
+  pro: { loading: boolean; kind?: string } | null,
+  now: number = Date.now(),
+): offer is FounderOffer {
+  if (!offer || offer.counter.soldOut || founderOfferEnded(now)) return false;
   if (pro === null) return true; // a guest
   if (pro.loading) return false; // never flash it at a subscriber while their status loads
   return pro.kind === "none" || pro.kind === "grant";

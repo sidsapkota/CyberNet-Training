@@ -3,7 +3,7 @@ import { hasPro, proCosmeticUntil, proIntervals, proStatus } from "./entitlement
 import { proLine } from "./describe";
 import { founderCopy, founderCounter, founderOfferOn, founderPurchaseOf, fullyRefundedPayment, seatsLeftText, showFounderOffer } from "./founder";
 import { PARENT_LINK_TEXT, parentLinkState } from "./founder";
-import { COUNTER_SHOWS_FROM, seatCounterText } from "./founder";
+import { COUNTER_SHOWS_FROM, FOUNDER_ENDS_AT, founderOfferEnded, seatCounterText } from "./founder";
 import { FOUNDER_ERRORS, FOUNDER_ERROR_TEXT, FOUNDER_RETRYABLE, FOUNDER_SIGN_IN_PATH, founderErrorData, isFounderContinue } from "./founder";
 
 const monthly = { unitAmount: 799, currency: "aud", interval: "month" as const };
@@ -68,22 +68,33 @@ describe("seatCounterText: no number until 5 are sold, then the real one", () =>
   });
 });
 
+const BEFORE = Date.parse("2026-10-20T00:00:00Z");
+
 describe("founderOfferOn: off unless switched on", () => {
   it("needs FOUNDER_OFFER=on and a price", () => {
     expect(founderOfferOn({})).toBe(false);
     expect(founderOfferOn({ price: "price_1UM0pXRt4PD9fCsfxqwBBuf0" })).toBe(false);
     expect(founderOfferOn({ flag: "off", price: "price_1UM0pXRt4PD9fCsfxqwBBuf0" })).toBe(false);
     expect(founderOfferOn({ flag: "on" })).toBe(false);
-    expect(founderOfferOn({ flag: " ON ", price: "price_1UM0pXRt4PD9fCsfxqwBBuf0" })).toBe(true);
+    expect(founderOfferOn({ flag: " ON ", price: "price_1UM0pXRt4PD9fCsfxqwBBuf0" }, BEFORE)).toBe(true);
+  });
+  it("ends at 11:59 pm AEDT on 30 Nov 2026, for good, with no switch", () => {
+    expect(new Date(FOUNDER_ENDS_AT).toISOString()).toBe("2026-11-30T12:59:59.000Z");
+    expect(founderOfferEnded(FOUNDER_ENDS_AT)).toBe(false);
+    expect(founderOfferEnded(FOUNDER_ENDS_AT + 1000)).toBe(true);
+    expect(founderOfferOn({ flag: "on", price: "price_1UM0pXRt4PD9fCsfxqwBBuf0" }, FOUNDER_ENDS_AT + 1000)).toBe(false);
   });
 });
 
 describe("showFounderOffer", () => {
   const offer = { price: "A$29", headline: "h", comparison: "c", counter: founderCounter({ sold: 1, held: 0, total: 50 }) };
   it("shows to guests, free learners and early-user grant holders", () => {
-    expect(showFounderOffer(offer, null)).toBe(true);
-    expect(showFounderOffer(offer, { loading: false, kind: "none" })).toBe(true);
-    expect(showFounderOffer(offer, { loading: false, kind: "grant" })).toBe(true);
+    expect(showFounderOffer(offer, null, BEFORE)).toBe(true);
+    expect(showFounderOffer(offer, { loading: false, kind: "none" }, BEFORE)).toBe(true);
+    expect(showFounderOffer(offer, { loading: false, kind: "grant" }, BEFORE)).toBe(true);
+  });
+  it("hides itself after the end, even with an offer fetched before it", () => {
+    expect(showFounderOffer(offer, null, FOUNDER_ENDS_AT + 1)).toBe(false);
   });
   it("never to subscribers or founders, never while loading, never when sold out", () => {
     expect(showFounderOffer(offer, { loading: false, kind: "subscription" })).toBe(false);

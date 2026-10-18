@@ -11,11 +11,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "/feed" },
 };
 
-/** The Feed: a vertical stream of bytes (docs/plans/feed.md). Behind FEED_ENABLED. */
+/** The Feed: today's 3 bytes, then the next lesson (docs/plans/feed.md). Behind FEED_ENABLED. */
 export default async function FeedPage({ searchParams }: PageProps<"/feed">) {
   const { feed, start } = await searchParams;
   if (!feedAllowed(feed)) notFound();
-  const courseTitle = new Map(getCourses().map((c) => [c.id, c.title]));
+  const courses = getCourses();
+  const courseTitle = new Map(courses.map((c) => [c.id, c.title]));
   const bytes: FeedByte[] = getBytes().map((b) => ({
     id: b.id,
     hook: b.hook,
@@ -26,5 +27,5 @@ export default async function FeedPage({ searchParams }: PageProps<"/feed">) {
     lessonTitle: b.lessonTitle,
     card: b.card,
   }));
-  return <Feed bytes={bytes} start={typeof start === "string" ? start : null} />;
+  return <Feed bytes={bytes} courses={courses} start={typeof start === "string" ? start : null} />;
 }

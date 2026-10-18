@@ -96,7 +96,7 @@ export function QuizResults({
           <div className="mt-4 inline-flex items-center gap-1.5 rounded-control border border-line bg-surface px-3 py-1.5 font-mono text-lead font-semibold text-accent-ink">
             <XpIcon className="size-5" />
             <span>
-              +<CountUp value={attempt.xp} delay={0.7} /> XP
+              +<CountUp value={attempt.xp} delay={0.7} /> XP earned
             </span>
           </div>
         )}

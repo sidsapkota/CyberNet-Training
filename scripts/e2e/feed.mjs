@@ -1,11 +1,11 @@
 // The Feed, end to end on STAGING (refuses production). Dev server running.
 // - The flag: off, /feed is a 404 without ?feed=1 (on: the tab and the landing byte show).
 // - Guest at 360x560: a byte answered right shows the reveal and +XP; Go deeper goes to its lesson;
-//   Next and the arrow keys move; events byte_viewed, byte_answered, byte_go_deeper; after 5 bytes,
-//   the sign-up card (feed_signup when a sign-in option is used).
-// - Signing in carries the guest's bytes over (at most 5, priced from the content).
-// - Signed in: XP is the server's (graded there), capped at 50 a day; a wrong answer earns nothing.
-// - After 15 minutes, the break card (with a fake clock); "Keep going" dismisses it.
+//   Next and the arrow keys move; events byte_viewed, byte_answered, byte_go_deeper; the Feed is
+//   finite: 3 bytes, then "That's today's bytes" with the next lesson (and, for guests, sign-up:
+//   feed_signup); the same 3 after a reload; no break card.
+// - Signing in carries the guest's bytes over (priced from the content).
+// - Signed in: XP is the server's (graded there), for 3 bytes a day at most; a wrong answer earns nothing.
 // - The video view plays itself; every byte fits 360x560 and desktop with nothing covered.
 //   npm run e2e:feed
 import fs from "node:fs";
@@ -58,8 +58,13 @@ async function watchEvents(page) {
   });
 }
 const sentNames = (page) => page.__sent.map(([n]) => n);
-async function openFeed(page, start) {
+/** `fresh`: forget this device's "today's 3" first, so `start` leads (each test byte starts a new day's set). */
+async function openFeed(page, start, { fresh = false } = {}) {
   await page.goto(`${BASE}/feed?feed=1${start ? `&start=${start}` : ""}`);
+  if (fresh) {
+    await page.evaluate(() => localStorage.removeItem("cybernet.feed.today"));
+    await page.reload();
+  }
   if (!(await page.locator("[data-index='0']").waitFor({ timeout: 30000 }).then(() => true, () => false))) {
     await page.reload(); // the dev server occasionally fails its first request
     await page.locator("[data-index='0']").waitFor({ timeout: 60000 });
@@ -112,7 +117,7 @@ try {
   await answerCard(page, cardOf(first)).catch(() => {}); // one-tap: it checks itself (there's no Check button to press)
   await section(page, 0).getByText("Right!").waitFor({ timeout: 15000 });
   record("A right answer shows the reveal and +5 XP", await section(page, 0).getByText("+5 XP").isVisible());
-  record("The Feed XP counter goes up", await until(async () => (await page.getByLabel("5 of 50 Feed XP today").count()) > 0));
+  record("Today's counter goes up (1 of 3)", await until(async () => (await page.getByLabel("1 of today's 3 bytes played").count()) > 0));
   await page.screenshot({ path: path.join(SHOTS, "feed-reveal-360.png") });
   record("byte_viewed and byte_answered (right) are sent", await until(async () => sentNames(page).includes("byte_viewed") && page.__sent.some(([n, d]) => n === "byte_answered" && d.source === "right")));
   const deeper = section(page, 0).getByRole("link", { name: /Go deeper/ });
@@ -124,13 +129,19 @@ try {
   await page.getByRole("button", { name: "Previous byte" }).click();
   await until(async () => (await section(page, 1).boundingBox())?.y < 120);
   const sections = await page.locator("[data-index]").count();
-  record("Guests get 5 bytes, then the sign-up card", sections === 6 && (await section(page, 5).getAttribute("aria-label")) === "Sign up", String(sections));
-  await section(page, 5).scrollIntoViewIfNeeded();
-  await page.route(/\/auth\/v1\/authorize/, (r) => r.abort());
-  const age = section(page, 5).getByRole("checkbox").first();
-  if (await age.count()) await age.check();
-  await section(page, 5).getByRole("button", { name: /Google/ }).click().catch(() => {});
-  record("Using a sign-in option on it sends feed_signup", await until(async () => sentNames(page).includes("feed_signup"), 8000));
+  const done = section(page, 3);
+  record("3 bytes, then \"That's today's bytes\"", sections === 4 && (await done.getAttribute("aria-label")) === "That's today's bytes", String(sections));
+  await done.scrollIntoViewIfNeeded();
+  record("…with a button to the next lesson", (await done.getByRole("link", { name: /^Next lesson: / }).getAttribute("href"))?.startsWith("/lesson/"));
+  record("No break card any more", (await page.getByText("Take a break?").count()) === 0);
+  await page.screenshot({ path: path.join(SHOTS, "feed-done-360.png") });
+  const ids = async () => page.locator("[data-index]").evaluateAll((els) => els.map((e) => e.querySelector("h2")?.textContent));
+  const before = await ids();
+  await page.reload();
+  await section(page, 0).waitFor({ timeout: 30000 });
+  record("The same 3 after a reload", JSON.stringify(await ids()) === JSON.stringify(before));
+  await done.getByRole("link", { name: /Create a free account/ }).click().catch(() => {});
+  record("Guests: the account link on it sends feed_signup", await until(async () => sentNames(page).includes("feed_signup"), 8000));
   await openFeed(page, first.id);
   await answerCard(page, cardOf(first)).catch(() => {}); // the link comes with the reveal
   await section(page, 0).getByRole("link", { name: /Go deeper/ }).click({ timeout: 15000 }).catch(() => {});
@@ -160,14 +171,22 @@ try {
     return row?.xp === 5 && event.length === 1 && event[0].kind === "card";
   });
   record("Signed in, a right answer earns 5 XP on the server (a card XP event, so streaks and leagues count it)", paid);
-  // Nearly at the cap: 48 of 50 today.
+  // Two of today's 3 paid: one more pays, the next one doesn't (nothing is stored either).
   const day = (await admin.from("xp_events").select("day").eq("user_id", fan.id).limit(1).single()).data.day;
-  await admin.from("xp_events").insert({ user_id: fan.id, at: new Date().toISOString(), day, time_zone: "Australia/Sydney", kind: "card", lesson_id: "feed", card_id: "e2e-seed", xp: 43 });
-  await openFeed(page2, mcBytes[2].id);
+  await admin.from("xp_events").insert({ user_id: fan.id, at: new Date().toISOString(), day, time_zone: "Australia/Sydney", kind: "card", lesson_id: "feed", card_id: "e2e-seed", xp: 5 });
+  await openFeed(page2, mcBytes[2].id, { fresh: true });
   await answerCard(page2, cardOf(mcBytes[2])).catch(() => {});
   await section(page2, 0).getByText("Right!").waitFor({ timeout: 15000 });
-  record("The daily cap: only the 2 XP left today are paid", await until(async () => (await admin.from("card_completions").select("xp").match({ user_id: fan.id, lesson_id: "feed", card_id: mcBytes[2].id }).maybeSingle()).data?.xp === 2));
-  await openFeed(page2, mcBytes[3].id);
+  record("The 3rd byte today is paid", await until(async () => (await admin.from("card_completions").select("xp").match({ user_id: fan.id, lesson_id: "feed", card_id: mcBytes[2].id }).maybeSingle()).data?.xp === 5));
+  const forth = await page2.evaluate(async () => document.body.innerText.includes("3/3 today"));
+  record("The counter says 3/3 today", forth);
+  const extra = mcBytes.find((b, i) => i > 3) ?? mcBytes[3];
+  await openFeed(page2, extra.id, { fresh: true });
+  await answerCard(page2, cardOf(extra)).catch(() => {});
+  await section(page2, 0).getByText("Right!").waitFor({ timeout: 15000 });
+  await page2.waitForTimeout(2000);
+  record("A 4th byte the same day earns nothing on the server, and isn't saved", ((await admin.from("card_completions").select("card_id").match({ user_id: fan.id, lesson_id: "feed", card_id: extra.id })).data ?? []).length === 0);
+  await openFeed(page2, mcBytes[3].id, { fresh: true });
   await answerCard(page2, cardOf(mcBytes[3]), { wrong: true }).catch(() => {});
   await section(page2, 0).getByText("Not quite").waitFor({ timeout: 15000 });
   await page2.waitForTimeout(1500);
@@ -176,20 +195,7 @@ try {
   record("The Feed isn't a lesson the lesson routes will pay for", forged === 404 || forged === 400, String(forged));
   await ctx2.close();
 
-  // 5. The break card after 15 minutes.
-  const ctx3 = await browser.newContext({ viewport: { width: 360, height: 640 }, reducedMotion: "reduce" });
-  const page3 = await ctx3.newPage();
-  await prepare(page3);
-  await page3.clock.install();
-  await openFeed(page3, mcBytes[0].id);
-  await page3.clock.fastForward("15:05");
-  const breakCard = page3.getByRole("heading", { name: "Nice work. Take a break?" });
-  record("After 15 minutes, a friendly break card", await breakCard.waitFor({ timeout: 15000 }).then(() => true, () => false));
-  await page3.getByRole("button", { name: "Keep going" }).click();
-  record("Keep going dismisses it", await until(async () => (await breakCard.count()) === 0, 8000));
-  await ctx3.close();
-
-  // 6. The video view.
+  // 5. The video view.
   const page4 = await browser.newPage({ viewport: { width: 540, height: 960 } });
   await page4.goto(`${BASE}/feed/video/${mcBytes[0].id}?feed=1`);
   await page4.getByRole("heading", { name: mcBytes[0].hook }).waitFor({ timeout: 60000 });
