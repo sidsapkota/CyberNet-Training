@@ -51,7 +51,7 @@
       "difficulty": "core",
       "predict": true,
       "uses": [],
-      "prompt": "The scammer types Mia's password and taps Next. **What happens?**",
+      "prompt": "The scammer taps Next. **What happens?**",
       "image": {
         "src": "/illustrations/sso/two-step-sign-in-predict.svg",
         "alt": "The scammer at their laptop on Mia's email sign-in page. Step 1, Password, is filled in and the pointer is on Next. Far away, Mia has her phone in her pocket.",
@@ -85,7 +85,7 @@
         "two-step-sign-in"
       ],
       "title": "Two-step sign-in",
-      "body": "This is **two-step sign-in**: your password, then a second lock, a **code** sent to your phone.\n\nA scammer far away can steal a password, but not the phone in your pocket.",
+      "body": "**Two-step sign-in** is your password, then a second lock: a **code** sent to your phone. A scammer can steal a password, not your phone.",
       "image": {
         "src": "/illustrations/sso/two-step-sign-in-named.svg",
         "alt": "The same picture, labelled. Step 1, the password: the scammer has it on a sticky note, with a green tick. Step 2, the code: it goes to the phone in Mia's pocket, and a red cross by the scammer shows they don't have it.",

@@ -202,7 +202,7 @@
         "src": "/illustrations/sso/quiz-manager-leak.svg",
         "alt": "Leo's password manager holding many different keys, with a counter reading 30, beside a game site with a red Hacked! banner.",
         "width": 340,
-        "height": 170
+        "height": 146
       },
       "options": [
         {
@@ -233,7 +233,7 @@
         "src": "/illustrations/sso/quiz-stolen-password.svg",
         "alt": "Far away, a stranger's laptop on your game's sign-in page with your password typed and the pointer on Next. Close by, your phone with two-step sign-in on.",
         "width": 340,
-        "height": 170
+        "height": 140
       },
       "options": [
         {

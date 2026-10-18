@@ -143,7 +143,7 @@
         "passkey",
         "authenticator-app"
       ],
-      "prompt": "A fake email page asks for Mia's password and code. Which lock keeps her safe?",
+      "prompt": "A fake email page asks for Mia's code. Which lock keeps her safe?",
       "image": {
         "src": "/illustrations/sso/strongest-lock-fake-page.svg",
         "alt": "A laptop shows a page that looks just like Mia's email sign-in, with a Password box and a Code box. An amber tag on its corner says Fake copy. A scammer peeks out from behind the screen. Mia's phone sits beside it.",

@@ -51,7 +51,7 @@ Strong passwords, passphrases and two-step sign-in.
 
 **Key facts**
 
-- *Meet the passphrase:* Scammers' computers try a **guess list** first: common passwords, names, years and song lines. A **passphrase** is four or more random words: long, and not on the guess list.
+- *Meet the passphrase:* Scammers' computers try a **guess list** first. A **passphrase** is four or more random words: long, and not on the list.
 - *Long and random wins:* A **passphrase** is four or more random words: long, and not on the guess list. **Try this:** Make up four random words that don't go together, ready for your next new password.
 
 **Best interactive cards**
@@ -89,13 +89,13 @@ Strong passwords, passphrases and two-step sign-in.
 
 **Key facts**
 
-- *Two-step sign-in:* This is **two-step sign-in**: your password, then a second lock, a **code** sent to your phone.
+- *Two-step sign-in:* **Two-step sign-in** is your password, then a second lock: a **code** sent to your phone.
 - *Recap:* **Two-step sign-in** means a stolen password isn't enough, as long as you never share your code. **Try this:** With a trusted adult, or on your own if you're 18+, turn on two-step sign-in for your email.
 
 **Best interactive cards**
 
 - Explore the picture: Sign in to Mia's email, the way she does. **Tap each part.**
-- Multiple choice: The scammer types Mia's password and taps Next. **What happens?**
+- Multiple choice: The scammer taps Next. **What happens?**
 - Multiple choice: A sign-in code arrives. Mia didn't sign in. **Tap what it means.**
 
 #### The Strongest Lock
