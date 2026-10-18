@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 150" width="340" height="150" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Left: Jo's phone says Post deleted, last year. Right: a different phone shows the same photo, a cartoon kid mid-sneeze, shared in a group chat today.</title>
+  <rect x="14" y="6" width="116" height="138" rx="14" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <rect x="54.6" y="11" width="34.8" height="3" rx="1.5" fill="#6f8fbd"/>
+  <rect x="28" y="22" width="88" height="52" rx="4" fill="#16305a" stroke="#6f8fbd" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <text x="72" y="100" font-size="16" font-weight="600" fill="#a3b6d2" text-anchor="middle">Post deleted</text>
+  <text x="72" y="122" font-size="16" font-weight="500" fill="#a3b6d2" text-anchor="middle">last year</text>
+  <rect x="168" y="6" width="158" height="138" rx="14" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <rect x="223.3" y="11" width="47.4" height="3" rx="1.5" fill="#6f8fbd"/>
+  <text x="184" y="32" font-size="16" font-weight="700" fill="#e6eef9">Group chat</text>
+  <rect x="180" y="40" width="98" height="72" rx="10" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="194" y="48" width="70" height="56" rx="4" fill="#5fb4f0"/>
+  <circle cx="229" cy="78" r="16" fill="#e0b48c"/>
+  <path d="M213 74A16 16 0 0 1 245 74C238 68 220 68 213 74Z" fill="#3b2a1f" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M221 78l4 2M237 78l-4 2" fill="none" stroke="#1d2a3d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="229" cy="88" r="3.5" fill="#1d2a3d"/>
+  <path d="M248 82l8 -4M249 88l9 0M248 94l8 4" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="184" y="116" width="116" height="24" rx="12" fill="#061630" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="242" y="133" font-size="16" font-weight="600" fill="#8be3ff" text-anchor="middle">Shared today</text>
+</svg>

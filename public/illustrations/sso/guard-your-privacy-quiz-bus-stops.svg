@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 226" width="340" height="226" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>A bus timetable app with a map of nearby bus stops. Over it, a pop-up: Allow Bus Times to use your location? with three buttons: Always (even when closed), Only while using the app, and Don't allow.</title>
+  <rect x="4" y="4" width="332" height="218" rx="12" fill="#16305a" stroke="#6f8fbd" stroke-width="2"/>
+  <rect x="12" y="10" width="316" height="212" rx="12" fill="#1d3d6e" stroke="#8be3ff" stroke-width="2"/>
+  <text x="170" y="36" font-size="16" font-weight="700" fill="#e6eef9" text-anchor="middle">Allow Bus Times to use</text>
+  <text x="170" y="56" font-size="16" font-weight="700" fill="#e6eef9" text-anchor="middle">your location?</text>
+  <rect x="20" y="66" width="300" height="48" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="170" y="96" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Always (even when closed)</text>
+  <rect x="20" y="118" width="300" height="48" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="170" y="148" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Only while using the app</text>
+  <rect x="20" y="170" width="300" height="48" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="170" y="200" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Don't allow</text>
+</svg>

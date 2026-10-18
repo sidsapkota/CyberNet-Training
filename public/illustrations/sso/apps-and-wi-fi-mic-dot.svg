@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 150" width="340" height="150" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>The top of your phone screen, zoomed in: the time 3:45, the battery, and a small glowing orange dot labelled mic in use (on many phones). Below, the home screen, with no call open.</title>
+  <rect x="4" y="4" width="332" height="142" rx="22" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="24" y="40" font-size="20" font-weight="700" fill="#e6eef9">3:45</text>
+  <circle cx="240" cy="32" r="11" fill="#ffb547" opacity="0.25"/>
+  <circle cx="240" cy="32" r="6" fill="#ffb547"/>
+  <rect x="282" y="22" width="32" height="18" rx="4" fill="none" stroke="#e6eef9" stroke-width="2"/>
+  <rect x="285" y="25" width="20" height="12" rx="2" fill="#3ddc97"/>
+  <rect x="315" y="27" width="3" height="8" rx="1" fill="#e6eef9"/>
+  <text x="24" y="72" font-size="16" font-weight="700" fill="#ffb547">mic in use</text>
+  <text x="24" y="92" font-size="16" font-weight="500" fill="#a3b6d2">(on many phones)</text>
+  <path d="M110 66Q190 66 230 38" fill="none" stroke="#ffb547" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4"/>
+  <rect x="30" y="104" width="36" height="32" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="106" y="104" width="36" height="32" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="182" y="104" width="36" height="32" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="258" y="104" width="36" height="32" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+</svg>

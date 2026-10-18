@@ -62,6 +62,33 @@ describe("simulator play mode", () => {
     expect(definition.isComplete(definition.initialState(card), card)).toBe(false);
     expect(definition.isComplete({ length: 9 }, card)).toBe(true);
   });
+
+  const picture = {
+    ...play,
+    model: "post-spread",
+    params: {},
+    controls: [
+      { id: "post", kind: "button", label: "Post" },
+      { id: "share", kind: "button", label: "Share", requires: "post" },
+    ],
+    outputs: [{ id: "phones", kind: "picture", label: "The post" }],
+    playChanges: 2,
+  };
+
+  it("draws a picture model, and waits for `playChanges` controls before Continue", () => {
+    const card = CardSchema.parse(picture);
+    const definition = getCardDefinition(card);
+    if (!isGuidedDefinition(definition)) throw new Error("expected a guided card");
+    expect(definition.isComplete({ post: true, share: false }, card)).toBe(false);
+    expect(definition.isComplete({ post: true, share: true }, card)).toBe(true);
+  });
+
+  it("only allows pictures for picture models, and `requires` on another button", () => {
+    expect(CardSchema.safeParse({ ...play, outputs: [{ id: "strength", kind: "picture", label: "x" }] }).success).toBe(false);
+    expect(CardSchema.safeParse({ ...picture, controls: [{ id: "share", kind: "button", label: "Share", requires: "share" }] }).success).toBe(false);
+    expect(CardSchema.safeParse({ ...picture, playChanges: 3 }).success).toBe(false);
+    expect(CardSchema.safeParse({ ...picture, mode: undefined, goal: { all: [{ target: "output", id: "people", op: ">=", value: 4 }] } }).success).toBe(false);
+  });
 });
 
 describe("Hook cards", () => {

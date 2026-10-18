@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 150" width="340" height="150" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>Settings open at Microphone: a list of apps with switches. Sticker app is switched off, and the orange dot is gone from the top of the screen.</title>
+  <rect x="4" y="4" width="332" height="142" rx="22" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="24" y="34" font-size="16" font-weight="700" fill="#e6eef9">3:46</text>
+  <text x="170" y="34" font-size="16" font-weight="700" fill="#e6eef9" text-anchor="middle">Microphone</text>
+  <rect x="14" y="42" width="312" height="30" rx="8" fill="#24507f" stroke="#6f8fbd" stroke-width="1"/>
+  <text x="28" y="63" font-size="16" font-weight="600" fill="#e6eef9">Video call</text>
+  <rect x="278" y="47" width="36" height="20" rx="10" fill="#00c2ff" stroke="#8be3ff" stroke-width="1.5"/>
+  <circle cx="304" cy="57" r="7" fill="#e6eef9"/>
+  <rect x="14" y="76" width="312" height="30" rx="8" fill="#24507f" stroke="#3ddc97" stroke-width="2"/>
+  <text x="28" y="97" font-size="16" font-weight="600" fill="#e6eef9">Sticker app</text>
+  <rect x="278" y="81" width="36" height="20" rx="10" fill="#16305a" stroke="#6f8fbd" stroke-width="1.5"/>
+  <circle cx="288" cy="91" r="7" fill="#e6eef9"/>
+  <rect x="14" y="110" width="312" height="30" rx="8" fill="#24507f" stroke="#6f8fbd" stroke-width="1"/>
+  <text x="28" y="131" font-size="16" font-weight="600" fill="#e6eef9">Voice notes</text>
+  <rect x="278" y="115" width="36" height="20" rx="10" fill="#00c2ff" stroke="#8be3ff" stroke-width="1.5"/>
+  <circle cx="304" cy="125" r="7" fill="#e6eef9"/>
+  <circle cx="252" cy="91" r="10" fill="#061630" stroke="#3ddc97" stroke-width="2.5"/>
+  <path d="M246 92l4.5 4.5l8 -9" fill="none" stroke="#3ddc97" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

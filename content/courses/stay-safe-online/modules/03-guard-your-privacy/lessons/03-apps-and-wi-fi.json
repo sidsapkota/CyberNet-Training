@@ -1,0 +1,246 @@
+{
+  "id": "apps-and-wi-fi",
+  "kind": "lesson",
+  "title": "App Permissions",
+  "about": "Choose what each app can use, and change it any time.",
+  "order": 3,
+  "icon": "app-window",
+  "blueprint": "1.1",
+  "cards": [
+    {
+      "id": "permission-panel",
+      "type": "simulator",
+      "mode": "play",
+      "difficulty": "core",
+      "teaches": [
+        "apps-reach-phone-parts"
+      ],
+      "uses": [],
+      "prompt": "Sam installs a drawing game. **Flip each switch** to see what it can reach.",
+      "model": "app-permissions",
+      "params": {},
+      "controls": [
+        {
+          "id": "camera",
+          "kind": "toggle",
+          "label": "Camera"
+        },
+        {
+          "id": "microphone",
+          "kind": "toggle",
+          "label": "Microphone"
+        },
+        {
+          "id": "location",
+          "kind": "toggle",
+          "label": "Location"
+        },
+        {
+          "id": "contacts",
+          "kind": "toggle",
+          "label": "Contacts"
+        }
+      ],
+      "outputs": [
+        {
+          "id": "reach",
+          "kind": "picture",
+          "label": "What the game can reach"
+        }
+      ],
+      "playChanges": 2,
+      "explanation": "Each switch lets the app reach one more part of Sam's phone."
+    },
+    {
+      "id": "new-game-asks",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "predict": true,
+      "play": "predict",
+      "uses": [
+        "apps-reach-phone-parts"
+      ],
+      "prompt": "The game asks for Sam's contacts. Sam taps Don't allow. **What happens?**",
+      "image": {
+        "src": "/illustrations/sso/apps-and-wi-fi-contacts.svg",
+        "alt": "The drawing game with a half-drawn cat and a row of brush colours. Over it, a pop-up: Allow Drawing game to see your contacts? with Don't allow and Allow. A finger is on Don't allow.",
+        "width": 340,
+        "height": 160,
+        "revealSrc": "/illustrations/sso/apps-and-wi-fi-contacts-reveal.svg",
+        "revealAlt": "The pop-up is gone. The cat is finished in bright colours and the brushes work. A small crossed-out contacts icon says Contacts: off."
+      },
+      "options": [
+        {
+          "id": "still-works",
+          "text": "It still draws just fine"
+        },
+        {
+          "id": "stops-working",
+          "text": "It stops working"
+        },
+        {
+          "id": "deletes-drawing",
+          "text": "It deletes the drawing"
+        }
+      ],
+      "correctOptionId": "still-works",
+      "explanation": "Drawing never needed Sam's contacts, so the game works fine without them."
+    },
+    {
+      "id": "meet-permission",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "app-permission",
+        "change-permissions-in-settings"
+      ],
+      "title": "App permissions",
+      "body": "An **app permission** is your OK for an app to use your camera, microphone, location or contacts. Allow only what it needs, and change it any time in **Settings**.",
+      "image": {
+        "src": "/illustrations/sso/apps-and-wi-fi-permission.svg",
+        "alt": "The same pop-up, labelled app permission. Under it, the four things an app can ask for: camera, microphone, location and contacts. A Settings gear has an arrow: change any time.",
+        "width": 320,
+        "height": 190
+      }
+    },
+    {
+      "id": "needs-it",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "uses": [
+        "app-permission"
+      ],
+      "prompt": "Four apps each ask for one thing. **Drag** each into Needs it or Doesn't need it.",
+      "bins": [
+        {
+          "id": "needs",
+          "label": "Needs it"
+        },
+        {
+          "id": "doesnt",
+          "label": "Doesn't need it"
+        }
+      ],
+      "items": [
+        {
+          "id": "maps-location",
+          "label": "Maps → location",
+          "bin": "needs"
+        },
+        {
+          "id": "call-mic",
+          "label": "Video call → microphone",
+          "bin": "needs"
+        },
+        {
+          "id": "torch-contacts",
+          "label": "Torch → contacts",
+          "bin": "doesnt"
+        },
+        {
+          "id": "calc-location",
+          "label": "Calculator → location",
+          "bin": "doesnt"
+        }
+      ],
+      "explanation": "Allow what fits the app's job: a torch needs light, not your contacts.",
+      "nudge": "For each one, ask: could the app do its main job without it?",
+      "showAnswer": "Maps and video calls need theirs; a torch and a calculator don't need contacts or location."
+    },
+    {
+      "id": "directions-to-the-park",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "teaches": [
+        "location-while-using"
+      ],
+      "uses": [
+        "app-permission"
+      ],
+      "prompt": "Sam wants directions to the skate park. The map asks for location. **Tap the best button.**",
+      "image": {
+        "src": "/illustrations/sso/apps-and-wi-fi-directions.svg",
+        "alt": "A map app with a pin: Skate park. Over it, a pop-up: Allow Maps to use your location? with three buttons: Always (even when closed), Only while using the app, and Don't allow.",
+        "width": 340,
+        "height": 230,
+        "revealSrc": "/illustrations/sso/apps-and-wi-fi-directions-reveal.svg",
+        "revealAlt": "A route line runs from Sam to the skate park. Beside it, a closed phone with a crossed-out pin: Closed: can't see you."
+      },
+      "options": [
+        {
+          "id": "always",
+          "text": "Always (even when closed)",
+          "area": { "x": 5.9, "y": 31.3, "w": 88.2, "h": 20.9 },
+          "nudge": "Does the map need to know where Sam is when it's closed?"
+        },
+        {
+          "id": "while-using",
+          "text": "Only while using the app",
+          "area": { "x": 5.9, "y": 53.9, "w": 88.2, "h": 20.9 }
+        },
+        {
+          "id": "dont-allow",
+          "text": "Don't allow",
+          "area": { "x": 5.9, "y": 76.5, "w": 88.2, "h": 20.9 },
+          "nudge": "Can a map give directions without knowing where Sam is?"
+        }
+      ],
+      "correctOptionId": "while-using",
+      "explanation": "The directions work, and the map can only use Sam's location while Sam's using it.",
+      "showAnswer": "Only while using the app: the map works, and it can't follow Sam once Sam stops using it."
+    },
+    {
+      "id": "mic-dot",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "play": "consequence",
+      "teaches": [
+        "mic-indicator"
+      ],
+      "uses": [
+        "app-permission",
+        "change-permissions-in-settings"
+      ],
+      "prompt": "This dot means an app is using your mic. You're not on a call. **Tap what you do.**",
+      "image": {
+        "src": "/illustrations/sso/apps-and-wi-fi-mic-dot.svg",
+        "alt": "The top of your phone screen, zoomed in: the time 3:45, the battery, and a small glowing orange dot labelled mic in use (on many phones). Below, the home screen, with no call open.",
+        "width": 340,
+        "height": 150,
+        "revealSrc": "/illustrations/sso/apps-and-wi-fi-mic-dot-reveal.svg",
+        "revealAlt": "Settings open at Microphone: a list of apps with switches. Sticker app is switched off, and the orange dot is gone from the top of the screen."
+      },
+      "options": [
+        {
+          "id": "ignore",
+          "text": "Ignore it: dots like this are normal",
+          "nudge": "No call is on: should any app be using your mic right now?"
+        },
+        {
+          "id": "restart",
+          "text": "Restart the phone so the app stops",
+          "nudge": "After a restart, would the app still have its permission?"
+        },
+        {
+          "id": "check",
+          "text": "Switch that app's mic off in Settings"
+        }
+      ],
+      "correctOptionId": "check",
+      "explanation": "Settings takes the permission back, so that app can't use the mic again.",
+      "showAnswer": "Find the app and switch its mic off in Settings: that takes the permission back."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "app-permission",
+        "location-while-using",
+        "change-permissions-in-settings"
+      ],
+      "title": "Recap",
+      "body": "Only let an app use what it needs for its job, and change your mind any time in **Settings**.\n\n**Try this:** Open Settings and switch one app's location to \"Only while using the app\".\n\n**Next:** The café Wi-Fi that isn't really the café's."
+    }
+  ]
+}

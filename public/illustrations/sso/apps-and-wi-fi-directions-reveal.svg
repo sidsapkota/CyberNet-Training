@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 230" width="340" height="230" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>A route line runs from Sam to the skate park. Beside it, a closed phone with a crossed-out pin: Closed: can't see you.</title>
+  <g opacity="1">
+  <rect x="4" y="4" width="332" height="222" rx="12" fill="#16305a" stroke="#6f8fbd" stroke-width="2"/>
+  <path d="M4 60H336M4 150H336M90 4V226M230 4V226" fill="none" stroke="#1d3d6e" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <path d="M50 196V150H230V60H262" fill="none" stroke="#8be3ff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="50" cy="196" r="8" fill="#00c2ff" stroke="#e6eef9" stroke-width="2"/>
+  <path d="M262 54C255.7 45.9 253.9 42.3 253.9 38.7A8.1 8.1 0 0 1 270.1 38.7C270.1 42.3 268.3 45.9 262 54ZM262 41.4A2.7 2.7 0 1 0 262 36A2.7 2.7 0 1 0 262 41.4Z" fill="#ffb547" fill-rule="evenodd"/>
+  <text x="258" y="22" font-size="16" font-weight="700" fill="#e6eef9" text-anchor="middle">Skate park</text>
+  <rect x="186" y="168" width="146" height="54" rx="10" fill="#061630" stroke="#6f8fbd" stroke-width="1.5"/>
+  <rect x="196" y="174" width="24" height="42" rx="5" fill="#122b52" stroke="#6f8fbd" stroke-width="1.5"/>
+  <path d="M208 202C204.5 197.5 203.5 195.5 203.5 193.5A4.5 4.5 0 0 1 212.5 193.5C212.5 195.5 211.5 197.5 208 202ZM208 195A1.5 1.5 0 1 0 208 192A1.5 1.5 0 1 0 208 195Z" fill="#a3b6d2" fill-rule="evenodd"/>
+  <path d="M198 184L218 206" fill="none" stroke="#ff7a7a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="228" y="191" font-size="16" font-weight="600" fill="#e6eef9">Closed:</text>
+  <text x="228" y="211" font-size="16" font-weight="600" fill="#3ddc97">can't see you</text>
+</svg>

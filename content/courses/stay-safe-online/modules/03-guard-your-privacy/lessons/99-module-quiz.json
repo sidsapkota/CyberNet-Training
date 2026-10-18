@@ -13,7 +13,7 @@
         "keep-locating-info-private",
         "security-question"
       ],
-      "prompt": "New public profile: share, or keep private?",
+      "prompt": "You're filling in a new public profile. Drag each into a bin.",
       "bins": [
         {
           "id": "share",
@@ -21,7 +21,7 @@
         },
         {
           "id": "private",
-          "label": "Keep it private"
+          "label": "Keep private"
         }
       ],
       "items": [
@@ -32,12 +32,12 @@
         },
         {
           "id": "school",
-          "label": "School's name",
+          "label": "Your school's name",
           "bin": "private"
         },
         {
           "id": "now",
-          "label": "Where you are now",
+          "label": "Where you are right now",
           "bin": "private"
         },
         {
@@ -46,32 +46,106 @@
           "bin": "private"
         }
       ],
-      "explanation": "Hobbies and things you make are fine. Your school and where you are right now help strangers find you, and your first pet's name is a common security question answer."
+      "explanation": "A school and where you are can find you, and a first pet's name can unlock a password reset."
     },
     {
-      "id": "q-quiz-post",
+      "id": "q-old-photo",
       "type": "multiple_choice",
       "difficulty": "core",
       "uses": [
-        "security-question"
+        "digital-footprint",
+        "posts-can-be-copied"
       ],
-      "prompt": "\"Reply with your childhood street and first pet's name to get your elf name!\" Your uncle replied. What's the risk?",
+      "prompt": "Jo deleted an embarrassing photo last year. Now it's back online. How?",
+      "image": {
+        "src": "/illustrations/sso/guard-your-privacy-quiz-old-photo.svg",
+        "alt": "Left: Jo's phone says Post deleted, last year. Right: a different phone shows the same photo, a cartoon kid mid-sneeze, shared in a group chat today.",
+        "width": 340,
+        "height": 150
+      },
       "options": [
         {
-          "id": "security",
-          "text": "Those are common answers to account security questions"
+          "id": "saved-copy",
+          "text": "Someone saved a copy before it was deleted"
         },
         {
-          "id": "none",
-          "text": "Only a small one: just people he knows will see his reply"
+          "id": "after-a-year",
+          "text": "Deleted posts come back after a year"
         },
         {
-          "id": "slow",
-          "text": "None: a pet's name and a street can't unlock anything"
+          "id": "popular",
+          "text": "The app puts popular posts back up"
         }
       ],
-      "correctOptionId": "security",
-      "explanation": "Pet names and streets are common security questions, so sharing them can help someone reset his accounts. Strangers can see and screenshot comments too."
+      "correctOptionId": "saved-copy",
+      "explanation": "Deleting removes your copy, but saved copies and screenshots can last."
+    },
+    {
+      "id": "q-settings",
+      "type": "match_pairs",
+      "difficulty": "core",
+      "uses": [
+        "privacy-settings",
+        "friends-only-messages",
+        "review-tags"
+      ],
+      "prompt": "Four problems on a public account. Match each to the switch that fixes it.",
+      "pairs": [
+        {
+          "id": "private",
+          "left": "Strangers see all your posts",
+          "right": "Private account"
+        },
+        {
+          "id": "messages",
+          "left": "Strangers keep messaging",
+          "right": "Messages: friends only"
+        },
+        {
+          "id": "location",
+          "left": "An app shows where you are",
+          "right": "Share location off"
+        },
+        {
+          "id": "tags",
+          "left": "You're tagged without asking",
+          "right": "Review tags"
+        }
+      ],
+      "explanation": "Each switch controls one thing: posts, messages, location or tags."
+    },
+    {
+      "id": "q-stranger",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "uses": [
+        "block-and-report",
+        "trusted-adult",
+        "keep-locating-info-private"
+      ],
+      "prompt": "Someone from a game chat offers a gift, then asks your suburb. What do you do?",
+      "image": {
+        "src": "/illustrations/sso/guard-your-privacy-quiz-gift.svg",
+        "alt": "A chat with GiftBuddy_4, a gift-box picture with no face: i'll send u a gift! what suburb r u in? send a pic so i know it's u. The chat's menu shows Block and Report.",
+        "width": 340,
+        "height": 150
+      },
+      "options": [
+        {
+          "id": "suburb-only",
+          "text": "Send your suburb, not a photo"
+        },
+        {
+          "id": "private-then-reply",
+          "text": "Make your account private, then reply"
+        },
+        {
+          "id": "safe",
+          "text": "Report, block and tell a trusted adult"
+        }
+      ],
+      "correctOptionId": "safe",
+      "explanation": "A suburb and a photo can find you: report, block and tell a trusted adult. It's not your fault."
     },
     {
       "id": "q-permissions",
@@ -80,7 +154,7 @@
       "uses": [
         "app-permission"
       ],
-      "prompt": "Does the app need it?",
+      "prompt": "Four apps each ask for one thing. Drag each into a bin.",
       "bins": [
         {
           "id": "needs",
@@ -113,39 +187,74 @@
           "bin": "doesnt"
         }
       ],
-      "explanation": "Allow what fits the app's job: a camera app needs the camera, and a route map needs your location. An alarm clock or a calculator doesn't need your contacts or the microphone."
+      "explanation": "Allow what fits the app's job: an alarm clock or calculator has no use for your contacts or mic."
     },
     {
-      "id": "q-stranger",
-      "type": "scenario",
+      "id": "q-while-using",
+      "type": "multiple_choice",
       "difficulty": "core",
       "uses": [
-        "block-and-report",
-        "trusted-adult"
+        "location-while-using",
+        "app-permission"
       ],
-      "prompt": "Someone you only know from a game chat says they want to send you a gift.",
-      "start": "start",
-      "steps": [
+      "prompt": "A bus timetable app asks for your location to find nearby stops. Tap the best button.",
+      "image": {
+        "src": "/illustrations/sso/guard-your-privacy-quiz-bus-stops.svg",
+        "alt": "A bus timetable app with a map of nearby bus stops. Over it, a pop-up: Allow Bus Times to use your location? with three buttons: Always (even when closed), Only while using the app, and Don't allow.",
+        "width": 340,
+        "height": 226
+      },
+      "options": [
         {
-          "id": "start",
-          "text": "They ask: **\"What suburb do you live in? And send a photo so I know it's you.\"** What do you do?",
-          "choices": [
-            {
-              "id": "safe",
-              "text": "Send nothing, block and report, and tell a trusted adult",
-              "consequence": "Right. You're not in trouble, and telling someone keeps you safe.",
-              "outcome": "success"
-            },
-            {
-              "id": "send",
-              "text": "Send them. A gift is a kind thing to offer",
-              "consequence": "Being friendly online doesn't show who someone really is. Your suburb and a photo help a stranger find you.",
-              "outcome": "fail"
-            }
-          ]
+          "id": "always",
+          "text": "Always (even when closed)",
+          "area": { "x": 5.9, "y": 29.2, "w": 88.2, "h": 21.2 }
+        },
+        {
+          "id": "while-using",
+          "text": "Only while using the app",
+          "area": { "x": 5.9, "y": 52.2, "w": 88.2, "h": 21.2 }
+        },
+        {
+          "id": "dont-allow",
+          "text": "Don't allow",
+          "area": { "x": 5.9, "y": 75.2, "w": 88.2, "h": 21.2 }
         }
       ],
-      "explanation": "Keep where you live and photos of you away from people you only know online. Block, report and tell a trusted adult."
+      "correctOptionId": "while-using",
+      "explanation": "It finds your stops while you're using it, and can't see where you are once you stop."
+    },
+    {
+      "id": "q-pool-wi-fi",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "uses": [
+        "fake-wi-fi",
+        "ask-staff-for-wi-fi"
+      ],
+      "prompt": "At the pool, two Wi-Fi networks show up. You want to watch a video. What first?",
+      "image": {
+        "src": "/illustrations/sso/guard-your-privacy-quiz-pool.svg",
+        "alt": "Your Wi-Fi list at the pool: Pool_Guest with two bars and Pool_Free_WiFi with four bars. Below, the pool's front desk with a staff member, and the water beside it.",
+        "width": 340,
+        "height": 180
+      },
+      "options": [
+        {
+          "id": "most-bars",
+          "text": "Join the one with more bars"
+        },
+        {
+          "id": "ask-staff",
+          "text": "Ask staff which one is theirs"
+        },
+        {
+          "id": "free",
+          "text": "Join the one with Free in its name"
+        }
+      ],
+      "correctOptionId": "ask-staff",
+      "explanation": "Anyone can pick a network's name or sit close for strong bars; staff know their own."
     },
     {
       "id": "q-wi-fi",
@@ -153,57 +262,31 @@
       "difficulty": "core",
       "uses": [
         "mobile-data-for-banking",
-        "fake-hotspot"
+        "fake-wi-fi"
       ],
-      "prompt": "What's the safest way to check your bank account at a café?",
+      "prompt": "You need to check your bank account at a café. What's the safest way to go online?",
+      "image": {
+        "src": "/illustrations/sso/guard-your-privacy-quiz-bank.svg",
+        "alt": "Your phone at a café table: the café's Wi-Fi list, CornerCafe and CornerCafe_Free, and a separate switch, Mobile data, which is off. Beside it, a banking app: Your Bank.",
+        "width": 340,
+        "height": 150
+      },
       "options": [
         {
-          "id": "mobile",
-          "text": "Use mobile data instead of the café's Wi-Fi"
-        },
-        {
           "id": "any",
-          "text": "Pick any network with the café's name in it"
+          "text": "Any network with the café's name"
         },
         {
           "id": "strongest",
-          "text": "Join the Wi-Fi network with the strongest signal"
+          "text": "The network with the strongest signal"
+        },
+        {
+          "id": "mobile",
+          "text": "Mobile data instead of Wi-Fi"
         }
       ],
       "correctOptionId": "mobile",
-      "explanation": "Anyone can name a fake hotspot after the café, and a strong signal doesn't show who runs a network. Mobile data avoids that risk."
-    },
-    {
-      "id": "q-settings",
-      "type": "match_pairs",
-      "difficulty": "core",
-      "uses": [
-        "privacy-settings"
-      ],
-      "prompt": "Match each problem to the privacy setting that fixes it.",
-      "pairs": [
-        {
-          "id": "private",
-          "left": "Strangers see all your posts",
-          "right": "Private account"
-        },
-        {
-          "id": "messages",
-          "left": "Strangers keep messaging",
-          "right": "Messages from friends only"
-        },
-        {
-          "id": "location",
-          "left": "An app shows where you are",
-          "right": "Location sharing off"
-        },
-        {
-          "id": "tags",
-          "left": "Tagged without asking",
-          "right": "Tag review"
-        }
-      ],
-      "explanation": "A private account hides posts from strangers, friends-only messages stop strangers messaging you, location off hides where you are, and tag review lets you approve photos first."
+      "explanation": "On public Wi-Fi you can't always be sure which network is real, so use mobile data for money."
     }
   ]
 }

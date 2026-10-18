@@ -1,0 +1,247 @@
+{
+  "id": "privacy-settings",
+  "kind": "lesson",
+  "title": "Privacy Settings",
+  "about": "Choose who sees your posts and who can reach you.",
+  "order": 2,
+  "icon": "eye-off",
+  "blueprint": "1.1",
+  "cards": [
+    {
+      "id": "flip-the-switches",
+      "type": "simulator",
+      "mode": "play",
+      "difficulty": "core",
+      "teaches": [
+        "switches-hide-things"
+      ],
+      "uses": [],
+      "prompt": "Sam's account is public. **Flip a switch** and watch what strangers can see.",
+      "model": "privacy-switches",
+      "params": {},
+      "controls": [
+        {
+          "id": "privateAccount",
+          "kind": "toggle",
+          "label": "Private account"
+        },
+        {
+          "id": "shareLocation",
+          "kind": "toggle",
+          "label": "Share location"
+        },
+        {
+          "id": "reviewTags",
+          "kind": "toggle",
+          "label": "Review tags"
+        }
+      ],
+      "outputs": [
+        {
+          "id": "strangerView",
+          "kind": "picture",
+          "label": "What strangers can see"
+        }
+      ],
+      "playChanges": 2,
+      "explanation": "Each switch hides one thing from strangers."
+    },
+    {
+      "id": "stranger-messages",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "predict": true,
+      "play": "predict",
+      "teaches": [
+        "friends-only-messages"
+      ],
+      "uses": [
+        "switches-hide-things"
+      ],
+      "prompt": "Messages are now friends only. A stranger taps Send. **What happens?**",
+      "image": {
+        "src": "/illustrations/sso/privacy-settings-messages.svg",
+        "alt": "Left: Sam's settings, with the switch Messages: friends only being turned on. Right: a stranger's phone on PixelFox's profile, typing hey, cool tricks, with a finger on Send. Below it, a question mark.",
+        "width": 340,
+        "height": 160,
+        "revealSrc": "/illustrations/sso/privacy-settings-messages-reveal.svg",
+        "revealAlt": "The stranger's Send button is greyed out, with a note: PixelFox only gets messages from friends."
+      },
+      "options": [
+        {
+          "id": "reaches-sam",
+          "text": "The message reaches Sam"
+        },
+        {
+          "id": "cant-send",
+          "text": "The stranger can't send it"
+        },
+        {
+          "id": "with-warning",
+          "text": "It sends, with a warning"
+        }
+      ],
+      "correctOptionId": "cant-send",
+      "explanation": "With friends-only messages, people Sam hasn't added can't message Sam."
+    },
+    {
+      "id": "meet-privacy-settings",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "privacy-settings"
+      ],
+      "title": "Privacy settings",
+      "body": "**Privacy settings** choose who can see your posts and who can reach you. Each switch controls one thing.",
+      "image": {
+        "src": "/illustrations/sso/privacy-settings-settings.svg",
+        "alt": "Sam's settings with four switches, each labelled with the one thing it controls: Private account (on) controls posts, Messages: friends only (on) controls messages, Share location (off) controls location, and Review tags (on) controls tags.",
+        "width": 320,
+        "height": 194
+      }
+    },
+    {
+      "id": "tag-review",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "teaches": [
+        "review-tags"
+      ],
+      "uses": [
+        "privacy-settings"
+      ],
+      "prompt": "Jo tagged Sam in a photo outside school. **Tap the switch** that lets Sam OK tags first.",
+      "image": {
+        "src": "/illustrations/sso/privacy-settings-tags.svg",
+        "alt": "Top: a photo Jo tagged Sam in, outside the school gate, two kids from behind: Tagged by Jo, shows on Sam's profile. Below: Sam's four switches, all off: Private account, Messages: friends only, Share location, Review tags.",
+        "width": 340,
+        "height": 214,
+        "revealSrc": "/illustrations/sso/privacy-settings-tags-reveal.svg",
+        "revealAlt": "Review tags is now on. The tagged photo is greyed out: Waiting for Sam's OK."
+      },
+      "options": [
+        {
+          "id": "private-account",
+          "text": "Private account",
+          "area": { "x": 1.2, "y": 41.1, "w": 48.2, "h": 28 },
+          "nudge": "Which switch is about photos other people tag you in?"
+        },
+        {
+          "id": "friends-only",
+          "text": "Messages: friends only",
+          "area": { "x": 50.6, "y": 41.1, "w": 48.2, "h": 28 },
+          "nudge": "Which switch is about photos other people tag you in?"
+        },
+        {
+          "id": "share-location",
+          "text": "Share location",
+          "area": { "x": 1.2, "y": 71, "w": 48.2, "h": 28 },
+          "nudge": "Which switch is about photos other people tag you in?"
+        },
+        {
+          "id": "review-tags",
+          "text": "Review tags",
+          "area": { "x": 50.6, "y": 71, "w": 48.2, "h": 28 }
+        }
+      ],
+      "correctOptionId": "review-tags",
+      "explanation": "Review tags keeps photos Sam's tagged in off Sam's profile until Sam says OK.",
+      "showAnswer": "Review tags: tagged photos wait for Sam's OK before they show on Sam's profile."
+    },
+    {
+      "id": "friendly-stranger",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "play": "consequence",
+      "teaches": [
+        "block-and-report",
+        "trusted-adult"
+      ],
+      "uses": [
+        "privacy-settings",
+        "keep-locating-info-private"
+      ],
+      "prompt": "Sam's game friend asks for Sam's school and a photo. **Tap what Sam should do.**",
+      "image": {
+        "src": "/illustrations/sso/privacy-settings-gamemate.svg",
+        "alt": "A chat on Sam's phone with GameMate_8, a game-controller picture with no face, marked Friend. Their message: what school do u go to? send a pic! The chat's menu is open, showing Block and Report.",
+        "width": 340,
+        "height": 150,
+        "revealSrc": "/illustrations/sso/privacy-settings-gamemate-reveal.svg",
+        "revealAlt": "The chat with GameMate_8 is closed, marked Reported and Blocked. Sam stands beside a grown-up at home and says: Can I show you something?"
+      },
+      "options": [
+        {
+          "id": "make-private",
+          "text": "Make the account private",
+          "nudge": "GameMate_8 is already Sam's friend: would a private account keep them out?"
+        },
+        {
+          "id": "send-photo",
+          "text": "Send a photo, not the school",
+          "nudge": "Think back to the front-steps photo: what can a photo give away?"
+        },
+        {
+          "id": "safe",
+          "text": "Report, block, tell a trusted adult"
+        }
+      ],
+      "correctOptionId": "safe",
+      "explanation": "Settings can't keep out someone Sam already let in, so report, block and tell a trusted adult.",
+      "showAnswer": "Report, block and tell a trusted adult: it's not Sam's fault, and telling someone keeps Sam safe."
+    },
+    {
+      "id": "screenshot-private-post",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "teaches": [
+        "followers-can-copy"
+      ],
+      "uses": [
+        "privacy-settings",
+        "review-tags",
+        "posts-can-be-copied"
+      ],
+      "prompt": "Your account is private. A follower screenshots your post. **Tap what can stop them sharing it.**",
+      "image": {
+        "src": "/illustrations/sso/privacy-settings-screenshot.svg",
+        "alt": "Left: your settings with Private account switched on and a padlock. Right: a follower's phone with your post, a white screenshot flash and a camera badge, and a Share arrow lifting off.",
+        "width": 340,
+        "height": 150,
+        "revealSrc": "/illustrations/sso/privacy-settings-screenshot-reveal.svg",
+        "revealAlt": "The screenshot of your post has spread to three more phones, joined by a trail of footprints labelled digital footprint."
+      },
+      "options": [
+        {
+          "id": "private-account",
+          "text": "Your private account",
+          "nudge": "Think back to the friends' phones in the last lesson: what could they do with a post?"
+        },
+        {
+          "id": "review-tags",
+          "text": "Turning on Review tags",
+          "nudge": "Think back to the friends' phones in the last lesson: what could they do with a post?"
+        },
+        {
+          "id": "no-setting",
+          "text": "No setting: followers can copy it"
+        }
+      ],
+      "correctOptionId": "no-setting",
+      "explanation": "Settings choose who sees a post, but a follower can still copy it, so post like anyone might see.",
+      "showAnswer": "No setting stops it: a follower can still copy your post, so share only what you'd be OK with anyone seeing."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "privacy-settings",
+        "block-and-report",
+        "trusted-adult"
+      ],
+      "title": "Recap",
+      "body": "**Privacy settings** choose who sees and reaches you. If someone crosses the line, **report, block and tell a trusted adult**.\n\n**Try this:** Open one of your accounts' privacy settings and turn on \"Private account\".\n\n**Next:** Why a torch app wants your contacts, and how to say no."
+    }
+  ]
+}

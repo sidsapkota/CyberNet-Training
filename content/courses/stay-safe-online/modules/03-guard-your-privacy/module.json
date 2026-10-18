@@ -1,7 +1,7 @@
 {
   "id": "guard-your-privacy",
   "title": "Guard Your Privacy",
-  "description": "Your digital footprint, app permissions and public Wi-Fi.",
+  "description": "Your digital footprint, privacy settings, app permissions and public Wi-Fi.",
   "order": 3,
   "access": "pro",
   "teaserCard": { "lesson": "your-digital-footprint", "card": "band-name-quiz" }

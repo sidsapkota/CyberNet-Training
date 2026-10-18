@@ -1,0 +1,233 @@
+{
+  "id": "public-wi-fi",
+  "kind": "lesson",
+  "title": "Public Wi-Fi",
+  "about": "Spot fake Wi-Fi, and keep money off public Wi-Fi.",
+  "order": 4,
+  "icon": "wifi",
+  "blueprint": "1.1",
+  "cards": [
+    {
+      "id": "cafe-networks",
+      "type": "hotspot",
+      "difficulty": "core",
+      "teaches": [
+        "anyone-can-name-wi-fi"
+      ],
+      "prompt": "Three Wi-Fi networks show up at the Corner Café. **Tap each glowing thing.**",
+      "scene": "cafe",
+      "mode": "explore",
+      "parts": [
+        {
+          "part": "cafe-wifi-box",
+          "job": "The café's own Wi-Fi box. It sends the network CornerCafe."
+        },
+        {
+          "part": "cafe-laptop",
+          "job": "Someone's laptop. Its owner named a network CornerCafe_Free."
+        },
+        {
+          "part": "cafe-library",
+          "job": "The library next door. It sends the network Library_Guest."
+        }
+      ],
+      "explanation": "Three networks, three owners: the café, a stranger's laptop and the library."
+    },
+    {
+      "id": "wi-fi-wants-password",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "predict": true,
+      "play": "predict",
+      "uses": [
+        "anyone-can-name-wi-fi"
+      ],
+      "prompt": "Sam joins CornerCafe_Free. It asks for Sam's email password. **Tap who gets it.**",
+      "image": {
+        "src": "/illustrations/sso/public-wi-fi-password.svg",
+        "alt": "Left: Sam's phone shows a page: Free Wi-Fi! Sign in with your email password, a password box and a finger on Go. Right, dimmed with question marks: the café counter with its Wi-Fi box and a staff member, a laptop on table 4, and a button: Nobody.",
+        "width": 340,
+        "height": 226,
+        "revealSrc": "/illustrations/sso/public-wi-fi-password-reveal.svg",
+        "revealAlt": "A dotted line runs from Sam's phone to the laptop at table 4, where a bubble with the hidden password lands."
+      },
+      "options": [
+        {
+          "id": "cafe-box",
+          "text": "The café's Wi-Fi box",
+          "area": { "x": 44.1, "y": 1.8, "w": 54.7, "h": 40.7 }
+        },
+        {
+          "id": "owner-has-it",
+          "text": "The laptop at table 4",
+          "area": { "x": 44.1, "y": 45.1, "w": 54.7, "h": 29.2 }
+        },
+        {
+          "id": "nobody",
+          "text": "Nobody",
+          "area": { "x": 44.1, "y": 77, "w": 54.7, "h": 21.2 }
+        }
+      ],
+      "correctOptionId": "owner-has-it",
+      "explanation": "The laptop's owner made this network and its page, so whatever Sam types goes to them."
+    },
+    {
+      "id": "meet-public-wi-fi",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "public-wi-fi",
+        "fake-wi-fi"
+      ],
+      "title": "Public Wi-Fi and fake Wi-Fi",
+      "body": "On **public Wi-Fi**, anyone can name a network after the café. A copycat like CornerCafe_Free is **fake Wi-Fi**: its name can look just right.",
+      "image": {
+        "src": "/illustrations/sso/public-wi-fi-named.svg",
+        "alt": "The Wi-Fi list, labelled. CornerCafe, from the café's Wi-Fi box, is public Wi-Fi. CornerCafe_Free, from someone's laptop, is fake Wi-Fi.",
+        "width": 320,
+        "height": 196
+      }
+    },
+    {
+      "id": "ask-the-staff",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "play": "consequence",
+      "teaches": [
+        "ask-staff-for-wi-fi"
+      ],
+      "uses": [
+        "fake-wi-fi"
+      ],
+      "prompt": "Sam wants the café's real Wi-Fi this time. **Tap the best way** to find its name.",
+      "image": {
+        "src": "/illustrations/sso/public-wi-fi-staff.svg",
+        "alt": "Sam's Wi-Fi list: CornerCafe with two bars and CornerCafe_Free with four bars. Below, the café counter with its Wi-Fi box and a staff member in an apron.",
+        "width": 340,
+        "height": 180,
+        "revealSrc": "/illustrations/sso/public-wi-fi-staff-reveal.svg",
+        "revealAlt": "The staff member says: It's CornerCafe. That row in the list is ticked."
+      },
+      "options": [
+        {
+          "id": "staff",
+          "text": "Ask the staff which one is theirs"
+        },
+        {
+          "id": "most-bars",
+          "text": "Join the one with the most bars",
+          "nudge": "Could a laptop close to Sam have strong bars too?"
+        },
+        {
+          "id": "free-name",
+          "text": "Join the one with Free in its name",
+          "nudge": "Who picks a network's name?"
+        }
+      ],
+      "correctOptionId": "staff",
+      "explanation": "Staff know their own network's name, so you're not guessing from names and bars.",
+      "showAnswer": "Ask the staff: anyone can pick a name, and a laptop nearby can have strong bars."
+    },
+    {
+      "id": "wi-fi-ok",
+      "type": "sort_bins",
+      "difficulty": "core",
+      "teaches": [
+        "mobile-data-for-banking"
+      ],
+      "uses": [
+        "fake-wi-fi"
+      ],
+      "prompt": "Some jobs are too important for Wi-Fi you can't be sure of. **Drag** each into a bin.",
+      "bins": [
+        {
+          "id": "fine",
+          "label": "Fine on café Wi-Fi"
+        },
+        {
+          "id": "mobile",
+          "label": "Use mobile data"
+        }
+      ],
+      "items": [
+        {
+          "id": "video",
+          "label": "Watching a video",
+          "bin": "fine"
+        },
+        {
+          "id": "news",
+          "label": "Reading the news",
+          "bin": "fine"
+        },
+        {
+          "id": "bank",
+          "label": "Checking your bank account",
+          "bin": "mobile"
+        },
+        {
+          "id": "new-password",
+          "label": "Changing an important password",
+          "bin": "mobile"
+        }
+      ],
+      "explanation": "Everyday browsing is fine; for money and important accounts, mobile data skips any fake Wi-Fi.",
+      "nudge": "Which ones involve your money or your most important accounts?",
+      "showAnswer": "Videos and news are fine; your bank and important passwords go on mobile data."
+    },
+    {
+      "id": "airport-game",
+      "type": "multiple_choice",
+      "difficulty": "core",
+      "play": "consequence",
+      "uses": [
+        "mobile-data-for-banking",
+        "fake-wi-fi"
+      ],
+      "prompt": "At the airport, you want to buy a game on your phone. **Tap how you'll go online.**",
+      "image": {
+        "src": "/illustrations/sso/public-wi-fi-airport.svg",
+        "alt": "An airport sign: Free Wi-Fi: Airport Wi-Fi. Your phone's list below it: Airport Wi-Fi, Airport_Free, and a separate switch, Mobile data. A game shop page waits with a Buy button.",
+        "width": 340,
+        "height": 220,
+        "revealSrc": "/illustrations/sso/public-wi-fi-airport-reveal.svg",
+        "revealAlt": "Mobile data is switched on and the Wi-Fi networks are greyed out. The Buy button now says Bought."
+      },
+      "options": [
+        {
+          "id": "airport-wi-fi",
+          "text": "Airport Wi-Fi",
+          "area": { "x": 1.2, "y": 21.8, "w": 68.2, "h": 22.7 },
+          "nudge": "A matching name is great for browsing: what kind of job is buying a game?"
+        },
+        {
+          "id": "airport-free",
+          "text": "Airport_Free",
+          "area": { "x": 1.2, "y": 47.3, "w": 68.2, "h": 22.7 },
+          "nudge": "Who chose that name, and does it match the sign?"
+        },
+        {
+          "id": "mobile-data",
+          "text": "Mobile data",
+          "area": { "x": 1.2, "y": 72.7, "w": 68.2, "h": 22.7 }
+        }
+      ],
+      "correctOptionId": "mobile-data",
+      "explanation": "Buying is money, so mobile data means you don't have to guess which Wi-Fi is real.",
+      "showAnswer": "Mobile data: buying is money, and on public Wi-Fi you can't always be sure which network is real."
+    },
+    {
+      "id": "recap",
+      "type": "explainer",
+      "difficulty": "core",
+      "teaches": [
+        "public-wi-fi",
+        "fake-wi-fi",
+        "ask-staff-for-wi-fi",
+        "mobile-data-for-banking"
+      ],
+      "title": "Recap",
+      "body": "Anyone can name Wi-Fi after the café: **ask staff** for the real one, and use **mobile data** for money.\n\n**Try this:** Next time you're out, ask staff for the Wi-Fi name before you join.\n\n**Next:** The clues that someone else has got into your account."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 180" width="340" height="180" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>A phone shows two screens. Top: a post from QuizTime with a star: Pop star name = first pet + street! Two replies: Biscuit Wattle and Mochi Hill. Bottom: your account's Forgot password? screen, asking the security question: first pet's name?</title>
+  <rect x="4" y="4" width="332" height="100" rx="12" fill="#1d3d6e" stroke="#6f8fbd" stroke-width="2"/>
+  <path d="M24 16l3 6.5l7 1l-5 5l1.2 7l-6.2 -3.3l-6.2 3.3l1.2 -7l-5 -5l7 -1z" fill="#ffb547" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="40" y="31" font-size="16" font-weight="700" fill="#e6eef9">QuizTime</text>
+  <text x="16" y="58" font-size="16" font-weight="600" fill="#e6eef9">Pop star name = first pet + street!</text>
+  <rect x="16" y="70" width="130" height="24" rx="12" fill="#061630" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="81" y="87" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Biscuit Wattle</text>
+  <rect x="154" y="70" width="104" height="24" rx="12" fill="#061630" stroke="#6f8fbd" stroke-width="1.5"/>
+  <text x="206" y="87" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Mochi Hill</text>
+  <rect x="4" y="110" width="332" height="66" rx="12" fill="#24507f" stroke="#6f8fbd" stroke-width="2"/>
+  <text x="16" y="134" font-size="16" font-weight="600" fill="#a3b6d2">Forgot password?</text>
+  <path d="M311.5 128.4V124.8A4.5 4.5 0 0 1 320.5 124.8V128.4" fill="none" stroke="#a3b6d2" stroke-width="2.16" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="308.8" y="128.4" width="14.4" height="11.700000000000001" rx="2.25" fill="#a3b6d2"/>
+  <text x="16" y="160" font-size="16" font-weight="600" fill="#e6eef9">Security question: first pet's name?</text>
+</svg>

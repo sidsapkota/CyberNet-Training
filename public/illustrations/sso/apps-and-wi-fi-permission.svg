@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 190" width="320" height="190" font-family="'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif">
+  <title>The same pop-up, labelled app permission. Under it, the four things an app can ask for: camera, microphone, location and contacts. A Settings gear has an arrow: change any time.</title>
+  <rect x="30" y="6" width="260" height="90" rx="12" fill="#1d3d6e" stroke="#8be3ff" stroke-width="2"/>
+  <text x="160" y="32" font-size="16" font-weight="500" fill="#e6eef9" text-anchor="middle">Allow Drawing game to</text>
+  <text x="160" y="52" font-size="16" font-weight="700" fill="#e6eef9" text-anchor="middle">see your contacts?</text>
+  <rect x="44" y="62" width="108" height="26" rx="7" fill="#24507f"/>
+  <text x="98" y="81" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Don't allow</text>
+  <rect x="168" y="62" width="108" height="26" rx="7" fill="#24507f"/>
+  <text x="222" y="81" font-size="16" font-weight="600" fill="#e6eef9" text-anchor="middle">Allow</text>
+  <text x="160" y="120" font-size="17" font-weight="700" fill="#8be3ff" text-anchor="middle">app permission</text>
+  <rect x="14" y="134" width="38" height="38" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <path d="M23 149h4l2 -3h8l2 3h4v12h-20ZM33 159A4 4 0 1 0 33 151A4 4 0 1 0 33 159Z" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="60" y="134" width="38" height="38" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <path d="M76 143h6v10a3 3 0 0 1 -6 0ZM71 153a8 8 0 0 0 16 0M79 161v3" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="106" y="134" width="38" height="38" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <path d="M125 163C119 156 117 153 117 150A8 8 0 0 1 133 150C133 153 131 156 125 163ZM125 152A2.5 2.5 0 1 0 125 147A2.5 2.5 0 1 0 125 152Z" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="152" y="134" width="38" height="38" rx="9" fill="#24507f" stroke="#6f8fbd" stroke-width="1.5"/>
+  <path d="M171 152A4.5 4.5 0 1 0 171 143A4.5 4.5 0 1 0 171 152ZM162 163C162 156 167 154 171 154C175 154 180 156 180 163Z" fill="none" stroke="#e6eef9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="244" cy="152" r="8" fill="none" stroke="#e6eef9" stroke-width="2.2"/>
+  <circle cx="244" cy="152" r="3" fill="none" stroke="#e6eef9" stroke-width="2"/>
+  <path d="M252.0 152.0L256.0 152.0M249.7 157.7L252.5 160.5M244.0 160.0L244.0 164.0M238.3 157.7L235.5 160.5M236.0 152.0L232.0 152.0M238.3 146.3L235.5 143.5M244.0 144.0L244.0 140.0M249.7 146.3L252.5 143.5" fill="none" stroke="#e6eef9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M262 140Q284 124 276 102" fill="none" stroke="#8be3ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4"/>
+  <text x="250" y="186" font-size="16" font-weight="600" fill="#a3b6d2" text-anchor="middle">change any time</text>
+</svg>

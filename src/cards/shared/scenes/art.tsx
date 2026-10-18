@@ -31,6 +31,8 @@ const C = {
   muted: "var(--color-on-screen-muted)",
   warn: "var(--color-screen-danger)",
   contact: "var(--color-scene-contact)",
+  ok: "var(--color-screen-success)",
+  screenSky: "var(--color-pic-sky-day)",
 };
 
 const mono = "var(--font-plex-mono), ui-monospace, monospace";
@@ -654,9 +656,154 @@ function SignInBase() {
   );
 }
 
+/* ── Stay Safe Online module 3 (Lesson Blueprint): a social post, and a café's Wi-Fi ────── */
+// Real colours for the photo (fixed --color-pic-* tokens); text is 16+ units in 320-wide scenes.
+
+const P = {
+  wall: "var(--color-pic-wall)",
+  brick: "var(--color-pic-stem)",
+  leaf: "var(--color-pic-leaf)",
+  board: "var(--color-scene-heat)",
+  ground: "var(--color-scene-shell)",
+};
+
+const POST: Record<string, ReactNode> = {
+  "post-letterbox": (
+    <g>
+      <rect x={42} y={146} width={10} height={54} fill={P.brick} />
+      <rect x={24} y={110} width={46} height={38} rx={6} fill={C.part} stroke={C.ink} strokeWidth={2} />
+      <rect x={32} y={118} width={30} height={5} rx={2} fill={C.shell} />
+      <text x={47} y={142} fontSize={17} fontWeight={700} fill={C.ink} fontFamily={sans} textAnchor="middle">12</text>
+    </g>
+  ),
+  "post-street-sign": (
+    <g>
+      <rect x={268} y={98} width={6} height={102} fill={C.edge} />
+      <rect x={238} y={64} width={68} height={32} rx={4} fill={C.board} stroke={C.ink} strokeWidth={2} />
+      <text x={272} y={86} fontSize={16} fontWeight={700} fill={C.ink} fontFamily={sans} textAnchor="middle">Fern St</text>
+    </g>
+  ),
+  "post-sneakers": (
+    <g>
+      <path d="M114 166V158Q114 154 118 154H124L130 160H133Q135 160 135 163V166Z" fill={C.ink} stroke={C.shell} strokeWidth={1.2} />
+      <path d="M128 168V160Q128 156 132 156H138L144 162H147Q149 162 149 165V168Z" fill={C.ink} stroke={C.shell} strokeWidth={1.2} />
+      <path d="M114 166H135M128 168H149" stroke={C.edge} strokeWidth={2} />
+    </g>
+  ),
+  "post-plant": (
+    <g>
+      <path d="M212 146Q200 128 198 116Q208 124 212 140Q214 120 222 112Q222 128 214 146Z" fill={P.leaf} />
+      <path d="M212 146Q218 132 228 126Q226 138 216 148Z" fill={P.leaf} />
+      <path d="M200 146H226L222 170H204Z" fill={P.brick} stroke={C.shell} strokeWidth={1.2} />
+    </g>
+  ),
+  "post-skateboard": (
+    <g>
+      <rect x={58} y={206} width={56} height={8} rx={4} fill={P.board} stroke={C.shell} strokeWidth={1.2} />
+      <circle cx={68} cy={218} r={4} fill={C.ink} />
+      <circle cx={104} cy={218} r={4} fill={C.ink} />
+    </g>
+  ),
+};
+
+function SocialPostBase() {
+  return (
+    <>
+      <rect x={4} y={4} width={312} height={232} rx={14} fill={C.panel} stroke={C.edge} strokeWidth={2} />
+      {/* The poster's picture: filled, so it never looks like a tap ring. */}
+      <circle cx={24} cy={22} r={10} fill={C.edge} />
+      <path d="M18 27Q24 18 30 27M24 21A3 3 0 1 0 24 15A3 3 0 1 0 24 21Z" fill={C.panel} />
+      <text x={42} y={28} fontSize={16} fontWeight={600} fill={C.ink} fontFamily={sans}>PixelFox</text>
+      {/* The photo: a house front, its door and steps, and the footpath. */}
+      <rect x={12} y={40} width={296} height={188} rx={6} fill={P.wall} />
+      <path d="M12 200H308V222A6 6 0 0 1 302 228H18A6 6 0 0 1 12 222Z" fill={P.ground} />
+      <rect x={128} y={60} width={56} height={92} rx={2} fill={C.part} stroke={C.shell} strokeWidth={2} />
+      <circle cx={174} cy={108} r={3} fill={C.contact} />
+      {[0, 1, 2].map((i) => (
+        <g key={i}>
+          <rect x={110 - i * 8} y={152 + i * 16} width={92 + i * 16} height={16} fill={P.brick} stroke={C.shell} strokeWidth={1} />
+          <path d={`M${134 - i * 4} ${152 + i * 16}V${168 + i * 16}M${170 + i * 4} ${152 + i * 16}V${168 + i * 16}`} stroke={C.shell} strokeWidth={1} />
+        </g>
+      ))}
+      <rect x={30} y={58} width={70} height={46} rx={2} fill={C.screenSky} stroke={C.shell} strokeWidth={2} />
+      <path d="M65 58V104M30 81H100" stroke={C.shell} strokeWidth={2} />
+    </>
+  );
+}
+
+function WifiBars({ x, y, bars }: { x: number; y: number; bars: number }) {
+  return (
+    <g>
+      {[0, 1, 2, 3].map((i) => (
+        <rect key={i} x={x + i * 6} y={y - 4 - i * 4} width={4} height={4 + i * 4} rx={1} fill={i < bars ? C.ink : C.edge} opacity={i < bars ? 1 : 0.5} />
+      ))}
+    </g>
+  );
+}
+
+const CAFE: Record<string, ReactNode> = {
+  "cafe-library": (
+    <g>
+      <rect x={14} y={122} width={82} height={74} rx={4} fill={C.screenSky} stroke={C.edge} strokeWidth={3} />
+      <rect x={26} y={146} width={58} height={50} fill={P.wall} />
+      <path d="M22 148L55 132L88 148Z" fill={P.brick} />
+      <text x={55} y={170} fontSize={16} fontWeight={700} fill={C.shell} fontFamily={sans} textAnchor="middle">Library</text>
+      <rect x={48} y={178} width={14} height={18} fill={C.shell} />
+    </g>
+  ),
+  "cafe-wifi-box": (
+    <g>
+      <path d="M178 160L174 140M204 160L208 140" stroke={C.ink} strokeWidth={2.5} strokeLinecap="round" />
+      <rect x={172} y={158} width={38} height={16} rx={4} fill={C.part} stroke={C.ink} strokeWidth={1.5} />
+      <circle cx={182} cy={166} r={2} fill={C.ok} />
+      <circle cx={190} cy={166} r={2} fill={C.ok} />
+    </g>
+  ),
+  "cafe-laptop": (
+    <g>
+      <path d="M248 202L254 172H290L296 202Z" fill={C.part} stroke={C.ink} strokeWidth={1.5} strokeLinejoin="round" />
+      <path d="M242 204H302" stroke={C.ink} strokeWidth={3} strokeLinecap="round" />
+    </g>
+  ),
+};
+
+function CafeBase() {
+  return (
+    <>
+      {/* The phone's Wi-Fi list. */}
+      <rect x={8} y={4} width={304} height={104} rx={12} fill={C.panel} stroke={C.edge} strokeWidth={2} />
+      <text x={20} y={26} fontSize={16} fontWeight={600} fill={C.muted} fontFamily={sans}>Wi-Fi</text>
+      {[
+        { name: "CornerCafe", bars: 3 },
+        { name: "CornerCafe_Free", bars: 4 },
+        { name: "Library_Guest", bars: 2 },
+      ].map((row, i) => (
+        <g key={row.name}>
+          <rect x={14} y={34 + i * 24} width={292} height={22} rx={5} fill={C.part} />
+          <text x={22} y={51 + i * 24} fontSize={16} fontWeight={600} fill={C.ink} fontFamily={sans}>{row.name}</text>
+          <WifiBars x={278} y={52 + i * 24} bars={row.bars} />
+        </g>
+      ))}
+      {/* The café: floor, counter and staff member, table 4. */}
+      <path d="M4 244H316" stroke={C.edge} strokeWidth={2} />
+      <circle cx={138} cy={140} r={11} fill={P.wall} />
+      <path d="M127 138A11 11 0 0 1 149 138C145 132 131 132 127 138Z" fill={C.shell} />
+      <path d="M122 176Q122 154 138 154Q154 154 154 176Z" fill={C.part} stroke={C.ink} strokeWidth={1.5} />
+      <path d="M131 158H145V176H131Z" fill={C.ink} opacity={0.85} />
+      <rect x={108} y={174} width={110} height={70} rx={3} fill={C.panel} stroke={C.edge} strokeWidth={2} />
+      <rect x={232} y={204} width={80} height={6} rx={2} fill={C.edge} />
+      <path d="M244 210V244M300 210V244" stroke={C.edge} strokeWidth={3} />
+      <rect x={258} y={214} width={28} height={26} rx={4} fill={C.part} stroke={C.ink} strokeWidth={1.5} />
+      <text x={272} y={233} fontSize={16} fontWeight={700} fill={C.ink} fontFamily={sans} textAnchor="middle">4</text>
+    </>
+  );
+}
+
 /* ── Registry ─────────────────────────────────────────────────────────────────────────── */
 
 const ART: Record<SceneId, { Base: () => ReactNode; parts: Record<string, ReactNode> }> = {
+  "social-post": { Base: SocialPostBase, parts: POST },
+  cafe: { Base: CafeBase, parts: CAFE },
   laptop: { Base: LaptopBase, parts: LAPTOP },
   phone: { Base: PhoneBase, parts: PHONE },
   "file-browser": { Base: FileBrowserBase, parts: FILES },

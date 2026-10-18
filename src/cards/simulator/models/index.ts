@@ -4,6 +4,7 @@
  * not exact real-world figures. Every simplification is listed in content/REVIEW.md.
  */
 import { z } from "zod";
+import { appPermissionsModel, postSpreadModel, privacySwitchesModel } from "./privacy";
 import { bool, clamp, type InputSpec, type ListItem, num, type OutputSpec, round, type SimulatorModel } from "./types";
 
 const Id = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/);
@@ -337,7 +338,11 @@ export const MODELS: Record<string, SimulatorModel<unknown>> = {
   storage: storageModel as SimulatorModel<unknown>,
   battery: batteryModel as SimulatorModel<unknown>,
   password: passwordModel as SimulatorModel<unknown>,
+  "post-spread": postSpreadModel as SimulatorModel<unknown>,
+  "privacy-switches": privacySwitchesModel as SimulatorModel<unknown>,
+  "app-permissions": appPermissionsModel as SimulatorModel<unknown>,
 };
 export const MODEL_IDS = Object.keys(MODELS) as [string, ...string[]];
 
 export type { OutputSpec };
+export { appPermissionsModel, postSpreadModel, privacySwitchesModel };
