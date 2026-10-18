@@ -64,7 +64,11 @@ npm run e2e:visual-qa:gate # MERGE GATE: every page (guest + signed in, light + 
                           # broken images, console errors, 404 links. STAGING ONLY (throwaway learner; opens and
                           # restores leagues). Fails on any problem
 npm run e2e:visual-qa     # the full sweep: all 6 sizes, plus contact sheets in docs/plans/visual-qa/ (PAGES_ONLY=,
-                          # CARDS_ONLY=, COURSE=, SIZES=, THEMES=, SHEETS=0)
+                          # CARDS_ONLY=, COURSE=, LESSONS=, SIZES=, THEMES=, SHEETS=0). CARDS_ONLY=1 makes no
+                          # throwaway learner, so the card pass runs even while the staging database is down
+npm run e2e:blueprint     # Lesson Blueprint v1.1 in the real player (Stay Safe Online module 1 via /dev/fit, no
+                          # database): Hook Start, play-mode Continue, Predict + Not sure + reveal, the 2nd-wrong
+                          # answer, no Hint button, answers on the picture (dev server running)
 npm run e2e:admin         # /admin: guest, learner and Pro get the plain 404 on every page and the reveal endpoint,
                           # nothing logged; the admin sees every page, views and email reveals are logged. STAGING
                           # ONLY; the dev server needs ADMIN_USER_IDS = the staging admin test account
@@ -458,7 +462,9 @@ All cards have `id` (kebab-case) and `difficulty` (`core` | `challenge`). Intera
   **preview** deployments (`VERCEL_ENV=preview`, behind Vercel's login, so cards can be tried on a
   phone). `next.config.ts` adds the `dev.tsx` page extension only then. Production builds never
   compile it.
-- **Also:** `/dev/mascot` shows every mascot expression at 48, 96 and 200px on both canvases, with
+- **Also:** `/dev/lessons` plays any real lesson or quiz from the start with throwaway progress (no
+  account, no database; rebuilt lessons are marked), so a rebuilt course can be tried end to end on a
+  preview. `/dev/mascot` shows every mascot expression at 48, 96 and 200px on both canvases, with
   the idle animation and an expression switcher (to see the bounce).
 - **What it does:** plays `src/dev/card-samples.ts` (one or more samples per type) through the real
   `LessonRun` / `QuizRun`, as a whole lesson, a whole quiz, or card by card.

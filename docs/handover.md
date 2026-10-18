@@ -1,7 +1,63 @@
 # Handover
 
 Read this first in every session. It is replaced, not appended: git keeps the history.
-Last updated: 18 October 2026.
+Last updated: 19 October 2026 (morning).
+
+## Morning report (night of 18–19 October 2026, worked autonomously)
+
+**Shipped to production: nothing.** Production is exactly as it was (`main` at `7f9a853`).
+- `fix-spot-the-ai` was pre-approved for production *only if* the visual QA gate passed on staging. The
+  staging Supabase project (`cybernet-staging`) has been **paused by Supabase** since about 10 idle
+  days (INACTIVE in `npx supabase projects list`; its address doesn't resolve). The CLI has no restore
+  command and I didn't pull your login token out of Windows' credential store to call the API, so the
+  full gate couldn't run and, per your rule, **it was not deployed**. Lint, typecheck, all tests, the
+  build and the card half of the visual QA sweep (every card in every course, phone/tablet/desktop)
+  pass on it; design QA and the page half of the gate need staging.
+
+**Ready on staging (branch `sso-module-1`, pushed; includes the bug fix and the storyboards):**
+Stay Safe Online module 1 rebuilt to Lesson Blueprint v1.1: Strong Passwords, One Password Each (new),
+Two-Step Sign-In, The Strongest Lock (new) and the module quiz, with 40 new pictures (`public/illustrations/sso/`).
+- **Play it:** https://cyber-net-training-git-sso-module-1-sidsapkotas-projects.vercel.app/dev/lessons
+  (Vercel login; every lesson from card 1, throwaway progress, no account, nothing saved). Locally:
+  http://localhost:3000/dev/lessons. Don't sign in elsewhere on the preview: previews share the
+  production database.
+- **Checks passed:** lint, typecheck, 101 test files / 1,271 tests, build; fit audit 322 card views at all
+  7 sizes (every control on screen, no broken layouts); visual QA card sweep on module 1 and on every
+  course (CARDS_ONLY, no database needed); new `npm run e2e:blueprint` (20 checks); `e2e:combo`,
+  `e2e:pacing`, `e2e:player-back`. **Not run (need staging):** design QA, the page half of the visual
+  QA gate, `check:rls` and the staging-only e2e suites.
+
+**Decisions I made (say if you'd like any changed):**
+1. **Opt-in per lesson:** only lessons with `"blueprint": "1.1"` get the new player behaviour (2nd wrong
+   shows the answer, unscored Predict cards, no Hint button); every other lesson plays exactly as before.
+2. **XP:** a Predict card pays its first-try XP (nothing to get wrong); a card whose answer was shown
+   after the 2nd wrong pays the retry XP and counts as done, so a lesson can always be finished.
+3. **No Hint button** in blueprint lessons: the 1st-wrong hint is the nudge, as the blueprint says.
+4. **"Tap the app" cards** are multiple choice with the answers drawn on the picture and a reveal
+   picture after a right answer (one answer each), rather than hotspot scenes with a reveal state (not
+   built). The two hotspot Predict cards became multiple choice with short text answers, the
+   storyboards' own fallback. One Password Each's Easy win asks for the one app the scammer can open.
+5. **Play cards:** Strong Passwords' toy is the password simulator in play mode; it shows its own
+   readout, not the drawn phone and dial (that picture is on the Hook). The three explore Play cards
+   use the new scenes (home screen, sign-in options, sign-in); a tap shows a callout, no animation.
+6. **Fit at 360×560:** under a picture, answers of up to 34 characters now sit two to a row; I trimmed
+   11 questions and answers to fit (same meaning) and tightened explainer pictures on short screens.
+   **Six cards still run 8–43px past the bottom of a 360×560 screen** (the end of two explainers, the
+   edge of four pictures; never a control). A redraw of those pictures would fix it.
+7. **Knock-on guards:** quizzes can't contain Predict cards, duels skip them, and Feed bytes can't point
+   at them; the `stolen-password` byte was re-pointed to Two-Step Sign-In's Easy win (the only Feed edit).
+8. **Blueprint v1.1's changelog** also records your other two rules (3+ answers; one "Try this"
+   wording); the storyboard review page is republished with all three changes (same link).
+
+**Blocked / waiting on you:**
+1. **Restore staging:** Supabase dashboard → `cybernet-staging` → **Restore project**. Then: the full
+   gate on `fix-spot-the-ai` (design QA + visual QA gate) and, with your OK, its deploy; the same full
+   gate plus `check:rls` on `sso-module-1`.
+2. **Play module 1** on the preview and tell me what to change; then whether to merge it to production
+   (it replaces the live module 1) and start module 2's build.
+3. Still open from before: `ADMIN_USER_IDS` in Vercel Production; push the Inside Your Devices branch
+   from the Mac.
+
 
 ## 0. Built 7 Oct while the owner was away
 
@@ -32,15 +88,17 @@ Plans: `docs/plans/retention-and-fun.md` (parts 1–4 + the content quality pass
 
 - **Staging leagues have been open since 6 Oct** (20+ test learners earned XP in one week, so they opened for good, as the rules say). E2e scripts that open the dashboard must call `closeLeaguesWelcome` (`scripts/e2e/lib/welcome.mjs`); `e2e:founder` and `e2e:reminders` now do.
 
-### 18 Oct: Lesson Blueprint v1 (owner)
+### 18–19 Oct: Lesson Blueprint v1.1 (owner)
 
 | Part | Branch | Status |
 |---|---|---|
-| Lesson Blueprint v1 in CLAUDE.md (replaces the 7-beat pattern and the 12-word rule; storyboard-first process; changelog) | `fix-spot-the-ai` | committed, waits for the gate |
+| Lesson Blueprint v1 in CLAUDE.md (replaces the 7-beat pattern and the 12-word rule; storyboard-first process; changelog), then v1.1 (Predict not scored, 3+ answers, one Try this wording) | `fix-spot-the-ai`, v1.1 on `sso-module-1` | waits for the gate (staging paused) |
 | Bug fix: answers never shown before they're earned (multiple-choice reveal pictures only after a right answer; hotspot no longer marks missed parts), Spot the AI card 2's situation line, pictures fill the card with text at 14px+ on a phone (`pictureText.test.ts`) | `fix-spot-the-ai` | lint, typecheck, tests, build pass; **design QA and the visual QA gate wait for staging** (paused, see section 3) |
-| Stay Safe Online storyboards (17 lessons + 4 quizzes; 7 proposed splits) | `sso-storyboards` | **waiting for the owner's OK**: review page https://claude.ai/artifact/2QiqWDSdfk7i3raNT74xcv, built by `node scripts/storyboard-page.mjs stay-safe-online` from `docs/storyboards/stay-safe-online/` (`ORDER.json` holds the order and the decisions) |
+| Stay Safe Online storyboards (17 lessons + 4 quizzes; 7 splits) | `sso-storyboards` (and `sso-module-1`) | **approved 18 Oct with 3 changes, applied**: review page https://claude.ai/artifact/2QiqWDSdfk7i3raNT74xcv, built by `node scripts/storyboard-page.mjs stay-safe-online` from `docs/storyboards/stay-safe-online/` (`ORDER.json` holds the order and the decisions) |
 
-- **After the OK:** build Stay Safe Online to the storyboards in the order on the review page's "New things to build" (the 2nd-wrong step and the Hook card first), update `shape.ts` and `scripts/lesson-length-report.mjs` to the blueprint's numbers for rebuilt courses, add the new lessons and facts to `content/REVIEW.md` (the password-manager master password fact was checked 18 Oct at cyber.gov.au), full gate + visual QA, merge. Then storyboard the next course.
+| Stay Safe Online module 1 built to the storyboards (phase 1) | `sso-module-1` | **on staging, waiting for the owner** (morning report above); not merged |
+
+- **Phase 2 (after the owner plays module 1 and staging is back):** the full gate on `sso-module-1` (design QA, the page half of the visual QA gate, `check:rls`), merge `fix-spot-the-ai` then `sso-module-1` with the owner's OK, then build modules 2–4 the same way (`docs/storyboards/stay-safe-online/build-kit.md` is the recipe; each module needs its scenes and features from the review page's "New things to build"). `scripts/lesson-length-report.mjs` still uses the old 12-word gate: update it for blueprint lessons when convenient (`shape.ts` already has `blueprintShapeProblems`).
 
 ## 1. Live on production (https://cybernettraining.com, branch `main`)
 
@@ -75,7 +133,7 @@ One payment (A$29, `STRIPE_PRICE_FOUNDER`) for lifetime Pro, first 50 buyers; `F
 ## 3. Waiting on the owner
 
 0. **Unpause staging:** Supabase paused `cybernet-staging` after about 10 idle days (`npx supabase projects list` shows INACTIVE; its URL doesn't resolve). Press **Restore project** in the Supabase dashboard. Every e2e script and the visual QA gate need it. Free projects pause after a week idle: run any e2e at least weekly to keep it awake.
-0. **Stay Safe Online storyboards:** your OK (or changes) on the review page above.
+0. **Stay Safe Online module 1:** play it on the preview (morning report) and say what to change, then whether to merge.
 
 0. **Admin dashboard: add `ADMIN_USER_IDS = cf5b0efc-1c8f-490c-b90d-a1ca081b16e8` in Vercel → project → Settings → Environment Variables, Production only, then redeploy.** Until then `/admin` is a 404 for everyone, you included. Sign in again if your last sign-in is over 12 hours old.
 0. **IYD rollout branch:** `rollout-inside-your-devices` (`9c562b7`, the 3 approved samples) isn't on GitHub. Push it from the Mac (`git push -u origin rollout-inside-your-devices`) to continue on Windows. **It also rebuilt Power Problems: when it arrives, merge `main` into it first** so it gets the 6 Oct simulator hotfix (`SimulatorCardView.tsx`, the battery card's prompt) and the 7-size fit audit, and re-run `npm run e2e:fit-audit COURSE=inside-your-devices`. **Seven Feed bytes point at Inside Your Devices cards** (`content/bytes/bytes.json`: phone-ram-swap, apps-need-ram, download-needs-storage, still-there-after-off, more-ghz-more-steps, blanket-slows-it, swollen-battery): if the rebuild removes any of those card ids, `feed.test.ts` fails; re-point the bytes (compact cards that fit 360×560) and run `npm run e2e:feed`.
